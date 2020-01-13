@@ -1,0 +1,42 @@
+date;room;dur;topic;teacher;assistant;link_slide;link_lab;link_room
+27/01/2020;Trippelrummet;15;Welcome;Björn Nystedt;;;;http://bit.ly/2PRscGA
+;;45;Intro to Linux;Anders Sjölander;;slide_linux_intro.pdf;;
+;;15;Coffee Break;;;;;
+;;105;Intro to Linux;Anders Sjölander;MD, JD, PE;;lab_linux_intro.html;
+;;60;Lunch;;;;;
+;;60;Intro to Uppmax;Anders Sjölander;;slide_uppmax_intro.pdf;;
+;;60;Intro to Uppmax;Anders Sjölander;MD, JD, PE;;lab_uppmax_intro.html;
+;;15;Coffee Break;;;;;
+;;105;Intro to Uppmax;Anders Sjölander;MD, JD, PE;;;
+28/01/2020;Trippelrummet;30;File types in Bioinformatics;Martin Dahlö;;slide_linux_filetypes.pdf;;http://bit.ly/2PRscGA
+;;45;File types in Bioinformatics;Martin Dahlö;AS, JD, PE;;lab_linux_filetypes.html;
+;;15;Coffee Break;;;;;
+;;60;Better terminal experience;Martin Dahlö;;slide_termexp.pdf;;
+;;60;Lunch;;;;;
+;;60;Advanced Linux;Martin Dahlö;;slide_linux_adv.pdf;;
+;;60;Advanced Linux;Martin Dahlö;AS, JD, PE;;lab_linux_adv.html;
+;;15;Coffee Break;;;;;
+;;105;Advanced Linux;Martin Dahlö;AS, JD, PE;;;
+29/01/2020;Trippelrummet;60;NGS Overview;Olga Petterson;;slide_ngs_overview.pdf;;http://bit.ly/2PRscGA
+;;15;Coffee Break;;;;;
+;;45;NGS Overview;Olga Petterson;;;;
+;;60;NGS pipeline;Adam Ameur;;;;
+;;60;Lunch;;;;;
+;;60;Variant-calling workflow;Malin Larsson;;slide_vc.pptx;;
+;;60;Variant-calling workflow;Malin Larsson;AJ, PE, MD;;lab_vc.html;
+;;15;Coffee Break;;;;;
+;;120;Variant-calling workflow;Malin Larsson;AJ, PE, MD;;;
+30/01/2020;Trippelrummet;60;Variant-calling workflow;Malin Larsson;AJ, PE;;slide_vc_discussion.pptx;http://bit.ly/2PRscGA
+;;15;Coffee Break;;;;;
+;;45;Variant-calling workflow;Malin Larsson;AJ, PE;;;
+;;60;Lunch;;;;;
+;;60;Data management;Niclas Jareborg;;slide_data_management.pdf;;
+;;60;Intro to RNA-Seq;Roy Francis;;slide_rnaseq.html;;
+;;15;Coffee Break;;;;;
+;;105;RNA-Seq workflow;Roy Francis;PE, BS, NR;;lab_rnaseq.html;
+31/01/2020;Trippelrummet;60;RNA-Seq workflow;Roy Francis;;;;http://bit.ly/2PRscGA
+;;15;Coffee Break;;;;;
+;;105;RNA-Seq workflow;Roy Francis;;;;
+;;60;Lunch;;;;;
+;;60;NBIS and services;Björn Nystedt;;;;
+;;60;Open session;Roy Francis;PE, JD, AJ, OP;;;

@@ -1,0 +1,156 @@
+---
+title: "&nbsp;"
+output:
+  bookdown::html_document2:
+    toc: false
+    number_sections: false
+---
+
+# Precourse {.tabset .tabset-fade}
+
+```{r,child="assets/header-lab.Rmd"}
+```
+
+```{r,eval=TRUE,include=FALSE}
+library(yaml)
+upid <- yaml::read_yaml("_site.yml")$uppmax_project
+```
+
+This workshop is aimed towards biologists, researchers, computer scientists or data analysts with limited experience in analysing NGS data.
+
+## Preparation
+
+These are steps to be completed before the workshop.
+
+### Uppmax ID
+
+A remote computing cluster (UPPMAX) will be use for data analyses. A SUPR/SNIC account is needed to use UPPMAX resources. 
+
+If you do not already have one, create an account at [https://supr.snic.se/](https://supr.snic.se/).
+
+<img src="data/common/supr-login.png" class="fancyimage">
+
+Log in to [SUPR/SNIC](https://supr.snic.se/) and request membership to the project ID **`r paste0(upid)`**. 
+
+<img src="data/common/supr-request.png" class="fancyimage">
+
+Once you are accepted to the project, you should see that project listed under your active projects.
+
+<img src="data/common/supr-projects.png" class="fancyimage">
+
+### SSH & SFTP access
+
+<div class="boxy">
+<span class="ifa">`r fa2("lightbulb")`</span> You need a program to connect to a remote cluster (UPPMAX). Linux and Mac users already have terminal on their systems.
+
+[![](data/common/mobaxterm.png)](http://mobaxterm.mobatek.net)
+
+If you are on a Windows system, we recommend [MobaXterm](http://mobaxterm.mobatek.net). It is recommended that you INSTALL the program and not use the portable version. MobaXterm also has an integrated SFTP file browser.  
+
+[![](data/common/xquartz.png)](https://www.xquartz.org/)
+
+Mac users will need to download and install [XQuartz](https://www.xquartz.org/) for X11 forwarding. *ie*; to forward remotely opened windows to local machine.
+</div>
+
+Type `ssh -Y user@rackham.uppmax.uu.se` in the terminal and then enter your password. The password will not be visible as you type. 
+
+<div class="boxy">
+<span class="ifa">`r fa2("lightbulb")`</span> If you need to transfer data between UPPMAX and your computer, you can use tools SCP or SFTP through the terminal. Windows users can use the SFTP browser available with MobaXterm. 
+
+[![](data/common/filezilla.png)](https://filezilla-project.org/)
+
+For all users, if you prefer a GUI to upload and download files from UPPMAX, we recommend installing [FileZilla](https://filezilla-project.org/).
+</div>
+
+### Course directory access
+
+<div class="boxy">
+<span class="ifa">`r fa2("lightbulb")`</span> For this step, you will have to use the terminal a bit. You can get started by following **Tutorial One** at this link *[Unix tutorial for beginners](http://www.ee.surrey.ac.uk/Teaching/Unix/)*. You must use [https://scilifelab.github.io/courses/ngsintro/common/emu/](https://scilifelab.github.io/courses/ngsintro/common/emu/) [(or this mirror)](https://bellard.org/jslinux/vm.html?url=https://bellard.org/jslinux/buildroot-x86.cfg) to try the commands in the tutorial, so that you don't mess up any real world system. If you any questions regarding this tutorial contact: *martin.dahlo@scilifelab.uu.se*.
+</div>
+
+Make sure that you can read and write in the workshop folder. Go to ``r paste0("/proj/",upid,"/nobackup/")`` and create a directory with your username. For example `mkdir jody`. You will work inside this directory for the workshop. For example ``r paste0("/proj/",upid,"/nobackup/jody")``. If you cannot write to the folder, the most likely reason is that you have not requested access to the workshop project via SUPR. This is described in step 1.  
+
+<div class="boxy">
+<span class="ifa">`r fa2("exclamation")`</span> Note that it may take an hour or so from request approval, before you can actually write to the folder. We will check before the workshop that all students have logged in and done this, so do not forget!
+</div>
+
+### Tools
+
+`r fa1("chevron-circle-right")` &nbsp; **Download IGV** (Integrated Genome Browser) from the [Broad Institute](https://www.broadinstitute.org/igv/) on your own computer and make sure that you have human genome available. The will work with human data and visualise the results in the IGV genome browser.
+
+<div class="boxy boxy-orange">
+<span class="ifa ifa-orange">`r fa2("clipboard-list")`</span> **Optional**
+
+In this course, R scripts are run on UPPMAX and sourced from the terminal. If you plan to run R steps locally on your computer, R and RStudio need to be installed on your computer . 
+
+[![](data/common/r.png)](https://cloud.r-project.org/)
+
+`r fa1("chevron-circle-right")` &nbsp; **Install R statistical software** from [r-project.org](https://cloud.r-project.org/). If you have an old version of R and you do not use it, uninstall it and then install a newer version. Make sure you have one of the recent versions of R. For Windows users, it is recommended that you DO NOT install to `C:\Program Files\R\`. Instead, install to `C:\R\`. 
+
+[![](data/common/rstudio.png)](https://www.rstudio.com/products/rstudio/download/)
+
+`r fa1("chevron-circle-right")` &nbsp; **Install [RStudio](https://www.rstudio.com/products/rstudio/download/)**. RStudio provides you with tools like code editor with highlighting, project management, version control, package building, debugger, profiler and more.
+
+`r fa1("chevron-circle-right")` &nbsp; Extra R packages used in the workshop exercises (if any) are listed below. It is recommended that you install this in advance. Simply copy and paste the code into R.
+
+```{r,eval=TRUE,block.title=NULL,echo=FALSE,comment="",class.output="r"}
+# this code block reads package names from '_site.yml' and prints them as installation instruction.
+
+pkg <- yaml::read_yaml("_site.yml")
+
+if(!is.null(pkg$packages$packages_cran_student)) {
+ cat("# install from cran\n")
+ cat(paste0("install.packages(c('",paste(pkg$packages$packages_cran_student,sep="",collapse="','"),"'))"))
+ cat("\n")
+}
+
+if(!is.null(pkg$packages$packages_bioc_student)) {
+ cat("# install from bioconductor\n")
+ cat(paste0("BiocManager::install(c('",paste(pkg$packages$packages_bioc_student,sep="",collapse="','"),"'))"))
+}
+```
+
+</div>
+
+***
+
+## Syllabus
+
+The syllabus for this workshop are as follows.
+
+* Working on the unix/linux command line
+  * Command line navigation and related commands: cd, mkdir, rm, rmdir
+  * Commonly used linux tools: cp, mv, tar, less, more, head, tail, nano, grep, top, man
+  * Wildcards
+  * Ownership and permissions
+  * Symbolic links
+  * Piping commands
+* Working on remote computing cluster
+  * Logging on to UPPMAX
+  * Booking resources
+  * Job templates, submission and queues
+  * Modules
+* Commonly used bioinformatic tools and pipelines
+* Working with integrated genome viewer
+* Variant-calling workflow
+  * Best practise workflow for germline variant calling
+  * VCF file format
+* RNA-Seq workflow
+  * RNA-Seq experimental design and considerations
+  * QC, mapping and gene expression counts
+  * Differential gene expression analyses
+* Current advances in NGS technologies
+
+***
+
+## Learning outcomes
+
+* Awareness of the current state of NGS technologies
+* Familiarity with unix/linux command line interface to perform basic tasks
+* Connecting to and working on a remote computing cluster
+* Familiarity with general workflow for variant-calling and rna-seq
+* Follow basic NGS jargon in scientific papers
+
+***
+
+#

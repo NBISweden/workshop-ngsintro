@@ -6,6 +6,8 @@ This repo contains the course material for NBIS workshop **Introduction to Bioin
 
 The source material is located on the *master* branch (default). The rendered material is located on the *gh-pages* branch. For most part, one only needs to update content in master. Changes pushed to the *master* branch is automatically rendered to the *gh-pages* branch.
 
+**For more detailed description of repo organisation, files and how it work, see the [template repo](https://github.com/NBISweden/workshop-template-rmd-gh).**
+
 ## Contributing
 
 To add or update contents of this repo (for collaborators), first clone the repo.

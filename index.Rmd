@@ -1,0 +1,50 @@
+---
+title: "&nbsp;"
+output:
+  bookdown::html_document2:
+    toc: false
+    number_sections: false
+---
+
+<div class="container landing-container">
+<div class="row landing-div" style="position:relative;">
+<div class="col" style="align-self:center;position:absolute;top:80px;">
+<div class="row">
+
+<div class="col-md-12 flex-box">
+<p class="landing-subtitle">
+<span style="display:block;">NBIS • Workshop</span>
+</p>
+</div>
+
+<div class="col-md-12 flex-box">
+<p class="landing-title">
+<span style="display:block;">Introduction to Bioinformatics</span>
+<span style="display:block;">using NGS data</span>
+</p>
+</div>
+
+<div class="col-md-12 flex-box">
+<p class="medium landing-bullets">
+<span style="display:block;">Unix and command line</span>
+<span style="display:block;">Data formats and QC</span>
+<span style="display:block;">Variant calling workflow</span>
+<span style="display:block;">RNA-Seq workflow</span>
+</p>
+</div>
+
+</div>
+</div>
+</div>
+
+***
+
+<div class="landing-update">
+<p class="small" style="color:#bdbdbd;">
+`r paste("Last updated on",fontawesome::fa("calendar-alt",fill="#bdbdbd"),format(Sys.time(),format='%d-%b-%Y'),"at",fontawesome::fa("clock",fill="#bdbdbd"),format(Sys.time(),format='%X'),".")`
+</p>
+</div>
+
+</div>
+
+

@@ -1,0 +1,82 @@
+name: Workshop-Template-Rmd
+favicon: assets/favicon.png
+output_dir: 2001
+uppmax_project: g2019031
+# location options are lund, umea or uppsala
+location: uppsala
+exclude: ["docs","README.md","schedule.csv","LICENSE","LICENSE.md","scripts","slide","tmprepo"]
+navbar:
+  title: '<img src="assets/logo.svg" id="logo" style="height:30px;margin:0;"/>'
+  type: default
+  logo:
+    image: "assets/logo.svg"
+    href: https://NBISweden.github.io/workshop-ngsintro
+  right:
+    - text: Home
+      href: index.html
+    - text: Schedule
+      href: home_schedule.html
+    - text: Content
+      href: home_content.html
+    - text: Precourse
+      href: home_precourse.html
+    - text: Info
+      href: home_info.html
+output:
+  bookdown::html_document2:
+    highlight: textmate
+    toc: true
+    toc_float:
+      collapsed: true
+      smooth_scroll: true
+      print: false
+    toc_depth: 4
+    number_sections: true
+    df_print: default
+    code_folding: none
+    self_contained: false
+    keep_md: false
+    encoding: 'UTF-8'
+    css: "assets/lab.css"
+    include:
+      after_body: assets/footer-lab.html
+# r packages needed for the workshop
+# used in home_precourse.Rmd
+# split into cran and bioc packages
+# if a package is needed by students and repo, add to _student
+# if a package is only needed for repo, add to _repo
+# if unsure, add to _student
+packages:
+  packages_cran_student:
+   - devtools
+   - dplyr
+   - ggplot2
+   - ggpubr
+   - pheatmap
+   - stringr
+   - tidyr
+  packages_bioc_student:
+   - biomaRt
+   - DESeq2
+   - edgeR
+   - DEXSeq
+   - EnsDb.Mmusculus.v79
+   - goseq
+   - GO.db
+   - Gviz
+   - methods
+   - org.Mm.eg.db
+   - reactome.db
+  packages_cran_repo:
+   - bookdown
+   - captioner
+   - formattable
+   - kableExtra
+   - knitr
+   - leaflet
+   - lubridate
+   - markdown
+   - rmarkdown
+   - xaringan
+   - yaml
+  packages_bioc_repo:
