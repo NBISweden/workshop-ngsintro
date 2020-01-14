@@ -1,4 +1,4 @@
-All current and previous workshop materials are listed below. Numbers denote year and month.
+All current and previous workshop materials are listed below.
 
-<a href='https://royfrancis.github.io/workshop-ngsintro/2001/'>2001</a>
-
+<div style='display:block;'><p>
+<span style='display:block;'><a href='https://royfrancis.github.io/workshop-ngsintro/2001/'>2020 Jan</a></span></p></div>
