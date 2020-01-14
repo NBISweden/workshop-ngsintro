@@ -2,12 +2,12 @@
 
 This repo contains the course material for NBIS workshop **Introduction to Bioinformatics using NGS data**. The rendered view of this repo is available [here](https://nbisweden.github.io/workshop-ngsintro/).
 
-## Brief overview
-### Repo organisation
+## 1. Brief overview
+### 1.1 Repo organisation
 
 The source material is located on the *master* branch (default). The rendered material is located on the *gh-pages* branch. For most part, one only needs to update content in master. Changes pushed to the *master* branch is automatically rendered to the *gh-pages* branch.
 
-### Contributing
+### 1.2 Contributing
 
 To add or update contents of this repo (for collaborators), first clone the repo.
 
@@ -27,7 +27,7 @@ If you are not added as a collaborator, first fork this repo to your account, th
 
 **It is recommended that you do not push changes too frequently as it take a while to render.**
 
-### Rendering
+### 1.3 Rendering
 
 The website is automatically rendered by [GitHub Actions](https://help.github.com/en/actions) whenever a change is pushed. **DO NOT** push any rendered material such as `slide_topic.html`, `lab_topic.html` or supporting directories `slide_topic_files`, `lab_topic_files` etc to GitHub.
 
@@ -37,9 +37,9 @@ Run `rmarkdown::render_site()` in the project directory. This renders all .Rmd a
 
 You can also run `rmarkdown::render("bla.Rmd")` on individual .Rmd/.md files. This is a time-saver as the whole website need not be rendered just to preview this one file.
 
-## Details
-### File descriptions
-#### Repo related files
+## 2. Details
+### 2.1 File descriptions
+#### 2.1.1 Repo related files
 
 |Filename|Type|Description|
 |---|---|---|
@@ -48,7 +48,7 @@ You can also run `rmarkdown::render("bla.Rmd")` on individual .Rmd/.md files. Th
 |README.md|md|This document|
 |LICENSE|-|Repo usage license|
 
-### Workshop content files
+#### 2.1.2 Workshop content files
 
 |Filename|Type|Description|
 |---|---|---|
@@ -64,13 +64,13 @@ You can also run `rmarkdown::render("bla.Rmd")` on individual .Rmd/.md files. Th
 |data|Folder|Shared data|
 |other|-|Other files can include pdf, pptx etc|
 
-### Updating
+### 2.2 Updating
 
 Fork/clone the repository. Only work in the master branch.
 
 `git clone github-link`
 
-#### Rerun a workshop
+#### 2.2.1 Rerun a workshop
 
 If this repo is updated for a different date and location, this is minimum changes required.
 
@@ -107,7 +107,7 @@ If this repo is updated for a different date and location, this is minimum chang
     - R packages are retrieved from **`_site.yml`**
 6. Optionally check info in **home_info.Rmd**
 
-#### Modify contents
+#### 2.2.2 Modify contents
 
 If the contents are also updated, further changes are required.
 
@@ -134,17 +134,16 @@ If the contents are also updated, further changes are required.
 11. Update the repo's **README.md** if needed
     - Check year in the bottom
 
-#### Create a new workshop
+#### 2.2.3 Create a new workshop
 
 If a new workshop repo is created using this template, the following changes also apply.
 
 13. Add a personal access token under repo *Settings > Secrets* and name it `GITHUB_TOKEN`
 14. Change repo and badge links in **README.md**
 15. Change `href` in **`_site.yml`**
+16. Change user/org name in **.github/workflows/main.yml** from **nbisweden** to something else if needed.
 
-These files most likely need not be changed: **.github/workflows/main.yml**, **LICENSE** and the directory **assets**.
-
-#### Push changes
+#### 2.2.4 Push changes
 
 After all changes have been finalised. Commit the changes and push the repo back to GitHub.
 
@@ -156,7 +155,7 @@ git push origin
 
 Once the source files are pushed to GitHub, it is automatically rendered to the branch gh-pages and website is visible at `org.github.io/repo/`. Details are further described below. For local rendering see below.
 
-#### Formatting
+#### 2.2.5 Formatting
 
 All .Rmd and .md files by default take the render arguments from `_site.yml` specified under `output: bookdown::html_document2`. The CSS style used is that from the default bootstrap as well as **lab.css**. YAML instructions within each .Rmd or .md file can be used to override the defaults. It is not always necessary to used .Rmd files. .md files are fine to use as long as R related functionality is not needed. The slides for example do not use the default template at all. In fact it completely uses a different output format `moon_reader` and styles from **style.css**.
 
@@ -183,7 +182,7 @@ output:
 ```
 ````
 
-### Local rendering
+### 2.3 Local rendering
 
 For local rendering, you need to have R installed on your system. R dependencies listed in `site.yml` under **packages_cran_repo** and **packages_bioc_repo** need to be installed. And then any R packages pertaining to your particular Rmd file(s) (if needed) must be installed.
 
@@ -193,13 +192,13 @@ For testing purposes, you can run `rmarkdown::render("bla.Rmd")` on individual R
 
 **DO NOT** push any rendered material such as `slide_topic.html`, `lab_topic.html` or supporting directories `slide_topic_files`, `lab_topic_files` etc to GitHub.
 
-### How it all works
+### 2.4 How it all works
 
 ![](data/common/versioning.png)
 
 The source content is maintained in the master branch. The source gets a new commit id anytime new content is pushed. The rendered material is maintained on the gh-pages branch under separate folders. These folders have the format YYMM. The contents of this folder is overwritten with a new push unless the directory name is changed (*output_dir* in `_site.yml`).  For convenience, last commit in the master branch for each workshop can be tagged as such **v1911** denoting YYMM. This can be used to easily connect a folder on gh-pages to the commit ID of the source code that produced it.
 
-#### GitHub Actions
+#### 2.4.1 GitHub Actions
 
 When the committed changes are pushed to GitHub, GitHub actions automatically runs to render the output. The `.github/workflows/main.yml` contains the workflow that runs to render the site. The script builds a linux container where R and necessary linux dependencies are installed. Then the R packages described under **packages_cran_repo** and **packages_bioc_repo** in `_site,yml` are installed. When completed, the R function `rmarkdown::render_site()` is executed to build the website.
 
@@ -207,9 +206,9 @@ The rendered html files, dependencies assets, data and other files are all moved
 
  The first GitHub build can take around 30-40 mins depending on the number of R packages. Subsequent builds take about 2 minutes since caching is enabled. Caches are removed after 7 days of last access. A push after that will require a full rebuild.
 
-#### render_site() function
+#### 2.4.2 render_site() function
 
-This function uses the information inside the config file `_site.yml`. The top navigation menu is described here. The default output style for all Rmd/md documents are specified under `output:`. Note that this described custom CSS style from `assets/labs.css` and custom footer from `assets/footer-lab.html`. If `output:` is specified under individual Rmd file, it overrides the default in `_site.yml`. The rendered output will all be moved to location specified under `output_dir`.
+This function uses the information inside the config file `_site.yml`. The top navigation menu is described here. The default output style for all Rmd/md documents are specified under `output:`. Note that this described custom CSS style from `assets/labs.css` and custom footer from `assets/footer-lab.html`. If `output:` is specified within individual Rmd files, it overrides the default in `_site.yml`. The rendered output will automatically be moved to location specified under `output_dir`.
 
 ---
 

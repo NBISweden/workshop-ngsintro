@@ -38,7 +38,7 @@ This page contains links to different lectures (slides) and practical exercises 
 
 * [Variant-calling (Slides)](slide_vc.pptx)
 * [Variant-calling workflow (Lab)](lab_vc.html)
-* [Variant-calling Lab discussion](lab_vc_discussion.pptx)
+* [Variant-calling Lab discussion](slide_vc_discussion.pptx)
 
 **RNA-Seq workflow**
 

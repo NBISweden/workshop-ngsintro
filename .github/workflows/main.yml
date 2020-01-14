@@ -79,8 +79,7 @@ jobs:
           dirs=$(ls -d */ | sed 's/\///' | tac)
           for i in $dirs
           do
-           ##printf "* [20${i:0:2} ${months[${i:(-3)}]}](https://${GITHUB_ACTOR}.github.io/${repo}/${i})\n" >> index.md
-           printf "<span style='display:block;'><a href='https://${GITHUB_ACTOR}.github.io/${repo}/${i}/'>20${i:0:2} ${months[${i:(-3)}]}</a></span>" >> index.md
+           printf "<span style='display:block;'><a href='https://nbisweden.github.io/${repo}/${i}/'>20${i:0:2} ${months[${i:(-3)}]}</a></span>" >> index.md
           done
           printf "</p></div>" >> index.md
 

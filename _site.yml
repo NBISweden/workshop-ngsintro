@@ -1,4 +1,4 @@
-name: Workshop-Template-Rmd
+name: workshop-ngsintro
 favicon: assets/favicon.png
 output_dir: 2001
 uppmax_project: g2019031
@@ -44,8 +44,7 @@ output:
 # used in home_precourse.Rmd
 # split into cran and bioc packages
 # if a package is needed by students and repo, add to _student
-# if a package is only needed for repo, add to _repo
-# if unsure, add to _student
+# if a package is only needed for repo (build, rendering etc), add to _repo
 packages:
   packages_cran_student:
    - devtools
