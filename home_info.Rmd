@@ -45,7 +45,7 @@ if(loc=="uppsala") {
 
 ```{r,eval=TRUE,echo=FALSE,block.title=NULL}
 address <- paste(unlist(strsplit(dfr$venue_address,split=",")),collapse="<br>")
-leaflet(height=450,width=940) %>%
+leaflet(height=450,width="auto") %>%
   addTiles(urlTemplate='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png') %>%
   addMarkers(lat=dfr$venue_lat,lng=dfr$venue_lon,popup=address) %>%
   setView(lat=dfr$venue_lat,lng=dfr$venue_lon,zoom=15)

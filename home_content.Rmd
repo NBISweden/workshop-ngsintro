@@ -13,40 +13,50 @@ This page contains links to different lectures (slides) and practical exercises 
 
 **Introduction to Linux**
 
-* [Intro to Linux (Slides)](slide_linux_intro.pdf) 
-* [Intro to Linux (Lab)](lab_linux_intro.html) 
+* [Intro to Linux (Slides)](slide_linux_intro.pdf)
+* [Intro to Linux (Lab)](lab_linux_intro.html)
 
 **File types in Linux**
 
-* [Filetypes (Slides)](slide_linux_filetypes.pdf) 
+* [Filetypes (Slides)](slide_linux_filetypes.pdf)
 * [Filetypes (Lab)](lab_linux_filetypes.html)  
 
 **Uppmax**
 
-* [Intro to Uppmax (Slides)](slide_uppmax_intro.pdf) 
+* [Intro to Uppmax (Slides)](slide_uppmax_intro.pdf)
 * [Introduction to UPPMAX (Lab)](lab_uppmax_intro.html)  
-* [UPPMAX Pipelines (Lab)](lab_uppmax_pipeline.html) 
+* [UPPMAX Pipelines (Lab)](lab_uppmax_pipeline.html)
 
 **Advanced Linux**
 
-* [Better terminal experience (Slides)](slide_termexp.pdf) 
-* [Advanced Linux (Slides)](slide_linux_adv.pdf) 
-* [Advanced linux - Variables & Loops (Lab)](lab_linux_loops.html) 
-* [Advanced linux (Lab)](lab_linux_adv.html) 
+* [Better terminal experience (Slides)](slide_termexp.pdf)
+* [Advanced Linux (Slides)](slide_linux_adv.pdf)
+* [Advanced linux - Variables & Loops (Lab)](lab_linux_loops.html)
+* [Advanced linux (Lab)](lab_linux_adv.html)
 
 **Variant-calling workflow**
 
-* [Variant-calling (Slides)](slide_vc.pptx) 
-* [Variant-calling workflow (Lab)](lab_vc.html) 
+* [Variant-calling (Slides)](slide_vc.pptx)
+* [Variant-calling workflow (Lab)](lab_vc.html)
+* [Variant-calling Lab discussion](lab_vc_discussion.pptx)
 
 **RNA-Seq workflow**
 
-* [RNA-Seq analyses (Slides)](slide_rnaseq.html) 
-* [RNA-Seq workflow (Lab)](lab_rnaseq.html) 
+* [RNA-Seq analyses (Slides)](slide_rnaseq.html)
+* [RNA-Seq workflow (Lab)](lab_rnaseq.html)
 
 **Other**
 
-* [NGS Overview (Slides)](slide_ngs_overview.pdf) 
-* [Data management (Slides)](slide_data_management.pdf) 
+* [NGS Overview (Slides)](slide_ngs_overview.pdf)
+* [Data management (Slides)](slide_data_management.pdf)
+
+**Useful resources**
+
+* [Linux cheatsheet](data/linux/linux_cheat_sheet.pdf)
+* [Bash cheat sheet 1](data/linux/bash_cheat_sheet_1.pdf)
+* [Bash cheat sheet 2](data/linux/bash_cheat_sheet_2.pdf)
+* [Bash cheat sheet 3](data/linux/bash_cheat_sheet_3.pdf)
+* [Uppmax cheatsheet](data/linux/uppmax_cheat_sheet.png)
+* [Mac keyboard](lab_mac_keyboard.html)
 
 ***

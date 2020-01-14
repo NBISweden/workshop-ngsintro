@@ -499,8 +499,8 @@ bash ../scripts/star_align.sh sample_1.fastq.gz sample_2.fastq.gz
 
 Now, do the same for the other samples as well if you have time. Otherwise just run for one sample and results for the other samples can be copied (See end of this section).
 
-<div class="optional">
-**Optional**
+<div class="boxy boxy-orange">
+<span class="ifa ifa-orange">`r fa2("clipboard")`</span> **Optional**
 
 Try to create a new bash loop script (`star_align_batch.sh`) to iterate over all fastq files in the directory and run the mapping using the `star_align.sh` script. Note that there is a bit of a tricky issue here. You need to use two fastq files (`_1` and `_2`) per run rather than one file.
 
@@ -1354,8 +1354,8 @@ Examine the alignments by clicking **Details** on the resulting page.
 - Your sequences will be displayed in the browser.
 - Enable the mouse annotations (ENSEMBL gene build, UCSC genes, human proteins etc.).
 
-<div class="optional">
-**Optional**
+<div class="boxy boxy-orange">
+<span class="ifa ifa-orange">`r fa2("clipboard")`</span> **Optional**
 
 `r fa1("clipboard-list")` &nbsp; Do a new transcriptome assembly of whitefly RNA-Seq data using above code as help.
 </div>
