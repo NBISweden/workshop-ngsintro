@@ -6,8 +6,6 @@ output:
     number_sections: false
 ---
 
-# Precourse {.tabset .tabset-fade}
-
 ```{r,child="assets/header-lab.Rmd"}
 ```
 
@@ -15,6 +13,8 @@ output:
 library(yaml)
 upid <- yaml::read_yaml("_site.yml")$uppmax_project
 ```
+
+# Precourse {.tabset .tabset-fade}
 
 This workshop is aimed towards biologists, researchers, computer scientists or data analysts with limited experience in analysing NGS data.
 
@@ -24,13 +24,13 @@ These are steps to be completed before the workshop.
 
 ### Uppmax ID
 
-A remote computing cluster (UPPMAX) will be use for data analyses. A SUPR/SNIC account is needed to use UPPMAX resources. 
+A remote computing cluster (UPPMAX) will be use for data analyses. A SUPR/SNIC account is needed to use UPPMAX resources.
 
 If you do not already have one, create an account at [https://supr.snic.se/](https://supr.snic.se/).
 
 <img src="data/common/supr-login.png" class="fancyimage">
 
-Log in to [SUPR/SNIC](https://supr.snic.se/) and request membership to the project ID **`r paste0(upid)`**. 
+Log in to [SUPR/SNIC](https://supr.snic.se/) and request membership to the project ID **`r paste0(upid)`**.
 
 <img src="data/common/supr-request.png" class="fancyimage">
 
@@ -52,10 +52,10 @@ If you are on a Windows system, we recommend [MobaXterm](http://mobaxterm.mobate
 Mac users will need to download and install [XQuartz](https://www.xquartz.org/) for X11 forwarding. *ie*; to forward remotely opened windows to local machine.
 </div>
 
-Type `ssh -Y user@rackham.uppmax.uu.se` in the terminal and then enter your password. The password will not be visible as you type. 
+Type `ssh -Y user@rackham.uppmax.uu.se` in the terminal and then enter your password. The password will not be visible as you type.
 
 <div class="boxy">
-<span class="ifa">`r fa2("lightbulb")`</span> If you need to transfer data between UPPMAX and your computer, you can use tools SCP or SFTP through the terminal. Windows users can use the SFTP browser available with MobaXterm. 
+<span class="ifa">`r fa2("lightbulb")`</span> If you need to transfer data between UPPMAX and your computer, you can use tools SCP or SFTP through the terminal. Windows users can use the SFTP browser available with MobaXterm.
 
 [![](data/common/filezilla.png)](https://filezilla-project.org/)
 
@@ -81,17 +81,21 @@ Make sure that you can read and write in the workshop folder. Go to ``r paste0("
 <div class="boxy boxy-orange">
 <span class="ifa ifa-orange">`r fa2("clipboard-list")`</span> **Optional**
 
-In this course, R scripts are run on UPPMAX and sourced from the terminal. If you plan to run R steps locally on your computer, R and RStudio need to be installed on your computer . 
+In this course, R scripts are run on UPPMAX and sourced from the terminal. If you plan to run R steps locally on your computer, R and RStudio need to be installed on your computer .
 
 [![](data/common/r.png)](https://cloud.r-project.org/)
 
-`r fa1("chevron-circle-right")` &nbsp; **Install R statistical software** from [r-project.org](https://cloud.r-project.org/). If you have an old version of R and you do not use it, uninstall it and then install a newer version. Make sure you have one of the recent versions of R. For Windows users, it is recommended that you DO NOT install to `C:\Program Files\R\`. Instead, install to `C:\R\`. 
+`r fa1("chevron-circle-right")` &nbsp; **Install R statistical software** from [r-project.org](https://cloud.r-project.org/). If you have an old version of R and you do not use it, uninstall it and then install a newer version. Make sure you have one of the recent versions of R (Preferably 3.6.1). For Windows users, it is recommended that you DO NOT install to `C:\Program Files\R\`. Instead, install to `C:\R\`.
 
 [![](data/common/rstudio.png)](https://www.rstudio.com/products/rstudio/download/)
 
 `r fa1("chevron-circle-right")` &nbsp; **Install [RStudio](https://www.rstudio.com/products/rstudio/download/)**. RStudio provides you with tools like code editor with highlighting, project management, version control, package building, debugger, profiler and more.
 
-`r fa1("chevron-circle-right")` &nbsp; Extra R packages used in the workshop exercises (if any) are listed below. It is recommended that you install this in advance. Simply copy and paste the code into R.
+`r fa1("chevron-circle-right")` &nbsp; Extra R packages used in the workshop exercises (if any) are listed below. It is recommended that you install this in advance. Simply copy and paste the code into R. 
+
+Linux users (for example Ubuntu) will have to install the following linux packages before installing the R packages.
+
+`sudo apt-get install libxml2-dev libssl-dev libcurl4-openssl-dev libudunits2-dev libopenblas-base`
 
 ```{r,eval=TRUE,block.title=NULL,echo=FALSE,comment="",class.output="r"}
 # this code block reads package names from '_site.yml' and prints them as installation instruction.
