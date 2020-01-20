@@ -60,8 +60,8 @@ RNA-seq experiment does not necessarily end with a list of DE genes. If you have
 - 03 RNA-Seq figures and plots using **R**
 - 04 De-novo transcriptome assembly using **Trinity**
 
-<div class="boxy">
-<span class="ifa">`r fa2("lightbulb")`</span> **General guide**
+<div class="boxy boxy-tip">
+**General guide**
 
 * Expected run times (in minutes, when running all samples) for some of the steps as shown below when using 8 cores with 64 GB RAM.
 
@@ -106,8 +106,8 @@ data.frame(Accession=c("SRR3222409","SRR3222410","SRR3222411","SRR3222412","SRR3
                 full_width=F,position="left")
 ```
 
-<div class="boxy">
-<span class="ifa">`r fa2("exclamation")`</span> For the purpose of this tutorial, to shorten the time needed to run various bioinformatics steps, we have downsampled the original files. We randomly sampled, without replacement, 25% reads from each sample, using `fastq-sample` from the toolset [fastq-tools](https://homes.cs.washington.edu/~dcjones/fastq-tools/).
+<div class="boxy boxy-note">
+For the purpose of this tutorial, to shorten the time needed to run various bioinformatics steps, we have downsampled the original files. We randomly sampled, without replacement, 25% reads from each sample, using `fastq-sample` from the toolset [fastq-tools](https://homes.cs.washington.edu/~dcjones/fastq-tools/).
 </div>
 
 # Main exercise
@@ -148,7 +148,7 @@ Create a directory named `rnaseq`. All RNA-Seq related activities must be carrie
 mkdir rnaseq
 ```
 
-`r fa1("clipboard-list")` &nbsp; Set up the below directory structure in your project directory.
+<i class="fas fa-clipboard-list"></i> Set up the below directory structure in your project directory.
 
 ```
 <username>/
@@ -176,7 +176,7 @@ cd ..'))
 
 The `1_raw` directory will hold the raw fastq files (soft-links). `2_fastqc` will hold FastQC outputs. `3_mapping` will hold the STAR mapping output files. `4_qualimap` will hold the QualiMap output files. `5_dge` will hold the counts from featureCounts and all differential gene expression related files. `6_multiqc` will hold MultiQC outputs. `reference` directory will hold the reference genome, annotations and STAR indices.
 
-`r fa1("lightbulb")` &nbsp; It might be a good idea to open an additional terminal window. One to navigate through directories and another for scripting in the `scripts` directory.
+<i class="fas fa-lightbulb"></i> It might be a good idea to open an additional terminal window. One to navigate through directories and another for scripting in the `scripts` directory.
 
 ### Create symbolic links
 
@@ -219,7 +219,7 @@ SRR3222414_2.fastq.gz -> /sw/courses/ngsintro/rnaseq/main/1_raw/SRR3222414_2.fas
 
 After receiving raw reads from a high throughput sequencing centre it is essential to check their quality.  [FastQC](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/) provides a simple way to do some quality control check on raw sequence data. It provides a modular set of analyses which you can use to get a quick impression of whether your data has any problems of which you should be aware before doing any further analysis.
 
-`r fa1("clipboard-list")` &nbsp; Change into the `2_fastqc` directory. Use `pwd` to check if you are standing in the correct directory. You should be standing here:
+<i class="fas fa-clipboard-list"></i> Change into the `2_fastqc` directory. Use `pwd` to check if you are standing in the correct directory. You should be standing here:
 
 ```{r,comment="",echo=FALSE}
 cat(paste0(path_project_rnaseq,"/2_fastqc"))
@@ -281,14 +281,14 @@ After the fastqc run, there should be a `.zip` file and a `.html` file for every
 firefox file.html &
 ```
 
-`r fa1("lightbulb")` &nbsp; Adding `&` at the end sends that process to the background, so that the console is free to accept new commands.
+<i class="fas fa-lightbulb"></i> Adding `&` at the end sends that process to the background, so that the console is free to accept new commands.
 
-<div class="boxy boxy-orange">
-<span class="ifa ifa-orange">`r fa2("clipboard")`</span> **Optional**
+<div class="boxy boxy-task boxy-orange">
+**Optional**
 
 Download the `.html` file to your computer and view it.
 
-`r fa1("lightbulb")` &nbsp; All users can use an SFTP browser like [Filezilla](https://filezilla-project.org/) or [Cyberduck](https://cyberduck.io/) for a GUI interface. Windows users can also use the MobaXterm SFTP file browser to drag and drop.
+<i class="fas fa-lightbulb"></i> All users can use an SFTP browser like [Filezilla](https://filezilla-project.org/) or [Cyberduck](https://cyberduck.io/) for a GUI interface. Windows users can also use the MobaXterm SFTP file browser to drag and drop.
 
 Linux and Mac users can use SFTP or SCP by running the below command in a **LOCAL** terminal and **NOT** on Uppmax. Open a terminal locally on your computer, move to a suitable download directory and run the command below.
 
@@ -297,9 +297,9 @@ cat(paste0("scp user@rackham.uppmax.uu.se:",path_project_rnaseq,"/2_fastqc/SRR32
 ```
 </div>
 
-`r fa1("clipboard-list")` &nbsp; Go back to the FastQC website and compare your report with the sample report for [Good Illumina data](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html) and [Bad Illumina data](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc.html).
+<i class="fas fa-clipboard-list"></i> Go back to the FastQC website and compare your report with the sample report for [Good Illumina data](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html) and [Bad Illumina data](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc.html).
 
-`r fa1("comments")` &nbsp; Discuss based on your reports, whether your data is of good enough quality and/or what steps are needed to fix it.
+<i class="fas fa-comments"></i> Discuss based on your reports, whether your data is of good enough quality and/or what steps are needed to fix it.
 
 ## STAR
 
@@ -311,9 +311,9 @@ After verifying that the quality of the raw sequencing reads is acceptable, we w
 
 It is best if the reference genome (`.fasta`) and annotation (`.gtf`) files come from the same source to avoid potential naming conventions problems. It is also good to check in the manual of the aligner you use for hints on what type of files are needed to do the mapping.
 
-`r fa1("comments")` &nbsp; What is the idea behind building STAR index? What files are needed to build one? Where do we take them from? Could one use a STAR index that was generated before? Browse through [Ensembl](https://www.ensembl.org/index.html) and try to find the files needed. Note that we are working with Mouse (*Mus musculus*).
+<i class="fas fa-comments"></i> What is the idea behind building STAR index? What files are needed to build one? Where do we take them from? Could one use a STAR index that was generated before? Browse through [Ensembl](https://www.ensembl.org/index.html) and try to find the files needed. Note that we are working with Mouse (*Mus musculus*).
 
-`r fa1("clipboard-list")` &nbsp; Move into the `reference` directory and download the Chr 11 genome (`.fasta`) file and the genome-wide annotation file (`.gtf`) from Ensembl.
+<i class="fas fa-clipboard-list"></i> Move into the `reference` directory and download the Chr 11 genome (`.fasta`) file and the genome-wide annotation file (`.gtf`) from Ensembl.
 
 You should be standing here to run this:
 
@@ -357,7 +357,7 @@ module load bioinfo-tools
 module load star/2.7.0e
 ```
 
-`r fa1("lightbulb")` &nbsp; To search for other available versions of STAR, use `module spider star`.
+<i class="fas fa-lightbulb"></i> To search for other available versions of STAR, use `module spider star`.
 
 Create a new bash script in your `scripts` directory named `star_index.sh` and add the following lines:
 
@@ -467,7 +467,7 @@ star \
 
 But, we will generalise the above script to be used as a bash script to read any two input files  and to automatically create the output filename.
 
-`r fa1("clipboard-list")` &nbsp; Now create a new bash script file named `star_align.sh` in your `scripts` directory and add the script below to it.
+<i class="fas fa-clipboard-list"></i> Now create a new bash script file named `star_align.sh` in your `scripts` directory and add the script below to it.
 
 ```{sh,accordion=TRUE,block.title=TRUE,eval=FALSE}
 #!/bin/bash
@@ -499,8 +499,8 @@ bash ../scripts/star_align.sh sample_1.fastq.gz sample_2.fastq.gz
 
 Now, do the same for the other samples as well if you have time. Otherwise just run for one sample and results for the other samples can be copied (See end of this section).
 
-<div class="boxy boxy-orange">
-<span class="ifa ifa-orange">`r fa2("clipboard")`</span> **Optional**
+<div class="boxy boxy-task boxy-orange">
+**Optional**
 
 Try to create a new bash loop script (`star_align_batch.sh`) to iterate over all fastq files in the directory and run the mapping using the `star_align.sh` script. Note that there is a bit of a tricky issue here. You need to use two fastq files (`_1` and `_2`) per run rather than one file.
 
@@ -552,11 +552,11 @@ SRR3222409.8816556      83      1       3199859 255     99M     =       3199842 
 SRR3222409.2149741      163     1       3199933 255     101M    =       3200069 237 AACTTACTTAACTGACCAAAAAAACTATGGTACTGCAGTATAGCAAATACTCCACACACTGTGCTTTGAGCTAGAGCACTTGGAGTCACTGCCCAGGGCAG ABDDDHHIIIIIIIIIIIIIIIHHIIIIIIIIIIIIIIIIIIIIIIII<<FHIHGHIIIIGIHEHIIIIIGIIIIIIIIIIIIIIHIIIIIHIIIIHIIIH        NH:i:1  HI:i:1  AS:i:200        nM:i:0
 ```
 
-`r fa1("comments")` &nbsp; Can you identify what some of these columns are? SAM format description is available [here](https://samtools.github.io/hts-specs/).
+<i class="fas fa-comments"></i> Can you identify what some of these columns are? SAM format description is available [here](https://samtools.github.io/hts-specs/).
 
 The `Log.final.out` file gives a summary of the mapping run. This file is used by MultiQC later to collect mapping statistics.
 
-`r fa1("clipboard-list")` &nbsp; Inspect one of the mapping log files to identify the number of uniquely mapped reads and multi-mapped reads.
+<i class="fas fa-clipboard-list"></i> Inspect one of the mapping log files to identify the number of uniquely mapped reads and multi-mapped reads.
 
 ```{sh,accordion=TRUE,block.title=TRUE,eval=FALSE}
 cat SRR3222409Log.final.out
@@ -607,7 +607,7 @@ rename "Aligned.sortedByCoord.out" "" *.bam
 
 Next, we need to index these BAM files. Indexing creates `.bam.bai` files which are required by many downstream programs to quickly and efficiently locate reads anywhere in the BAM file.
 
-`r fa1("clipboard-list")` &nbsp; Index all BAM files.
+<i class="fas fa-clipboard-list"></i> Index all BAM files.
 
 ```{sh,accordion=TRUE,block.title=TRUE,eval=FALSE}
 module load samtools/1.8
@@ -644,9 +644,9 @@ cat(paste0("cp -r ",path_data,"/main/3_mapping/* ",path_project,"/[user]/rnaseq/
 
 Some important quality aspects, such as saturation of sequencing depth, read distribution between different genomic features or coverage uniformity along transcripts, can be measured only after mapping reads to the reference genome. One of the tools to perform this post-alignment quality control is QualiMap. QualiMap examines sequencing alignment data in SAM/BAM files according to the features of the mapped reads and provides an overall view of the data that helps to the detect biases in the sequencing and/or mapping of the data and eases decision-making for further analysis.
 
-`r fa1("clipboard-list")` &nbsp; Read through [QualiMap](http://qualimap.bioinfo.cipf.es/doc_html/intro.html) documentation and see if you can figure it out how to run it to assess post-alignment quality on the RNA-seq mapped samples. Here is the RNA-Seq specific tool [explanation](http://qualimap.bioinfo.cipf.es/doc_html/analysis.html#rnaseqqc). The tool is already installed on Uppmax as a module.
+<i class="fas fa-clipboard-list"></i> Read through [QualiMap](http://qualimap.bioinfo.cipf.es/doc_html/intro.html) documentation and see if you can figure it out how to run it to assess post-alignment quality on the RNA-seq mapped samples. Here is the RNA-Seq specific tool [explanation](http://qualimap.bioinfo.cipf.es/doc_html/analysis.html#rnaseqqc). The tool is already installed on Uppmax as a module.
 
-`r fa1("clipboard-list")` &nbsp; Load the QualiMap module version 2.2.1 and create a bash script named `qualimap.sh` in your `scripts` directory.
+<i class="fas fa-clipboard-list"></i> Load the QualiMap module version 2.2.1 and create a bash script named `qualimap.sh` in your `scripts` directory.
 
 Add the following script to it.
 
@@ -673,7 +673,7 @@ qualimap rnaseq -pe \
 
 The line `prefix=$( basename "$1" .bam)` is used to remove directory path and `.bam` from the input filename and create a prefix which will be used to label output. The `export DISPLAY=""` is used to run JAVA application in headless mode or else throws an error about X11 display. The last part `>& "${prefix}-qualimap.log"` saves the **standard-out** as a log file.
 
-`r fa1("clipboard-list")` &nbsp; create a new bash loop script named `qualimap_batch.sh` with a bash loop to run the qualimap script over all BAM files. The loop should look like below. Alternatively, you can also simply run the script below directly on the command line.
+<i class="fas fa-clipboard-list"></i> create a new bash loop script named `qualimap_batch.sh` with a bash loop to run the qualimap script over all BAM files. The loop should look like below. Alternatively, you can also simply run the script below directly on the command line.
 
 ```{sh,accordion=TRUE,block.title=TRUE,eval=FALSE}
 for i in ../3_mapping/*.bam
@@ -705,7 +705,7 @@ drwxrwxr-x 2 user gXXXXXXX 4.0K Sep 14 17:24 raw_data_qualimapReport
 
 <i class="fas fa-exclamation-circle"></i> You can download the HTML files locally to your computer if you wish. If you do so, note that you MUST also download the dependency files (ie; css folder and images_qualimapReport folder), otherwise the HTML file may not render correctly.
 
-`r fa1("clipboard-list")` &nbsp; Inspect the HTML output file and try to make sense of it.
+<i class="fas fa-clipboard-list"></i> Inspect the HTML output file and try to make sense of it.
 
 ```{sh,block.title=TRUE,eval=FALSE}
 firefox qualimapReport.html &
@@ -717,7 +717,7 @@ firefox qualimapReport.html &
 cat(paste0("cp -r ",path_data,"/main/4_qualimap/* ",path_project_rnaseq,"/4_qualimap/"))
 ```
 
-`r fa1("comments")` &nbsp; Check the QualiMap report for one sample and discuss if the sample is of good quality. You only need to do this for one file now. We will do a comparison with all samples when using the MultiQC tool.
+<i class="fas fa-comments"></i> Check the QualiMap report for one sample and discuss if the sample is of good quality. You only need to do this for one file now. We will do a comparison with all samples when using the MultiQC tool.
 
 <br>
 
@@ -727,9 +727,9 @@ cat(paste0("cp -r ",path_data,"/main/4_qualimap/* ",path_project_rnaseq,"/4_qual
 
 After ensuring mapping quality, we can move on to enumerating reads mapping to genomic features of interest. Here we will use **featureCounts**, an ultrafast and accurate read summarization program, that can count mapped reads for genomic features such as genes, exons, promoter, gene bodies, genomic bins and chromosomal locations.
 
-`r fa1("clipboard-list")` &nbsp; Read featureCounts [documentation](http://bioinf.wehi.edu.au/subread-package/SubreadUsersGuide.pdf) and see if you can figure it out how to use paired-end reads using an unstranded library to count fragments overlapping with exonic regions and summarise over genes.
+<i class="fas fa-clipboard-list"></i> Read featureCounts [documentation](http://bioinf.wehi.edu.au/subread-package/SubreadUsersGuide.pdf) and see if you can figure it out how to use paired-end reads using an unstranded library to count fragments overlapping with exonic regions and summarise over genes.
 
-`r fa1("clipboard-list")` &nbsp; Load the subread module version 1.5.2 on Uppmax. Create a bash script named `featurecounts.sh` in the directory `scripts`.
+<i class="fas fa-clipboard-list"></i> Load the subread module version 1.5.2 on Uppmax. Create a bash script named `featurecounts.sh` in the directory `scripts`.
 
 We could run featureCounts on each BAM file, produce a text output for each sample and combine the output. But the easier way is to provide a list of all BAM files and featureCounts will combine counts for all samples into one text file.
 
@@ -779,7 +779,7 @@ ls -l
 -rw-rw-r-- 1 user gXXXXXXX  658 Sep 15 11:05 counts.txt.summary
 ```
 
-`r fa1("comments")` &nbsp; Inspect the files and try to make sense of them.
+<i class="fas fa-comments"></i> Inspect the files and try to make sense of them.
 
 <i class="fas fa-exclamation-circle"></i> If you are running out of time or were unable to run featureCounts, you can copy the count table file `counts.txt` and it's summary `counts.txt.summary` located here: ``r paste0(path_data,"/main/5_dge/")``.
 
@@ -819,7 +819,7 @@ drwxrwsr-x 2 user gXXXXXXX 4.0K Sep  6 22:33 multiqc_data
 -rw-rw-r-- 1 user gXXXXXXX 1.3M Sep  6 22:33 multiqc_report.html
 ```
 
-`r fa1("comments")` &nbsp; Open the MultiQC HTML report using `firefox` and/or transfer to your computer and inspect the report. You can also download the file locally to your computer.
+<i class="fas fa-comments"></i> Open the MultiQC HTML report using `firefox` and/or transfer to your computer and inspect the report. You can also download the file locally to your computer.
 
 ```{sh,block.title=TRUE,eval=FALSE}
 firefox multiqc_report.html &
@@ -872,11 +872,11 @@ ls -l
 -rw-rw-r-- 1 user gXXXXXXX 2.6M Nov 29 16:31 dge_results.txt
 ```
 
-`r fa1("clipboard-list")` &nbsp;  Copy the results text file (`dge_results.txt`) to your computer and inspect the results. What are the columns? How many differentially expressed genes are present at an FDR cutoff of 0.05? How many genes are upregulated and how many are down-regulated? How does this change if we set a fold-change cut-off of 1?
+<i class="fas fa-clipboard-list"></i>  Copy the results text file (`dge_results.txt`) to your computer and inspect the results. What are the columns? How many differentially expressed genes are present at an FDR cutoff of 0.05? How many genes are upregulated and how many are down-regulated? How does this change if we set a fold-change cut-off of 1?
 
-`r fa1("lightbulb")` &nbsp; Open in a spreadsheet editor like Microsoft Excel or LibreOffice Calc.
+<i class="fas fa-lightbulb"></i> Open in a spreadsheet editor like Microsoft Excel or LibreOffice Calc.
 
-`r fa1("lightbulb")` &nbsp; If you do not have the results or were unable to run the DGE step, you can copy these two here which will be required for functional annotation (optional).
+<i class="fas fa-lightbulb"></i> If you do not have the results or were unable to run the DGE step, you can copy these two here which will be required for functional annotation (optional).
 
 ```{r,comment="",block.title=TRUE,class.output="sh",echo=FALSE}
 cat(paste0("cp ",path_data,"/main/5_dge/dge_results.txt .\n"))
@@ -885,10 +885,10 @@ cat(paste0("cp ",path_data,"/main/5_dge/dge_data.Rdata .\n"))
 
 # Bonus exercises
 
-<div class="boxy">
-<span class="ifa">`r fa2("exclamation")`</span>  These exercises are completely optional and to be run only if you have time and if it interests you.
+<div class="boxy boxy-note">
+These exercises are completely optional and to be run only if you have time and if it interests you.
 
-**Markers:** &nbsp; `r fa1("desktop")` &nbsp;  Run locally &nbsp; `r fa1("cloud")` Run on Uppmax
+**Markers:** &nbsp; <i class="fas fa-desktop"></i> &nbsp;  Run locally &nbsp; <i class="fas fa-cloud"></i>  Run on Uppmax
 </div>
 
 ## Functional annotation
@@ -907,8 +907,8 @@ Running functional annotation is typically not computationally heavy and it may 
 
 ### Preparation
 
-<div class="boxy">
-<span class="ifa">`r fa2("desktop")`</span>  **Local**
+<div class="boxy boxy-desktop">
+**Local**
 
 Install required R packages by running the script below in R.
 
@@ -926,8 +926,8 @@ cat(paste0("scp -r user@rackham.uppmax.uu.se:",path_data,"/bonus/funannot ./"))
 Alternatively, all users can use an SFTP browser like [Filezilla](https://filezilla-project.org/) or [Cyberduck](https://cyberduck.io/) for a GUI interface. Windows users can also use the MobaXterm SFTP file browser to drag and drop.
 </div>
 
-<div class="boxy">
-<span class="ifa">`r fa2("cloud")`</span> **Uppmax**
+<div class="boxy boxy-cloud">
+**Uppmax**
 
 Copy this directory ``r paste0(path_data,"/bonus/funannot")`` and all it's contents to your `rnaseq` project directory.
 
@@ -939,8 +939,8 @@ cat(paste0("cp -r ",path_data,"/bonus/funannot ",path_project,"/[user]/rnaseq/")
 
 ### Workflow
 
-<div class="boxy">
-<span class="ifa">`r fa2("desktop")`</span> **Local**
+<div class="boxy boxy-desktop">
+**Local**
 
 Set the working directory to `funannot` in R.
 
@@ -958,8 +958,8 @@ source("annotate_de_results.R")
 
 </div>
 
-<div class="boxy">
-<span class="ifa">`r fa2("cloud")`</span> **Uppmax**
+<div class="boxy boxy-cloud">
+**Uppmax**
 
 Load R module and R packages
 
@@ -1014,7 +1014,7 @@ The results are saved in the directory `GO_react_results`. The plot `Rplots.pdf`
 
 The results are saved as tables in the directory `GO_react_results`. There are four tables: GO terms for up-regulated genes, GO terms for down-regulated genes and similarily, Reactome pathways for up-regulated genes and Reactome pathways for down-regulated genes.
 
-`r fa1("clipboard-list")` &nbsp; Take a quick look at some of these files.
+<i class="fas fa-clipboard-list"></i> Take a quick look at some of these files.
 
 ```{sh,eval=FALSE,block.title=TRUE}
 head GO_term_genes_dn.txt
@@ -1031,13 +1031,13 @@ category over_represented_pvalue under_represented_pvalue numDEInCat numInCat pa
 
 You can view the tables in a text editor (`nano`,`gedit` etc), and try to find GO terms and pathways relevant to the experiment using a word search functionality. You could download these files to your computer and import them into a spreadsheet program like MS Excel or LibreOffice Calc.
 
-`r fa1("clipboard-list")` &nbsp; Try to use `grep` to find a match using a keyword, say **phosphorylation**.
+<i class="fas fa-clipboard-list"></i> Try to use `grep` to find a match using a keyword, say **phosphorylation**.
 
 ```{sh,block.title=TRUE,eval=FALSE}
 cat reactome_pway_genes_up.txt | grep "phosphorylation"
 ```
 
-`r fa1("comments")` &nbsp; Have a look at the GO terms and see if you think the functional annotation reflects the biology of the experiments we have just analysed?
+<i class="fas fa-comments"></i> Have a look at the GO terms and see if you think the functional annotation reflects the biology of the experiments we have just analysed?
 
 ## IGV browser
 
@@ -1047,10 +1047,10 @@ If you are already familiar with IGV you can load the mouse genome and at least 
 
 Integrated genomics viewer from Broad Institute is a nice graphical interface to view bam files and genome annotations. It also has tools to export data and some functionality to look at splicing patterns in RNA-seq data sets. Even though it allows for some basic types of analysis it should be used more as a nice way to look at your mapped data. Looking at data in this way might seem like a daunting approach as you can not check more than a few regions, but in in many cases it can reveal mapping patterns that are hard to catch with just summary statistics.
 
-For this tutorial you can chose to run IGV directly on your own computer `r fa1("desktop")` or on Uppmax `r fa1("cloud")`. If you chose to run it on your own computer you will have to download some of the BAM files (and the corresponding index files) from Uppmax. If you have not yet installed IGV you also have to [download](http://software.broadinstitute.org/software/igv/download) the program.
+For this tutorial you can chose to run IGV directly on your own computer <i class="fas fa-desktop"></i>  or on Uppmax <i class="fas fa-cloud"></i> . If you chose to run it on your own computer you will have to download some of the BAM files (and the corresponding index files) from Uppmax. If you have not yet installed IGV you also have to [download](http://software.broadinstitute.org/software/igv/download) the program.
 
-<div class="boxy">
-<span class="ifa">`r fa2("desktop")`</span> **Local**
+<div class="boxy boxy-desktop">
+**Local**
 
 Copy two BAM files (one from each experimental group, for example; SRR3222409 and SRR3222412) and the associated index (`.bam.bai`) files to your computer by running the below command in a **LOCAL** terminal and **NOT** on Uppmax.
 
@@ -1064,8 +1064,8 @@ cat(paste0("scp user@rackham.uppmax.uu.se:",path_project,"/rnaseq/[user]/3_mappi
 Alternatively, all users can use an SFTP browser like [Filezilla](https://filezilla-project.org/) or [Cyberduck](https://cyberduck.io/) for a GUI interface. Windows users can also use the MobaXterm SFTP file browser to drag and drop.
 </div>
 
-<div class="boxy">
-<span class="ifa">`r fa2("cloud")`</span> **Uppmax**
+<div class="boxy boxy-cloud">
+**Uppmax**
 
 For Linux and Mac users, Log in to Uppmax in a way so that the generated graphics are exported via the network to your screen. This will allow any graphical interface that you start on your compute node to be exported to your computer. However, as the graphics are exported over the network, it can be fairly slow in redrawing windows and the experience can be fairly poor.
 
@@ -1103,18 +1103,18 @@ If you for example search for the gene **Mocs2**, you should see a decent amount
 
 To try some of the features available in IGV, you can try to address the following questions:
 
-`r fa1("clipboard-list")` &nbsp; Are the reads you mapped from a stranded or unstranded library?
+<i class="fas fa-clipboard-list"></i> Are the reads you mapped from a stranded or unstranded library?
 
-`r fa1("clipboard-list")` &nbsp; Pick a gene from the top list of most significant genes from the DE analysis and search for it using the search box in IGV. Would you say that the pattern you see here confirms the gene as differentially expressed between treatments? For example; **Klk10**.
+<i class="fas fa-clipboard-list"></i> Pick a gene from the top list of most significant genes from the DE analysis and search for it using the search box in IGV. Would you say that the pattern you see here confirms the gene as differentially expressed between treatments? For example; **Klk10**.
 
-`r fa1("clipboard-list")` &nbsp; One can visualize all genes in a given pathway using the gene list option under **Regions** in the menu. Would you agree with what they state in the paper about certain pathways being down-regulated. If you need hints for how to proceed, see [Gene List tutorial](http://software.broadinstitute.org/software/igv/gene_list_view) at Broad.
+<i class="fas fa-clipboard-list"></i> One can visualize all genes in a given pathway using the gene list option under **Regions** in the menu. Would you agree with what they state in the paper about certain pathways being down-regulated. If you need hints for how to proceed, see [Gene List tutorial](http://software.broadinstitute.org/software/igv/gene_list_view) at Broad.
 
 ## RNA-Seq plots
 
 Creating high quality plots of RNA-seq analysis are most easily done using R. Depending on your proficiency in reading R code and using R, you can in this section either just call scripts from the command lines with a set of arguments or you can open the R script in a text editor, and run the code step by step from an interactive R session.
 
-<div class="boxy">
-<span class="ifa">`r fa2("exclamation")`</span> For this tutorial, the R scripts are to be run on Uppmax `r fa1("cloud")`.
+<div class="boxy boxy-exclamation">
+For this tutorial, the R scripts are to be run on Uppmax <i class="fas fa-cloud"></i> .
 </div>
 
 Copy the R script files from the following directory: ``r paste0(path_data,"/bonus/visual/")`` to your `5_dge` directory.
@@ -1154,7 +1154,7 @@ knitr::include_graphics("data/rnaseq/MDS.png")
 ```
 
 
-`r fa1("comments")` &nbsp; Based on these results are you surprised that your DE analysis detected a fairly large number of significant genes?
+<i class="fas fa-comments"></i> Based on these results are you surprised that your DE analysis detected a fairly large number of significant genes?
 
 ### MA plot
 
@@ -1172,7 +1172,7 @@ This generates a file named **MA.png** in the `5_dge` folder. To view it, use `e
 knitr::include_graphics("data/rnaseq/MA.png")
 ```
 
-`r fa1("comments")` &nbsp; What do you think the red dots represent?
+<i class="fas fa-comments"></i> What do you think the red dots represent?
 
 ### Volcano plot
 
@@ -1190,7 +1190,7 @@ This generates a file named **Volcano.png** in the `5_dge` folder. To view it, u
 knitr::include_graphics("data/rnaseq/Volcano.png")
 ```
 
-`r fa1("comments")` &nbsp; Anything noteworthy about the patterns in the plot?
+<i class="fas fa-comments"></i> Anything noteworthy about the patterns in the plot?
 
 ### Heatmap
 
@@ -1208,14 +1208,14 @@ This generates a file named **Heatmap.png** in the `5_dge` folder. To view it, u
 knitr::include_graphics("data/rnaseq/Heatmap.png")
 ```
 
-`r fa1("clipboard-list")` &nbsp; Compare this plot to a similar plot in the paper behind the data.
+<i class="fas fa-clipboard-list"></i> Compare this plot to a similar plot in the paper behind the data.
 
 Most of these plots can be done with a limited set of code. In many cases these **standard** plots can be created with two to three lines of code as the packages that has been written to handle RNA-seq expression data often contains easy to use functions for generating them. But, creating publication-quality custom plots can take a lot more tweaking.
 
 ## De-novo transcriptome assembly
 
-<div class="boxy">
-<span class="ifa">`r fa2("exclamation")`</span> For this tutorial, the code is to be run on Uppmax `r fa1("cloud")`.
+<div class="boxy boxy-exclamation">
+For this tutorial, the code is to be run on Uppmax <i class="fas fa-cloud"></i> .
 </div>
 
 Trinity is one of several de-novo transcriptome assemblers. By efficiently constructing and analyzing sets of de Bruijn graphs, Trinity reconstructs a large fraction of transcripts, including alternatively spliced isoforms and transcripts from recently duplicated genes. This approach provides a unified solution for transcriptome reconstruction in any sample, especially in the absence of a reference genome.
@@ -1272,7 +1272,7 @@ Have a look at the example data used in this exercise. The data is obtained from
 
 By setting the `-SS_lib_type` parameter to one of the above, you are indicating that the reads are strand-specific. By default, reads are treated as not strand-specific.
 
-`r fa1("clipboard-list")` &nbsp; Check the [manual](https://github.com/trinityrnaseq/trinityrnaseq/wiki) of Trinity again and try to figure out what parameters and settings that are needed to run trinity on the test data. Remember to try and use all 8 cores. Create a bash script named `trinity.sh` in the `scripts` directory.
+<i class="fas fa-clipboard-list"></i> Check the [manual](https://github.com/trinityrnaseq/trinityrnaseq/wiki) of Trinity again and try to figure out what parameters and settings that are needed to run trinity on the test data. Remember to try and use all 8 cores. Create a bash script named `trinity.sh` in the `scripts` directory.
 
 Note that trinity version 2.8.2 is available as a module on Uppmax and needs several other modules to work, namely, samtools 1.6, jellyfish 2.2.6 and Salmon 0.9.1.
 
@@ -1298,7 +1298,7 @@ Trinity \
   --output trinity_output
 ```
 
-`r fa1("lightbulb")` &nbsp; It is recommended to use full paths for sequence files with Trinity. Depending on version of Trinity used `--max_memory` is sometimes given by the command `--JM`.
+<i class="fas fa-lightbulb"></i> It is recommended to use full paths for sequence files with Trinity. Depending on version of Trinity used `--max_memory` is sometimes given by the command `--JM`.
 
 Run the command in the `assembly` directory.
 
@@ -1316,13 +1316,13 @@ Transcripts are grouped as follows:
 - contigs: transcripts that share a number of k-mers (the set of isoforms of a gene)
 - sequences: (isoforms and allelic variation)
 
-`r fa1("clipboard-list")` &nbsp; Count the number of sequences in the `Trinity.fasta` file (`r fa1("lightbulb")` &nbsp; Try using the unix commands `grep` and `wc`)
+<i class="fas fa-clipboard-list"></i> Count the number of sequences in the `Trinity.fasta` file (<i class="fas fa-lightbulb"></i> Try using the unix commands `grep` and `wc`)
 
 ```{sh,block.title=TRUE,eval=FALSE}
 cat Trinity.fasta | grep ">" | wc -l
 ```
 
-`r fa1("comments")` &nbsp; What is `grep` doing? What is the `-l` switch doing?
+<i class="fas fa-comments"></i> What is `grep` doing? What is the `-l` switch doing?
 
 Get basic information about the assembly with TrinityStats.
 
@@ -1330,9 +1330,9 @@ Get basic information about the assembly with TrinityStats.
 /sw/apps/bioinfo/trinity/2.8.2/rackham/util/TrinityStats.pl Trinity.fasta
 ```
 
-`r fa1("comments")` &nbsp; How many **genes** did Trinity assemble? How many transcripts? How large is the assembly? (Number of bases) What is N50?
+<i class="fas fa-comments"></i> How many **genes** did Trinity assemble? How many transcripts? How large is the assembly? (Number of bases) What is N50?
 
-`r fa1("clipboard-list")` &nbsp; Filter out sequences shorter than 1000 nucleotides. (`r fa1("lightbulb")` &nbsp; Do a web search for appropriate tools. Someone else must have had the exact same problem. Count the number of sequences again)
+<i class="fas fa-clipboard-list"></i> Filter out sequences shorter than 1000 nucleotides. (<i class="fas fa-lightbulb"></i> Do a web search for appropriate tools. Someone else must have had the exact same problem. Count the number of sequences again)
 
 ```{sh,accordion=TRUE,block.title=TRUE,eval=FALSE}
 module load bioinfo-tools
@@ -1341,9 +1341,9 @@ fasta_formatter -i Trinity.fasta -o Trinity.formatted
 fastx_clipper -l 1000 -i Trinity.formatted -o Trinity1000.fasta
 ```
 
-`r fa1("comments")` &nbsp; What is the `fasta_formatter` step doing?
+<i class="fas fa-comments"></i> What is the `fasta_formatter` step doing?
 
-`r fa1("clipboard-list")` &nbsp; Align some sequences to a protein database and assess full-lengthness using NCBI blast database. Also try to see if you can find instances of spliced genes in your data by using the UCSC genome browser (do a web search to find it)
+<i class="fas fa-clipboard-list"></i> Align some sequences to a protein database and assess full-lengthness using NCBI blast database. Also try to see if you can find instances of spliced genes in your data by using the UCSC genome browser (do a web search to find it)
 
 - Select BLAT from the menu at the top of the page and paste in a mouse transcript sequence from `Trinity.fasta`.
 - Select the **mouse/mm10** genome and click **Submit**.
@@ -1354,18 +1354,18 @@ Examine the alignments by clicking **Details** on the resulting page.
 - Your sequences will be displayed in the browser.
 - Enable the mouse annotations (ENSEMBL gene build, UCSC genes, human proteins etc.).
 
-<div class="boxy boxy-orange">
-<span class="ifa ifa-orange">`r fa2("clipboard")`</span> **Optional**
+<div class="boxy boxy-clipboard-list boxy-orange">
+**Optional**
 
-`r fa1("clipboard-list")` &nbsp; Do a new transcriptome assembly of whitefly RNA-Seq data using above code as help.
+<i class="fas fa-clipboard-list"></i> Do a new transcriptome assembly of whitefly RNA-Seq data using above code as help.
 </div>
 
 <br>
 
 # sbatch
 
-<div class="boxy">
-<span class="ifa">`r fa2("exclamation")`</span> You are not required to run anything practically in this section. This is just to read and understand.
+<div class="boxy boxy-exclamation">
+You are not required to run anything practically in this section. This is just to read and understand.
 </div>
 
 We have throughout this tutorial written bash scripts and run them from the terminal directly. Remember that we are not running on the login node. We have pre-allocated resources, then logged in to a compute node to run tasks. This is called working **interactively** on Uppmax. This is fine for tutorials and testing purposes. But, if you were to actually work on Uppmax, you would follow a slightly different approach.
@@ -1426,7 +1426,7 @@ star \
 
 The `SBATCH` commands in the above script is specifying the account name to use resources from, the required number of cores, the time required for the job and a job name.
 
-`r fa1("lightbulb")` &nbsp; If you run this as a normal bash script like this `./star_align.sh ...`, the `SBATCH` comments have no effect (they are treated as comments) and the contents of the script will immediately start executing. But if you run this as script as `sbatch ./star_align.sh ...`, the script is submitted as a job to the Uppmax Slurm queue. In this case, the `SBATCH` lines are interpreted and used by Slurm. At some point, your submitted job will reach the top of the queue and then the script will start to be executed.
+<i class="fas fa-lightbulb"></i> If you run this as a normal bash script like this `./star_align.sh ...`, the `SBATCH` comments have no effect (they are treated as comments) and the contents of the script will immediately start executing. But if you run this as script as `sbatch ./star_align.sh ...`, the script is submitted as a job to the Uppmax Slurm queue. In this case, the `SBATCH` lines are interpreted and used by Slurm. At some point, your submitted job will reach the top of the queue and then the script will start to be executed.
 
 You can check your jobs in the queue by running the following command.
 

@@ -40,8 +40,8 @@ Once you are accepted to the project, you should see that project listed under y
 
 ### SSH & SFTP access
 
-<div class="boxy">
-<span class="ifa">`r fa2("lightbulb")`</span> You need a program to connect to a remote cluster (UPPMAX). Linux and Mac users already have terminal on their systems.
+<div class="boxy boxy-lightbulb">
+You need a program to connect to a remote cluster (UPPMAX). Linux and Mac users already have terminal on their systems.
 
 [![](data/common/mobaxterm.png)](http://mobaxterm.mobatek.net)
 
@@ -54,8 +54,8 @@ Mac users will need to download and install [XQuartz](https://www.xquartz.org/) 
 
 Type `ssh -Y user@rackham.uppmax.uu.se` in the terminal and then enter your password. The password will not be visible as you type.
 
-<div class="boxy">
-<span class="ifa">`r fa2("lightbulb")`</span> If you need to transfer data between UPPMAX and your computer, you can use tools SCP or SFTP through the terminal. Windows users can use the SFTP browser available with MobaXterm.
+<div class="boxy boxy-lightbulb">
+If you need to transfer data between UPPMAX and your computer, you can use tools SCP or SFTP through the terminal. Windows users can use the SFTP browser available with MobaXterm.
 
 [![](data/common/filezilla.png)](https://filezilla-project.org/)
 
@@ -64,38 +64,60 @@ For all users, if you prefer a GUI to upload and download files from UPPMAX, we 
 
 ### Course directory access
 
-<div class="boxy">
-<span class="ifa">`r fa2("lightbulb")`</span> For this step, you will have to use the terminal a bit. You can get started by following **Tutorial One** at this link *[Unix tutorial for beginners](http://www.ee.surrey.ac.uk/Teaching/Unix/)*. You must use [https://scilifelab.github.io/courses/ngsintro/common/emu/](https://scilifelab.github.io/courses/ngsintro/common/emu/) [(or this mirror)](https://bellard.org/jslinux/vm.html?url=https://bellard.org/jslinux/buildroot-x86.cfg) to try the commands in the tutorial, so that you don't mess up any real world system. If you any questions regarding this tutorial contact: *martin.dahlo@scilifelab.uu.se*.
+<div class="boxy boxy-lightbulb">
+For this step, you will have to use the terminal a bit. You can get started by following **Tutorial One** at this link *[Unix tutorial for beginners](http://www.ee.surrey.ac.uk/Teaching/Unix/)*. You must use [https://scilifelab.github.io/courses/ngsintro/common/emu/](https://scilifelab.github.io/courses/ngsintro/common/emu/) [(or this mirror)](https://bellard.org/jslinux/vm.html?url=https://bellard.org/jslinux/buildroot-x86.cfg) to try the commands in the tutorial, so that you don't mess up any real world system. If you any questions regarding this tutorial contact: *martin.dahlo@scilifelab.uu.se*.
 </div>
 
 Make sure that you can read and write in the workshop folder. Go to ``r paste0("/proj/",upid,"/nobackup/")`` and create a directory with your username. For example `mkdir jody`. You will work inside this directory for the workshop. For example ``r paste0("/proj/",upid,"/nobackup/jody")``. If you cannot write to the folder, the most likely reason is that you have not requested access to the workshop project via SUPR. This is described in step 1.  
 
-<div class="boxy">
-<span class="ifa">`r fa2("exclamation")`</span> Note that it may take an hour or so from request approval, before you can actually write to the folder. We will check before the workshop that all students have logged in and done this, so do not forget!
+<div class="boxy boxy-exclamation">
+Note that it may take an hour or so from request approval, before you can actually write to the folder. We will check before the workshop that all students have logged in and done this, so do not forget!
 </div>
 
 ### Tools
 
-`r fa1("chevron-circle-right")` &nbsp; **Download IGV** (Integrated Genome Browser) from the [Broad Institute](https://www.broadinstitute.org/igv/) on your own computer and make sure that you have human genome available. The will work with human data and visualise the results in the IGV genome browser.
+<i class="fas fa-chevron-circle-right"></i> **Download IGV** (Integrated Genome Browser) from the [Broad Institute](https://www.broadinstitute.org/igv/) on your own computer and make sure that you have human genome available. The will work with human data and visualise the results in the IGV genome browser.
 
-<div class="boxy boxy-orange">
-<span class="ifa ifa-orange">`r fa2("clipboard-list")`</span> **Optional**
+<div class="boxy boxy-clipboard-list boxy-orange">
+**Optional**
 
 In this course, R scripts are run on UPPMAX and sourced from the terminal. If you plan to run R steps locally on your computer, R and RStudio need to be installed on your computer .
 
 [![](data/common/r.png)](https://cloud.r-project.org/)
 
-`r fa1("chevron-circle-right")` &nbsp; **Install R statistical software** from [r-project.org](https://cloud.r-project.org/). If you have an old version of R and you do not use it, uninstall it and then install a newer version. Make sure you have one of the recent versions of R (Preferably 3.6.1). For Windows users, it is recommended that you DO NOT install to `C:\Program Files\R\`. Instead, install to `C:\R\`.
+<i class="fas fa-chevron-circle-right"></i> **Install R statistical software** from [r-project.org](https://cloud.r-project.org/). If you have an old version of R and you do not use it, uninstall it and then install a newer version. Make sure you have one of the recent versions of R (Preferably 3.6.1). For Windows users, it is recommended that you DO NOT install to `C:\Program Files\R\`. Instead, install to `C:\R\`.
 
 [![](data/common/rstudio.png)](https://www.rstudio.com/products/rstudio/download/)
 
-`r fa1("chevron-circle-right")` &nbsp; **Install [RStudio](https://www.rstudio.com/products/rstudio/download/)**. RStudio provides you with tools like code editor with highlighting, project management, version control, package building, debugger, profiler and more.
+<i class="fas fa-chevron-circle-right"></i> **Install [RStudio](https://www.rstudio.com/products/rstudio/download/)**. RStudio provides you with tools like code editor with highlighting, project management, version control, package building, debugger, profiler and more.
 
-`r fa1("chevron-circle-right")` &nbsp; Extra R packages used in the workshop exercises (if any) are listed below. It is recommended that you install this in advance. Simply copy and paste the code into R. 
+<i class="fas fa-chevron-circle-right"></i> Extra R packages used in the workshop exercises (if any) are listed below. It is recommended that you install this in advance. Simply copy and paste the code into R.
 
-Linux users (for example Ubuntu) will have to install the following linux packages before installing the R packages.
+For Linux and Mac users, you may have to install some extra OS specific libraries before installing the R packages. Pick the packages as needed based on your system below.
 
-`sudo apt-get install libxml2-dev libssl-dev libcurl4-openssl-dev libudunits2-dev libopenblas-base`
+libcurl  
+
+> * deb: libcurl4-openssl-dev (Debian, Ubuntu, etc)
+> * rpm: libcurl-devel (Fedora, CentOS, RHEL)
+> * csw: libcurl_dev (Solaris)
+
+libssl  
+
+> * deb: libssl-dev (Debian, Ubuntu, etc)
+> * rpm: openssl-devel (Fedora, CentOS, RHEL)
+> * csw: libssl_dev (Solaris)
+> * brew: openssl@1.1 (Mac OSX)
+
+libxml2  
+
+> * deb: libxml2-dev (Debian, Ubuntu, etc)
+> * rpm: libxml2-devel (Fedora, CentOS, RHEL)
+> * csw: libxml2_dev (Solaris)
+
+libudunits2-dev  
+libopenblas-base  
+
+Install the R packages. Simply copy and paste the code into R.  
 
 ```{r,eval=TRUE,block.title=NULL,echo=FALSE,comment="",class.output="r"}
 # this code block reads package names from '_site.yml' and prints them as installation instruction.
@@ -111,6 +133,11 @@ if(!is.null(pkg$packages$packages_cran_student)) {
 if(!is.null(pkg$packages$packages_bioc_student)) {
  cat("# install from bioconductor\n")
  cat(paste0("BiocManager::install(c('",paste(pkg$packages$packages_bioc_student,sep="",collapse="','"),"'))"))
+}
+
+if(!is.null(pkg$packages$packages_github_student)) {
+ cat("# install from github\n")
+ cat(paste0("devtools::install_github(c('",paste(pkg$packages$packages_github_student,sep="",collapse="','"),"'))"))
 }
 ```
 

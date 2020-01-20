@@ -73,21 +73,21 @@ s %>%
 <p class="small" style="margin-top:20px;">
 <span>
 <span style="margin-left:6px; margin-right:6px;">
-<span style="margin-left:4px; margin-right:4px;">`r fontawesome::fa("calendar",fill=color_primary)`</span> Date
+<i class="fas fa-calendar" style="margin-left:4px; margin-right:4px;"></i> Date
 </span>
 <span style="margin-left:6px; margin-right:6px;">
-<span style="margin-left:4px; margin-right:4px;">`r fontawesome::fa("map-marker-alt",fill=color_primary)`</span> Room number
+<i class="fas fa-map-marker-alt" style="margin-left:4px; margin-right:4px;"></i> Room number
 </span>
 <span style="margin-left:6px; margin-right:6px;">
-<span style="margin-left:4px; margin-right:4px;">`r fontawesome::fa("file-powerpoint",fill=color_primary)`</span> Slides
+<i class="fas fa-file-powerpoint" style="margin-left:4px; margin-right:4px;"></i> Slides
 </span>
 <span style="margin-left:6px; margin-right:6px;">
-<span style="margin-left:4px; margin-right:4px;">`r fontawesome::fa("file-alt",fill=color_primary)`</span> Lab exercises
+<i class="fas fa-file-alt" style="margin-left:4px; margin-right:4px;"></i> Lab exercises
 </span>
 </span>
 </p>
 
 <p class="small" style="margin-top:20px;">
-<span style="margin-left:4px; margin-right:4px;">`r fontawesome::fa("users",fill=color_primary)`</span> MD: Martin Dalhö, JD: Jacques Dainat, PE: Payam Emami, AS: Anders Sjölander, AJ: Anna Johansson, BS: Bengt Sennblad, NR: Nima Rafati, OP: Olga Petterson.
+<span style="margin-left:4px; margin-right:4px;"><i class="fas fa-users" style="margin-left:4px; margin-right:4px;"></i></span> MD: Martin Dalhö, JD: Jacques Dainat, PE: Payam Emami, AS: Anders Sjölander, AJ: Anna Johansson, BS: Bengt Sennblad, NR: Nima Rafati, OP: Olga Petterson.
 </p>
 </div>

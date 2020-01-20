@@ -80,3 +80,7 @@ packages:
    - xaringan
    - yaml
   packages_bioc_repo:
+  packages_github_repo:
+   - rstudio/fontawesome
+  packages_github_student:
+

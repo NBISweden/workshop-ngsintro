@@ -10,8 +10,8 @@ library(yaml)
 upid <- yaml::read_yaml("_site.yml")$uppmax_project
 ```
 
-<div class="boxy">
-<span class="ifa">`r fa2("exclamation")`</span> In code blocks, the dollar sign (`$`) is not to be printed. The dollar sign is usually an indicator that the text following it should be typed in a terminal window.
+<div class="boxy boxy-exclamation">
+In code blocks, the dollar sign (`$`) is not to be printed. The dollar sign is usually an indicator that the text following it should be typed in a terminal window.
 </div>
 
 # Ownership & Permissions
@@ -51,8 +51,8 @@ Directory: Whether the directory can be entered using `cd`.
 
 Start your terminal, log onto UPPMAX (check with `squeue` which core you had and ssh onto it, if for some reason your core is unavailable:
 
-```{r,echo=FALSE,comment="",class.output="bash"} 
-cat(paste0("$ salloc -A ",upid,"-t 04:30:00 -p core --no-shell --reservation=g20XXXXX_XX")) 
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0("$ salloc -A ",upid,"-t 04:30:00 -p core --no-shell --reservation=g20XXXXX_XX"))
 ```
 
 make an empty directory we can work in and make a file.
@@ -136,7 +136,7 @@ $ chmod a=- filename
 $ chmod a+w directoryname
 ```
 
-`r fa1("clipboard-list")` &nbsp; In no more than two commands, change the file permissions from
+<i class="fas fa-clipboard-list"></i> In no more than two commands, change the file permissions from
 
 ```bash
 ----------
@@ -162,7 +162,7 @@ Much like a windows user has a shortcut on his desktop to *WorldOfWarcraft.exe*,
 
 Make sure you are standing in the directory **`r cat(paste0('/proj/',upid,'/nobackup/<username>/advlinux'))`**. Then remove our old file and directory.
 
-`r fa1("exclamation-circle")` &nbsp; **IMPORTANT**: Using `rm -r *` removes all folder and subfolders from where you are standing. Be extremely careful when using this. Always double check current working directory or path.
+<i class="fas fa-exclamation-circle"></i> **IMPORTANT**: Using `rm -r *` removes all folder and subfolders from where you are standing. Be extremely careful when using this. Always double check current working directory or path.
 
 ```bash
 $ rm -r *
@@ -195,11 +195,11 @@ Notice that we see the type of the file is `l`, for symbolic link, and that we h
 
 If want you to change the information in the file using the link file, then you should change the information in the original file.
 
-`r fa1("clipboard-list")` &nbsp; Change the information using the original file, then check the link. Has the information changed in the original file and the linked file?
+<i class="fas fa-clipboard-list"></i> Change the information using the original file, then check the link. Has the information changed in the original file and the linked file?
 
-`r fa1("clipboard-list")` &nbsp; Now move or delete the original file. What happens to the link? What information is there now if you open the link?
+<i class="fas fa-clipboard-list"></i> Now move or delete the original file. What happens to the link? What information is there now if you open the link?
 
-`r fa1("clipboard-list")` &nbsp; Now create a new file in stuff/ with exactly the same name that your link file is pointing too with new information in it. What happens now? Is the link still broken? What is the content of the linked file now?
+<i class="fas fa-clipboard-list"></i> Now create a new file in stuff/ with exactly the same name that your link file is pointing too with new information in it. What happens now? Is the link still broken? What is the content of the linked file now?
 
 
 ## Directories
@@ -245,9 +245,9 @@ lrwxr-xr-x  1 S_D  staff    13B Sep 21 16:13 three -> one/two/three
 
 Once again, we see that it is correctly identified as a symbolic link, `l`, that it's default name is the same as the directory it is pointing to, same as the files link had the same name as the file by default previously, and that we have the additional pointer after the links name showing us where it's going.
 
-`r fa1("clipboard-list")` &nbsp; Run `ls` and `cd` on the link. Does it act just as if you were standing in directory two/ performing the very same actions on three/?
+<i class="fas fa-clipboard-list"></i> Run `ls` and `cd` on the link. Does it act just as if you were standing in directory two/ performing the very same actions on three/?
 
-`r fa1("clipboard-list")` &nbsp; After entering the link directory using `cd`, go back one step using `cd ..`, where do you end up?
+<i class="fas fa-clipboard-list"></i> After entering the link directory using `cd`, go back one step using `cd ..`, where do you end up?
 
 Moving, deleting or renaming the directory would, just like in the case with the file, break the link.
 
@@ -309,15 +309,15 @@ Copy the file sample_1.sam to your folder using the command below
 $ cp /sw/share/compstore/courses/ngsintro/linux_additional-files/sample_1.sam .
 ```
 
-`r fa1("clipboard-list")` &nbsp; Use `grep` to search in the file for a specific string of nucleotides, for example:
+<i class="fas fa-clipboard-list"></i> Use `grep` to search in the file for a specific string of nucleotides, for example:
 
 ```bash
 $ grep "TACCACCGAAATCTGTGCAGAGGAGAACGCAGCTCCGCCCTCGCGGTGCTCTCCGGGTCTGTGCTGAGGAG" sample_1.sam
 ```
 
-`r fa1("clipboard-list")` &nbsp; Try with shorter sequences. When do you start getting lots of hits? This file is only a fraction of a genome, you would have gotten many times more hits doing this to a complete many GB large sam file.
+<i class="fas fa-clipboard-list"></i> Try with shorter sequences. When do you start getting lots of hits? This file is only a fraction of a genome, you would have gotten many times more hits doing this to a complete many GB large sam file.
 
-`r fa1("clipboard-list")` &nbsp; Use `grep` to find all lines with **chr1** in them. This output is too much to be meaningful. Send it to a file (`>`) where you have now effectively stored all the chromosome 1 information.
+<i class="fas fa-clipboard-list"></i> Use `grep` to find all lines with **chr1** in them. This output is too much to be meaningful. Send it to a file (`>`) where you have now effectively stored all the chromosome 1 information.
 
 # Piping
 
@@ -383,13 +383,13 @@ $ grep "CATCATCAT" sample_1.sam | wc
 
 To see only the line count you can add `-l` after `wc` and to count only characters **-m**.
 
-`r fa1("clipboard-list")` &nbsp; Output only the amount of lines that have **chr1** in them from sample_1.sam.
+<i class="fas fa-clipboard-list"></i> Output only the amount of lines that have **chr1** in them from sample_1.sam.
 
 ```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}
 cat(paste0('$ grep "chr1" sample_1.sam | wc -l'))
 ```
 
-`r fa1("clipboard-list")` &nbsp; Count the lines containing `CATCATCAT` in the outbam.bam file.
+<i class="fas fa-clipboard-list"></i> Count the lines containing `CATCATCAT` in the outbam.bam file.
 
 ```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}
 cat(paste0('$ samtools view outbam.bam | grep "CATCATCAT" | wc -l'))
@@ -401,14 +401,14 @@ These are some harder assignments, so don't worry about it if you didn't have ti
 
 Lets look at `grep` and use some regular expressions http://www.cheatography.com/davechild/cheat-sheets/regular-expressions/
 
-`r fa1("clipboard-list")` &nbsp; From file **sample_1.sam** find all lines that start with `@` and put them in a file called **at.txt**.
+<i class="fas fa-clipboard-list"></i> From file **sample_1.sam** find all lines that start with `@` and put them in a file called **at.txt**.
 
 ```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}
 cat(paste0('$ grep "^@" sample_1.sam > at.txt'))
 ```
 
-`r fa1("clipboard-list")` &nbsp; Find all the lines that end with at least 3 numbers from **at.txt**.
-`r fa1("lightbulb")` &nbsp; **Sometimes**, you have to escape {} with \\{\\})
+<i class="fas fa-clipboard-list"></i> Find all the lines that end with at least 3 numbers from **at.txt**.
+<i class="fas fa-lightbulb"></i> **Sometimes**, you have to escape {} with \\{\\})
 
 ```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}
 cat(paste0('$ grep "[0-9]\\{3\\}$" sample_1.sam'))
@@ -418,9 +418,9 @@ cat(paste0('$ grep "[0-9]\\{3\\}$" sample_1.sam'))
 
 `[sed](http://www.grymoire.com/Unix/Sed.html)` is a handy tool to replace strings in files.
 
-`r fa1("clipboard-list")` &nbsp; You have realized that all the chromosomes have been misnamed as **chr3** when they should be **chr4**. Use `sed` to replace **chr3** with **chr4** in **sample_1.sam** and output it to **sample_2.sam**.
+<i class="fas fa-clipboard-list"></i> You have realized that all the chromosomes have been misnamed as **chr3** when they should be **chr4**. Use `sed` to replace **chr3** with **chr4** in **sample_1.sam** and output it to **sample_2.sam**.
 
-`r fa1("lightbulb")` &nbsp; The solution to this replaces the first instance on each line of chr3. What if we have multiple instances? What if we had wanted to replace **chr1**? This would effect chr10-19 as well! There are many things to consider :).
+<i class="fas fa-lightbulb"></i> The solution to this replaces the first instance on each line of chr3. What if we have multiple instances? What if we had wanted to replace **chr1**? This would effect chr10-19 as well! There are many things to consider :).
 
 ```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}
 cat(paste0('$ sed "s/chr1/chr2/" sample_1.sam > sample_2.sam'))
@@ -436,15 +436,15 @@ Create a couple of files as seen below
 $ touch one.bam two.sam three.bam four.sam five.bam six.sam
 ```
 
-`r fa1("clipboard-list")` &nbsp; All the files are actually in bam format. What a crazy mistake! Create a bash loop that changes all files ending in **.sam** to end with **.bam** instead.
+<i class="fas fa-clipboard-list"></i> All the files are actually in bam format. What a crazy mistake! Create a bash loop that changes all files ending in **.sam** to end with **.bam** instead.
 
-`r fa1("lightbulb")` &nbsp; The bash loop syntax is this:
+<i class="fas fa-lightbulb"></i> The bash loop syntax is this:
 
 ```bash
 $ for _variable_ in _pattern_; do _command with $variable_; done
 ```
 
-`r fa1("lightbulb")` &nbsp; To rename file1 to file2 you write this:
+<i class="fas fa-lightbulb"></i> To rename file1 to file2 you write this:
 
 ```bash
 $ mv file1 file2
@@ -457,7 +457,7 @@ $ cp file1 file2
 $ rm file1
 ```
 
-`r fa1("lightbulb")` &nbsp; Ponder how this can be used to your advantage:
+<i class="fas fa-lightbulb"></i> Ponder how this can be used to your advantage:
 
 ```bash
 $ i=filename
@@ -467,10 +467,9 @@ filestuff
 
 ```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}
 cat(paste0('$ for f in *.sam
-do 
+do
   mv $f ${f/.sam}.bam;
 done'))
 ```
 
 ***
-

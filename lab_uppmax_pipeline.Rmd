@@ -10,17 +10,17 @@ library(yaml)
 upid <- yaml::read_yaml("_site.yml")$uppmax_project
 ```
 
-<div class="boxy">
-<span class="ifa">`r fa2("exclamation")`</span> In code blocks, the dollar sign (`$`) is not to be printed. The dollar sign is usually an indicator that the text following it should be typed in a terminal window.
+<div class="boxy boxy-exclamation">
+In code blocks, the dollar sign (`$`) is not to be printed. The dollar sign is usually an indicator that the text following it should be typed in a terminal window.
 </div>
 
 # Connect to UPPMAX
 
 The first step of this lab is to open a ssh connection to UPPMAX. You will need an SSH program to do this:
 
-`r fa1("linux")` &nbsp;  Linux: Use **Terminal** (Included by default).   
-`r fa1("apple")` &nbsp;  OSX: Use **Terminal** (Included by default).  
-`r fa1("windows")` &nbsp;  Windows: use [MobaXterm](https://mobaxterm.mobatek.net/). Download and install it if you haven't already done so.  
+<i class="fab fa-linux"></i> Linux: Use **Terminal** (Included by default).   
+<i class="fab fa-apple"></i> OSX: Use **Terminal** (Included by default).  
+<i class="fab fa-windows"></i> Windows: use [MobaXterm](https://mobaxterm.mobatek.net/). Download and install it if you haven't already done so.  
 
 Fire up the available SSH program and enter the following:
 
@@ -59,8 +59,8 @@ dahlo@rackham4 ~ $
 
 Usually you would do most of the work in this lab directly on one of the login nodes at UPPMAX, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
 
-```{r,echo=FALSE,comment="",class.output="bash"} 
-cat(paste0("$ salloc -A ",upid,"-t 07:00:00 -p core -n 1 --no-shell --reservation=g20XXXXX_XX &")) 
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0("$ salloc -A ",upid,"-t 07:00:00 -p core -n 1 --no-shell --reservation=g20XXXXX_XX &"))
 ```
 
 check which node you got (replace **username** with your UPPMAX username)
@@ -85,7 +85,7 @@ Note the numbers in the Time column. They show for how long the job has been run
 $ ssh -Y r292
 ```
 
-`r fa1("lightbulb")` &nbsp; There is a UPPMAX specific tool called `jobinfo` that supplies the same kind of information as `squeue` that you can use as well (`$ jobinfo -u username`).
+<i class="fas fa-lightbulb"></i> There is a UPPMAX specific tool called `jobinfo` that supplies the same kind of information as `squeue` that you can use as well (`$ jobinfo -u username`).
 
 # Copy files for lab
 
@@ -93,16 +93,16 @@ Now, you will need some files. To avoid all the course participants editing the 
 
 Next, copy the lab files from this folder. `-r` means recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, NOT sub-folders and files in sub-folders.
 
-`r fa1("lightbulb")` &nbsp; Remember to use tab-complete to avoid typos and too much writing.
+<i class="fas fa-lightbulb"></i> Remember to use tab-complete to avoid typos and too much writing.
 
-```{r,echo=FALSE,comment="",class.output="bash"} 
-cat("$ cp -r <source> <destination>\n") 
-cat(paste0("$ cp -r /sw/share/compstore/courses/ngsintro/uppmax_pipeline_exercise /data",upid,"/nobackup/<username>/uppmax_pipeline_exercise")) 
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat("$ cp -r <source> <destination>\n")
+cat(paste0("$ cp -r /sw/share/compstore/courses/ngsintro/uppmax_pipeline_exercise /data",upid,"/nobackup/<username>/uppmax_pipeline_exercise"))
 ```
 
 Have a look in **`r paste0("/proj/",upid,"/nobackup/<username>/uppmax_pipeline_exercise")`**.
 
-```{r,echo=FALSE,comment="",class.output="bash"} 
+```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0("$ cd /proj/",upid,"/nobackup/<username>/uppmax_pipeline_exercise\n"))
 cat("ll")
 ```
@@ -163,7 +163,7 @@ $ export PATH=$PATH:/sw/share/compstore/courses/ngsintro/uppmax_pipeline_exercis
 
 This will set the `$PATH` variable to whatever it is at the moment, and add a directory at the end of it. Note the lack of a dollar sign infront of the variable name directly after **export**. You don't use dollar signs when **assigning** values to variables, and you always use dollar signs when **getting** values from variables.
 
-`r fa1("exclamation-circle")` &nbsp; **IMPORTANT:** The export command affects only the terminal you type it in. If you have 2 terminals open, only the terminal you typed it in will have a modified path. If you close that terminal and open a new one, it will not have the modified path.
+<i class="fas fa-exclamation-circle"></i> **IMPORTANT:** The export command affects only the terminal you type it in. If you have 2 terminals open, only the terminal you typed it in will have a modified path. If you close that terminal and open a new one, it will not have the modified path.
 
 Enough with variables now. Let's try the scripts out!
 
@@ -231,8 +231,8 @@ Right, so now you know how to figure out how to run programs (just type the prog
 
 First, go to the exome directory in the lab directory that you copied to your folder in step 2 in this lab:
 
-```{r,echo=FALSE,comment="",class.output="bash"} 
-cat(paste0("$ cd /proj/",upid,"/nobackup/<username>/uppmax_pipeline_exercise/exomeSeq")) 
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0("$ cd /proj/",upid,"/nobackup/<username>/uppmax_pipeline_exercise/exomeSeq"))
 ```
 
 In there, you will find a folder called `raw_data`, containing a fastq file: `my_reads.rawdata.fastq`. This file contains the raw data that you will analyse.
@@ -259,8 +259,8 @@ The simplest way to work with scripts is to have 2 terminals open. One will have
 
 Start writing you script with `nano`:
 
-```{r,echo=FALSE,comment="",class.output="bash"} 
-cat(paste0("$ cd /proj/",upid,"/nobackup/<username>/uppmax_pipeline_exercise/exomeSeq\n")) 
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0("$ cd /proj/",upid,"/nobackup/<username>/uppmax_pipeline_exercise/exomeSeq\n"))
 cat("nano exome_analysis_script.sh")
 ```
 
