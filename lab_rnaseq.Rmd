@@ -59,8 +59,10 @@ RNA-seq experiment does not necessarily end with a list of DE genes. If you have
 - 02 RNA-Seq figures and plots using **R**
 - 03 Visualisation of RNA-seq BAM files using **IGV** genome browser
 
-<div class="boxy boxy-lightbulb">
+<div class="boxy boxy-exclamation">
 **General guide**
+
+* In paths, remember to change `<username>` with your actual UPPMAX username.
 
 * You are welcome to try your own solutions to the problems, before checking the solution. Click the <code style="background-color:#0093BD;color:white;">+</code> button to see the suggested solution. There is more than one way to complete a task. Discuss with person next to you and ask us when in doubt.
 
@@ -239,9 +241,9 @@ The command below creates a new file in the current directory.
 touch fastqc.sh
 ```
 
-Use `nano`,`vim` or `gedit` to edit `fastqc.sh`.
+Use a text editor (`nano`,`Emacs`,`gedit` etc.) to edit `fastqc.sh`.
 
-<i class="fas fa-lightbulb"></i> `gedit` has a graphical interface.
+<i class="fas fa-lightbulb"></i> `gedit` behaves like a regular text editor with a standard graphical interface.
 
 ```{sh,block.title=TRUE,eval=FALSE}
 gedit fastqc.sh&
@@ -332,7 +334,7 @@ gunzip Mus_musculus.GRCm38.dna.chromosome.19.fa.gz
 gunzip Mus_musculus.GRCm38.99.gtf.gz
 ```
 
-From the full gtf file, we will also extra chr 19 alone to create a new gtf file for use later.
+From the full gtf file, we will also extract chr 19 alone to create a new gtf file for use later.
 
 ```{sh,block.title=TRUE,eval=FALSE}
 cat Mus_musculus.GRCm38.99.gtf | grep -E "^#|^19" > Mus_musculus.GRCm38.99-19.gtf
@@ -666,7 +668,7 @@ qualimap rnaseq -pe \
   --java-mem-size=6G >& "${prefix}-qualimap.log"
 ```
 
-The line `prefix=$( basename "$1" .bam)` is used to remove directory path and `.bam` from the input filename and create a prefix which will be used to label output. The `export DISPLAY=:0` is used to run JAVA application in headless mode or else throws an error about X11 display. If that doesn't work, one can also try `unset DISPLAY` or `export DISPLAY=""`. The last part `>& "${prefix}-qualimap.log"` saves the **standard-out** as a log file.
+The line `prefix=$( basename "$1" .bam)` is used to remove directory path and `.bam` from the input filename and create a prefix which will be used to label output. The export `DISPLAY=:0` forces  a 'headless mode' on the JAVA application, which would otherwise throw an error about X11 display. If that doesn't work, one can also try `unset DISPLAY` or `export DISPLAY=""`. The last part `>& "${prefix}-qualimap.log"` saves the **standard-out** as a log file.
 
 <i class="fas fa-clipboard-list"></i> Create a new bash loop script named `qualimap_batch.sh` with a bash loop to run the qualimap script over all BAM files. The loop should look like below.
 
@@ -874,7 +876,7 @@ ls -l
 -rw-rw-r-- 1 user gXXXXXXX 1.7M Jan 22 23:16 dge_results_full.txt
 ```
 
-Essentially, we have two outputs, **dge_results_full** which is the list of differentially expressed. This is available in human readable tab-delimited txt file and R readable binary .Rds file. The **counts_vst_full** is variance-stabilised normalised counts, useful for plotting.
+Essentially, we have two outputs: dge_results_full and counts_vst_full. **dge_results_full** is the list of differentially expressed genes. This is available in human readable tab-delimited .txt file and R readable binary .Rds file. The **counts_vst_full** is variance-stabilised normalised counts, useful for exploratory analyses.
 
 <i class="fas fa-clipboard-list"></i>  Copy the results text file (`dge_results_full.txt`) to your computer and inspect the results. What are the columns? How many differentially expressed genes are present after adjusted p-value of 0.05? How many genes are upregulated and how many are down-regulated? How does this change if we set a fold-change cut-off of 1?
 

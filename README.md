@@ -38,7 +38,7 @@ Run `rmarkdown::render_site()` in the project directory. This renders all .Rmd a
 
 You can also run `rmarkdown::render("bla.Rmd")` on individual .Rmd/.md files. This is a time-saver as the whole website need not be rendered just to preview this one file.
 
-**Known issue**: Note that when rendering **slide** Rmd files locally using `render()`, it takes output and formatting from `_site.yml` when it should use it's own definition from YAML. For now, either use `render_site()` or rename the `_site.yml` temporarily.
+**Known issue**: Note that when rendering **slide** Rmd files locally using `render()`, the output is messed up. This is because it takes output and report style formatting from `_site.yml` when it should use it's own slide style definition from YAML. For now, either use `render_site()` or rename the `_site.yml` temporarily.
 
 ---
 

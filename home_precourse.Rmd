@@ -76,16 +76,18 @@ Note that it may take an hour or so from request approval, before you can actual
 
 ### Tools
 
-<i class="fas fa-chevron-circle-right"></i> **Download IGV** (Integrated Genome Browser) from the [Broad Institute](https://www.broadinstitute.org/igv/) on your own computer and make sure that you have human genome available. The will work with human data and visualise the results in the IGV genome browser.
+We will use IGV and R on Uppmax and therefore, you do not need to install it on your own system. Alternatively, if you would like to try it out on your own system, instructions are given below.
 
 <div class="boxy boxy-clipboard-list boxy-orange">
 **Optional**
 
-In this course, R scripts are run on UPPMAX and sourced from the terminal. If you plan to run R steps locally on your computer, R and RStudio need to be installed on your computer .
+<i class="fas fa-chevron-circle-right"></i> **Download IGV** (Integrated Genome Browser) from the [Broad Institute](https://www.broadinstitute.org/igv/) on your own computer and have the mouse genome (mm10) available.
+
+If you plan to run R steps locally on your computer, R and RStudio need to be installed on your computer .
 
 [![](data/common/r.png)](https://cloud.r-project.org/)
 
-<i class="fas fa-chevron-circle-right"></i> **Install R statistical software** from [r-project.org](https://cloud.r-project.org/). If you have an old version of R and you do not use it, uninstall it and then install a newer version. Make sure you have one of the recent versions of R (Preferably 3.6.1). For Windows users, it is recommended that you DO NOT install to `C:\Program Files\R\`. Instead, install to `C:\R\`.
+<i class="fas fa-chevron-circle-right"></i> **Install R statistical software** from [r-project.org](https://cloud.r-project.org/). If you have an old version of R and you do not use it, uninstall it and then install a newer version. Make sure you have one of the recent versions of R (Preferably one version older than the latest). For Windows users, it is recommended that you DO NOT install to `C:\Program Files\R\`. Instead, install to `C:\R\`.
 
 [![](data/common/rstudio.png)](https://www.rstudio.com/products/rstudio/download/)
 
