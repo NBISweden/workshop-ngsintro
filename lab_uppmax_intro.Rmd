@@ -59,11 +59,7 @@ dahlo@rackham4 ~ $
 
 Usually you would do most of the work in this lab directly on one of the login nodes at UPPMAX, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("$ salloc -A ",upid,"-t 07:00:00 -p core -n 1 --no-shell --reservation=g2019031_27 &"))
-```
-
-check which node you got (replace **username** with your UPPMAX username)
+Check which node you got when you booked resources this morning (replace **username** with your UPPMAX username)
 
 ```bash
 $ squeue -u username
@@ -80,6 +76,12 @@ dahlo@rackham2 work $
 
 where **r292** is the name of the node I got (yours will probably be different).
 Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested (7 hours in this case) the session will shut down, and you will lose all unsaved data. Connect to this node from within UPPMAX.
+
+If the list is empty you can run the allocation command again and it should be in the list:
+
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0("$ salloc -A ",upid,"-t 03:30:00 -p core -n 1 --no-shell --reservation=g2019031_27 &"))
+```
 
 ```bash
 $ ssh -Y r292

@@ -380,6 +380,6 @@ $ ll -h 3_sorted/ad2.sorted.bam 4_cram/ad2.cram
 
 This will list both the files, and print the file size in a human readable format (**`-h`**). The CRAM file is roughly 1/3 of the size of the BAM file. This is probably because all the reads in the simulated data has the same quality value (BBBBBBBBBB). Fewer types of quality values are easier to compress, hence this amazing compression ratio. Real data will have much more diverse quality scores, and the CRAM file would be pethaps 70-80% of the original BAM file.
 
-If you have been fast to finish this lab and you still have time left (or just can't get enough of linux stuff), please have a look at the [loops lab](lab_loops.html) where you can learn the basics in bash programming using variables, loops and control statements.
+If you have been fast to finish this lab and you still have time left (or just can't get enough of linux stuff), please have a look at the [advanced linux tutorial](lab_linux_advanced.html) where you can learn the basics in bash programming using variables, loops and control statements. This is the lab that is scheduled for after lunch today.
 
 ***
