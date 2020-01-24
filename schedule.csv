@@ -1,20 +1,20 @@
 date;room;dur;topic;teacher;assistant;link_slide;link_lab;link_room
 27/01/2020;E10:1309;15;Welcome;Björn Nystedt;;;;http://bit.ly/2PRscGA
-;;45;Intro to Linux;Anders Sjölander;;slide_linux_intro.pdf;;
+;;45;Intro to Linux;Martin Dahlö;;slide_linux_intro.pdf;;
 ;;15;Coffee Break;;;;;
-;;105;Intro to Linux;Anders Sjölander;MD, JD, PE;;lab_linux_intro.html;
+;;105;Intro to Linux;Martin Dahlö;MD, JD, PE;;lab_linux_intro.html;
 ;;60;Lunch;;;;;
-;;60;Intro to Uppmax;Anders Sjölander;;slide_uppmax_intro.pdf;;
-;;60;Intro to Uppmax;Anders Sjölander;MD, JD, PE;;lab_uppmax_intro.html;
+;;60;Intro to Uppmax;Björn Viklund;;slide_uppmax_intro.pdf;;
+;;60;Intro to Uppmax;Björn Viklund;JD, PE;;lab_uppmax_intro.html;
 ;;15;Coffee Break;;;;;
-;;105;Intro to Uppmax;Anders Sjölander;MD, JD, PE;;;
+;;105;Intro to Uppmax;Björn Viklund;JD, PE;;;
 28/01/2020;E10:1309;30;File types in Bioinformatics;Martin Dahlö;;slide_linux_filetypes.pdf;;http://bit.ly/2PRscGA
 ;;30;File types in Bioinformatics;Martin Dahlö;AS, JD, PE;;lab_linux_filetypes.html;
 ;;15;Coffee Break;;;;;
-;;105;Better terminal experience;Martin Dahlö;;slide_termexp.pdf;;
+;;105;Better terminal experience;Martin Dahlö;;slide_qol_termexp.pdf;;
 ;;60;Lunch;;;;;
-;;60;Advanced Linux;Martin Dahlö;;slide_linux_adv.pdf;;
-;;60;Advanced Linux;Martin Dahlö;AS, JD, PE;;lab_linux_adv.html;
+;;60;Advanced Linux;Martin Dahlö;;slide_linux_advanced.pdf;;
+;;60;Advanced Linux;Martin Dahlö;AS, JD, PE;;lab_linux_advanced.html;
 ;;15;Coffee Break;;;;;
 ;;105;Advanced Linux;Martin Dahlö;AS, JD, PE;;;
 29/01/2020;E10:1309;60;NGS Overview;Olga Petterson;;slide_ngs_overview.pdf;;http://bit.ly/2PRscGA

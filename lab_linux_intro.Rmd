@@ -60,7 +60,7 @@ dahlo@rackham4 ~ $
 Usually you would do most of the work in this lab directly on one of the login nodes at UPPMAX, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("$ salloc -A ",upid,"-t 07:00:00 -p core -n 1 --no-shell --reservation=g20XXXXX_XX &"))
+cat(paste0("$ salloc -A ",upid,"-t 07:00:00 -p core -n 1 --no-shell --reservation=g2019031_27 &"))
 ```
 
 check which node you got (replace **username** with your UPPMAX username)
@@ -242,21 +242,21 @@ Look in the folder again and see what we just unpacked:
 ```bash
 [valent@milou2 linux_tutorial]$ ls -la
 total 512
-drwxrwsr-x 12 valent g2019020   2048 Sep 24 13:19 .
-drwxrwsr-x  6 valent g2019020   2048 Sep 24 13:19 ..
-drwxrwsr-x  2 valent g2019020   2048 Sep 19  2012 a_strange_name
-drwxrwsr-x  2 valent g2019020   2048 Sep 19  2012 backed_up_proj_folder
-drwxrwsr-x  2 valent g2019020   2048 Sep 19  2012 external_hdd
--rwxrwxr-x  1 valent g2019020  17198 Sep 24 13:19 files.tar.gz
-drwxrwsr-x  2 valent g2019020   2048 Sep 19  2012 important_results
-drwxrwsr-x  2 valent g2019020 129024 Sep 19  2012 many_files
-drwxrwsr-x  2 valent g2019020   2048 Sep 19  2012 old_project
--rwxrwxr-x  1 valent g2019020      0 Sep 24 13:19 other_file.old
-drwxrwsr-x  2 valent g2019020   2048 Sep 19  2012 part_1
-drwxrwsr-x  2 valent g2019020   2048 Sep 19  2012 part_2
-drwxrwsr-x  2 valent g2019020   2048 Jan 28  2012 this_has_a_file
-drwxrwsr-x  2 valent g2019020   2048 Jan 28  2012 this_is_empty
--rwxrwxr-x  1 valent g2019020      0 Sep 19  2012 useless_file
+drwxrwsr-x 12 valent g2019031   2048 Sep 24 13:19 .
+drwxrwsr-x  6 valent g2019031   2048 Sep 24 13:19 ..
+drwxrwsr-x  2 valent g2019031   2048 Sep 19  2012 a_strange_name
+drwxrwsr-x  2 valent g2019031   2048 Sep 19  2012 backed_up_proj_folder
+drwxrwsr-x  2 valent g2019031   2048 Sep 19  2012 external_hdd
+-rwxrwxr-x  1 valent g2019031  17198 Sep 24 13:19 files.tar.gz
+drwxrwsr-x  2 valent g2019031   2048 Sep 19  2012 important_results
+drwxrwsr-x  2 valent g2019031 129024 Sep 19  2012 many_files
+drwxrwsr-x  2 valent g2019031   2048 Sep 19  2012 old_project
+-rwxrwxr-x  1 valent g2019031      0 Sep 24 13:19 other_file.old
+drwxrwsr-x  2 valent g2019031   2048 Sep 19  2012 part_1
+drwxrwsr-x  2 valent g2019031   2048 Sep 19  2012 part_2
+drwxrwsr-x  2 valent g2019031   2048 Jan 28  2012 this_has_a_file
+drwxrwsr-x  2 valent g2019031   2048 Jan 28  2012 this_is_empty
+-rwxrwxr-x  1 valent g2019031      0 Sep 19  2012 useless_file
 [valent@milou2 linux_tutorial]$
 ```
 
@@ -280,9 +280,9 @@ First, take a look inside the **important_results** folder:
 ```bash
 [valent@milou2 linux_tutorial]$ ll important_results/
 total 0
--rwxrwxr-x 1 valent g2019020 0 Sep 19  2012 dna_data_analysis_result_file_that_is_important-you_should_really_use_tab_completion_for_file_names.bam
--rwxrwxr-x 1 valent g2019020 0 Sep 19  2012 temp_file-1
--rwxrwxr-x 1 valent g2019020 0 Sep 19  2012 temp_file-2
+-rwxrwxr-x 1 valent g2019031 0 Sep 19  2012 dna_data_analysis_result_file_that_is_important-you_should_really_use_tab_completion_for_file_names.bam
+-rwxrwxr-x 1 valent g2019031 0 Sep 19  2012 temp_file-1
+-rwxrwxr-x 1 valent g2019031 0 Sep 19  2012 temp_file-2
 [valent@milou2 linux_tutorial]$
 ```
 
@@ -299,9 +299,9 @@ Look in the backed-up project folder to make sure you moved the file correctly.
 ```bash
 [valent@milou2 linux_tutorial]$ ll backed_up_proj_folder/
 total 0
--rwxrwxr-x 1 valent g2019020 0 Sep 19  2012 dna_data_analysis_result_file_that_is_important-you_should_really_use_tab_completion_for_file_names.bam
--rwxrwxr-x 1 valent g2019020 0 Sep 19  2012 last_years_data
--rwxrwxr-x 1 valent g2019020 0 Sep 19  2012 temp_file-1
+-rwxrwxr-x 1 valent g2019031 0 Sep 19  2012 dna_data_analysis_result_file_that_is_important-you_should_really_use_tab_completion_for_file_names.bam
+-rwxrwxr-x 1 valent g2019031 0 Sep 19  2012 last_years_data
+-rwxrwxr-x 1 valent g2019031 0 Sep 19  2012 temp_file-1
 [valent@milou2 linux_tutorial]$
 ```
 
@@ -317,19 +317,19 @@ Look around to see that the name change worked.
 [valent@milou2 linux_tutorial]$ mv a_strange_name a_better_name
 [valent@milou2 linux_tutorial]$ ll
 total 448
-drwxrwsr-x 2 valent g2019020   2048 Sep 19  2012 a_better_name
-drwxrwsr-x 2 valent g2019020   2048 Sep 24 13:40 backed_up_proj_folder
-drwxrwsr-x 2 valent g2019020   2048 Sep 19  2012 external_hdd
--rwxrwxr-x 1 valent g2019020  17198 Sep 24 13:36 files.tar.gz
-drwxrwsr-x 2 valent g2019020   2048 Sep 24 13:40 important_results
-drwxrwsr-x 2 valent g2019020 129024 Sep 19  2012 many_files
-drwxrwsr-x 2 valent g2019020   2048 Sep 19  2012 old_project
--rwxrwxr-x 1 valent g2019020      0 Sep 24 13:36 other_file.old
-drwxrwsr-x 2 valent g2019020   2048 Sep 19  2012 part_1
-drwxrwsr-x 2 valent g2019020   2048 Sep 19  2012 part_2
-drwxrwsr-x 2 valent g2019020   2048 Jan 28  2012 this_has_a_file
-drwxrwsr-x 2 valent g2019020   2048 Jan 28  2012 this_is_empty
--rwxrwxr-x 1 valent g2019020      0 Sep 19  2012 useless_file
+drwxrwsr-x 2 valent g2019031   2048 Sep 19  2012 a_better_name
+drwxrwsr-x 2 valent g2019031   2048 Sep 24 13:40 backed_up_proj_folder
+drwxrwsr-x 2 valent g2019031   2048 Sep 19  2012 external_hdd
+-rwxrwxr-x 1 valent g2019031  17198 Sep 24 13:36 files.tar.gz
+drwxrwsr-x 2 valent g2019031   2048 Sep 24 13:40 important_results
+drwxrwsr-x 2 valent g2019031 129024 Sep 19  2012 many_files
+drwxrwsr-x 2 valent g2019031   2048 Sep 19  2012 old_project
+-rwxrwxr-x 1 valent g2019031      0 Sep 24 13:36 other_file.old
+drwxrwsr-x 2 valent g2019031   2048 Sep 19  2012 part_1
+drwxrwsr-x 2 valent g2019031   2048 Sep 19  2012 part_2
+drwxrwsr-x 2 valent g2019031   2048 Jan 28  2012 this_has_a_file
+drwxrwsr-x 2 valent g2019031   2048 Jan 28  2012 this_is_empty
+-rwxrwxr-x 1 valent g2019031      0 Sep 19  2012 useless_file
 [valent@milou2 linux_tutorial]$
 ```
 
@@ -348,7 +348,7 @@ Take a look in the **external_hdd** to make sure the file got copied.
 [valent@milou2 linux_tutorial]$ cp backed_up_proj_folder/last_years_data external_hdd/
 [valent@milou2 linux_tutorial]$ ll external_hdd/
 total 0
--rwxrwxr-x 1 valent g2019020 0 Sep 24 13:46 last_years_data
+-rwxrwxr-x 1 valent g2019031 0 Sep 24 13:46 last_years_data
 [valent@milou2 linux_tutorial]$
 ```
 
@@ -376,19 +376,19 @@ Try it out by deleting the useless file in the folder you are standing in. First
 ```bash
 [valent@milou2 linux_tutorial]$ ll
 total 448
-drwxrwsr-x 2 valent g2019020   2048 Sep 19  2012 a_better_name
-drwxrwsr-x 2 valent g2019020   2048 Sep 24 13:40 backed_up_proj_folder
-drwxrwsr-x 2 valent g2019020   2048 Sep 24 13:46 external_hdd
--rwxrwxr-x 1 valent g2019020  17198 Sep 24 13:36 files.tar.gz
-drwxrwsr-x 2 valent g2019020   2048 Sep 24 13:40 important_results
-drwxrwsr-x 2 valent g2019020 129024 Sep 19  2012 many_files
-drwxrwsr-x 2 valent g2019020   2048 Sep 19  2012 old_project
--rwxrwxr-x 1 valent g2019020      0 Sep 24 13:36 other_file.old
-drwxrwsr-x 2 valent g2019020   2048 Sep 19  2012 part_1
-drwxrwsr-x 2 valent g2019020   2048 Sep 19  2012 part_2
-drwxrwsr-x 2 valent g2019020   2048 Jan 28  2012 this_has_a_file
-drwxrwsr-x 2 valent g2019020   2048 Jan 28  2012 this_is_empty
--rwxrwxr-x 1 valent g2019020      0 Sep 19  2012 useless_file
+drwxrwsr-x 2 valent g2019031   2048 Sep 19  2012 a_better_name
+drwxrwsr-x 2 valent g2019031   2048 Sep 24 13:40 backed_up_proj_folder
+drwxrwsr-x 2 valent g2019031   2048 Sep 24 13:46 external_hdd
+-rwxrwxr-x 1 valent g2019031  17198 Sep 24 13:36 files.tar.gz
+drwxrwsr-x 2 valent g2019031   2048 Sep 24 13:40 important_results
+drwxrwsr-x 2 valent g2019031 129024 Sep 19  2012 many_files
+drwxrwsr-x 2 valent g2019031   2048 Sep 19  2012 old_project
+-rwxrwxr-x 1 valent g2019031      0 Sep 24 13:36 other_file.old
+drwxrwsr-x 2 valent g2019031   2048 Sep 19  2012 part_1
+drwxrwsr-x 2 valent g2019031   2048 Sep 19  2012 part_2
+drwxrwsr-x 2 valent g2019031   2048 Jan 28  2012 this_has_a_file
+drwxrwsr-x 2 valent g2019031   2048 Jan 28  2012 this_is_empty
+-rwxrwxr-x 1 valent g2019031      0 Sep 19  2012 useless_file
 [valent@milou2 linux_tutorial]$
 ```
 
@@ -410,7 +410,7 @@ If you look inside `this_has_a_file`,
 ```bash
 [valent@milou2 linux_tutorial]$ ll this_has_a_file
 total 0
--rwxrwxr-x 1 valent g2019020 0 Jan 28  2012 file
+-rwxrwxr-x 1 valent g2019031 0 Jan 28  2012 file
 [valent@milou2 linux_tutorial]$
 ```
 
@@ -438,9 +438,9 @@ Of course, this never happens because you **ALWAYS** name your files so that you
 ```bash
 [valent@milou2 linux_tutorial]$ ll old_project/
 total 96
--rwxrwxr-x 1 valent g2019020 39904 Sep 19  2012 a
--rwxrwxr-x 1 valent g2019020     0 Sep 19  2012 stuff_1
--rwxrwxr-x 1 valent g2019020  1008 Sep 19  2012 the_best
+-rwxrwxr-x 1 valent g2019031 39904 Sep 19  2012 a
+-rwxrwxr-x 1 valent g2019031     0 Sep 19  2012 stuff_1
+-rwxrwxr-x 1 valent g2019031  1008 Sep 19  2012 the_best
 [valent@milou2 linux_tutorial]$
 ```
 
@@ -524,14 +524,14 @@ We can try it out on the example files I have prepared. There are two folders ca
 ```bash
 [valent@milou2 linux_tutorial]$ ll part_1/
 total 0
--rwxrwxr-x 1 valent g2019020 0 Sep 19  2012 file_1.txt
--rwxrwxr-x 1 valent g2019020 0 Sep 19  2012 file_2.txt
+-rwxrwxr-x 1 valent g2019031 0 Sep 19  2012 file_1.txt
+-rwxrwxr-x 1 valent g2019031 0 Sep 19  2012 file_2.txt
 [valent@milou2 linux_tutorial]$ ll part_2
 total 0
--rwxrwxr-x 1 valent g2019020 0 Sep 19  2012 file_3.txt
--rwxrwxr-x 1 valent g2019020 0 Sep 19  2012 file_4.txt
--rwxrwxr-x 1 valent g2019020 0 Sep 19  2012 garbage.tmp
--rwxrwxr-x 1 valent g2019020 0 Sep 19  2012 incomplete_datasets.dat
+-rwxrwxr-x 1 valent g2019031 0 Sep 19  2012 file_3.txt
+-rwxrwxr-x 1 valent g2019031 0 Sep 19  2012 file_4.txt
+-rwxrwxr-x 1 valent g2019031 0 Sep 19  2012 garbage.tmp
+-rwxrwxr-x 1 valent g2019031 0 Sep 19  2012 incomplete_datasets.dat
 [valent@milou2 linux_tutorial]$
 ```
 
@@ -650,6 +650,6 @@ This will open a less window (remember, <kbd>q</kbd> to close it down, arrows to
 
 The `man` pages can be a bit tricky to understand at first, but you get used to it with time. If it is still unclear, try searching for it on the internet. You are bound to find someone with the exact same question as you, that has already asked on a forum, and gotten a good answer. 5 years ago.
 
-If you still have time left on the lab and you finished early, check out the [advanced linux exercises](lab_linux_adv.html)!
+If you still have time left on the lab and you finished early, check out the [Linux file permissions exercises](lab_linux_permissions.html)!
 
 ***

@@ -60,7 +60,7 @@ dahlo@rackham4 ~ $
 Usually you would do most of the work in this lab directly on one of the login nodes at UPPMAX, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("$ salloc -A ",upid,"-t 07:00:00 -p core -n 1 --no-shell --reservation=g20XXXXX_XX &"))
+cat(paste0("$ salloc -A ",upid,"-t 07:00:00 -p core -n 1 --no-shell --reservation=g2019031_27 &"))
 ```
 
 check which node you got (replace **username** with your UPPMAX username)
@@ -304,7 +304,7 @@ The next couple of rows will contain all the options you want to give SLURM:
 
 ```bash
 #!/bin/bash -l
-#SBATCH -A g2019020
+#SBATCH -A g2019031
 #SBATCH -t 00:05:00
 #SBATCH -p core
 ```
@@ -331,6 +331,6 @@ Typical RNAseq analysis consists of multiple samples / time points:
 
 The difficulty here is that you have not just 1 sample, you have 3 of them. And they all need to be filtered and aligned separately, and then compared to each other. The program that does the differential expression analysis in this exercise is called `diff_exp` and is located in the same directory as the previous scripts. The samples are filtered and aligned individually.
 
-For the really fast ones: Continue with this tutorial on [advanced Linux](lab_advanced_linux.html) if you still have time left on the lab.
+For the really fast ones: Continue with this tutorial on [Linux file permissions](lab_linux_permissions.html) if you still have time left on the lab.
 
 ***
