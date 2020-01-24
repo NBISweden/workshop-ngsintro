@@ -1,8 +1,8 @@
 ---
-title: "Introduction to RNA-Seq"
+title: "Analysis of bulk RNA-Seq data"
 subtitle: "Introduction To Bioinformatics Using NGS Data"
-author: "`r paste0('<b>NBIS</b> • ',format(Sys.time(), '%d-%b-%Y'))`"
-institute: NBIS, SciLifeLab
+author: "`r format(Sys.time(), '%d-%b-%Y')`"
+institute: NBIS
 keywords: rnaseq, bioinformatics, course, scilifelab, nbis
 output:
   xaringan::moon_reader:
@@ -75,6 +75,17 @@ class: spaced
 - The transcriptome is spatially and temporally dynamic
 - Data comes from functional units (coding regions)
 - Only a tiny fraction of the genome
+
+???
+
+* What is RNA?
+* Central dogma of molecular biology. DNA -> RNA -> Protein.
+* We have gene models to explain organisation of the DNA into functional units.
+* Very tiny portion of the genome transcribes to RNA.
+* There are many types of RNA. Commonly protein coding RNA or mRNA. There are tRNA, sRNA, miRNA, siRNA, lincRNA etc.
+* What is the most abundant RNA? rRNA.
+* Why are we interested in RNA? While DNA is constant in all cells, expressed RNA varies from cell to cell and from time to time.
+* When we say RNA sequencing, what we sequencing?. For most part we are converting RNA to DNA and sequencing the DNA just like regular DNA sequencing.
 
 ---
 name: applications
@@ -273,9 +284,13 @@ name: fastqc
 
 ## FastQC
 
-.size-70[[![](data/rnaseq/fastqc_good.png)](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html)]
+Good quality  
 
-.size-70[[![](data/rnaseq/fastqc_bad.png)](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc.html)]
+.size-50[[![](data/rnaseq/fastqc_good.png)](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html)]
+
+Poor quality  
+
+.size-50[[![](data/rnaseq/fastqc_bad.png)](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc.html)]
 
 ---
 name: read-qc-2
@@ -433,6 +448,8 @@ ST-E00274:188:H3JWNCCXY:4:1102:32431:49900      163     1       1       60      
 
 `query flag ref pos mapq cigar mrnm mpos tlen seq qual opt`
 
+**Never store alignment files in raw SAM format. Always compress it!**
+
 |Format|Size_GB|
 |------|-------|
 |SAM|7.4|
@@ -511,14 +528,14 @@ QoRTs was run on all samples and summarised using MultiQC.
 ---
 name: qorts-plots
 
-## QoRTs
+## Alignment QC • QoRTs
 
 .size-95[![](data/rnaseq/qorts.png)]
 
 ---
 name: alignment-qc-1
 
-## Alignment QC
+## Alignment QC • Examples
 
 .pull-left-50[
 **Soft clipping**
@@ -533,7 +550,7 @@ name: alignment-qc-1
 ---
 name: alignment-qc-2
 
-## Alignment QC
+## Alignment QC • Examples
 
 .pull-left-50[
 **Insert size**
@@ -583,7 +600,7 @@ name: quant-pcr-multi
 
 - Added (BEDTools multicov)
 - Discard (featureCounts, HTSeq)
-- Distribute counts (Cufflinks)
+- Distribute counts (Cufflinks, featureCounts)
 - Rescue
   - Probabilistic assignment (Rcount, Cufflinks)
   - Prioritise features (Rcount)
@@ -943,7 +960,7 @@ name: functional-analysis-2
 name: summary
 class: spaced
 
-## Summary
+  ## Summary
 
 - Sound experimental design to avoid confounding
 - Plan carefully about lib prep, sequencing etc based on experimental objective
@@ -991,14 +1008,13 @@ class: spaced
 - 02 Map the reads to the reference genome using **Star**
 - 03 Assess the post-alignment quality using **QualiMap**
 - 04 Count the reads overlapping with genes using **featureCounts**
-- 05 Find DE genes using **edgeR** in R
+- 05 Find DE genes using **DESeq2** in R
 
 **Bonus exercises**
 
 - 01 Functional annotation of DE genes using **GO/Reactome/Kegg** databases
-- 02 Visualisation of RNA-seq BAM files using **IGV** genome browser
-- 03 RNA-Seq figures and plots using **R**
-- 04 De-novo transcriptome assembly using **Trinity**
+- 02 RNA-Seq figures and plots using **R**
+- 03 Visualisation of RNA-seq BAM files using **IGV** genome browser
 
 .large[**Data:** `/sw/courses/ngsintro/rnaseq/`]  
 .large[**Work:** `/proj/gXXXXXXX/nobackup/<user>/rnaseq/`]  
@@ -1021,7 +1037,7 @@ rnaseq/
 |   +-- assembly/
 |   +-- exon/
 |   +-- funannot/
-|   +-- visual/
+|   +-- plots/
 +-- documents/
 +-- main/
 |   +-- 1_raw/
@@ -1031,8 +1047,7 @@ rnaseq/
 |   +-- 5_dge/
 |   +-- 6_multiqc/
 +-- reference/
-|   +-- mouse/
-|   +-- mouse_chr11/
+|   +-- mouse_chr19/
 +-- scripts/
 ```
 ]
@@ -1042,7 +1057,7 @@ rnaseq/
 
 - Your work directory
 
-.large[`/proj/gXXXXXXX/nobackup/[user]/`]  
+.large[`/proj/gXXXX/nobackup/<user>/`]  
 
 .large[
 ```
@@ -1055,11 +1070,10 @@ rnaseq/
   +-- 5_dge/
   +-- 6_multiqc/
   +-- reference/
-  |   +-- mouse/
-  |   +-- mouse_chr11/
+  |   +-- mouse_chr19/
   +-- scripts/
   +-- funannot/
-  +-- assembly/
+  +-- plots/
 ```
 ]
 ]
