@@ -18,7 +18,7 @@ navbar:
       href: home_schedule.html
     - text: Content
       href: home_content.html
-    - text: Precourse
+    - text: Precourse   
       href: home_precourse.html
     - text: Info
       href: home_info.html
@@ -59,11 +59,8 @@ packages:
    - biomaRt
    - DESeq2
    - edgeR
-   - DEXSeq
-   - EnsDb.Mmusculus.v79
    - goseq
    - GO.db
-   - Gviz
    - methods
    - org.Mm.eg.db
    - reactome.db
