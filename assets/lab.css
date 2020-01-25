@@ -445,7 +445,7 @@ button.btn-collapse-optional:hover {
 
 button.btn.collapsed:before
 {
-    content: '+' ;
+    content: '⌄' ;
     display: block;
     width: 15px;
     font-size: 120%;
@@ -454,7 +454,7 @@ button.btn.collapsed:before
 
 button.btn:before
 {
-    content: '-' ;
+    content: '⌃' ;
     display: block;
     width: 15px;
     font-size: 120%;

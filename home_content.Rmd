@@ -29,10 +29,9 @@ This page contains links to different lectures (slides) and practical exercises 
 
 **Advanced Linux**
 
-* [Better terminal experience (Slides)](slide_termexp.pdf)
-* [Advanced Linux (Slides)](slide_linux_adv.pdf)
-* [Advanced linux - Variables & Loops (Lab)](lab_linux_loops.html)
-* [Advanced linux (Lab)](lab_linux_adv.html)
+* [Better terminal experience (Slides)](slide_qol_termexp.pdf)
+* [Advanced Linux (Slides)](slide_linux_advanced.pdf)
+* [Advanced linux (Lab)](lab_linux_advanced.html)
 
 **Variant-calling workflow**
 
