@@ -208,10 +208,10 @@ cat(paste0("cp -r /sw/share/compstore/courses/ngsintro/linux_tutorial/* /proj/",
 
 <i class="fas fa-lightbulb"></i> Remember to tab-complete to avoid typos and too much writing.
 
-If you are unable to copy the files on UPPMAX, you can download the files instead of copying them. This is done with the command `wget` (*web get*). It works kind of the same way as the `cp` command, but you give it a source URL instead of a source file, and you specify the destination by giving it a prefix, a path that will be appended in front on the file name when it's downloaded.
+If you are unable to copy the files on UPPMAX, you can [download the files from this link](data/linux/files.tar.gz) instead of copying them. This is done with the command `wget` (*web get*). It works kind of the same way as the `cp` command, but you give it a source URL instead of a source file, and you specify the destination by giving it a prefix, a path that will be appended in front on the file name when it's downloaded.
 
 *i.e*; if you want to download the file http://somewhere.com/my.file and you give it the prefix `~/analysis/`, the downloaded file will be saved as `~/analysis/my.file`.
-
+[Linux file permissions exercises](lab_linux_permissions.html)
 ```bash
 Ex: wget -P <destination prefix> <source URL>
 ```
