@@ -52,7 +52,7 @@ Directory: Whether the directory can be entered using `cd`.
 Start your terminal, log onto UPPMAX (check with `squeue` which core you had and ssh onto it, if for some reason your core is unavailable:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("$ salloc -A ",upid,"-t 04:30:00 -p core --no-shell --reservation=g2019031_27"))
+cat(paste0("$ salloc -A ",upid," -t 04:30:00 -p core --no-shell --reservation=g2019031_27"))
 ```
 
 make an empty directory we can work in and make a file.
