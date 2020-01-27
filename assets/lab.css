@@ -445,20 +445,22 @@ button.btn-collapse-optional:hover {
 
 button.btn.collapsed:before
 {
-    content: '+' ;
+    content: '\f078';
     display: block;
     width: 15px;
-    font-size: 120%;
-    font-weight: bold;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 80%;
 }
 
 button.btn:before
 {
-    content: '-' ;
+    content: '\f077';
     display: block;
     width: 15px;
-    font-size: 120%;
-    font-weight: bold;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 80%;
 }
 
 /** top title code **/
