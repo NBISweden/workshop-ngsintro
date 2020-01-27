@@ -13,7 +13,7 @@ upid <- yaml::read_yaml("_site.yml")$uppmax_project
 
 # Introduction
 
-In this lab we will use a region on chr2, around the LCT gene, that has been shown to control how lactose is tolerated in adults. The 3 samples we will work with have been sequenced at low coverage in the 1000 Genomes Project. Much like the corresponding lecture, we will go through alignment, deduplication, base quality score recalibration, variant calling and variant filtering. In addition, we will annotate the variants and view the alignments.
+In this lab we will use a region on chr2, around the LCT gene, that has been shown to control how lactose is tolerated in adults. To learn more about genetic factors behind lactose-persistence and lactose intolerance, please see for example [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf). We will work with 3 samples that have been sequenced at low coverage in the 1000 Genomes Project. Much like in the corresponding lecture, we will go through alignment, deduplication, base quality score recalibration, variant calling (first in one sample and then in all samples), and variant filtering. In addition, we will annotate the variants and view the alignments.
 
 ## Running commands
 
@@ -54,7 +54,7 @@ $ ssh -Y username@rackham.uppmax.uu.se
 Book a node. Make sure you only do this once!
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("salloc -A ",upid,"-t 04:00:00 -p core -n 5 --no-shell --reservation=g20XXXXX_XX &"))
+cat(paste0("salloc -A ",upid,"-t 04:00:00 -p core -n 1 --no-shell --reservation=g20XXXXX_XX &"))
 ```
 
 Once your job allocation has been granted (should not take long) you can connect to the node using `ssh`. To find out the name of your node, use:
@@ -151,9 +151,9 @@ We are skipping the quality control and trimming of reads for this exercise, but
 We are going to start by aligning the reads for the HG00097 sample, using `bwa mem`. We give the paths to our reference genome and the forward (`_1.fq`) and reverse (`_2.fq`) read fastq files.
 
 ```bash
-bwa mem -t 5 human_g1k_v37_chr2.fasta HG00097_1.fq HG00097_2.fq > HG00097.sam
+bwa mem -t 1 human_g1k_v37_chr2.fasta HG00097_1.fq HG00097_2.fq > HG00097.sam
 
-# -t 5 is the number of threads to use (the number of cores you booked)
+# -t 1 is the number of threads to use (the number of cores you booked). If you would have analysed the entire genome more cores and threads would have been necessary. 
 # You have to use a file redirect ">" for the output, otherwise it will be written to stdout (your screen).
 ```
 
@@ -184,18 +184,16 @@ java -Xmx16g -jar $PICARD_HOME/picard.jar BuildBamIndex INPUT=<bam file>
 
 ### BAM Processing
 
-The reads have now been aligned to the reference, but these files can still be improved a bit before we use them for variant calling. Genome Analysis Tool Kit (GATK) is a popular set of tools used for this and for variant calling. GATK comes with a *best practise*, which gives a suggestion on how to get from raw BAM to filtered variants.
+The reads have now been aligned to the reference, but these files can still be improved a bit before we use them for variant calling. Genome Analysis Tool Kit (GATK) is a popular set of tools used for variant calling. GATK comes with *best practises*, which gives a suggestion on how to get from raw BAM to filtered variants.
 
-In brief, their best practise consists of:
-
-* Local realignment, not necessary if you do variant calling with HaplotypeCaller or Mutect
+In brief, their current best practises for [Germline short variant discovery (SNPs + Indels)](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-) consists of:
 * Marking duplicates
 * Base quality score recalibration
 * Sample wise variant calling
 * Joint genotyping of all samples
 * Variant filtration
 
-However, this may need adjustment depending for example on your experimental setup. **It is therefore important to check the best practise in each case**.
+However, this may need adjustment depending for example on your experimental setup. **It is therefore important to check the best practises in each case**.
 
 ### Marking duplicates
 
