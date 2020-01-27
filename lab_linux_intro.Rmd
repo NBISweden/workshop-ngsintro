@@ -60,7 +60,7 @@ dahlo@rackham4 ~ $
 Usually you would do most of the work in this lab directly on one of the login nodes at UPPMAX, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("$ salloc -A ",upid,"-t 07:00:00 -p core -n 1 --no-shell --reservation=g2019031_27 &"))
+cat(paste0("$ salloc -A ",upid," -t 07:00:00 -p core -n 1 --no-shell --reservation=g2019031_27 &"))
 ```
 
 check which node you got (replace **username** with your UPPMAX username)
