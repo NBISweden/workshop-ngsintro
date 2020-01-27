@@ -86,7 +86,6 @@ If the list is empty you can run the allocation command again and it should be i
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0("$ salloc -A ",upid," -t 03:30:00 -p core -n 1 --no-shell --reservation=g2019031_27 &"))
 ```
-```
 
 <i class="fas fa-lightbulb"></i> There is a UPPMAX specific tool called `jobinfo` that supplies the same kind of information as `squeue` that you can use as well (`$ jobinfo -u username`).
 
