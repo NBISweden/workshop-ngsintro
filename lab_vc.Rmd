@@ -295,6 +295,8 @@ java -Xmx16g -jar $GATK_HOME/GenomeAnalysisTK.jar -T GenotypeGVCFs \
 
 ## Filtering Variants
 
+![](data/ngs-workflow/wf_filtration.png)
+
 The next thing we will do is filter the variants. For a large dataset with many variants it is recommended to use GATK's VQSR technique for training filter thresholds on known variants. Since we are working with a small data set we're going to use hard filters and [parameters suggested by GATK.](https://software.broadinstitute.org/gatk/documentation/article?id=2806)
 
 The parameters are slightly different for SNPs and INDELs, which we have called together and are both in our VCF. You therefore need to perform the filtering in two separate steps: first select all SNPs and filter them, then select all indels and filter them.
@@ -378,6 +380,8 @@ vcftools --vcf <my_variants_filtered>.vcf \
 * Try to find out how many variants that are indels (Hint: `man vcftools` will list available options.)
 
 ## Variant annotation
+
+![](data/ngs-workflow/wf_annotation.png)
 
 There are several tools for variant annotation. Some of the most frequently used are VEP (Variant Effect Predictor), SnpEff and Annovar. We will try [Annovar](http://annovar.openbioinformatics.org/en/latest/). Note that these tools are predictors and may give slightly different results. The output is also dependent on your choice of gene set.
 
