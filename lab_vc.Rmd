@@ -140,7 +140,7 @@ We will also build two other sequence dictionaries for the reference, which just
 
 ```bash
 samtools faidx human_g1k_v37_chr2.fasta
-java -Xmx16g -jar $PICARD_HOME/picard.jar CreateSequenceDictionary R=human_g1k_v37_chr2.fasta O=human_g1k_v37_chr2.dict
+java -Xmx7g -jar $PICARD_HOME/picard.jar CreateSequenceDictionary R=human_g1k_v37_chr2.fasta O=human_g1k_v37_chr2.dict
 ```
 
 ## Data pre-processing
@@ -170,7 +170,7 @@ We also need to add something called read groups to our BAM file, because this i
 We will use Picard to add read group information, and simultaneously sort the file, and then output it as BAM.
 
 ```bash
-java -Xmx16g -jar $PICARD_HOME/picard.jar AddOrReplaceReadGroups INPUT=<sam file> OUTPUT=<bam file> SORT_ORDER=coordinate RGID=HG00097-id RGLB=HG00097-lib RGPL=ILLUMINA RGPU=HG00097-01 RGSM=HG00097
+java -Xmx7g -jar $PICARD_HOME/picard.jar AddOrReplaceReadGroups INPUT=<sam file> OUTPUT=<bam file> SORT_ORDER=coordinate RGID=HG00097-id RGLB=HG00097-lib RGPL=ILLUMINA RGPU=HG00097-01 RGSM=HG00097
 
 # Typically the BAM file has the same name as the SAM but with the .sam extension replaced with .bam
 # Replace HG00097 with different sample name if running other samples
@@ -179,7 +179,7 @@ java -Xmx16g -jar $PICARD_HOME/picard.jar AddOrReplaceReadGroups INPUT=<sam file
 We also need to index this BAM, so that programs can randomly access the sorted data without reading the whole file. This creates an index file similarly named to the input BAM file, except with a .bai extension.
 
 ```bash
-java -Xmx16g -jar $PICARD_HOME/picard.jar BuildBamIndex INPUT=<bam file>
+java -Xmx7g -jar $PICARD_HOME/picard.jar BuildBamIndex INPUT=<bam file>
 ```
 
 <i class="fas fa-clipboard-list"></i> Compare the size of the SAM and BAM files using `ls -l`
@@ -204,7 +204,7 @@ However, this may need adjustment depending for example on your experimental set
 We use Picard to mark duplicate reads:
 
 ```bash
-java -Xmx16g -jar $PICARD_HOME/picard.jar MarkDuplicates \
+java -Xmx7g -jar $PICARD_HOME/picard.jar MarkDuplicates \
   INPUT=<input_bam> \
   OUTPUT=<marked_bam> \
   METRICS_FILE=<metrics_file> \
@@ -220,7 +220,7 @@ java -Xmx16g -jar $PICARD_HOME/picard.jar MarkDuplicates \
 Again, we need to index the new BAM file before proceeding.
 
 ```bash
-java -Xmx16g -jar $PICARD_HOME/picard.jar BuildBamIndex INPUT=<marked_bam>
+java -Xmx7g -jar $PICARD_HOME/picard.jar BuildBamIndex INPUT=<marked_bam>
 ```
 
 ### BQSR
@@ -230,7 +230,7 @@ java -Xmx16g -jar $PICARD_HOME/picard.jar BuildBamIndex INPUT=<marked_bam>
 We perform Base quality score recalibration (BQSR) using GATK. We do this last, because we want all the data to be as clean as possible at this point. This is performed in two steps: BaseRecalibrator and PrintReads. As usual we give our latest BAM file as input_bam. First, we compute all the covariation of quality with various other factors using `BaseRecalibrator`:
 
 ```bash
-java -Xmx16g -jar $GATK_HOME/GenomeAnalysisTK.jar -T BaseRecalibrator \
+java -Xmx7g -jar $GATK_HOME/GenomeAnalysisTK.jar -T BaseRecalibrator \
   -R human_g1k_v37_chr2.fasta \
   -I <input_bam> \
   -o <calibration_table> \
@@ -243,7 +243,7 @@ java -Xmx16g -jar $GATK_HOME/GenomeAnalysisTK.jar -T BaseRecalibrator \
 We need to supply a list of known sites to `BaseRecalibrator`. If you are sequencing an organism with few known sites, you could try variant calling once before base quality score recalibration and then use the most confident variants as known sites. In the next step, `PrintReads` applies the recalibration and outputs the recalibrated bam file. GATK automatically indexes the new BAM for us.
 
 ```bash
-java -Xmx16g -jar $GATK_HOME/GenomeAnalysisTK.jar -T PrintReads \
+java -Xmx7g -jar $GATK_HOME/GenomeAnalysisTK.jar -T PrintReads \
   -R human_g1k_v37_chr2.fasta \
   -BQSR <calibration_table> \
   -I <input_bam> \
@@ -262,7 +262,7 @@ A good method article describing [BQSR](https://software.broadinstitute.org/gatk
 Now we'll run the GATK `HaplotypeCaller` on our BAM file and output a gVCF file.
 
 ```bash
-java -Xmx16g -jar $GATK_HOME/GenomeAnalysisTK.jar -T HaplotypeCaller \
+java -Xmx7g -jar $GATK_HOME/GenomeAnalysisTK.jar -T HaplotypeCaller \
   -R human_g1k_v37_chr2.fasta \
   --emitRefConfidence GVCF \
   -I <input_bam> \
@@ -285,7 +285,7 @@ cp /sw/share/compstore/courses/ngsintro/reseq/data/vcf/<sample>.g.vcf .
 Now you will call genotypes from all the gVCF files produced in the previous step with `GenotypeGVCFs`. This will create one file with unfiltered variants for all samples (HG00097, HG00100 and HG00101).
 
 ```bash
-java -Xmx16g -jar $GATK_HOME/GenomeAnalysisTK.jar -T GenotypeGVCFs \
+java -Xmx7g -jar $GATK_HOME/GenomeAnalysisTK.jar -T GenotypeGVCFs \
   -R human_g1k_v37_chr2.fasta \
   --variant <sample1>.g.vcf \
   --variant <sample2>.g.vcf \
@@ -304,13 +304,13 @@ The parameters are slightly different for SNPs and INDELs, which we have called 
 #### SNPs
 
 ```bash
-java -Xmx16g -jar $GATK_HOME/GenomeAnalysisTK.jar -T SelectVariants \
+java -Xmx7g -jar $GATK_HOME/GenomeAnalysisTK.jar -T SelectVariants \
   -R human_g1k_v37_chr2.fasta \
   -V <raw_variants>.vcf \
   -selectType SNP \
   -o <raw_snps>.vcf
 
-java -Xmx16g -jar $GATK_HOME/GenomeAnalysisTK.jar -T VariantFiltration \
+java -Xmx7g -jar $GATK_HOME/GenomeAnalysisTK.jar -T VariantFiltration \
   -R human_g1k_v37_chr2.fasta \
   -V <raw_snps>.vcf \
   -o <filtered_snps>.vcf \
@@ -325,13 +325,13 @@ java -Xmx16g -jar $GATK_HOME/GenomeAnalysisTK.jar -T VariantFiltration \
 #### Indels
 
 ```bash
-java -Xmx16g -jar $GATK_HOME/GenomeAnalysisTK.jar -T SelectVariants \
+java -Xmx7g -jar $GATK_HOME/GenomeAnalysisTK.jar -T SelectVariants \
   -R human_g1k_v37_chr2.fasta \
   -V <raw_variants>.vcf \
   -selectType INDEL \
   -o <raw_indels>.vcf
 
-java -Xmx16g -jar $GATK_HOME/GenomeAnalysisTK.jar -T VariantFiltration \
+java -Xmx7g -jar $GATK_HOME/GenomeAnalysisTK.jar -T VariantFiltration \
   -R human_g1k_v37_chr2.fasta \
   -V <raw_indels>.vcf \
   -o <filtered_indels>.vcf \
@@ -346,7 +346,7 @@ java -Xmx16g -jar $GATK_HOME/GenomeAnalysisTK.jar -T VariantFiltration \
 Once you have the filtered calls for both SNPs and INDELs, you can combine these using `CombineVariants`:
 
 ```bash
-java -Xmx16g -jar $GATK_HOME/GenomeAnalysisTK.jar -T CombineVariants \
+java -Xmx7g -jar $GATK_HOME/GenomeAnalysisTK.jar -T CombineVariants \
   -R human_g1k_v37_chr2.fasta \
   --variant:snp <filtered_snps>.vcf \
   --variant:indel <filtered_indels>.vcf \
