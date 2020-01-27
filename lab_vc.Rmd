@@ -13,7 +13,9 @@ upid <- yaml::read_yaml("_site.yml")$uppmax_project
 
 # Introduction
 
-In this lab we will use a region on chr2, around the LCT gene, that has been shown to control how lactose is tolerated in adults. To learn more about genetic factors behind lactose-persistence and lactose intolerance, please see for example [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf). We will work with 3 samples that have been sequenced at low coverage in the 1000 Genomes Project. Much like in the corresponding lecture, we will go through alignment, deduplication, base quality score recalibration, variant calling (first in one sample and then in all samples), and variant filtering. In addition, we will annotate the variants and view the alignments.
+In this lab we will use a region on chr2, around the LCT gene, that has been shown to control how lactose is tolerated in adults. We will work with 3 samples that have been sequenced at low coverage in the 1000 Genomes Project. Much like in the corresponding lecture, we will go through alignment, deduplication, base quality score recalibration, variant calling (first in one sample and then in all samples), and variant filtering. In addition, we will annotate the variants and view the alignments.  
+  
+To learn more about genetic factors behind lactose-persistence and lactose intolerance, please read for example [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf). 
 
 ## Running commands
 
