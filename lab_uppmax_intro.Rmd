@@ -270,7 +270,7 @@ $ module unload <module name>
 
 ```
 
-Look in the list from `$ module list` to see the name of the module you want to unload. When the old module is unloaded, load `samtools/0.1.18` (or try with the latest samtools module!).
+Look in the list from `$ module list` to see the name of the module you want to unload. When the old module is unloaded, load `samtools/0.1.19` (or try with the latest samtools module!).
 
 # Submitting a job
 
