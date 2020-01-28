@@ -86,7 +86,6 @@ If the list is empty you can run the allocation command again and it should be i
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0("$ salloc -A ",upid," -t 03:30:00 -p core -n 1 --no-shell --reservation=g2019031_27 &"))
 ```
-```
 
 <i class="fas fa-lightbulb"></i> There is a UPPMAX specific tool called `jobinfo` that supplies the same kind of information as `squeue` that you can use as well (`$ jobinfo -u username`).
 
@@ -100,7 +99,7 @@ Next, copy the lab files from this folder. `-r` means recursively, which means a
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat("$ cp -r <source> <destination>\n")
-cat(paste0("$ cp -r /sw/share/compstore/courses/ngsintro/uppmax_pipeline_exercise /data",upid,"/nobackup/<username>/uppmax_pipeline_exercise"))
+cat(paste0("$ cp -r /sw/share/compstore/courses/ngsintro/uppmax_pipeline_exercise /proj/",upid,"/nobackup/<username>/uppmax_pipeline_exercise"))
 ```
 
 Have a look in **`r paste0("/proj/",upid,"/nobackup/<username>/uppmax_pipeline_exercise")`**.
