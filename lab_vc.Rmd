@@ -56,7 +56,7 @@ $ ssh -Y username@rackham.uppmax.uu.se
 Book a node. Make sure you only do this once!
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("salloc -A ",upid," -t 04:00:00 -p core -n 1 --no-shell --reservation=g20XXXXX_XX &"))
+cat(paste0("salloc -A ",upid," -t 04:00:00 -p core -n 1 --no-shell --reservation=g2019031_29 &"))
 ```
 
 Once your job allocation has been granted (should not take long) you can connect to the node using `ssh`. To find out the name of your node, use:
