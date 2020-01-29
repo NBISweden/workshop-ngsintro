@@ -1,6 +1,7 @@
 date;room;dur;topic;teacher;assistant;link_slide;link_lab;link_room
 
-27/01/2020;E10:1309;15;Welcome;Björn Nystedt;;;;http://bit.ly/2PRscGA
+27/01/2020;E10:1309;15;
+Welcome;Björn Nystedt;;;;http://bit.ly/2PRscGA
 ;;45;Intro to Linux;Martin Dahlö;;slide_linux_intro.pdf;;
 ;;15;Coffee Break;;;;;
 ;;105;Intro to Linux;Martin Dahlö;MD, JD, PE;;lab_linux_intro.html;
@@ -10,7 +11,8 @@ date;room;dur;topic;teacher;assistant;link_slide;link_lab;link_room
 ;;15;Coffee Break;;;;;
 ;;105;Intro to Uppmax;Björn Viklund;JD, PE;;;
 
-28/01/2020;E10:1309;30;File types in Bioinformatics;Martin Dahlö;;slide_linux_filetypes.pdf;;http://bit.ly/2PRscGA
+28/01/2020;E10:1309
+;30;File types in Bioinformatics;Martin Dahlö;;slide_linux_filetypes.pdf;;http://bit.ly/2PRscGA
 ;;30;File types in Bioinformatics;Martin Dahlö;AS, JD, PE;;lab_linux_filetypes.html;
 ;;15;Coffee Break;;;;;
 ;;105;Better terminal experience;Martin Dahlö;;slide_qol_termexp.pdf;;
@@ -20,7 +22,8 @@ date;room;dur;topic;teacher;assistant;link_slide;link_lab;link_room
 ;;15;Coffee Break;;;;;
 ;;105;Advanced Linux;Martin Dahlö;AS, JD, PE;;;
 
-29/01/2020;E10:1309;60;NGS Overview;Olga Petterson;;slide_Sequencing_technologies_2020b.pptx;;http://bit.ly/2PRscGA
+29/01/2020;E10:1309
+;60;NGS Overview;Olga Petterson;;slide_Sequencing_technologies_2020b.pptx;;http://bit.ly/2PRscGA
 ;;15;Coffee Break;;;;;
 ;;45;NGS Overview;Olga Petterson;;slide_Sequencing_technologies_2020b.pptx;;
 ;;60;NGS pipeline;Adam Ameur;;;;
@@ -30,7 +33,8 @@ date;room;dur;topic;teacher;assistant;link_slide;link_lab;link_room
 ;;15;Coffee Break;;;;;
 ;;105;Variant-calling workflow;Malin Larsson;AJ, PE, MD;;;
 
-30/01/2020;E10:1309;60;Variant-calling workflow;Malin Larsson;AJ, PE;;;http://bit.ly/2PRscGA
+30/01/2020;E10:1309
+;60;Variant-calling workflow;Malin Larsson;AJ, PE;;;http://bit.ly/2PRscGA
 ;;15;Coffee Break;;;;;
 ;;105;Variant-calling workflow;Malin Larsson;AJ, PE;;slide_vc_discussion.pptx;
 ;;60;Lunch;;;;;
@@ -39,7 +43,8 @@ date;room;dur;topic;teacher;assistant;link_slide;link_lab;link_room
 ;;15;Coffee Break;;;;;
 ;;105;RNA-Seq workflow;Roy Francis;PE, BS, NR;;lab_rnaseq.html;
 
-31/01/2020;E10:1309;60;RNA-Seq workflow;Roy Francis;;;;http://bit.ly/2PRscGA
+31/01/2020;E10:1309
+;60;RNA-Seq workflow;Roy Francis;;;;http://bit.ly/2PRscGA
 ;;15;Coffee Break;;;;;
 ;;105;RNA-Seq workflow;Roy Francis;;;;
 ;;60;Lunch;;;;;
