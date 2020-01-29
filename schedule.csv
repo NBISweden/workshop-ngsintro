@@ -28,9 +28,9 @@ date;room;dur;topic;teacher;assistant;link_slide;link_lab;link_room
 ;;60;Variant-calling workflow;Malin Larsson;;slide_vc.pptx;;
 ;;60;Variant-calling workflow;Malin Larsson;AJ, PE, MD;;lab_vc.html;
 ;;15;Coffee Break;;;;;
-;;105;Variant-calling workflow;Malin Larsson;AJ, PE, MD;;;
+;;105;Variant-calling workflow;Malin Larsson;AJ, PE, MD;;lab_vc.html;
 
-30/01/2020;E10:1309;60;Variant-calling workflow;Malin Larsson;AJ, PE;;;http://bit.ly/2PRscGA
+30/01/2020;E10:1309;60;Variant-calling workflow;Malin Larsson;AJ, PE;;lab_vc.html;http://bit.ly/2PRscGA
 ;;15;Coffee Break;;;;;
 ;;105;Variant-calling workflow;Malin Larsson;AJ, PE;;slide_vc_discussion.pptx;
 ;;60;Lunch;;;;;
