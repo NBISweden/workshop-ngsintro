@@ -23,7 +23,7 @@ date;room;dur;topic;teacher;assistant;link_slide;link_lab;link_room
 29/01/2020;E10:1309;60;NGS Overview;Olga Petterson;;slide_Sequencing_technologies_2020b.pptx;;http://bit.ly/2PRscGA
 ;;15;Coffee Break;;;;;
 ;;45;NGS Overview;Olga Petterson;;slide_Sequencing_technologies_2020b.pptx;;
-;;60;NGS pipeline;Adam Ameur;;;;
+;;60;NGS pipeline;Adam Ameur;;slide_ngs_pipelines.pptx;;
 ;;60;Lunch;;;;;
 ;;60;Variant-calling workflow;Malin Larsson;;slide_vc.pptx;;
 ;;60;Variant-calling workflow;Malin Larsson;AJ, PE, MD;;lab_vc.html;
