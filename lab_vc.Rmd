@@ -109,6 +109,13 @@ All input data for this exercise is located in the folder:
 # These files are read-only so that the files are not accidentally deleted
 ```
 
+Bam and VCF files can be reached at this new location on Uppmax:
+
+```bash
+/sw/share/compstore/courses/ngsintro/g2019031/reseq
+```
+
+
 ## The reference genome
 
 Before we can align our sample we need a reference genome. For our exercises, we'll use only human chromosome 2, however in a real situation you should use the full genome.  Create a symbolic link to the reference in your workspace:
