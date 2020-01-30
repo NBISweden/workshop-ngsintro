@@ -450,9 +450,10 @@ You will need the bam files of all 3 samples: HG00097, HG00100 and HG00101.
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat("# copy bam files\n")
-cat(paste0("scp <username>@rackham.uppmax.uu.se:/proj/",upid,"/nobackup/<username>/ngsworkflow/<recalibrated_bam>.ba* ./\n"))
+cat(paste0("scp <username>@rackham.uppmax.uu.se:/sw/share/compstore/courses/ngsintro/g2019031/reseq/HG00* ./\n"))
 cat("# copy vcf file\n")
-cat(paste0("scp <username>@rackham.uppmax.uu.se:/proj/",upid,"/nobackup/<username>/ngsworkflow/<my_filtered_variants>.vcf ./\n"))
+cat(paste0("scp <username>@rackham.uppmax.uu.se:/sw/share/compstore/courses/ngsintro/g2019031/reseq/filtered_variants.vcf ./\n"))
+
 ```
 
 If you are missing some of the BAM files or the VCF you can do this instead:
