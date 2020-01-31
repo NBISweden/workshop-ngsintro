@@ -38,5 +38,5 @@ date;room;dur;topic;teacher;assistant;link_slide;link_lab;link_room
 ;;15;Coffee Break;;;;;
 ;;105;RNA-Seq workflow;Roy Francis;;;;
 ;;60;Lunch;;;;;
-;;60;NBIS and services;Björn Nystedt;;slide_nbis.pptx;;
+;;60;NBIS and services;Björn Nystedt;;;slide_nbis.pptx;
 ;;60;Open session;Roy Francis;PE, JD, AJ, OP;;;
