@@ -1,5 +1,5 @@
 date;room;dur;topic;teacher;assistant;link_slide;link_lab;link_room
-
+;;;;;;;;
 27/01/2020;E10:1309;15;Welcome;Björn Nystedt;;;;http://bit.ly/2PRscGA
 ;;45;Intro to Linux;Martin Dahlö;;slide_linux_intro.pdf;;
 ;;15;Coffee Break;;;;;
@@ -9,7 +9,7 @@ date;room;dur;topic;teacher;assistant;link_slide;link_lab;link_room
 ;;60;Intro to Uppmax;Björn Viklund;JD, PE;;lab_uppmax_intro.html;
 ;;15;Coffee Break;;;;;
 ;;105;Intro to Uppmax;Björn Viklund;JD, PE;;;
-
+;;;;;;;;
 28/01/2020;E10:1309;30;File types in Bioinformatics;Martin Dahlö;;slide_linux_filetypes.pdf;;http://bit.ly/2PRscGA
 ;;30;File types in Bioinformatics;Martin Dahlö;AS, JD, PE;;lab_linux_filetypes.html;
 ;;15;Coffee Break;;;;;
@@ -19,7 +19,7 @@ date;room;dur;topic;teacher;assistant;link_slide;link_lab;link_room
 ;;60;Advanced Linux;Martin Dahlö;AS, JD, PE;;lab_linux_advanced.html;
 ;;15;Coffee Break;;;;;
 ;;105;Advanced Linux;Martin Dahlö;AS, JD, PE;;;
-
+;;;;;;;;
 29/01/2020;E10:1309;60;NGS Overview;Olga Petterson;;slide_Sequencing_technologies_2020b.pptx;;http://bit.ly/2PRscGA
 ;;15;Coffee Break;;;;;
 ;;45;NGS Overview;Olga Petterson;;slide_Sequencing_technologies_2020b.pptx;;
@@ -29,7 +29,7 @@ date;room;dur;topic;teacher;assistant;link_slide;link_lab;link_room
 ;;60;Variant-calling workflow;Malin Larsson;AJ, PE, MD;;lab_vc.html;
 ;;15;Coffee Break;;;;;
 ;;105;Variant-calling workflow;Malin Larsson;AJ, PE, MD;;lab_vc.html;
-
+;;;;;;;;
 30/01/2020;E10:1309;60;Variant-calling workflow;Malin Larsson;AJ, PE;;lab_vc.html;http://bit.ly/2PRscGA
 ;;15;Coffee Break;;;;;
 ;;105;Variant-calling workflow;Malin Larsson;AJ, PE;;slide_vc_discussion.pptx;
@@ -38,10 +38,10 @@ date;room;dur;topic;teacher;assistant;link_slide;link_lab;link_room
 ;;60;Intro to RNA-Seq;Roy Francis;;slide_rnaseq.html;;
 ;;15;Coffee Break;;;;;
 ;;105;RNA-Seq workflow;Roy Francis;PE, BS, NR;;lab_rnaseq.html;
-
+;;;;;;;;
 31/01/2020;E10:1309;60;RNA-Seq workflow;Roy Francis;;;;http://bit.ly/2PRscGA
 ;;15;Coffee Break;;;;;
 ;;105;RNA-Seq workflow;Roy Francis;;;;
 ;;60;Lunch;;;;;
-;;60;NBIS and services;Björn Nystedt;;;;
+;;60;NBIS and services;Björn Nystedt;;slide_nbis.pptx;;
 ;;60;Open session;Roy Francis;PE, JD, AJ, OP;;;
