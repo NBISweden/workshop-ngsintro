@@ -2,14 +2,6 @@
 
 This repo contains the course material for NBIS workshop **Introduction to Bioinformatics using NGS data**. The rendered view of this repo is available [here](https://nbisweden.github.io/workshop-ngsintro/).
 
-## Repo organisation
-
-The source material is located on the *master* branch (default). The rendered material is located on the *gh-pages* branch. For most part, one only needs to update content in master. Changes pushed to the *master* branch is automatically rendered to the *gh-pages* branch.
-
-The first build can take around 30-40 mins depending on the number of R packages. Subsequent builds take about 2 minutes since caching is enabled. Caches are removed after 7 days of last access. A push after that will require a full rebuild.
-
-For more details about repo organisation, updating and modifying this repo, check out the [template repo](https://github.com/royfrancis/workshop-template-rmd-ga).
-
 ## Contributing
 
 To add or update contents of this repo (for collaborators), first clone the repo.
@@ -27,6 +19,16 @@ git push origin
 ```
 
 If you are not added as a collaborator, first fork this repo to your account, then clone it locally, make changes, commit, push to your repo, then submit a pull request to this repo.
+
+<span style="color:#dc3545;">When updating repo for a new course, change `output_dir: XXXX` in `site.yml` as the first thing, so that old rendered files are not overwritten.</span>
+
+## Repo organisation
+
+The source material is located on the *master* branch (default). The rendered material is located on the *gh-pages* branch. For most part, one only needs to update content in master. Changes pushed to the *master* branch is automatically rendered to the *gh-pages* branch.
+
+<span style="color:#17a2b8;">The first build can take around 30-40 mins depending on the number of R packages. Subsequent builds take about 2-3 minutes since caching is enabled. Caches are removed after 7 days of last access. A push after that will require a full rebuild.</span>
+
+For more details about repo organisation, updating and modifying this repo, check out the [template repo](https://github.com/royfrancis/workshop-template-rmd-ga).
 
 ## Rendering
 
