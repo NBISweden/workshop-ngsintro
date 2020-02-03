@@ -9,8 +9,8 @@ subtitle: "NGS workflow"
 ```{r,include=FALSE}
 library(yaml)
 upid <- yaml::read_yaml("_site.yml")$uppmax_project
-id_reservation_1 <- paste0(upid,"_30")
-id_reservation_2 <- paste0(upid,"_31")
+upres4 <- yaml::read_yaml("_site.yml")$uppmax_res_4
+upres5 <- yaml::read_yaml("_site.yml")$uppmax_res_5
 path_data <- "/sw/courses/ngsintro/rnaseq"
 path_project <- paste0("/proj/",upid,"/nobackup")
 path_project_rnaseq <- paste0(path_project,"/<username>/rnaseq")
@@ -118,13 +118,13 @@ For the RNA-Seq part of the course, we will work on the Rackham cluster. A stand
 Book resources for RNA-Seq day 1.
 
 ```{r,comment="",block.title=TRUE,class.output="sh",echo=FALSE}
-cat(paste0("salloc -A ",upid," -t 08:00:00 -p core -n 1 --reservation=",id_reservation_1))
+cat(paste0("salloc -A ",upid," -t 03:00:00 -p core -n 1 --reservation=",upres4))
 ```
 
 Book resources for RNA-Seq day 2.
 
 ```{r,comment="",block.title=TRUE,class.output="sh",echo=FALSE}
-cat(paste0("salloc -A ",upid," -t 08:00:00 -p core -n 1 --reservation=",id_reservation_2))
+cat(paste0("salloc -A ",upid," -t 04:00:00 -p core -n 1 --reservation=",upres5))
 ```
 
 ### Set-up directory

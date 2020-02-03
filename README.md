@@ -20,13 +20,13 @@ git push origin
 
 If you are not added as a collaborator, first fork this repo to your account, then clone it locally, make changes, commit, push to your repo, then submit a pull request to this repo.
 
-<span style="color:#dc3545;">When updating repo for a new course, change `output_dir: XXXX` in `site.yml` as the first thing, so that old rendered files are not overwritten.</span>
+:exclamation: When updating repo for a new course, change `output_dir: XXXX` in `site.yml` as the first thing, so that old rendered files are not overwritten.
 
 ## Repo organisation
 
 The source material is located on the *master* branch (default). The rendered material is located on the *gh-pages* branch. For most part, one only needs to update content in master. Changes pushed to the *master* branch is automatically rendered to the *gh-pages* branch.
 
-<span style="color:#17a2b8;">The first build can take around 30-40 mins depending on the number of R packages. Subsequent builds take about 2-3 minutes since caching is enabled. Caches are removed after 7 days of last access. A push after that will require a full rebuild.</span>
+:exclamation: The first build can take around 30-40 mins depending on the number of R packages. Subsequent builds take about 2-3 minutes since caching is enabled. Caches are removed after 7 days of last access. A push after that will require a full rebuild.
 
 For more details about repo organisation, updating and modifying this repo, check out the [template repo](https://github.com/royfrancis/workshop-template-rmd-ga).
 
@@ -41,6 +41,12 @@ Run `rmarkdown::render_site()` in the project directory. This renders all .Rmd a
 You can also run `rmarkdown::render("bla.Rmd")` on individual .Rmd/.md files. This is a time-saver as the whole website need not be rendered just to preview this one file.
 
 **Known issue**: Note that when rendering **slide** Rmd files locally using `render()`, the output is messed up. This is because it takes output and report style formatting from `_site.yml` when it should use it's own slide style definition from YAML. For now, either use `render_site()` or rename the `_site.yml` temporarily.
+
+## Test scripts
+
+For variant-calling and rnaseq, shell scripts are prepared to test the labs. The contents of these scripts should use identical steps and tools as the student would use in the lab. The aim of this script is to execute them on UPPMAX before the course. This should provide insight into broken links, broken tools, tool incompatibilities, core usage, ram usage and total space used.
+
+Test scripts are available inside the directory `scripts`. These are intended to be run on UPPMAX. Further instructions are available within the scripts. For rnaseq, use `rnaseq-master.sh` which internally uses other `rnaseq-*.sh` scripts. For variant-calling, use `vc-master.sh`.
 
 ---
 

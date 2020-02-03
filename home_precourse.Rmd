@@ -40,7 +40,6 @@ Once you are accepted to the project, you should see that project listed under y
 
 ### SSH & SFTP access
 
-<div class="boxy boxy-lightbulb">
 You need a program to connect to a remote cluster (UPPMAX). Linux and Mac users already have terminal on their systems.
 
 [![](data/common/mobaxterm.png)](http://mobaxterm.mobatek.net)
@@ -50,13 +49,12 @@ If you are on a Windows system, we recommend [MobaXterm](http://mobaxterm.mobate
 [![](data/common/xquartz.png)](https://www.xquartz.org/)
 
 Mac users will need to download and install [XQuartz](https://www.xquartz.org/) for X11 forwarding. *ie*; to forward remotely opened windows to local machine.
-</div>
 
 Type `ssh -Y user@rackham.uppmax.uu.se` in the terminal and then enter your password. The password will not be visible as you type.
 
-<div class="boxy boxy-lightbulb">
 If you need to transfer data between UPPMAX and your computer, you can use tools SCP or SFTP through the terminal. Windows users can use the SFTP browser available with MobaXterm.
 
+<div class="boxy boxy-lightbulb">
 [![](data/common/filezilla.png)](https://filezilla-project.org/)
 
 For all users, if you prefer a GUI to upload and download files from UPPMAX, we recommend installing [FileZilla](https://filezilla-project.org/).

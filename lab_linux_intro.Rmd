@@ -8,6 +8,7 @@ title:  "Introduction to Linux"
 ```{r,eval=TRUE,include=FALSE}
 library(yaml)
 upid <- yaml::read_yaml("_site.yml")$uppmax_project
+upres <- yaml::read_yaml("_site.yml")$uppmax_res_1
 ```
 
 <div class="boxy boxy-exclamation">
@@ -60,7 +61,7 @@ dahlo@rackham4 ~ $
 Usually you would do most of the work in this lab directly on one of the login nodes at UPPMAX, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("$ salloc -A ",upid," -t 07:00:00 -p core -n 1 --no-shell --reservation=g2019031_27 &"))
+cat(paste0("$ salloc -A ",upid," -t 07:00:00 -p core -n 1 --no-shell --reservation=",upres," &"))
 ```
 
 check which node you got (replace **username** with your UPPMAX username)
@@ -152,7 +153,7 @@ Now we have practised moving around and looking at what we have in folders. The 
 If we want to look at what we have in our home folder, while standing in the course's project folder, we type `$ ll /home/<username>/` and remember to substitute **\<username\>** with your own user name.
 
 ```bash
-$ ll /home/valent/
+$ ll /home/<username>
 ```
 
 Since most programmers are lazy (efficient), there is a shortcut to your home folder so that you don't have to write it all the time. If you write **`~/`** it means the same as if you would write **/home/\<username\>/**
@@ -240,24 +241,24 @@ The command will always be the same for all tar.gz files you want to unpack. `-x
 Look in the folder again and see what we just unpacked:
 
 ```bash
-[valent@milou2 linux_tutorial]$ ls -la
+[user@milou2 linux_tutorial]$ ls -la
 total 512
-drwxrwsr-x 12 valent g2019031   2048 Sep 24 13:19 .
-drwxrwsr-x  6 valent g2019031   2048 Sep 24 13:19 ..
-drwxrwsr-x  2 valent g2019031   2048 Sep 19  2012 a_strange_name
-drwxrwsr-x  2 valent g2019031   2048 Sep 19  2012 backed_up_proj_folder
-drwxrwsr-x  2 valent g2019031   2048 Sep 19  2012 external_hdd
--rwxrwxr-x  1 valent g2019031  17198 Sep 24 13:19 files.tar.gz
-drwxrwsr-x  2 valent g2019031   2048 Sep 19  2012 important_results
-drwxrwsr-x  2 valent g2019031 129024 Sep 19  2012 many_files
-drwxrwsr-x  2 valent g2019031   2048 Sep 19  2012 old_project
--rwxrwxr-x  1 valent g2019031      0 Sep 24 13:19 other_file.old
-drwxrwsr-x  2 valent g2019031   2048 Sep 19  2012 part_1
-drwxrwsr-x  2 valent g2019031   2048 Sep 19  2012 part_2
-drwxrwsr-x  2 valent g2019031   2048 Jan 28  2012 this_has_a_file
-drwxrwsr-x  2 valent g2019031   2048 Jan 28  2012 this_is_empty
--rwxrwxr-x  1 valent g2019031      0 Sep 19  2012 useless_file
-[valent@milou2 linux_tutorial]$
+drwxrwsr-x 12 user g20XXXXX   2048 Sep 24 13:19 .
+drwxrwsr-x  6 user g20XXXXX   2048 Sep 24 13:19 ..
+drwxrwsr-x  2 user g20XXXXX   2048 Sep 19  2012 a_strange_name
+drwxrwsr-x  2 user g20XXXXX   2048 Sep 19  2012 backed_up_proj_folder
+drwxrwsr-x  2 user g20XXXXX   2048 Sep 19  2012 external_hdd
+-rwxrwxr-x  1 user g20XXXXX  17198 Sep 24 13:19 files.tar.gz
+drwxrwsr-x  2 user g20XXXXX   2048 Sep 19  2012 important_results
+drwxrwsr-x  2 user g20XXXXX 129024 Sep 19  2012 many_files
+drwxrwsr-x  2 user g20XXXXX   2048 Sep 19  2012 old_project
+-rwxrwxr-x  1 user g20XXXXX      0 Sep 24 13:19 other_file.old
+drwxrwsr-x  2 user g20XXXXX   2048 Sep 19  2012 part_1
+drwxrwsr-x  2 user g20XXXXX   2048 Sep 19  2012 part_2
+drwxrwsr-x  2 user g20XXXXX   2048 Jan 28  2012 this_has_a_file
+drwxrwsr-x  2 user g20XXXXX   2048 Jan 28  2012 this_is_empty
+-rwxrwxr-x  1 user g20XXXXX      0 Sep 19  2012 useless_file
+[user@milou2 linux_tutorial]$
 ```
 
 # Copying and moving files
@@ -278,12 +279,12 @@ $ mv <source> <destination>
 First, take a look inside the **important_results** folder:
 
 ```bash
-[valent@milou2 linux_tutorial]$ ll important_results/
+[user@milou2 linux_tutorial]$ ll important_results/
 total 0
--rwxrwxr-x 1 valent g2019031 0 Sep 19  2012 dna_data_analysis_result_file_that_is_important-you_should_really_use_tab_completion_for_file_names.bam
--rwxrwxr-x 1 valent g2019031 0 Sep 19  2012 temp_file-1
--rwxrwxr-x 1 valent g2019031 0 Sep 19  2012 temp_file-2
-[valent@milou2 linux_tutorial]$
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 dna_data_analysis_result_file_that_is_important-you_should_really_use_tab_completion_for_file_names.bam
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 temp_file-1
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 temp_file-2
+[user@milou2 linux_tutorial]$
 ```
 
 You see that there are some unimportant temporary files that you have no interest in. Just to demonstrate the move command, I will show you how to move one of these temporary files to your backed-up project folder:
@@ -297,12 +298,12 @@ $ mv important_results/temp_file-1 backed_up_proj_folder/
 Look in the backed-up project folder to make sure you moved the file correctly.
 
 ```bash
-[valent@milou2 linux_tutorial]$ ll backed_up_proj_folder/
+[user@milou2 linux_tutorial]$ ll backed_up_proj_folder/
 total 0
--rwxrwxr-x 1 valent g2019031 0 Sep 19  2012 dna_data_analysis_result_file_that_is_important-you_should_really_use_tab_completion_for_file_names.bam
--rwxrwxr-x 1 valent g2019031 0 Sep 19  2012 last_years_data
--rwxrwxr-x 1 valent g2019031 0 Sep 19  2012 temp_file-1
-[valent@milou2 linux_tutorial]$
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 dna_data_analysis_result_file_that_is_important-you_should_really_use_tab_completion_for_file_names.bam
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 last_years_data
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 temp_file-1
+[user@milou2 linux_tutorial]$
 ```
 
 Another use for the `move` command is to rename things. When you think of it, renaming is just a special case of moving. You move the file to a location and give the file a new name in the process. The location you move the file **to** can of very well be the same folder the file already is in. To give this a try, we will rename the folder `a_strange_name` to a better name.
@@ -314,23 +315,23 @@ $ mv a_strange_name a_better_name
 Look around to see that the name change worked.
 
 ```bash
-[valent@milou2 linux_tutorial]$ mv a_strange_name a_better_name
-[valent@milou2 linux_tutorial]$ ll
+[user@milou2 linux_tutorial]$ mv a_strange_name a_better_name
+[user@milou2 linux_tutorial]$ ll
 total 448
-drwxrwsr-x 2 valent g2019031   2048 Sep 19  2012 a_better_name
-drwxrwsr-x 2 valent g2019031   2048 Sep 24 13:40 backed_up_proj_folder
-drwxrwsr-x 2 valent g2019031   2048 Sep 19  2012 external_hdd
--rwxrwxr-x 1 valent g2019031  17198 Sep 24 13:36 files.tar.gz
-drwxrwsr-x 2 valent g2019031   2048 Sep 24 13:40 important_results
-drwxrwsr-x 2 valent g2019031 129024 Sep 19  2012 many_files
-drwxrwsr-x 2 valent g2019031   2048 Sep 19  2012 old_project
--rwxrwxr-x 1 valent g2019031      0 Sep 24 13:36 other_file.old
-drwxrwsr-x 2 valent g2019031   2048 Sep 19  2012 part_1
-drwxrwsr-x 2 valent g2019031   2048 Sep 19  2012 part_2
-drwxrwsr-x 2 valent g2019031   2048 Jan 28  2012 this_has_a_file
-drwxrwsr-x 2 valent g2019031   2048 Jan 28  2012 this_is_empty
--rwxrwxr-x 1 valent g2019031      0 Sep 19  2012 useless_file
-[valent@milou2 linux_tutorial]$
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 a_better_name
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 24 13:40 backed_up_proj_folder
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 external_hdd
+-rwxrwxr-x 1 user g20XXXXX  17198 Sep 24 13:36 files.tar.gz
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 24 13:40 important_results
+drwxrwsr-x 2 user g20XXXXX 129024 Sep 19  2012 many_files
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 old_project
+-rwxrwxr-x 1 user g20XXXXX      0 Sep 24 13:36 other_file.old
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 part_1
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 part_2
+drwxrwsr-x 2 user g20XXXXX   2048 Jan 28  2012 this_has_a_file
+drwxrwsr-x 2 user g20XXXXX   2048 Jan 28  2012 this_is_empty
+-rwxrwxr-x 1 user g20XXXXX      0 Sep 19  2012 useless_file
+[user@milou2 linux_tutorial]$
 ```
 
 Sometimes you don't want to move things, you want to copy them. Moving a file will remove the original file, whereas copying the file will leave the original untouched. An example when you want to do this could be that you want to give a copy of a file to a friend. Imagine that you have a external hard drive that you want to place the file on. The file you want to give to your friend is data from last years project, which is located in your backed_up_project_folder, `backed_up_proj_folder/last_years_data`
@@ -345,11 +346,11 @@ $ cp backed_up_proj_folder/last_years_data external_hdd/
 Take a look in the **external_hdd** to make sure the file got copied.
 
 ```bash
-[valent@milou2 linux_tutorial]$ cp backed_up_proj_folder/last_years_data external_hdd/
-[valent@milou2 linux_tutorial]$ ll external_hdd/
+[user@milou2 linux_tutorial]$ cp backed_up_proj_folder/last_years_data external_hdd/
+[user@milou2 linux_tutorial]$ ll external_hdd/
 total 0
--rwxrwxr-x 1 valent g2019031 0 Sep 24 13:46 last_years_data
-[valent@milou2 linux_tutorial]$
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 24 13:46 last_years_data
+[user@milou2 linux_tutorial]$
 ```
 
 # Deleting files
@@ -374,22 +375,22 @@ $ rm <file to remove> <file to remove> <file to remove> <file to remove> <file t
 Try it out by deleting the useless file in the folder you are standing in. First, look around in the folder to see the file.
 
 ```bash
-[valent@milou2 linux_tutorial]$ ll
+[user@milou2 linux_tutorial]$ ll
 total 448
-drwxrwsr-x 2 valent g2019031   2048 Sep 19  2012 a_better_name
-drwxrwsr-x 2 valent g2019031   2048 Sep 24 13:40 backed_up_proj_folder
-drwxrwsr-x 2 valent g2019031   2048 Sep 24 13:46 external_hdd
--rwxrwxr-x 1 valent g2019031  17198 Sep 24 13:36 files.tar.gz
-drwxrwsr-x 2 valent g2019031   2048 Sep 24 13:40 important_results
-drwxrwsr-x 2 valent g2019031 129024 Sep 19  2012 many_files
-drwxrwsr-x 2 valent g2019031   2048 Sep 19  2012 old_project
--rwxrwxr-x 1 valent g2019031      0 Sep 24 13:36 other_file.old
-drwxrwsr-x 2 valent g2019031   2048 Sep 19  2012 part_1
-drwxrwsr-x 2 valent g2019031   2048 Sep 19  2012 part_2
-drwxrwsr-x 2 valent g2019031   2048 Jan 28  2012 this_has_a_file
-drwxrwsr-x 2 valent g2019031   2048 Jan 28  2012 this_is_empty
--rwxrwxr-x 1 valent g2019031      0 Sep 19  2012 useless_file
-[valent@milou2 linux_tutorial]$
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 a_better_name
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 24 13:40 backed_up_proj_folder
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 24 13:46 external_hdd
+-rwxrwxr-x 1 user g20XXXXX  17198 Sep 24 13:36 files.tar.gz
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 24 13:40 important_results
+drwxrwsr-x 2 user g20XXXXX 129024 Sep 19  2012 many_files
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 old_project
+-rwxrwxr-x 1 user g20XXXXX      0 Sep 24 13:36 other_file.old
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 part_1
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 part_2
+drwxrwsr-x 2 user g20XXXXX   2048 Jan 28  2012 this_has_a_file
+drwxrwsr-x 2 user g20XXXXX   2048 Jan 28  2012 this_is_empty
+-rwxrwxr-x 1 user g20XXXXX      0 Sep 19  2012 useless_file
+[user@milou2 linux_tutorial]$
 ```
 
 Now remove it.
@@ -408,10 +409,10 @@ $ rmdir this_has_a_file
 If you look inside `this_has_a_file`,
 
 ```bash
-[valent@milou2 linux_tutorial]$ ll this_has_a_file
+[user@milou2 linux_tutorial]$ ll this_has_a_file
 total 0
--rwxrwxr-x 1 valent g2019031 0 Jan 28  2012 file
-[valent@milou2 linux_tutorial]$
+-rwxrwxr-x 1 user g20XXXXX 0 Jan 28  2012 file
+[user@milou2 linux_tutorial]$
 ```
 
 you see that there is a file in there! Only directories that are completely empty can be deleted using `rmdir`. To be able to delete `this_has_a_file`, either delete the file manually and then remove the folder
@@ -436,12 +437,12 @@ Of course, this never happens because you **ALWAYS** name your files so that you
 <i class="fas fa-clipboard-list"></i> Now, we are looking for that really good script we wrote a couple of months ago in that other project. Look in the project's folder, **old_project** and find the script.
 
 ```bash
-[valent@milou2 linux_tutorial]$ ll old_project/
+[user@milou2 linux_tutorial]$ ll old_project/
 total 96
--rwxrwxr-x 1 valent g2019031 39904 Sep 19  2012 a
--rwxrwxr-x 1 valent g2019031     0 Sep 19  2012 stuff_1
--rwxrwxr-x 1 valent g2019031  1008 Sep 19  2012 the_best
-[valent@milou2 linux_tutorial]$
+-rwxrwxr-x 1 user g20XXXXX 39904 Sep 19  2012 a
+-rwxrwxr-x 1 user g20XXXXX     0 Sep 19  2012 stuff_1
+-rwxrwxr-x 1 user g20XXXXX  1008 Sep 19  2012 the_best
+[user@milou2 linux_tutorial]$
 ```
 
 Not so easy with those names.. We will have to use less to look at the files and figure out which is which. We use `less` to view the file.
@@ -522,17 +523,17 @@ $ mv  sample_1_*  my_other_folder
 We can try it out on the example files I have prepared. There are two folders called **part_1** and **part_2**. We want to collect all the **.txt** files from both these folders in one of the folders. Look around in both the folders to see what they contain.
 
 ```bash
-[valent@milou2 linux_tutorial]$ ll part_1/
+[user@milou2 linux_tutorial]$ ll part_1/
 total 0
--rwxrwxr-x 1 valent g2019031 0 Sep 19  2012 file_1.txt
--rwxrwxr-x 1 valent g2019031 0 Sep 19  2012 file_2.txt
-[valent@milou2 linux_tutorial]$ ll part_2
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 file_1.txt
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 file_2.txt
+[user@milou2 linux_tutorial]$ ll part_2
 total 0
--rwxrwxr-x 1 valent g2019031 0 Sep 19  2012 file_3.txt
--rwxrwxr-x 1 valent g2019031 0 Sep 19  2012 file_4.txt
--rwxrwxr-x 1 valent g2019031 0 Sep 19  2012 garbage.tmp
--rwxrwxr-x 1 valent g2019031 0 Sep 19  2012 incomplete_datasets.dat
-[valent@milou2 linux_tutorial]$
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 file_3.txt
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 file_4.txt
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 garbage.tmp
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 incomplete_datasets.dat
+[user@milou2 linux_tutorial]$
 ```
 
 We see that **part_1** only contains `.txt` files, and that **part_2** contains some other files as well. The best option seems to be to move all `.txt` files from **part_2** info **part_1**.

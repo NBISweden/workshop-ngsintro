@@ -1,4 +1,4 @@
----
+/sw/courses/ngsintro/vc/---
 title: "Variant-calling workflow"
 subtitle: "NGS workflow"
 ---
@@ -9,13 +9,15 @@ subtitle: "NGS workflow"
 ```{r,eval=TRUE,include=FALSE}
 library(yaml)
 upid <- yaml::read_yaml("_site.yml")$uppmax_project
+upres3 <- yaml::read_yaml("_site.yml")$uppmax_res_3
+upres4 <- yaml::read_yaml("_site.yml")$uppmax_res_4
 ```
 
 # Introduction
 
 In this lab we will use a region on chr2, around the LCT gene, that has been shown to control how lactose is tolerated in adults. We will work with 3 samples that have been sequenced at low coverage in the 1000 Genomes Project. Much like in the corresponding lecture, we will go through alignment, deduplication, base quality score recalibration, variant calling (first in one sample and then in all samples), and variant filtering. In addition, we will annotate the variants and view the alignments.  
-  
-To learn more about genetic factors behind lactose-persistence and lactose intolerance, please read for example [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf). 
+
+To learn more about genetic factors behind lactose-persistence and lactose intolerance, please read for example [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf).
 
 ## Running commands
 
@@ -53,10 +55,18 @@ Connect to UPPMAX.
 $ ssh -Y username@rackham.uppmax.uu.se
 ```
 
-Book a node. Make sure you only do this once!
+Book a node. Make sure you only do this once depeding on the day.
+
+Use this reservation on day 1 of variant-calling.
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("salloc -A ",upid," -t 04:00:00 -p core -n 1 --no-shell --reservation=g2019031_29 &"))
+cat(paste0("salloc -A ",upid," -t 04:00:00 -p core -n 1 --no-shell --reservation=",upres3," &"))
+```
+
+Use this reservation on day 2 of variant-calling.
+
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0("salloc -A ",upid," -t 04:00:00 -p core -n 1 --no-shell --reservation=",upres4," &"))
 ```
 
 Once your job allocation has been granted (should not take long) you can connect to the node using `ssh`. To find out the name of your node, use:
@@ -105,29 +115,28 @@ cat(paste0("cd /proj/",upid,"/nobackup/<username>/ngsworkflow"))
 All input data for this exercise is located in the folder:
 
 ```bash
-/sw/share/compstore/courses/ngsintro/reseq/data/
+/sw/courses/ngsintro/vc/data/
 # These files are read-only so that the files are not accidentally deleted
 ```
 
 Bam and VCF files can be reached at this new location on Uppmax:
 
-```bash
-/sw/share/compstore/courses/ngsintro/g2019031/reseq
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0("$ cd /sw/courses/ngsintro/",upid,"/vc"))
 ```
-
 
 ## The reference genome
 
 Before we can align our sample we need a reference genome. For our exercises, we'll use only human chromosome 2, however in a real situation you should use the full genome.  Create a symbolic link to the reference in your workspace:
 
 ```bash
-ln -s /sw/share/compstore/courses/ngsintro/reseq/data/ref/human_g1k_v37_chr2.fasta
+ln -s /sw/courses/ngsintro/vc/data/ref/human_g1k_v37_chr2.fasta
 ```
 Do the same with the fastq files
 
 ```bash
-ln -s /sw/share/compstore/courses/ngsintro/reseq/data/fastq/HG00097_1.fq
-ln -s /sw/share/compstore/courses/ngsintro/reseq/data/fastq/HG00097_2.fq
+ln -s /sw/courses/ngsintro/vc/data/fastq/HG00097_1.fq
+ln -s /sw/courses/ngsintro/vc/data/fastq/HG00097_2.fq
 ```
 
 ### BWA index
@@ -162,7 +171,7 @@ We are going to start by aligning the reads for the HG00097 sample, using `bwa m
 ```bash
 bwa mem -t 1 human_g1k_v37_chr2.fasta HG00097_1.fq HG00097_2.fq > HG00097.sam
 
-# -t 1 is the number of threads to use (the number of cores you booked). If you would have analysed the entire genome more cores and threads would have been necessary. 
+# -t 1 is the number of threads to use (the number of cores you booked). If you would have analysed the entire genome more cores and threads would have been necessary.
 # You have to use a file redirect ">" for the output, otherwise it will be written to stdout (your screen).
 ```
 
@@ -241,7 +250,7 @@ java -Xmx7g -jar $GATK_HOME/GenomeAnalysisTK.jar -T BaseRecalibrator \
   -R human_g1k_v37_chr2.fasta \
   -I <input_bam> \
   -o <calibration_table> \
-  -knownSites /sw/share/compstore/courses/ngsintro/reseq/data/ref/1000G_phase1.snps.high_confidence.b37.chr2.vcf
+  -knownSites /sw/courses/ngsintro/vc/data/ref/1000G_phase1.snps.high_confidence.b37.chr2.vcf
 
 # knownSites is a list of known high quality variants
 # calibration_table is a new file with the covariation data written to it and used in the second step
@@ -284,7 +293,7 @@ java -Xmx7g -jar $GATK_HOME/GenomeAnalysisTK.jar -T HaplotypeCaller \
 Rerun the workflow for additional samples. If you want to repeat the procedure you can now use your saved commands and rerun the mapping and variant calling steps for at least one more sample (HG00100 or HG00101) from the course directory before continuing with the next step. Alternatively, you can copy the .g.vcf files of the two additional samples.
 
 ```bash
-cp /sw/share/compstore/courses/ngsintro/reseq/data/vcf/<sample>.g.vcf .
+cp /sw/courses/ngsintro/vc/data/vcf/<sample>.g.vcf .
 ```
 
 ## Joint genotyping
@@ -450,9 +459,9 @@ You will need the bam files of all 3 samples: HG00097, HG00100 and HG00101.
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat("# copy bam files\n")
-cat(paste0("scp <username>@rackham.uppmax.uu.se:/sw/share/compstore/courses/ngsintro/g2019031/reseq/HG00* ./\n"))
+cat(paste0("scp <username>@rackham.uppmax.uu.se:/sw/courses/ngsintro/vc/HG00* ./\n"))
 cat("# copy vcf file\n")
-cat(paste0("scp <username>@rackham.uppmax.uu.se:/sw/share/compstore/courses/ngsintro/g2019031/reseq/filtered_variants.vcf ./\n"))
+cat(paste0("scp <username>@rackham.uppmax.uu.se:/sw/courses/ngsintro/vc/filtered_variants.vcf ./\n"))
 
 ```
 
@@ -460,8 +469,8 @@ If you are missing some of the BAM files or the VCF you can do this instead:
 
 ```bash
 # Copy the files from the course directory:
-scp <username>@rackham.uppmax.uu.se:/sw/share/compstore/courses/ngsintro/reseq/data/bam/<sample>.dedup.recal.ba* ./
-scp <username>@rackham.uppmax.uu.se:/sw/share/compstore/courses/ngsintro/reseq/data/vcf/my_variants_filtered.vcf ./
+scp <username>@rackham.uppmax.uu.se:/sw/courses/ngsintro/vc/data/bam/<sample>.dedup.recal.ba* ./
+scp <username>@rackham.uppmax.uu.se:/sw/courses/ngsintro/vc/data/vcf/my_variants_filtered.vcf ./
 ```
 
 **Choose reference**
@@ -536,7 +545,7 @@ You can try to answer these questions:
 module load BEDTools/2.27.1
 
 #Copy this bed file from the course directory and look at it using e.g. less
-cp /sw/share/compstore/courses/ngsintro/reseq/data/genes.bed .
+cp /sw/courses/ngsintro/vc/data/genes.bed .
 
 bedtools intersect -wo -a <vcffile> -b <bedfile> > <subset.vcf>
 ```

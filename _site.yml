@@ -3,11 +3,11 @@ favicon: assets/favicon.png
 output_dir: 2004
 uppmax_project: g2019031
 # uppmax reservation ids
-uppmax_res_1: XXXXX
-uppmax_res_2: XXXXX
-uppmax_res_3: XXXXX
-uppmax_res_4: XXXXX
-uppmax_res_5: XXXXX
+uppmax_res_1: g2019031_27
+uppmax_res_2: g2019031_28
+uppmax_res_3: g2019031_29
+uppmax_res_4: g2019031_30
+uppmax_res_5: g2019031_31
 # location options are lund, umea or uppsala
 location: uppsala
 exclude: ["docs","README.md","schedule.csv","LICENSE","LICENSE.md","scripts","tmprepo"]
