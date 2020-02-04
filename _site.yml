@@ -9,7 +9,7 @@ uppmax_res_3: g2019031_29
 uppmax_res_4: g2019031_30
 uppmax_res_5: g2019031_31
 # location options are lund, umea or uppsala
-location: uppsala
+location: linkoping
 exclude: ["docs","README.md","schedule.csv","LICENSE","LICENSE.md","scripts","tmprepo"]
 navbar:
   title: '<img src="assets/logo.svg" id="logo" style="height:30px;margin:0;"/>'

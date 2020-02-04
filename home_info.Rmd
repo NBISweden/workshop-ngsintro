@@ -41,7 +41,7 @@ if(loc=="uppsala") {
                     description="Use the [UL website](www.ul.se) or the [UL app](https://www.ul.se/en/tickets/how-to-buy-a-ticket/the-UL-app/) for bus and train services around Uppsala. For buses from the Centralstation (Train/Bus), take Bus 4 (towards Gottsunda Centrum) or 8 (towards Sunnersta) and get off at the stop *Uppsala Science Park*. Bus tickets can be purchased in the app or directly from the driver using a credit card.",
                     stringsAsFactors=F)
 }
-if(loc=="Linkoping") {
+if(loc=="linkoping") {
   dfr <- data.frame(venue_lat=58.4,
                     venue_lon=15.6,
                     venue_address="<b>Linköping University</b>,Campus Valla, C-house, Entrance 12, 581 83 Linköping, Sweden",
