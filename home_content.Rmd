@@ -46,7 +46,7 @@ This page contains links to different lectures (slides) and practical exercises 
 
 **Other**
 
-* [NGS Overview (Slides)](slide_ngs_overview.pdf)
+* [NGS Overview (Slides)](slide_Sequencing_technologies_2020b.pptx)
 * [Data management (Slides)](slide_data_management.pdf)
 
 **Useful resources**

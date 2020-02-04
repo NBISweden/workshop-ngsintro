@@ -9,8 +9,8 @@ subtitle: "NGS workflow"
 ```{r,include=FALSE}
 library(yaml)
 upid <- yaml::read_yaml("_site.yml")$uppmax_project
-id_reservation_1 <- paste0(upid,"_30")
-id_reservation_2 <- paste0(upid,"_31")
+upres4 <- yaml::read_yaml("_site.yml")$uppmax_res_4
+upres5 <- yaml::read_yaml("_site.yml")$uppmax_res_5
 path_data <- "/sw/courses/ngsintro/rnaseq"
 path_project <- paste0("/proj/",upid,"/nobackup")
 path_project_rnaseq <- paste0(path_project,"/<username>/rnaseq")
@@ -118,13 +118,13 @@ For the RNA-Seq part of the course, we will work on the Rackham cluster. A stand
 Book resources for RNA-Seq day 1.
 
 ```{r,comment="",block.title=TRUE,class.output="sh",echo=FALSE}
-cat(paste0("salloc -A ",upid," -t 08:00:00 -p core -n 1 --reservation=",id_reservation_1))
+cat(paste0("salloc -A ",upid," -t 03:00:00 -p core -n 1 --reservation=",upres4))
 ```
 
 Book resources for RNA-Seq day 2.
 
 ```{r,comment="",block.title=TRUE,class.output="sh",echo=FALSE}
-cat(paste0("salloc -A ",upid," -t 08:00:00 -p core -n 1 --reservation=",id_reservation_2))
+cat(paste0("salloc -A ",upid," -t 04:00:00 -p core -n 1 --reservation=",upres5))
 ```
 
 ### Set-up directory
@@ -224,7 +224,7 @@ module load FastQC/0.11.8
 Once the module is loaded, FastQC program is available through the command `fastqc`. Use `fastqc --help` to see the various parameters available to the program. We will use `-o` to specify the output directory path and finally, the name of the input fastq file to analyse. The syntax will look like below.
 
 ```{sh,block.title=TRUE,eval=FALSE}
-fastqc -t 8 -o . ../1_raw/filename.fq.gz
+fastqc -o . ../1_raw/filename.fq.gz
 ```
 
 Based on the above command, we will write a bash loop to process all fastq files in the directory. Writing multi-line commands through the terminal can be a pain. Therefore, we will run larger scripts from a bash script file. Move to your `scripts` directory and create a new file named `fastqc.sh`.
@@ -376,12 +376,13 @@ module load star/2.7.2b
 star \
   --runMode genomeGenerate \
   --runThreadN 1 \
+  --genomeSAindexNbases 11 \
   --genomeDir ./mouse_chr19 \
   --genomeFastaFiles ./Mus_musculus.GRCm38.dna.chromosome.19.fa \
   --sjdbGTFfile ./Mus_musculus.GRCm38.99.gtf
 ```
 
-The above script means that STAR should run in `genomeGenerate` mode to build an index. It should use 8 threads for computation. The output files must be directed to the indicated directory. The paths to the `.fasta` file and the annotation file (`.gtf`) is also shown. STAR arguments are described in the [STAR manual](https://github.com/alexdobin/STAR/blob/master/doc/STARmanual.pdf).
+The above script means that STAR should run in `genomeGenerate` mode to build an index. It should use 1 core for computation. The `--genomeSAindexNbases` argument needs to be adjusted for genome size. Here we set it to a value that is optimal for one chromosome. This option doesn't have to be adjusted for full genome. In any case, if it needs to be adjusted, STAR will tell you about it and what value. The output files must be directed to the indicated directory. The paths to the `.fasta` file and the annotation file (`.gtf`) is also shown. STAR arguments are described in the [STAR manual](https://github.com/alexdobin/STAR/blob/master/doc/STARmanual.pdf).
 
 Use `pwd` to check if you are standing in the correct directory. Then, run the script from the `reference` directory.
 
