@@ -1,5 +1,5 @@
 /sw/courses/ngsintro/vc/---
-title: "Variant-calling workflow"
+title: "Variant-calling workflow test"
 subtitle: "NGS workflow"
 ---
 
