@@ -15,7 +15,7 @@ date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_r
 ;;11:00;12:00;NGS pipeline;Adam Ameur;;slide_ngs_pipelines.pptx;;
 ;;12:00;13:00;Lunch;;;;;
 ;;13:00;14:00;Variant-calling workflow;Malin Larsson;;slide_vc.pptx;;
-;;14:00;17:00;Variant-calling workflow;Malin Larsson;AJ, PE, MD;;lab_vc_2020.html;
+;;14:00;17:00;Variant-calling workflow;Malin Larsson;AJ, PE, MD;;lab_vc.html;
 30/01/2020;E10:1309;09:00;11:30;Variant-calling workflow;Malin Larsson;AJ, PE;;;http://bit.ly/2PRscGA
 ;;11:30;12:00;Variant-calling discussion;Malin Larsson;AJ, PE;;slide_vc_discussion.pptx;
 ;;12:00;13:00;Lunch;;;;;
