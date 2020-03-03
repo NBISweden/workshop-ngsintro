@@ -14,10 +14,47 @@ upres4 <- yaml::read_yaml("_site.yml")$uppmax_res_4
 ```
 
 # Introduction
-
-In this lab we will use a region on chr2, around the LCT gene, that has been shown to control how lactose is tolerated in adults. We will work with 3 samples that have been sequenced at low coverage in the 1000 Genomes Project. Much like in the corresponding lecture, we will go through alignment, deduplication, base quality score recalibration, variant calling (first in one sample and then in all samples), and variant filtering. In addition, we will annotate the variants and view the alignments.  
+Rapidly dropping sequencing costs and the ability to obtain valuable information about the entire genetic code has made Whole-genome sequening (WGS) a powerful research tool. The 1000 Genomes Project was the first project to sequence the entire genomes of a large number of people, to provide a comprehensive resource on human genetic variation. Data from the 1000 Genomes Project was quickly made available to the worldwide scientific community through freely accessible public databases. In this workshop we will use 3 samples from the 1000 Genomes project, and look in detail at a small regions on chromosome 2 around the LCT gene. We will look at genetic variants in this region that has been shown to control how lactose is tolerated in adults. 
+  
+In the first part of the workshop we will run a basic variant calling workflow consisting of quality control, Alingment of reads to the reference genome, and variant calling in one of the samples. 
+  
+In the second part of the workshop we will learn how to perform joint variant calling in all three samples. 
+  
+In the third part of the workshop we will look in more detail at GATK best practise variant calling, and try to follow their principles on our three samples. 
 
 To learn more about genetic factors behind lactose-persistence and lactose intolerance, please read for example [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf).
+
+To learn more about GATK and their best practises workflows, please visit [their website](https://gatk.broadinstitute.org/hc/en-us)
+
+# Data
+
+All input data for this exercise is located in the folder:
+
+```bash
+/sw/courses/ngsintro/reseq/data
+# These files are read-only so that the files are not accidentally deleted
+```
+
+Bam and VCF files can be reached at this new location on Uppmax:
+
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0("$ cd /sw/courses/ngsintro/",upid,"/vc"))
+```
+
+## The reference genome
+
+Before we can align our sample we need a reference genome. For our exercises, we'll use only human chromosome 2, however in a real situation you should use the full genome.  Create a symbolic link to the reference in your workspace:
+
+```bash
+ln -s /sw/courses/ngsintro/reseq/data/ref/human_g1k_v37_chr2.fasta
+```
+Do the same with the fastq files
+
+```bash
+ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00097_1.fq
+ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00097_2.fq
+```
+
 
 ## Running commands
 
