@@ -15,27 +15,23 @@ upres4 <- yaml::read_yaml("_site.yml")$uppmax_res_4
 
 # Introduction
 Rapidly dropping sequencing costs and the ability to obtain information about the entire genetic code has made whole genome sequening (WGS) a powerful research tool for detecting genetic variation. This workshop will take you thourgh the process of calling short variants (SNPs and indels) in whole geonome sequence data from three samples. 
-    
-The main part of the workshop will guide you through a basic short variant calling workflow for just one sample. The aim is to get familiar with the bam and vcf file formats, and how to interpret the results of variant calling in Integrative Genomics Viewer (IGV).
-
-Next, if you have time, we will expand the workflow and perform joint variant calling on three samples.Here we will also give you an idea of how you can combine individual linux commands into a workflow that can be started as an SBATCH script.  
-
-The last part of the exercise will take you thourgh some additional steps that are recommended by GATK best practise short variant detection. 
-
+- The main part of the workshop will guide you through a basic short variant calling workflow for just one sample. The aim is to get familiar with the bam and vcf file formats, and how to interpret the results of variant calling in Integrative Genomics Viewer (IGV).
+- Next, if you have time, we will expand the workflow and perform joint variant calling on three samples. Here we will also give you an idea of how you can combine individual linux commands into a workflow that can be started as an SBATCH script.
+- The last part of the exercise will take you thourgh some additional steps that are recommended by GATK best practise short variant detection. 
+  
 # Samples
-The 1000 Genomes Project was the first project to sequence the entire genomes of a large number of people, to provide a comprehensive resource on human genetic variation. Data from the 1000 Genomes Project was quickly made available to the worldwide scientific community through freely accessible public databases. The first phase of the project The project planned to sequence each sample to 4x genome coverage; at this depth, sequencing can not discover all variants in each sample, but can allow the detection of most variants with frequencies as low as 1% in the cohort.
+The 1000 Genomes Project was the first project to sequence the entire genomes of a large number of people, to provide a comprehensive resource on human genetic variation. In the first phase of the project each sample was seqcuended to 4x genome coverage. At this depth, sequencing can not discover all variants in each sample, but can allow the detection of most variants with frequencies of 1% in the 1000 Genomes cohort. Data from the 1000 Genomes Project available through freely accessible public databases, and in this workshop we will use 3 samples from the low converage phase of the 1000 Genomes project:  
+HG00097  
+HG00100  
+HG00101  
   
-In this workshop we will use 3 samples from the 1000 Genomes project:  
-HG00097
-HG00100
-HG00101
-
-
 # The LCT locus
-In this workshop we will look in detail at a small regions on chromosome 2 around the LCT gene. We will look at genetic variants in this region that has been shown to control how lactose is tolerated in adults. 
-  
-To learn more about genetic factors behind lactose-persistence and lactose intolerance, please read for example [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf).
+We will look in detail at a small regions on chromosome 2 around the LCT gene. We will look at genetic variants in this region that has been shown to control how lactose is tolerated in adults. 
 
+One variant that lead to lactase persistance has dbSNP accession number rs4988235, and is located at at position chr2:136608596. Please read the first three pages of this publication to find out more details about the lactase persistence allele.  The variant (rs4988235) is referred to as LCT-13910C>T. [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf).
+
+
+# Data
 
 All input data for this exercise is located in the folder:
 
