@@ -26,9 +26,7 @@ HG00100
 HG00101  
   
 # The LCT locus
-We will look in detail at a small regions on chromosome 2 around the LCT gene. We will look at genetic variants in this region that has been shown to control how lactose is tolerated in adults. 
-
-One variant that lead to lactase persistance has dbSNP accession number rs4988235, and is located at at position chr2:136608596. Please read the first three pages of this publication to find out more details about the lactase persistence allele.  The variant (rs4988235) is referred to as LCT-13910C>T. [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf).
+We will work with data for a small regions on chromosome 2 around the LCT gene. Genetic variants in this region control how lactose is tolerated in adults, and the variant rs4988235 (located at at position chr2:136608596 in HG19) has been shown to lead to lactose persistence in adults. To learn more about the genetic bases for lactose tolerance please read the first three pages of this publication by Mattar et al. The variant (rs4988235) is here referred to as LCT-13910C>T. [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf).
 
 
 # Data
