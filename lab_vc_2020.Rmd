@@ -1,5 +1,5 @@
-/sw/courses/ngsintro/vc/---
-title: "Variant-calling workflow"
+---
+title: "Short Variant Calling"
 subtitle: "NGS workflow"
 ---
 
@@ -14,31 +14,34 @@ upres4 <- yaml::read_yaml("_site.yml")$uppmax_res_4
 ```
 
 # Introduction
-Rapidly dropping sequencing costs and the ability to obtain valuable information about the entire genetic code has made Whole-genome sequening (WGS) a powerful research tool. The 1000 Genomes Project was the first project to sequence the entire genomes of a large number of people, to provide a comprehensive resource on human genetic variation. Data from the 1000 Genomes Project was quickly made available to the worldwide scientific community through freely accessible public databases. In this workshop we will use 3 samples from the 1000 Genomes project, and look in detail at a small regions on chromosome 2 around the LCT gene. We will look at genetic variants in this region that has been shown to control how lactose is tolerated in adults. 
+Rapidly dropping sequencing costs and the ability to obtain information about the entire genetic code has made whole genome sequening (WGS) a powerful research tool for detecting genetic variation. This workshop will take you thourgh the process of calling short variants (SNPs and indels) in whole geonome sequence data from three samples. The workshop is divided into three parts, with increasing difficulty. The main part of the workshop is intended for everyone, and the subsequent parts are intended for those of you that have time. 
   
-In the first part of the workshop we will run a basic variant calling workflow consisting of quality control, Alingment of reads to the reference genome, and variant calling in one of the samples. 
-  
-In the second part of the workshop we will learn how to perform joint variant calling in all three samples. 
-  
-In the third part of the workshop we will look in more detail at GATK best practise variant calling, and try to follow their principles on our three samples. 
+The main part of the workshop will guide you through a basic short variant calling workflow for just one sample. The aim is to get familiar with the bam and vcf file formats, and how to interpret the results of variant calling in Integrative Genomics Viewer (IGV).
 
+Next we will expand the workflow and perform joint variant calling on three samples.Here we will also give you an idea of how you can combine individual linux commands into a workflow that can be started as an SBATCH script.  
+
+The last part of the exercise will take you thourgh some additional steps that are recommended by GATK best practise short variant detection. 
+
+# Samples
+The 1000 Genomes Project was the first project to sequence the entire genomes of a large number of people, to provide a comprehensive resource on human genetic variation. Data from the 1000 Genomes Project was quickly made available to the worldwide scientific community through freely accessible public databases. The first phase of the project The project planned to sequence each sample to 4x genome coverage; at this depth, sequencing can not discover all variants in each sample, but can allow the detection of most variants with frequencies as low as 1% in the cohort.
+  
+In this workshop we will use 3 samples from the 1000 Genomes project:  
+HG00097
+HG00100
+HG00101
+
+
+# The LCT locus
+In this workshop we will look in detail at a small regions on chromosome 2 around the LCT gene. We will look at genetic variants in this region that has been shown to control how lactose is tolerated in adults. 
+  
 To learn more about genetic factors behind lactose-persistence and lactose intolerance, please read for example [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf).
 
-To learn more about GATK and their best practises workflows, please visit [their website](https://gatk.broadinstitute.org/hc/en-us)
-
-# Data
 
 All input data for this exercise is located in the folder:
 
 ```bash
 /sw/courses/ngsintro/reseq/data
 # These files are read-only so that the files are not accidentally deleted
-```
-
-Bam and VCF files can be reached at this new location on Uppmax:
-
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("$ cd /sw/courses/ngsintro/",upid,"/vc"))
 ```
 
 ## The reference genome
