@@ -16,9 +16,9 @@ upres4 <- yaml::read_yaml("_site.yml")$uppmax_res_4
 # Introduction
 Rapidly dropping sequencing costs and the ability to obtain information about the entire genetic code has made whole genome sequening (WGS) a powerful research tool for detecting genetic variation. This workshop will take you thourgh the process of calling short variants (SNPs and indels) in whole geonome sequence data from three samples. 
   
-- 01 The main part of the workshop will guide you through a basic short variant calling workflow for just one sample. The aim is to get familiar with the bam and vcf file formats, and how to interpret the results of variant calling in Integrative Genomics Viewer (IGV).
-- 02 Next, if you have time, we will expand the workflow and perform joint variant calling on three samples. Here we will also give you an idea of how you can combine individual linux commands into a workflow that can be started as an SBATCH script.
-- 03 The last part of the exercise will take you thourgh some additional steps that are recommended by GATK best practise short variant detection. 
+* The main part of the workshop will guide you through a basic short variant calling workflow for just one sample. The aim is to get familiar with the bam and vcf file formats, and how to interpret the results of variant calling in Integrative Genomics Viewer (IGV).
+* Next, if you have time, we will expand the workflow and perform joint variant calling on three samples. Here we will also give you an idea of how you can combine individual linux commands into a workflow that can be started as an SBATCH script.
+* The last part of the exercise will take you thourgh some additional steps that are recommended by GATK best practise short variant detection. 
   
 # Samples
 The 1000 Genomes Project was the first project to sequence the entire genomes of a large number of people, to provide a comprehensive resource on human genetic variation. In the first phase of the project each sample was seqcuended to 4x genome coverage. At this depth, sequencing can not discover all variants in each sample, but can allow the detection of most variants with frequencies of 1% in the 1000 Genomes cohort. Data from the 1000 Genomes Project available through freely accessible public databases, and in this workshop we will use 3 samples from the low converage phase of the 1000 Genomes project:  
