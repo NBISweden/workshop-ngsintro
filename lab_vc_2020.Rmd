@@ -21,11 +21,16 @@ Rapidly dropping sequencing costs and the ability to obtain information about th
 * The last part of the exercise will take you thourgh some additional steps that are recommended by GATK best practise short variant detection. 
   
 # Samples
-The 1000 Genomes Project was the first project to sequence the entire genomes of a large number of people, to provide a comprehensive resource on human genetic variation. In the first phase of the project each sample was seqcuended to 4x genome coverage. At this depth, sequencing can not discover all variants in each sample, but can allow the detection of most variants with frequencies of 1% in the 1000 Genomes cohort. Data from the 1000 Genomes Project available through freely accessible public databases, and in this workshop we will use 3 samples from the low converage phase of the 1000 Genomes project:  
+The 1000 Genomes Project was the first project to sequence the entire genomes of a large number of people, to provide a comprehensive resource on human genetic variation. In the first phase of the project each sample was seqcuended to 4x genome coverage. At this depth, sequencing can not discover all variants in each sample, but can allow the detection of most variants with frequencies of 1% in the 1000 Genomes cohort. Data from the 1000 Genomes Project available through freely accessible public databases, and in this workshop we will use 3 samples from the low converage phase of the 1000 Genomes project.
+Sample ID | 
 HG00097  
 HG00100  
 HG00101  
-  
+Table Header  | Population | Coverage
+------------- | ---------- | --------
+HG00097       | European   | 30X
+HG00100       | European   | 30X
+HG00100       | European   | 30X
 # The LCT locus
 We will work with data for a small regions on chromosome 2 around the LCT gene. Genetic variants in this region control how lactose is tolerated in adults, and the variant rs4988235 (located at at position chr2:136608596 in HG19) has been shown to lead to lactose persistence in adults. To learn more about the genetic bases for lactose tolerance please read the first three pages of this publication by Mattar et al. The variant (rs4988235) is here referred to as LCT-13910C>T. [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf).
 
