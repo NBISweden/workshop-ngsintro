@@ -40,11 +40,11 @@ To learn more about the genetic bases for lactose tolerance please read the firs
   
 ## General guide
 <div class="boxy boxy-lightbulb">
-* In paths, you should replace `<username>` with your actual UPPMAX username.
-* In commands, you should replace `<parameter>` with the correct parameter type, for example your input file name, output file name, directory name, etc. 
-* Running a command without parameters will, often, return a help message on how to run the command.
+* In paths, replace `<username>` with your actual UPPMAX username.
+* In commands, replace `<parameter>` with the correct parameter type, for example your input file name, output file name, directory name, etc. 
+* Running a command without parameters will often return a help message on how to run the command.
 * Copying and pasting commands from the exercise to terminal can result in formatting errors. 
-* Use tab completion when possible.
+* Use tab completion.
 * A line starting with `#` is a comment
 * If you change the node you are working on you will need to reload the tool modules. (See **Accessing programs** below)
 * Check that the output file exists and is a reasonable size (use `ls -l`) after a command is completed as a quick way to see that the command went well. 
@@ -52,9 +52,8 @@ To learn more about the genetic bases for lactose tolerance please read the firs
 * Giving good names to your output files that describes what has been done will help you.
 * Google errors, someone in the world has run into EXACTLY the same problem you had and asked about it on a forum somewhere.
 </p>
-
 </div>
-
+  
 # Data
 All input data for this exercise is located in the folder on Rackham:
 ```bash
@@ -68,53 +67,39 @@ You will also need the reference genome in fasta format. This, and a few other r
 ```bash
 /sw/courses/ngsintro/reseq/data/ref
 ```
-
+  
 # Main exercise
+
 ## Using Uppmax
-
 Connect to UPPMAX.
-
 ```bash
 $ ssh -Y username@rackham.uppmax.uu.se
 ```
-
 Book a node. Make sure you only do this once depeding on the day.
-
 Use this reservation on day 1 of variant-calling.
-
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0("salloc -A ",upid," -t 04:00:00 -p core -n 1 --no-shell --reservation=",upres3," &"))
 ```
-
 Use this reservation on day 2 of variant-calling.
-
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0("salloc -A ",upid," -t 04:00:00 -p core -n 1 --no-shell --reservation=",upres4," &"))
 ```
-
 Once your job allocation has been granted (should not take long) you can connect to the node using `ssh`. To find out the name of your node, use:
-
 ```bash
 squeue -u <username>
 # Node name is found under nodelist header. You should only see one node here.
 ```
-
 and to connect to the node:
-
 ```bash
 ssh -Y <nodename>
 ```
 
 ## Accessing programs
-
 We're going to need several programs that are installed in the module system. To access the bioinformatics modules you first need to load the `bioinfo-tools` module:
-
 ```bash
 module load bioinfo-tools
 ```
-
 This makes it possible to load the individual programs we need:
-
 ```bash
 module load bwa/0.7.17
 module load samtools/1.8
