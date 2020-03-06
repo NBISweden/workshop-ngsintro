@@ -60,7 +60,7 @@ This means that you should replace `<parameter>` with the correct parameter type
 
 </div>
 
-## Data
+# Data
 All input data for this exercise is located in the folder on Rackham:
 ```bash
 /sw/courses/ngsintro/reseq/data
