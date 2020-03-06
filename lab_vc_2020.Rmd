@@ -39,12 +39,6 @@ We will use this region as an example case to illustrate how you can look for ge
 To learn more about the genetic bases for lactose tolerance please read the first three pages of this publication by Mattar et al. The variant (rs4988235) is here referred to as LCT-13910C>T. [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf).
   
 ## General guide
-
-```bash
-command <parameter1> <parameter2> ...
-``` 
-This means that you should replace `<parameter>` with the correct parameter type, for example your input file name, output file name, directory name, etc. If you don't know which parameter you should supply, please ask.
-
 <div class="boxy boxy-lightbulb">
 * In commands, you should replace `<parameter>` with the correct parameter type, for example your input file name, output file name, directory name, etc. 
 * In paths, remember to change `<username>` with your actual UPPMAX username.
