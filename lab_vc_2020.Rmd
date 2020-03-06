@@ -46,7 +46,7 @@ To learn more about the genetic bases for lactose tolerance please read the firs
 * Copying and pasting commands from the exercise to terminal can result in formatting errors. 
 * Use tab completion.
 * A line starting with `#` is a comment
-* If you change the node you are working on you will need to reload the tool modules. Please see [Accessing programs](#Acessing programs) below.
+* If you change the node you are working on you will need to reload the tool modules. Please see [Accessing programs](#Acessingprograms) below.
 * Check that the output file exists and is a reasonable size (use `ls -l`) after a command is completed as a quick way to see that the command went well. 
 * A common mistake is to attempt to load input files that do not exist, or create output files where they cannot write.
 * Giving good names to your output files that describes what has been done will help you.
@@ -115,7 +115,7 @@ Do the same with the fastq files
 ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00097_1.fq
 ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00097_2.fq
 ```
-### Accessing programs {#Accessing programs}
+### Accessing programs {#Accessingprograms}
 We will use several programs that are installed in the module system on Uppmax. First load the `bioinfo-tools` module:
 ```bash
 module load bioinfo-tools
