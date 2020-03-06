@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Introduction to Linux</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link id="font-awesome-1-attachment" rel="attachment" href="site_libs/font-awesome-5.1.0/fonts/fontawesome-webfont.ttf"/>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="assets/lab.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+#TOC {
+  display: none !important;
+}
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"><img src="assets/logo.svg" id="logo" style="height:30px;margin:0;"/></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="home_schedule.html">Schedule</a>
+</li>
+<li>
+  <a href="home_content.html">Content</a>
+</li>
+<li>
+  <a href="home_precourse.html">Precourse</a>
+</li>
+<li>
+  <a href="home_info.html">Info</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Introduction to Linux</h1>
+
+</div>
+
+
+<!-- rmd lab header -->
+<p><br></p>
+<div class="boxy boxy-exclamation">
+<p>In code blocks, the dollar sign (<code>$</code>) is not to be printed. The dollar sign is usually an indicator that the text following it should be typed in a terminal window.</p>
+</div>
+<div id="connect-to-uppmax" class="section level1">
+<h1><span class="header-section-number">1</span> Connect to UPPMAX</h1>
+<p>The first step of this lab is to open a ssh connection to UPPMAX. You will need an SSH program to do this:</p>
+<p><i class="fab fa-linux"></i> Linux: Use <strong>Terminal</strong> (Included by default).<br />
+<i class="fab fa-apple"></i> OSX: Use <strong>Terminal</strong> (Included by default).<br />
+<i class="fab fa-windows"></i> Windows: use <a href="https://mobaxterm.mobatek.net/">MobaXterm</a>. Download and install it if you haven’t already done so.</p>
+<p>Fire up the available SSH program and enter the following:</p>
+<pre class="bash"><code>$ ssh -Y username@rackham.uppmax.uu.se</code></pre>
+<p>Replace <strong>username</strong> with your UPPMAX username. <code>-Y</code> means that X-forwarding is activated on the connection, which means graphical data can be transmitted if a program requests it, i.e. programs can use a graphical user interface (GUI) if they want to.</p>
+<p>Enter your password when prompted. As you type, nothing will show on screen.
+No stars, no dots. It is supposed to be that way. Just type the password and press enter, it will be fine.</p>
+<p>Now your screen should look something like this:</p>
+<pre class="bash"><code>dahlo@dahlo-xps ~ $ ssh -Y dahlo@rackham.uppmax.uu.se
+Last login: Fri May 18 15:03:59 2018 from micro046.icm.uu.se
+ _   _ ____  ____  __  __    _    __  __
+| | | |  _ \|  _ \|  \/  |  / \   \ \/ /   | System:    rackham4
+| | | | |_) | |_) | |\/| | / _ \   \  /    | User:      dahlo
+| |_| |  __/|  __/| |  | |/ ___ \  /  \    |
+ \___/|_|   |_|   |_|  |_/_/   \_\/_/\_\   |
+
+###############################################################################
+
+        User Guides: http://www.uppmax.uu.se/support/user-guides
+        FAQ: http://www.uppmax.uu.se/support/faq
+
+        Write to support@uppmax.uu.se, if you have questions or comments.
+
+
+dahlo@rackham4 ~ $</code></pre>
+</div>
+<div id="logon-to-a-node" class="section level1">
+<h1><span class="header-section-number">2</span> Logon to a node</h1>
+<p>Usually you would do most of the work in this lab directly on one of the login nodes at UPPMAX, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.</p>
+<pre class="bash"><code>$ salloc -A g2019031 -t 07:00:00 -p core -n 1 --no-shell --reservation=g2019031_27 &amp;</code></pre>
+<p>check which node you got (replace <strong>username</strong> with your UPPMAX username)</p>
+<pre class="bash"><code>$ squeue -u username</code></pre>
+<p>should look something like this</p>
+<pre class="bash"><code>dahlo@rackham2 work $ squeue -u dahlo
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+           3132376      core       sh    dahlo  R       0:04      1 r292
+dahlo@rackham2 work $</code></pre>
+<p>where <strong>r292</strong> is the name of the node I got (yours will probably be different).
+Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested (7 hours in this case) the session will shut down, and you will lose all unsaved data. Connect to this node from within UPPMAX.</p>
+<pre class="bash"><code>$ ssh -Y r292</code></pre>
+<p><i class="fas fa-lightbulb"></i> There is a UPPMAX specific tool called <code>jobinfo</code> that supplies the same kind of information as <code>squeue</code> that you can use as well (<code>$ jobinfo -u username</code>).</p>
+</div>
+<div id="navigation" class="section level1">
+<h1><span class="header-section-number">3</span> Navigation</h1>
+<p>It is good to know how to move around in the file system. I’m sure you all have experienced this using a graphical user interface (<strong>GUI</strong>) before, Windows Explorer in Windows and Finder in OSX. Using the command line can be confusing at first, but the more your do it, the easier it gets.</p>
+<p>When you connect to UPPMAX, you will start out in your home folder. The absolute path to your home folder is usually <strong>/home/&lt;username&gt;</strong></p>
+<p>Start with looking at what you have in your home folder. The command for this ls, and it stand for <strong>L</strong>i<strong>S</strong>t (list).</p>
+<pre class="bash"><code>$ ls -l</code></pre>
+<p>You should see something similar to:</p>
+<pre class="bash"><code>[12:56:32] dahlo@rackham1 ~ $ ls -l
+total 4384
+drwxr-xr-x  3 dahlo b2014068    2048 Apr 27  2017 archive
+-rw-rw-r--  1 dahlo dahlo      49042 Sep 23  2016 bad.png
+-rw-r--r--  1 dahlo root     1704126 Feb 16  2015 CORRUPTED_FILE_LIST.20150216
+drwxr-xr-x  2 dahlo dahlo       2048 Mar 18  2016 data
+drwxr-x---  3 dahlo dahlo       2048 Feb 15  2017 glob
+drwxrwxr-x  3 dahlo dahlo       2048 Feb 10  2015 glob2
+-rw-rw-r--  1 dahlo dahlo      60944 Sep 23  2016 good.png
+drwxr-xr-x  4 dahlo b2014209    2048 Oct 30  2014 igv
+drwxrwxr-x  5 dahlo dahlo       2048 Sep 20  2016 ngsintro
+drwxr-xr-x  5 dahlo dahlo       2048 Jun  3  2014 perl
+drwxrwxr-x  5 dahlo dahlo       2048 Nov 22  2012 perl5
+drwx--S---  2 dahlo dahlo       2048 May  4  2010 private
+drwxr-xr-x  6 dahlo dahlo       2048 May 17  2016 R
+lrwxrwxrwx  1 dahlo dahlo         41 Nov 14  2013 thindrives -&gt; /var/opt/thinlinc/sessions/dahlo/6/drives
+drwxr-xr-x 26 dahlo dahlo       4096 May 18 10:43 uppmaxScripts
+drwxrwxr-x  5 dahlo dahlo    2201600 May 14 14:02 work
+[12:57:36] dahlo@rackham1 ~ $</code></pre>
+<p>We can start off with moving to this workshop’s project folder. Each project has its own <strong>proj folder</strong> and <strong>nobackup folder</strong> that contains all the files that belong to the project. The <strong>proj</strong> folder is backed-up, so if a file is deleted by mistake it can be retrieved from the backups, and this is where only compressed raw data and scripts are usually stored. The <strong>nobackup</strong> folder is as the name implies not backed-up, and this is where all the other files belonging to the project is kept, like everything that is created by programs that you run. Backup is expensive, so we don’t want to waste it on temporary files generated by your analysis programs, which could be re-run. The nobackup folder is the folder you will keep most of your files in.</p>
+<p>As seen in the lecture, the command for moving around is <code>cd</code>. The command stands for <strong>C</strong>hange <strong>D</strong>irectory and does exactly that. It is the equivalent of double clicking a folder in a GUI.</p>
+<p>To enter the course project’s proj folder, simply type <strong><code>cd /proj/g2019031</code></strong>.</p>
+<p>Have a look around and see which folders there are. This is the folder where all the non-replacable files belonging to a project would go, like the raw sequencing data that is delivered by the sequencing platforms. Since we’ll be creating a bunch of temporary files during these labs, we will have to do that in the nobackup folder.</p>
+<p>Go there using the <code>cd</code> command.</p>
+<pre class="bash"><code>$ cd nobackup</code></pre>
+<p>We can easily see that this is a relative path, since it does not start with a <strong><code>/</code></strong>. That means that this command will only work when you are standing in your project folder. If you are standing somewhere else and say that you want to enter a folder named nobackup, the computer will tell you that there is no folder named nobackup where you are located at the moment.</p>
+<p>The absolute path to the course’s nobackup folder would be <strong>/proj/g2019031/nobackup</strong></p>
+<p>It is the exact same thing as if you are using a GUI. If you are standing on your desktop, you can double click a folder which is located on your desktop. But if you are standing in another folder, you can’t double click on the same folder, because it is just not located in that folder. You have to move to your desktop first, and then double click it.</p>
+<p>If you look around in the nobackup folder, you probably only have a folder called <strong>private</strong>. This is how every nobackup folder looks before you start putting files there.</p>
+<p>Typing <code>ls -l</code> all the time is.. more annoying than one would think, so someone came up with the good idea to add a shortcut here. If you type <code>ll</code>, it is the same as typing <code>ls -l</code>. Use it from now on.</p>
+<p>Now we have practised moving around and looking at what we have in folders. The next step will show you how to do the same thing, but without the moving around part.</p>
+<p>If we want to look at what we have in our home folder, while standing in the course’s project folder, we type <code>$ ll /home/&lt;username&gt;/</code> and remember to substitute <strong>&lt;username&gt;</strong> with your own user name.</p>
+<pre class="bash"><code>$ ll /home/&lt;username&gt;</code></pre>
+<p>Since most programmers are lazy (efficient), there is a shortcut to your home folder so that you don’t have to write it all the time. If you write <strong><code>~/</code></strong> it means the same as if you would write <strong>/home/&lt;username&gt;/</strong></p>
+<p>Try using it with <code>ls</code>:</p>
+<pre class="bash"><code>$ ll /home/&lt;username&gt;</code></pre>
+<p>or</p>
+<pre class="bash"><code>$ ll ~/</code></pre>
+</div>
+<div id="copy-lab-files" class="section level1">
+<h1><span class="header-section-number">4</span> Copy lab files</h1>
+<p>Now you will need some files. To avoid all the course participants editing the same file all at once, undoing each other’s edits, each participant will get their own copy of the needed files.</p>
+<p>The files are located in the folder <strong>/sw/share/compstore/courses/ngsintro/linux_tutorial</strong></p>
+<p>or they can be downloaded if you are not on UPPMAX at the moment, <a href="data/linux/files.tar.gz">files.tar.gz</a> (instruction on how to download further down)</p>
+<p>For structures sake, first create a folder with your username in the <strong>nobackup</strong> folder, and a folder called <strong>linux_tutorial</strong> inside that folder, where you can put all your lab files.</p>
+<p>This can be done in 2 ways:</p>
+<pre class="bash"><code>$ mkdir /proj/g2019031/nobackup/&lt;username&gt;
+$ mkdir /proj/g2019031/nobackup/&lt;username&gt;/linux_tutorial</code></pre>
+<p>or</p>
+<pre class="bash"><code>$ mkdir -p /proj/g2019031/nobackup/&lt;username&gt;/linux_tutorial</code></pre>
+<p>The reason for this is that Linux will not like it if you try to create the folder <strong>linux_tutorial</strong> inside a folder (the one named like your username) that does not exist yet. Then, you have the choice to either first create the one named like your username (the first way), or to tell Linux to create it for you by giving it the <strong><code>-p</code></strong> option (the second way).</p>
+<p>Next, copy the lab files to this folder.</p>
+<pre class="bash"><code>cp -r &lt;source-folder&gt; &lt;destination-folder&gt;</code></pre>
+<pre class="bash"><code>cp -r /sw/share/compstore/courses/ngsintro/linux_tutorial/* /proj/g2019031/nobackup/&lt;username&gt;/linux_tutorial</code></pre>
+<p><code>-r</code> denotes recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, NOT sub-folders and files in sub-folders.</p>
+<p><i class="fas fa-lightbulb"></i> Remember to tab-complete to avoid typos and too much writing.</p>
+<p>If you are unable to copy the files on UPPMAX, you can <a href="data/linux/files.tar.gz">download the files from this link</a> instead of copying them. This is done with the command <code>wget</code> (<em>web get</em>). It works kind of the same way as the <code>cp</code> command, but you give it a source URL instead of a source file, and you specify the destination by giving it a prefix, a path that will be appended in front on the file name when it’s downloaded.</p>
+<p><em>i.e</em>; if you want to download the file <a href="http://somewhere.com/my.file" class="uri">http://somewhere.com/my.file</a> and you give it the prefix <code>~/analysis/</code>, the downloaded file will be saved as <code>~/analysis/my.file</code>.
+<a href="lab_linux_permissions.html">Linux file permissions exercises</a></p>
+<pre class="bash"><code>Ex: wget -P &lt;destination prefix&gt; &lt;source URL&gt;</code></pre>
+</div>
+<div id="unpack-files" class="section level1">
+<h1><span class="header-section-number">5</span> Unpack files</h1>
+<p>Go to the folder you just copied and see what is in it.</p>
+<p><i class="fas fa-lightbulb"></i> Remember to tab-complete to avoid typos and too much writing.</p>
+<pre class="bash"><code>$ cd /proj/g2019031/nobackup/&lt;username&gt;/linux_tutorial
+ll</code></pre>
+<p><strong>tar.gz</strong> is a file ending give to compressed files, something you will encounter quite often. Compression decreases the size of the files which is good when downloading, and it can take thousands of files and compress them all into a single compressed file. This is both convenient for the person downloading and speeds up the transfer more than you would think.</p>
+<p>To unpack the <strong>files.tar.gz</strong> file use the following line while standing in the newly copied <strong>linux_tutorial</strong> folder.</p>
+<pre class="bash"><code>$ tar -xzvf files.tar.gz</code></pre>
+<p>The command will always be the same for all tar.gz files you want to unpack. <code>-xzvf</code> means e<b>X</b>tract from a <strong>Z</strong>ipped file, <strong>V</strong>erbose (prints the name of the file being unpacked), from the specified <strong>F</strong>ile (<code>f</code> must always be the last of the letters).</p>
+<p>Look in the folder again and see what we just unpacked:</p>
+<pre class="bash"><code>[user@milou2 linux_tutorial]$ ls -la
+total 512
+drwxrwsr-x 12 user g20XXXXX   2048 Sep 24 13:19 .
+drwxrwsr-x  6 user g20XXXXX   2048 Sep 24 13:19 ..
+drwxrwsr-x  2 user g20XXXXX   2048 Sep 19  2012 a_strange_name
+drwxrwsr-x  2 user g20XXXXX   2048 Sep 19  2012 backed_up_proj_folder
+drwxrwsr-x  2 user g20XXXXX   2048 Sep 19  2012 external_hdd
+-rwxrwxr-x  1 user g20XXXXX  17198 Sep 24 13:19 files.tar.gz
+drwxrwsr-x  2 user g20XXXXX   2048 Sep 19  2012 important_results
+drwxrwsr-x  2 user g20XXXXX 129024 Sep 19  2012 many_files
+drwxrwsr-x  2 user g20XXXXX   2048 Sep 19  2012 old_project
+-rwxrwxr-x  1 user g20XXXXX      0 Sep 24 13:19 other_file.old
+drwxrwsr-x  2 user g20XXXXX   2048 Sep 19  2012 part_1
+drwxrwsr-x  2 user g20XXXXX   2048 Sep 19  2012 part_2
+drwxrwsr-x  2 user g20XXXXX   2048 Jan 28  2012 this_has_a_file
+drwxrwsr-x  2 user g20XXXXX   2048 Jan 28  2012 this_is_empty
+-rwxrwxr-x  1 user g20XXXXX      0 Sep 19  2012 useless_file
+[user@milou2 linux_tutorial]$</code></pre>
+</div>
+<div id="copying-and-moving-files" class="section level1">
+<h1><span class="header-section-number">6</span> Copying and moving files</h1>
+<p>Let’s move some files. Moving files might be one of the more common things you do, after <code>cd</code> and <code>ls</code>. You might want to organize your files in a better way, or move important result files to the project folder, who knows?</p>
+<p>We will start with moving our important result to a backed-up folder. When months of analysis is done, the last thing you want is to lose your files.
+Typically this would mean that you move the final results to your project folder.</p>
+<p>In this example, we want to move the result files only, located in the folder <code>important_results</code>, to our fake project folder, called <code>backed_up_proj_folder</code>.</p>
+<p>The syntax for the move command is:</p>
+<pre class="bash"><code>$ mv &lt;source&gt; &lt;destination&gt;</code></pre>
+<p>First, take a look inside the <strong>important_results</strong> folder:</p>
+<pre class="bash"><code>[user@milou2 linux_tutorial]$ ll important_results/
+total 0
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 dna_data_analysis_result_file_that_is_important-you_should_really_use_tab_completion_for_file_names.bam
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 temp_file-1
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 temp_file-2
+[user@milou2 linux_tutorial]$</code></pre>
+<p>You see that there are some unimportant temporary files that you have no interest in. Just to demonstrate the move command, I will show you how to move one of these temporary files to your backed-up project folder:</p>
+<pre class="bash"><code>$ mv important_results/temp_file-1 backed_up_proj_folder/</code></pre>
+<p><i class="fas fa-clipboard-list"></i> Now do the same, but move the important DNA data file!</p>
+<p>Look in the backed-up project folder to make sure you moved the file correctly.</p>
+<pre class="bash"><code>[user@milou2 linux_tutorial]$ ll backed_up_proj_folder/
+total 0
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 dna_data_analysis_result_file_that_is_important-you_should_really_use_tab_completion_for_file_names.bam
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 last_years_data
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 temp_file-1
+[user@milou2 linux_tutorial]$</code></pre>
+<p>Another use for the <code>move</code> command is to rename things. When you think of it, renaming is just a special case of moving. You move the file to a location and give the file a new name in the process. The location you move the file <strong>to</strong> can of very well be the same folder the file already is in. To give this a try, we will rename the folder <code>a_strange_name</code> to a better name.</p>
+<pre class="bash"><code>$ mv a_strange_name a_better_name</code></pre>
+<p>Look around to see that the name change worked.</p>
+<pre class="bash"><code>[user@milou2 linux_tutorial]$ mv a_strange_name a_better_name
+[user@milou2 linux_tutorial]$ ll
+total 448
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 a_better_name
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 24 13:40 backed_up_proj_folder
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 external_hdd
+-rwxrwxr-x 1 user g20XXXXX  17198 Sep 24 13:36 files.tar.gz
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 24 13:40 important_results
+drwxrwsr-x 2 user g20XXXXX 129024 Sep 19  2012 many_files
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 old_project
+-rwxrwxr-x 1 user g20XXXXX      0 Sep 24 13:36 other_file.old
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 part_1
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 part_2
+drwxrwsr-x 2 user g20XXXXX   2048 Jan 28  2012 this_has_a_file
+drwxrwsr-x 2 user g20XXXXX   2048 Jan 28  2012 this_is_empty
+-rwxrwxr-x 1 user g20XXXXX      0 Sep 19  2012 useless_file
+[user@milou2 linux_tutorial]$</code></pre>
+<p>Sometimes you don’t want to move things, you want to copy them. Moving a file will remove the original file, whereas copying the file will leave the original untouched. An example when you want to do this could be that you want to give a copy of a file to a friend. Imagine that you have a external hard drive that you want to place the file on. The file you want to give to your friend is data from last years project, which is located in your backed_up_project_folder, <code>backed_up_proj_folder/last_years_data</code></p>
+<p>As with the move command, the syntax is</p>
+<pre class="bash"><code>$ cp &lt;source&gt; &lt;destination&gt;
+$ cp backed_up_proj_folder/last_years_data external_hdd/</code></pre>
+<p>Take a look in the <strong>external_hdd</strong> to make sure the file got copied.</p>
+<pre class="bash"><code>[user@milou2 linux_tutorial]$ cp backed_up_proj_folder/last_years_data external_hdd/
+[user@milou2 linux_tutorial]$ ll external_hdd/
+total 0
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 24 13:46 last_years_data
+[user@milou2 linux_tutorial]$</code></pre>
+</div>
+<div id="deleting-files" class="section level1">
+<h1><span class="header-section-number">7</span> Deleting files</h1>
+<p>Sometimes you will delete files. Usually this is when you know that the file or files are useless to you, and they only take up space on your hard drive or UPPMAX account.</p>
+<p>To delete a file, we use the <strong>R</strong>e<b>M</b>ove command, <strong><code>rm</code></strong>.
+Syntax:</p>
+<pre class="bash"><code>$ rm &lt;file to remove&gt;</code></pre>
+<p>If you want, you can also specify multiple files at once, as many as you want!</p>
+<pre class="bash"><code>$ rm &lt;file to remove&gt; &lt;file to remove&gt; &lt;file to remove&gt; &lt;file to remove&gt; &lt;file to remove&gt;</code></pre>
+<p><i class="fas fa-exclamation-circle"></i> <strong>IMPORTANT: There is no trash bin in Linux. If you delete a file, it is gone. So be careful when deleting stuff.</strong></p>
+<p>Try it out by deleting the useless file in the folder you are standing in. First, look around in the folder to see the file.</p>
+<pre class="bash"><code>[user@milou2 linux_tutorial]$ ll
+total 448
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 a_better_name
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 24 13:40 backed_up_proj_folder
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 24 13:46 external_hdd
+-rwxrwxr-x 1 user g20XXXXX  17198 Sep 24 13:36 files.tar.gz
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 24 13:40 important_results
+drwxrwsr-x 2 user g20XXXXX 129024 Sep 19  2012 many_files
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 old_project
+-rwxrwxr-x 1 user g20XXXXX      0 Sep 24 13:36 other_file.old
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 part_1
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 part_2
+drwxrwsr-x 2 user g20XXXXX   2048 Jan 28  2012 this_has_a_file
+drwxrwsr-x 2 user g20XXXXX   2048 Jan 28  2012 this_is_empty
+-rwxrwxr-x 1 user g20XXXXX      0 Sep 19  2012 useless_file
+[user@milou2 linux_tutorial]$</code></pre>
+<p>Now remove it.</p>
+<pre class="bash"><code>$ rm useless_file</code></pre>
+<p>Similarly, folders can be removed too. There is even a special command for removing folders, <code>rmdir</code>. They work similar to <code>rm</code>, except that they can’t remove files. There are two folders, <code>this_is_empty</code> and <code>this_has_a_file</code>, that we now will delete.</p>
+<pre class="bash"><code>$ rmdir this_is_empty
+$ rmdir this_has_a_file</code></pre>
+<p>If you look inside <code>this_has_a_file</code>,</p>
+<pre class="bash"><code>[user@milou2 linux_tutorial]$ ll this_has_a_file
+total 0
+-rwxrwxr-x 1 user g20XXXXX 0 Jan 28  2012 file
+[user@milou2 linux_tutorial]$</code></pre>
+<p>you see that there is a file in there! Only directories that are completely empty can be deleted using <code>rmdir</code>. To be able to delete <code>this_has_a_file</code>, either delete the file manually and then remove the folder</p>
+<pre class="bash"><code>$ rm this_has_a_file/file
+$ rmdir this_has_a_file</code></pre>
+<p>or delete the directory recursively, which will remove <code>this_has_a_file</code> and everything inside:</p>
+<pre class="bash"><code>$ rm -r this_has_a_file</code></pre>
+</div>
+<div id="open-files" class="section level1">
+<h1><span class="header-section-number">8</span> Open files</h1>
+<p>So what happens if you give your files bad names like <strong>file1</strong> or <strong>results</strong>? You take a break in a project and return to it 4 months later, and all those short names you gave your files doesn’t tell you at all what the files actually contain.</p>
+<p>Of course, this never happens because you <strong>ALWAYS</strong> name your files so that you definitely know what they contain. But let’s say it did happen. Then the only way out is to look at the contents of the files and try to figure out if it is the file you are looking for.</p>
+<p><i class="fas fa-clipboard-list"></i> Now, we are looking for that really good script we wrote a couple of months ago in that other project. Look in the project’s folder, <strong>old_project</strong> and find the script.</p>
+<pre class="bash"><code>[user@milou2 linux_tutorial]$ ll old_project/
+total 96
+-rwxrwxr-x 1 user g20XXXXX 39904 Sep 19  2012 a
+-rwxrwxr-x 1 user g20XXXXX     0 Sep 19  2012 stuff_1
+-rwxrwxr-x 1 user g20XXXXX  1008 Sep 19  2012 the_best
+[user@milou2 linux_tutorial]$</code></pre>
+<p>Not so easy with those names.. We will have to use less to look at the files and figure out which is which. We use <code>less</code> to view the file.</p>
+<pre class="bash"><code>$ less &lt;filename&gt;</code></pre>
+<p><i class="fas fa-lightbulb"></i> Press <kbd>q</kbd> to close it down, use arrows to scroll up/down.</p>
+<p>Have a look at <strong>the_best</strong>, that must be our script, right?</p>
+<pre class="bash"><code>$ less old_project/the_best</code></pre>
+<p>I guess not. Carrot cakes might be the bomb, but they won’t solve bioinformatic problems. Have a look at the file <strong>a</strong> instead.</p>
+<p>That’s more like it!</p>
+<p>Now imagine that you had hundreds of files with weird names, and you really needed to find it. <em>Lesson learned:</em> name your files so that you know what they are! And don’t be afraid to create folders to organise files.</p>
+<p>Another thing to think about when opening files in Linux is which program should you open the file in? The programs we covered during the lectures are <strong>nano</strong> and <strong>less</strong>. The main difference between these programs in that <strong>less can’t edit files</strong>, only view them. Another difference is that <strong>less doesn’t load the whole file</strong> into the RAM memory when opening it.</p>
+<p>So, why care about how the program works? I’ll show you why. This time we will be opening a larger file, located in the course’s project folder. It’s 65 megabytes, so it is a tiny file compared with bio-data. Normal sequencing files can easily be 100-1000 times larger than this.</p>
+<p>First, open the file with <code>nano</code>.</p>
+<pre class="bash"><code>$ nano &lt;filename&gt;
+$ nano /sw/share/compstore/courses/ngsintro/linux_additional-files/large_file</code></pre>
+<p><i class="fas fa-lightbulb"></i> Press <kbd>Ctrl+X</kbd> to close it down, use arrows to scroll up/down).</p>
+<p>Is the file loaded yet? Now take that waiting time and multiply it with 100-1000. Now open the file with less. Notice the difference?</p>
+<p><strong><code>head</code></strong> and <strong><code>tail</code></strong> works the same was as less in this regard. They don’t load the whole file into RAM, they just take what they need.</p>
+<p>To view the first rows of the large file, use <code>head</code>.</p>
+<pre class="bash"><code>$ head &lt;filename&gt;
+
+$ head /sw/share/compstore/courses/ngsintro/linux_additional-files/large_file</code></pre>
+<p>Remember how to view an arbitrary number of first rows in a file?</p>
+<pre class="bash"><code>$ head -n &lt;number of rows to view&gt; &lt;filename&gt;
+
+$ head -n 23 /sw/share/compstore/courses/ngsintro/linux_additional-files/large_file</code></pre>
+<p>The same syntax for viewing the last rows of a file with tail:</p>
+<pre class="bash"><code>$ tail &lt;filename&gt;
+
+$ tail /sw/share/compstore/courses/ngsintro/linux_additional-files/large_file
+
+$ tail -n &lt;number of rows to view&gt; &lt;filename&gt;
+
+$ tail -n 23 /sw/share/compstore/courses/ngsintro/linux_additional-files/large_file</code></pre>
+</div>
+<div id="wildcards" class="section level1">
+<h1><span class="header-section-number">9</span> Wildcards</h1>
+<p>Sometimes (most of the time really) you have many files. So many that it would take you a day just to type all their names. This is where <strong>wildcards</strong> saves the day. The wildcard symbol in Linux is the star sign, <code>*</code> , and it means literally <strong>anything</strong>. Say that you want to move all the files which has names starting with <code>sample_1_</code> and the rest of the name doesn’t matter. You want all the files belonging to <code>sample_1</code>. Then you could use the wildcard to represent the rest of the name.</p>
+<p><i class="fas fa-exclamation-circle"></i> <strong>DO NOT</strong> run this command, it’s just an example.</p>
+<pre class="bash"><code>$ mv  sample_1_*  my_other_folder</code></pre>
+<p>We can try it out on the example files I have prepared. There are two folders called <strong>part_1</strong> and <strong>part_2</strong>. We want to collect all the <strong>.txt</strong> files from both these folders in one of the folders. Look around in both the folders to see what they contain.</p>
+<pre class="bash"><code>[user@milou2 linux_tutorial]$ ll part_1/
+total 0
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 file_1.txt
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 file_2.txt
+[user@milou2 linux_tutorial]$ ll part_2
+total 0
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 file_3.txt
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 file_4.txt
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 garbage.tmp
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 incomplete_datasets.dat
+[user@milou2 linux_tutorial]$</code></pre>
+<p>We see that <strong>part_1</strong> only contains <code>.txt</code> files, and that <strong>part_2</strong> contains some other files as well. The best option seems to be to move all <code>.txt</code> files from <strong>part_2</strong> info <strong>part_1</strong>.</p>
+<pre class="bash"><code>$ mv part_2/*.txt part_1/</code></pre>
+<p>The wildcard works with most, if not all, Linux commands. We can try using wildcards with <strong><code>ls</code></strong>. Look in the folder <code>many_files</code>. Yes, there are hundreds of .docx files in there. But, there are a couple of <strong>.txt</strong> files in there as well. Find out how many .docx and .txt files exist.</p>
+<p><i class="fas fa-clipboard-list"></i> Try to figure out the solution on your own. Then check the answer below.</p>
+<p>
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2020030613021163" aria-expanded="false" aria-controls="acc2020030613021163">
+</button>
+</p>
+<div id="acc2020030613021163" class="collapse">
+<div class="card card-body">
+<pre class="bash"><code>$ ll many_files/*.docx
+$ ll many_files/*.txt</code></pre>
+</div>
+</div>
+</div>
+<div id="utility-commands" class="section level1">
+<h1><span class="header-section-number">10</span> Utility commands</h1>
+<p>Ok, the last 2 commands for now are <code>top</code> and <code>man</code>.</p>
+<p><code>top</code> can be useful when you want to look at which programs are being run on the computer, and how hard the computer is working. Type <code>top</code> and have a look.</p>
+<pre class="bash"><code>$ top</code></pre>
+<p><i class="fas fa-lightbulb"></i> Press <kbd>q</kbd> to exit.</p>
+<pre class="bash"><code>Tasks: 376 total,   2 running, 290 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  2.7 us,  1.3 sy,  0.0 ni, 95.3 id,  0.1 wa,  0.0 hi,  0.6 si,  0.0 st
+KiB Mem : 32590776 total, 16233548 free,  8394804 used,  7962424 buff/cache
+KiB Swap: 99999744 total, 99999744 free,        0 used. 22658832 avail Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND                       
+ 3286 roy       20   0 4557248 522400 170808 R  12.3  1.6  62:49.20 gnome-shell                   
+ 3113 roy       20   0 1282356 385012 290540 S   8.0  1.2  42:00.49 Xorg                          
+22213 roy       20   0 5474576 544848 101592 S   5.6  1.7 102:55.33 zoom                          
+ 6186 roy       20   0  710140  60504  35836 S   3.0  0.2   0:00.62 terminator                    
+ 4248 roy       20   0 2737604 556212 140580 S   2.7  1.7  54:51.48 QtWebEngineProc               
+ 4632 roy       20   0 4866068 0.993g 281532 S   2.7  3.2  69:18.68 firefox                       
+ 6548 roy       20   0 3703060 509340 189452 S   2.7  1.6  15:26.80 Web Content                   
+ 9338 roy       20   0 4407324 846700 213324 S   2.7  2.6  15:53.71 Web Content                   
+ 4776 roy       20   0 3310524 318364 102700 S   2.0  1.0   8:53.07 WebExtensions                 
+ 6595 roy       20   0 4133152 992224 187540 S   1.3  3.0  18:51.05 Web Content                   
+  952 root     -51   0       0      0      0 S   1.0  0.0   2:40.89 irq/51-SYNA2393               
+ 7800 roy       20   0 1213744 238536 129392 S   1.0  0.7  11:15.74 atom                          
+    1 root      20   0  226080   9836   6692 S   0.7  0.0   2:07.87 systemd                       
+ 6690 roy       20   0 3492596 560304 166588 S   0.7  1.7   8:08.77 Web Content                   
+12895 roy       20   0 3320332 294820 172212 S   0.7  0.9   7:05.93 Web Content                   
+   10 root      20   0       0      0      0 I   0.3  0.0   2:43.21 rcu_sched                     
+ 1052 root      20   0 2505296  36228  22444 S   0.3  0.1   3:45.16 containerd                    
+ 2631 gdm       20   0 4044492 198480 142328 S   0.3  0.6   1:55.32 gnome-shell</code></pre>
+<p>Each row in top corresponds to one program running on the computer, and the column describe various information about the program. <strong>The right-most column</strong> shows you which program the row is about.</p>
+<p>There are mainly 2 things that are interesting when looking in top. The column <strong>%CPU</strong> describes how much cpu is used by each program. If you are doing calculations, which is what bioinformatics is mostly about, the cpu usage should be high. The numbers in the column is how many percent of a core the program is running. If you have a computer with 8 cores, like the UPPMAX computers, you can have 8 programs using 100% of a core each running at the same time without anything slowing down. As soon as you start a 9th program, it will have to share a core with another program and those 2 programs will run at half-speed since a core can only work that fast. In the example above, program <strong>gnome-shell</strong> is using 12.3% of a core.</p>
+<p>The column <strong>%MEM</strong> describes how much memory each program uses. The numbers mean how many percent of the total memory a program uses. In the example above, the program firefox is using 3.2% of the total memory.</p>
+<p>The area in the top describes the overall memory usage. <strong>Total</strong> tells you how much memory the computer has, <strong>used</strong> tells you how much of the memory is being used at the moment, and <strong>free</strong> tells you how much memory is free at the moment.</p>
+<p>Total = Used + Free</p>
+<p>A warning sign you can look for in top is when you are running an analysis which seems to take forever to complete, and you see that there is almost no cpu usage on the computer. That means that the computer is not doing any calculation, which could be bad. If you look at the memory usage at the same time, and see that it’s maxed out (used 100% of total), you can more or less abort the analysis.</p>
+<p>When the memory runs out, the computer more or less stops. Since it can’t fit everything into the RAM memory, it will start using the hard drive to store the things it can’t fit in the RAM. Since the hard drive is ~1000 times slower than the RAM, things will be going in slow-motion. The solution could be to either change the settings of the program you are running to decrease the memory usage (if the program has that functionality), or just get a computer with more memory.</p>
+<p>You might wonder how the heck am I supposed to be able to remember all these commands, options and flags? The simple answer is that you won’t. Not all of them at least. You might remember <code>ls</code>, but was it <code>-l</code> or <code>-a</code> you should use to see hidden files? You might wish that there was a manual for these things.</p>
+<p>Good news everyone, there is a manual! To get all the nitty-gritty details about <code>ls</code>, you use the <code>man</code> command.</p>
+<pre class="bash"><code>$ man &lt;command you want to look at&gt;
+
+$ man ls</code></pre>
+<pre class="bash"><code>LS(1)                            User Commands                            LS(1)
+
+NAME
+       ls - list directory contents
+
+SYNOPSIS
+       ls [OPTION]... [FILE]...
+
+DESCRIPTION
+       List  information  about  the  FILEs (the current directory by default).
+       Sort entries alphabetically if none of -cftuvSUX nor  --sort  is  speci‐
+       fied.
+
+       Mandatory arguments to long options are mandatory for short options too.
+
+       -a, --all
+              do not ignore entries starting with .
+
+       -A, --almost-all
+              do not list implied . and ..
+
+       --author
+              with -l, print the author of each file
+
+       -b, --escape
+              print C-style escapes for nongraphic characters
+
+       --block-size=SIZE
+              scale  sizes by SIZE before printing them; e.g., &#39;--block-size=M&#39;
+ Manual page ls(1) line 1 (press h for help or q to quit)</code></pre>
+<p>This will open a less window (remember, <kbd>q</kbd> to close it down, arrows to scroll) with the manual page about <code>ls</code>. Here you will be able to read everything about <code>ls</code>. You’ll see which flag does what (<code>-a</code> is to show the hidden files, which in linux are files with a name starting with a dot <code>.</code>), which syntax the program has, etc. If you are unsure about how to use a command, look it up using <code>man</code>.</p>
+<p>The <code>man</code> pages can be a bit tricky to understand at first, but you get used to it with time. If it is still unclear, try searching for it on the internet. You are bound to find someone with the exact same question as you, that has already asked on a forum, and gotten a good answer. 5 years ago.</p>
+<p>If you still have time left on the lab and you finished early, check out the <a href="lab_linux_permissions.html">Linux file permissions exercises</a>!</p>
+<hr />
+</div>
+
+
+<footer class="footer">
+<div class="container footer-container">
+<div class="row">
+  
+<div class="col-sm-8" style="text-align:left;vertical-align:middle;">
+<p class="small" style="color:#bdbdbd;">
+<b>2020</b> • NBIS • SciLifeLab
+</p>
+</div>
+
+<div class="col-sm-4" style="text-align:right;vertical-align:middle;">
+<p style="color:#bdbdbd;">
+<span>
+  <span class="footericon" style="padding-right:4px; padding-left:4px">
+    <a href="https://nbis.se/">
+      <svg style="height:0.8em;top:.04em;position:relative;fill:#bdbdbd;" viewBox="0 0 496 512"><path d="M248 8C111.03 8 0 119.03 0 256s111.03 248 248 248 248-111.03 248-248S384.97 8 248 8zm82.29 357.6c-3.9 3.88-7.99 7.95-11.31 11.28-2.99 3-5.1 6.7-6.17 10.71-1.51 5.66-2.73 11.38-4.77 16.87l-17.39 46.85c-13.76 3-28 4.69-42.65 4.69v-27.38c1.69-12.62-7.64-36.26-22.63-51.25-6-6-9.37-14.14-9.37-22.63v-32.01c0-11.64-6.27-22.34-16.46-27.97-14.37-7.95-34.81-19.06-48.81-26.11-11.48-5.78-22.1-13.14-31.65-21.75l-.8-.72a114.792 114.792 0 0 1-18.06-20.74c-9.38-13.77-24.66-36.42-34.59-51.14 20.47-45.5 57.36-82.04 103.2-101.89l24.01 12.01C203.48 89.74 216 82.01 216 70.11v-11.3c7.99-1.29 16.12-2.11 24.39-2.42l28.3 28.3c6.25 6.25 6.25 16.38 0 22.63L264 112l-10.34 10.34c-3.12 3.12-3.12 8.19 0 11.31l4.69 4.69c3.12 3.12 3.12 8.19 0 11.31l-8 8a8.008 8.008 0 0 1-5.66 2.34h-8.99c-2.08 0-4.08.81-5.58 2.27l-9.92 9.65a8.008 8.008 0 0 0-1.58 9.31l15.59 31.19c2.66 5.32-1.21 11.58-7.15 11.58h-5.64c-1.93 0-3.79-.7-5.24-1.96l-9.28-8.06a16.017 16.017 0 0 0-15.55-3.1l-31.17 10.39a11.95 11.95 0 0 0-8.17 11.34c0 4.53 2.56 8.66 6.61 10.69l11.08 5.54c9.41 4.71 19.79 7.16 30.31 7.16s22.59 27.29 32 32h66.75c8.49 0 16.62 3.37 22.63 9.37l13.69 13.69a30.503 30.503 0 0 1 8.93 21.57 46.536 46.536 0 0 1-13.72 32.98zM417 274.25c-5.79-1.45-10.84-5-14.15-9.97l-17.98-26.97a23.97 23.97 0 0 1 0-26.62l19.59-29.38c2.32-3.47 5.5-6.29 9.24-8.15l12.98-6.49C440.2 193.59 448 223.87 448 256c0 8.67-.74 17.16-1.82 25.54L417 274.25z"></path>
+      </svg>
+    </a>
+    </span>
+    <span class="footericon" style="padding-right:4px; padding-left:4px">
+      <a href="https://twitter.com/NBISwe"><svg style="height:0.8em;top:.04em;position:relative;fill:#bdbdbd;" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
+    </svg>
+    </a>
+    </span>
+    <span class="footericon" style="padding-left:4px">
+      <a href="https://www.linkedin.com/company/nbisweden/">
+        <svg style="height:0.8em;top:.04em;position:relative;fill:#bdbdbd;" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"></path>
+        </svg>
+    </a>
+    </span>
+  </span>
+</p>
+</div>
+
+</div>
+</div>
+</footer>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
