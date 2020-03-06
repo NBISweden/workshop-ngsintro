@@ -25,9 +25,9 @@ The 1000 Genomes Project was the first project to sequence the entire genomes of
 
 Sample        | Population | Coverage
 ------------- | ---------- | --------
-HG00097       | European   | 30X  
-HG00100       | European   | 30X  
-HG00100       | European   | 30X  
+HG00097       | British in England and Scotland    | 30X  
+HG00100       | British in England and Scotland    | 30X  
+HG00100       | British in England and Scotland    | 30X  
   
 # The LCT locus
 We will work with data for a small regions on chromosome 2 around the LCT gene. Genetic variants in this region control how lactose is tolerated in adults, and the variant rs4988235 (located at at position chr2:136608596 in HG19) has been shown to lead to lactose persistence in adults. To learn more about the genetic bases for lactose tolerance please read the first three pages of this publication by Mattar et al. The variant (rs4988235) is here referred to as LCT-13910C>T. [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf).
