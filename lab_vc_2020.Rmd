@@ -40,15 +40,16 @@ To learn more about the genetic bases for lactose tolerance please read the firs
   
 ## General guide
 <div class="boxy boxy-lightbulb">
+* In paths, you should replace `<username>` with your actual UPPMAX username.
 * In commands, you should replace `<parameter>` with the correct parameter type, for example your input file name, output file name, directory name, etc. 
-* In paths, remember to change `<username>` with your actual UPPMAX username.
-* Copying and pasting commands from the exercise to terminal can result in formatting errors. 
 * Running a command without parameters will, often, return a help message on how to run the command.
+* Copying and pasting commands from the exercise to terminal can result in formatting errors. 
 * Use tab completion when possible.
 * A line starting with `#` is a comment
 * If you change the node you are working on you will need to reload the tool modules. (See **Accessing programs** below)
-* Check that the output file exists and is a reasonable size (use `ls -l`) after a command is completed as a quick way to see that nothing is wrong. A common mistake people make is to attempt to load input files that do not exist or create output files where they cannot write.
-* Giving good names to your outfiles that describes what has been done will help you.
+* Check that the output file exists and is a reasonable size (use `ls -l`) after a command is completed as a quick way to see that the command went well. 
+* A common mistake is to attempt to load input files that do not exist, or create output files where they cannot write.
+* Giving good names to your output files that describes what has been done will help you.
 * Google errors, someone in the world has run into EXACTLY the same problem you had and asked about it on a forum somewhere.
 </p>
 
