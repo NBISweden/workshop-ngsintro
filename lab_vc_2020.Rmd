@@ -16,11 +16,11 @@ upres4 <- yaml::read_yaml("_site.yml")$uppmax_res_4
 # Introduction
 Rapidly dropping sequencing costs and the ability to obtain information about the entire genetic code has made whole genome sequening (WGS) a powerful research tool for detecting genetic variation. This workshop will take you thourgh the process of calling short variants (SNPs and indels) in whole geonome sequence data from three samples. 
   
-* The main part of the workshop will guide you through a basic short variant calling workflow for just one sample. The aim is to get familiar with the bam and vcf file formats, and how to interpret the results of variant calling in Integrative Genomics Viewer (IGV).
-* Next, if you have time, we will expand the workflow and perform joint variant calling on three samples. Here we will also give you an idea of how you can combine individual linux commands into a workflow that can be started as an SBATCH script.
-* The last part of the exercise will take you thourgh some additional steps that are recommended by GATK best practise short variant detection. 
+1. The main part of the workshop will guide you through a basic short variant calling workflow for just one sample. The aim is to get familiar with the bam and vcf file formats, and how to interpret the results of variant calling in Integrative Genomics Viewer (IGV).
+2. Next, if you have time, we will expand the workflow and perform joint variant calling on three samples. Here we will also give you an idea of how you can combine individual linux commands into a workflow that can be started as an SBATCH script.
+3. The last part of the exercise, if you have time, will take you thourgh some additional steps that are recommended by GATK best practise short variant detection. 
   
-# Samples
+## Samples
 The 1000 Genomes Project was the first project to sequence the entire genomes of a large number of people, to provide a comprehensive resource on human genetic variation. Data from the 1000 Genomes Project available through freely accessible public databases, and in this workshop we will use 3 samples from the low converage phase of the 1000 Genomes project.
 
 Sample        | Population | Coverage
@@ -29,8 +29,8 @@ HG00097       | British in England and Scotland    | Low
 HG00100       | British in England and Scotland    | Low  
 HG00100       | British in England and Scotland    | Low  
   
-# The **LCT** locus
-The **LCT** gene on chromosome 2 encodes the lactase protein, which is responible for the metabolism of lactose in mammals. Most mammals can not digest lactose as adults, but some humans tolerate lactose also in adulthood. Genetic variants upstream of the human **LCT** control how lactose is tolerated in adults, and the variant *rs 4988235* (located at at position chr2:136608596 in HG19) has been shown to lead to lactose persistence.  
+## The *LCT* locus
+The *LCT* gene on chromosome 2 encodes the lactase protein, which is responible for the metabolism of lactose in mammals. Most mammals can not digest lactose as adults, but some humans tolerate lactose also in adulthood. Genetic variants upstream of the human *LCT* control how lactose is tolerated in adults, and the variant **rs 4988235** (located at at position chr2:136608596 in HG19) has been shown to lead to lactose persistence.  
   
 In this workshop we will work with sequencing data (fastq files) for a small region on chromosome 2 that covers the LCT gene and upstream region: 
 chr2:136545000-136617000
@@ -38,27 +38,23 @@ chr2:136545000-136617000
 We will use this region as an example case to illustrate how you can look for genetic variation in NGS data. 
 To learn more about the genetic bases for lactose tolerance please read the first three pages of this publication by Mattar et al. The variant (rs4988235) is here referred to as LCT-13910C>T. [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf).
   
-# Data
-All input data for this exercise is located in the folder:
+## Data
+All input data for this exercise is located in the folder on Rackham:
 ```bash
 /sw/courses/ngsintro/reseq/data
-# These files are read-only so that the files are not accidentally deleted
 ```
-## Fastq files
-The fastq files are located in this folder:
+### Fastq files
+The fastq files are located in this folder on Rackham:
 ```bash
 /sw/courses/ngsintro/reseq/data/fastq
-# These files are read-only so that the files are not accidentally deleted
 ```
-## The reference genome
-You will also need the reference genome in fasta format. This, and a few other refence files are located in this folder: 
-Before we can align our sample we need a reference genome. For our exercises, we'll use only human chromosome 2, however in a real situation you should use the full genome.  Create a symbolic link to the reference in your workspace:
+### The reference genome
+You will also need the reference genome in fasta format. This, and a few other refence files are located in this folder on Rackham: 
 ```bash
 /sw/courses/ngsintro/reseq/data/ref
-# These files are read-only so that the files are not accidentally deleted
 ```
 
-## Running commands
+# Main exercise
 
 Throughout the exercises, we will illustrate commands in the format:
 
