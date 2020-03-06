@@ -43,13 +43,11 @@ All input data for this exercise is located in the folder on Rackham:
 ```bash
 /sw/courses/ngsintro/reseq/data
 ```
-### Fastq files
-The fastq files are located in this folder on Rackham:
+The fastq files are located in this folder:
 ```bash
 /sw/courses/ngsintro/reseq/data/fastq
 ```
-### The reference genome
-You will also need the reference genome in fasta format. This, and a few other refence files are located in this folder on Rackham: 
+You will also need the reference genome in fasta format. This, and a few other refence files are located in this folder: 
 ```bash
 /sw/courses/ngsintro/reseq/data/ref
 ```
