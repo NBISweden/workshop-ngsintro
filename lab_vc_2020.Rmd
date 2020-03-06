@@ -67,7 +67,7 @@ You will also need the reference genome in fasta format. This, and a few other r
 ```bash
 /sw/courses/ngsintro/reseq/data/ref
 ```
-    
+      
 # Main exercise
 
 ## Using Uppmax
