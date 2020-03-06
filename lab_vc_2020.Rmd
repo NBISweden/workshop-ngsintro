@@ -46,7 +46,7 @@ To learn more about the genetic bases for lactose tolerance please read the firs
 * Copying and pasting commands from the exercise to terminal can result in formatting errors. 
 * Use tab completion.
 * A line starting with `#` is a comment
-* If you change the node you are working on you will need to reload the tool modules. (See **Accessing programs** below)
+* If you change the node you are working on you will need to reload the tool modules. Please see [Accessing programs](### Accessing programs) below.
 * Check that the output file exists and is a reasonable size (use `ls -l`) after a command is completed as a quick way to see that the command went well. 
 * A common mistake is to attempt to load input files that do not exist, or create output files where they cannot write.
 * Giving good names to your output files that describes what has been done will help you.
@@ -75,12 +75,12 @@ Connect to UPPMAX.
 ```bash
 $ ssh -Y username@rackham.uppmax.uu.se
 ```
-Book a node. Make sure you only do this once depeding on the day.
-Use this reservation on day 1 of variant-calling.
+Book a node. Make sure you only do this once depeding on the day.  
+Use this reservation on day 1 of variant-calling:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0("salloc -A ",upid," -t 04:00:00 -p core -n 1 --no-shell --reservation=",upres3," &"))
 ```
-Use this reservation on day 2 of variant-calling.
+Use this reservation on day 2 of variant-calling:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0("salloc -A ",upid," -t 04:00:00 -p core -n 1 --no-shell --reservation=",upres4," &"))
 ```
@@ -93,32 +93,16 @@ and to connect to the node:
 ```bash
 ssh -Y <nodename>
 ```
-
-## Accessing programs
-We're going to need several programs that are installed in the module system. To access the bioinformatics modules you first need to load the `bioinfo-tools` module:
-```bash
-module load bioinfo-tools
-```
-This makes it possible to load the individual programs we need:
-```bash
-module load bwa/0.7.17
-module load samtools/1.8
-module load GATK/3.7
-module load picard/2.10.3
-# It is not necessary to add version number, but it is recommended if you want to rerun the exact same commands later.
-# Picard and GATK are java programs, which means that we need the path to the program file, therefore UPPMAX sets a variable when you load these modules ($GATK_HOME or $PICARD_HOME).
-```
-
-## Creating a workspace
-
+### Creating a workspace
 During this lab you should work in your folder under the course's nobackup folder, just like you have done during the previous labs. Start by creating a workspace for this exercise in your folder, and then move into it.
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0("mkdir /proj/",upid,"/nobackup/<username>/ngsworkflow\n"))
 cat(paste0("cd /proj/",upid,"/nobackup/<username>/ngsworkflow"))
 ```
+### Create symbolic links 
+The raw fastq files are located in the [Data](# Data) folder described above. In stead of copying the files to your workspace you should create symbolic links (soft-links) to them. We do this because fastq are very large, and copying them would use up a lot of storage space. Soft-linking files and folders allows us to work with those files as if they were actually there. Use pwd to check if you are standing in the correct directory. You should be standing here:
 
-## Create symbolic links to data
 
 Before we can align our sample we need a reference genome. For our exercises, we'll use only human chromosome 2, however in a real situation you should use the full genome.  Create a symbolic link to the reference in your workspace:
 
@@ -130,6 +114,22 @@ Do the same with the fastq files
 ```bash
 ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00097_1.fq
 ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00097_2.fq
+```
+### Accessing programs
+We will use several programs that are installed in the module system on Uppmax. First load the `bioinfo-tools` module:
+```bash
+module load bioinfo-tools
+```
+This makes it possible to load the individual programs we need:
+```bash
+module load bwa/0.7.17
+module load 
+samtools/1.10
+module load GATK/4.1.4.1
+module loadpicard/2.20.4
+
+# It is not necessary to add version number, but it is recommended if you want to rerun the exact same commands later.
+# Picard and GATK are java programs, which means that we need the path to the program file, therefore UPPMAX sets a variable when you load these modules ($GATK_HOME or $PICARD_HOME).
 ```
 
 ### BWA index
