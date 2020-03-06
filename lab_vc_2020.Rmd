@@ -38,6 +38,28 @@ chr2:136545000-136617000
 We will use this region as an example case to illustrate how you can look for genetic variation in NGS data. 
 To learn more about the genetic bases for lactose tolerance please read the first three pages of this publication by Mattar et al. The variant (rs4988235) is here referred to as LCT-13910C>T. [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf).
   
+## General guide
+
+```bash
+command <parameter1> <parameter2> ...
+``` 
+This means that you should replace `<parameter>` with the correct parameter type, for example your input file name, output file name, directory name, etc. If you don't know which parameter you should supply, please ask.
+
+<div class="boxy boxy-lightbulb">
+* In commands, you should replace `<parameter>` with the correct parameter type, for example your input file name, output file name, directory name, etc. 
+* In paths, remember to change `<username>` with your actual UPPMAX username.
+* Copying and pasting commands from the exercise to terminal can result in formatting errors. 
+* Running a command without parameters will, often, return a help message on how to run the command.
+* Use tab completion when possible.
+* A line starting with `#` is a comment
+* If you change the node you are working on you will need to reload the tool modules. (See **Accessing programs** below)
+* Check that the output file exists and is a reasonable size (use `ls -l`) after a command is completed as a quick way to see that nothing is wrong. A common mistake people make is to attempt to load input files that do not exist or create output files where they cannot write.
+* Giving good names to your outfiles that describes what has been done will help you.
+* Google errors, someone in the world has run into EXACTLY the same problem you had and asked about it on a forum somewhere.
+</p>
+
+</div>
+
 ## Data
 All input data for this exercise is located in the folder on Rackham:
 ```bash
@@ -51,30 +73,6 @@ You will also need the reference genome in fasta format. This, and a few other r
 ```bash
 /sw/courses/ngsintro/reseq/data/ref
 ```
-
-<div class="boxy boxy-lightbulb">
-**General guide**
-
-<p>
-* Throughout the exercises, we will illustrate commands in the format:
-```bash
-command <parameter1> <parameter2> ...
-```
-This means that you should replace `<parameter>` with the correct parameter type, for example your input file name, output file name, directory name, etc. If you don't know which parameter you should supply, please ask.
-
-* Use tab completion when possible.
-* Running a command without parameters will, often, return a default help message on how to run the command.
-* Copying and pasting commands from the exercise to terminal can result in formatting errors. Especially backslash (`\`), which is used to show that the command continues on the next line, can be a bit tricky.
-* A line starting with `#` is a comment
-* Once a command has resulted in successful completion, save it! You will redo the procedure again with another sample and this will save time.
-* If you change the node you are working on you will need to reload the tool modules. (See **Accessing programs** below)
-* Check that the output file exists and is a reasonable size (use `ls -l`) after a command is completed as a quick way to see that nothing is wrong. A common mistake people make is to attempt to load input files that do not exist or create output files where they cannot write.
-* Giving good names to your outfiles that describes what has been done will help you.
-* Again, replace `<parameter>` with the correct parameter in the commands
-* Google errors, someone in the world has run into EXACTLY the same problem you had and asked about it on a forum somewhere.
-</p>
-
-</div>
 
 # Main exercise
 ## Using Uppmax
