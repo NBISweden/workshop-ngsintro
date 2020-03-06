@@ -40,8 +40,8 @@ To learn more about the genetic bases for lactose tolerance please read the firs
   
 ## General guide
 <div class="boxy boxy-lightbulb">
-* In commands, replace `<parameter>` with the correct parameter, for example your input file name, output file name, directory name, etc.
-* In paths, replace `<username>` with your actual UPPMAX username.
+* In paths, please replace `<username>` with your actual UPPMAX username.
+* In commands, please replace `<parameter>` with the correct parameter, for example your input file name, output file name, directory name, etc.
 * Running a command without parameters will often return a help message on how to run the command.
 * Copying and pasting commands from the exercise to terminal can result in formatting errors. 
 * Use tab completion.
