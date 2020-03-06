@@ -21,41 +21,42 @@ Rapidly dropping sequencing costs and the ability to obtain information about th
 * The last part of the exercise will take you thourgh some additional steps that are recommended by GATK best practise short variant detection. 
   
 # Samples
-The 1000 Genomes Project was the first project to sequence the entire genomes of a large number of people, to provide a comprehensive resource on human genetic variation. In the first phase of the project each sample was seqcuended to 4x genome coverage. At this depth, sequencing can not discover all variants in each sample, but can allow the detection of most variants with frequencies of 1% in the 1000 Genomes cohort. Data from the 1000 Genomes Project available through freely accessible public databases, and in this workshop we will use 3 samples from the low converage phase of the 1000 Genomes project.
+The 1000 Genomes Project was the first project to sequence the entire genomes of a large number of people, to provide a comprehensive resource on human genetic variation. Data from the 1000 Genomes Project available through freely accessible public databases, and in this workshop we will use 3 samples from the low converage phase of the 1000 Genomes project.
 
 Sample        | Population | Coverage
 ------------- | ---------- | --------
-HG00097       | British in England and Scotland    | 30X  
-HG00100       | British in England and Scotland    | 30X  
-HG00100       | British in England and Scotland    | 30X  
+HG00097       | British in England and Scotland    | Low  
+HG00100       | British in England and Scotland    | Low  
+HG00100       | British in England and Scotland    | Low  
   
-# The LCT locus
-We will work with data for a small regions on chromosome 2 around the LCT gene. Genetic variants in this region control how lactose is tolerated in adults, and the variant rs4988235 (located at at position chr2:136608596 in HG19) has been shown to lead to lactose persistence in adults. To learn more about the genetic bases for lactose tolerance please read the first three pages of this publication by Mattar et al. The variant (rs4988235) is here referred to as LCT-13910C>T. [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf).
+# The **LCT** locus
+The **LCT** gene on chromosome 2 encodes the lactase protein, which is responible for the metabolism of lactose in mammals. Most mammals can not digest lactose as adults, but some humans tolerate lactose also in adulthood. Genetic variants upstream of the human **LCT** control how lactose is tolerated in adults, and the variant *rs 4988235* (located at at position chr2:136608596 in HG19) has been shown to lead to lactose persistence.  
+  
+In this workshop we will work with sequencing data (fastq files) for a small region on chromosome 2 that covers the LCT gene and upstream region: 
+chr2:136545000-136617000
 
-
+We will use this region as an example case to illustrate how you can look for genetic variation in NGS data. 
+To learn more about the genetic bases for lactose tolerance please read the first three pages of this publication by Mattar et al. The variant (rs4988235) is here referred to as LCT-13910C>T. [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf).
+  
 # Data
-
 All input data for this exercise is located in the folder:
-
 ```bash
 /sw/courses/ngsintro/reseq/data
 # These files are read-only so that the files are not accidentally deleted
 ```
-
+## Fastq files
+The fastq files are located in this folder:
+```bash
+/sw/courses/ngsintro/reseq/data/fastq
+# These files are read-only so that the files are not accidentally deleted
+```
 ## The reference genome
-
+You will also need the reference genome in fasta format. This, and a few other refence files are located in this folder: 
 Before we can align our sample we need a reference genome. For our exercises, we'll use only human chromosome 2, however in a real situation you should use the full genome.  Create a symbolic link to the reference in your workspace:
-
 ```bash
-ln -s /sw/courses/ngsintro/reseq/data/ref/human_g1k_v37_chr2.fasta
+/sw/courses/ngsintro/reseq/data/ref
+# These files are read-only so that the files are not accidentally deleted
 ```
-Do the same with the fastq files
-
-```bash
-ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00097_1.fq
-ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00097_2.fq
-```
-
 
 ## Running commands
 
@@ -64,8 +65,7 @@ Throughout the exercises, we will illustrate commands in the format:
 ```bash
 command <parameter1> <parameter2> ...
 ```
-
-This signifies that you should replace `<parameter>` with the correct parameter type, for example your input file name, output file name, directory name, etc. If you don't know which parameter you should supply, please ask.
+This means that you should replace `<parameter>` with the correct parameter type, for example your input file name, output file name, directory name, etc. If you don't know which parameter you should supply, please ask.
 
 <div class="boxy boxy-lightbulb">
 **General guide**
@@ -148,22 +148,7 @@ cat(paste0("mkdir /proj/",upid,"/nobackup/<username>/ngsworkflow\n"))
 cat(paste0("cd /proj/",upid,"/nobackup/<username>/ngsworkflow"))
 ```
 
-## Data for this lab
-
-All input data for this exercise is located in the folder:
-
-```bash
-/sw/courses/ngsintro/vc/data/
-# These files are read-only so that the files are not accidentally deleted
-```
-
-Bam and VCF files can be reached at this new location on Uppmax:
-
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("$ cd /sw/courses/ngsintro/",upid,"/vc"))
-```
-
-## The reference genome
+## Create symbolic links to data
 
 Before we can align our sample we need a reference genome. For our exercises, we'll use only human chromosome 2, however in a real situation you should use the full genome.  Create a symbolic link to the reference in your workspace:
 
