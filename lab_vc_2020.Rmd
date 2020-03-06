@@ -52,19 +52,16 @@ You will also need the reference genome in fasta format. This, and a few other r
 /sw/courses/ngsintro/reseq/data/ref
 ```
 
-# Main exercise
+<div class="boxy boxy-lightbulb">
+**General guide**
 
-Throughout the exercises, we will illustrate commands in the format:
-
+<p>
+* Throughout the exercises, we will illustrate commands in the format:
 ```bash
 command <parameter1> <parameter2> ...
 ```
 This means that you should replace `<parameter>` with the correct parameter type, for example your input file name, output file name, directory name, etc. If you don't know which parameter you should supply, please ask.
 
-<div class="boxy boxy-lightbulb">
-**General guide**
-
-<p>
 * Use tab completion when possible.
 * Running a command without parameters will, often, return a default help message on how to run the command.
 * Copying and pasting commands from the exercise to terminal can result in formatting errors. Especially backslash (`\`), which is used to show that the command continues on the next line, can be a bit tricky.
@@ -79,6 +76,7 @@ This means that you should replace `<parameter>` with the correct parameter type
 
 </div>
 
+# Main exercise
 ## Using Uppmax
 
 Connect to UPPMAX.
