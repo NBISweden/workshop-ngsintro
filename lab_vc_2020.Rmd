@@ -132,26 +132,27 @@ module loadpicard/2.20.4
 # Picard and GATK are java programs, which means that we need the path to the program file, therefore UPPMAX sets a variable when you load these modules ($GATK_HOME or $PICARD_HOME).
 ```
 
-### BWA index
-
-Some associated files are expected by the aligner. You will only need to create these files once.
-
+### index the reference genome
+Index files allow efficient random access to large files. The tools BWA, Samtools and Picard need different indices of the reference fasta file, so they must be generated before we can proceed to analysing our samples.  
+  
+To generate several BWA index files:
 ```bash
 bwa index -a bwtsw human_g1k_v37_chr2.fasta
-# BWA is a program that takes different commands as the first argument, here index, used with the bwtsw algorithm
 ```
-
 Check to see that several new files have been created using `ls -l`.
-
-### Samtools and Picard indices
-
-We will also build two other sequence dictionaries for the reference, which just lists the names and lengths of all the chromosomes. Other programs will need these later.
-
+  
+Generate a Samtool index: 
 ```bash
 samtools faidx human_g1k_v37_chr2.fasta
+```
+Check to see that several new files have been created using `ls -lrt`.
+  
+Generate a sequence dictionary for Picard:
+```bash
 java -Xmx7g -jar $PICARD_HOME/picard.jar CreateSequenceDictionary R=human_g1k_v37_chr2.fasta O=human_g1k_v37_chr2.dict
 ```
-
+Again, check that the last command generated a new index file using `ls -lrt`
+  
 ## Data pre-processing
 ### Aligning reads
 
