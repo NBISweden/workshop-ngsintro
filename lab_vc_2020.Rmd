@@ -46,7 +46,7 @@ To learn more about the genetic bases for lactose tolerance please read the firs
 * Copying and pasting commands from the exercise to terminal can result in formatting errors. 
 * Use tab completion.
 * A line starting with `#` is a comment
-* If you change the node you are working on you will need to reload the tool modules. Please see [Accessing programs](### Accessing programs) below.
+* If you change the node you are working on you will need to reload the tool modules. Please see [Accessing programs](#Acessing programs) below.
 * Check that the output file exists and is a reasonable size (use `ls -l`) after a command is completed as a quick way to see that the command went well. 
 * A common mistake is to attempt to load input files that do not exist, or create output files where they cannot write.
 * Giving good names to your output files that describes what has been done will help you.
@@ -54,7 +54,7 @@ To learn more about the genetic bases for lactose tolerance please read the firs
 </p>
 </div>
   
-# Data
+# Data {#Data}
 All input data for this exercise is located in the folder on Rackham:
 ```bash
 /sw/courses/ngsintro/reseq/data
@@ -101,7 +101,7 @@ cat(paste0("mkdir /proj/",upid,"/nobackup/<username>/ngsworkflow\n"))
 cat(paste0("cd /proj/",upid,"/nobackup/<username>/ngsworkflow"))
 ```
 ### Create symbolic links 
-The raw fastq files are located in the [Data](# Data) folder described above. In stead of copying the files to your workspace you should create symbolic links (soft-links) to them. We do this because fastq are very large, and copying them would use up a lot of storage space. Soft-linking files and folders allows us to work with those files as if they were actually there. Use pwd to check if you are standing in the correct directory. You should be standing here:
+The raw fastq files are located in the [Data](#Data) folder described above. In stead of copying the files to your workspace you should create symbolic links (soft-links) to them. We do this because fastq are very large, and copying them would use up a lot of storage space. Soft-linking files and folders allows us to work with those files as if they were actually there. Use pwd to check if you are standing in the correct directory. You should be standing here:
 
 
 Before we can align our sample we need a reference genome. For our exercises, we'll use only human chromosome 2, however in a real situation you should use the full genome.  Create a symbolic link to the reference in your workspace:
@@ -115,7 +115,7 @@ Do the same with the fastq files
 ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00097_1.fq
 ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00097_2.fq
 ```
-### Accessing programs
+### Accessing programs {#Accessing programs}
 We will use several programs that are installed in the module system on Uppmax. First load the `bioinfo-tools` module:
 ```bash
 module load bioinfo-tools
