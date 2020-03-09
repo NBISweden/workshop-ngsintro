@@ -173,7 +173,7 @@ scp <username>@rackham.uppmax.uu.se:</path/to/fastqc/>*.html .
 ```
 
 Open a webbrowser in your local computer and open the two html files that you just dowloaded.
-**Questions:** 
+**Questions:**   
 * Look at the section "Sequence Length Distribution". How long are the reads?
 * Look at the "per base sequence quality". How many bases in the reads have a median phred-score above 28?
 * Are the quality scores higher for the first strand reads or the second strand reads?
