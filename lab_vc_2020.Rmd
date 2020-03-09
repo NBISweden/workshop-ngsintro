@@ -152,6 +152,8 @@ java -Xmx7g -jar $PICARD_HOME/picard.jar CreateSequenceDictionary R=human_g1k_v3
 Again, check that the last command generated a new index file using `ls -lrt`
   
 ### Quality control
+![](data/ngs-workflow/main_qc.png)
+
 We will use FastQC to check the qualiy scores of the reads in the fastq. The output is a .html document that shows the quality score along the reads, and other information. 
 First create a folder where the output from FastQC will be stored:
 ```bash
@@ -180,16 +182,7 @@ Open a webbrowser in your local computer and open the two html files that you ju
 Phred scores 
 
 ### Aligning reads
-
-We are skipping the quality control and trimming of reads for this exercise, but two excellent tools are [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) & [MultiQC](http://multiqc.info/). You will get a chance to try these tools later.
-
-Should we instead run the first sampe (R1 and R2) in fastqc?
-
-```bash
-module load FastQC/0.11.8
-mkdir fastqc
-fastqc -q HG00097_1.fq HG00097_2.fq -o fastqc
-```
+![](data/ngs-workflow/main_align.png)
 
 
 
@@ -217,59 +210,10 @@ samtools index HG00097_RG.bam
 ```
 
 
-#########KOM hit!
-
-<i class="fas fa-clipboard-list"></i> Compare the size of the SAM and BAM files using `ls -l`
-
-### BAM Processing
-
-The reads have now been aligned to the reference, but these files can still be improved a bit before we use them for variant calling. Genome Analysis Tool Kit (GATK) is a popular set of tools used for variant calling. GATK comes with *best practises*, which gives a suggestion on how to get from raw BAM to filtered variants.
-
-In brief, their current best practises for [Germline short variant discovery (SNPs + Indels)](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-) consists of:
-* Marking duplicates
-* Base quality score recalibration
-* Sample wise variant calling
-* Joint genotyping of all samples
-* Variant filtration
-
-However, this may need adjustment depending for example on your experimental setup. **It is therefore important to check the best practises in each case**.
-
-### Marking duplicates
-
-![](data/ngs-workflow/wf_markdup.png)
-
-We use Picard to mark duplicate reads:
-
-```bash
-java -Xmx7g -jar $PICARD_HOME/picard.jar MarkDuplicates \
-  INPUT=<input_bam> \
-  OUTPUT=<marked_bam> \
-  METRICS_FILE=<metrics_file> \
-  READ_NAME_REGEX=null
-
-# marked_bam: you need to specify an output name, which will be used in the following steps.
-# It is suggested to use file names that describe what has been done, e.g. <sample>.dedup.bam
-# The metrics file is a text file that will be created and contains some stats about duplicates.
-```
-
-<i class="fas fa-clipboard-list"></i> How many duplicates were detected? Check the metrics file.
-
-Again, we need to index the new BAM file before proceeding.
-
-```bash
-samtools index <marked_bam>
-```
-Create a bam file with only the duplicate reads:
-
-```bash
-samtools view -f 1024 HG00097.dedup.RG.bam | cut -f1 | sort | uniq > HG00097.dupreads.txt
-java -jar $PICARD_HOME/picard.jar SortSam INPUT=HG00097.dedup.bam OUTPUT=HG00097.sorted_by_name.bam SORT_ORDER=queryname
-java -jar $PICARD_HOME/picard.jar FilterSamReads INPUT=HG00097.sorted_by_name.bam OUTPUT=HG00097.only_dups.bam FILTER=includeReadList READ_LIST_FILE=HG00097.dupreads.txt SORT_ORDER=coordinate CREATE_INDEX=true 
-```
 
 ## Variant Calling
+![](data/ngs-workflow/main_vc.png)
 
-![](data/ngs-workflow/wf_varcall.png)
 
 Now we'll run the GATK `HaplotypeCaller` on our BAM file and output a gVCF file.
 
