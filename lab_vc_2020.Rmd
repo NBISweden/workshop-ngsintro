@@ -232,9 +232,6 @@ samtools view HG00097.bam | head -n 5
 ### Inspect the bam file in IGV
 Looking at the aligned reads in samformat can be good in some cases, for example when inspecting reads marked with a specific sam flag, but to get an overview of the data we will use `Integrative Genomics Viewer`. IGV provides a graphical representation of the bam file, and it is best used on your local computer. download the generated bam and bam.bai files to your local computer using `SCP` as above. 
 
-
-
-
 ## Variant Calling
 ![](data/ngs-workflow/main_vc.png)
 
@@ -567,4 +564,3 @@ Do you get the same annotations as with annovar?
   * [GATK](https://software.broadinstitute.org/gatk/)
   * [samtools](http://www.htslib.org/)
 
-***
