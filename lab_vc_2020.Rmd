@@ -185,7 +185,6 @@ Phred scores
 ![](data/ngs-workflow/main_align.png)
 
 
-
 We are going to start by aligning the reads for the HG00097 sample, using `bwa mem`. We give the paths to our reference genome and the forward (`_1.fq`) and reverse (`_2.fq`) read fastq files.
 
 At the same time we add something called read groups to the reads in the fastq files. Read groups allow us to trace various technical features, such as which flowcell that was used to generate the reads. Read gruop info needs to be in the file when we perform variant calling with HaplotypeCaller. 
@@ -213,6 +212,7 @@ samtools index HG00097_RG.bam
 
 ## Variant Calling
 ![](data/ngs-workflow/main_vc.png)
+
 
 
 Now we'll run the GATK `HaplotypeCaller` on our BAM file and output a gVCF file.
