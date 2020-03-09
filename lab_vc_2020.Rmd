@@ -101,16 +101,12 @@ cat(paste0("mkdir /proj/",upid,"/nobackup/<username>/ngsworkflow\n"))
 cat(paste0("cd /proj/",upid,"/nobackup/<username>/ngsworkflow"))
 ```
 ### Create symbolic links 
-The raw fastq files are located in the [Data](#Data) folder described above. In stead of copying the files to your workspace you should create symbolic links (soft-links) to them. We do this because fastq are very large, and copying them would use up a lot of storage space. Soft-linking files and folders allows us to work with those files as if they were actually there. Use pwd to check if you are standing in the correct directory. You should be standing here:
-
-
-Before we can align our sample we need a reference genome. For our exercises, we'll use only human chromosome 2, however in a real situation you should use the full genome.  Create a symbolic link to the reference in your workspace:
-
+The raw fastq files are located in the [Data](#Data) folder described above. In stead of copying the files to your workspace you should create symbolic links (soft-links) to them. Soft-linking files and folders allows us to work them as if they were in in your work directory, but we avoid multiplying them.   
+Create a symbolic link to the reference in your workspace:
 ```bash
 ln -s /sw/courses/ngsintro/reseq/data/ref/human_g1k_v37_chr2.fasta
 ```
-Do the same with the fastq files
-
+Do the same with the fastq files:
 ```bash
 ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00097_1.fq
 ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00097_2.fq
@@ -131,9 +127,9 @@ module loadpicard/2.20.4
 # It is not necessary to add version number, but it is recommended if you want to rerun the exact same commands later.
 # Picard and GATK are java programs, which means that we need the path to the program file, therefore UPPMAX sets a variable when you load these modules ($GATK_HOME or $PICARD_HOME).
 ```
-
+  
 ### Index the reference genome
-Index files allow efficient random access to large files. The tools BWA, Samtools and Picard need different indices of the reference fasta file, so they must be generated before we can proceed to analysing our samples.  
+Tools that compare (short) reads with a (large) reference genome needs genome index files to allow efficient access to the reference genome. Before we can begin analysing our samples we therefore need to create index files for each tool.  
   
 To generate several BWA index files:
 ```bash
