@@ -234,7 +234,7 @@ samtools view HG00097.bam | head -n 5
 You also need to download the bam file to your laptop. 
 Navigate to your *local workspace*, but do not log in to UPPMAX. Copy the .bam file generated above with this command:
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("scp <username>@rackham.uppmax.uu.se:/proj/",upid,""/nobackup/<username>/ngsworkflow/HG00097.bam ./\n"))
+cat(paste0("scp <username>@rackham.uppmax.uu.se:/proj/",upid,"/nobackup/<username>/ngsworkflow/HG00097.bam ./\n"))
 #Replace <username> with your uppmax user name
 ```
 Check that the files are now present in the workspace folder on your laptop downladed using `ls -lrt`. 
