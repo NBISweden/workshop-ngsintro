@@ -160,6 +160,7 @@ Again, check that the last command generated a new index file using `ls -lrt`
 # Part one
 ## Quality control
 ![](data/ngs-workflow/main_qc.png)
+  
 ### FastQC  
 We will use FastQC to check the qualiy scores of the reads in the fastq. The output is a .html document that shows the quality score along the reads, and other information. 
 First create a folder where the output from FastQC will be stored:
@@ -191,7 +192,7 @@ Phred scores
 ## Aligning reads
 ![](data/ngs-workflow/main_align.png)
 
-### Align the reads with BWA mem  
+### BWA mem  
 We will use *BWA mem* to align the reads to the reference genome. At the same time we add something called *read groups* to the reads in the fastq files. Read groups allow us to trace various technical features, such as which flowcell that was used to generate the reads, and read gruop info needs to be in the file when we perform variant calling with HaplotypeCaller. For a detailed description of read groups, please read this article at [GATK-forum](https://gatkforums.broadinstitute.org/gatk/discussion/6472/read-groups).  
    
 The samples in this workshop comes from the 1000 Genomes project, and we don't have all the information needed to create *real* read groups. However, we assume that each fastq file was generated from one library preparation (called "libraryx" below) derived from one biological sample (called "HG00097" below) that was run on one lane of a flowcell (flowcellx_lanex) in the Illumina machine, and we call this "readgroup x". 
@@ -244,8 +245,8 @@ Check that the files are now present in your *local workspace* using `ls -lrt`.
 
 **Look at the bam file in IGV**  
 * In IGV, go to the popup menu in the upper left and set it to **Human hg19**.  
-* Go under the Tools menu and select **Run igvtools…**. Choose the command **Count** and then use the Browse button next to the Input File line to select the BAMs (not the bai) that you just downloaded. It will autofill the output file. Hit the Run button. This generates a .tdf file for each BAM. This allows us to see the coverage value for our BAM file even at zoomed out views. 
-* Close the **igvtools** window and go back to the File menu, select **Load from File…** and select your BAMs (not the .bai or the .tdf), which should appear in the tracks window. You will have to zoom in before you can see any reads. You can either select a region by click and drag, or by typing a region (chr:from-to) or gene name in the text box at the top.  
+* In Tools menu, select **Run igvtools**. Choose the command **Count** and then use the Browse button next to the Input File line to select the BAMs (not the bai) that you just downloaded. It will autofill the output file. Hit the Run button. This generates a .tdf file for each BAM. This allows us to see the coverage value for our BAM file even at zoomed out views. Close the **igvtools** window. 
+* In the File menu, select **Load from File** and select your BAMs (not the .bai or the .tdf), which should appear in the tracks window. You will have to zoom in before you can see any reads. You can either select a region by click and drag, or by typing a region (chr:from-to) or gene name in the text box at the top.  
 **Questions**  
 * What is the read length?  
 * Can you estimate the coverage by looking at the bam file in IGV?   
