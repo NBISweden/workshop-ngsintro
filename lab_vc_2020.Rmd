@@ -230,8 +230,10 @@ samtools view HG00097.bam | head -n 5
 ```
   
 ### Inspect the bam file in IGV on your laptop
-Integrative Genomics Viewer (IGV) provides an interactive visualisation of the reads in a bam file. You can launch IGV from UPPMAX using your graphical forwarding, -X or -Y, as you may have already tried. However, here we will show how to run it on your laptop. If you have not used IGV on your laptop before, plase go to the IGV [download page](https://software.broadinstitute.org/software/igv/download), and follow the instructions. It will prompt you to fill in some information and agree to license. Launch the viewer through webstart. The 1.2 Gb version should be sufficient for our data.
+#### Install IGV
+Integrative Genomics Viewer (IGV) provides an interactive visualisation of the reads in a bam file. Here we will show how to run IGV on your laptop. If you have not used IGV on your laptop before, plase go to the IGV [download page](https://software.broadinstitute.org/software/igv/download), and follow the instructions to dowload it. It will prompt you to fill in some information and agree to license. Launch the viewer through webstart. The 1.2 Gb version should be sufficient for our data.
 
+##### Dowload the bam file
 You also need to download the bam file to your laptop. 
 Navigate to your *local workspace*, but do not log in to UPPMAX. Copy the .bam file generated in your *uppmax workspace* with this command:
 ```{r,echo=FALSE,comment="",class.output="bash"}
@@ -240,10 +242,7 @@ cat(paste0("scp <username>@rackham.uppmax.uu.se:/proj/",upid,"/nobackup/<usernam
 ```
 Check that the files are now present in your *local workspace* using `ls -lrt`. 
 
-**Choose reference**
-
-First we want to make sure we have the right reference, i.e. the same reference used for mapping the reads.
-
+#### Look at the bam file in IGV
 * In IGV, go to the popup menu in the upper left and set it to **Human hg19**.
 
 **Prepare BAMs**
