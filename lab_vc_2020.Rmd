@@ -70,11 +70,11 @@ You will also need the reference genome in fasta format. This, and a few other r
       
 # Preparations
 
-## Create local workspace  {#preparelaptop}
+## Local workspace  {#preparelaptop}
 The majority of the analyses in this workshop will be done on Uppmax, but we will copy some of the resulting files to our laptops so that we can look at them in graphical browsers. Therefore, please start by creating a folder for this workshop on your local laptop. 
 It is up to you where you want to put this, but it can for example be a folder called "ngsworkflow" on Desktop. You need to have write permission in this folder. The folder you create here will be refered to as **local workspace** throughout this workshop. 
 
-## Using Uppmax
+## Uppmax
 Connect to UPPMAX.
 ```bash
 $ ssh -Y username@rackham.uppmax.uu.se
@@ -213,7 +213,7 @@ samtools index HG00097.bam
 ```
 Please check what output file was generated this time. 
 
-### check output bam
+### check bam with samtools
 The bam file is binary so we can not direct read it, but we can view it with `samtools view`. 
 The header section of the bam file can be viewed separatedly with the `-H` flag:
 ```bash
@@ -245,7 +245,7 @@ Check that the files are now present in your *local workspace* using `ls -lrt`.
 
 **Look at the bam file in IGV**  
 * In IGV, go to the popup menu in the upper left and set it to **Human hg19**.  
-* In Tools menu, select **Run igvtools**. Choose the command **Count** and then use the Browse button next to the Input File line to select the BAMs (not the bai) that you just downloaded. It will autofill the output file. Hit the Run button. This generates a .tdf file for each BAM. This allows us to see the coverage value for our BAM file even at zoomed out views. Close the **igvtools** window. 
+* In Tools menu, select **Run igvtools**. Choose the command **Count** and then use the Browse button next to the Input File line to select the BAMs (not the bai) that you just downloaded. It will autofill the output file. Hit the Run button. This generates a .tdf file for each BAM. This allows us to see the coverage value for our BAM file even at zoomed out views. Close the **igvtools** window.  
 * In the File menu, select **Load from File** and select your BAMs (not the .bai or the .tdf), which should appear in the tracks window. You will have to zoom in before you can see any reads. You can either select a region by click and drag, or by typing a region (chr:from-to) or gene name in the text box at the top.  
 **Questions**  
 * What is the read length?  
