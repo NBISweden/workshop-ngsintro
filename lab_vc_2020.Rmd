@@ -74,7 +74,7 @@ You will also need the reference genome in fasta format. This, and a few other r
 You will copy stuff from Uppmax during this exercies, so we need a good workspace in your local computer. 
 It is up to you where you want to put this, but it can be for example a folder called "ngsworkflows" on Desktop. 
 You need to be able to write to this workspace.
-We will use `SCP`to copy files that we have generated on Rackham to this folder. 
+We will use `SCP` to copy files that we have generated on Rackham to this folder. 
 
 ## Using Uppmax
 Connect to UPPMAX.
@@ -244,7 +244,7 @@ java -Xmx7g -jar $GATK_HOME/GenomeAnalysisTK.jar -T HaplotypeCaller \
   -R human_g1k_v37_chr2.fasta \
   --emitRefConfidence GVCF \
   -I <input_bam> \
-  -o <output>.g.vcf
+  -o <output>.vcf
 
 # The output gVCF file needs to have the ending .g.vcf
 # You will have one g.vcf file per sample, so make sure the sample id is in the file name
