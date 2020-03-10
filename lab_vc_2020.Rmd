@@ -244,31 +244,13 @@ Check that the files are now present in your *local workspace* using `ls -lrt`.
 
 #### Look at the bam file in IGV
 * In IGV, go to the popup menu in the upper left and set it to **Human hg19**.
-
-**Prepare BAMs**
-
-* Go under the Tools menu and select **Run igvtools…**. Choose the command **Count** and then use the Browse button next to the Input File line to select the BAMs (not the bai) that you just downloaded. It will autofill the output file.
-* Now hit the Run button. This generates a .tdf file for each BAM. This allows us to see the coverage value for our BAM file even at zoomed out views.
-
-**Load BAMF**
-
-Close the **igvtools** window and go back to the File menu, select **Load from File…** and select your BAMs (not the .bai or the .tdf), which should appear in the tracks window. Next, load the vcf file. You will have to zoom in before you can see any reads. You can either select a region by click and drag, or by typing a region (chr:from-to) or gene name in the text box at the top.
-
-<i class="fas fa-comments"></i> You can now try to answer these questions:
-
+* Go under the Tools menu and select **Run igvtools…**. Choose the command **Count** and then use the Browse button next to the Input File line to select the BAMs (not the bai) that you just downloaded. It will autofill the output file. Hit the Run button. This generates a .tdf file for each BAM. This allows us to see the coverage value for our BAM file even at zoomed out views.
+* Close the **igvtools** window and go back to the File menu, select **Load from File…** and select your BAMs (not the .bai or the .tdf), which should appear in the tracks window. You will have to zoom in before you can see any reads. You can either select a region by click and drag, or by typing a region (chr:from-to) or gene name in the text box at the top.
+*Questions*
 * What is the read length?
-* Can you find the variant shown to be associated with lactose tolerance?
-* Do you have coverage in this region in all samples?
-* Which samples do you think should avoid drinking milk? Any heterozygotes?
-* Does this agree with the genotype in the vcf file?
+* Can you estimate the coverage by looking at the bam file in IGV? 
+* 
 
-**Customizing the view**
-
-* Change the track features. If you control-click (or right click) on the track name at the left, you will get a popup menu with several options. For example, click the gene track and play with the view.
-
-* If you go to a read alignment track, you can control some useful features of the display. One is how you color the reads and another is the grouping. Are there any colored reads? Why?
-
-* Go under the View menu and select Preferences. Click on the Alignments tab. There are a number of things we can configure. Feel free to play with them.
 
 
 
