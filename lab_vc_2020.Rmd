@@ -70,11 +70,9 @@ You will also need the reference genome in fasta format. This, and a few other r
       
 # Main exercise
 
-## Prepare your local computed
-You will copy stuff from Uppmax during this exercies, so we need a good workspace in your local computer. 
-It is up to you where you want to put this, but it can be for example a folder called "ngsworkflows" on Desktop. 
-You need to be able to write to this workspace.
-We will use `SCP` to copy files that we have generated on Rackham to this folder. 
+## Prepare your laptop
+The majority of the analyses in this workshop will be done on Uppmax, but we will copy some of the resulting files to our laptops so that we can look at them in graphical browsers. Therefore, please start by creating a folder for this workshop on your local laptop. 
+It is up to you where you want to put this, but it can be for example a folder called "ngsworkflow" on Desktop. You need to have write permission in this folder.    
 
 ## Using Uppmax
 Connect to UPPMAX.
@@ -219,18 +217,18 @@ The header section of the bam file can be viewed separatedly with the `-H` flag:
 samtools view -H HG00097.bam 
 ```
 Please look at the sam/bam format definition at [Sequence Alignment/Map Format Specification](https://samtools.github.io/hts-specs/SAMv1.pdf).  
-**Questions**
-* How is your bam file sorted and what does it mean?
-* What is encoded in the @SQ tag?
-* What is encoded in the @RG tag?
-
+**Questions**  
+* How is your bam file sorted and what does it mean?  
+* What is encoded in the @SQ tag?  
+* What is encoded in the @RG tag?  
+  
 To look at the reads in the bam file just use `samtools view` without the `-H`. This will display the entire bam file whcih is quite large, so if you just want to look at the first 5 lines (for example) you can combine `samtools view` with `head`:
 ```bash
 samtools view HG00097.bam | head -n 5 
 ```
 
 ### Inspect the bam file in IGV
-Looking at the aligned reads in samformat can be good in some cases, for example when inspecting reads marked with a specific sam flag, but to get an overview of the data we will use `Integrative Genomics Viewer`. IGV provides a graphical representation of the bam file, and it is best used on your local computer. download the generated bam and bam.bai files to your local computer using `SCP` as above. 
+Looking at the aligned reads in samformat can be good in some cases, for example when inspecting reads marked with a specific sam flag, but to get an overview of the data we will use `Integrative Genomics Viewer`. IGV provides a graphical representation of the bam file, and it is best used on your local computer. Download the generated bam and bam.bai files to your local computer using `SCP` as above. 
 
 ## Variant Calling
 ![](data/ngs-workflow/main_vc.png)
