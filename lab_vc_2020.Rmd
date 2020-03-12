@@ -244,9 +244,9 @@ cat(paste0("scp <username>@rackham.uppmax.uu.se:/proj/",upid,"/nobackup/<usernam
 Check that the files are now present in your **local workspace** using `ls -lrt`. 
 
 **Look at the bam file in IGV**  
-* In IGV, go to the popup menu in the upper left and set it to *Human hg19*.  
-* In Tools menu, select *Run igvtools*. Choose the command *Count* and then use the Browse button next to the Input File line to select the BAMs (not the bai) that you just downloaded. It will autofill the output file. Hit the Run button. This generates a .tdf file for each BAM. This allows us to see the coverage value for our BAM file even at zoomed out views. Close the *igvtools* window.  
-* In the File menu, select *Load from File* and select your BAMs (not the .bai or the .tdf), which should appear in the tracks window. You will have to zoom in before you can see any reads. You can either select a region by click and drag, or by typing a region (chr:from-to) or gene name in the text box at the top.  
+* In IGV, go to the popup menu in the upper left and set it to **Human hg19**.  
+* In Tools menu, select **Run igvtools**. Choose the command **Count** and then use the Browse button next to the Input File line to select the BAMs (not the bai) that you just downloaded. It will autofill the output file. Hit the Run button. This generates a .tdf file for each BAM. This allows us to see the coverage value for our BAM file even at zoomed out views. Close the **igvtools** window.  
+* In the File menu, select **Load from File** and select your BAMs (not the .bai or the .tdf), which should appear in the tracks window. You will have to zoom in before you can see any reads. You can either select a region by click and drag, or by typing a region (chr:from-to) or gene name in the text box at the top.  
 **Questions**  
 * What is the read length?  
 * Can you estimate the coverage by looking at the bam file in IGV?   
@@ -274,7 +274,7 @@ cat(paste0("scp <username>@rackham.uppmax.uu.se:/proj/",upid,"/nobackup/<usernam
 Check that the files are now present in your **local workspace** using `ls -lrt`. 
 
 **Look at the vcf file in IGV**  
-* In IGV, in the File menu, select *Load from File* and select your vcf file (not the .idx file), which should appear in the tracks window. You will now see all the variants called in HG00097. You can view all variants in the *LCT* gene by typing the gene name in the search box.  
+* In IGV, in the File menu, select **Load from File** and select your vcf file (not the .idx file), which should appear in the tracks window. You will now see all the variants called in HG00097. You can view all variants in the *LCT* gene by typing the gene name in the search box.  
 **Questions**  
 * The vcf file is displayed on two rows; what is shown in the two rows in this case?  
 * What does it mean if a variant has two colors in the upper row?  
