@@ -274,12 +274,12 @@ cat(paste0("scp <username>@rackham.uppmax.uu.se:/proj/",upid,"/nobackup/<usernam
 Check that the files are now present in your **local workspace** using `ls -lrt`. 
 
 **Look at the vcf file in IGV**  
-* In IGV, in the File menu, select **Load from File** and select your vcf file (not the .idx file), which should appear in the tracks window. You will now see all the variants called in HG00097. You can view all variants in the *LCT* gene by typing the gene name in the search box.
+* In IGV, in the File menu, select *Load from File* and select your vcf file (not the .idx file), which should appear in the tracks window. You will now see all the variants called in HG00097. You can view all variants in the *LCT* gene by typing the gene name in the search box.  
 **Questions**  
 * The vcf file is displayed on two rows; what is shown in the two rows in this case?  
 * What does it mean if a variant has two colors in the upper row?  
-* What colour heterozygout variants have in the second row?
-* What does it mean if a variant is coloured in tourquise in the second row?
+* What colour heterozygout variants have in the second row?  
+* What does it mean if a variant is coloured in tourquise in the second row?  
 
 
 
