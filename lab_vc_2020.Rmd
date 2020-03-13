@@ -245,7 +245,7 @@ Check that the files are now present in your **local workspace** using `ls -lrt`
 
 **Look at the bam file in IGV**  
 * In IGV, go to the popup menu in the upper left and set it to **Human hg19**.  
-* In Tools menu, select **Run igvtools**. Choose the command **Count** and then use the Browse button next to the Input File line to select the BAMs (not the bai) that you just downloaded. It will autofill the output file. Hit the Run button. This generates a .tdf file for each BAM. This allows us to see the coverage value for our BAM file even at zoomed out views. Close the **igvtools** window.  
+* In Tools menu, select **Run igvtools**. Choose the command **Count** and then use the Browse button next to the Input File line to select the BAMs (not the bai) that you just downloaded. It will autofill the output file. Hit the Run button. This generates a .tdf file for each BAM. This allows us to see the coverage value for our BAM file even at zoomed out views. **Close** the igvtools window.  
 * In the File menu, select **Load from File** and select your BAMs (not the .bai or the .tdf), which should appear in the tracks window. You will have to zoom in before you can see any reads. You can either select a region by click and drag, or by typing a region (chr:from-to) or gene name in the text box at the top.  
 **Questions**  
 * What is the read length?  
@@ -264,9 +264,16 @@ Check what new files were generated with `ls -lrt`.
 **Question** 
 What is the new file that ends with *idx*?
 
+
+
+```{css}
+.workLocally {
+background-color: red;
+}
+```
 ### Check vcf in IGV
 To check the vcf file in IGV you first need to download this file from the **uppmax workspace** to the **local workspace** on your laptop. Navigate to your local workspace, but do not log in to UPPMAX. Copy the .vcf file that you just generated:
-```{r,echo=FALSE,comment="",class.output="bash"}
+```{r,echo=FALSE,comment="",class.output="bash", class.source="badCode"}
 cat(paste0("scp <username>@rackham.uppmax.uu.se:/proj/",upid,"/nobackup/<username>/ngsworkflow/HG00097.vcf* ."))
 #Replace <username> with your uppmax user name
 #Note that the * in the end of the file name means that you will download all files that start with HG00097.vcf, so you will also dowload the vcf index file. 
