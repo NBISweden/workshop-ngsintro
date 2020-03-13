@@ -13,11 +13,12 @@ upres3 <- yaml::read_yaml("_site.yml")$uppmax_res_3
 upres4 <- yaml::read_yaml("_site.yml")$uppmax_res_4
 ```
 
-```{css}
+```{css,include=FALSE}
 .workLocally{
 background-color: red;
 }
 ```
+
 ```{r,include=FALSE}
 ## VARIABLES
 #colours
