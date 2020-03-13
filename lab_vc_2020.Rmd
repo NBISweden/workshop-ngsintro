@@ -308,35 +308,63 @@ Check that the files are now present in your **local workspace** using `ls -lrt`
 
 
 # Part two 
-Here you will align reads and perform variant calling in all three samples. This time you will emitt variant calls in each sample g.vcf format, and subsequenclty perform joint variant calling of the "cohort" using GATK's GenotypeGVCFs.
+Now it is time to align reads and perform variant calling in all three samples. This time variant calls in each sample will first be emitted g.vcf format. Joint variant calling of all three samples will then be performed with GATK's GenotypeGVCFs, and this will generate a vcf file with all samples.  
 ![](data/ngs-workflow/2_jointvc.png)
 
 
-If you want to you can run all commands one by one in the terminal as you did in the first step of the workshop. However, you can also create  scripts to run BWA mem and HaplotypeCaller automatically for all samples, see [below]{} 
+If you want to you can run all commands one by one in the terminal as you did in the first step of the workshop. However, you can also create  an SBACH scripts to run BWA mem and HaplotypeCaller automatically for all samples, see [below]{#runinscript} 
 
 
 ## BWA mem 
-Run BWA mem and HaplotypeCaller for all three samples in the data set. BWA mem should be run exaclty [as above] {#bwamem} but you need to replace the sample name in the above command with the new sample names. 
+Run BWA mem and HaplotypeCaller for all three samples in the data set. BWA mem should be run exaclty [as above]{#bwamem} but you need to replace the sample name in the above command with the new sample names. 
   
-## HaplotypeCaller
+## Generate g.vcf files
 HaplotypeCaller should also be run for all three samples, but this time the output for each sample needs to be in g.vcf format. This is accompliched with a small change in the HaploteypCaller command (here examplified with the sample HG00097): 
 ```bash
-gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta --emitRefConfidence GVCF -I HG00097.bam -O HG00097.g.vcf 
+gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I HG00097.bam -O HG00097.g.vcf 
 ```
 
 ## Joint genotyping
-Now you will call genotypes from all the gVCF files produced in the previous step with `GenotypeGVCFs`. This will create one file withvariants for all samples (HG00097, HG00100 and HG00101).
+Once you have the g.vcf files for all samples you should run GATK's GenoteypeGVCF. This will generate a "normal" vcf file with variants for all samples (HG00097, HG00100 and HG00101).
 ```bash
-java -Xmx7g -jar $GATK_HOME/GenomeAnalysisTK.jar -T GenotypeGVCFs \
-  -R human_g1k_v37_chr2.fasta \
-  --variant <sample1>.g.vcf \
-  --variant <sample2>.g.vcf \
-  --variant <sample3>.g.vcf \
-  -o <cohort>.vcf
+gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta --variant <sample1>.g.vcf --variant <sample2>.g.vcf --variant <sample3>.g.vcf -o <cohort>.vcf
 ```
 Please replace <sample1>, <sample2>, <sample3> and <cohort> with the real sample names and name of the output file.  
 
+## SBATCH script {#sbatchscript}
+This section is for those of you who want to learn how to run analyses automatically in bash scripts. 
+To learn more about SLURM and SBATCH scripts please look the [SLURM user guide]{https://www.uppmax.uu.se/support/user-guides/slurm-user-guide/} on Uppmax website. 
+  
+Below is a skeleton script that can be used as a templeate. Please modify it to run all the steps in part two of this workshop. 
+
+Detta skall uppdateras:
+```bash
+#!/bin/bash
+
+#SBATCH -A <projid
+#SBATCH -p core
+#SBATCH -n 1
+#SBATCH -t 2:00:00
+#SBATCH -J vc
+
+#Load modules
+module load bioinfo-tools
+module load bwa/0.7.17
+module load samtools/1.10
+module load picard/2.20.4
+module load GATK/4.1.4.1
+
+#for s in "HG00097" "HG00100" "HG00101"
+  #call bwa mem 
+  #call to haplotypecaller -ERC
+
+#call GenotypeGVCF
+
+```
+
+  
 # Part three
+Here we will expand the variant calling workflow to follow GATKs best practise short germline variant detection. 
 
 # Additional information
 
