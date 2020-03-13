@@ -27,7 +27,6 @@ fastqdir <- "/sw/courses/ngsintro/reseq/data/fastq"
 refdir <- "/sw/courses/ngsintro/reseq/data/ref"
 col_uppmax <- "#f4f8e8"
 col_local <- "#e5f4f8"
-
 ```
 
 # Introduction
@@ -74,7 +73,7 @@ To learn more about the genetic bases for lactose tolerance please read the firs
 # Data {#Data}
 All input data for this exercise is located in the folder on Rackham:
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("datadir"))
+cat(paste0(datadir))
 ```
 
 ```bash
@@ -280,7 +279,7 @@ Check that the files are now present in your **local workspace** using `ls -lrt`
 ## Variant Calling
 ![](data/ngs-workflow/main_vc.png)
 
-### Haplotype caller
+### HaplotypeCaller {#haplotypecaller}
 Now we will detect short variants in the bam file using GATK's HaplotypeCaller. Go to your **uppmax workspace** and run:
 ```bash
 gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -I HG00097.bam -O HG00097.vcf 
@@ -314,7 +313,7 @@ If there is still time you can continue to part two of the workshop.
 Here you will align reads and perform variant calling in two additional samples. This time you will emitt the output from variant calling in the individual samples in g.vcf format, and perform joint variant calling of the "cohort". 
 
 ## Align reads and emitt g.vcf files
-Now you should run [bwa mem] {#bwamem}, and HaplotypeCaller for all three samples in the data set.  Rerun the workflow for additional samples. If you want to repeat the procedure you can now use your saved commands and rerun the mapping and variant calling steps for at least one more sample (HG00100 or HG00101) from the course directory before continuing with the next step. Alternatively, you can copy the .g.vcf files of the two additional samples.
+Run BWA mem and HaplotypeCaller for all three samples in the data set. BWA mem shoulr be run exaclty [as above] {#bwamem} but you need to replace the sample name in the above command with the new sample names. , and [HaplotypeCaller] {#haplotypecaller} for all three samples in the data set.  Rerun the workflow for additional samples. If you want to repeat the procedure you can now use your saved commands and rerun the mapping and variant calling steps for at least one more sample (HG00100 or HG00101) from the course directory before continuing with the next step. Alternatively, you can copy the .g.vcf files of the two additional samples.
 
 ```bash
 cp /sw/courses/ngsintro/vc/data/vcf/<sample>.g.vcf .
