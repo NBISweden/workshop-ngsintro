@@ -312,31 +312,31 @@ Here you will align reads and perform variant calling in all three samples. This
 ![](data/ngs-workflow/2_jointvc.png)
 
 
-If you want to you can run all commands one by one in the terminal as you did in the first step of the workshop. However, you can also create  scripts to run . 
+If you want to you can run all commands one by one in the terminal as you did in the first step of the workshop. However, you can also create  scripts to run BWA mem and HaplotypeCaller automatically for all samples, see [below]{} 
 
 
-## Aligning reads 
-Run BWA mem and HaplotypeCaller for all three samples in the data set. BWA mem should be run exaclty [as above] {#bwamem} but you need to replace the sample name in the above command with the new sample names. , and [HaplotypeCaller] {#haplotypecaller} for all three samples in the data set.  Rerun the workflow for additional samples. If you want to repeat the procedure you can now use your saved commands and rerun the mapping and variant calling steps for at least one more sample (HG00100 or HG00101) from the course directory before continuing with the next step. Alternatively, you can copy the .g.vcf files of the two additional samples.
-
+## BWA mem 
+Run BWA mem and HaplotypeCaller for all three samples in the data set. BWA mem should be run exaclty [as above] {#bwamem} but you need to replace the sample name in the above command with the new sample names. 
+  
+## HaplotypeCaller
+HaplotypeCaller should also be run for all three samples, but this time the output for each sample needs to be in g.vcf format. This is accompliched with a small change in the HaploteypCaller command (here examplified with the sample HG00097): 
 ```bash
-cp /sw/courses/ngsintro/vc/data/vcf/<sample>.g.vcf .
+gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta --emitRefConfidence GVCF -I HG00097.bam -O HG00097.g.vcf 
 ```
 
-
 ## Joint genotyping
-
-Now you will call genotypes from all the gVCF files produced in the previous step with `GenotypeGVCFs`. This will create one file with unfiltered variants for all samples (HG00097, HG00100 and HG00101).
-
+Now you will call genotypes from all the gVCF files produced in the previous step with `GenotypeGVCFs`. This will create one file withvariants for all samples (HG00097, HG00100 and HG00101).
 ```bash
 java -Xmx7g -jar $GATK_HOME/GenomeAnalysisTK.jar -T GenotypeGVCFs \
   -R human_g1k_v37_chr2.fasta \
   --variant <sample1>.g.vcf \
   --variant <sample2>.g.vcf \
   --variant <sample3>.g.vcf \
-  -o <raw_variants>.vcf
+  -o <cohort>.vcf
 ```
+Please replace <sample1>, <sample2>, <sample3> and <cohort> with the real sample names and name of the output file.  
 
-
+# Part three
 
 # Additional information
 
