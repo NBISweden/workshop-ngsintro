@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Advanced Linux</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link id="font-awesome-1-attachment" rel="attachment" href="site_libs/font-awesome-5.1.0/fonts/fontawesome-webfont.ttf"/>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="assets/lab.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+#TOC {
+  display: none !important;
+}
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"><img src="assets/logo.svg" id="logo" style="height:30px;margin:0;"/></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="home_schedule.html">Schedule</a>
+</li>
+<li>
+  <a href="home_content.html">Content</a>
+</li>
+<li>
+  <a href="home_precourse.html">Precourse</a>
+</li>
+<li>
+  <a href="home_info.html">Info</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Advanced Linux</h1>
+<h3 class="subtitle">Variables and Loops</h3>
+
+</div>
+
+
+<!-- rmd lab header -->
+<p><br></p>
+<div class="boxy boxy-exclamation">
+<p>In code blocks, the dollar sign (<code>$</code>) is not to be printed. The dollar sign is usually an indicator that the text following it should be typed in a terminal window.</p>
+</div>
+<div id="connect-to-uppmax" class="section level1">
+<h1><span class="header-section-number">1</span> Connect to UPPMAX</h1>
+<p>The first step of this lab is to open a ssh connection to UPPMAX. You will need an SSH program to do this:</p>
+<p><i class="fab fa-linux"></i> Linux: Use <strong>Terminal</strong> (Included by default).<br />
+<i class="fab fa-apple"></i> OSX: Use <strong>Terminal</strong> (Included by default).<br />
+<i class="fab fa-windows"></i> Windows: use <a href="https://mobaxterm.mobatek.net/">MobaXterm</a>. Download and install it if you haven’t already done so.</p>
+<p>Fire up the available SSH program and enter the following:</p>
+<pre class="bash"><code>$ ssh -Y username@rackham.uppmax.uu.se</code></pre>
+<p>Replace <strong>username</strong> with your UPPMAX username. <code>-Y</code> means that X-forwarding is activated on the connection, which means graphical data can be transmitted if a program requests it, i.e. programs can use a graphical user interface (GUI) if they want to.</p>
+<p>Enter your password when prompted. As you type, nothing will show on screen.
+No stars, no dots. It is supposed to be that way. Just type the password and press enter, it will be fine.</p>
+<p>Now your screen should look something like this:</p>
+<pre class="bash"><code>dahlo@dahlo-xps ~ $ ssh -Y dahlo@rackham.uppmax.uu.se
+Last login: Fri May 18 15:03:59 2018 from micro046.icm.uu.se
+ _   _ ____  ____  __  __    _    __  __
+| | | |  _ \|  _ \|  \/  |  / \   \ \/ /   | System:    rackham4
+| | | | |_) | |_) | |\/| | / _ \   \  /    | User:      dahlo
+| |_| |  __/|  __/| |  | |/ ___ \  /  \    |
+ \___/|_|   |_|   |_|  |_/_/   \_\/_/\_\   |
+
+###############################################################################
+
+        User Guides: http://www.uppmax.uu.se/support/user-guides
+        FAQ: http://www.uppmax.uu.se/support/faq
+
+        Write to support@uppmax.uu.se, if you have questions or comments.
+
+
+dahlo@rackham4 ~ $</code></pre>
+</div>
+<div id="logon-to-a-node" class="section level1">
+<h1><span class="header-section-number">2</span> Logon to a node</h1>
+<p>Usually you would do most of the work in this lab directly on one of the login nodes at UPPMAX, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.</p>
+<p>Check which node you got when you booked resources this morning (replace <strong>username</strong> with your UPPMAX username)</p>
+<pre class="bash"><code>$ squeue -u username</code></pre>
+<p>should look something like this</p>
+<pre class="bash"><code>dahlo@rackham2 work $ squeue -u dahlo
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+           3132376      core       sh    dahlo  R       0:04      1 r292
+dahlo@rackham2 work $</code></pre>
+<p>where <strong>r292</strong> is the name of the node I got (yours will probably be different).
+Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested (7 hours in this case) the session will shut down, and you will lose all unsaved data. Connect to this node from within UPPMAX.</p>
+<pre class="bash"><code>$ ssh -Y r292</code></pre>
+<p>If the list is empty you can run the allocation command again and it should be in the list:</p>
+<pre class="bash"><code>$ salloc -A g2019031 -t 03:30:00 -p core -n 1 --no-shell --reservation=g2019031_28 &amp;</code></pre>
+<p><i class="fas fa-lightbulb"></i> There is a UPPMAX specific tool called <code>jobinfo</code> that supplies the same kind of information as <code>squeue</code> that you can use as well (<code>$ jobinfo -u username</code>).</p>
+</div>
+<div id="first-things-first" class="section level1">
+<h1><span class="header-section-number">3</span> First things first</h1>
+<p>Let’s make sure nano has <strong>syntax highlighting</strong> enabled. What that will do is to paint the boring code in pretty colors, making it much easier to read it. See the difference for yourself by first looking at this file before you enable it:</p>
+<pre class="bash"><code>$ nano /sw/uppmax/bin/projplot</code></pre>
+<p>Close down nano when you have seen how boing it looks without colors by pressing <code>ctrl+x</code>. Now, let’s enable syntax highlighting. To do this, we will simply tell nano to include the syntax highlighting instructions from a bunch of files that are already installed at uppmax. Run this command to do just that:</p>
+<pre class="bash"><code>$ find /usr/share/nano/ -iname &quot;*.nanorc&quot; -exec echo include {} \; &gt;&gt; ~/.nanorc</code></pre>
+<p>This command will put one line per language instructions (~30 of them, located in <code>/usr/share/nano</code>), into the nano autostart file (<code>~/.nanorc</code>) and put the word ‘include’ infront of each file name. That will make nano include the instructions from each of those files whenever it starts. Now have a look at the same file as before and enjoy the colors:</p>
+<pre class="bash"><code>$ nano /sw/uppmax/bin/projplot</code></pre>
+<p>Then close nano and continue with the lab.</p>
+</div>
+<div id="copy-files-for-lab" class="section level1">
+<h1><span class="header-section-number">4</span> Copy files for lab</h1>
+<p>Now, you will need some files. To avoid all the course participants editing the same file all at once, undoing each other’s edits, each participant will get their own copy of the needed files. The files are located in the folder <code>/sw/share/compstore/courses/ngsintro/linux_advanced/</code>.</p>
+<p>If you for some reason have problems copying the files, or if you are not on UPPMAX when running this lab, you can download these files <a href="data/linux_advanced/linux_advanced.tar.gz">here</a>. You can unpack the file using the command <code>tar -xzvf linux_advanced.tar.gz</code> once you have downloaded it. After unpacking, continue the lab from step 4.</p>
+<p>Next, copy the lab files from this folder. <code>-r</code> means recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, NOT sub-folders and files in sub-folders.</p>
+<p><i class="fas fa-lightbulb"></i> Remember to use tab-complete to avoid typos and too much writing.</p>
+<pre class="bash"><code>$ cp -r &lt;source&gt; &lt;destination&gt;
+$ cp -r /sw/share/compstore/courses/ngsintro/linux_advanced /proj/g2019031/nobackup/&lt;username&gt;</code></pre>
+<p>Have a look in <code>/proj/g2019031/nobackup/&lt;username&gt;/linux_advanced</code>.</p>
+<pre class="bash"><code>$ cd /proj/g2019031/nobackup/&lt;username&gt;/linux_advanced</code></pre>
+<pre class="bash"><code>$ ll</code></pre>
+<p>If you see files, the copying was successful.</p>
+</div>
+<div id="using-variables" class="section level1">
+<h1><span class="header-section-number">5</span> Using variables</h1>
+<p>Variables are like small notes you write stuff on. If you want to save the value of something to be able to use it later, variables is the way to go. Let’s try assigning values to some variables and see how we use them.</p>
+<pre class="bash"><code>$ a=5</code></pre>
+<p>Now the values 5 is stored in the variable named <code>a</code>. To use the variable we have to put a <code>$</code> sign in front of it so that bash knows we are referring to the variable <code>a</code> and not just typing the letter <code>a</code>. To see the result of using the variable, we can use the program <code>echo</code>, which prints whatever you give it to the terminal.</p>
+<pre class="bash"><code>$ echo print this text to the terminal
+$ echo &quot;you can use quotes if you want to&quot;</code></pre>
+<p>As you see, all the words you give it are printed just the way they are. Try putting the variable somewhere in the text.</p>
+<pre class="bash"><code>$ echo Most international flights leave from terminal $a at Arlanda airport</code></pre>
+<p>Bash will see that you have a variable there and will replace the variable name with the value the variable have before sending the text to echo. If you change the value of <code>a</code> and run the exact command again you will see that it changes.</p>
+<pre class="bash"><code>$ a=&quot;five&quot;
+$ echo Most international flights leave from terminal $a at Arlanda airport</code></pre>
+<p>So without changing anything in the echo statement, we can make it output different things, all depending on the value of the variable <code>a</code>. This is one of the main points of using variables, that you don’t have to change the code or script but you can still make it behave differently depending on the values of the variables.</p>
+<p>You can also do mathematics with variables, but we have to tell bash that we want to do calculations first. We do this by wrapping the calculations inside a dollar sign (telling bash it’s a variable) and double parentheses, i.e. <code>$((5+5))</code>.</p>
+<pre class="bash"><code>$ a=4
+$ echo $a squared is $(($a*$a))</code></pre>
+<p><i class="fas fa-clipboard-list"></i> Write a echo command that will print out the volume of a <a href="https://www.mathsisfun.com/cuboid.html">rectangular cuboid</a>, with the side lengths specified by variables named <code>x</code>, <code>y</code>, and <code>z</code>. To see that it works correctly, the volume of a rectangular cuboid with sides 5,5,5 is 125, and for 4,5,10 is 200. <em>Give it a couple of tries on your own first. If you get completely stuck you can see a suggested solution below.</em></p>
+<p>
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2020031309542180" aria-expanded="false" aria-controls="acc2020031309542180">
+</button>
+</p>
+<div id="acc2020031309542180" class="collapse">
+<div class="card card-body">
+<pre class="bash"><code>$ x=4
+$ y=5
+$ z=10
+$ echo The volume of the rectangular cuboid with the sides $x,$y,$z is $(($x*$y*$z)).</code></pre>
+</div>
+</div>
+</div>
+<div id="exercises" class="section level1">
+<h1><span class="header-section-number">6</span> Exercises</h1>
+<p>First off, let’s open another terminal to UPPMAX so that you have 2 of them open. Scripting is a lot easier if you have one terminal on the command line ready to run commands and test things, and another one with a text editor where you write the actual code. That way you will never have to close down the text editor when you want to run the script you are writing on, and then open it up again when you want to continue editing the code.</p>
+<p>So open a new terminal window, connect it to UPPMAX and then connect it to the node you have booked. Make sure both terminals are in the <code>/proj/g2019031/nobackup/&lt;username&gt;/linux_advanced</code> directory, and start editing a new file with gedit or nano where you write your script. Name the file whatever you want, but in the examples I will refer to it as <code>loop_01.sh</code>. Write your loops to this file (or create a new file for each new example) and test run it in the other terminal.</p>
+<p>The most simple loops are the ones that loop over a predefined list. You saw examples of this in the lecture slides, for example:</p>
+<pre class="bash"><code>for i in &quot;Print these words&quot; one by one;
+do
+    echo $i
+done</code></pre>
+<p>which will print the value of <code>$i</code> in each iteration of the loop. Write this loop in the file you are editing with <code>gedit</code>/<code>nano</code>, save the file, and then run it in the other terminal you have open.</p>
+<pre class="bash"><code>$ bash loop_01.sh</code></pre>
+<p>As you see, the words inside the quotation marks are treated as a single unit, unlike the words after. You can also iterate over numbers, so erase the previous loop you wrote and try this instead:</p>
+<pre class="bash"><code>for number in 1 2 3;
+do
+    echo $number
+done</code></pre>
+<p>If everything worked correctly you should have gotten the numbers <code>1 2 3</code> printed to the screen. As you might guess, this way of writing the list of numbers to iterate over will not be usable once you have more than 10 or so numbers you want to loop over. Fortunately, the creators of bash (and most other computer languages) saw this problem coming a mile away and did something about it. To quickly create a list of numbers in bash, you can use something called a sequence expression to create the list for you.</p>
+<pre class="bash"><code>for whatevernameyouwant in {12..72};  
+do  
+    echo $whatevernameyouwant  
+done  </code></pre>
+<div id="exercise-1" class="section level2">
+<h2><span class="header-section-number">6.1</span> Exercise 1</h2>
+<p><i class="fas fa-clipboard-list"></i> Let’s say it’s New Year’s Eve and you want to impress your friends with a computerized countdown of the last 10 seconds of the year (don’t we all?).</p>
+<div class="boxy boxy-lightbulb">
+<p>Start off with getting a loop to count down from 10 to 0 first. Notice how fast the computer counts? That won’t do if it’s seconds we want to be counting down. Try looking the man page for the <code>sleep</code> command (<code>man sleep</code>) and figure out how to use it. The point of using <code>sleep</code> is to tell the computer to wait for 1 second after printing the number, instead of rushing to the next iteration in the loop directly. Try to implement this on your own.</p>
+</div>
+<p>
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2020031309540078" aria-expanded="false" aria-controls="acc2020031309540078">
+</button>
+</p>
+<div id="acc2020031309540078" class="collapse">
+<div class="card card-body">
+<pre class="bash"><code># declare the values the loop will loop over
+for secondsToGo in {10..0};
+do
+    # print out the current number
+    echo $secondsToGo
+
+    # sleep for 1 second
+    sleep 1
+
+done
+
+# Declare the start of a new year in a festive manner
+echo Happy New Year everyone!!</code></pre>
+</div>
+</div>
+</div>
+<div id="exercise-2" class="section level2">
+<h2><span class="header-section-number">6.2</span> Exercise 2</h2>
+<p>Let’s try to do something similar to the example in the lecture slides, to run the same commands on multiple files. In the <a href="lab_uppmax_intro.html">UPPMAX intro</a> we learned how to use samtools to convert BAM files to SAM files so that humans can read them.
+In real life you will never do this, instead you will most likely always do it the other way around. SAM files take up ~4x more space on the hard drive compared to the same file in BAM format, so as soon as you see a SAM file you should convert it to a BAM file instead to conserve hard drive space. If you have many SAM files that needs converting you don’t want to sit there and type all the commands by hand like a pleb.</p>
+<p><i class="fas fa-clipboard-list"></i> Write a script that converts all the SAM files in a specified directory to BAM files. Incidentally, you can find 50 SAM files in need of conversion in the folder called <code>sam</code> in the folder you copied to your folder earlier in this lab (<code>/proj/g2019031/nobackup/&lt;username&gt;/linux_advanced/sam</code>). Bonus points if you make the program take the specified directory as an argument, and another bonus point if you get the program to name the resulting BAM file to the same name as the SAM file but with a .bam ending instead.</p>
+<div class="boxy boxy-lightbulb">
+<p>Remember that you have to load the samtools module to be able to run it. The way you get samtools to convert a SAM file to a BAM file is by typing the following command:</p>
+<pre class="bash"><code>samtools view -bS sample_1.sam &gt; sample_1.bam</code></pre>
+<p>The <code>-b</code> option tells samtools to output BAM format, and the <code>-S</code> option tells samtools that the input is in SAM format.</p>
+<p>Remember, Google is a good place to get help. If you get stuck, google “bash remove file ending” or “bash argument to script” and look for hits from <a href="https://stackoverflow.com/">StackOverflow/StackExchange</a> or similar pages. There are always many different way to solve a problem. Try finding one you understand what they do and test if you can get them to work the way you want. If not, look for another solution and try that one instead.</p>
+</div>
+<p>Basic, without bonus points:</p>
+<p>
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2020031309546432" aria-expanded="false" aria-controls="acc2020031309546432">
+</button>
+</p>
+<div id="acc2020031309546432" class="collapse">
+<div class="card card-body">
+<pre class="bash"><code># load the modules needed for samtools
+module load bioinfo-tools samtools/1.3
+
+# move to the SAM files directory to start with
+cd sam
+
+# use ls to get the list to iterate over
+for file in *.sam;
+do
+    # do the actual converting, just slapping on .bam at the end of the name
+    samtools view -bS $file &gt; $file.bam
+done</code></pre>
+</div>
+</div>
+<p>Advanced, with bonus points:</p>
+<p>
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2020031309544444" aria-expanded="false" aria-controls="acc2020031309544444">
+</button>
+</p>
+<div id="acc2020031309544444" class="collapse">
+<div class="card card-body">
+<pre class="bash"><code># load the modules needed for samtools
+module load bioinfo-tools samtools/1.3
+
+# move to the SAM files directory to start with.
+# $1 contains the first argument given to the program
+cd $1
+
+# use ls to get the list to iterate over.
+for file in *.sam;
+do
+
+    # print a message to the screen so that the user knows what is happening.
+    # $(basename $file .sam) means that it will take the file name and remove .sam
+    # at the end of the name.
+    echo &quot;Converting $file to $(basename $file .sam).bam&quot;
+
+    # do the actual converting
+    samtools view -bS $file &gt; $(basename $file .sam).bam
+done</code></pre>
+</div>
+</div>
+</div>
+<div id="exercise-3" class="section level2">
+<h2><span class="header-section-number">6.3</span> Exercise 3</h2>
+<p>Let’s add a small thing to the exercise we just did. If there already exists a BAM file with the same name as the SAM file it’s not necessary to convert it again. Let’s use an <code>if</code> statement to check if the file already exists before we do the conversion.</p>
+<p>The following <code>if</code> statement will check if a given filename exists, and prints a message depending on if it exists or not.</p>
+<pre class="bash"><code>FILE=$1
+
+if [ -f $FILE ];
+then
+   echo &quot;File $FILE exists.&quot;
+else
+   echo &quot;File $FILE does not exist.&quot;
+fi</code></pre>
+<p>What we want to do is to check if the file <strong>doesn’t</strong> exists. The way to do that is to invert the answer of the check if the file does exist. To do that in bash, and many other languages, is to use the exclamation mark, which in these kinds of logical situations means <strong>NOT</strong> or <strong>the opposite of</strong>.</p>
+<pre class="bash"><code>FILE=$1
+
+if [ ! -f $FILE ];
+then
+    echo &quot;File $FILE does not exist.&quot;
+fi</code></pre>
+<p><i class="fas fa-clipboard-list"></i> Now, modify the previous exercise to only do the conversion if a file with the intended name of the BAM file doesn’t already exists. <em>i.e</em>; if you have a.sam and want to create a BAM file named a.bam, first check if a.bam already exists and only do the conversion if it does not exist.</p>
+<p>Basic:</p>
+<p>
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2020031309546833" aria-expanded="false" aria-controls="acc2020031309546833">
+</button>
+</p>
+<div id="acc2020031309546833" class="collapse">
+<div class="card card-body">
+<pre class="bash"><code># load the modules needed for samtools
+module load bioinfo-tools samtools/1.3
+
+# move to the SAM files directory to start with.
+cd sam
+
+# use ls to get the list to iterate over.
+for file in *.sam;
+do
+    # check if the intended output file does not already exists
+    if [ ! -f $file.bam ];
+    then
+        # do the actual converting, just slapping on .bam at the end of the name
+        samtools view -bS $file &gt; $file.bam
+    fi
+done</code></pre>
+</div>
+</div>
+<p>Advanced:</p>
+<p>
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2020031309549636" aria-expanded="false" aria-controls="acc2020031309549636">
+</button>
+</p>
+<div id="acc2020031309549636" class="collapse">
+<div class="card card-body">
+<pre class="bash"><code># load the modules needed for samtools
+module load bioinfo-tools samtools/1.3
+
+cd $1
+
+# use ls to get the list to iterate over.
+# $1 contains the first argument given to the program
+for file in *.sam;
+do
+
+    # basename will remove the path information to the file, and will also remove the .sam ending
+    filename_bam=$(basename $file .sam)
+
+    # add the .bam file ending to the filename
+    filename_bam=$filename_bam.bam
+
+    # check if the intended output file does not already exists.
+    if [ ! -f $filename_bam ];
+    then
+
+        # print a message to the screen so that the user knows what is happening.
+        echo &quot;Converting $file to $filename_bam&quot;
+
+        # do the actual converting
+        samtools view -bS $file &gt; $filename_bam
+
+    else
+        # inform the user that the conversion is skipped
+        echo &quot;Skipping conversion of $file as $filename_bam already exist&quot;
+    fi
+done</code></pre>
+</div>
+</div>
+</div>
+<div id="bonus-exercise-1" class="section level2">
+<h2><span class="header-section-number">6.4</span> Bonus exercise 1</h2>
+<p>Maths and programming are usually a very good combination, so many of the examples of programming you’ll see involve some kind of maths. Now we will write a loop that will calculate the factorial of a number. As <a href="https://en.wikipedia.org/wiki/Factorial">wikipedia will tell you</a>, “the factorial of a non-negative integer n, denoted by n!, is the product of all positive integers less than or equal to n”, i.e. multiply all the integers, starting from 1, leading up to and including a number with each other.</p>
+<p>The factorial of 5, written 5!, would be <code>1*2*3*4*5=120</code>. Doing this by hand would start taking its time even after a couple of steps, but since we know how to loop that should not be a problem anymore.</p>
+<p><i class="fas fa-clipboard-list"></i> Write a loop that will calculate the factorial of a given number stored in the variable <code>$n</code>.</p>
+<div class="boxy boxy-lightbulb">
+<p>A problem that you will encounter is that the sequence expression, <code>{1..10}</code>, from the previous exercise doesn’t handle variables. This is because of the way bash is built. The sequence expressions are handled before handling the variables so when bash tries to generate the sequence, the variable names have not yet been replaced with the values they contain. This leads to bash trying to create a sequence from 1 to <code>$n</code>, which of course doesn’t mean anything.</p>
+<p>To get around this we can use a different way of generating sequences (there are <strong>always</strong> alternatives). There is a program called <code>seq</code> that does pretty much the same thing as the sequence expression, and since it is a program it will be executed <strong>after</strong> the variables have been handled. It’s as easy to use as the sequence expressions; instead of writing <code>{1..10}</code> just write <code>$( seq 1 10 )</code>.</p>
+</div>
+<p>
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2020031309548333" aria-expanded="false" aria-controls="acc2020031309548333">
+</button>
+</p>
+<div id="acc2020031309548333" class="collapse">
+<div class="card card-body">
+<pre class="bash"><code># set the number you want to calculate the factorial of
+n=10
+
+# you have to initialize a variable before you can start using it.
+# Leaving this empty would lead to the first iteration of the loop trying
+# to use a variable that has no value, which would cause it to crash
+factorial=1
+
+# declare the values the loop will loop over (1 to whatever $n is)
+for i in $( seq 1 $n );
+do
+
+    # set factorial to whatever factorial is at the moment, multiplied with the variable $i
+    factorial=$(( $factorial * $i ))
+
+    # an alternative solution which gives exactly the same result, but makes it a bit more readable maybe
+    # temporary_sum=$(( $factorial * $i ))
+    # factorial=$temporary_sum
+
+done
+
+# print the result
+echo The factorial of $n is $factorial</code></pre>
+</div>
+</div>
+</div>
+<div id="bonus-exercise-2" class="section level2">
+<h2><span class="header-section-number">6.5</span> Bonus exercise 2</h2>
+<p>Now, let’s combine everything you’ve learned so far in this course.</p>
+<p><i class="fas fa-clipboard-list"></i> Write a script that runs the pipeline from the <a href="lab_linux_filetypes.html">file types exercise</a> for each fastq file in a specified directory, using the same reference genome as in the file type exercise.</p>
+<p>If that sounds too easy, make the script submit a slurm job for each sample that will run the pipeline for that sample on a calculation node (1 core, 5 minutes each). And if that is too easy, add that the pipeline will use the local hard drive on the calculation node for all files used in the analysis.</p>
+<p>When the analysis is done, only fastq files and sorted and indexed BAM files should be in your folder.</p>
+<p><i class="fas fa-lightbulb"></i> Read more about the <code>$SNIC_TMP</code> variable in the <a href="http://www.uppmax.uu.se/support/user-guides/disk-storage-guide/">disk storage guide</a> on the UPPMAX homepage.</p>
+<p>There is a bunch of fastq files in the directory <code>/proj/g2019031/nobackup/&lt;username&gt;/linux_advanced/fastq/</code> that is to be used for this exercise.</p>
+<p>Basic solution:</p>
+<p>
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2020031309548646" aria-expanded="false" aria-controls="acc2020031309548646">
+</button>
+</p>
+<div id="acc2020031309548646" class="collapse">
+<div class="card card-body">
+<pre class="bash"><code># make the dummy pipeline available
+export PATH=$PATH:/sw/share/compstore/courses/ngsintro/uppmax_pipeline_exercise/dummy_scripts
+
+# index the reference genome
+reference_indexer -r /proj/g2019031/nobackup/&lt;username&gt;/filetypes/0_ref/ad2.fa
+
+# go to the input files
+cd $1
+
+# loop over all the fastq files
+for file in *.fastq;
+do
+
+    # align the reads
+    align_reads -r /proj/g2019031/nobackup/&lt;username&gt;/filetypes/0_ref/ad2.fa -i $file -o $file.sam
+
+    # convert the sam file to a bam file
+    sambam_tool -f bam -i $file.sam -o $file.bam
+
+    # sort the bam file
+    sambam_tool -f sort -i $file.bam -o $file.sorted.bam
+
+    # index the bam file
+    sambam_tool -f index -i $file.sorted.bam
+
+done</code></pre>
+</div>
+</div>
+<p>Advanced solution:</p>
+<p>
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2020031309543319" aria-expanded="false" aria-controls="acc2020031309543319">
+</button>
+</p>
+<div id="acc2020031309543319" class="collapse">
+<div class="card card-body">
+<pre class="bash"><code># make the dummy pipeline available in this script
+export PATH=$PATH:/sw/share/compstore/courses/ngsintro/uppmax_pipeline_exercise/dummy_scripts
+
+# index the reference genome once, only if needed
+if [ ! -f /proj/g2019031/nobackup/&lt;username&gt;/filetypes/0_ref/ad2.fa.idx ];
+then
+    reference_indexer -r /proj/g2019031/nobackup/&lt;username&gt;/filetypes/0_ref/ad2.fa
+fi
+
+
+# find out the absolute path to the input files
+cd $1
+input_absolute_path=$(pwd)
+
+# go back to the previous directory now that the absolute path has been saved
+cd -
+
+
+
+# loop over all the fastq files
+for file in $input_absolute_path/*.fastq;
+do
+
+    # print status report
+    echo Processing $file
+
+    # save the file name without the path information for convenience
+    file_basename=$(basename $file)
+
+    # save the file name without the file ending for convenience
+    file_prefix=$(basename $file .fastq)
+
+    # print a temporary script file that will be submitted to slurm
+    echo &quot;#!/bin/bash -l
+
+    #SBATCH -A g2019031
+    #SBATCH -p core
+    #SBATCH -n 1
+    #SBATCH -t 00:05:00
+    #SBATCH -J $file_basename
+
+    # make the dummy pipeline available on the calculation node
+    echo &quot;Loading modules&quot;
+    export PATH=$PATH:/sw/share/compstore/courses/ngsintro/uppmax_pipeline_exercise/dummy_scripts
+
+    # copy the reference genome, index and sample file to the nodes local hard drive.
+    # You have to escape the dollar sign in SNIC_TMP to keep bash from resolving
+    # it to its value in the submitter script already.
+    echo &quot;Copying data to node local hard drive&quot;
+    cp /proj/g2019031/nobackup/&lt;username&gt;/filetypes/0_ref/ad2.fa* $file $SNIC_TMP/
+
+    # go the the nodes local hard drive
+    echo &quot;Changing directory to node local hard drive&quot;
+    cd $SNIC_TMP
+
+    # align the reads
+    echo &quot;Aligning the reads&quot;
+    align_reads -r ad2.fa -i $file_basename -o $file_prefix.sam
+
+    # convert the SAM file to a BAM file
+    echo &quot;Converting sam to bam&quot;
+    sambam_tool -f bam -i $file_prefix.sam -o $file_prefix.bam
+
+    # sort the BAM file
+    echo &quot;Sorting the bam file&quot;
+    sambam_tool -f sort -i $file_prefix.bam -o $file_prefix.sorted.bam
+
+    # index the BAM file
+    echo &quot;Indexing the sorted bam file&quot;
+    sambam_tool -f index -i $file_prefix.sorted.bam
+
+    # copy back the files you want to keep
+    echo &quot;Copying results back to network storage&quot;
+    cp $file_prefix.sorted.bam $input_absolute_path/
+    cp $file_prefix.sorted.bam.bai $input_absolute_path/$file_prefix.sorted.bai
+
+    echo &quot;Finished&quot;
+    &quot; &gt; tmp.sbatch
+
+    # submit the temporary script file
+    sbatch tmp.sbatch
+
+done
+
+# remove the temporary file now that everything has been submitted
+rm tmp.sbatch</code></pre>
+</div>
+</div>
+<hr />
+</div>
+</div>
+
+
+<footer class="footer">
+<div class="container footer-container">
+<div class="row">
+  
+<div class="col-sm-8" style="text-align:left;vertical-align:middle;">
+<p class="small" style="color:#bdbdbd;">
+<b>2020</b> • NBIS • SciLifeLab
+</p>
+</div>
+
+<div class="col-sm-4" style="text-align:right;vertical-align:middle;">
+<p style="color:#bdbdbd;">
+<span>
+  <span class="footericon" style="padding-right:4px; padding-left:4px">
+    <a href="https://nbis.se/">
+      <svg style="height:0.8em;top:.04em;position:relative;fill:#bdbdbd;" viewBox="0 0 496 512"><path d="M248 8C111.03 8 0 119.03 0 256s111.03 248 248 248 248-111.03 248-248S384.97 8 248 8zm82.29 357.6c-3.9 3.88-7.99 7.95-11.31 11.28-2.99 3-5.1 6.7-6.17 10.71-1.51 5.66-2.73 11.38-4.77 16.87l-17.39 46.85c-13.76 3-28 4.69-42.65 4.69v-27.38c1.69-12.62-7.64-36.26-22.63-51.25-6-6-9.37-14.14-9.37-22.63v-32.01c0-11.64-6.27-22.34-16.46-27.97-14.37-7.95-34.81-19.06-48.81-26.11-11.48-5.78-22.1-13.14-31.65-21.75l-.8-.72a114.792 114.792 0 0 1-18.06-20.74c-9.38-13.77-24.66-36.42-34.59-51.14 20.47-45.5 57.36-82.04 103.2-101.89l24.01 12.01C203.48 89.74 216 82.01 216 70.11v-11.3c7.99-1.29 16.12-2.11 24.39-2.42l28.3 28.3c6.25 6.25 6.25 16.38 0 22.63L264 112l-10.34 10.34c-3.12 3.12-3.12 8.19 0 11.31l4.69 4.69c3.12 3.12 3.12 8.19 0 11.31l-8 8a8.008 8.008 0 0 1-5.66 2.34h-8.99c-2.08 0-4.08.81-5.58 2.27l-9.92 9.65a8.008 8.008 0 0 0-1.58 9.31l15.59 31.19c2.66 5.32-1.21 11.58-7.15 11.58h-5.64c-1.93 0-3.79-.7-5.24-1.96l-9.28-8.06a16.017 16.017 0 0 0-15.55-3.1l-31.17 10.39a11.95 11.95 0 0 0-8.17 11.34c0 4.53 2.56 8.66 6.61 10.69l11.08 5.54c9.41 4.71 19.79 7.16 30.31 7.16s22.59 27.29 32 32h66.75c8.49 0 16.62 3.37 22.63 9.37l13.69 13.69a30.503 30.503 0 0 1 8.93 21.57 46.536 46.536 0 0 1-13.72 32.98zM417 274.25c-5.79-1.45-10.84-5-14.15-9.97l-17.98-26.97a23.97 23.97 0 0 1 0-26.62l19.59-29.38c2.32-3.47 5.5-6.29 9.24-8.15l12.98-6.49C440.2 193.59 448 223.87 448 256c0 8.67-.74 17.16-1.82 25.54L417 274.25z"></path>
+      </svg>
+    </a>
+    </span>
+    <span class="footericon" style="padding-right:4px; padding-left:4px">
+      <a href="https://twitter.com/NBISwe"><svg style="height:0.8em;top:.04em;position:relative;fill:#bdbdbd;" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
+    </svg>
+    </a>
+    </span>
+    <span class="footericon" style="padding-left:4px">
+      <a href="https://www.linkedin.com/company/nbisweden/">
+        <svg style="height:0.8em;top:.04em;position:relative;fill:#bdbdbd;" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"></path>
+        </svg>
+    </a>
+    </span>
+  </span>
+</p>
+</div>
+
+</div>
+</div>
+</footer>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
