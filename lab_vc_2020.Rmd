@@ -308,11 +308,11 @@ Check that the files are now present in your **local workspace** using `ls -lrt`
 
 
 # Part two 
-Here you will align reads and perform variant calling in two additional samples. This time you will emitt the output from variant calling in the individual samples in g.vcf format, and subsequenclty perform joint variant calling of the "cohort".
+Here you will align reads and perform variant calling in two additional samples. This time you will emitt the output from variant calling in the individual samples in g.vcf format, and subsequenclty perform joint variant calling of the "cohort" using GATK's GenotypeGVCFs.
 ![](data/ngs-workflow/2_jointvc.png)
 
 
-If you want to you can run all commands one by one in the terminal, as you did in the first step of the workshop. However, you can also create  scripts to run several steps at a time. 
+If you want to you can run all commands one by one in the terminal as you did in the first step of the workshop. However, you can also create  scripts to run . 
 
 
 ## Aligning reads 
