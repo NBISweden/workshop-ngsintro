@@ -18,6 +18,16 @@ upres4 <- yaml::read_yaml("_site.yml")$uppmax_res_4
 background-color: red;
 }
 ```
+```{r,include=FALSE}
+## VARIABLES
+#colours
+datadir <- "/sw/courses/ngsintro/reseq/data"
+fastqdir <- "/sw/courses/ngsintro/reseq/data/fastq"
+refdir <- "/sw/courses/ngsintro/reseq/data/ref"
+col_uppmax <- "#f4f8e8"
+col_local <- "#e5f4f8"
+
+```
 
 # Introduction
 Rapidly dropping sequencing costs and the ability to obtain information about the entire genetic code has made whole genome sequening (WGS) a powerful research tool for detecting genetic variation. This workshop will take you thourgh the process of calling short variants (SNPs and indels) in whole geonome sequence data from three samples. 
@@ -29,11 +39,11 @@ Rapidly dropping sequencing costs and the ability to obtain information about th
 ## Samples
 The 1000 Genomes Project was the first project to sequence the entire genomes of a large number of people, to provide a comprehensive resource on human genetic variation. Data from the 1000 Genomes Project available through freely accessible public databases, and in this workshop we will use 3 samples from the low converage phase of the 1000 Genomes project.
 
-Sample        | Population | Coverage
+Sample        | Population | Sequencing technology
 ------------- | ---------- | --------
-HG00097       | British in England and Scotland    | Low  
-HG00100       | British in England and Scotland    | Low  
-HG00100       | British in England and Scotland    | Low  
+HG00097       | British in England and Scotland    | Low coverage WGS
+HG00100       | British in England and Scotland    | Low coverage WGS
+HG0010q       | British in England and Scotland    | Low coverage WGS 
   
 ## The *LCT* locus
 The *LCT* gene on chromosome 2 encodes the lactase protein, which is responible for the metabolism of lactose in mammals. Most mammals can not digest lactose as adults, but some humans tolerate lactose also in adulthood. Genetic variants upstream of the human *LCT* control how lactose is tolerated in adults, and the variant **rs4988235** (located at at position chr2:136608596 in HG19) has been shown to lead to lactose persistence.  
@@ -63,15 +73,15 @@ To learn more about the genetic bases for lactose tolerance please read the firs
 # Data {#Data}
 All input data for this exercise is located in the folder on Rackham:
 ```bash
-/sw/courses/ngsintro/reseq/data
+datadir
 ```
 The fastq files are located in this folder:
 ```bash
-/sw/courses/ngsintro/reseq/data/fastq
+fastqdir
 ```
 You will also need the reference genome in fasta format. This, and a few other refence files are located in this folder: 
 ```bash
-/sw/courses/ngsintro/reseq/data/ref
+refdir
 ```
       
 # Preparations
