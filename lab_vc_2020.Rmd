@@ -13,6 +13,12 @@ upres3 <- yaml::read_yaml("_site.yml")$uppmax_res_3
 upres4 <- yaml::read_yaml("_site.yml")$uppmax_res_4
 ```
 
+```{css}
+.workLocally {
+background-color: red;
+}
+```
+
 # Introduction
 Rapidly dropping sequencing costs and the ability to obtain information about the entire genetic code has made whole genome sequening (WGS) a powerful research tool for detecting genetic variation. This workshop will take you thourgh the process of calling short variants (SNPs and indels) in whole geonome sequence data from three samples. 
   
@@ -265,15 +271,9 @@ Check what new files were generated with `ls -lrt`.
 What is the new file that ends with *idx*?
 
 
-
-```{css}
-.workLocally {
-background-color: red;
-}
-```
 ### Check vcf in IGV
 To check the vcf file in IGV you first need to download this file from the **uppmax workspace** to the **local workspace** on your laptop. Navigate to your local workspace, but do not log in to UPPMAX. Copy the .vcf file that you just generated:
-```{r,echo=FALSE,comment="",class.output="bash", class.source="badCode"}
+```{r,echo=FALSE,comment="",class.output="bash", class.source="workLocally"}
 cat(paste0("scp <username>@rackham.uppmax.uu.se:/proj/",upid,"/nobackup/<username>/ngsworkflow/HG00097.vcf* ."))
 #Replace <username> with your uppmax user name
 #Note that the * in the end of the file name means that you will download all files that start with HG00097.vcf, so you will also dowload the vcf index file. 
