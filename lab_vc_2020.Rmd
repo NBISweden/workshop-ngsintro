@@ -14,7 +14,7 @@ upres4 <- yaml::read_yaml("_site.yml")$uppmax_res_4
 ```
 
 ```{css}
-.workLocally {
+.workLocally{
 background-color: red;
 }
 ```
@@ -122,6 +122,10 @@ Do the same with the fastq files:
 ```bash
 ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00097_1.fq
 ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00097_2.fq
+ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00000_1.fq
+ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00000_2.fq
+ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00001_1.fq
+ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00001_2.fq
 ```
   
 ### Accessing programs {#Accessingprograms}
@@ -198,7 +202,7 @@ Phred scores
 ## Aligning reads
 ![](data/ngs-workflow/main_align.png)
 
-### BWA mem  
+### BWA mem {#bwamem}
 In the *Uppmax workspace* you will now use *BWA mem* to align the reads to the reference genome. At the same time you will add something called *read groups* to the reads in the fastq files. Read groups allow us to trace various technical features, such as which flowcell that was used to generate the reads, and read gruop info needs to be in the file when we perform variant calling with HaplotypeCaller. For a detailed description of read groups, please read this article at [GATK-forum](https://gatkforums.broadinstitute.org/gatk/discussion/6472/read-groups).  
    
 The samples in this workshop comes from the 1000 Genomes project, and we don't have all the information needed to create *real* read groups. However, we assume that each fastq file was generated from one library preparation (called "libraryx" below) derived from one biological sample (called "HG00097" below) that was run on one lane of a flowcell (flowcellx_lanex) in the Illumina machine, and we call this "readgroup x". 
@@ -292,11 +296,10 @@ Check that the files are now present in your **local workspace** using `ls -lrt`
 
 # Part two 
 If there is still time you can continue to part two of the workshop. 
-Here you will align the reads of twp additional samples to the reference genome. You will then detect short variants in all three sampes and emitt the output in g.vcf format 
+Here you will align reads and perform variant calling in two additional samples. This time you will emitt the output from variant calling in the individual samples in g.vcf format, and perform joint variant calling of the "cohort". 
 
-## Further samples
-
-Rerun the workflow for additional samples. If you want to repeat the procedure you can now use your saved commands and rerun the mapping and variant calling steps for at least one more sample (HG00100 or HG00101) from the course directory before continuing with the next step. Alternatively, you can copy the .g.vcf files of the two additional samples.
+## Align reads and emitt g.vcf files
+Now you should run [bwa mem] {#bwamem}, and HaplotypeCaller for all three samples in the data set.  Rerun the workflow for additional samples. If you want to repeat the procedure you can now use your saved commands and rerun the mapping and variant calling steps for at least one more sample (HG00100 or HG00101) from the course directory before continuing with the next step. Alternatively, you can copy the .g.vcf files of the two additional samples.
 
 ```bash
 cp /sw/courses/ngsintro/vc/data/vcf/<sample>.g.vcf .
