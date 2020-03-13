@@ -128,7 +128,7 @@ cat(paste0("cd /proj/",upid,"/nobackup/<username>/ngsworkflow"))
 The raw fastq files are located in the [Data](#Data) folder described above. In stead of copying the files to your workspace you should create symbolic links (soft-links) to them. Soft-linking files and folders allows us to work them as if they were in in your work directory, but we avoid multiplying them.   
 Create a symbolic link to the reference in your workspace:
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("ln -s ",refdir,"/human_g1k_v37_chr2.fasta"))
+cat(paste0("ln -s ",refdir,"/human_g1k_v37_chr2.fasta"))  
 ```
 
 Do the same with the fastq files:
