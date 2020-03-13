@@ -76,18 +76,16 @@ All input data for this exercise is located in the folder on Rackham:
 cat(paste0(datadir))
 ```
 
-```bash
-datadir
-```
 The fastq files are located in this folder:
-```bash
-fastqdir
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0(fastqdir))
 ```
+
 You will also need the reference genome in fasta format. This, and a few other refence files are located in this folder: 
-```bash
-refdir
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0(refdir))
 ```
-      
+
 # Preparations
 
 ## Local workspace  {#preparelaptop}
@@ -129,17 +127,18 @@ cat(paste0("cd /proj/",upid,"/nobackup/<username>/ngsworkflow"))
 ### Symbolic links to data
 The raw fastq files are located in the [Data](#Data) folder described above. In stead of copying the files to your workspace you should create symbolic links (soft-links) to them. Soft-linking files and folders allows us to work them as if they were in in your work directory, but we avoid multiplying them.   
 Create a symbolic link to the reference in your workspace:
-```bash
-ln -s /sw/courses/ngsintro/reseq/data/ref/human_g1k_v37_chr2.fasta
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0("ln -s "refdir"/human_g1k_v37_chr2.fasta"))
 ```
+
 Do the same with the fastq files:
-```bash
-ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00097_1.fq
-ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00097_2.fq
-ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00000_1.fq
-ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00000_2.fq
-ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00001_1.fq
-ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00001_2.fq
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0("ln -s "fastqdir"/HG00097_1.fq"))
+cat(paste0("ln -s "fastqdir"/HG00097_2.fq"))
+cat(paste0("ln -s "fastqdir"/HG00100_1.fq"))
+cat(paste0("ln -s "fastqdir"/HG00100_2.fq"))
+cat(paste0("ln -s "fastqdir"/HG00101_1.fq"))
+cat(paste0("ln -s "fastqdir"/HG00101_2.fq"))
 ```
   
 ### Accessing programs {#Accessingprograms}
@@ -309,15 +308,20 @@ Check that the files are now present in your **local workspace** using `ls -lrt`
 
 
 # Part two 
-If there is still time you can continue to part two of the workshop. 
-Here you will align reads and perform variant calling in two additional samples. This time you will emitt the output from variant calling in the individual samples in g.vcf format, and perform joint variant calling of the "cohort". 
+Here you will align reads and perform variant calling in two additional samples. This time you will emitt the output from variant calling in the individual samples in g.vcf format, and subsequenclty perform joint variant calling of the "cohort".
+![](data/ngs-workflow/2_jointvc.png)
 
-## Align reads and emitt g.vcf files
-Run BWA mem and HaplotypeCaller for all three samples in the data set. BWA mem shoulr be run exaclty [as above] {#bwamem} but you need to replace the sample name in the above command with the new sample names. , and [HaplotypeCaller] {#haplotypecaller} for all three samples in the data set.  Rerun the workflow for additional samples. If you want to repeat the procedure you can now use your saved commands and rerun the mapping and variant calling steps for at least one more sample (HG00100 or HG00101) from the course directory before continuing with the next step. Alternatively, you can copy the .g.vcf files of the two additional samples.
+
+If you want to you can run all commands one by one in the terminal, as you did in the first step of the workshop. However, you can also create  scripts to run several steps at a time. 
+
+
+## Aligning reads 
+Run BWA mem and HaplotypeCaller for all three samples in the data set. BWA mem should be run exaclty [as above] {#bwamem} but you need to replace the sample name in the above command with the new sample names. , and [HaplotypeCaller] {#haplotypecaller} for all three samples in the data set.  Rerun the workflow for additional samples. If you want to repeat the procedure you can now use your saved commands and rerun the mapping and variant calling steps for at least one more sample (HG00100 or HG00101) from the course directory before continuing with the next step. Alternatively, you can copy the .g.vcf files of the two additional samples.
 
 ```bash
 cp /sw/courses/ngsintro/vc/data/vcf/<sample>.g.vcf .
 ```
+
 
 ## Joint genotyping
 
