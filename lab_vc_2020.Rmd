@@ -319,10 +319,11 @@ If you want to you can run all commands one by one in the terminal as you did in
 Run BWA mem and HaplotypeCaller for all three samples in the data set. BWA mem should be run exaclty [as above]{#bwamem} but you need to replace the sample name in the above command with the new sample names. 
   
 ## Generate g.vcf files
-HaplotypeCaller should also be run for all three samples, but this time the output for each sample needs to be in g.vcf format. This is accompliched with a small change in the HaploteypCaller command (here examplified with the sample HG00097): 
+HaplotypeCaller should also be run for all three samples, but this time the output for each sample needs to be in g.vcf format. This is accompliched with a small change in the HaploteypCaller command: 
 ```bash
-gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I HG00097.bam -O HG00097.g.vcf 
+gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I <sample.bam -O <sample>.g.vcf 
 ```
+Please replace <sample> with the real sample names.
 
 ## Joint genotyping
 Once you have the g.vcf files for all samples you should run GATK's GenoteypeGVCF. This will generate a "normal" vcf file with variants for all samples (HG00097, HG00100 and HG00101).
