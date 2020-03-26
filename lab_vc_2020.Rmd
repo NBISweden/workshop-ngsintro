@@ -326,11 +326,15 @@ gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF
 Please replace <sample> with the real sample names.
 
 ## Joint genotyping
-Once you have the g.vcf files for all samples you should run GATK's GenoteypeGVCF. This will generate a "normal" vcf file with variants for all samples (HG00097, HG00100 and HG00101).
+Once you have the g.vcf files for all samples you should perform joint genotype calling. To do this you first beed to combine all individual .g.vcf files to one file:
 ```bash
-gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta --variant <sample1>.g.vcf --variant <sample2>.g.vcf --variant <sample3>.g.vcf -o <cohort>.vcf
+gatk --java-options -Xmx7g CombineGVCFs -R human_g1k_v37_chr2.fasta --variant <sample1>.g.vcf --variant <sample2>.g.vcf --variant <sample3>.g.vcf -O cohort.g.vcf
 ```
-Please replace <sample1>, <sample2>, <sample3> and <cohort> with the real sample names and name of the output file.  
+Please replace <sample1>, <sample2>, <sample3> and <cohort> with the real sample names.
+Then run GATK's GenoteypeGVC to generate a "normal" vcf file:
+```bash
+gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta --variant cohort.g.vcf -O cohort.vcf
+```
 
 ## SBATCH script {#sbatchscript}
 This section is for those of you who want to learn how to run analyses automatically in bash scripts. 
