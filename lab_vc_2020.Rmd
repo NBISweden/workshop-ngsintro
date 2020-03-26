@@ -328,12 +328,12 @@ Please replace <sample> with the real sample names.
 ## Joint genotyping
 Once you have the g.vcf files for all samples you should perform joint genotype calling. To do this you first beed to combine all individual .g.vcf files to one file:
 ```bash
-gatk --java-options -Xmx7g CombineGVCFs -R human_g1k_v37_chr2.fasta --variant <sample1>.g.vcf --variant <sample2>.g.vcf --variant <sample3>.g.vcf -O cohort.g.vcf
+gatk --java-options -Xmx7g CombineGVCFs -R human_g1k_v37_chr2.fasta -V <sample1>.g.vcf -V <sample2>.g.vcf -V <sample3>.g.vcf -O cohort.g.vcf
 ```
 Please replace <sample1>, <sample2>, <sample3> and <cohort> with the real sample names.
 Then run GATK's GenoteypeGVC to generate a "normal" vcf file:
 ```bash
-gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta --variant cohort.g.vcf -O cohort.vcf
+gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g.vcf -O cohort.vcf
 ```
 
 ## SBATCH script {#sbatchscript}
