@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Filetypes</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link id="font-awesome-1-attachment" rel="attachment" href="site_libs/font-awesome-5.1.0/fonts/fontawesome-webfont.ttf"/>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="assets/lab.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+#TOC {
+  display: none !important;
+}
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"><img src="assets/logo.svg" id="logo" style="height:30px;margin:0;"/></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="home_schedule.html">Schedule</a>
+</li>
+<li>
+  <a href="home_content.html">Content</a>
+</li>
+<li>
+  <a href="home_precourse.html">Precourse</a>
+</li>
+<li>
+  <a href="home_info.html">Info</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Filetypes</h1>
+
+</div>
+
+
+<!-- rmd lab header -->
+<p><br></p>
+<div class="boxy boxy-exclamation">
+<p>In code blocks, the dollar sign (<code>$</code>) is not to be printed. The dollar sign is usually an indicator that the text following it should be typed in a terminal window.</p>
+</div>
+<div id="connect-to-uppmax" class="section level1">
+<h1><span class="header-section-number">1</span> Connect to UPPMAX</h1>
+<p>The first step of this lab is to open a ssh connection to UPPMAX. You will need an SSH program to do this:</p>
+<p><i class="fab fa-linux"></i> Linux: Use <strong>Terminal</strong> (Included by default).<br />
+<i class="fab fa-apple"></i> OSX: Use <strong>Terminal</strong> (Included by default).<br />
+<i class="fab fa-windows"></i> Windows: use <a href="https://mobaxterm.mobatek.net/">MobaXterm</a>. Download and install it if you haven’t already done so.</p>
+<p>Fire up the available SSH program and enter the following:</p>
+<pre class="bash"><code>$ ssh -Y username@rackham.uppmax.uu.se</code></pre>
+<p>Replace <strong>username</strong> with your UPPMAX username. <code>-Y</code> means that X-forwarding is activated on the connection, which means graphical data can be transmitted if a program requests it, i.e. programs can use a graphical user interface (GUI) if they want to.</p>
+<p>Enter your password when prompted. As you type, nothing will show on screen.
+No stars, no dots. It is supposed to be that way. Just type the password and press enter, it will be fine.</p>
+<p>Now your screen should look something like this:</p>
+<pre class="bash"><code>dahlo@dahlo-xps ~ $ ssh -Y dahlo@rackham.uppmax.uu.se
+Last login: Fri May 18 15:03:59 2018 from micro046.icm.uu.se
+ _   _ ____  ____  __  __    _    __  __
+| | | |  _ \|  _ \|  \/  |  / \   \ \/ /   | System:    rackham4
+| | | | |_) | |_) | |\/| | / _ \   \  /    | User:      dahlo
+| |_| |  __/|  __/| |  | |/ ___ \  /  \    |
+ \___/|_|   |_|   |_|  |_/_/   \_\/_/\_\   |
+
+###############################################################################
+
+        User Guides: http://www.uppmax.uu.se/support/user-guides
+        FAQ: http://www.uppmax.uu.se/support/faq
+
+        Write to support@uppmax.uu.se, if you have questions or comments.
+
+
+dahlo@rackham4 ~ $</code></pre>
+</div>
+<div id="logon-to-a-node" class="section level1">
+<h1><span class="header-section-number">2</span> Logon to a node</h1>
+<p>Usually you would do most of the work in this lab directly on one of the login nodes at UPPMAX, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.</p>
+<pre class="bash"><code>$ salloc -A g2019031 -t 07:00:00 -p core -n 1 --no-shell --reservation=g2019031_28 &amp;</code></pre>
+<p>check which node you got (replace <strong>username</strong> with your UPPMAX username)</p>
+<pre class="bash"><code>$ squeue -u username</code></pre>
+<p>should look something like this</p>
+<pre class="bash"><code>dahlo@rackham2 work $ squeue -u dahlo
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+           3132376      core       sh    dahlo  R       0:04      1 r292
+dahlo@rackham2 work $</code></pre>
+<p>where <strong>r292</strong> is the name of the node I got (yours will probably be different).
+Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested (7 hours in this case) the session will shut down, and you will lose all unsaved data. Connect to this node from within UPPMAX.</p>
+<pre class="bash"><code>$ ssh -Y r292</code></pre>
+<p><i class="fas fa-lightbulb"></i> There is a UPPMAX specific tool called <code>jobinfo</code> that supplies the same kind of information as <code>squeue</code> that you can use as well (<code>$ jobinfo -u username</code>).</p>
+</div>
+<div id="copy-lab-files" class="section level1">
+<h1><span class="header-section-number">3</span> Copy lab files</h1>
+<p>Now you will need some files. To avoid all the course participants editing the same file all at once, undoing each other’s edits, each participant will get their own copy of the needed files. The files are located in the folder <code>/sw/share/compstore/courses/ngsintro/filetypes</code></p>
+<p>Next, copy the lab files from this folder. <code>-r</code> means recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, NOT sub-folders and files in sub-folders.</p>
+<p><i class="fas fa-lightbulb"></i> Remember to use tab-complete to avoid typos and too much writing.</p>
+<pre class="bash"><code>$ cp -r &lt;source&gt; &lt;destination&gt;
+$ cp -r /sw/share/compstore/courses/ngsintro/filetypes /proj/g2019031/nobackup/&lt;username&gt;/</code></pre>
+<p>Have a look in <strong>/proj/g2019031/nobackup/<username>/</strong>.</p>
+<pre class="bash"><code>$ cp -r &lt;source&gt; &lt;destination&gt;
+cd /proj/g2019031/nobackup/&lt;username&gt;/filetypes
+$ tree</code></pre>
+<p>This will print a file tree, which gives you a nice overview of the folders where you are standing in. As you can see, you have a couple of files and a couple of empty folders. In the <strong>0_ref</strong> folder you have a reference genome in fasta format and annotations for the genome in GTF format. In <strong>0_seq</strong> you have a fastq file containing the reads we will align.</p>
+</div>
+<div id="run-pipeline" class="section level1">
+<h1><span class="header-section-number">4</span> Run pipeline</h1>
+<p>The best way to see all the different file formats is to run a small pipeline and see which files we encounter along the way. The pipeline is roughly the same steps you’ll do in the variant-calling part of the course, so for now we’ll stick with the dummy pipeline which some of you might have encoutered in the <a href="lab_uppmax_pipeline.html">extra material</a> for the UPPMAX exercise.</p>
+<p>The programs in the dummy pipeline does not actually do any analysis but they work the same way as the real deal, although slightly simplified, to get you familiar with how to work with analysis programs. The data is from a sequencing of the adenovirus genome, which is tiny compared to the human genome (36kb vs 3gb).</p>
+<p>The starting point of the pipeline are fresh reads from the sequencing machine in fastq format, and a reference genome in fasta format. The goal of the exercise is to look at our aligned reads in a genome viewer together with the annotations of the adenovirus genome.</p>
+<p>First, let’s go through the steps of the pipeline:</p>
+<ul>
+<li><strong>Build an index for the reference genome.</strong> This will speed up the alignment process. Not possible to do the analysis without it.</li>
+<li><strong>Align the reads.</strong></li>
+<li><strong>Convert the SAM file to a BAM file.</strong> We want to use the space efficiently.</li>
+<li><strong>Sort the BAM file.</strong> We have to sort it to be able to index it.</li>
+<li><strong>Index the BAM file.</strong> We have to index it to make it fast to access the data in the file.</li>
+<li><strong>View the aligned data together with the annotations.</strong></li>
+</ul>
+<p>The first thing you usually do is to load the modules for the programs you want to run. During this exercise we’ll only run my dummy scripts that don’t actually do any analysis, so they don’t have a module of their own. What we can do instead is to manually do what module loading usually does: to modify the <strong><code>$PATH</code> variable</strong>.</p>
+<p>The <code>$PATH</code> variable specifies directories where the computer should look for programs. For instance, when you type <code>nano</code>, how does the computer know which program to start? You gave it the name <code>nano</code>, but that could refer to any file named nano in the computer, yet it starts the correct one every time. The answer is that it looks in the directories stored in the <code>$PATH</code> variable.</p>
+<p>To see which directories that are available by default, type</p>
+<pre class="bash"><code>$ echo $PATH</code></pre>
+<p>It should give you something like this, a list of directories, separated by colon signs:</p>
+<pre class="bash"><code>dahlo@rackham2 work $ echo $PATH
+/home/dahlo/perl//bin/:/home/dahlo/.pyenv/shims:/home/dahlo/.pyenv/bin:
+/usr/lib64/qt-3.3/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:
+/sbin:/opt/thinlinc/bin:/sw/uppmax/bin:/home/dahlo/usr/bin</code></pre>
+<p>Try loading a module, and then look at the <code>$PATH</code> variable again. You’ll see that there are a few extra directories there now, after the module has been loaded.</p>
+<pre class="bash"><code>dahlo@rackham2 work $ module load bioinfo-tools samtools/1.6
+dahlo@rackham2 work $ echo $PATH
+/sw/apps/bioinfo/samtools/1.6/rackham/bin:/home/dahlo/perl/bin:/home/dahlo/.pyenv/shims:
+/home/dahlo/.pyenv/bin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:
+/usr/sbin:/sbin:/opt/thinlinc/bin:/sw/uppmax/bin:/home/dahlo/usr/bin</code></pre>
+<p>To pretend that we are loading a module, we will just add a the directory containing my dummy scripts to the <code>$PATH</code> variable, and it will be like we loaded the module for them.</p>
+<pre class="bash"><code>$ export PATH=$PATH:/sw/share/compstore/courses/ngsintro/uppmax_pipeline_exercise/dummy_scripts</code></pre>
+<p>This will set the <code>$PATH</code> variable to whatever it is at the moment, and add a directory at the end of it. Note the lack of a dollar sign in front of the variable name directly after <code>export</code>. You don’t use dollar sign when <strong>assigning</strong> values to variables, and you always use dollar signs when <strong>getting</strong> values from variables.</p>
+<p><i class="fas fa-exclamation-circle"></i> <strong>IMPORTANT:</strong> The export command affects only the terminal you type it in. If you have 2 terminals open, only the terminal you typed it in will have a modified path. If you close that terminal and open a new one, it will not have the modified path.</p>
+<div id="build-index" class="section level2">
+<h2><span class="header-section-number">4.1</span> Build index</h2>
+<ol style="list-style-type: decimal">
+<li><strong>Build an index for the reference genome.</strong></li>
+<li>Align the reads.</li>
+<li>Convert the SAM file to a BAM file.</li>
+<li>Sort the BAM file.</li>
+<li>Index the BAM file.</li>
+<li>View the aligned data together with the annotations.</li>
+</ol>
+<p>All aligners will have to index the reference genome you are aligning your data against. This is only done once per reference genome, and then you reuse that index whenever you need it. All aligners have their own kind of index unfortunately, so you will have to build one index for each aligner you want to use. In this lab, we will use the dummy aligher called <code>align_reads</code>, and we will build a index using it’s indexing progam, called <code>reference_indexer</code>.</p>
+<p>First, have a look in the <strong>0_ref</strong> folder</p>
+<pre class="bash"><code>$ ll 0_ref</code></pre>
+<p>You should see 2 files: the fasta file, the gtf file. Have a look at each of them with <code>less</code>, just to see how they look inside. To do the actual indexing of the genome:</p>
+<p><i class="fas fa-clipboard-list"></i> Run reference_indexer.</p>
+<pre class="bash"><code>Syntax: reference_indexer -r &lt;name of the fasta file you want to index&gt;</code></pre>
+<p>
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2020032616395433" aria-expanded="false" aria-controls="acc2020032616395433">
+</button>
+</p>
+<div id="acc2020032616395433" class="collapse">
+<div class="card card-body">
+<pre class="bash"><code>$ reference_indexer -r 0_ref/ad2.fa</code></pre>
+</div>
+</div>
+<p>Since the genome is so small this should only take a second or so. The human genome will probably take a couple of hours. Look in the <strong>0_ref folder</strong> again and see if anything has changed.</p>
+<pre class="bash"><code>$ ll 0_ref</code></pre>
+<p>The new file you see is the index file created by <strong>reference_indexer</strong>. This index is in the same format as you would get from the real program <strong>samtools</strong>. Try viewing the index file with <code>less</code> and see how it looks. The samtools type of index contains one row per fasta record in the reference file. In this case, there is only one record for the adenovirus genome, and it’s called <code>ad2</code> in the fasta file. The human reference genome typically have one record per chromosome, so a index of the human genome would then have 24 rows.</p>
+<p>The numbers after the record name specifies how many bases the record has, how far into the file (in bytes) the record starts, the number of bases on each line in the record, and how many bytes each line takes up in the file.
+Using this information the program can quickly jump to the start location of each record, without having to read the file from the first row every time.</p>
+<p>Other aligners might use more complex indexing of the file to speed up the alignment process even further, e.g. creating an index over where it can find all possible “words” that you can form with 5 or so bases, making it easier to find possible matching sites for reads. If the read starts with <code>ATGTT</code> you can quickly look in the index and see all places in the geonome that contains this word and start looking if the rest of the read matches the area around the word.</p>
+<p>This greatly decreases the number of places you have to look when looking for a match. These types of indexes usually take a long time to create (5+ hours maybe), but since you only have to do it once per reference genome it’s easily worth it, seeing how the alignment process probably would take 100s of hours without the index, instead of 6-12 hours.</p>
+<p>We are now ready to align our reads.</p>
+</div>
+<div id="align-reads" class="section level2">
+<h2><span class="header-section-number">4.2</span> Align reads</h2>
+<ol style="list-style-type: decimal">
+<li>Build an index for the reference genome.</li>
+<li><strong>Align the reads.</strong></li>
+<li>Convert the SAM file to a BAM file.</li>
+<li>Sort the BAM file.</li>
+<li>Index the BAM file.</li>
+<li>View the aligned data together with the annotations.</li>
+</ol>
+<p><i class="fas fa-clipboard-list"></i> Align reads using <strong>align_reads</strong>, naming the output file <strong>ad2.sam</strong>, placed in the <strong>1_alignment</strong> folder.</p>
+<pre class="bash"><code>Syntax: align_reads -r &lt;reference genome&gt; -i &lt;fastq file with reads&gt; -o &lt;name of the output file&gt;</code></pre>
+<p>
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2020032616393374" aria-expanded="false" aria-controls="acc2020032616393374">
+</button>
+</p>
+<div id="acc2020032616393374" class="collapse">
+<div class="card card-body">
+<pre class="bash"><code>$ align_reads -r 0_ref/ad2.fa -i 0_seq/ad2.fq -o 1_alignment/ad2.sam</code></pre>
+</div>
+</div>
+<p>This will create a SAM file in <strong>1_alignment</strong> called <strong>ad2.sam</strong>. Have a look at it with less. If you think the file looks messy, add a <code>-S</code> after less to make it stop wrapping long lines, <code>less -S 1_alignment/ad2.sam</code> and scroll sideways using the arrow keys. As you can see there is one row per aligned read in this file. Each row contains information about the read, like the name of the read, where in the reference genome it aligned, and also a copy of the reads sequence and quality score, among other things.</p>
+</div>
+<div id="sam-to-bam" class="section level2">
+<h2><span class="header-section-number">4.3</span> SAM to BAM</h2>
+<ol style="list-style-type: decimal">
+<li>Build an index for the reference genome.</li>
+<li>Align the reads.</li>
+<li><strong>Convert the SAM file to a BAM file.</strong></li>
+<li>Sort the BAM file.</li>
+<li>Index the BAM file.</li>
+<li>View the aligned data together with the annotations.</li>
+</ol>
+<p><i class="fas fa-clipboard-list"></i> The next step is to convert the SAM file to a BAM file. This is more or less just compressing the file, like creating a zip file. To do that we will use the dummy program <strong>sambam_tools</strong>, telling it we want to convert a file to BAM (<strong>-f bam</strong>), which file we want to convert (<strong>-i</strong>), where it should save the resulting BAM file (<strong>-o</strong>). Save the BAM file in the <strong>2_bam</strong> folder and name it <strong>ad2.bam</strong>.</p>
+<pre class="bash"><code>Syntax: sambam_tool -f bam -i &lt;sam file&gt; -o &lt;bam&gt;</code></pre>
+<p>
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2020032616394855" aria-expanded="false" aria-controls="acc2020032616394855">
+</button>
+</p>
+<div id="acc2020032616394855" class="collapse">
+<div class="card card-body">
+<pre class="bash"><code>$ sambam_tool -f bam -i 1_alignment/ad2.sam -o 2_bam/ad2.bam</code></pre>
+</div>
+</div>
+<p>Have a look in the <strong>2_bam</strong> folder.</p>
+<pre class="bash"><code>$ ll 2_bam</code></pre>
+<p>The created BAM file is an exact copy of the SAM file, but stored in a much more efficient format. Aligners usually have an option to output BAM format directly, saving you the trouble to convert it yourself, but not all tools can do this (they really should though). Have a look at the difference in file size, though in this example it’s quite an extreme difference (2.9 MB vs 0.3 MB). The quality score of all reads is the same (BBBBBBBBB..), and files with less differences are easier to compress. Usually the BAM file is about 25% of the size of the SAM file.</p>
+<p>Since the BAM format is a binary format we can’t look at it with <code>less</code>. We would have to use a tool, like <strong>samtools</strong> which you will probably see later in the week, to first convert the file back to a SAM file before we can read it. In that case we can just look at the SAM file before converting it since they will be the same.</p>
+</div>
+<div id="sort-index-bam" class="section level2">
+<h2><span class="header-section-number">4.4</span> Sort &amp; index BAM</h2>
+<ol style="list-style-type: decimal">
+<li>Build an index for the reference genome.</li>
+<li>Align the reads.</li>
+<li>Convert the SAM file to a BAM file.</li>
+<li><strong>Sort the BAM file.</strong></li>
+<li><strong>Index the BAM file.</strong></li>
+<li>View the aligned data together with the annotations.</li>
+</ol>
+<p>A BAM file is taking up much less space than the SAM file, but we can still improve performance. An indexed BAM file is infinitely faster for programs to work with, but before we can index it, we have to sort it since it’s not possible to index an unsorted file in any meaningful way.</p>
+<p><i class="fas fa-clipboard-list"></i> To sort the BAM file we’ll use the <strong>sambam_tool</strong> again, but specifying a different function, <strong>-f sort</strong> instead. Tell it to store the sorted BAM file in the <strong>3_sorted</strong> folder and name the file <strong>ad2.sorted.bam</strong></p>
+<pre class="bash"><code>Syntax: sambam_tool -f sort -i &lt;unsorted bam file&gt; -o &lt;sorted bam file&gt;</code></pre>
+<p>
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2020032616397981" aria-expanded="false" aria-controls="acc2020032616397981">
+</button>
+</p>
+<div id="acc2020032616397981" class="collapse">
+<div class="card card-body">
+<pre class="bash"><code>$ sambam_tool -f sort -i 2_bam/ad2.bam -o 3_sorted/ad2.sorted.bam</code></pre>
+</div>
+</div>
+<p>This will sort the <strong>ad2.bam</strong> file and create a new BAM file which is sorted, called <strong>ad2.sorted.bam</strong>.</p>
+<p><i class="fas fa-clipboard-list"></i> Now when we have a sorted BAM file, we can index it. Use the command</p>
+<pre class="bash"><code>Syntax: sambam_tool -f index -i &lt;sorted bam file&gt;</code></pre>
+<p>
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2020032616393837" aria-expanded="false" aria-controls="acc2020032616393837">
+</button>
+</p>
+<div id="acc2020032616393837" class="collapse">
+<div class="card card-body">
+<pre class="bash"><code>$ sambam_tool -f index -i 3_sorted/ad2.sorted.bam</code></pre>
+</div>
+</div>
+<p>This will create an index named <strong>ad2.sorted.bam.bai</strong> in the same folder as the <strong>ad2.sorted.bam</strong> file is located. It’s nicer to have the <strong>.bam</strong> and <strong>.bai</strong> named to the same “prefix”, so rename the <strong>.bai</strong> file to not have the <strong>.bam</strong> in its name.</p>
+<pre class="bash"><code>$ mv 3_sorted/ad2.sorted.bam.bai 3_sorted/ad2.sorted.bai</code></pre>
+</div>
+<div id="view-in-a-genome-viewer" class="section level2">
+<h2><span class="header-section-number">4.5</span> View in a genome viewer</h2>
+<ol style="list-style-type: decimal">
+<li>Build an index for the reference genome.</li>
+<li>Align the reads.</li>
+<li>Convert the SAM file to a BAM file.</li>
+<li>Sort the BAM file.</li>
+<li>Index the BAM file.</li>
+<li><strong>View the aligned data together with the annotations.</strong></li>
+</ol>
+<p>Now that we have to data aligned and prepared for easy access, we will view it in a genome viewer together with the annotations for the genome. Have a look at the annotations file with <code>less</code>.</p>
+<pre class="bash"><code>$ less -S 0_ref/ad2.gtf</code></pre>
+<p>The <strong>-S</strong> will tell less to not wrap the lines, and instead show one line per line. If the line is longer than the window, you can user the left and right arrow to scroll to the left and right. Many tabular files are much more readable when using the <code>-S</code> option. Try viewing the file without it and see the difference.</p>
+<p>To view the file, we will use the program <strong>IGV</strong> (Integrated Genome Viewer). Before we can do this, we have to load the module for IGV.</p>
+<p><i class="fas fa-lightbulb"></i> If you are using a Mac you might have to install the program <a href="https://www.xquartz.org/">XQuartz</a>, if you have not already installed that program. By using <code>-Y</code> in your ssh command you enable graphical transfer over ssh, but you will also have to have a program able to receive the graphics in order to display it.</p>
+<pre class="bash"><code>$ module load bioinfo-tools IGV/2.4.2</code></pre>
+<p>Start it by typing the following command (now we’ll find out if you used <code>-Y</code> in all your ssh connections!):</p>
+<pre class="bash"><code>$ igv.sh</code></pre>
+<div class="boxy boxy-lightbulb boxy-orange">
+<p><strong>Optional</strong></p>
+<p>If you notice that IGV over Xforwarding is excruciatingly slow, you can try to use the web based ThinLinc client instead. Unfortunately this requires you to have set up a two factor authentification (2FA) with UPPMAX, so it’s something you can try on your own. <a href="https://www.uppmax.uu.se/support/user-guides/setting-up-two-factor-authentication/">Instructions for setting up the 2FA at UPPMAX</a>. When you are all set up, go to the address <a href="https://rackham-gui.uppmax.uu.se">https://rackham-gui.uppmax.uu.se</a> and login with your normal UPPMAX username and password together with your 2FA (described at the login screen). This will get you a remote desktop on one of the login nodes, and you can open a terminal and run IGV there instead. Once IGV is started, either using Xforwarding or the remote desktop in your web browser, we are ready to go.</p>
+</div>
+<p>There are 3 files we have to load in IGV.</p>
+<p>The first is the reference genome. Press the menu button located at <strong>“Genomes - Load Genome from File…”</strong> and find your reference genome in <strong>0_ref/ad2.fa</strong>. If you are having trouble finding your files, note that IGV always starts in your home directory. Use the dropdown menu at the top to navigate to <strong>/proj/g2019031/nobackup/…</strong>.</p>
+<p>The second file you have to load is the reads. Press the menu button <strong>“File - Load from File…”</strong> and select your <strong>3_sorted/ad2.sorted.bam</strong>.</p>
+<p>The last file you have to load is the annotation data. Press <strong>“File - Load from File…”</strong> again and select you annotation file in <strong>0_ref/ad2.gtf</strong>.</p>
+<p>This will show you the reference genome, how all the reads are aligned to it, and all the annotation data. Try zooming in on an area and have a look at the reads and annotations. The figures you see in the picture are all derived from the data in the files you have given it.</p>
+<p>At the top of the window you have the overview of the current chromosome you are looking at, which tells you the scale you are zoomed at for the moment. When you zoom in you will see a red rectangle apper which shows you which portion of the chromosome you are looking at. Just below the scale you’ll see the coverage graph, which tells you how many reads cover each position along the reference genome. The colored bands you see here and there are SNPs, i.e. positions where the reads of your sample does not match the reference genome.</p>
+<p>All the reads, the larger area in the middle of the window, are drawn from the data in the BAM file using the chromosome name, the starting position and the ending position of each read. When you zoom in more you will be able to see individual reads and how they are aligned. The annotation in GTF format are all plotted using the data in the GTF file, visible just under all the reads, are shown as blue rectangles.</p>
+<p>The reference genome, a fasta file containing the DNA sequence of the reference genome, is visible at the bottom of the window if you zoom to the smallest level so you can see the bases of the genome.</p>
+</div>
+</div>
+<div id="create-a-cram-file" class="section level1">
+<h1><span class="header-section-number">5</span> Create a CRAM file</h1>
+<p>The CRAM format is even more efficient than the BAM format. To create a CRAM file we’ll have to use <strong>samtools</strong>, so we will load the module for it.</p>
+<pre class="bash"><code>$ module load bioinfo-tools samtools/1.3</code></pre>
+<p><i class="fas fa-clipboard-list"></i> Tell samtools that you want CRAM output (<strong><code>-C</code></strong>) and specify which reference genome it should use to do the CRAM conversion (<strong><code>-T</code></strong>)</p>
+<pre class="bash"><code>Syntax: samtools view -C -T &lt;reference genome&gt; -o &lt;name of cram file&gt; &lt;bam file to convert&gt;</code></pre>
+<p>
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2020032616392406" aria-expanded="false" aria-controls="acc2020032616392406">
+</button>
+</p>
+<div id="acc2020032616392406" class="collapse">
+<div class="card card-body">
+<pre class="bash"><code>$ samtools view -C -T 0_ref/ad2.fa -o 4_cram/ad2.cram 3_sorted/ad2.sorted.bam</code></pre>
+</div>
+</div>
+<p>Compare the sizes of the convered BAM file and the newly created CRAM file:</p>
+<pre class="bash"><code>$ ll -h 3_sorted/ad2.sorted.bam 4_cram/ad2.cram</code></pre>
+<p>This will list both the files, and print the file size in a human readable format (<strong><code>-h</code></strong>). The CRAM file is roughly 1/3 of the size of the BAM file. This is probably because all the reads in the simulated data has the same quality value (BBBBBBBBBB). Fewer types of quality values are easier to compress, hence this amazing compression ratio. Real data will have much more diverse quality scores, and the CRAM file would be pethaps 70-80% of the original BAM file.</p>
+<p>If you have been fast to finish this lab and you still have time left (or just can’t get enough of linux stuff), please have a look at the <a href="lab_linux_advanced.html">advanced linux tutorial</a> where you can learn the basics in bash programming using variables, loops and control statements. This is the lab that is scheduled for after lunch today.</p>
+<hr />
+</div>
+
+
+<footer class="footer">
+<div class="container footer-container">
+<div class="row">
+  
+<div class="col-sm-8" style="text-align:left;vertical-align:middle;">
+<p class="small" style="color:#bdbdbd;">
+<b>2020</b> • NBIS • SciLifeLab
+</p>
+</div>
+
+<div class="col-sm-4" style="text-align:right;vertical-align:middle;">
+<p style="color:#bdbdbd;">
+<span>
+  <span class="footericon" style="padding-right:4px; padding-left:4px">
+    <a href="https://nbis.se/">
+      <svg style="height:0.8em;top:.04em;position:relative;fill:#bdbdbd;" viewBox="0 0 496 512"><path d="M248 8C111.03 8 0 119.03 0 256s111.03 248 248 248 248-111.03 248-248S384.97 8 248 8zm82.29 357.6c-3.9 3.88-7.99 7.95-11.31 11.28-2.99 3-5.1 6.7-6.17 10.71-1.51 5.66-2.73 11.38-4.77 16.87l-17.39 46.85c-13.76 3-28 4.69-42.65 4.69v-27.38c1.69-12.62-7.64-36.26-22.63-51.25-6-6-9.37-14.14-9.37-22.63v-32.01c0-11.64-6.27-22.34-16.46-27.97-14.37-7.95-34.81-19.06-48.81-26.11-11.48-5.78-22.1-13.14-31.65-21.75l-.8-.72a114.792 114.792 0 0 1-18.06-20.74c-9.38-13.77-24.66-36.42-34.59-51.14 20.47-45.5 57.36-82.04 103.2-101.89l24.01 12.01C203.48 89.74 216 82.01 216 70.11v-11.3c7.99-1.29 16.12-2.11 24.39-2.42l28.3 28.3c6.25 6.25 6.25 16.38 0 22.63L264 112l-10.34 10.34c-3.12 3.12-3.12 8.19 0 11.31l4.69 4.69c3.12 3.12 3.12 8.19 0 11.31l-8 8a8.008 8.008 0 0 1-5.66 2.34h-8.99c-2.08 0-4.08.81-5.58 2.27l-9.92 9.65a8.008 8.008 0 0 0-1.58 9.31l15.59 31.19c2.66 5.32-1.21 11.58-7.15 11.58h-5.64c-1.93 0-3.79-.7-5.24-1.96l-9.28-8.06a16.017 16.017 0 0 0-15.55-3.1l-31.17 10.39a11.95 11.95 0 0 0-8.17 11.34c0 4.53 2.56 8.66 6.61 10.69l11.08 5.54c9.41 4.71 19.79 7.16 30.31 7.16s22.59 27.29 32 32h66.75c8.49 0 16.62 3.37 22.63 9.37l13.69 13.69a30.503 30.503 0 0 1 8.93 21.57 46.536 46.536 0 0 1-13.72 32.98zM417 274.25c-5.79-1.45-10.84-5-14.15-9.97l-17.98-26.97a23.97 23.97 0 0 1 0-26.62l19.59-29.38c2.32-3.47 5.5-6.29 9.24-8.15l12.98-6.49C440.2 193.59 448 223.87 448 256c0 8.67-.74 17.16-1.82 25.54L417 274.25z"></path>
+      </svg>
+    </a>
+    </span>
+    <span class="footericon" style="padding-right:4px; padding-left:4px">
+      <a href="https://twitter.com/NBISwe"><svg style="height:0.8em;top:.04em;position:relative;fill:#bdbdbd;" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
+    </svg>
+    </a>
+    </span>
+    <span class="footericon" style="padding-left:4px">
+      <a href="https://www.linkedin.com/company/nbisweden/">
+        <svg style="height:0.8em;top:.04em;position:relative;fill:#bdbdbd;" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"></path>
+        </svg>
+    </a>
+    </span>
+  </span>
+</p>
+</div>
+
+</div>
+</div>
+</footer>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
