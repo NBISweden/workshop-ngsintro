@@ -201,8 +201,8 @@ Uppmax is a compute cluster with great analysis capacity, but when it comes to d
 Open a new terminal and navigate to your [local workspace](#preparelaptop). Do not log in to UPPMAX. Copy the .html files generated above with this command:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0("scp <username>@rackham.uppmax.uu.se:/proj/",upid,"/nobackup/<username>/ngsworkflow/fastqc/*.html ."))
-#Replace <username> with your uppmax user name
 ```
+Please replace `<username>` with your uppmax user name.
 Check that the files are now present in the **local workspace** using `ls -lrt`. 
 
 Open a webbrowser in your local computer and open the two html files that you just dowloaded.  
@@ -224,9 +224,10 @@ We parse the output from BWA to samtools sort, which sorts the sam file accordin
   
 ```bash
 bwa mem -R "@RG\\tID:readgroupx\\tPU:flowcellx_lanex\\tSM:HG00097\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta HG00097_1.fq HG00097_2.fq | samtools sort > HG00097.bam
-# -t 1 is the number of threads to use (the number of cores you booked). If you would have analysed the entire genome more cores and threads would have been necessary.
-# You have to use a file redirect ">" for the output, otherwise it will be written to stdout (your screen).
 ```
+Where -t 1 is the number of threads to use (the number of cores you booked). If you would have analysed the entire genome more cores and threads would have been necessary.
+You have to use a file redirect `>` for the output, otherwise it will be written to stdout (your screen).
+
 Please check that the expected output file was generated and that it has content. 
 
 We also need to index the output bam file so that programs can randomly access the sorted data without reading the whole file. This creates an index file with the same name as the input bam file, except with a .bai extension.
@@ -329,7 +330,7 @@ Once you have the g.vcf files for all samples you should perform joint genotype 
 ```bash
 gatk --java-options -Xmx7g CombineGVCFs -R human_g1k_v37_chr2.fasta -V <sample1>.g.vcf -V <sample2>.g.vcf -V <sample3>.g.vcf -O cohort.g.vcf
 ```
-Please replace /<sample1/>, /<sample2/>, /<sample3/> with the real sample names.
+Please replace `<sample1>`, `<sample2>`, `<sample3>` with the real sample names.
 Then run GATK's GenoteypeGVC to generate a "normal" vcf file:
 ```bash
 gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g.vcf -O cohort.vcf
