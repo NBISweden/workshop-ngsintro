@@ -132,14 +132,13 @@ cat(paste0("ln -s ",refdir,"/human_g1k_v37_chr2.fasta"))
 ```
 
 Do the same with the fastq files TESTING 3:
-```{r, list ,eval=FALSE,block.title=FALSE}
-cat(paste0("ln -s ",fastqdir,"/HG00097_1.fq"))    
-cat(paste0("ln -s ",fastqdir,"/HG00097_2.fq"))    
-cat(paste0("ln -s ",fastqdir,"/HG00100_1.fq"))    
-cat(paste0("ln -s ",fastqdir,"/HG00100_2.fq"))    
-cat(paste0("ln -s ",fastqdir,"/HG00101_1.fq"))    
-cat(paste0("ln -s ",fastqdir,"/HG00101_2.fq"))
-
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0("ln -s ",fastqdir,"/HG00097_1.fq\n")) 
+cat(paste0("ln -s ",fastqdir,"/HG00097_2.fq\n"))  
+cat(paste0("ln -s ",fastqdir,"/HG00100_1.fq\n"))
+cat(paste0("ln -s ",fastqdir,"/HG00100_2.fq\n"))
+cat(paste0("ln -s ",fastqdir,"/HG00101_1.fq\n")) 
+cat(paste0("ln -s ",fastqdir,"/HG00101_2.fq\n"))
 ```
   
 ### Accessing programs {#Accessingprograms}
