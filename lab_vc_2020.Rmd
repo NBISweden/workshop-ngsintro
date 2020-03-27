@@ -131,8 +131,8 @@ Create a symbolic link to the reference in your workspace:
 cat(paste0("ln -s ",refdir,"/human_g1k_v37_chr2.fasta"))  
 ```
 
-Do the same with the fastq files:
-```{r,echo=FALSE,comment="",class.output="bash"}
+Do the same with the fastq files NOW TESTING:
+```{r,echo=FALSE,comment="",class.output="sh"}
 cat(paste0("ln -s ",fastqdir,"/HG00097_1.fq"))    
 cat(paste0("ln -s ",fastqdir,"/HG00097_2.fq"))    
 cat(paste0("ln -s ",fastqdir,"/HG00100_1.fq"))    
