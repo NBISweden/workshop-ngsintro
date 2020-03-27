@@ -97,7 +97,7 @@ Connect to UPPMAX.
 ```bash
 $ ssh -Y username@rackham.uppmax.uu.se
 ```
-Book a node. Make sure you only do this once depeding on the day.  
+Book a core. Make sure you only do this once depeding on the day.  
 Use this reservation on day 1 of variant-calling:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0("salloc -A ",upid," -t 04:00:00 -p core -n 1 --no-shell --reservation=",upres3," &"))
@@ -131,7 +131,7 @@ Create a symbolic link to the reference in your workspace:
 cat(paste0("ln -s ",refdir,"/human_g1k_v37_chr2.fasta"))  
 ```
 
-Do the same with the fastq files TESTING 3:
+Do the same with the fastq files:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0("ln -s ",fastqdir,"/HG00097_1.fq\n")) 
 cat(paste0("ln -s ",fastqdir,"/HG00097_2.fq\n"))  
@@ -347,28 +347,49 @@ Below is a skeleton script that can be used as a templeate. Please modify it to 
 Detta skall uppdateras:
 ```bash
 #!/bin/bash
-
-#SBATCH -A <projid
+#SBATCH -A g2019031
 #SBATCH -p core
 #SBATCH -n 1
-#SBATCH -t 2:00:00
-#SBATCH -J vc
+#SBATCH -t 1:00:00
+#SBATCH -J jointGenotyping
 
-#Load modules
+## load modules
 module load bioinfo-tools
 module load bwa/0.7.17
 module load samtools/1.10
-module load picard/2.20.4
 module load GATK/4.1.4.1
 
-#for s in "HG00097" "HG00100" "HG00101"
-  #call bwa mem 
-  #call to haplotypecaller -ERC
+## loop through the samples:
+for sample in HG00097 HG00100 HG00101;
+do
+  echo "Now analyzing: "$sample
+  #bwa mem
+  Fill in the code for running bwa-mem for each sample here
+  
+  #samtools index
+  Fill in the code for samtools index for each samplke here
 
-#call GenotypeGVCF
+  #HaplotypeCaller
+  Fill in the code for HaplotypeCaller for each sample here
+done
 
+#CombineGVCFs:
+Fill in the code for CombineGVCFs for all samples here
+
+#GenotypeGVCFs:
+Fill in the code for GenotypeGVCFs here
 ```
+Please save the sbatch script in your uppmax folder as "joint_genotyping.sbatch" or similar.
 
+To run the sbatch script in the SLURM queue, use this command: 
+```bash
+sbatch joint_genotyping.sbatch
+```
+If you have an active job reservation you can use this, and run the script as a normal bash script:
+```bash
+./joint_genotyping.sbatch
+```
+If you would like more help with creating the sbatch script, please look at our [example solution](scripts/reseq/joint_genotyping.sbatch).  
   
 # Part three
 Here we will expand the variant calling workflow to follow GATKs best practise short germline variant detection. 
