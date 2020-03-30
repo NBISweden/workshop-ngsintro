@@ -401,7 +401,8 @@ gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g
 ```  
 
 **Questions**  
-* How many lines do the comined.g.vcf file have? (Hint: You don't have to open the file! You can use the linux command grep -v "#" filename.txt to extract all lines that don't start with "#", then "|", and then wc to count those lines.)  
+* How many lines do the comined.g.vcf file have?  
+  (Hint: You don't have to open the file! You can use the linux command grep -v "#" filename.txt to extract all lines that don't start with "#", then "|", and then wc to count those lines.)  
 * How many lines do the combined.vcf file have?  
 * Explain the difference in number of lines?  
 * More questions - please add!  
