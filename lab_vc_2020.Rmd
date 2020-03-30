@@ -389,7 +389,7 @@ If you have an active job reservation you can run the script as a normal bash sc
 ```bash
 ./joint_genotyping.sbatch
 ```
-If you would like more help with creating the sbatch script, please look at our ![example solution](./scripts/reseq/joint_genotyping.sbatch).  
+If you would like more help with creating the sbatch script, please look at our [example solution](https://github.com/NBISweden/workshop-ngsintro/scripts/reseq/joint_genotyping.sbatch).  
   
 # Part three
 Here we will expand the variant calling workflow to follow GATKs best practise short germline variant detection. 
