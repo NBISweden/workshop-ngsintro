@@ -396,6 +396,7 @@ cat(paste0('#!/bin/bash
 #SBATCH -n 1
 #SBATCH -t 1:00:00
 #SBATCH -J jointGenotyping
+
 ## load modules\n
 module load bioinfo-tools\n
 module load bwa/0.7.17\n
