@@ -389,30 +389,31 @@ If you have an active job reservation you can run the script as a normal bash sc
 ./joint_genotyping.sbatch
 ```
 If you would like more help with creating the sbatch script, please look at our example solution:
-```{accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
-#!/bin/bash
-#SBATCH -A g2019031
-#SBATCH -p core
-#SBATCH -n 1
-#SBATCH -t 1:00:00
-#SBATCH -J jointGenotyping
-
-## load modules
-module load bioinfo-tools
-module load bwa/0.7.17
-module load samtools/1.10
-module load GATK/4.1.4.1
-
-## loop through the samples:
-for sample in HG00097 HG00100 HG00101;
-do
-  echo "\n\nNow analyzing: "$sample"\n\n"
-  bwa mem -R "@RG\\tID:readgroupx\\tPU:flowcellx_lanex\\tSM:"$sample"\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta $sample"_1.fq" $sample"_2.fq" | samtools sort > $sample".bam"
-  samtools index $sample".bam"
-  gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I $sample".bam" -O $sample".g.vcf" 
-done
-gatk --java-options -Xmx7g CombineGVCFs -R human_g1k_v37_chr2.fasta -V HG00097.g.vcf -V HG00100.g.vcf -V HG00101.g.vcf -O cohort.g.vcf
-gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g.vcf -O cohort.vcf
+```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
+cat(paste0('#!/bin/bash\n
+#SBATCH -A g2019031\n
+#SBATCH -p core\n
+#SBATCH -n 1\n
+#SBATCH -t 1:00:00\n
+#SBATCH -J jointGenotyping\n
+\n  
+## load modules\n
+module load bioinfo-tools\n
+module load bwa/0.7.17\n
+module load samtools/1.10\n
+module load GATK/4.1.4.1\n
+\n
+## loop through the samples:\n
+for sample in HG00097 HG00100 HG00101;\n
+do\n
+  echo "\n\nNow analyzing: "$sample"\n\n"\n
+  bwa mem -R "@RG\\tID:readgroupx\\tPU:flowcellx_lanex\\tSM:"$sample"\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta $sample"_1.fq"\n $sample"_2.fq" | samtools sort > $sample".bam"\n
+  samtools index $sample".bam"\n
+  gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I $sample".bam" -O $sample".g.vcf"\n
+done\n
+gatk --java-options -Xmx7g CombineGVCFs -R human_g1k_v37_chr2.fasta -V HG00097.g.vcf -V HG00100.g.vcf -V HG00101.g.vcf -O cohort.g.vcf\n
+gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g.vcf -O cohort.vcf\n'
+))
 ```  
 
 **Questions** 
