@@ -401,16 +401,13 @@ gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g
 ```  
 
 **Questions**  
-* How many lines do the comined.g.vcf file have? You can use the linux command 'grep -v "#" filename.txt' to extract all lines that don't start with "#", then '|', and then 'wc' to count those lines.  
+* How many lines do the comined.g.vcf file have? You can use the linux command `grep -v "#" filename.txt` to extract all lines in "filename.txt" that don't start with "#", then `|`, and then `wc` to count those lines.  
 * How many lines do the combined.vcf file have?  
 * Explain the difference in number of lines?  
 * More questions - please add!  
 
 ## Check combined vcf in IGV
 Download the combined vcf file to your **local workspace** as described [above]{#downloaddata}). Then open the combined vcf file in IGV as described [above]{#vcfinigv}). 
-
-**Look at the vcf file in IGV**  
-* In IGV, in the File menu, select **Load from File** and select your vcf file (not the .idx file), which should appear in the tracks window. You will now see all the variants called in HG00097. You can view all variants in the *LCT* gene by typing the gene name in the search box.  
 **Questions**  
 * The vcf file is displayed on two rows; what is shown in the two rows in this case?   
 * What does it mean if a variant has two colors in the upper row?  
