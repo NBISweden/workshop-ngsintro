@@ -407,12 +407,12 @@ gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g
 * More questions - please add!  
 
 ## Check combined vcf in IGV
-Download the combined vcf file to your **local workspace** as described [above]{#downloaddata}). Then open the combined vcf file in IGV as described [above]{#vcfinigv}). 
+Download the combined vcf file to your **local workspace** as described [above]{#downloaddata}. Then open the combined vcf file in IGV as described [above]{#vcfinigv}.  
 **Questions**  
-* Can you find the variant shown to be associated with lactose tolerance in adults?
-* Do you have coverage in this region in all samples?
-* Which samples do you think should avoid drinking milk? Any heterozygotes?
-* Does this agree with the genotype in the vcf file?  
+* Can you find the variant shown to be associated with lactose tolerance in adults?  
+* Do you have coverage in this region in all samples?  
+* Which samples do you think should avoid drinking milk? Any heterozygotes?  
+* Does this agree with the genotype in the vcf file?   
 
 # Part three
 Here we will expand the variant calling workflow to follow GATKs best practise short germline variant detection. 
