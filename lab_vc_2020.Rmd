@@ -351,34 +351,22 @@ Detta skall uppdateras:
 #SBATCH -n 1
 #SBATCH -t 1:00:00
 #SBATCH -J jointGenotyping
-
-## load modules
 module load bioinfo-tools
 module load bwa/0.7.17
 module load samtools/1.10
 module load GATK/4.1.4.1
-
 ## loop through the samples:
 for sample in HG00097 HG00100 HG00101;
 do
   echo "Now analyzing: "$sample
-  #bwa mem
-  Fill in the code for running bwa-mem for each sample here
-  
-  #samtools index
-  Fill in the code for samtools index for each samplke here
-
-  #HaplotypeCaller
-  Fill in the code for HaplotypeCaller for each sample here
+  #Fill in the code for running bwa-mem for each sample
+  #Fill in the code for samtools index for each sample
+  #Fill in the code for HaplotypeCaller for each sample
 done
-
-#CombineGVCFs:
-Fill in the code for CombineGVCFs for all samples here
-
-#GenotypeGVCFs:
-Fill in the code for GenotypeGVCFs here
+#Fill in the code for CombineGVCFs for all samples below
+#Fill in the code for GenotypeGVCFs below
 ```
-Please save the sbatch script in your uppmax folder as "joint_genotyping.sbatch" or similar.
+Please save the sbatch script in your uppmax folder and call it "joint_genotyping.sbatch" or similar.
 
 To run the sbatch script in the SLURM queue, use this command: 
 ```bash
@@ -396,12 +384,12 @@ cat(paste0('#!/bin/bash
 #SBATCH -n 1
 #SBATCH -t 1:00:00
 #SBATCH -J jointGenotyping
-## load modules
+
 module load bioinfo-tools
 module load bwa/0.7.17
 module load samtools/1.10
 module load GATK/4.1.4.1
-## loop through the samples:
+
 for sample in HG00097 HG00100 HG00101;
 do
   echo "Now analyzing: "$sample
