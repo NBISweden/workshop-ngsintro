@@ -341,9 +341,7 @@ gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g
 This section is for those of you who want to learn how to run analyses automatically in bash scripts. 
 To learn more about SLURM and SBATCH scripts please look the [SLURM user guide](https://www.uppmax.uu.se/support/user-guides/slurm-user-guide/) on Uppmax website. 
   
-Below is a skeleton script that can be used as a templeate. Please modify it to run all the steps in part two of this workshop. 
-
-Detta skall uppdateras:
+Below is a skeleton script that can be used as a templeate. Please modify it to run all the steps in part two of this workshop. :
 ```bash
 #!/bin/bash
 #SBATCH -A g2019031
@@ -359,12 +357,12 @@ module load GATK/4.1.4.1
 for sample in HG00097 HG00100 HG00101;
 do
   echo "Now analyzing: "$sample
-  #Fill in the code for running bwa-mem for each sample
-  #Fill in the code for samtools index for each sample
-  #Fill in the code for HaplotypeCaller for each sample
+  #Fill in the code for running bwa-mem for each sample here
+  #Fill in the code for samtools index for each sample here 
+  #Fill in the code for HaplotypeCaller for each sample here
 done
-#Fill in the code for CombineGVCFs for all samples below
-#Fill in the code for GenotypeGVCFs below
+#Fill in the code for CombineGVCFs for all samples here
+#Fill in the code for GenotypeGVCFs here
 ```
 Please save the sbatch script in your uppmax folder and call it "joint_genotyping.sbatch" or similar.
 
@@ -393,7 +391,7 @@ module load GATK/4.1.4.1
 for sample in HG00097 HG00100 HG00101;
 do
   echo "Now analyzing: "$sample
-  bwa mem -R "@RG\\tID:readgroupx\\tPU:flowcellx_lanex\\tSM:"$sample"\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta $sample"_1.fq"\n $sample"_2.fq" | samtools sort > $sample".bam"
+  bwa mem -R "@RG\\tID:readgroupx\\tPU:flowcellx_lanex\\tSM:"$sample"\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta $sample"_1.fq" $sample"_2.fq" | samtools sort > $sample".bam"
   samtools index $sample".bam"
   gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I $sample".bam" -O $sample".g.vcf"
 done
