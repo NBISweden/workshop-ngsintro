@@ -390,13 +390,12 @@ If you have an active job reservation you can run the script as a normal bash sc
 ```
 If you would like more help with creating the sbatch script, please look at our example solution:
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
-cat(paste0('#!/bin/bash\n
-#SBATCH -A g2019031\n
-#SBATCH -p core\n
-#SBATCH -n 1\n
-#SBATCH -t 1:00:00\n
-#SBATCH -J jointGenotyping\n
-\n  
+cat(paste0('#!/bin/bash
+#SBATCH -A g2019031
+#SBATCH -p core
+#SBATCH -n 1
+#SBATCH -t 1:00:00
+#SBATCH -J jointGenotyping
 ## load modules\n
 module load bioinfo-tools\n
 module load bwa/0.7.17\n
