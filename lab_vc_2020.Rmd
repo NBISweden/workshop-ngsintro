@@ -46,7 +46,7 @@ HG00100       | British in England and Scotland    | Low coverage WGS
 HG0010q       | British in England and Scotland    | Low coverage WGS 
   
 ## The *LCT* locus
-The *LCT* gene on chromosome 2 encodes the lactase protein, which is responible for the metabolism of lactose in mammals. Most mammals can not digest lactose as adults, but some humans tolerate lactose also in adulthood. Genetic variants upstream of the human *LCT* control how lactose is tolerated in adults, and the variant **rs4988235** (located at at position chr2:136608596 in HG19) has been shown to lead to lactose persistence.  
+The *LCT* gene on chromosome 2 encodes the lactase protein, which is responible for the metabolism of lactose in mammals. Most mammals can not digest lactose as adults, but some humans tolerate lactose also in adulthood. Genetic variants upstream of the human *LCT* control how lactose is tolerated in adults, and the variant **rs4988235** (located at at position chr2:136608646 in HG19) has been shown to lead to lactose persistence.  
   
 In this workshop we will work with sequencing data (fastq files) for a small region on chromosome 2 that covers the LCT gene and upstream region: 
 chr2:136545000-136617000
@@ -332,7 +332,7 @@ Once you have the g.vcf files for all samples you should perform joint genotype 
 gatk --java-options -Xmx7g CombineGVCFs -R human_g1k_v37_chr2.fasta -V <sample1>.g.vcf -V <sample2>.g.vcf -V <sample3>.g.vcf -O cohort.g.vcf
 ```
 Please replace `<sample1>`, `<sample2>`, `<sample3>` with the real sample names.
-Then run GATK's GenoteypeGVC to generate a "normal" vcf file:
+Then run GATK's GenoteypeGVC to generate a vcf file:
 ```bash
 gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g.vcf -O cohort.vcf
 ```
@@ -415,7 +415,8 @@ Download the combined vcf file to your **local workspace** as described [above]{
 * Does this agree with the genotype in the vcf file?   
 
 # Part three
-Here we will expand the variant calling workflow to follow GATKs best practise short germline variant detection. 
+Here we will expand the variant calling workflow to follow GATKs best practise short germline variant detection. For a full description of GATK's best practise germline short variant discovery, please visit [GATKs web site](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-)
+![](data/ngs-workflow/3_best_practise.png)
 
 # Additional information
 
