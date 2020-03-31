@@ -491,10 +491,13 @@ java -Xmx7g -jar $PICARD_HOME/picard.jar MergeVcfs \
 Open your filtered VCF with `less` and page through it. It still has all the variant lines, but the FILTER column that was blank before is now filled in, with PASS or a list of the filters it failed. Note also that the filters that were run are described in the header section.
 
 Run the entire Best Practice workflow on all three samples, then copy the final filtered vcf file to your local workspace and open the file in IGV. 
-**Questions**
+**Questions**  
 * Look at the variant associated with lactose tolerance in adults and compare with combined vcf generated in step two above. Can you see any differences?
+  
+Note: In this workshop we use public data from low covare sequencing, that has been processed before publication. The difference between variants processed with our simplified workflow and the bet practise workflow may be small in this case, but with a real life data set it is recomended to follow the best pracites workflow!
 
-Note: In this workshop we use public data from low covare sequencing, that has been processed before publication. The difference 
+**Thanks for today!**
+  
 
 # Additional information
 
