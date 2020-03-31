@@ -415,34 +415,88 @@ Download the combined vcf file to your **local workspace** as described [above]{
 * Does this agree with the genotype in the vcf file?   
 
 # Part three
-In step 1-2 we have used a simplified workflow for variant calling because the priority in this course is to learn the concepts. Now we will look into the details, and make a workflow that follows GATKs best practise short germline variant detection. Please visit [GATKs web site](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-) to read more about their best practice. 
+Now we will look into the details of variant calling, and make a workflow that follows [GATKs best practise for germline short variant discovery](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-). 
   
 The flowchart below shows how GATK's best practice short vartiant discovery should be applied to our three samples. You can either run the new steps command by command in your reserved core, or include the steps in the SBATCH script that you created in Step 2 [above]{#sbatchscript}.
+The new steps are describer below, and the other steps should be run as previously described.  
 
 ![](data/ngs-workflow/3_best_practise.png)
 
 ## Mark Duplicates
-This tool locates and tags duplicate reads in a BAM or SAM file, where duplicate reads are defined as originating from a single fragment of DNA. Duplicates can arise during sample preparation e.g. library construction using PCR. Duplicate reads can also result from a single amplification cluster, incorrectly detected as multiple clusters by the optical sensor of the sequencing instrument. 
-We use Picard to mark duplicate reads. This is the command to mark one single bam file:
+This tool locates and tags duplicate reads in a BAM or SAM file, where duplicate reads are reads that originate from a single fragment of DNA. Duplicates can arise during sample preparation e.g. library construction using PCR. They can also result from a single amplification cluster, incorrectly detected as multiple clusters by the optical sensor of the sequencing instrument.  
+This is the command to mark duplicates in one single bam file using Picard:
 ```bash
 java -Xmx7g -jar $PICARD_HOME/picard.jar MarkDuplicates I=sample.bam O=sample.md.bam M=sample_mdmetrics.txt
 ```
 
 ## Recalibrate Base Quality Scores
-The goal of this procedure is to correct for systematic bias that affect the assignment of base quality scores by the sequencer. The first pass consists of calculating error empirically and finding patterns in how error varies with basecall features over all bases. The relevant observations are written to a recalibration table. The second pass consists of applying numerical corrections to each individual basecall based on the patterns identified in the first step (recorded in the recalibration table) and write out the recalibrated data to a new BAM file.
-
-First generate a recalibration table for a sample: 
+The goal of this procedure is to correct for systematic bias that affect the assignment of base quality scores by the sequencer. The first pass consists of calculating error empirically and finding patterns in how error varies with basecall features over all bases. The relevant observations are written to a recalibration table. The second pass consists of applying numerical corrections to each individual basecall based on the patterns identified in the first step (recorded in the recalibration table) and write out the recalibrated data to a new BAM file.  
+First generate a recalibration table for a sample:  
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0("gatk --java-options -Xmx7g BaseRecalibrator -R human_g1k_v37_chr2.fasta -I <sample.md.bam> --known-sites ",datadir,"/1000G_phase1.snps.high_confidence.b37.chr2.vcf -O <sample.recal.table>\n"))
 ```
-Then recalibrate the base quality scores in that sample's bam file: 
+Then recalibrate the base quality scores in that sample's bam file:  
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0("gatk --java-options -Xmx7g ApplyBQSR -R human_g1k_v37_chr2.fasta -I <sample.md.bam> --bqsr-recal-file <sample.recal.table> -O <sample.recal.bam>"))
 ```
+  
+## Variant Filtering
+The GATK's variant calling tools are designed to be very sensitive, which good because it minimizes the chance of missing real variants. Howeer, it means that we need to filter the raw callset in order to reduce the amount of false positives, which can be quite large. GATK offers two ways to filter variants: The variant quality score recalibration (VQSR) methods uses machine learning to identify variants that are likely to be real, and hard filters. VQSR is very good, but requires quite a lot of data in order to learn the profiles of good vs. bad variants (for example one whole genome sequence sample or several whole exome samples). 
+  
+Since we have data for only a very small part of the human genome, and only three samples, we will use hard filters. Please read this article for [parameters suggested by GATK for hard filters](https://software.broadinstitute.org/gatk/documentation/article?id=2806). The parameters are slightly different for SNPs and INDELs, which we have called together and are both in our combined vcf file. You therefore need to perform the filtering in two separate steps: first select all SNPs and filter them, then select all indels and filter them. Finally you can merge the snps and indels to get all variants in one file. 
+  
+### SNPs
+```bash
+gatk --java-options -Xmx7g SelectVariants \
+  -R human_g1k_v37_chr2.fasta \
+  -V cohort.vcf \
+  --selectType SNP \
+  -O cohort.snvs.vcf
+  
+gatk --java-options -Xmx7g VariantFiltration \
+  -R human_g1k_v37_chr2.fasta \
+  -V cohort.snvs.vcf \
+  -O cohort.snvs.filtered.vcf \
+  --filterName QDfilter --filterExpression "QD < 2.0"  \
+  --filterName MQfilter --filterExpression "MQ < 40.0"  \
+  --filterName FSfilter --filterExpression "FS > 60.0" 
+```
 
+#### Indels
+
+```bash
+gatk --java-options -Xmx7g SelectVariants \
+  -R human_g1k_v37_chr2.fasta \
+  -V cohort.vcf \
+  --selectType INDEL \
+  -o cohort.indels.vcf
+
+gatk --java-options -Xmx7g VariantFiltration \
+  -R human_g1k_v37_chr2.fasta \
+  -V cohort.indels.vcf \
+  -O cohort.indels.filtered.vcf \
+  --filterName QDfilter --filterExpression "QD < 2.0" \
+  --filterName FSfilter --filterExpression "FS > 200.0" \
+```
+
+### Merge SNPs and Indels
+
+Once you have the filtered calls for both SNPs and INDELs, you can combine these using Picard's `MergeVcfs`:
+```bash
+java -Xmx7g -jar $PICARD_HOME/picard.jar MergeVcfs \
+          I=cohort.snps.filtered.vcf \
+          I=cohort.indels.filtered.vcf \
+          O=cohort.filtered.vcf
+```
+Open your filtered VCF with `less` and page through it. It still has all the variant lines, but the FILTER column that was blank before is now filled in, with PASS or a list of the filters it failed. Note also that the filters that were run are described in the header section.
+
+Run the entire Best Practice workflow on all three samples, then copy the final filtered vcf file to your local workspace and open the file in IGV. 
+**Questions**
+* Look at the variant associated with lactose tolerance in adults and compare with combined vcf generated in step two above. Can you see any differences?
+
+Note: In this workshop we use public data from low covare sequencing, that has been processed before publication. The difference 
 
 # Additional information
-
 
 * Here is a technical documentation of [Illumina Quality Scores](https://www.illumina.com/documents/products/technotes/technote_understanding_quality_scores.pdf)
 
