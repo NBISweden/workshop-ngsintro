@@ -450,16 +450,16 @@ Since we have data for only a very small part of the human genome, and only thre
 gatk --java-options -Xmx7g SelectVariants \
   -R human_g1k_v37_chr2.fasta \
   -V cohort.vcf \
-  --selectType SNP \
+  ----select-type-to-include SNP \
   -O cohort.snvs.vcf
   
 gatk --java-options -Xmx7g VariantFiltration \
   -R human_g1k_v37_chr2.fasta \
   -V cohort.snvs.vcf \
   -O cohort.snvs.filtered.vcf \
-  --filterName QDfilter --filterExpression "QD < 2.0"  \
-  --filterName MQfilter --filterExpression "MQ < 40.0"  \
-  --filterName FSfilter --filterExpression "FS > 60.0" 
+  --filter-name QDfilter --filter-expression "QD < 2.0"  \
+  --filter-name MQfilter --filter-expression "MQ < 40.0"  \
+  --filter-name FSfilter --filter-expression "FS > 60.0" 
 ```
   
 ### Indels
@@ -467,22 +467,22 @@ gatk --java-options -Xmx7g VariantFiltration \
 gatk --java-options -Xmx7g SelectVariants \
   -R human_g1k_v37_chr2.fasta \
   -V cohort.vcf \
-  --selectType INDEL \
+  ----select-type-to-include INDEL \
   -o cohort.indels.vcf
 
 gatk --java-options -Xmx7g VariantFiltration \
   -R human_g1k_v37_chr2.fasta \
   -V cohort.indels.vcf \
   -O cohort.indels.filtered.vcf \
-  --filterName QDfilter --filterExpression "QD < 2.0" \
-  --filterName FSfilter --filterExpression "FS > 200.0" \
+  --filter-name QDfilter --filter-expression "QD < 2.0" \
+  --filter-name FSfilter --filter-expression "FS > 200.0" \
 ```
   
 ### Merge SNPs and Indels
 Once you have the filtered calls for both SNPs and INDELs, you can combine these using Picard's `MergeVcfs`:
 ```bash
 java -Xmx7g -jar $PICARD_HOME/picard.jar MergeVcfs \
-          I=cohort.snps.filtered.vcf \
+          I=cohort.snvs.filtered.vcf \
           I=cohort.indels.filtered.vcf \
           O=cohort.filtered.vcf
 ```
