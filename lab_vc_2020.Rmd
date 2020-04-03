@@ -62,7 +62,7 @@ HG00097       | British in England and Scotland    | Low coverage WGS
 HG00100       | British in England and Scotland    | Low coverage WGS
 HG0010q       | British in England and Scotland    | Low coverage WGS 
   
-## Genomic region
+## Genomic regions
 The *LCT* gene on chromosome 2 encodes the lactase protein, which is responible for the metabolism of lactose in mammals. Most mammals can not digest lactose as adults, but some humans tolerate lactose also in adulthood. Genetic variants upstream of the human *LCT* control how lactose is tolerated in adults, and the variant **rs4988235** (located at at position chr2:136608646 in HG19) has been shown to lead to lactose persistence.  
   
 In this workshop we will work with sequencing data (fastq files) for a small region on chromosome 2 that covers the LCT gene and upstream region: 
@@ -98,6 +98,7 @@ Please connect to the Rackham cluster on UPPMAX using `SSH`:
 ```bash
 $ ssh -Y username@rackham.uppmax.uu.se
 ```
+  
 ### Workspace on Uppmax
 During this lab you should work in your folder under the course's nobackup folder, just like you have done during the previous labs. Start by creating a workspace for this exercise in your folder, and then move into it. This folder will be refered to as your "uppmax workspace" throughout this workshop.  
 
@@ -105,6 +106,24 @@ During this lab you should work in your folder under the course's nobackup folde
 cat(paste0("mkdir /proj/",upid,"/nobackup/<username>/ngsworkflow\n"))
 cat(paste0("cd /proj/",upid,"/nobackup/<username>/ngsworkflow"))
 ```
+  
+### Symbolic links to data
+The raw fastq files are located in the [Data](#Data) folder described above. In stead of copying the files to your workspace you should create symbolic links (soft-links) to them. Soft-linking files and folders allows us to work them as if they were in in your work directory, but we avoid multiplying them.   
+Create a symbolic link to the reference in your workspace:
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0("ln -s ",refdir,"/human_g1k_v37_chr2.fasta"))  
+```
+
+Do the same with the fastq files:
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0("ln -s ",fastqdir,"/HG00097_1.fq\n")) 
+cat(paste0("ln -s ",fastqdir,"/HG00097_2.fq\n"))  
+cat(paste0("ln -s ",fastqdir,"/HG00100_1.fq\n"))
+cat(paste0("ln -s ",fastqdir,"/HG00100_2.fq\n"))
+cat(paste0("ln -s ",fastqdir,"/HG00101_1.fq\n")) 
+cat(paste0("ln -s ",fastqdir,"/HG00101_2.fq\n"))
+```
+  
 ### Book a core 
 When you login to Rackham you enter the "login node", which is not intended for compute intensive tasks. To be able to run analyses directly in the terminal you should therefore book a compute node (or in this case just one core of a node). Make sure you only do this once each day because we have reserved one core per student for the course.    
 Use this reservation on day 1 of variant-calling:
@@ -123,26 +142,12 @@ squeue -u <username>
 and to connect to the node:
 ```bash
 ssh -Y <nodename>
-``` 
-### Symbolic links to data
-The raw fastq files are located in the [Data](#Data) folder described above. In stead of copying the files to your workspace you should create symbolic links (soft-links) to them. Soft-linking files and folders allows us to work them as if they were in in your work directory, but we avoid multiplying them.   
-Create a symbolic link to the reference in your workspace:
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("ln -s ",refdir,"/human_g1k_v37_chr2.fasta"))  
 ```
 
-Do the same with the fastq files:
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("ln -s ",fastqdir,"/HG00097_1.fq\n")) 
-cat(paste0("ln -s ",fastqdir,"/HG00097_2.fq\n"))  
-cat(paste0("ln -s ",fastqdir,"/HG00100_1.fq\n"))
-cat(paste0("ln -s ",fastqdir,"/HG00100_2.fq\n"))
-cat(paste0("ln -s ",fastqdir,"/HG00101_1.fq\n")) 
-cat(paste0("ln -s ",fastqdir,"/HG00101_2.fq\n"))
-```
-  
 ### Accessing programs {#Accessingprograms}
-We will use several programs that are installed in the module system on Uppmax. First load the `bioinfo-tools` module:
+We will use several programs that are installed in the module system on Uppmax. Note: These modules needs to be loaded everytime you login to Rackham, or when you connect to a new comput node.  
+  
+First load the `bioinfo-tools` module:
 ```bash
 module load bioinfo-tools
 ```
@@ -157,7 +162,6 @@ module load GATK/4.1.4.1
 You don't HAVE to specify version number when you load a tool, but it is recommended for reproducability if you want to rerun the exact same commands later.  
 Picard and GATK are java programs, which means that we need the path to the program file, therefore UPPMAX sets a variable when you load these modules ($GATK_HOME or $PICARD_HOME).  
 
-  
 ## Index the genome
 Tools that compare (short) reads with a (large) reference genome needs genome index files to allow efficient random access to the reference genome. Before we can begin analysing our samples we therefore need to create index files for each tool.  
   
@@ -182,6 +186,7 @@ You will get a warning about upcoming command line syntax changes for Picard, bu
 Again, check that the last command generated a new index file using `ls -lrt`
 
 # Variant calling in one sample
+Now lets start the first part of the workshop, which will guide you through a basic variant calling workflow in one sample.
 ## Quality control
 ![](data/ngs-workflow/main_qc.png)
   
@@ -310,11 +315,11 @@ Check that the files are now present in your **local workspace** using `ls -lrt`
 
 
 # Variant calling in cohort
-Now it is time to align reads and perform variant calling in all three samples. This time variant calls in each sample will first be emitted g.vcf format. Joint variant calling of all three samples will then be performed with GATK's GenotypeGVCFs, and this will generate a vcf file with all samples.  
+Now it is time to align reads and perform variant calling in all three samples. This time variant calls in each sample will first be emitted g.vcf format. The individual g.vcf fiels will subsequenctly be combined with GATK's `CombineGVCFs`, and translated into vcf format with GATK' `GenotypeGVCFs`. 
 ![](data/ngs-workflow/2_jointvc.png)
 
 
-If you want to you can run all commands one by one in the terminal as you did in the first step of the workshop. However, you can also create an SBACH scripts to run this automatically for all samples, see [below]{#runinscript} 
+You can run all commands one by one in the terminal as you did in the first step of the workshop. However, since the same steps needs to be repeated for all samples, this is a good opportunity to learn how to write a simple SBATCH script to run all steps automatically for all samples. If you are interested in this, please see the [SBATCH script]{#runinscript} section below. 
 
 ## BWA mem 
 Run BWA mem and HaplotypeCaller for all three samples in the data set. BWA mem should be run exaclty [as above]{#bwamem} but you need to replace the sample name in the above command with the new sample names. 
@@ -370,7 +375,7 @@ To run the sbatch script in the SLURM queue, use this command:
 ```bash
 sbatch joint_genotyping.sbatch
 ```
-If you have an active job reservation you can run the script as a normal bash script (because you are already working on one compute core):
+If you have an active node reservation you can run the script as a normal bash script (because you are already working in a compute node):
 ```bash
 ./joint_genotyping.sbatch
 ```
@@ -406,7 +411,7 @@ gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g
 * Explain the difference in number of lines?  
 * More questions - please add!  
 
-## Check combined vcf in IGV
+## Check combined vcf file in IGV
 Download the combined vcf file to your **local workspace** as described [above]{#downloaddata}. Then open the combined vcf file in IGV as described [above]{#vcfinigv}.  
 **Questions**  
 * Can you find the variant shown to be associated with lactose tolerance in adults?  
@@ -418,7 +423,7 @@ Download the combined vcf file to your **local workspace** as described [above]{
 Now we will look into the details of variant calling, and make a workflow that follows [GATKs best practise for germline short variant discovery](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-). 
   
 The flowchart below shows how GATK's best practice short vartiant discovery should be applied to our three samples. You can either run the new steps command by command in your reserved core, or include the steps in the SBATCH script that you created in Step 2 [above]{#sbatchscript}.
-The new steps are describer below.  Testing 8
+The new steps are listed below, and contain links to GATK's web where you can find detailed instructions.
 
 ![](data/ngs-workflow/3_best_practise.png){width=80%}
 
