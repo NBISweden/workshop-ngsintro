@@ -32,8 +32,8 @@ col_local <- "#e5f4f8"
 # Introduction
 Rapidly dropping sequencing costs and the ability to obtain information about the entire genetic code has made whole genome sequening (WGS) a powerful research tool for detecting genetic variation. This workshop will take you thourgh the process of calling short variants (SNPs and indels) in whole geonome sequence data from three samples. 
   
-1. The first part of the workshop will guide you through a basic short variant calling workflow for just one sample. The aim is to get familiar with the bam and vcf file formats, and how to interpret the results of variant calling in Integrative Genomics Viewer (IGV).
-2. Next, if you have time, we will expand the workflow and perform joint variant calling on three samples. Here we will also give you an idea of how you can combine individual linux commands into a workflow that can be started as an SBATCH script.
+1. The first part of the workshop will guide you through a basic variant calling workflow in one sample. The aim is to get familiar with the bam and vcf file formats, and how to interpret the results of variant calling in Integrative Genomics Viewer (IGV).
+2. If you have time, the next part of the workflow will show you how to perform joint variant calling on three samples. You will combine individual linux commands into a workflow that can be started as an SBATCH script.
 3. The last part of the exercise, if you have time, will take you thourgh some additional steps that are recommended by GATK best practise short variant detection. 
 
 ## General guide
@@ -52,7 +52,7 @@ Rapidly dropping sequencing costs and the ability to obtain information about th
 </p>
 </div>
 
-## Data
+# Data
 The 1000 Genomes Project was the first project to sequence the entire genomes of a large number of people, to provide a comprehensive resource on human genetic variation. Data from the 1000 Genomes Project available through freely accessible public databases, and in this workshop we will use 3 samples from the low converage phase of the 1000 Genomes project.
 
 Sample        | Population | Sequencing technology
