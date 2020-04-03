@@ -427,23 +427,29 @@ The new steps are listed below, and contain links to GATK's web where you can fi
 ![](data/ngs-workflow/3_best_practise.png){width=80%}
 
 ## Mark Duplicates
-This tool locates and tags duplicate reads in a BAM or SAM file, where duplicate reads are reads that originate from a single fragment of DNA. Duplicates can arise during sample preparation e.g. library construction using PCR. They can also result from a single amplification cluster, incorrectly detected as multiple clusters by the optical sensor of the sequencing instrument.  
-This is the command to mark duplicates in one single bam file using Picard:
-```bash
-java -Xmx7g -jar $PICARD_HOME/picard.jar MarkDuplicates I=sample.bam O=sample.md.bam M=sample_mdmetrics.txt
+Please read about Mark Duplicates and why it is important [here](https://gatk.broadinstitute.org/hc/en-us/articles/360037225972-MarkDuplicates-Picard-). Try to follow the Usage Example in the bottom pf the page to mark duplicates in your data. 
+
+If you need some more help you can look at our example solution for HG00097 below. 
+```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
+cat(paste0("java -Xmx7g -jar $PICARD_HOME/picard.jar MarkDuplicates I=HG00097.bam O=HG00097.md.bam M=HG00097_mdmetrics.txt"))
 ```
   
 ## Recalibrate Base Quality Scores
-The goal of this procedure is to correct for systematic bias that affect the assignment of base quality scores by the sequencer. The first pass consists of calculating error empirically and finding patterns in how error varies with basecall features over all bases. The relevant observations are written to a recalibration table. The second pass consists of applying numerical corrections to each individual basecall based on the patterns identified in the first step (recorded in the recalibration table) and write out the recalibrated data to a new BAM file.  
-First generate a recalibration table for a sample:  
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("gatk --java-options -Xmx7g BaseRecalibrator -R human_g1k_v37_chr2.fasta -I <sample.md.bam> --known-sites ",datadir,"/1000G_phase1.snps.high_confidence.b37.chr2.vcf -O <sample.recal.table>\n"))
-```
-Then recalibrate the base quality scores in that sample's bam file:  
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("gatk --java-options -Xmx7g ApplyBQSR -R human_g1k_v37_chr2.fasta -I <sample.md.bam> --bqsr-recal-file <sample.recal.table> -O <sample.recal.bam>"))
-```
+The goal of the Base Quality Score Recalibration is to correct for systematic bias that affect the assignment of base quality scores by the sequencer. A genreal description of the procedure can be found [here](https://gatk.broadinstitute.org/hc/en-us/articles/360035890531-Base-Quality-Score-Recalibration-BQSR-)
+This is a two pass procedure, where you should first use GATK's BaseRecalibrator to build a recalibration model, and then use GATK's ApplyBQSR to recalibrate the basequalities in your bam file using the model you created in the first step. 
+BaseRecalibrator is documented [here](https://gatk.broadinstitute.org/hc/en-us/articles/360037593511-BaseRecalibrator) and ApplyBQSR is documented [here](https://gatk.broadinstitute.org/hc/en-us/articles/360037225212-ApplyBQSR). Try to follow the usage examples on those pages to recalibrate the base quality scores in your data.  
   
+Note: BaseRecalibrator requres a file with known SNPs as input. This file is available in the data folder on Uppmax in  
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0(refdir,"/1000G_phase1.snps.high_confidence.b37.chr2.vcf"))
+```
+
+If you would like more help you can sneek peek at our example solution for HG00097 below.  
+```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
+cat(paste0("gatk --java-options -Xmx7g BaseRecalibrator -R human_g1k_v37_chr2.fasta -I HG00097.md.bam> --known-sites ",refdir,"/1000G_phase1.snps.high_confidence.b37.chr2.vcf -O HG00097.recal.table\n"))
+cat(paste0("gatk --java-options -Xmx7g ApplyBQSR -R human_g1k_v37_chr2.fasta -I HG00097.md.bam --bqsr-recal-file HG00097.recal.table -O HG00097.recal.bam"))
+```
+
 ## Variant Filtering
 The GATK's variant calling tools are designed to be very sensitive, which good because it minimizes the chance of missing real variants. Howeer, it means that we need to filter the raw callset in order to reduce the amount of false positives, which can be quite large. GATK offers two ways to filter variants: The variant quality score recalibration (VQSR) methods uses machine learning to identify variants that are likely to be real, and hard filters. VQSR is very good, but requires quite a lot of data in order to learn the profiles of good vs. bad variants (for example one whole genome sequence sample or several whole exome samples). 
   
