@@ -492,6 +492,59 @@ java -Xmx7g -jar $PICARD_HOME/picard.jar MergeVcfs \
 ```
 Run the entire Best Practice workflow on all three samples, either command by command, or with a script.  
 Open your filtered VCF with `less` and page through it. It still has all the variant lines, but the FILTER column that was blank before is now filled in, with PASS or a list of the filters it failed. Note also that the filters that were run are described in the header section.
+ 
+## SBATCH script {#bpscript}
+GATK's best practise short variant discovery is complex, where several steps should be performed on individual sample level followed by a workflow for the joint variant calling. When you have three samples it is possible to run the analysis manually in the command line, but runing the analysis in an automated script is much more efficient. 
+We recommend you to incorporate all analysis steps in a new version of the the SBATCH script that you created for the [joint variant calling]{#sbatchscript}. 
+
+We advise you to try each step of the workflow in the interactive terminal for one sample, and paste successful commands in the SBATCH script. 
+Please try yourselfe to complete the script for GATK's best practise workflow. If you run out of time you can sneek peek at our example solution:
+```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
+cat(paste0('#!/bin/bash
+#SBATCH -A g2019031
+#SBATCH -p core
+#SBATCH -n 1
+#SBATCH -t 1:00:00
+#SBATCH -J jointGenotyping
+
+## load modules
+module load bioinfo-tools
+module load bwa/0.7.17
+module load samtools/1.10
+module load GATK/4.1.4.1
+module load picard/2.20.4
+
+ref="/sw/courses/ngsintro/reseq/data/ref"
+
+## loop through the samples:
+for sample in HG00097 HG00100 HG00101;
+do
+  echo "\n\nNow analyzing: "$sample"\n\n"
+  #Map the reads:
+  bwa mem -R "@RG\\tID:readgroupx\\tPU:flowcellx_lanex\\tSM:"$sample"\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta $sample"_1.fq" $sample"_2.fq" | samtools sort > $sample".bam"
+  samtools index $sample".bam"
+  #Mark duplicates:
+  java -Xmx7g -jar $PICARD_HOME/picard.jar MarkDuplicates I=$sample".bam" O=$sample".md.bam" M=$sample"_mdmetrics.txt"
+  #Base quality score recalibration:
+  gatk --java-options -Xmx7g BaseRecalibrator -R human_g1k_v37_chr2.fasta -I $sample".md.bam" --known-sites $ref"/1000G_phase1.snps.high_confidence.b37.chr2.vcf" -O $sample".recal.table"
+  gatk --java-options -Xmx7g ApplyBQSR -R human_g1k_v37_chr2.fasta -I $sample".md.bam" --bqsr-recal-file $sample".recal.table" -O $sample".recal.bam"
+  #HaplotypeCaller in -ERC mode:
+  gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I $sample".bam" -O $sample".g.vcf" 
+done
+#Joint genotyping:
+gatk --java-options -Xmx7g CombineGVCFs -R human_g1k_v37_chr2.fasta -V HG00097.g.vcf -V HG00100.g.vcf -V HG00101.g.vcf -O cohort.g.vcf
+gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g.vcf -O cohort.vcf
+#Variant filtration SNPs:
+gatk --java-options -Xmx7g SelectVariants -R human_g1k_v37_chr2.fasta -V cohort.vcf --select-type-to-include SNP -O cohort.snvs.vcf
+gatk --java-options -Xmx7g VariantFiltration -R human_g1k_v37_chr2.fasta -V cohort.snvs.vcf -O cohort.snvs.filtered.vcf --filter-name QDfilter --filter-expression "QD < 2.0" --filter-name MQfilter --filter-expression "MQ < 40.0"  --filter-name FSfilter --filter-expression "FS > 60.0"
+#Variant filtration indels
+gatk --java-options -Xmx7g SelectVariants -R human_g1k_v37_chr2.fasta -V cohort.vcf --select-type-to-include INDEL -O cohort.indels.vcf
+gatk --java-options -Xmx7g VariantFiltration -R human_g1k_v37_chr2.fasta -V cohort.indels.vcf -O cohort.indels.filtered.vcf --filter-name QDfilter --filter-expression "QD < 2.0" --filter-name FSfilter --filter-expression "FS > 200.0"
+#Merge filtered SNPs and indels
+java -Xmx7g -jar $PICARD_HOME/picard.jar MergeVcfs I=cohort.snvs.filtered.vcf I=cohort.indels.filtered.vcf O=cohort.filtered.vcf'
+))
+```  
+
   
 **Questions**  
 * How many variants are present in the cohort.filtered.vcf file?  
