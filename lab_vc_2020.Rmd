@@ -53,6 +53,7 @@ Rapidly dropping sequencing costs and the ability to obtain information about th
 </div>
 
 # Data
+## Samples
 The 1000 Genomes Project was the first project to sequence the entire genomes of a large number of people, to provide a comprehensive resource on human genetic variation. Data from the 1000 Genomes Project available through freely accessible public databases, and in this workshop we will use 3 samples from the low converage phase of the 1000 Genomes project.
 
 Sample        | Population | Sequencing technology
@@ -61,7 +62,7 @@ HG00097       | British in England and Scotland    | Low coverage WGS
 HG00100       | British in England and Scotland    | Low coverage WGS
 HG0010q       | British in England and Scotland    | Low coverage WGS 
   
-## The *LCT* locus
+## Genomic region
 The *LCT* gene on chromosome 2 encodes the lactase protein, which is responible for the metabolism of lactose in mammals. Most mammals can not digest lactose as adults, but some humans tolerate lactose also in adulthood. Genetic variants upstream of the human *LCT* control how lactose is tolerated in adults, and the variant **rs4988235** (located at at position chr2:136608646 in HG19) has been shown to lead to lactose persistence.  
   
 In this workshop we will work with sequencing data (fastq files) for a small region on chromosome 2 that covers the LCT gene and upstream region: 
@@ -92,12 +93,20 @@ cat(paste0(refdir))
 The majority of the analyses in this workshop will be done on Uppmax, but we will copy some of the resulting files to our laptops so that we can look at them in graphical browsers. Therefore, please start by creating a folder for this workshop on your local laptop. 
 It is up to you where you want to put this, but it can for example be a folder called "ngsworkflow" on Desktop. You need to have write permission in this folder. The folder you create here will be refered to as "local workspace" throughout this workshop. 
 
-## Uppmax
-Connect to UPPMAX.
+## UPPMAX
+Please connect to the Rackham cluster on UPPMAX using `SSH`:
 ```bash
 $ ssh -Y username@rackham.uppmax.uu.se
 ```
-Book a core. Make sure you only do this once depeding on the day.  
+### Workspace on Uppmax
+During this lab you should work in your folder under the course's nobackup folder, just like you have done during the previous labs. Start by creating a workspace for this exercise in your folder, and then move into it. This folder will be refered to as your "uppmax workspace" throughout this workshop.  
+
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0("mkdir /proj/",upid,"/nobackup/<username>/ngsworkflow\n"))
+cat(paste0("cd /proj/",upid,"/nobackup/<username>/ngsworkflow"))
+```
+### Book a core 
+When you login to Rackham you enter the "login node", which is not intended for compute intensive tasks. To be able to run analyses directly in the terminal you should therefore book a compute node (or in this case just one core of a node). Make sure you only do this once each day because we have reserved one core per student for the course.    
 Use this reservation on day 1 of variant-calling:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0("salloc -A ",upid," -t 04:00:00 -p core -n 1 --no-shell --reservation=",upres3," &"))
@@ -114,16 +123,7 @@ squeue -u <username>
 and to connect to the node:
 ```bash
 ssh -Y <nodename>
-```
-  
-### Workspace on Uppmax
-During this lab you should work in your folder under the course's nobackup folder, just like you have done during the previous labs. Start by creating a workspace for this exercise in your folder, and then move into it. This folder will be refered to as your "uppmax workspace" throughout this workshop.  
-
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("mkdir /proj/",upid,"/nobackup/<username>/ngsworkflow\n"))
-cat(paste0("cd /proj/",upid,"/nobackup/<username>/ngsworkflow"))
-```
-  
+``` 
 ### Symbolic links to data
 The raw fastq files are located in the [Data](#Data) folder described above. In stead of copying the files to your workspace you should create symbolic links (soft-links) to them. Soft-linking files and folders allows us to work them as if they were in in your work directory, but we avoid multiplying them.   
 Create a symbolic link to the reference in your workspace:
