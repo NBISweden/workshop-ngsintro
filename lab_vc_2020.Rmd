@@ -33,8 +33,8 @@ col_local <- "#e5f4f8"
 Rapidly dropping sequencing costs and the ability to obtain information about the entire genetic code has made whole genome sequening (WGS) a powerful research tool for detecting genetic variation. This workshop will take you thourgh the process of calling short variants (SNPs and indels) in whole geonome sequence data from three samples. 
   
 1. The first part of the workshop will guide you through a basic variant calling workflow in one sample. The aim is to get familiar with the bam and vcf file formats, and how to interpret the results of variant calling in Integrative Genomics Viewer (IGV).
-2. If you have time, the next part of the workflow will show you how to perform joint variant calling on three samples. You will combine individual linux commands into a workflow that can be started as an SBATCH script.
-3. The last part of the exercise, if you have time, will take you thourgh some additional steps that are recommended by GATK best practise short variant detection. 
+2. If you have time, the next part of the workflow will show you how to perform joint variant calling on three samples. The goal of this part of the workshop is to understant the differences betwen g.vcf files and vcf files, and You will combine individual linux commands into a workflow that can be started as an SBATCH script.  
+3. The last part of the exercise, if you have time, will take you through the GATK best practise short variant detection. 
 
 ## General guide
 <div class="boxy boxy-lightbulb">
@@ -70,7 +70,7 @@ chr2:136545000-136617000
 We will use this region as an example case to illustrate how you can look for genetic variation in NGS data. 
 To learn more about the genetic bases for lactose tolerance please read the first three pages of this publication by Mattar et al. The variant (rs4988235) is here referred to as LCT-13910C>T. [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf).
   
-# Data folders on Uppmax {#Data}
+## Data folders on Uppmax {#Data}
 All input data for this exercise is located in the folder on Rackham:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0(datadir))
@@ -181,7 +181,7 @@ You will get a warning about upcoming command line syntax changes for Picard, bu
 
 Again, check that the last command generated a new index file using `ls -lrt`
 
-# Basic variant calling workflow
+# Variant calling in one sample
 ## Quality control
 ![](data/ngs-workflow/main_qc.png)
   
@@ -309,7 +309,7 @@ Check that the files are now present in your **local workspace** using `ls -lrt`
 
 
 
-# Joint variant calling in cohort
+# Variant calling in cohort
 Now it is time to align reads and perform variant calling in all three samples. This time variant calls in each sample will first be emitted g.vcf format. Joint variant calling of all three samples will then be performed with GATK's GenotypeGVCFs, and this will generate a vcf file with all samples.  
 ![](data/ngs-workflow/2_jointvc.png)
 
@@ -414,7 +414,7 @@ Download the combined vcf file to your **local workspace** as described [above]{
 * Which samples do you think should avoid drinking milk? Any heterozygotes?  
 * Does this agree with the genotype in the vcf file?   
 
-# GATK's best practise short variant calling
+# GATK's best practise
 Now we will look into the details of variant calling, and make a workflow that follows [GATKs best practise for germline short variant discovery](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-). 
   
 The flowchart below shows how GATK's best practice short vartiant discovery should be applied to our three samples. You can either run the new steps command by command in your reserved core, or include the steps in the SBATCH script that you created in Step 2 [above]{#sbatchscript}.
