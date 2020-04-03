@@ -429,22 +429,22 @@ The new steps are listed below, and contain links to GATK's web where you can fi
 ## Mark Duplicates
 Please read about Mark Duplicates and why it is important [here](https://gatk.broadinstitute.org/hc/en-us/articles/360037225972-MarkDuplicates-Picard-). Try to follow the Usage Example in the bottom pf the page to mark duplicates in your data. 
 
-If you need some more help you can look at our example solution for HG00097 below. 
+If you would like more help you can sneak peek at our example solution for HG00097 below. 
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0("java -Xmx7g -jar $PICARD_HOME/picard.jar MarkDuplicates I=HG00097.bam O=HG00097.md.bam M=HG00097_mdmetrics.txt"))
 ```
   
 ## Recalibrate Base Quality Scores
-The goal of the Base Quality Score Recalibration is to correct for systematic bias that affect the assignment of base quality scores by the sequencer. A genreal description of the procedure can be found [here](https://gatk.broadinstitute.org/hc/en-us/articles/360035890531-Base-Quality-Score-Recalibration-BQSR-)
-This is a two pass procedure, where you should first use GATK's BaseRecalibrator to build a recalibration model, and then use GATK's ApplyBQSR to recalibrate the basequalities in your bam file using the model you created in the first step. 
-BaseRecalibrator is documented [here](https://gatk.broadinstitute.org/hc/en-us/articles/360037593511-BaseRecalibrator) and ApplyBQSR is documented [here](https://gatk.broadinstitute.org/hc/en-us/articles/360037225212-ApplyBQSR). Try to follow the usage examples on those pages to recalibrate the base quality scores in your data.  
-  
-Note: BaseRecalibrator requres a file with known SNPs as input. This file is available in the data folder on Uppmax in  
+A general description of GATK's Base Quality Score Recalibration can be found [here](https://gatk.broadinstitute.org/hc/en-us/articles/360035890531-Base-Quality-Score-Recalibration-BQSR-). This is a two pass procedure, where first use `BaseRecalibrator` to build a recalibration model, and then `ApplyBQSR` to recalibrate the basequalities in your bam file. 
+`BaseRecalibrator` is documented [here](https://gatk.broadinstitute.org/hc/en-us/articles/360037593511-BaseRecalibrator) and `ApplyBQSR` is documented [here](https://gatk.broadinstitute.org/hc/en-us/articles/360037225212-ApplyBQSR).  
+
+Try to follow the usage examples on those pages to recalibrate the base quality scores in your data.  
+BaseRecalibrator requres a file with known SNPs as input. This file is available in the data folder on Uppmax in  
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0(refdir,"/1000G_phase1.snps.high_confidence.b37.chr2.vcf"))
 ```
-
-If you would like more help you can sneek peek at our example solution for HG00097 below.  
+  
+If you would like more help you can sneak peek at our example solution for HG00097 below.  
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0("gatk --java-options -Xmx7g BaseRecalibrator -R human_g1k_v37_chr2.fasta -I HG00097.md.bam> --known-sites ",refdir,"/1000G_phase1.snps.high_confidence.b37.chr2.vcf -O HG00097.recal.table\n"))
 cat(paste0("gatk --java-options -Xmx7g ApplyBQSR -R human_g1k_v37_chr2.fasta -I HG00097.md.bam --bqsr-recal-file HG00097.recal.table -O HG00097.recal.bam"))
@@ -503,8 +503,8 @@ Open your filtered VCF with `less` and page through it. It still has all the var
 GATK's best practise short variant discovery is complex, where several steps should be performed on individual sample level followed by a workflow for the joint variant calling. When you have three samples it is possible to run the analysis manually in the command line, but runing the analysis in an automated script is much more efficient. 
 We recommend you to incorporate all analysis steps in a new version of the the SBATCH script that you created for the [joint variant calling]{#sbatchscript}. 
 
-We advise you to try each step of the workflow in the interactive terminal for one sample, and paste successful commands in the SBATCH script. 
-Please try yourselfe to complete the script for GATK's best practise workflow. If you run out of time you can sneek peek at our example solution:
+We advise you to try each step of the workflow in the interactive terminal for one sample, and paste successful commands in the SBATCH script.   
+Please try yourselfe to complete the script for GATK's best practise workflow. If you run out of time you can sneak peek at our example solution below.  
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('#!/bin/bash
 #SBATCH -A g2019031
