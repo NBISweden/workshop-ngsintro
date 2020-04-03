@@ -33,7 +33,7 @@ col_local <- "#e5f4f8"
 Rapidly dropping sequencing costs and the ability to obtain information about the entire genetic code has made whole genome sequening (WGS) a powerful research tool for detecting genetic variation. This workshop will take you thourgh the process of calling short variants (SNPs and indels) in whole geonome sequence data from three samples. 
   
 1. The first part of the workshop will guide you through a basic variant calling workflow in one sample. The aim is to get familiar with the bam and vcf file formats, and learn how to interpret the results of variant calling in Integrative Genomics Viewer (IGV).
-2. If you have time, the next part of the workflow will show you how to perform joint variant calling on three samples. The aim is to understant the differences betwen g.vcf files and vcf files, and to learn how to combine individual linux commands into a workflow that can be started as an SBATCH script.  
+2. If you have time, the next part of the workflow will show you how to perform joint variant calling on three samples. The aim is to understant the differences betwen g.vcf files and vcf files, and to learn how to combine individual linux commands into an SBATCH script.  
 3. The last part of the exercise, if you have time, will take you through the GATK best practise short variant detection. The aim is to learn how to find relevant information in GATKs documentation, and to develop a more complex SBATCH script. 
 
 **General guide**
@@ -52,7 +52,7 @@ Rapidly dropping sequencing costs and the ability to obtain information about th
 </p>
 </div>
 
-# Data
+# Data description
 ## Samples
 The 1000 Genomes Project was the first project to sequence the entire genomes of a large number of people, to provide a comprehensive resource on human genetic variation. Data from the 1000 Genomes Project available through freely accessible public databases, and in this workshop we will use 3 samples from the low converage phase of the 1000 Genomes project.
 
@@ -62,7 +62,7 @@ HG00097       | British in England and Scotland    | Low coverage WGS
 HG00100       | British in England and Scotland    | Low coverage WGS
 HG0010q       | British in England and Scotland    | Low coverage WGS 
   
-## Genomic regions
+## Genomic region
 The *LCT* gene on chromosome 2 encodes the lactase protein, which is responible for the metabolism of lactose in mammals. Most mammals can not digest lactose as adults, but some humans tolerate lactose also in adulthood. Genetic variants upstream of the human *LCT* control how lactose is tolerated in adults, and the variant **rs4988235** (located at at position chr2:136608646 in HG19) has been shown to lead to lactose persistence.  
   
 In this workshop we will work with sequencing data (fastq files) for a small region on chromosome 2 that covers the LCT gene and upstream region: 
@@ -71,7 +71,7 @@ chr2:136545000-136617000
 We will use this region as an example case to illustrate how you can look for genetic variation in NGS data. 
 To learn more about the genetic bases for lactose tolerance please read the first three pages of this publication by Mattar et al. The variant (rs4988235) is here referred to as LCT-13910C>T. [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf).
   
-## Data folders on Uppmax {#Data}
+## Data folder on Uppmax {#Data}
 All input data for this exercise is located in the folder on Rackham:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0(datadir))
@@ -90,8 +90,7 @@ cat(paste0(refdir))
 # Preparations
 
 ## Local workspace  {#preparelaptop}
-The majority of the analyses in this workshop will be done on Uppmax, but we will copy some of the resulting files to our laptops so that we can look at them in graphical browsers. Therefore, please start by creating a folder for this workshop on your local laptop. 
-It is up to you where you want to put this, but it can for example be a folder called "ngsworkflow" on Desktop. You need to have write permission in this folder. The folder you create here will be refered to as "local workspace" throughout this workshop. 
+The majority of the analyses in this workshop will be done on Uppmax, but we will copy some of the resulting files to our laptops. Therefore, please start by creating a folder for this workshop on your local laptop. It is up to you where you want to put this, but it can for example be a folder called "ngsworkflow" on Desktop. You need to have write permission in this folder. The folder you create here will be refered to as "local workspace" throughout this workshop. 
 
 ## UPPMAX
 Please connect to the Rackham cluster on UPPMAX using `SSH`:
@@ -186,7 +185,7 @@ You will get a warning about upcoming command line syntax changes for Picard, bu
 Again, check that the last command generated a new index file using `ls -lrt`
 
 # Variant calling in one sample
-Now lets start the first part of the workshop, which will guide you through a basic variant calling workflow in one sample.
+Now lets start the main part of the workshop, which will guide you through a basic variant calling workflow in one sample.  
 ## Quality control
 ![](data/ngs-workflow/main_qc.png)
   
@@ -202,7 +201,7 @@ fastqc -q HG00097_1.fq HG00097_2.fq -o fastqc
 ```
   
 ### Dowload data to laptop {#downloaddata}
-Uppmax is a compute cluster with great analysis capacity, but when it comes to displaying data graphically it is usually more efficient to dowload the data to your local computer. We will therefore download the .html files generated by `FastQC` using `scp`, and look at them in using a web-browser on your laptop. 
+When it comes to displaying data graphically it is usually more efficient to dowload the data to your local computer. We will therefore download the .html files generated by `FastQC` using `scp`, and look at them in using a web-browser on your laptop. 
 Open a new terminal and navigate to your [local workspace](#preparelaptop). Do not log in to UPPMAX. Copy the .html files generated above with this command:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0("scp <username>@rackham.uppmax.uu.se:/proj/",upid,"/nobackup/<username>/ngsworkflow/fastqc/*.html ."))
@@ -312,14 +311,13 @@ Check that the files are now present in your **local workspace** using `ls -lrt`
 * What colour heterozygout variants have in the second row?  
 * What does it mean if a variant is coloured in tourquise in the second row?  
 
-
-
 # Variant calling in cohort
-Now it is time to align reads and perform variant calling in all three samples. This time variant calls in each sample will first be emitted g.vcf format. The individual g.vcf fiels will subsequenctly be combined with GATK's `CombineGVCFs`, and translated into vcf format with GATK' `GenotypeGVCFs`. 
+If you have time, you can now try variant calling in all three samples.  Each sample has to be processed with BWA mem as above, and then with HaplotypeCaller with the flag "-ERC" to generate sample specific g.vcf files. The individual g.vcf fiels will subsequenctly be combined with GATK's `CombineGVCFs`, and translated into vcf format with GATK' `GenotypeGVCFs`. The workflow below shows how the three samples should be processed and combined. 
+  
 ![](data/ngs-workflow/2_jointvc.png)
 
 
-You can run all commands one by one in the terminal as you did in the first step of the workshop. However, since the same steps needs to be repeated for all samples, this is a good opportunity to learn how to write a simple SBATCH script to run all steps automatically for all samples. If you are interested in this, please see the [SBATCH script]{#runinscript} section below. 
+You can run all commands one by one in the terminal as you did in the first step of the workshop. However, since some steps needs to be repeated for all samples, this is a good opportunity to learn how to write a simple SBATCH script to run all steps automatically. If you are interested in this, please see the [SBATCH script]{#runinscript} section below. 
 
 ## BWA mem 
 Run BWA mem and HaplotypeCaller for all three samples in the data set. BWA mem should be run exaclty [as above]{#bwamem} but you need to replace the sample name in the above command with the new sample names. 
@@ -337,6 +335,7 @@ Once you have the g.vcf files for all samples you should perform joint genotype 
 gatk --java-options -Xmx7g CombineGVCFs -R human_g1k_v37_chr2.fasta -V <sample1>.g.vcf -V <sample2>.g.vcf -V <sample3>.g.vcf -O cohort.g.vcf
 ```
 Please replace `<sample1>`, `<sample2>`, `<sample3>` with the real sample names.
+  
 Then run GATK's GenoteypeGVC to generate a vcf file:
 ```bash
 gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g.vcf -O cohort.vcf
