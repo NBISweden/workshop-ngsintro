@@ -419,12 +419,12 @@ Download the combined vcf file to your **local workspace** as described [above]{
 * Does this agree with the genotype in the vcf file?   
 
 # GATK's best practise
-The third part of this workshop will take you through some additional refinement steps that are recommended in [GATKs best practise for germline short variant discovery](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-). The flowchart below shows how GATK's best practice short vartiant discovery should be applied to our three samples. You can either run the steps command by command in your interactive session, or include the new steps in the SBATCH script that you created in Step 2 [above]{#sbatchscript}. 
+The third part of this workshop will take you through some additional refinement steps that are recommended in [GATKs best practise for germline short variant discovery](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-). The flowchart below shows how GATK's best practice short vartiant discovery should be applied to our three samples. You can either run the steps command by command in your interactive session, or include the new steps in the SBATCH script that you created [above]{#sbatchscript}. 
 
 ![](data/ngs-workflow/3_best_practise.png){width=80%}
 
 ## Mark Duplicates
-Sometimes a DNA fragment is sequenced multiple times, which leads to multiple reads from the same fragment in the fastq file. This is called dupliate reads, and can occur due to PCR amplification during library preparation, or if one read cluster is incorrectly detected as multiple clusters by the sequencing instrument. 
+Sometimes the same DNA fragment is sequenced multiple times, which leads to multiple reads from the same fragment in the fastq file. This is called dupliate reads, and can occur due to PCR amplification during library preparation, or if one read cluster is incorrectly detected as multiple clusters by the sequencing instrument. 
 If a duplicated read contains a genetic variant, the ratio of the two alleles might be obscured, which can lead to incorect genotyping. It is therefore recommended (in most cases) to mark duplicate reads so that they are counted as one during genotyping.  
   
 Please read about Mark Duplicates [here](https://gatk.broadinstitute.org/hc/en-us/articles/360037225972-MarkDuplicates-Picard-), and follow the Usage Example in the bottom of the page to mark duplicates in your data. 
@@ -436,9 +436,7 @@ cat(paste0("java -Xmx7g -jar $PICARD_HOME/picard.jar MarkDuplicates I=HG00097.ba
   
 ## Recalibrate Base Quality Scores
 Another source of genotyping error is systematic biases in the assignment of base quality scores by the sequencing instrument. This can be corrected by [GATK's Base Quality Score Recalibration](https://gatk.broadinstitute.org/hc/en-us/articles/360035890531-Base-Quality-Score-Recalibration-BQSR-). 
-In short, you first use `BaseRecalibrator` to build a recalibration model, and then `ApplyBQSR` to recalibrate the basequalities in your bam file using the model.
-  
-`BaseRecalibrator` is documented [here](https://gatk.broadinstitute.org/hc/en-us/articles/360037593511-BaseRecalibrator) and `ApplyBQSR` is documented [here](https://gatk.broadinstitute.org/hc/en-us/articles/360037225212-ApplyBQSR). Please follow the usage examples on those pages to recalibrate the base quality scores in your data.     
+In short, you first use [BaseRecalibrator](https://gatk.broadinstitute.org/hc/en-us/articles/360037593511-BaseRecalibrator) to build a recalibration model, and then [ApplyBQSR](https://gatk.broadinstitute.org/hc/en-us/articles/360037225212-ApplyBQSR) to recalibrate the basequalities in your bam file using the model.  Please follow the usage examples on those pages to recalibrate the base quality scores in your data.     
    
 BaseRecalibrator requres a file with known SNPs as input. This file is available in the data folder on Uppmax in  
 ```{r,echo=FALSE,comment="",class.output="bash"}
@@ -453,10 +451,10 @@ cat(paste0("gatk --java-options -Xmx7g ApplyBQSR -R human_g1k_v37_chr2.fasta -I 
 
 ## Variant Filtering
 HaplotypeCaller is designed to be very sensitive, which good because it minimizes the chance of missing real variants. However, it means that we need to filter the raw callset in order to reduce the amount of false positives, which can be quite large. GATK offers two ways to filter variants:  
-1. The variant quality score recalibration (VQSR) methods uses machine learning to identify variants that are likely to be real. This is the best method if you have a lot of data. for example one whole genome sequence sample or several whole exome samples.
+1. The variant quality score recalibration (VQSR) methods uses machine learning to identify variants that are likely to be real. This is the best method if you have a lot of data. for example one whole genome sequence sample or several whole exome samples.  
 2. If you have less data you can use hard filters.  
   
-Since we have data for only a very small part of the human genome, and only three samples, we will use hard filters. Please read this article for [parameters suggested by GATK for hard filters](https://software.broadinstitute.org/gatk/documentation/article?id=2806). The parameters are slightly different for SNPs and INDELs. You therefore need to perform the filtering in two separate steps: first select all SNPs and filter them, then select all indels and filter them. Finally you can merge the snps and indels to get all variants in one file. 
+Since we have very little data we will use hard filters. Please read this article for [parameters suggested by GATK for hard filters](https://software.broadinstitute.org/gatk/documentation/article?id=2806). The parameters are slightly different for SNPs and INDELs. You therefore need to perform the filtering in two separate steps: first select all SNPs and filter them, then select all indels and filter them. Finally you can merge the snps and indels to get all variants in one file. 
    
 ### SNPs
 ```
@@ -499,13 +497,12 @@ java -Xmx7g -jar $PICARD_HOME/picard.jar MergeVcfs \
           I=cohort.indels.filtered.vcf \
           O=cohort.filtered.vcf
 ```
-Run the entire Best Practice workflow on all three samples, either command by command, or with a script.  
-Open your filtered VCF with `less` and page through it. It still has all the variant lines, but the FILTER column that was blank before is now filled in, with PASS or a list of the filters it failed. Note also that the filters that were run are described in the header section.
- 
+  
+Once you have run the entire Best Practice workflow on all three samples, open your filtered VCF with `less` and page through it. It still has all the variant lines, but the FILTER column that was blank before is now filled in, with PASS or a list of the filters it failed. Note also that the filters that were run are described in the header section.
+  
 ## SBATCH script {#bpscript}
-We recommend you to incorporate all analysis steps for thin a new version of the the SBATCH script that you created for the [joint variant calling]{#sbatchscript}. 
-
-We advise you to try each step of the workflow in the interactive terminal for one sample, and paste successful commands in the SBATCH script.   
+We recommend you to incorporate the new steps into the SBATCH script that you creater for the [joint variant calling]{#sbatchscript} above. 
+You might find it helpful to try each step for one sample in the interactive terminal, so that you know that a particular command is working for one sample before you incorporate it in the script.      
 Please try yourselfe to complete the script for GATK's best practise workflow. If you run out of time you can sneak peek at our example solution below.  
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('#!/bin/bash
@@ -552,7 +549,6 @@ gatk --java-options -Xmx7g VariantFiltration -R human_g1k_v37_chr2.fasta -V coho
 java -Xmx7g -jar $PICARD_HOME/picard.jar MergeVcfs I=cohort.snvs.filtered.vcf I=cohort.indels.filtered.vcf O=cohort.filtered.vcf'
 ))
 ```  
-
   
 **Questions**  
 * How many variants are present in the cohort.filtered.vcf file?  
@@ -560,9 +556,9 @@ java -Xmx7g -jar $PICARD_HOME/picard.jar MergeVcfs I=cohort.snvs.filtered.vcf I=
   
 Copy the final filtered vcf file to your local workspace and open the file in IGV.   
 **Questions**  
-* Look at the variant associated with lactose tolerance in adults and compare with combined vcf generated in step two above. Can you see any differences?  
+* Look at the variant associated with lactose tolerance in adults and compare with the combined vcf file generated in step two above. Can you see if the extra refinement steps in GATK's best practise short variant discovery made any difference to these variants? 
    
-Note: In this workshop we use public data from low covare sequencing, that has been processed before publication. The difference between variants processed with our simplified workflow and the bet practise workflow may be small in this case, but with a real life data set it is recomended to follow the best pracites workflow!
+**Note:** In this workshop we use public data from low covare sequencing, that has been processed before publication. The difference between variants processed with our simplified workflow and the bet practise workflow may be small in this case, but with a real life data set it is recomended to follow the best pracites workflow!
   
 **Thanks for today!**
   
