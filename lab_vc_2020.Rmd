@@ -543,7 +543,7 @@ java -Xmx7g -jar $PICARD_HOME/picard.jar MergeVcfs I=cohort.snvs.filtered.vcf I=
 **Questions**  
 * How many variants are present in the cohort.filtered.vcf file?  
 * How many variants have passed the filters?  
-Look at the filtered variants in IGV and compare them to the vcf file generated in step two [above](#jointvc). Zoom in to the variants in *LCT* and *MCM6*. 
+Look at the filtered variants in IGV and compare them to the vcf file generated in step two [above](#jointvc). Zoom in to the variants in *LCT* and *MCM6*.  
 * Did the extra refinement steps in GATK's best practise short variant discovery make any difference to these variants? 
   
 **Note:** In this workshop we use public data from low covare sequencing, that has been processed before publication. The difference between variants processed with our simplified workflow and the bet practise workflow may be small in this case, but with a real life data set it is recomended to follow the best pracites workflow!
