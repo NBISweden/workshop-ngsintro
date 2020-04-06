@@ -311,7 +311,7 @@ Check that the files are now present in your **local workspace** using `ls -lrt`
 * What colour heterozygout variants have in the second row?  
 * What does it mean if a variant is coloured in tourquise in the second row?  
 
-# Variant calling in cohort
+# Variant calling in cohort {#jointvc}
 If you have time, you can now try variant calling in all three samples.  Each sample has to be processed with BWA mem as above, and then with HaplotypeCaller with the flag "-ERC" to generate sample specific g.vcf files. The individual g.vcf fiels will subsequenctly be combined with GATK's `CombineGVCFs`, and translated into vcf format with GATK' `GenotypeGVCFs`. The workflow below shows how the three samples should be processed and combined. 
   
 ![](data/ngs-workflow/2_jointvc.png)
@@ -424,7 +424,7 @@ The third part of this workshop will take you through additional refinement step
 ![](data/ngs-workflow/3_best_practise.png){width=80%}
 
 ## Mark Duplicates
-Sometimes the same DNA fragment is sequenced multiple times, which leads to multiple reads from the same fragment in the fastq file. This is called dupliate reads, and can occur due to PCR amplification during library preparation, or if one read cluster is incorrectly detected as multiple clusters by the sequencing instrument. 
+Sometimes the same DNA fragment is sequenced multiple times, which leads to multiple reads from the same fragment in the fastq file. This can occur due to PCR amplification in the library preparation, or if one read cluster is incorrectly detected as multiple clusters by the sequencing instrument. 
 If a duplicated read contains a genetic variant, the ratio of the two alleles might be obscured, which can lead to incorect genotyping. It is therefore recommended (in most cases) to mark duplicate reads so that they are counted as one during genotyping.  
   
 Please read about Picard's Mark Duplicates [here](https://gatk.broadinstitute.org/hc/en-us/articles/360037225972-MarkDuplicates-Picard-), and follow the Usage Example to mark duplicates in your data. If you would like more help you can sneak peek at our example solution for HG00097 below. 
@@ -448,7 +448,7 @@ cat(paste0("gatk --java-options -Xmx7g ApplyBQSR -R human_g1k_v37_chr2.fasta -I 
 ## Variant Filtering
 HaplotypeCaller is designed to be very sensitive, which good because it minimizes the chance of missing real variants. However, it means that the amount of false positives can be quite large, so we need to filter the raw callset. GATK offers two ways to filter variants:  
 1. The variant quality score recalibration (VQSR) method uses machine learning to identify variants that are likely to be real. This is the best method if you have a lot of data, for example one whole genome sequence sample or several whole exome samples.  
-2. If you have less data you can use hard filters, as described [here](https://gatk.broadinstitute.org/hc/en-us/articles/360035531112?id=2806#2). 
+2. If you have less data you can use hard filters as described [here](https://gatk.broadinstitute.org/hc/en-us/articles/360035531112?id=2806#2). 
   
 Since we have very little data we will use hard filters. The parameters are slightly different for SNVs and INDELs, so you need to first select all SNVs using [SelectVariants](https://gatk.broadinstitute.org/hc/en-us/articles/360037225432-SelectVariants) and filter them using [VariantFiltration](https://gatk.broadinstitute.org/hc/en-us/articles/360037226192-VariantFiltration) with the parameters suggested for SNVs. Then select all INDELs and filter them with the parameters suggested for INDELs. Finally merge the SNVs and INDELs to get all variants in one file using [MergeVCFs](https://gatk.broadinstitute.org/hc/en-us/articles/360037226612-MergeVcfs-Picard-). If you would like more help you can sneak peek at our example solution for HG00097 below.  
 Filter SNVs:
@@ -543,7 +543,8 @@ java -Xmx7g -jar $PICARD_HOME/picard.jar MergeVcfs I=cohort.snvs.filtered.vcf I=
 **Questions**  
 * How many variants are present in the cohort.filtered.vcf file?  
 * How many variants have passed the filters?  
-* Copy the final filtered vcf file to your local workspace and open the file in IGV. Look at the variant associated with lactose tolerance in adults and compare with the combined vcf file generated in step two above. Can you see if the extra refinement steps in GATK's best practise short variant discovery made any difference to these variants? 
+Look at the filtered variants in IGV and compare them to the vcf file generated in step two [above](#jointvc). Zoom in to the variants in *LCT* and *MCM6*. 
+* Did the extra refinement steps in GATK's best practise short variant discovery make any difference to these variants? 
   
 **Note:** In this workshop we use public data from low covare sequencing, that has been processed before publication. The difference between variants processed with our simplified workflow and the bet practise workflow may be small in this case, but with a real life data set it is recomended to follow the best pracites workflow!
   
