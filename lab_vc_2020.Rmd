@@ -419,18 +419,15 @@ Download the combined vcf file to your **local workspace** as described [above]{
 * Does this agree with the genotype in the vcf file?   
 
 # GATK's best practise
-Now we will add some important refinement steps and make a workflow that follows [GATKs best practise for germline short variant discovery](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-). 
-  
-The flowchart below shows how GATK's best practice short vartiant discovery should be applied to our three samples. You can either run the new steps command by command in your reserved core, or include the steps in the SBATCH script that you created in Step 2 [above]{#sbatchscript}.
-The new steps are listed below, and contain links to GATK's web where you can find detailed instructions.
+The last part of this workshop will take you through some important refinement steps that are needed to make a workflow that follows [GATKs best practise for germline short variant discovery](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-). The flowchart below shows how GATK's best practice short vartiant discovery should be applied to our three samples. You can either run the steps command by command in your reserved core, or include the steps in the SBATCH script that you created in Step 2 [above]{#sbatchscript}. The new steps are descibed below.
 
 ![](data/ngs-workflow/3_best_practise.png){width=80%}
 
 ## Mark Duplicates
-Sometimes a DNA fragment from the sample is sequenced multiple times, and therfore gives rise to multiple reads in the fastq file. This is called dupliate reads, and can occur due to PCR amplification during library preparation, or if one read cluster is incorrectly detected as multiple clusters by the sequencing instrument. 
-If a duplicated read contains a variant allele, the ratio of the two alleles might be obscured which can lead to incorect genotyping. It is therefore recommended, in most cases, to mark duplicate reads so that they are counted as one read during genotyping.  
+Sometimes a DNA fragment is sequenced multiple times, which leads to multiple reads from the same fragment in the fastq file. This is called dupliate reads, and can occur due to PCR amplification during library preparation, or if one read cluster is incorrectly detected as multiple clusters by the sequencing instrument. 
+If a duplicated read contains a genetic variant, the ratio of the two alleles might be obscured, which can lead to incorect genotyping. It is therefore recommended (in most cases) to mark duplicate reads so that they are counted as one during genotyping.  
   
-Please read about Mark Duplicates and why it is important [here](https://gatk.broadinstitute.org/hc/en-us/articles/360037225972-MarkDuplicates-Picard-). Try to follow the Usage Example in the bottom pf the page to mark duplicates in your data. 
+Please read about Mark Duplicates [here](https://gatk.broadinstitute.org/hc/en-us/articles/360037225972-MarkDuplicates-Picard-), and follow the Usage Example in the bottom of the page to mark duplicates in your data. 
 
 If you would like more help you can sneak peek at our example solution for HG00097 below. 
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
@@ -438,11 +435,11 @@ cat(paste0("java -Xmx7g -jar $PICARD_HOME/picard.jar MarkDuplicates I=HG00097.ba
 ```
   
 ## Recalibrate Base Quality Scores
-Another source of genotyping errors is systematic biases in the assignment of base quality scores by the sequencinc instrument. The goal of the Base Quality Score Recalibration is therefore to correct for this.  
-A general description of GATK's Base Quality Score Recalibration can be found [here](https://gatk.broadinstitute.org/hc/en-us/articles/360035890531-Base-Quality-Score-Recalibration-BQSR-). This is a two pass procedure, where you first use `BaseRecalibrator` to build a recalibration model, and then `ApplyBQSR` to recalibrate the basequalities in your bam file. 
-`BaseRecalibrator` is documented [here](https://gatk.broadinstitute.org/hc/en-us/articles/360037593511-BaseRecalibrator) and `ApplyBQSR` is documented [here](https://gatk.broadinstitute.org/hc/en-us/articles/360037225212-ApplyBQSR).  
-
-Try to follow the usage examples on those pages to recalibrate the base quality scores in your data.  
+Another source of genotyping error is systematic biases in the assignment of base quality scores by the sequencing instrument. This can be corrected by [GATK's Base Quality Score Recalibration](https://gatk.broadinstitute.org/hc/en-us/articles/360035890531-Base-Quality-Score-Recalibration-BQSR-). 
+In short, you first use `BaseRecalibrator` to build a recalibration model, and then `ApplyBQSR` to recalibrate the basequalities in your bam file using the model.
+  
+`BaseRecalibrator` is documented [here](https://gatk.broadinstitute.org/hc/en-us/articles/360037593511-BaseRecalibrator) and `ApplyBQSR` is documented [here](https://gatk.broadinstitute.org/hc/en-us/articles/360037225212-ApplyBQSR). Please follow the usage examples on those pages to recalibrate the base quality scores in your data.     
+   
 BaseRecalibrator requres a file with known SNPs as input. This file is available in the data folder on Uppmax in  
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0(refdir,"/1000G_phase1.snps.high_confidence.b37.chr2.vcf"))
@@ -455,12 +452,14 @@ cat(paste0("gatk --java-options -Xmx7g ApplyBQSR -R human_g1k_v37_chr2.fasta -I 
 ```
 
 ## Variant Filtering
-The GATK's variant calling tools are designed to be very sensitive, which good because it minimizes the chance of missing real variants. Howeer, it means that we need to filter the raw callset in order to reduce the amount of false positives, which can be quite large. GATK offers two ways to filter variants: The variant quality score recalibration (VQSR) methods uses machine learning to identify variants that are likely to be real, and hard filters. VQSR is very good, but requires quite a lot of data in order to learn the profiles of good vs. bad variants (for example one whole genome sequence sample or several whole exome samples). 
+HaplotypeCaller is designed to be very sensitive, which good because it minimizes the chance of missing real variants. However, it means that we need to filter the raw callset in order to reduce the amount of false positives, which can be quite large. GATK offers two ways to filter variants:  
+1. The variant quality score recalibration (VQSR) methods uses machine learning to identify variants that are likely to be real. This is the best method if you have a lot of data. for example one whole genome sequence sample or several whole exome samples.
+2. If you have less data you can use hard filters.  
   
-Since we have data for only a very small part of the human genome, and only three samples, we will use hard filters. Please read this article for [parameters suggested by GATK for hard filters](https://software.broadinstitute.org/gatk/documentation/article?id=2806). The parameters are slightly different for SNPs and INDELs, which we have called together and are both in our combined vcf file. You therefore need to perform the filtering in two separate steps: first select all SNPs and filter them, then select all indels and filter them. Finally you can merge the snps and indels to get all variants in one file. 
+Since we have data for only a very small part of the human genome, and only three samples, we will use hard filters. Please read this article for [parameters suggested by GATK for hard filters](https://software.broadinstitute.org/gatk/documentation/article?id=2806). The parameters are slightly different for SNPs and INDELs. You therefore need to perform the filtering in two separate steps: first select all SNPs and filter them, then select all indels and filter them. Finally you can merge the snps and indels to get all variants in one file. 
    
 ### SNPs
-```bash
+```
 gatk --java-options -Xmx7g SelectVariants \
   -R human_g1k_v37_chr2.fasta \
   -V cohort.vcf \
