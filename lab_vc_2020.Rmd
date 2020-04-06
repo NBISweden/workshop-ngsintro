@@ -419,7 +419,7 @@ Download the combined vcf file to your **local workspace** as described [above]{
 * Does this agree with the genotype in the vcf file?   
 
 # GATK's best practise
-The last part of this workshop will take you through some important refinement steps that are needed to make a workflow that follows [GATKs best practise for germline short variant discovery](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-). The flowchart below shows how GATK's best practice short vartiant discovery should be applied to our three samples. You can either run the steps command by command in your reserved core, or include the steps in the SBATCH script that you created in Step 2 [above]{#sbatchscript}. The new steps are descibed below.
+The third part of this workshop will take you through some additional refinement steps that are recommended in [GATKs best practise for germline short variant discovery](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-). The flowchart below shows how GATK's best practice short vartiant discovery should be applied to our three samples. You can either run the steps command by command in your reserved core, or include the new steps in the SBATCH script that you created in Step 2 [above]{#sbatchscript}. 
 
 ![](data/ngs-workflow/3_best_practise.png){width=80%}
 
