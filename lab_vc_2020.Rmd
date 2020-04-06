@@ -320,7 +320,7 @@ If you have time, you can now try variant calling in all three samples.  Each sa
 You can run all commands one by one in the terminal as you did in the first step of the workshop. However, since some steps needs to be repeated for all samples, this is a good opportunity to learn how to write a simple SBATCH script to run all steps automatically. If you are interested in this, please see the [SBATCH script]{#runinscript} section below. 
 
 ## BWA mem 
-Run BWA mem and HaplotypeCaller for all three samples in the data set. BWA mem should be run exaclty [as above]{#bwamem} but you need to replace the sample name in the above command with the new sample names. 
+Run BWA mem and HaplotypeCaller for all three samples in the data set. BWA mem should be run exaclty [as above](#bwamem) but you need to replace the sample name in the above command with the new sample names. 
   
 ## Generate g.vcf files
 HaplotypeCaller should also be run for all three samples, but this time the output for each sample needs to be in g.vcf format. This is accompliched with a small change in the HaploteypCaller command: 
@@ -418,8 +418,8 @@ Download the combined vcf file to your **local workspace** as described [above]{
 * Which samples do you think should avoid drinking milk? Any heterozygotes?  
 * Does this agree with the genotype in the vcf file?   
 
-# GATK's best practise
-The third part of this workshop will take you through some additional refinement steps that are recommended in [GATKs best practise for germline short variant discovery](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-). The flowchart below shows how GATK's best practice short vartiant discovery should be applied to our three samples. You can either run the steps command by command in your interactive session, or include the new steps in the SBATCH script that you created [above]{#sbatchscript}. 
+# GATK's best practises
+The third part of this workshop will take you through some additional refinement steps that are recommended in [GATKs best practises for germline short variant discovery](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-). The flowchart below illustrates this for our three samples. You can either run the steps command by command in your interactive session, or include the new steps in the SBATCH script that you created [above](#sbatchscript). 
 
 ![](data/ngs-workflow/3_best_practise.png){width=80%}
 
