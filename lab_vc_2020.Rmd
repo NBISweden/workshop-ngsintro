@@ -454,11 +454,12 @@ HaplotypeCaller is designed to be very sensitive, which good because it minimize
 1. The variant quality score recalibration (VQSR) methods uses machine learning to identify variants that are likely to be real. This is the best method if you have a lot of data. for example one whole genome sequence sample or several whole exome samples.  
 2. If you have less data you can use hard filters.  
   
-Since we have very little data we will use hard filters. Please read this article for [parameters suggested by GATK for hard filters](https://software.broadinstitute.org/gatk/documentation/article?id=2806). The parameters are slightly different for SNPs and INDELs. You therefore need to perform the filtering in two separate steps: first select all SNPs and filter them, then select all indels and filter them. Finally you can merge the snps and indels to get all variants in one file. 
-   
-### SNPs
-```
-gatk --java-options -Xmx7g SelectVariants \
+Since we have very little data we will use hard filters. 
+Please read this article for [parameters suggested by GATK for hard filters](https://software.broadinstitute.org/gatk/documentation/article?id=2806). The parameters are slightly different for SNVs and INDELs. You therefore need to perform the filtering in two separate steps. First select all SNVs using [SelectVariants](https://gatk.broadinstitute.org/hc/en-us/articles/360037225432-SelectVariants) and filter them using [VariantFiltration](https://gatk.broadinstitute.org/hc/en-us/articles/360037226192-VariantFiltration) with the parameters for SNVs. Then select all INDELs and filter them with the parameters for INDELs. Finally you can merge the SNVs and INDELs to get all variants in one file using [MergeVCFs](https://gatk.broadinstitute.org/hc/en-us/articles/360037226612-MergeVcfs-Picard-). 
+    
+If you would like more help you can sneak peek at our example solution for HG00097 below.    
+```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="Filter SNVs",class.output="sh"}
+cat(paste0('gatk --java-options -Xmx7g SelectVariants \
   -R human_g1k_v37_chr2.fasta \
   -V cohort.vcf \
   ----select-type-to-include SNP \
@@ -470,12 +471,11 @@ gatk --java-options -Xmx7g VariantFiltration \
   -O cohort.snvs.filtered.vcf \
   --filter-name QDfilter --filter-expression "QD < 2.0"  \
   --filter-name MQfilter --filter-expression "MQ < 40.0"  \
-  --filter-name FSfilter --filter-expression "FS > 60.0" 
+  --filter-name FSfilter --filter-expression "FS > 60.0"'))
 ```
-  
-### Indels
-```bash
-gatk --java-options -Xmx7g SelectVariants \
+
+```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="Filter INDELs",class.output="sh"}
+cat(paste0('gatk --java-options -Xmx7g SelectVariants \
   -R human_g1k_v37_chr2.fasta \
   -V cohort.vcf \
   ----select-type-to-include INDEL \
@@ -486,16 +486,14 @@ gatk --java-options -Xmx7g VariantFiltration \
   -V cohort.indels.vcf \
   -O cohort.indels.filtered.vcf \
   --filter-name QDfilter --filter-expression "QD < 2.0" \
-  --filter-name FSfilter --filter-expression "FS > 200.0" \
+  --filter-name FSfilter --filter-expression "FS > 200.0"'))
 ```
   
-### Merge SNPs and Indels
-Once you have the filtered calls for both SNPs and INDELs, you can combine these using Picard's `MergeVcfs`:
-```bash
-java -Xmx7g -jar $PICARD_HOME/picard.jar MergeVcfs \
+```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="Merge SNVs & INDELs",class.output="sh"}
+cat(paste0('java -Xmx7g -jar $PICARD_HOME/picard.jar MergeVcfs \
           I=cohort.snvs.filtered.vcf \
           I=cohort.indels.filtered.vcf \
-          O=cohort.filtered.vcf
+          O=cohort.filtered.vcf'))
 ```
   
 Once you have run the entire Best Practice workflow on all three samples, open your filtered VCF with `less` and page through it. It still has all the variant lines, but the FILTER column that was blank before is now filled in, with PASS or a list of the filters it failed. Note also that the filters that were run are described in the header section.
