@@ -419,7 +419,7 @@ Download the combined vcf file to your **local workspace** as described [above]{
 * Does this agree with the genotype in the vcf file?   
 
 # GATK's best practise
-Now we will look into the details of variant calling, and make a workflow that follows [GATKs best practise for germline short variant discovery](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-). 
+Now we will add some important refinement steps and make a workflow that follows [GATKs best practise for germline short variant discovery](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-). 
   
 The flowchart below shows how GATK's best practice short vartiant discovery should be applied to our three samples. You can either run the new steps command by command in your reserved core, or include the steps in the SBATCH script that you created in Step 2 [above]{#sbatchscript}.
 The new steps are listed below, and contain links to GATK's web where you can find detailed instructions.
@@ -427,6 +427,9 @@ The new steps are listed below, and contain links to GATK's web where you can fi
 ![](data/ngs-workflow/3_best_practise.png){width=80%}
 
 ## Mark Duplicates
+Sometimes a DNA fragment from the sample is sequenced multiple times, and therfore gives rise to multiple reads in the fastq file. This is called dupliate reads, and can occur due to PCR amplification during library preparation, or if one read cluster is incorrectly detected as multiple clusters by the sequencing instrument. 
+If a duplicated read contains a variant allele, the ratio of the two alleles might be obscured which can lead to incorect genotyping. It is therefore recommended, in most cases, to mark duplicate reads so that they are counted as one read during genotyping.  
+  
 Please read about Mark Duplicates and why it is important [here](https://gatk.broadinstitute.org/hc/en-us/articles/360037225972-MarkDuplicates-Picard-). Try to follow the Usage Example in the bottom pf the page to mark duplicates in your data. 
 
 If you would like more help you can sneak peek at our example solution for HG00097 below. 
@@ -435,7 +438,8 @@ cat(paste0("java -Xmx7g -jar $PICARD_HOME/picard.jar MarkDuplicates I=HG00097.ba
 ```
   
 ## Recalibrate Base Quality Scores
-A general description of GATK's Base Quality Score Recalibration can be found [here](https://gatk.broadinstitute.org/hc/en-us/articles/360035890531-Base-Quality-Score-Recalibration-BQSR-). This is a two pass procedure, where first use `BaseRecalibrator` to build a recalibration model, and then `ApplyBQSR` to recalibrate the basequalities in your bam file. 
+Another source of genotyping errors is systematic biases in the assignment of base quality scores by the sequencinc instrument. The goal of the Base Quality Score Recalibration is therefore to correct for this.  
+A general description of GATK's Base Quality Score Recalibration can be found [here](https://gatk.broadinstitute.org/hc/en-us/articles/360035890531-Base-Quality-Score-Recalibration-BQSR-). This is a two pass procedure, where you first use `BaseRecalibrator` to build a recalibration model, and then `ApplyBQSR` to recalibrate the basequalities in your bam file. 
 `BaseRecalibrator` is documented [here](https://gatk.broadinstitute.org/hc/en-us/articles/360037593511-BaseRecalibrator) and `ApplyBQSR` is documented [here](https://gatk.broadinstitute.org/hc/en-us/articles/360037225212-ApplyBQSR).  
 
 Try to follow the usage examples on those pages to recalibrate the base quality scores in your data.  
@@ -500,8 +504,7 @@ Run the entire Best Practice workflow on all three samples, either command by co
 Open your filtered VCF with `less` and page through it. It still has all the variant lines, but the FILTER column that was blank before is now filled in, with PASS or a list of the filters it failed. Note also that the filters that were run are described in the header section.
  
 ## SBATCH script {#bpscript}
-GATK's best practise short variant discovery is complex, where several steps should be performed on individual sample level followed by a workflow for the joint variant calling. When you have three samples it is possible to run the analysis manually in the command line, but runing the analysis in an automated script is much more efficient. 
-We recommend you to incorporate all analysis steps in a new version of the the SBATCH script that you created for the [joint variant calling]{#sbatchscript}. 
+We recommend you to incorporate all analysis steps for thin a new version of the the SBATCH script that you created for the [joint variant calling]{#sbatchscript}. 
 
 We advise you to try each step of the workflow in the interactive terminal for one sample, and paste successful commands in the SBATCH script.   
 Please try yourselfe to complete the script for GATK's best practise workflow. If you run out of time you can sneak peek at our example solution below.  
