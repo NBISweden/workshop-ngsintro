@@ -454,11 +454,10 @@ HaplotypeCaller is designed to be very sensitive, which good because it minimize
 1. The variant quality score recalibration (VQSR) methods uses machine learning to identify variants that are likely to be real. This is the best method if you have a lot of data. for example one whole genome sequence sample or several whole exome samples.  
 2. If you have less data you can use hard filters.  
   
-Since we have very little data we will use hard filters. 
-Please read this article for [parameters suggested by GATK for hard filters](https://software.broadinstitute.org/gatk/documentation/article?id=2806). The parameters are slightly different for SNVs and INDELs. You therefore need to perform the filtering in two separate steps. First select all SNVs using [SelectVariants](https://gatk.broadinstitute.org/hc/en-us/articles/360037225432-SelectVariants) and filter them using [VariantFiltration](https://gatk.broadinstitute.org/hc/en-us/articles/360037226192-VariantFiltration) with the parameters for SNVs. Then select all INDELs and filter them with the parameters for INDELs. Finally you can merge the SNVs and INDELs to get all variants in one file using [MergeVCFs](https://gatk.broadinstitute.org/hc/en-us/articles/360037226612-MergeVcfs-Picard-). 
+Since we have very little data we will use hard filters. Please read this article to leard about [parameters suggested by GATK for hard filters](https://software.broadinstitute.org/gatk/documentation/article?id=2806). The parameters are slightly different for SNVs and INDELs, so you need to perform the filtering in two separate steps. First select all SNVs using [SelectVariants](https://gatk.broadinstitute.org/hc/en-us/articles/360037225432-SelectVariants) and filter them using [VariantFiltration](https://gatk.broadinstitute.org/hc/en-us/articles/360037226192-VariantFiltration) with the parameters suggested for SNVs. Then select all INDELs and filter them with the parameters suggested for INDELs. Finally merge the SNVs and INDELs to get all variants in one file using [MergeVCFs](https://gatk.broadinstitute.org/hc/en-us/articles/360037226612-MergeVcfs-Picard-). 
     
-If you would like more help you can sneak peek at our example solution for HG00097 below.
-Filter SNVs: 
+If you would like more help you can sneak peek at our example solution for HG00097 below.  
+Filter SNVs:
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('gatk --java-options -Xmx7g SelectVariants \
   -R human_g1k_v37_chr2.fasta \
