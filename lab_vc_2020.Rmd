@@ -489,7 +489,7 @@ gatk --java-options -Xmx7g VariantFiltration \
   --filter-name FSfilter --filter-expression "FS > 200.0"'))
 ```
   
-```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="Merge SNVs & INDELs",class.output="sh"}
+```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="Merge SNVs and INDELs",class.output="sh"}
 cat(paste0('java -Xmx7g -jar $PICARD_HOME/picard.jar MergeVcfs \
           I=cohort.snvs.filtered.vcf \
           I=cohort.indels.filtered.vcf \
