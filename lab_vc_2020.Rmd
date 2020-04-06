@@ -419,7 +419,7 @@ Download the combined vcf file to your **local workspace** as described [above]{
 * Does this agree with the genotype in the vcf file?   
 
 # GATK's best practises
-The third part of this workshop will take you through some additional refinement steps that are recommended in [GATKs best practises for germline short variant discovery](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-). The flowchart below illustrates this for our three samples. You can either run the steps command by command in your interactive session, or include the new steps in the SBATCH script that you created [above](#sbatchscript). 
+The third part of this workshop will take you through additional refinement steps that are recommended in [GATKs best practises for germline short variant discovery](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-), illustrated in the flowchart below. You can either run the steps command by command in your interactive session, or include the new steps in the SBATCH script that you created above. 
 
 ![](data/ngs-workflow/3_best_practise.png){width=80%}
 
@@ -427,23 +427,19 @@ The third part of this workshop will take you through some additional refinement
 Sometimes the same DNA fragment is sequenced multiple times, which leads to multiple reads from the same fragment in the fastq file. This is called dupliate reads, and can occur due to PCR amplification during library preparation, or if one read cluster is incorrectly detected as multiple clusters by the sequencing instrument. 
 If a duplicated read contains a genetic variant, the ratio of the two alleles might be obscured, which can lead to incorect genotyping. It is therefore recommended (in most cases) to mark duplicate reads so that they are counted as one during genotyping.  
   
-Please read about Mark Duplicates [here](https://gatk.broadinstitute.org/hc/en-us/articles/360037225972-MarkDuplicates-Picard-), and follow the Usage Example in the bottom of the page to mark duplicates in your data. 
-
-If you would like more help you can sneak peek at our example solution for HG00097 below. 
+Please read about Picard's Mark Duplicates [here](https://gatk.broadinstitute.org/hc/en-us/articles/360037225972-MarkDuplicates-Picard-), and follow the Usage Example to mark duplicates in your data. If you would like more help you can sneak peek at our example solution for HG00097 below. 
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0("java -Xmx7g -jar $PICARD_HOME/picard.jar MarkDuplicates I=HG00097.bam O=HG00097.md.bam M=HG00097_mdmetrics.txt"))
 ```
   
 ## Recalibrate Base Quality Scores
-Another source of genotyping error is systematic biases in the assignment of base quality scores by the sequencing instrument. This can be corrected by [GATK's Base Quality Score Recalibration](https://gatk.broadinstitute.org/hc/en-us/articles/360035890531-Base-Quality-Score-Recalibration-BQSR-). 
-In short, you first use [BaseRecalibrator](https://gatk.broadinstitute.org/hc/en-us/articles/360037593511-BaseRecalibrator) to build a recalibration model, and then [ApplyBQSR](https://gatk.broadinstitute.org/hc/en-us/articles/360037225212-ApplyBQSR) to recalibrate the basequalities in your bam file using the model.  Please follow the usage examples on those pages to recalibrate the base quality scores in your data.     
-   
+Another source of genotyping error is systematic biases in the assignment of base quality scores by the sequencing instrument. This can be corrected by GATK's [Base Quality Score Recalibration](https://gatk.broadinstitute.org/hc/en-us/articles/360035890531-Base-Quality-Score-Recalibration-BQSR-). 
+In short, you first use [BaseRecalibrator](https://gatk.broadinstitute.org/hc/en-us/articles/360037593511-BaseRecalibrator) to build a recalibration model, and then [ApplyBQSR](https://gatk.broadinstitute.org/hc/en-us/articles/360037225212-ApplyBQSR) to recalibrate the basequalities in your bam file using the model.  
 BaseRecalibrator requres a file with known SNPs as input. This file is available in the data folder on Uppmax in  
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0(refdir,"/1000G_phase1.snps.high_confidence.b37.chr2.vcf"))
 ```
-  
-If you would like more help you can sneak peek at our example solution for HG00097 below.  
+ Please follow the usage examples on those pages to recalibrate the base quality scores in your data. If you would like more help you can sneak peek at our example solution for HG00097 below. 
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0("gatk --java-options -Xmx7g BaseRecalibrator -R human_g1k_v37_chr2.fasta -I HG00097.md.bam> --known-sites ",refdir,"/1000G_phase1.snps.high_confidence.b37.chr2.vcf -O HG00097.recal.table\n"))
 cat(paste0("gatk --java-options -Xmx7g ApplyBQSR -R human_g1k_v37_chr2.fasta -I HG00097.md.bam --bqsr-recal-file HG00097.recal.table -O HG00097.recal.bam"))
@@ -451,12 +447,10 @@ cat(paste0("gatk --java-options -Xmx7g ApplyBQSR -R human_g1k_v37_chr2.fasta -I 
 
 ## Variant Filtering
 HaplotypeCaller is designed to be very sensitive, which good because it minimizes the chance of missing real variants. However, it means that we need to filter the raw callset in order to reduce the amount of false positives, which can be quite large. GATK offers two ways to filter variants:  
-1. The variant quality score recalibration (VQSR) methods uses machine learning to identify variants that are likely to be real. This is the best method if you have a lot of data. for example one whole genome sequence sample or several whole exome samples.  
-2. If you have less data you can use hard filters.  
+1. The variant quality score recalibration (VQSR) method uses machine learning to identify variants that are likely to be real. This is the best method if you have a lot of data, for example one whole genome sequence sample or several whole exome samples.  
+2. If you have less data you can use [hard filters](https://software.broadinstitute.org/gatk/documentation/article?id=2806). 
   
-Since we have very little data we will use hard filters. Please read this article to leard about [parameters suggested by GATK for hard filters](https://software.broadinstitute.org/gatk/documentation/article?id=2806). The parameters are slightly different for SNVs and INDELs, so you need to perform the filtering in two separate steps. First select all SNVs using [SelectVariants](https://gatk.broadinstitute.org/hc/en-us/articles/360037225432-SelectVariants) and filter them using [VariantFiltration](https://gatk.broadinstitute.org/hc/en-us/articles/360037226192-VariantFiltration) with the parameters suggested for SNVs. Then select all INDELs and filter them with the parameters suggested for INDELs. Finally merge the SNVs and INDELs to get all variants in one file using [MergeVCFs](https://gatk.broadinstitute.org/hc/en-us/articles/360037226612-MergeVcfs-Picard-). 
-    
-If you would like more help you can sneak peek at our example solution for HG00097 below.  
+Since we have very little data we will use hard filters. The parameters are slightly different for SNVs and INDELs, so you need to first select all SNVs using [SelectVariants](https://gatk.broadinstitute.org/hc/en-us/articles/360037225432-SelectVariants) and filter them using [VariantFiltration](https://gatk.broadinstitute.org/hc/en-us/articles/360037226192-VariantFiltration) with the parameters suggested for SNVs. Then select all INDELs and filter them with the parameters suggested for INDELs. Finally merge the SNVs and INDELs to get all variants in one file using [MergeVCFs](https://gatk.broadinstitute.org/hc/en-us/articles/360037226612-MergeVcfs-Picard-). If you would like more help you can sneak peek at our example solution for HG00097 below.  
 Filter SNVs:
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('gatk --java-options -Xmx7g SelectVariants \
