@@ -419,7 +419,7 @@ Download the combined vcf file to your **local workspace** as described [above]{
 * Does this agree with the genotype in the vcf file?   
 
 # GATK's best practises
-The third part of this workshop will take you through additional refinement steps that are recommended in [GATKs best practises for germline short variant discovery](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-), illustrated in the flowchart below. You can either run the steps command by command in your interactive session, or include the new steps in the SBATCH script that you created above. 
+The third part of this workshop will take you through additional refinement steps that are recommended in [GATKs best practises for germline short variant discovery](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-), illustrated in the flowchart below. You can either run the steps command by command in your interactive session, or include the new steps in the SBATCH script that you created earlier. 
 
 ![](data/ngs-workflow/3_best_practise.png){width=80%}
 
@@ -433,22 +433,22 @@ cat(paste0("java -Xmx7g -jar $PICARD_HOME/picard.jar MarkDuplicates I=HG00097.ba
 ```
   
 ## Recalibrate Base Quality Scores
-Another source of genotyping error is systematic biases in the assignment of base quality scores by the sequencing instrument. This can be corrected by GATK's [Base Quality Score Recalibration](https://gatk.broadinstitute.org/hc/en-us/articles/360035890531-Base-Quality-Score-Recalibration-BQSR-). 
-In short, you first use [BaseRecalibrator](https://gatk.broadinstitute.org/hc/en-us/articles/360037593511-BaseRecalibrator) to build a recalibration model, and then [ApplyBQSR](https://gatk.broadinstitute.org/hc/en-us/articles/360037225212-ApplyBQSR) to recalibrate the basequalities in your bam file using the model.  
-BaseRecalibrator requres a file with known SNPs as input. This file is available in the data folder on Uppmax in  
+Another source of error is systematic biases in the assignment of base quality scores by the sequencing instrument. This can be corrected by GATK's [Base Quality Score Recalibration](https://gatk.broadinstitute.org/hc/en-us/articles/360035890531-Base-Quality-Score-Recalibration-BQSR-). 
+In short, you first use [BaseRecalibrator](https://gatk.broadinstitute.org/hc/en-us/articles/360037593511-BaseRecalibrator) to build a recalibration model, and then [ApplyBQSR](https://gatk.broadinstitute.org/hc/en-us/articles/360037225212-ApplyBQSR) to recalibrate the basequalities in your bam file.  
+BaseRecalibrator requres a file with known SNPs as input. This file is available in the data folder on Uppmax:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0(refdir,"/1000G_phase1.snps.high_confidence.b37.chr2.vcf"))
 ```
- Please follow the usage examples on those pages to recalibrate the base quality scores in your data. If you would like more help you can sneak peek at our example solution for HG00097 below. 
+ Please use GATK's documentation to recalibrate the base quality scores in your data. If you would like more help you can sneak peek at our example solution for HG00097 below. 
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0("gatk --java-options -Xmx7g BaseRecalibrator -R human_g1k_v37_chr2.fasta -I HG00097.md.bam> --known-sites ",refdir,"/1000G_phase1.snps.high_confidence.b37.chr2.vcf -O HG00097.recal.table\n"))
 cat(paste0("gatk --java-options -Xmx7g ApplyBQSR -R human_g1k_v37_chr2.fasta -I HG00097.md.bam --bqsr-recal-file HG00097.recal.table -O HG00097.recal.bam"))
 ```
 
 ## Variant Filtering
-HaplotypeCaller is designed to be very sensitive, which good because it minimizes the chance of missing real variants. However, it means that we need to filter the raw callset in order to reduce the amount of false positives, which can be quite large. GATK offers two ways to filter variants:  
+HaplotypeCaller is designed to be very sensitive, which good because it minimizes the chance of missing real variants. However, it means that the amount of false positives can be quite large, so we need to filter the raw callset. GATK offers two ways to filter variants:  
 1. The variant quality score recalibration (VQSR) method uses machine learning to identify variants that are likely to be real. This is the best method if you have a lot of data, for example one whole genome sequence sample or several whole exome samples.  
-2. If you have less data you can use [hard filters](https://software.broadinstitute.org/gatk/documentation/article?id=2806). 
+2. If you have less data you can use hard filters, as described [here](https://gatk.broadinstitute.org/hc/en-us/articles/360035531112?id=2806#2). 
   
 Since we have very little data we will use hard filters. The parameters are slightly different for SNVs and INDELs, so you need to first select all SNVs using [SelectVariants](https://gatk.broadinstitute.org/hc/en-us/articles/360037225432-SelectVariants) and filter them using [VariantFiltration](https://gatk.broadinstitute.org/hc/en-us/articles/360037226192-VariantFiltration) with the parameters suggested for SNVs. Then select all INDELs and filter them with the parameters suggested for INDELs. Finally merge the SNVs and INDELs to get all variants in one file using [MergeVCFs](https://gatk.broadinstitute.org/hc/en-us/articles/360037226612-MergeVcfs-Picard-). If you would like more help you can sneak peek at our example solution for HG00097 below.  
 Filter SNVs:
@@ -493,9 +493,7 @@ cat(paste0('java -Xmx7g -jar $PICARD_HOME/picard.jar MergeVcfs \
 Open your filtered VCF with `less` and page through it. It still has all the variant lines, but the FILTER column that was blank before is now filled in, with PASS or a list of the filters it failed. Note also that the filters that were run are described in the header section.
   
 ## SBATCH script {#bpscript}
-We recommend you to incorporate the new steps into the SBATCH script that you creater for the [joint variant calling]{#sbatchscript} above. 
-You might find it helpful to try each step for one sample in the interactive terminal, so that you know that a particular command is working for one sample before you incorporate it in the script.      
-Please try yourselfe to complete the script for GATK's best practise workflow. If you run out of time you can sneak peek at our example solution below.  
+We recommend you to incorporate the new steps into the SBATCH script that you created above for [joint variant calling](#sbatchscript). You might find it helpful to try each step for one sample in the interactive terminal, so that you know that a particular command is working before you incorporate it in the script. Please try to complete the script for GATK's best practise workflow. If you run out of time you can sneak peek at our example solution below. 
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('#!/bin/bash
 #SBATCH -A g2019031
@@ -545,16 +543,12 @@ java -Xmx7g -jar $PICARD_HOME/picard.jar MergeVcfs I=cohort.snvs.filtered.vcf I=
 **Questions**  
 * How many variants are present in the cohort.filtered.vcf file?  
 * How many variants have passed the filters?  
+* Copy the final filtered vcf file to your local workspace and open the file in IGV. Look at the variant associated with lactose tolerance in adults and compare with the combined vcf file generated in step two above. Can you see if the extra refinement steps in GATK's best practise short variant discovery made any difference to these variants? 
   
-Copy the final filtered vcf file to your local workspace and open the file in IGV.   
-**Questions**  
-* Look at the variant associated with lactose tolerance in adults and compare with the combined vcf file generated in step two above. Can you see if the extra refinement steps in GATK's best practise short variant discovery made any difference to these variants? 
-   
 **Note:** In this workshop we use public data from low covare sequencing, that has been processed before publication. The difference between variants processed with our simplified workflow and the bet practise workflow may be small in this case, but with a real life data set it is recomended to follow the best pracites workflow!
   
 **Thanks for today!**
   
-
 # Additional information
 
 * Here is a technical documentation of [Illumina Quality Scores](https://www.illumina.com/documents/products/technotes/technote_understanding_quality_scores.pdf)
