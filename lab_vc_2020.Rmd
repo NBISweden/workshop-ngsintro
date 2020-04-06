@@ -496,7 +496,7 @@ cat(paste0('java -Xmx7g -jar $PICARD_HOME/picard.jar MergeVcfs \
           O=cohort.filtered.vcf'))
 ```
   
-Once you have run the entire Best Practice workflow on all three samples, open your filtered VCF with `less` and page through it. It still has all the variant lines, but the FILTER column that was blank before is now filled in, with PASS or a list of the filters it failed. Note also that the filters that were run are described in the header section.
+Open your filtered VCF with `less` and page through it. It still has all the variant lines, but the FILTER column that was blank before is now filled in, with PASS or a list of the filters it failed. Note also that the filters that were run are described in the header section.
   
 ## SBATCH script {#bpscript}
 We recommend you to incorporate the new steps into the SBATCH script that you creater for the [joint variant calling]{#sbatchscript} above. 
