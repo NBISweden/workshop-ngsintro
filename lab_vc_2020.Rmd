@@ -66,7 +66,7 @@ The *LCT* gene on chromosome 2 encodes the lactase protein, which is responible 
 In this workshop we will work with sequencing data for a small region on chromosome 2 that covers the *LCT* gene and upstream region: 
 chr2:136545000-136617000
 
-We will use this region to illustrate how you can look for genetic variation in NGS data. To learn more about the genetic bases for lactose tolerance please read the first three pages of [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf) by Mattar et al. The variant (rs4988235) is here referred to as LCT-13910C>T.
+We will use this region to illustrate how you can look for genetic variation in NGS data. To learn more about the genetic bases for lactose tolerance please read the first three pages of [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf) by Mattar et al. The variant (rs4988235) is here referred to as LCT-13910C>T.  
 ## Data folder on Uppmax {#Data}
 All input data for this exercise is located in the folder on Rackham:
 ```{r,echo=FALSE,comment="",class.output="bash"}
@@ -82,15 +82,14 @@ cat(paste0(refdir))
 ```
 # Preparations
 ## Local workspace  {#preparelaptop}
-The majority of the analyses in this workshop will be done on Uppmax, but you will copy some of the resulting files to your laptop. Therefore, please start by creating a folder for this workshop on your local laptop. It is up to you where you want to put this, but it can for example be a folder called "ngsworkflow" on Desktop. You need to have write permission in this folder. The folder you create here will be refered to as **local workspace** throughout this workshop. 
+The majority of the analyses in this workshop will be done on Uppmax, but you will copy some of the resulting files to your laptop. Therefore, please start by creating a folder for this workshop on your local laptop. It is up to you where you want to put this, but it can for example be a folder called "ngsworkflow" on Desktop. You need to have write permission in this folder. The folder you create here will be referred to as **local workspace** throughout this workshop. 
 ## UPPMAX
 Please connect to the Rackham cluster on UPPMAX using `SSH`:
 ```bash
 $ ssh -Y username@rackham.uppmax.uu.se
 ```
 ### Workspace on Uppmax
-During this lab you should work in your folder under the course's nobackup folder, just like you have done during the previous labs. Start by creating a workspace for this exercise in your folder, and then move into it. This folder will be refered to as your "uppmax workspace" throughout this workshop.  
-
+During this lab you should work in your folder under the course's nobackup folder, just like you have done during the previous labs. Start by creating a workspace for this exercise in your folder, and then move into it. This folder will be referred to as your **uppmax workspace** throughout this workshop.  
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0("mkdir /proj/",upid,"/nobackup/<username>/ngsworkflow\n"))
 cat(paste0("cd /proj/",upid,"/nobackup/<username>/ngsworkflow"))
