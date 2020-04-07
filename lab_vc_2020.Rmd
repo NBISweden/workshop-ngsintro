@@ -81,6 +81,7 @@ Reference files, such as the reference genome in fasta format, are located in th
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0(refdir))
 ```
+
 # Preparations
 ## Local workspace  {#preparelaptop}
 The majority of the analyses in this workshop will be done on Uppmax, but you will copy some of the resulting files to your laptop. Therefore, please start by creating a folder for this workshop on your local laptop. It is up to you where you want to put this, but it can for example be a folder called "ngsworkflow" on Desktop. You need to have write permission in this folder. The folder you create here will be referred to as **local workspace** throughout this workshop.  
