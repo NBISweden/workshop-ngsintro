@@ -67,6 +67,7 @@ In this workshop we will work with sequencing data for a small region on chromos
 chr2:136545000-136617000
 
 We will use this region to illustrate how you can look for genetic variation in NGS data. To learn more about the genetic bases for lactose tolerance please read the first three pages of [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf) by Mattar et al. The variant (rs4988235) is here referred to as LCT-13910C>T.  
+
 ## Data folder on Uppmax {#Data}
 All input data for this exercise is located in the folder on Rackham:
 ```{r,echo=FALSE,comment="",class.output="bash"}
@@ -82,7 +83,7 @@ cat(paste0(refdir))
 ```
 # Preparations
 ## Local workspace  {#preparelaptop}
-The majority of the analyses in this workshop will be done on Uppmax, but you will copy some of the resulting files to your laptop. Therefore, please start by creating a folder for this workshop on your local laptop. It is up to you where you want to put this, but it can for example be a folder called "ngsworkflow" on Desktop. You need to have write permission in this folder. The folder you create here will be referred to as **local workspace** throughout this workshop. 
+The majority of the analyses in this workshop will be done on Uppmax, but you will copy some of the resulting files to your laptop. Therefore, please start by creating a folder for this workshop on your local laptop. It is up to you where you want to put this, but it can for example be a folder called "ngsworkflow" on Desktop. You need to have write permission in this folder. The folder you create here will be referred to as **local workspace** throughout this workshop.  
 ## UPPMAX
 Please connect to the Rackham cluster on UPPMAX using `SSH`:
 ```bash
@@ -95,12 +96,11 @@ cat(paste0("mkdir /proj/",upid,"/nobackup/<username>/ngsworkflow\n"))
 cat(paste0("cd /proj/",upid,"/nobackup/<username>/ngsworkflow"))
 ```
 ### Symbolic links to data
-The raw fastq files are located in the [Data](#Data) folder described above. In stead of copying the files to your workspace you should create symbolic links (soft-links) to them. Soft-linking files and folders allows us to work them as if they were in in your work directory, but we avoid multiplying them.   
+The raw fastq files are located in the [Data](#Data) folder described above. In stead of copying the files to your workspace you should create symbolic links (soft-links) to them. Soft-linking files and folders allows us to work with them as if they were in the current directory, but we avoid multiplying them.  
 Create a symbolic link to the reference in your workspace:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0("ln -s ",refdir,"/human_g1k_v37_chr2.fasta"))  
 ```
-
 Do the same with the fastq files:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0("ln -s ",fastqdir,"/HG00097_1.fq\n")) 
@@ -111,7 +111,7 @@ cat(paste0("ln -s ",fastqdir,"/HG00101_1.fq\n"))
 cat(paste0("ln -s ",fastqdir,"/HG00101_2.fq\n"))
 ```
   
-### Book a core 
+### Book a node 
 When you login to Rackham you enter the "login node", which is not intended for compute intensive tasks. To be able to run analyses directly in the terminal you should therefore book a compute node (or in this case just one core of a node). Make sure you only do this once each day because we have reserved one core per student for the course.    
 Use this reservation on day 1 of variant-calling:
 ```{r,echo=FALSE,comment="",class.output="bash"}
