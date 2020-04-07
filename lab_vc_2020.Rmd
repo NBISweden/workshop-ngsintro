@@ -84,23 +84,23 @@ cat(paste0(refdir))
   
 # Preparations
 ## Local workspace  {#preparelaptop}
-The majority of the analyses in this workshop will be done on Uppmax, but you will copy some of the resulting files to your laptop. Therefore, please start by creating a folder for this workshop on your local laptop. It is up to you where you want to put this, but it can for example be a folder called "ngsworkflow" on Desktop. You need to have write permission in this folder. The folder you create here will be referred to as **local workspace** throughout this workshop.  
+The majority of the analyses in this workshop will be done on Uppmax, but you will copy some of the resulting files to your laptop. Therefore, please start by creating a folder for this workshop on your local laptop. It is up to you where you want to put this, but it can for example be a folder called *ngsworkflow* on Desktop. You need to have write permission in this folder. The folder you create here will be referred to as *local workspace* throughout this workshop.  
   
 ## UPPMAX
-Please connect to the Rackham cluster on UPPMAX using `SSH`:
+Please connect to the Rackham cluster on UPPMAX using ssh:
 ```bash
 $ ssh -Y username@rackham.uppmax.uu.se
 ```  
   
 ### Workspace on Uppmax
-During this lab you should work in your folder under the course's nobackup folder, just like you have done during the previous labs. Start by creating a workspace for this exercise in your folder, and then move into it. This folder will be referred to as your **uppmax workspace** throughout this workshop.  
+During this lab you should work in your folder under the course's nobackup folder, just like you have done during the previous labs. Start by creating a workspace for this exercise in your folder, and then move into it. This folder will be referred to as your *uppmax workspace* throughout this workshop.  
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0("mkdir /proj/",upid,"/nobackup/<username>/ngsworkflow\n"))
 cat(paste0("cd /proj/",upid,"/nobackup/<username>/ngsworkflow"))
 ```
   
 ### Symbolic links to data
-The raw fastq files are located in the [Data](#Data) folder described above. In stead of copying the files to your workspace you should create symbolic links (soft-links) to them. Soft-linking files and folders allows us to work with them as if they were in the current directory, but we avoid multiplying them.  
+The raw fastq files are located in the [Data](#Data) folder described above. In stead of copying the files to your workspace you should create symbolic links (soft-links) to them. Soft-linking files and folders allows you to work with them as if they were in your current directory, but without multiplying them.  
 Create a symbolic link to the reference in your workspace:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0("ln -s ",refdir,"/human_g1k_v37_chr2.fasta"))  
@@ -116,7 +116,7 @@ cat(paste0("ln -s ",fastqdir,"/HG00101_2.fq\n"))
 ```
    
 ### Book a node 
-When you login to Rackham you enter the "login node", which is not intended for compute intensive tasks. To be able to run analyses directly in the terminal you should therefore book a compute node (or in this case just one core of a node). Make sure you only do this once each day because we have reserved one core per student for the course.    
+When you login to Rackham you enter the *login node*, which is not intended for compute intensive tasks. To be able to run analyses directly in the terminal you should therefore book a compute node (or in this case just one core of a node). Make sure you only do this once each day because we have reserved one core per student for the course.    
 Use this reservation on day 1 of variant-calling:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0("salloc -A ",upid," -t 04:00:00 -p core -n 1 --no-shell --reservation=",upres3," &"))
@@ -125,24 +125,23 @@ Use this reservation on day 2 of variant-calling:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0("salloc -A ",upid," -t 04:00:00 -p core -n 1 --no-shell --reservation=",upres4," &"))
 ```
-Once your job allocation has been granted (should not take long) you can connect to the node using `ssh`. To find out the name of your node, use:
+Once your job allocation has been granted (should not take long) you can connect to the node using ssh. To find out the name of your node, use:
 ```bash
 squeue -u <username>
-# Node name is found under nodelist header. You should only see one node here.
 ```
-and to connect to the node:
+The node name is found under nodelist header, you should only see one. Connect to that node:  
 ```bash
 ssh -Y <nodename>
 ```
   
 ### Accessing programs {#Accessingprograms}
-We will use several programs that are installed in the module system on Uppmax. Note: These modules needs to be loaded everytime you login to Rackham, or when you connect to a new comput node.  
+We will use several programs that are installed in the module system on Uppmax. These modules needs to be loaded *every time* you login to Rackham, or when you connect to a new compute node.  
   
 First load the `bioinfo-tools` module:
 ```bash
 module load bioinfo-tools
 ```
-This makes it possible to load the individual programs we need:
+This makes it possible to load the individual programs:
 ```bash
 module load FastQC/0.11.8
 module load bwa/0.7.17
@@ -150,13 +149,12 @@ module load samtools/1.10
 module load picard/2.20.4
 module load GATK/4.1.4.1
 ```
-You don't HAVE to specify version number when you load a tool, but it is recommended for reproducability if you want to rerun the exact same commands later.  
-Picard and GATK are java programs, which means that we need the path to the program file, therefore UPPMAX sets a variable when you load these modules ($GATK_HOME or $PICARD_HOME).  
+You don't HAVE to specify version number when you load a tool, but it is recommended for reproducability if you want to rerun the exact same analyses later. Picard and GATK are java programs, which means that we need the path to the program file, therefore UPPMAX sets a variable when you load these modules ($GATK_HOME or $PICARD_HOME).  
   
 ## Index the genome
-Tools that compare (short) reads with a (large) reference genome needs genome index files to allow efficient random access to the reference genome. Before we can begin analysing our samples we therefore need to create index files for each tool.  
+Tools that compare short reads with a large reference genome needs an index of the reference genome to allow efficient random access to it. Before you can begin analysing the samples you therefore need to create index files for each tool.  
   
-To generate several BWA index files:
+Generate several BWA index files:
 ```bash
 bwa index -a bwtsw human_g1k_v37_chr2.fasta
 ```
@@ -172,8 +170,7 @@ Generate a sequence dictionary for Picard:
 ```bash
 java -Xmx7g -jar $PICARD_HOME/picard.jar CreateSequenceDictionary R=human_g1k_v37_chr2.fasta O=human_g1k_v37_chr2.dict
 ```
-You will get a warning about upcoming command line syntax changes for Picard, but you can ignore them.  
-
+Here you will get a warning about upcoming command line syntax changes for Picard, but you can ignore them.  
 Again, check that the last command generated a new index file using `ls -lrt`
   
 # Variant calling in one sample
