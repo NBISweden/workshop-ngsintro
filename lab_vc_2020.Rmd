@@ -61,10 +61,10 @@ HG00097       | British in England and Scotland    | Low coverage WGS
 HG00100       | British in England and Scotland    | Low coverage WGS
 HG0010q       | British in England and Scotland    | Low coverage WGS 
 ## Genomic region
-The *LCT* gene on chromosome 2 encodes the lactase protein, which is responsible for the metabolism of lactose in mammals. Most mammals can not digest lactose as adults, but some humans tolerate lactose and can use it as energy source also in adulthood. Genetic variants upstream of the *LCT* gene control how lactose is tolerated in adults, and the variant rs4988235, located at at position chr2:136608646 in HG19, has been shown to lead to lactose persistence.  
+The *LCT* gene on chromosome 2 encodes the lactase protein, which is responsible for the metabolism of lactose in mammals. Most mammals can not digest lactose as adults, but some humans tolerate lactose and can use it as energy source also in adulthood. Genetic variants upstream of the *LCT* gene control how lactose is tolerated in adults. The variant rs4988235, located at at position chr2:136608646 in the HG19 reference assembly, has been shown to lead to lactose persistence.  
+   
+Here we will use sequencing data for the region chr2:136545000-136617000 in the 3 samples listed above to illustrate the process of variant detection in NGS data.  
   
-To illustrate the process of variant detection, we will use sequencing data for the region chr2:136545000-136617000 in the 3 samples listed above. This region covers the *LCT* gene and the upstream *MCM6* gene, and contains the the rs4988235 variant.  
-
 To learn more about the genetic bases for lactose tolerance please read the first three pages of [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf) by Mattar et al. The variant (rs4988235) is here referred to as LCT-13910C>T.  
   
 ## Data folder on Uppmax {#Data}
