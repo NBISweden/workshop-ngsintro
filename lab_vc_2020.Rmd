@@ -258,7 +258,7 @@ Check that the files are now present in your *local workspace* using `ls -lrt`.
 
 **Look at the bam file in IGV**  
 * In `IGV`, go to the popup menu in the upper left and set it to `Human hg19`.  
-* In the `Tools` menu, select `Run igvtools`. Choose the command `Count` and then use the Browse button next to the Input File line to select the BAMs (not the bai) that you just downloaded. It will autofill the output file. Hit the `Run` button. This generates a .tdf file for each BAM. This allows us to see the coverage value for our BAM file even at zoomed out views. `Close` the igvtools window.  
+* In the `Tools` menu, select `Run igvtools`. Choose the command `Count` and then use the `Browse` button next to the `Input File` line to select the bam file (not the bai) that you just downloaded. It will autofill the output file. Hit the `Run` button. This generates a .tdf file that allows you to see the coverage value for our bam file even at zoomed out views. `Close` the igvtools window.  
 * In the `File` menu, select `Load from File and select your BAMs (not the .bai or the .tdf), which should appear in the tracks window. You will have to zoom in before you can see any reads. You can either select a region by click and drag, or by typing a region (chr:from-to) or gene name in the text box at the top.  
 
 ### Questions  
@@ -271,27 +271,36 @@ Check that the files are now present in your *local workspace* using `ls -lrt`.
 ### HaplotypeCaller {#haplotypecaller}
 Now we will detect short variants in the bam file using GATK's `HaplotypeCaller`. Go to your *uppmax workspace* and run:
 ```bash
-gatk --java-options -Xmx7g HaplotypeCaller \ 
--R human_g1k_v37_chr2.fasta \
--I HG00097.bam \
--O HG00097.vcf 
+gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -I HG00097.bam -O HG00097.vcf 
 ```
 Check what new files were generated with `ls -lrt`.  
+Now you have your first vcf file, that contains the raw variants in the region chr2:136545000-136617000 in sample HG00097. 
+Next you should explore the file using some basic text mining. 
+Now you have your first vcf file with 
 
+you should explore the vcf file using some basic linux commands. 
+
+
+
+grep
 ### Question
-9. What is the new file that ends with *idx*?
+9. What new files were generated with the command above? 
+10. What is the file that ends with *idx*?
+10. How many lines of meta data does your vcf file have?
+11. How many data lines (variants) does your vcf file have?
+Type the command ´grep '#CHROM' HG00097.vcf` to see what data columns your vcf file has. 
 
 
 ### Check vcf in IGV {#vcfinigv}
-To check the vcf file in IGV you first need to download this file from the *uppmax workspace* to the *local workspace* on your laptop. Navigate to your local workspace, but do not log in to UPPMAX. Copy the .vcf file that you just generated:
+Download the vcf file and its index to the *local workspace* on your laptop. Navigate to your local workspace, but do not log in to UPPMAX. Copy the files that you just generated:
 ```{r,echo=FALSE,comment="",class.output="bash", class.source="workLocally"}
 cat(paste0("scp <username>@rackham.uppmax.uu.se:/proj/",upid,"/nobackup/<username>/ngsworkflow/HG00097.vcf* ."))
 ```
 Please replace `<username>` with your uppmax user name.  
-Note that the * in the end of the file name means that you will download all files that start with HG00097.vcf, so you will also dowload the vcf index file.  
-Check that the bam file was downloaded properly to your *local workspace* using `ls -lrt`. 
+Note that the * in the end of the file name means that you will download all files that start with *HG00097.vcf*, so you will also dowload the vcf index.  
+Check that the filex were properly downloaded to your *local workspace* using `ls -lrt`. 
 
-In IGV, in the File menu, select `Load from File` and select your vcf file (not the .idx file), which should appear in the tracks window. You will now see all the variants called in HG00097. You can view all variants in the *LCT* gene by typing the gene name in the search box.  
+In `IGV`, in the `File` menu, select `Load from File` and select your vcf file (not the .idx file), which should appear in the tracks window. You will now see all the variants called in HG00097. You can view all variants in the *LCT* gene by typing the gene name in the search box.  
 
 ### Questions  
 10. The vcf file is displayed on two rows; what is shown in the two rows in this case?  
