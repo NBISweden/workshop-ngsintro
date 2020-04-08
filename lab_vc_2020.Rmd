@@ -295,11 +295,11 @@ For more detailed information about vcf files please have a look at [The Variant
 
 ### Questions
 10. What is the file *HG00097.vcf.idx*?
-11. How many meta-information lines does your vcf file contain? The linux command `grep "^##" HG00097.vcf | wc` extracts all lines in HG00097.vcf starting with *##*, and counts these lines. 
-12. How many genetic variants was detected in the sample? The linux command `grep -v "#" filename.txt | wc ` extracts all lines in HG00097.vcf that *don't* start with "#", and counts these lines.  
-13. What columns does the header line contain? 
-14. What do the *FORMAT* column of the data lines tell you? 
-15. What do the *HG00097* column of the data lines tell you?
+11. How many genetic variants was detected in the sample? The linux command `grep -v "#" filename.txt | wc ` extracts all lines in HG00097.vcf that *don't* start with "#", and counts these lines.  
+12. What columns does the header line contain? 
+13. What does *GT* in the *FORMAT* column of the data lines mean? Please use the variant at position 2:136220992 as example.
+14. What does *AD* in the *FORMAT* column of the data lines mean? Please use the variant at position 2:136220992 as example.
+15. What genotype does *HG00097* have at position 2:136220992?
 
 ### Check vcf in IGV {#vcfinigv}
 Download the vcf file and its index to the *local workspace* on your laptop. Navigate to your local workspace, but do not log in to UPPMAX. Copy the files that you just generated:
