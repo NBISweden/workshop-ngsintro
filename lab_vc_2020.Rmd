@@ -269,7 +269,7 @@ Check that the files are now present in your *local workspace* using `ls -lrt`.
 ![](data/ngs-workflow/main_vc.png)
 
 ### HaplotypeCaller {#haplotypecaller}
-Now we will detect short variants in the bam file using GATK's `HaplotypeCaller. Go to your *uppmax workspace* and run:
+Now we will detect short variants in the bam file using GATK's `HaplotypeCaller`. Go to your *uppmax workspace* and run:
 ```bash
 gatk --java-options -Xmx7g HaplotypeCaller \ 
 -R human_g1k_v37_chr2.fasta \
