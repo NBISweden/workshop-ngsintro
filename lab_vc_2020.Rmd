@@ -68,7 +68,7 @@ Here we will use sequencing data for the region chr2:136545000-136617000 in the 
 To learn more about the genetic bases for lactose tolerance please read the first three pages of [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf) by Mattar et al. The variant (rs4988235) is here referred to as LCT-13910C>T.  
   
 ## Data folder on Uppmax {#Data}
-All input data for this exercise is located in the folder on Rackham:
+All input data for this exercise is located in this folder on Rackham:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0(datadir))
 ```
@@ -83,7 +83,7 @@ cat(paste0(refdir))
   
 # Preparations
 ## Local workspace  {#preparelaptop}
-The majority of the analyses in this workshop will be done on Uppmax, but you will copy some of the resulting files to your laptop. Therefore, please start by creating a folder for this workshop on your local laptop. It is up to you where you want to put this, but it can for example be a folder called *ngsworkflow* on Desktop. You need to have write permission in this folder. The folder you create here will be referred to as *local workspace* throughout this workshop.  
+The majority of the analyses in this workshop will be done on Uppmax, but you will copy some of the resulting files to your laptop. Therefore, please start by creating a folder for this workshop on your laptop. It is up to you where you want to put this, but it can for example be a folder called *ngsworkflow* on Desktop. You need to have write permission in this folder. The folder you create here will be referred to as *local workspace* throughout this workshop.  
   
 ## UPPMAX
 Please connect to the Rackham cluster on UPPMAX using `ssh:
@@ -99,7 +99,7 @@ cat(paste0("cd /proj/",upid,"/nobackup/<username>/ngsworkflow"))
 ```
   
 ### Symbolic links to data
-The raw fastq files are located in the [Data](#Data) folder described above. In stead of copying the files to your workspace you should create symbolic links (soft-links) to them. Soft-linking files and folders allows you to work with them as if they were in your current directory, but without multiplying them.  
+The raw data files are located in the [Data](#Data) folder described above. In stead of copying the files to your workspace you should create symbolic links (soft-links) to them. Soft-linking files and folders allows you to work with them as if they were in your current directory, but without multiplying them.  
 Create a symbolic link to the reference in your workspace:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0("ln -s ",refdir,"/human_g1k_v37_chr2.fasta"))  
