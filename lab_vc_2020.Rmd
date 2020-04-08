@@ -274,21 +274,24 @@ Now we will detect short variants in the bam file using GATK's `HaplotypeCaller`
 gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -I HG00097.bam -O HG00097.vcf 
 ```
 Check what new files were generated with `ls -lrt`.  
-Now you have your first vcf file, that contains the raw variants in the region chr2:136545000-136617000 in sample HG00097. 
-Next you should explore the file using some basic text mining. 
-Now you have your first vcf file with 
 
-you should explore the vcf file using some basic linux commands. 
+### Explore the vcf file
+Now you have your first vcf file containing the raw variants in the region chr2:136545000-136617000 in sample HG00097. 
+Please look at the vcf file with `less` and try to understand its structure.  
+Vcf files contains meta-information lines starting with *##*, a header line starting with *#CHROM*, and then data lines each containing information about one variant position in the genome. The header line defines the columns of the data lines, and to view the header line you can type this command:  
+```bash
+grep '#CHROM' HG00097.vcf
+```
+The meta-information lines describe the content of the data lines. The lines starting with *##INFO* defines how the data in the *INFO* column is encoded, and the lines starting with *##FORMAT* defines how the info the FORMAT column is encoded and in the *INFO* column
+Please have a look at [The Variant Call Format specification](https://samtools.github.io/hts-specs/VCFv4.2.pdf) for more information about vcf files.
 
-
-
-grep
-### Question
-9. What new files were generated with the command above? 
-10. What is the file that ends with *idx*?
-10. How many lines of meta data does your vcf file have?
-11. How many data lines (variants) does your vcf file have?
-Type the command ´grep '#CHROM' HG00097.vcf` to see what data columns your vcf file has. 
+### Questions
+9. What is the file *HG00097.vcf.idx*?
+10. How many meta-information lines does your vcf file contain? The linux command `grep "^##" HG00097.vcf | wc` extracts all lines in HG00097.vcf starting with *##*, and counts these lines. 
+11. How many genetic variants was detected in the sample? The linux command `grep -v "#" filename.txt | wc ` extracts all lines in HG00097.vcf that *don't* start with "#", and counts these lines.  
+12. How does the header line look in your sample? You can view it with the command ´grep '#CHROM' HG00097.vcf`.
+13. What do the *FORMAT* column of the data lines tell you? Remember that the abbreviations shown in the *FORMAT* column is defined in the meta-inforamtion lines starting with *##FORMAT*.
+14. What do the *HG00097* column of the data lines tell you?
 
 
 ### Check vcf in IGV {#vcfinigv}
