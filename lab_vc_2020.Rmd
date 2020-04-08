@@ -263,7 +263,8 @@ Check that the files are now present in your *local workspace* using `ls -lrt`.
 
 ### Questions  
 7. What is the read length?  
-8. Can you estimate the coverage by looking at the bam file in IGV? Is the coverage evenly distributed?
+8. How can you estimate the coverage in IGV? 
+9. Is the coverage evenly distributed across the genome?
   
 ## Variant Calling
 ![](data/ngs-workflow/main_vc.png)
@@ -286,12 +287,12 @@ The meta-information lines describe the content of the data lines. The lines sta
 Please have a look at [The Variant Call Format specification](https://samtools.github.io/hts-specs/VCFv4.2.pdf) for more information about vcf files.
 
 ### Questions
-9. What is the file *HG00097.vcf.idx*?
-10. How many meta-information lines does your vcf file contain? The linux command `grep "^##" HG00097.vcf | wc` extracts all lines in HG00097.vcf starting with *##*, and counts these lines. 
-11. How many genetic variants was detected in the sample? The linux command `grep -v "#" filename.txt | wc ` extracts all lines in HG00097.vcf that *don't* start with "#", and counts these lines.  
-12. How does the header line look in your sample? You can view it with the command ´grep '#CHROM' HG00097.vcf`.
-13. What do the *FORMAT* column of the data lines tell you? Remember that the abbreviations shown in the *FORMAT* column is defined in the meta-inforamtion lines starting with *##FORMAT*.
-14. What do the *HG00097* column of the data lines tell you?
+10. What is the file *HG00097.vcf.idx*?
+11. How many meta-information lines does your vcf file contain? The linux command `grep "^##" HG00097.vcf | wc` extracts all lines in HG00097.vcf starting with *##*, and counts these lines. 
+12. How many genetic variants was detected in the sample? The linux command `grep -v "#" filename.txt | wc ` extracts all lines in HG00097.vcf that *don't* start with "#", and counts these lines.  
+13. How does the header line look in your sample? You can view it with the command ´grep '#CHROM' HG00097.vcf`.
+14. What do the *FORMAT* column of the data lines tell you? Remember that the abbreviations shown in the *FORMAT* column is defined in the meta-inforamtion lines starting with *##FORMAT*.
+15. What do the *HG00097* column of the data lines tell you?
 
 
 ### Check vcf in IGV {#vcfinigv}
@@ -306,10 +307,10 @@ Check that the filex were properly downloaded to your *local workspace* using `l
 In `IGV`, in the `File` menu, select `Load from File` and select your vcf file (not the .idx file), which should appear in the tracks window. You will now see all the variants called in HG00097. You can view all variants in the *LCT* gene by typing the gene name in the search box.  
 
 ### Questions  
-10. The vcf file is displayed on two rows; what is shown in the two rows in this case?  
-11. What does it mean if a variant has two colors in the upper row?  
-12. What colour heterozygout variants have in the second row?  
-13. What does it mean if a variant is coloured in tourquise in the second row?  
+16. The vcf file is displayed on two rows; what is shown in the two rows in this case?  
+17. What does it mean if a variant has two colors in the upper row?  
+18. What colour heterozygout variants have in the second row?  
+19. What does it mean if a variant is coloured in tourquise in the second row?  
   
 # Variant calling in cohort {#jointvc}
 If you have time, you can now try joint variant calling in all three samples. Each sample has to be processed with `BWA mem` as above, and then with `HaplotypeCaller` with the flag `-ERC` to generate sample specific g.vcf files. The individual g.vcf fiels will subsequenctly be combined with GATK's `CombineGVCFs`, and translated into vcf format with GATK's `GenotypeGVCFs`. The workflow below shows how the three samples should be processed and combined.  
@@ -406,13 +407,15 @@ gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g
 Download the combined vcf file to your **local workspace** as described [above]{#downloaddata}. Then open the combined vcf file in IGV as described [above]{#vcfinigv} and look at it.  
 
 ## Questions 
-13. How many lines do the comined.g.vcf file have? You can use the linux command `grep -v "#" filename.txt` to extract all lines in "filename.txt" that don't start with "#", then `|`, and then `wc` to count those lines.  
-14. How many lines do the combined.vcf file have?  
-15. Explain the difference in number of lines?  
-16. In IGV, can you find the variant shown to be associated with lactose tolerance in adults?  
-17. What is the approximate coverage in this region in all samples?  
-18. Which samples do you think should avoid drinking milk? Any heterozygotes?  
-19. Does this agree with the genotype in the vcf file?   
+20. How many lines do the comined.g.vcf file have? You can use the linux command `grep -v "#" filename.txt` to extract all lines in "filename.txt" that don't start with "#", then `|`, and then `wc` to count those lines.  
+21. How many lines do the combined.vcf file have?  
+22. Explain the difference in number of lines?  
+23. Look at the header line of the combined vcf file. What columns does it have? 
+24. What is encoded in the last three columns of the data lines?
+25. In IGV, can you find the variant shown to be associated with lactose tolerance in adults?  
+26. What is the approximate coverage in this region in all samples?  
+27. Which samples do you think should avoid drinking milk? Any heterozygotes?  
+28. Does this agree with the genotype in the vcf file?   
 
 # GATK's best practises
 The third part of this workshop will take you through additional refinement steps that are recommended in [GATKs best practises for germline short variant discovery](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-), illustrated in the flowchart below. You can either run the steps command by command in your interactive session, or include the new steps in the SBATCH script that you created earlier. 
@@ -537,10 +540,10 @@ java -Xmx7g -jar $PICARD_HOME/picard.jar MergeVcfs I=cohort.snvs.filtered.vcf I=
 ```  
   
 ## Questions  
-20. How many variants are present in the cohort.filtered.vcf file?  
-21. How many variants have passed the filters?  
+29. How many variants are present in the cohort.filtered.vcf file?  
+30. How many variants have passed the filters?  
 Look at the filtered variants in IGV and compare them to the vcf file generated in step two [above](#jointvc). Zoom in to the variants in *LCT* and *MCM6*.  
-22. Did the extra refinement steps in GATK's best practise short variant discovery make any difference to these variants? 
+31. Did the extra refinement steps in GATK's best practise short variant discovery make any difference to these variants? 
   
 **Note:** In this workshop we use public data from low covare sequencing, that has been processed before publication. The difference between variants processed with our simplified workflow and the bet practise workflow may be small in this case, but with a real life data set it is recomended to follow the best pracites workflow!
    
