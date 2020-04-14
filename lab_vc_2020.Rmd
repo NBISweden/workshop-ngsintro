@@ -164,6 +164,12 @@ samtools faidx human_g1k_v37_chr2.fasta
 ```
 Check to see what file(s) were created using `ls -lrt`.
 
+Genreate a GATK sequence dictionary:
+```bash
+gatk --java-options -Xmx7g CreateSequenceDictionary -R human_g1k_v37_chr2.fasta -O human_g1k_v37_chr2.dict
+```
+Again, check what new file was created using `ls -lrt`. 
+
 # Variant calling in one sample
 Now lets start the main part of the workshop, which will guide you through a basic variant calling workflow in one sample.  
   
@@ -368,7 +374,7 @@ done
 ```
 Please save the sbatch script in your uppmax folder and call it "joint_genotyping.sbatch" or similar. Make the script executable by this command:
 ```bash
-chmod -u+x joint_genotyping.sbatch
+chmod u+x joint_genotyping.sbatch
 ```
 To run the sbatch script in the SLURM queue, use this command:  
 ```bash
@@ -490,7 +496,7 @@ cat(paste0('gatk --java-options -Xmx7g MergeVcfs -I cohort.snvs.filtered.vcf -I 
 Open your filtered VCF with `less` and page through it. It still has all the variant lines, but the FILTER column that was blank before is now filled in, with PASS or a list of the filters it failed. Note also that the filters that were run are described in the header section.
   
 ## SBATCH script {#bpscript}
-We recommend you to incorporate the new steps into the SBATCH script that you created above for [joint variant calling](#sbatchscript). You might find it helpful to try each step for one sample in the interactive terminal, so that you know that a particular command is working before you incorporate it in the script. Please try to complete the script for GATK's best practise workflow. If you run out of time you can sneak peek at our example solution below. 
+We recommend you to incorporate the new steps into an SBATCH script similar to the one you created above for [joint variant calling](#sbatchscript). You might find it helpful to try each step for one sample in the interactive terminal, so that you know that a particular command is working before you incorporate it in the script. Please try to complete the script for GATK's best practise workflow. If you run out of time you can sneak peek at our example solution below. 
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('#!/bin/bash
 #SBATCH -A g2019031
