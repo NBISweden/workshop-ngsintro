@@ -164,7 +164,7 @@ samtools faidx human_g1k_v37_chr2.fasta
 ```
 Check to see what file(s) were created using `ls -lrt`.
 
-Genreate a GATK sequence dictionary:
+Genereate a GATK sequence dictionary:
 ```bash
 gatk --java-options -Xmx7g CreateSequenceDictionary -R human_g1k_v37_chr2.fasta -O human_g1k_v37_chr2.dict
 ```
@@ -517,7 +517,7 @@ ref="/sw/courses/ngsintro/reseq/data/ref"
 ## loop through the samples:
 for sample in HG00097 HG00100 HG00101;
 do
-  echo "Now analyzing: $sample
+  echo "Now analyzing: "$sample
   #Map the reads:
   bwa mem -R "@RG\\tID:readgroupx\\tPU:flowcellx_lanex\\tSM:"$sample"\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta $sample"_1.fq" $sample"_2.fq" | samtools sort > $sample".bam"
   samtools index $sample".bam"
