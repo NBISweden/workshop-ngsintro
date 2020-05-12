@@ -1,6 +1,6 @@
 ---
-title: "Short Variant Calling"
-subtitle: "NGS workflow"
+title: "Variant Calling Workflow"
+subtitle: "From reads to short variants"
 ---
 
 ```{r,child="assets/header-lab.Rmd"}
