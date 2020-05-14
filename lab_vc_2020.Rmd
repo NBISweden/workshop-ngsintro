@@ -61,11 +61,11 @@ HG00097       | British in England and Scotland    | Low coverage WGS
 HG00100       | British in England and Scotland    | Low coverage WGS
 HG00101       | British in England and Scotland    | Low coverage WGS 
 ## Genomic region
-The *LCT* gene on chromosome 2 encodes the lactase protein, which is responsible for the metabolism of lactose in mammals. Most mammals can not digest lactose as adults, but some humans tolerate lactose and can use it as energy source also in adulthood. Genetic variants upstream of the *LCT* gene control how lactose is tolerated in adults. The variant rs4988235, located at at position chr2:136608646 in the HG19 reference assembly, has been shown to lead to lactose persistence.  
+The *LCT* gene on chromosome 2 encodes the lactase protein, which is responsible for the metabolism of lactose in mammals. Most mammals can not digest lactose as adults, but some humans tolerate lactose and can use it as energy source also in adulthood. Genetic variants upstream of the *LCT* gene control how lactose is tolerated in adults. The variant rs4988235, located at position chr2:136608646 in the HG19 reference assembly, has been shown to lead to lactose persistence.  
    
 Here we will use sequencing data for the region chr2:136545000-136617000 in the 3 samples listed above to illustrate the process of variant detection in NGS data.  
   
-For those interested in the details about the genetic bases for lactose tolerance, please read the first three pages of [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf) by Mattar et al. The variant (rs4988235) is here referred to as LCT-13910C>T.  
+For those interested in the details of the genetic bases for lactose tolerance, please read the first three pages of [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf) by Mattar et al. The variant rs4988235 is here referred to as LCT-13910C>T.  
   
 ## Data folder on UPPMAX {#Data}
 All input data for this exercise is located in this folder on Rackham:
@@ -147,7 +147,7 @@ module load bwa/0.7.17
 module load samtools/1.10
 module load GATK/4.1.4.1
 ```
-It is recommended that you specify the version number for reproducibility if you want to rerun the  exact same analyses later. Some programs, for example GATK, has different command syntax in different versions and therefore is important to know which version you used. The GATK commands in this tutorial is for GATK v 4.1.4.1 and forward, at least to 4.1.7.0 which is the latest in time of writing.
+It is recommended that you specify the version number for reproducibility if you want to rerun the  exact same analyses later. Some programs, for example GATK, has different command syntax in different versions and therefore is important to know which version you used. The GATK commands in this tutorial is for GATK4.  
  
   
 ## Index the genome
@@ -448,7 +448,7 @@ cat(paste0('gatk --java-options -Xmx7g MarkDuplicates -I HG00097.bam -O HG00097.
   
 ## Recalibrate Base Quality Scores
 Another source of error is systematic biases in the assignment of base quality scores by the sequencing instrument. This can be corrected by GATK's [Base Quality Score Recalibration](https://gatk.broadinstitute.org/hc/en-us/articles/360035890531-Base-Quality-Score-Recalibration-BQSR-). 
-In short, you first use [BaseRecalibrator](https://gatk.broadinstitute.org/hc/en-us/articles/360037593511-BaseRecalibrator) to build a recalibration model, and then [ApplyBQSR](https://gatk.broadinstitute.org/hc/en-us/articles/360037225212-ApplyBQSR) to recalibrate the basequalities in your bam file.  
+In short, you first use [BaseRecalibrator](https://gatk.broadinstitute.org/hc/en-us/articles/360037593511-BaseRecalibrator) to build a recalibration model, and then [ApplyBQSR](https://gatk.broadinstitute.org/hc/en-us/articles/360037225212-ApplyBQSR) to recalibrate the base qualities in your bam file.  
 `BaseRecalibrator` requires a file with known SNPs as input. This file is available in the data folder on UPPMAX:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0(refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf'))
@@ -504,7 +504,7 @@ cat(paste0('gatk --java-options -Xmx7g MergeVcfs -I cohort.snvs.filtered.vcf -I 
 Open your filtered vcf with `less` and page through it. It still has all the variant lines, but the FILTER column that was blank before is now filled in, with PASS or a list of the filters it failed. Note also that the filters that were run are described in the header section.
   
 ## SBATCH script {#bpscript}
-We recommend you to incorporate the new steps into an SBATCH script similar to the one you created above for [joint variant calling](#sbatchscript). You might find it helpful to try each step for one sample in the interactive terminal, so that you know that a particular command is working before you incorporate it in the script. Please try to complete the script for GATK's best practice workflow. If you run out of time you can sneak peek at our example solution below. 
+We recommend you to incorporate the new steps into an SBATCH script similar to the one you created above for [joint variant calling](#sbatchscript). You might find it helpful to try each step for one sample in the interactive terminal, so that you know that a particular command is working before you incorporate it in the script. Please try to complete the script for GATK's best practices workflow. If you run out of time you can sneak peek at our example solution below. 
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('#!/bin/bash
 #SBATCH -A g2019031
@@ -554,9 +554,9 @@ gatk --java-options -Xmx7g MergeVcfs -I cohort.snvs.filtered.vcf -I cohort.indel
 29. How many variants are present in the cohort.filtered.vcf file?  
 30. How many variants have passed the filters?  
 Upload the filtered variants, as well as the combined vcf file generated  [above](#jointvc), to IGV. Zoom in to the variants in *LCT* and *MCM6*.  
-31. Did the extra refinement steps in GATK's best practice short variant discovery make any difference to these variants? 
+31. Did the extra refinement steps in GATK's best practices short variant discovery make any difference to these variants? 
   
-**Note:** In this workshop we use public data from low coverage sequencing, that has been processed before publication. The difference between variants processed with our simplified workflow and the best practice workflow may be small in this case, but with a real-life data set it is recommended to follow the best practices workflow!
+**Note:** In this workshop we use public data from low coverage sequencing, that has been processed before publication. The difference between variants processed with our simplified workflow and the best practices workflow may be small in this case, but with a real-life data set it is recommended to follow the best practices workflow!
 
 # Clean up
 When the analysis is done and you are sure that you have the desired output, it is a good practise to remove intermediary files that are no longer needed. This will save disk space, and will be a crucial part of the routines when you work with your own data. Please think about which files you need to keep if you would like to go back and look at this lab later on. Remove the other files.   
