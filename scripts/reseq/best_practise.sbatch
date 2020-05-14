@@ -10,7 +10,6 @@ module load bioinfo-tools
 module load bwa/0.7.17
 module load samtools/1.10
 module load GATK/4.1.4.1
-module load picard/2.20.4
 
 ref="/sw/courses/ngsintro/reseq/data/ref"
 
@@ -22,8 +21,8 @@ do
   
   samtools index $sample".bam"
   
-  java -Xmx7g -jar $PICARD_HOME/picard.jar MarkDuplicates I=$sample".bam" O=$sample".md.bam" M=$sample"_mdmetrics.txt"
-
+  gatk --java-options -Xmx7g MarkDuplicates -I $sample".bam" -O $sample".md.bam" -M $sample"_mdmetrics.txt"
+  
   gatk --java-options -Xmx7g BaseRecalibrator -R human_g1k_v37_chr2.fasta -I $sample".md.bam" --known-sites $ref"/1000G_phase1.snps.high_confidence.b37.chr2.vcf" -O $sample".recal.table"
   
   gatk --java-options -Xmx7g ApplyBQSR -R human_g1k_v37_chr2.fasta -I $sample".md.bam" --bqsr-recal-file $sample".recal.table" -O $sample".recal.bam"
@@ -44,4 +43,4 @@ gatk --java-options -Xmx7g SelectVariants -R human_g1k_v37_chr2.fasta -V cohort.
 
 gatk --java-options -Xmx7g VariantFiltration -R human_g1k_v37_chr2.fasta -V cohort.indels.vcf -O cohort.indels.filtered.vcf --filter-name QDfilter --filter-expression "QD < 2.0" --filter-name FSfilter --filter-expression "FS > 200.0"
 
-java -Xmx7g -jar $PICARD_HOME/picard.jar MergeVcfs I=cohort.snvs.filtered.vcf I=cohort.indels.filtered.vcf O=cohort.filtered.vcf
+gatk --java-options -Xmx7g MergeVcfs -I cohort.snvs.filtered.vcf -I cohort.indels.filtered.vcf -O cohort.filtered.vcf'
