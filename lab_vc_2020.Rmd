@@ -559,7 +559,8 @@ Upload the filtered variants, as well as the combined vcf file generated  [above
 **Note:** In this workshop we use public data from low coverage sequencing, that has been processed before publication. The difference between variants processed with our simplified workflow and the best practices workflow may be small in this case, but with a real-life data set it is recommended to follow the best practices workflow!
 
 # Clean up
-When the analysis is done and you are sure that you have the desired output, it is a good practise to remove intermediary files that are no longer needed. This will save disk space, and will be a crucial part of the routines when you work with your own data. Please think about which files you need to keep if you would like to go back and look at this lab later on. Remove the other files.   
+When the analysis is done and you are sure that you have the desired output, it is a good practise to remove intermediary files that are no longer needed. This will save disk space, and will be a crucial part of the routines when you work with your own data. Please think about which files you need to keep if you would like to go back and look at this lab later on. Remove the other files.
+  
 # Additional information
 * Here is a technical documentation of [Illumina Quality Scores](https://www.illumina.com/documents/products/technotes/technote_understanding_quality_scores.pdf)
 * Tools used or referenced 
