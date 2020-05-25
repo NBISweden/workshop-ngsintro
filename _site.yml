@@ -1,15 +1,15 @@
 name: Introduction to Bioinformatics using NGS data
 favicon: assets/favicon.png
-output_dir: 2004
-uppmax_project: g2019031
+output_dir: 2011
+uppmax_project: g2020009
 # uppmax reservation ids
-uppmax_res_1: g2019031_27
-uppmax_res_2: g2019031_28
-uppmax_res_3: g2019031_29
-uppmax_res_4: g2019031_30
-uppmax_res_5: g2019031_31
-# location options are lund, umea or uppsala
-location: linkoping
+uppmax_res_1: g2020009_09
+uppmax_res_2: g2020009_10
+uppmax_res_3: g2020009_11
+uppmax_res_4: g2020009_12
+uppmax_res_5: g2020009_13
+# location options are linkoping, lund, umea or uppsala
+location: uppsala
 exclude: ["docs","README.md","schedule.csv","LICENSE","LICENSE.md","scripts","tmprepo"]
 navbar:
   title: '<img src="assets/logo.svg" id="logo" style="height:30px;margin:0;"/>'
