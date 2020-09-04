@@ -45,8 +45,8 @@ jobs:
           Rscript -e 'install.packages(yaml::read_yaml("_site.yml")$packages$packages_cran_student)'
           Rscript -e 'BiocManager::install(as.character(yaml::read_yaml("_site.yml")$packages$packages_bioc_repo))'
           Rscript -e 'BiocManager::install(as.character(yaml::read_yaml("_site.yml")$packages$packages_bioc_student))'
-          Rscript -e 'devtools::install_github(yaml::read_yaml("_site.yml")$packages$packages_github_repo)'
-          Rscript -e 'devtools::install_github(yaml::read_yaml("_site.yml")$packages$packages_github_student)'
+          Rscript -e 'remotes::install_github(yaml::read_yaml("_site.yml")$packages$packages_github_repo)'
+          Rscript -e 'remotes::install_github(yaml::read_yaml("_site.yml")$packages$packages_github_student)'
           echo "R directory size:"
           du -sh /home/runner/work/_temp/Library
       - name: Render site, pull repo, copy folder, create index, push repo

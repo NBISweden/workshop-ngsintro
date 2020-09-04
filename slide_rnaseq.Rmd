@@ -38,14 +38,6 @@ class: spaced
 #library(pheatmap)
 #library(plotly)
 #library(DESeq2)
-
-#colours
-col_sll_green <- "#95C11E"
-col_sll_blue <- "#0093BD"
-col_sll_orange <- "#EF7C00"
-col_sll_green_light <- "#f4f8e8"
-col_sll_blue_light <- "#e5f4f8"
-col_sll_orange_light <- "#fdf1e5"
 ```
 
 ## Contents

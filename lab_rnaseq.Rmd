@@ -27,14 +27,6 @@ path_project_rnaseq <- paste0(path_project,"/<username>/rnaseq")
 library(dplyr) # data handling
 library(kableExtra)
 
-#colours
-col_sll_green <- "#95C11E"
-col_sll_blue <- "#0093BD"
-col_sll_orange <- "#EF7C00"
-col_sll_green_light <- "#f4f8e8"
-col_sll_blue_light <- "#e5f4f8"
-col_sll_orange_light <- "#fdf1e5"
-
 col_condition=c("#fb8072","#8dd3c7")
 col_rep <- c("#80b1d3","#fdb462","#bebada")
 ```
@@ -64,7 +56,7 @@ RNA-seq experiment does not necessarily end with a list of DE genes. If you have
 
 * In paths, remember to change `<username>` with your actual UPPMAX username.
 
-* You are welcome to try your own solutions to the problems, before checking the solution. Click the <code style="background-color:#0093BD;color:white;">+</code> button to see the suggested solution. There is more than one way to complete a task. Discuss with person next to you and ask us when in doubt.
+* You are welcome to try your own solutions to the problems, before checking the solution. Click the `r paste0('<code style="background-color:',color_primary,';color:white;">+</code>')` button to see the suggested solution. There is more than one way to complete a task. Discuss with person next to you and ask us when in doubt.
 
 * Input code blocks are displayed like shown below. The code language is displayed above the block. Shell scripts (**SH**) are to be executed in the linux terminal such as bash. **R** scripts are to be run in R after running  R` in the terminal or in R/RStudio locally. Output text blocks are marked as **OUTPUT**.
 
@@ -83,13 +75,11 @@ Myelination is essential for nervous system function. Schwann cells interact wit
 The material for RNA-seq was collected from 2 conditions (**Wt** and **KO**), each with 3 biological replicates.
 
 ```{r,echo=FALSE}
-data.frame(Accession=c("SRR3222409","SRR3222410","SRR3222411","SRR3222412","SRR3222413","SRR3222414"),
-           Condition=c(rep(c("KO","Wt"),each=3)),
-           Replicate=rep(1:3,2)) %>%
+data.frame(Accession=c("SRR3222409","SRR3222410","SRR3222411","SRR3222412","SRR3222413","SRR3222414"),Condition=c(rep(c("KO","Wt"),each=3)),Replicate=rep(1:3,2)) %>%
   mutate(Condition=cell_spec(Condition,"html",color="white",bold=T,
-    background=col_condition[.$Condition])) %>%
+    background=col_condition[factor(Condition)])) %>%
   mutate(Replicate=cell_spec(Replicate,"html",color="white",bold=T,
-    background=col_rep[.$Replicate])) %>%
+    background=col_rep[factor(Replicate)])) %>%
   kable("html",escape=F,align="r") %>%
   kable_styling(bootstrap_options=c("striped","hover","responsive"),
                 full_width=F,position="left")

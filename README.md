@@ -26,7 +26,7 @@ If you are not added as a collaborator, first fork this repo to your account, th
 
 The source material is located on the *master* branch (default). The rendered material is located on the *gh-pages* branch. For most part, one only needs to update content in master. Changes pushed to the *master* branch is automatically rendered to the *gh-pages* branch.
 
-:exclamation: The first build can take around 30-40 mins depending on the number of R packages. Subsequent builds take about 2-3 minutes since caching is enabled. Caches are removed after 7 days of last access. A push after that will require a full rebuild.
+:exclamation: The first build can take around 30-40 mins depending on the number of R packages (listed in **_site.yml**). Subsequent builds take about 2-3 minutes since caching is enabled. Caches are removed after 7 days of last access. A push after that will require a full rebuild.
 
 For more details about repo organisation, updating and modifying this repo, check out the [template repo](https://github.com/royfrancis/workshop-template-rmd-ga).
 
@@ -44,9 +44,11 @@ You can also run `rmarkdown::render("bla.Rmd")` on individual .Rmd/.md files. Th
 
 ## Test scripts
 
-For variant-calling and rnaseq, shell scripts are prepared to test the labs. The contents of these scripts should use identical steps and tools as the student would use in the lab. The aim of this script is to execute them on UPPMAX before the course. This should provide insight into broken links, broken tools, tool incompatibilities, core usage, ram usage and total space used.
+This is regarding the directory **scripts**. This directory contains shell scripts for reseq (variant-calling) and rnaseq parts of the workshop. These are intended to be run on UPPMAX. Further instructions on using them are available within the scripts.
 
-Test scripts are available inside the directory `scripts`. These are intended to be run on UPPMAX. Further instructions are available within the scripts. For rnaseq, use `rnaseq-master.sh` which internally uses other `rnaseq-*.sh` scripts. For variant-calling, use `vc-master.sh`.
+The contents of these scripts should use identical steps and tools as the student would use in the lab. The aim of these scripts is to execute them on UPPMAX before the course. This should provide insight into broken links, broken tools, tool incompatibilities, core usage, ram usage and total space used.
+
+*The scripts directory is not used in this repo, tutorial or the website. It's just here as a backup.*
 
 ---
 
