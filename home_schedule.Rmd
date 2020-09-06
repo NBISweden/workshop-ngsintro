@@ -14,6 +14,7 @@ library(lubridate)
 library(dplyr)
 library(kableExtra)
 library(formattable)
+library(yaml)
 ```
 
 ```{r,eval=TRUE,include=FALSE}
@@ -74,18 +75,28 @@ s %>%
 <i class="fas fa-calendar" style="margin-left:4px; margin-right:4px;"></i> Date
 </span>
 <span style="margin-left:6px; margin-right:6px;">
-<i class="fas fa-map-marker-alt" style="margin-left:4px; margin-right:4px;"></i> Room number
+<i class="fas fa-map-marker-alt" style="margin-left:4px; margin-right:4px;"></i> Venue
 </span>
 <span style="margin-left:6px; margin-right:6px;">
 <i class="fas fa-file-powerpoint" style="margin-left:4px; margin-right:4px;"></i> Slides
 </span>
 <span style="margin-left:6px; margin-right:6px;">
-<i class="fas fa-file-alt" style="margin-left:4px; margin-right:4px;"></i> Lab exercises
+<i class="fas fa-file-alt" style="margin-left:4px; margin-right:4px;"></i> Exercises
 </span>
 </span>
 </p>
 
-<p class="small" style="margin-top:20px;">
-<span style="margin-left:4px; margin-right:4px;"><i class="fas fa-users" style="margin-left:4px; margin-right:4px;"></i></span> MD: Martin Dalhö, JD: Jacques Dainat, PE: Payam Emami, AS: Anders Sjölander, AJ: Anna Johansson, BS: Bengt Sennblad, NR: Nima Rafati, OP: Olga Petterson.
-</p>
+```{r,echo=FALSE,results='asis'}
+# add assistant list if present
+asst <- yaml::read_yaml("_site.yml")$assistant
+
+if(!is.null(asst)) {
+  cat('<p class="small" style="margin-top:20px;">',
+           '<span style="margin-left:4px; margin-right:4px;"><i class="fas fa-users" style="margin-left:4px; margin-right:4px;"></i></span>',
+           paste(asst,collapse=", "),
+           '</p>')
+}
+```
+
 </div>
+
