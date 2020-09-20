@@ -24,7 +24,7 @@ assistants:
 favicon: assets/favicon.png
 exclude: ["docs","README.md","schedule.csv","LICENSE","LICENSE.md","scripts","tmprepo"]
 navbar:
-  title: '<img src="assets/logo.svg" id="logo" style="height:30px;margin:0;"/>'
+  title: '<img src="assets/logo.svg" id="logo" style="height:22px;margin:0;"/>'
   type: default
   logo:
     image: "assets/logo.svg"
@@ -73,12 +73,10 @@ packages:
    - stringr
    - tidyr
   packages_bioc_student:
-   - biomaRt
    - DESeq2
    - edgeR
    - goseq
    - GO.db
-   - methods
    - org.Mm.eg.db
    - reactome.db
   packages_github_student:
