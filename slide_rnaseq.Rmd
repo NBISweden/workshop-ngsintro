@@ -997,7 +997,7 @@ class: spaced
 **Main exercise**
 
 - 01 Check the quality of the raw reads with **FastQC**
-- 02 Map the reads to the reference genome using **Star**
+- 02 Map the reads to the reference genome using **HISAT2**
 - 03 Assess the post-alignment quality using **QualiMap**
 - 04 Count the reads overlapping with genes using **featureCounts**
 - 05 Find DE genes using **DESeq2** in R
@@ -1032,15 +1032,15 @@ rnaseq/
 |   +-- plots/
 +-- documents/
 +-- main/
-|   +-- 1_raw/
-|   +-- 2_fastqc/
-|   +-- 3_mapping/
-|   +-- 4_qualimap/
-|   +-- 5_dge/
-|   +-- 6_multiqc/
-+-- reference/
-|   +-- mouse_chr19/
-+-- scripts/
+    +-- 1_raw/
+    +-- 2_fastqc/
+    +-- 3_mapping/
+    +-- 4_qualimap/
+    +-- 5_dge/
+    +-- 6_multiqc/
+    +-- reference/
+    |   +-- mouse_chr19_hisat2/
+    +-- scripts/
 ```
 ]
 ]
@@ -1062,7 +1062,7 @@ rnaseq/
   +-- 5_dge/
   +-- 6_multiqc/
   +-- reference/
-  |   +-- mouse_chr19/
+  |   +-- mouse_chr19_hisat2/
   +-- scripts/
   +-- funannot/
   +-- plots/
