@@ -44,7 +44,7 @@ You need a program to connect to a remote cluster (UPPMAX). Linux and Mac users 
 
 [![](data/common/mobaxterm.png)](http://mobaxterm.mobatek.net)
 
-If you are on a Windows system, we recommend [MobaXterm](http://mobaxterm.mobatek.net). It is recommended that you INSTALL the program and not use the portable version. MobaXterm also has an integrated SFTP file browser.  
+If you are on a Windows system, we recommend [MobaXterm](http://mobaxterm.mobatek.net). It is recommended that you INSTALL the program and not use the portable version. MobaXterm also has an integrated SFTP file browser.
 
 [![](data/common/xquartz.png)](https://www.xquartz.org/)
 
@@ -66,7 +66,7 @@ For all users, if you prefer a GUI to upload and download files from UPPMAX, we 
 For this step, you will have to use the terminal a bit. You can get started by following **Tutorial One** at this link *[Unix tutorial for beginners](http://www.ee.surrey.ac.uk/Teaching/Unix/)*. You must use [https://scilifelab.github.io/courses/ngsintro/common/emu/](https://scilifelab.github.io/courses/ngsintro/common/emu/) [(or this mirror)](https://bellard.org/jslinux/vm.html?url=https://bellard.org/jslinux/buildroot-x86.cfg) to try the commands in the tutorial, so that you don't mess up any real world system. If you any questions regarding this tutorial contact: *martin.dahlo@scilifelab.uu.se*.
 </div>
 
-Make sure that you can read and write in the workshop folder. Go to ``r paste0("/proj/",upid,"/nobackup/")`` and create a directory with your username. For example `mkdir jody`. You will work inside this directory for the workshop. For example ``r paste0("/proj/",upid,"/nobackup/jody")``. If you cannot write to the folder, the most likely reason is that you have not requested access to the workshop project via SUPR. This is described in step 1.  
+Make sure that you can read and write in the workshop folder. Go to ``r paste0("/proj/",upid,"/nobackup/")`` and create a directory with your username. For example `mkdir jody`. You will work inside this directory for the workshop. For example ``r paste0("/proj/",upid,"/nobackup/jody")``. If you cannot write to the folder, the most likely reason is that you have not requested access to the workshop project via SUPR. This is described in step 1.
 
 <div class="boxy boxy-exclamation">
 Note that it may take an hour or so from request approval, before you can actually write to the folder. We will check before the workshop that all students have logged in and done this, so do not forget!
@@ -95,29 +95,29 @@ If you plan to run R steps locally on your computer, R and RStudio need to be in
 
 For Linux and Mac users, you may have to install some extra OS specific libraries before installing the R packages. Pick the packages as needed based on your system below.
 
-libcurl  
+libcurl
 
 > * deb: libcurl4-openssl-dev (Debian, Ubuntu, etc)
 > * rpm: libcurl-devel (Fedora, CentOS, RHEL)
 > * csw: libcurl_dev (Solaris)
 
-libssl  
+libssl
 
 > * deb: libssl-dev (Debian, Ubuntu, etc)
 > * rpm: openssl-devel (Fedora, CentOS, RHEL)
 > * csw: libssl_dev (Solaris)
 > * brew: openssl@1.1 (Mac OSX)
 
-libxml2  
+libxml2
 
 > * deb: libxml2-dev (Debian, Ubuntu, etc)
 > * rpm: libxml2-devel (Fedora, CentOS, RHEL)
 > * csw: libxml2_dev (Solaris)
 
-libudunits2-dev  
-libopenblas-base  
+libudunits2-dev
+libopenblas-base
 
-Install the R packages. Simply copy and paste the code into R.  
+Install the R packages. Simply copy and paste the code into R.
 
 ```{r,eval=TRUE,block.title=NULL,echo=FALSE,comment="",class.output="r"}
 # this code block reads package names from '_site.yml' and prints them as installation instruction.
@@ -137,7 +137,7 @@ if(!is.null(pkg$packages$packages_bioc_student)) {
 
 if(!is.null(pkg$packages$packages_github_student)) {
  cat("# install from github\n")
- cat(paste0("devtools::install_github(c('",paste(pkg$packages$packages_github_student,sep="",collapse="','"),"'))"))
+ cat(paste0("remotes::install_github(c('",paste(pkg$packages$packages_github_student,sep="",collapse="','"),"'))"))
 }
 ```
 

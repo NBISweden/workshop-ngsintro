@@ -4,5 +4,5 @@
 for i in ../1_raw/*.gz
 do
 	echo "Running $i ..."
-	../scripts/rnaseq-fastqc.sh "$i"
+	bash ../scripts/rnaseq-fastqc.sh "$i"
 done

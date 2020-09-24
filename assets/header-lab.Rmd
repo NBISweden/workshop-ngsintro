@@ -21,7 +21,7 @@ knitr::opts_knit$set(progress=TRUE,verbose=TRUE)
 knitr::opts_chunk$set(dev="svg",results="hold",fig.show="hold",fig.align="left",
                       echo=TRUE,warning=FALSE,message=FALSE,accordion=NULL,
                       block.title=NULL)
-color_primary <- "#0093BD"
+color_primary <- "#4C979F"
 color_text <- "#424949"
 ```
 

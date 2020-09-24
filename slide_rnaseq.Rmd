@@ -38,14 +38,6 @@ class: spaced
 #library(pheatmap)
 #library(plotly)
 #library(DESeq2)
-
-#colours
-col_sll_green <- "#95C11E"
-col_sll_blue <- "#0093BD"
-col_sll_orange <- "#EF7C00"
-col_sll_green_light <- "#f4f8e8"
-col_sll_blue_light <- "#e5f4f8"
-col_sll_orange_light <- "#fdf1e5"
 ```
 
 ## Contents
@@ -1005,7 +997,7 @@ class: spaced
 **Main exercise**
 
 - 01 Check the quality of the raw reads with **FastQC**
-- 02 Map the reads to the reference genome using **Star**
+- 02 Map the reads to the reference genome using **HISAT2**
 - 03 Assess the post-alignment quality using **QualiMap**
 - 04 Count the reads overlapping with genes using **featureCounts**
 - 05 Find DE genes using **DESeq2** in R
@@ -1040,15 +1032,15 @@ rnaseq/
 |   +-- plots/
 +-- documents/
 +-- main/
-|   +-- 1_raw/
-|   +-- 2_fastqc/
-|   +-- 3_mapping/
-|   +-- 4_qualimap/
-|   +-- 5_dge/
-|   +-- 6_multiqc/
-+-- reference/
-|   +-- mouse_chr19/
-+-- scripts/
+    +-- 1_raw/
+    +-- 2_fastqc/
+    +-- 3_mapping/
+    +-- 4_qualimap/
+    +-- 5_dge/
+    +-- 6_multiqc/
+    +-- reference/
+    |   +-- mouse_chr19_hisat2/
+    +-- scripts/
 ```
 ]
 ]
@@ -1070,7 +1062,7 @@ rnaseq/
   +-- 5_dge/
   +-- 6_multiqc/
   +-- reference/
-  |   +-- mouse_chr19/
+  |   +-- mouse_chr19_hisat2/
   +-- scripts/
   +-- funannot/
   +-- plots/
