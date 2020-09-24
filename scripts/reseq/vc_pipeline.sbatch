@@ -3,7 +3,7 @@
 
 ## Set cores (-n) as same as set below under variables
 
-#SBATCH -A g2019031
+#SBATCH -A g2020009
 #SBATCH -p core
 #SBATCH -n 1
 #SBATCH -t 1:00:00
