@@ -227,7 +227,7 @@ jg_start_time=`date +%s`
 
 if [ ${compute} == "long" ];
  then
-    gatk --java-options -Xmx7g MergeVcfs -I cohort.snvs.filtered.vcf -I cohort.indels.filtered.vcf -O cohort.filtered.vcf'
+    gatk --java-options -Xmx7g MergeVcfs -I cohort.snvs.filtered.vcf -I cohort.indels.filtered.vcf -O cohort.filtered.vcf
 
 fi
 
