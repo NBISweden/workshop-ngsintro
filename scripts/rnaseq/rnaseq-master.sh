@@ -34,11 +34,15 @@
 
 ## VARIABLES --------------------------------------------------------------------
 
+# fail fast
+set -e
+
 ## path to base directory (WITHOUT forward slash at the end)
 path_base="/sw/courses/ngsintro/rnaseq/"
+#path_base="/home/roy/Documents/nbis/teaching/ngsintro/test/source"
 
-## if compute is set to long, all steps are run, takes ~12 mins on 1 core (6 GB RAM)
-## if compute is set to short, long computations are not run, takes ~4 mins on 1 core (6 GB RAM)
+## if compute is set to long, all steps are run, takes ~12 mins on 1 core (6 GB RAM), final directory size: 1.5GB
+## if compute is set to short, long computations are not run, takes ~4 mins on 1 core (6 GB RAM), final directory size: 33MB
 compute="long"
 
 ## number of cores to use
@@ -62,16 +66,18 @@ start_time=`date +%s`
 echo "Loading modules ..."
 
 ## load modules
-module load bioinfo-tools
-module load FastQC/0.11.8
-module load HISAT2/2.1.0
-module load samtools/1.9
-module load MultiQC/1.8
-module load QualiMap/2.2.1
-module load subread/2.0.0
-module load R/4.0.0
-module load R_packages/4.0.0
-## trinity uses additional modules
+if ( hostname | grep -q uppmax );
+then
+  module load bioinfo-tools
+  module load FastQC/0.11.8
+  module load HISAT2/2.1.0
+  module load samtools/1.9
+  module load MultiQC/1.8
+  module load QualiMap/2.2.1
+  module load subread/2.0.0
+  module load R/4.0.0
+  module load R_packages/4.0.0
+fi
 
 ##:<<'comment'
 ## comment
@@ -229,7 +235,7 @@ cp ${path_base}/main/5_dge/counts_full.txt .
 
 if [ ${compute} == "long" ];
  then
-  Rscript dge.R
+  Rscript --no-environ --no-site-file --no-init-file --no-save dge.R
  else
   cp ${path_base}/main/5_dge/dge_results_full.Rds .
   cp ${path_base}/main/5_dge/counts_vst_full.Rds .
@@ -255,7 +261,7 @@ gunzip ./reference/*.gz
 mkdir funannot
 cp -r ${path_base}/bonus/funannot/annotate_de_results.R ./funannot/
 cd funannot
-Rscript annotate_de_results.R
+Rscript --no-environ --no-site-file --no-init-file --no-save annotate_de_results.R
 cd ..
 
 funannot_end_time=`date +%s`
@@ -270,10 +276,10 @@ mkdir plots
 cd plots
 cp ${path_base}/bonus/plots/*.R .
 
-Rscript pca.R
-Rscript ma.R
-Rscript volcano.R
-Rscript heatmap.R
+Rscript --no-environ --no-site-file --no-init-file --no-save pca.R
+Rscript --no-environ --no-site-file --no-init-file --no-save ma.R
+Rscript --no-environ --no-site-file --no-init-file --no-save volcano.R
+Rscript --no-environ --no-site-file --no-init-file --no-save heatmap.R
 
 cd ..
 

@@ -10,8 +10,11 @@
 # run from directory /5_dge/
 
 # load modules
-module load bioinfo-tools
-module load subread/2.0.0
+if ( hostname | grep -q uppmax );
+then
+  module load bioinfo-tools
+  module load subread/2.0.0
+fi
 
 featureCounts \
 -a "../reference/Mus_musculus.GRCm38.99-19.gtf" \

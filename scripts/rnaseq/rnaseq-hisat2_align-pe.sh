@@ -22,9 +22,12 @@ if [ -z "$2" ]; then
 fi
 
 # load modules
-module load bioinfo-tools
-module load HISAT2/2.1.0
-module load samtools/1.8
+if ( hostname | grep -q uppmax );
+then
+  module load bioinfo-tools
+  module load HISAT2/2.1.0
+  module load samtools/1.8
+fi
 
 # create output file name
 prefix="${1##*/}"

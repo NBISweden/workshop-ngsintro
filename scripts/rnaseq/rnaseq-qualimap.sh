@@ -16,8 +16,11 @@ if [ -z "$1" ]; then
 fi
 
 # load modules
-module load bioinfo-tools
-module load QualiMap/2.2.1
+if ( hostname | grep -q uppmax );
+then
+  module load bioinfo-tools
+  module load QualiMap/2.2.1
+fi
 
 # available memory in GB
 mem="6"
@@ -36,4 +39,3 @@ qualimap rnaseq -pe \
 -outfile "${prefix}" \
 -outformat "HTML" \
 --java-mem-size="${mem}G" >& "${prefix}-qualimap.log"
-

@@ -17,7 +17,10 @@ if [ -z "$1" ]; then
 fi
 
 # load modules
-module load bioinfo-tools
-module load FastQC/0.11.8
+if ( hostname | grep -q uppmax );
+then
+  module load bioinfo-tools
+  module load FastQC/0.11.8
+fi
 
 fastqc -t 1 -o . "$1"

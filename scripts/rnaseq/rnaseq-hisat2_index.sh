@@ -10,11 +10,13 @@
 # run from directory /reference/
 
 # load module
-module load bioinfo-tools
-module load HISAT2/2.1.0
+if ( hostname | grep -q uppmax );
+then
+  module load bioinfo-tools
+  module load HISAT2/2.1.0
+fi
 
 hisat2-build \
 -p 1 \
 Mus_musculus.GRCm38.dna.chromosome.19.fa \
 mouse_chr19_hisat2/mouse_chr19_hisat2
-
