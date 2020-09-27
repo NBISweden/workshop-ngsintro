@@ -1,0 +1,25 @@
+name: nbis-workshop-ngsintro
+channels:
+  - conda-forge
+  - bioconda
+  - BioBuilds
+dependencies:
+  - bwa=0.7.17
+  - samtools
+  - gatk4=4.1
+  - fastqc
+  - igv
+  - multiqc
+  - hisat2=2.1.0
+  - qualimap
+  - subread
+  - r-base=4.0.2
+  - bioconductor-deseq2
+  - bioconductor-edger
+  - bioconductor-goseq
+  - bioconductor-go.db
+  - bioconductor-reactome.db
+  - bioconductor-org.mm.eg.db
+  - r-pheatmap
+  - r-ggplot2
+  - bioconductor-genomeinfodb
