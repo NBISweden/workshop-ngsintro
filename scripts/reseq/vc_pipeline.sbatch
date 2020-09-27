@@ -9,8 +9,7 @@
 #SBATCH -t 1:00:00
 #SBATCH -J vc
 #SBATCH --mail-type=ALL
-#SBATCH --mail-user="malin.larsson@scilifelab.se"
-
+##SBATCH --mail-user="malin.larsson@scilifelab.se"
 
 ## INTRO COURSE VARIANT CALLING TEST SCRIPT
 
@@ -28,13 +27,16 @@
 ## The script can be started from anywhere on Rackham
 ## It will create the folder $path_home/ngsworkflow (if not already there)
 ## And write all output there
-## Run sbatch /sw/share/compstore/courses/ngsintro/reseq/scripts/vc_pipeline.sbatch
+## Run sbatch /sw/courses/ngsintro/reseq/scripts/vc_pipeline.sbatch
 
 ## VARIABLES --------------------------------------------------------------------
 
+# fail fast
+set -e
+
 ## path to base directory for the course data (WITHOUT forward slash at the end)
-ref="/sw/courses/ngsintro/reseq/data/ref"
-## should be /sw/share/compstore/courses/ngsintro/reseq/data on rackham.
+path_base="/sw/courses/ngsintro/reseq/data"
+## should be /sw/courses/ngsintro/reseq/data on rackham.
 path_home=$PWD
 
 ## if compute is set to long, all steps are run, takes ~30 minutes on 1 core
@@ -61,10 +63,13 @@ start_time=`date +%s`
 echo "Loading modules ..."
 
 ## load modules
-module load bioinfo-tools
-module load bwa/0.7.17
-module load samtools/1.10
-module load GATK/4.1.4.1
+if ( hostname | grep -q uppmax ) ;
+ then
+  module load bioinfo-tools
+  module load bwa/0.7.17
+  module load samtools/1.10
+  module load GATK/4.1.4.1
+ fi
 
 ## make directories
 echo "Creating directories ..."
@@ -72,16 +77,15 @@ mkdir -p ${path_home}/ngsworkflow
 cd ${path_home}/ngsworkflow
 echo $PWD
 
-
 ## create links to reference genome and fastq files
 echo "Creating softlinks ..."
-ln -s /sw/courses/ngsintro/reseq/data/ref/human_g1k_v37_chr2.fasta
-ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00097_1.fq
-ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00097_2.fq
-ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00100_1.fq
-ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00100_2.fq
-ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00101_1.fq
-ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00101_2.fq
+ln -s ${path_base}/ref/human_g1k_v37_chr2.fasta
+ln -s ${path_base}/fastq/HG00097_1.fq
+ln -s ${path_base}/fastq/HG00097_2.fq
+ln -s ${path_base}/fastq/HG00100_1.fq
+ln -s ${path_base}/fastq/HG00100_2.fq
+ln -s ${path_base}/fastq/HG00101_1.fq
+ln -s ${path_base}/fastq/HG00101_2.fq
 
 ## index reference genome ----------------------------------------------------------------------
 echo "Indexing the genome ..."
@@ -89,14 +93,13 @@ index_start_time=`date +%s`
 
 if [ ${compute} == "long" ];
  then
-	bwa index -a bwtsw human_g1k_v37_chr2.fasta
-	samtools faidx human_g1k_v37_chr2.fasta
-    gatk --java-options -Xmx7g CreateSequenceDictionary -R human_g1k_v37_chr2.fasta -O human_g1k_v37_chr2.dict
+  bwa index -a bwtsw human_g1k_v37_chr2.fasta
+  samtools faidx human_g1k_v37_chr2.fasta
+  gatk --java-options -Xmx7g CreateSequenceDictionary -R human_g1k_v37_chr2.fasta -O human_g1k_v37_chr2.dict
 fi
 
 index_end_time=`date +%s`
 echo "Indexing took $((${index_end_time}-${index_start_time})) seconds."
-
 
 ## Per sample mapping and variant calling -------------------------------------------------------------
 
@@ -107,74 +110,63 @@ per_sample_start_time=`date +%s`
 if [ ${compute} == "long" ];
  then
 
-## loop through the samples:
-for sample in HG00097 HG00100 HG00101;
-do
-  echo "\n\nNow analyzing: "$sample"\n\n"
-  bwa mem -R "@RG\\tID:readgroupx\\tPU:flowcellx_lanex\\tSM:"$sample"\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta $sample"_1.fq" $sample"_2.fq" | samtools sort > $sample".bam"
-
-  samtools index $sample".bam"
-
-  gatk --java-options -Xmx7g MarkDuplicates -I $sample".bam" -O $sample".md.bam" -M $sample"_mdmetrics.txt"
-
-  gatk --java-options -Xmx7g BaseRecalibrator -R human_g1k_v37_chr2.fasta -I $sample".md.bam" --known-sites $ref"/1000G_phase1.snps.high_confidence.b37.chr2.vcf" -O $sample".recal.table"
-
-  gatk --java-options -Xmx7g ApplyBQSR -R human_g1k_v37_chr2.fasta -I $sample".md.bam" --bqsr-recal-file $sample".recal.table" -O $sample".recal.bam"
-
-  gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I $sample".bam" -O $sample".g.vcf"
-
-done
-
+ ## loop through the samples:
+ for sample in HG00097 HG00100 HG00101;
+  do
+   echo "\n\nNow analyzing: "$sample"\n\n"
+   bwa mem -R "@RG\\tID:readgroupx\\tPU:flowcellx_lanex\\tSM:"$sample"\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta $sample"_1.fq" $sample"_2.fq" | samtools sort > $sample".bam"
+   samtools index $sample".bam"
+   gatk --java-options -Xmx7g MarkDuplicates -I $sample".bam" -O $sample".md.bam" -M $sample"_mdmetrics.txt"
+   gatk --java-options -Xmx7g BaseRecalibrator -R human_g1k_v37_chr2.fasta -I $sample".md.bam" --known-sites "${path_base}/ref/1000G_phase1.snps.high_confidence.b37.chr2.vcf" -O $sample".recal.table"
+   gatk --java-options -Xmx7g ApplyBQSR -R human_g1k_v37_chr2.fasta -I $sample".md.bam" --bqsr-recal-file $sample".recal.table" -O $sample".recal.bam"
+   gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I $sample".bam" -O $sample".g.vcf"
+ done
 fi
 
 per_sample_end_time=`date +%s`
 echo "Per sample mapping and variant calling took $((${per_sample_end_time}-${per_sample_start_time})) seconds."
 
-
-
 ## Combine GVCFs  ----------------------------------------------------------------
+
 echo "Converting sam to bam..."
 cgvcf_start_time=`date +%s`
 
 if [ ${compute} == "long" ];
  then
-    gatk --java-options -Xmx7g CombineGVCFs -R human_g1k_v37_chr2.fasta -V HG00097.g.vcf -V HG00100.g.vcf -V HG00101.g.vcf -O cohort.g.vcf
+  gatk --java-options -Xmx7g CombineGVCFs -R human_g1k_v37_chr2.fasta -V HG00097.g.vcf -V HG00100.g.vcf -V HG00101.g.vcf -O cohort.g.vcf
 fi
 
 cgvcf_end_time=`date +%s`
 echo "Joint variant calling took $((${cgvcf_end_time}-${cgvcf_start_time})) seconds."
 
-
 ## Genotype GVCF--------------------------------------------------------------------
+
 echo "genotype GVCF ..."
 ib_start_time=`date +%s`
 
 if [ ${compute} == "long" ];
  then
-	gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g.vcf -O cohort.vcf
+  gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g.vcf -O cohort.vcf
 fi
 
 ib_end_time=`date +%s`
 echo "Genotype GVCF took $((${ib_end_time}-${ib_start_time})) seconds."
 
-
-
-
 ## Select SNPs ---------------------------------------------------------------
+
 echo "Selecting SNPs..."
 md_start_time=`date +%s`
 
 if [ ${compute} == "long" ];
  then
-gatk --java-options -Xmx7g SelectVariants -R human_g1k_v37_chr2.fasta -V cohort.vcf --select-type-to-include SNP -O cohort.snvs.vcf
-
-
+  gatk --java-options -Xmx7g SelectVariants -R human_g1k_v37_chr2.fasta -V cohort.vcf --select-type-to-include SNP -O cohort.snvs.vcf
 fi
 
 md_end_time=`date +%s`
 echo "Selecting SNPs took $((${md_end_time}-${md_start_time})) seconds."
 
 ## VariantFiltration ---------------------------------------------------------------------
+
 echo "VariantFiltration ..."
 bqsr_start_time=`date +%s`
 
@@ -186,15 +178,14 @@ fi
 bqsr_end_time=`date +%s`
 echo "VariantFiltration took $((${bqsr_end_time}-${bqsr_start_time})) seconds."
 
-
 ## Select indels -------------------------------------------------------------------------
+
 echo "Selecting indels ..."
 hc_start_time=`date +%s`
 
 if [ ${compute} == "long" ];
  then
-	gatk --java-options -Xmx7g SelectVariants -R human_g1k_v37_chr2.fasta -V cohort.vcf --select-type-to-include INDEL -O cohort.indels.vcf
-
+  gatk --java-options -Xmx7g SelectVariants -R human_g1k_v37_chr2.fasta -V cohort.vcf --select-type-to-include INDEL -O cohort.indels.vcf
 fi
 
 if [ ${compute} == "short" ];
@@ -205,35 +196,31 @@ fi
 hc_end_time=`date +%s`
 echo "Selecting indels took $((${hc_end_time}-${hc_start_time})) seconds."
 
-
-
 ## Variant filtration -------------------------------------------------------------------------
+
 echo "Variant filtration..."
 ss_start_time=`date +%s`
 
 if [ ${compute} == "long" ];
  then
   gatk --java-options -Xmx7g VariantFiltration -R human_g1k_v37_chr2.fasta -V cohort.indels.vcf -O cohort.indels.filtered.vcf --filter-name QDfilter --filter-expression "QD < 2.0" --filter-name FSfilter --filter-expression "FS > 200.0"
-
 fi
 
 ss_end_time=`date +%s`
 echo "Variant filtration took $((${ss_end_time}-${ss_start_time})) seconds."
 
-
 ##  Merge VCF -------------------------------------------------------------------------
+
 echo "merging SNVs and indels..."
 jg_start_time=`date +%s`
 
 if [ ${compute} == "long" ];
  then
     gatk --java-options -Xmx7g MergeVcfs -I cohort.snvs.filtered.vcf -I cohort.indels.filtered.vcf -O cohort.filtered.vcf
-
 fi
 
 jg_end_time=`date +%s`
 echo "Merging SNVs and indels took $((${jg_end_time}-${jg_start_time})) seconds."
-
 
 echo ""
 echo "============================================"
