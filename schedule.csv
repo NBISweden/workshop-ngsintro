@@ -1,28 +1,27 @@
 date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_room
-09/11/2020;E10:1309;09:00;09:15;Welcome;Björn Nystedt;;;;http://bit.ly/2PRscGA
-;;09:15;10:00;Intro to Linux;Martin Dahlö;;slide_linux_intro.pdf;;
-;;10:00;12:00;Intro to Linux;Martin Dahlö;MD, JD, PE;;lab_linux_intro.html;
+09/11/2020;Online;09:00;09:20;Welcome;Martin/Anders;;;;
+;;09:20;10:00;Presentations (Breakout);Martin/Anders;;;;
+;;10:00;11:00;Intro to Linux;Martin/Anders;;slide_linux_intro.pdf;;
+;;11:00;12:00;Intro to Linux;Martin/Anders;;;lab_linux_intro.html;
 ;;12:00;13:00;Lunch;;;;;
-;;13:00;14:00;Intro to Uppmax;Björn Viklund;;slide_uppmax_intro.pdf;;
-;;14:00;17:00;Intro to Uppmax;Björn Viklund;JD, PE;;lab_uppmax_intro.html;
-10/11/2020;E10:1309;09:00;09:30;File types in Bioinformatics;Martin Dahlö;;slide_linux_filetypes.pdf;;http://bit.ly/2PRscGA
-;;09:30;10:00;File types in Bioinformatics;Martin Dahlö;AS, JD, PE;;lab_linux_filetypes.html;
-;;10:00;12:00;Better terminal experience;Martin Dahlö;;slide_qol_termexp.pdf;;
+;;13:00;14:00;Intro to Uppmax;Martin/Anders;;slide_uppmax_intro.pdf;;
+;;14:00;17:00;Intro to Uppmax;Martin/Anders;;;lab_uppmax_intro.html;
+10/11/2020;Online;09:00;09:30;File types in Bioinformatics;Martin/Anders;;slide_linux_filetypes.pdf;;
+;;09:30;10:00;File types in Bioinformatics;Martin/Anders;;;lab_linux_filetypes.html;
+;;11:00;12:00;Quality control;Malin Larsson;;;;
 ;;12:00;13:00;Lunch;;;;;
-;;13:00;14:00;Advanced Linux;Martin Dahlö;;slide_linux_advanced.pdf;;
-;;14:00;17:00;Advanced Linux;Martin Dahlö;AS, JD, PE;;lab_linux_advanced.html;
-11/11/2020;E10:1309;09:00;11:00;NGS Overview;Olga Petterson;;slide_Sequencing_technologies_2020b.pptx;;http://bit.ly/2PRscGA
-;;11:00;12:00;NGS pipeline;Adam Ameur;;slide_ngs_pipelines.pptx;;
+;;13:00;13:30;Better terminal experience;Martin/Anders;;slide_qol_termexp.pdf;;
+;;13:30;14:30;Advanced Bash;Martin/Anders;;slide_linux_advanced.pdf;;
+;;14:30;17:00;Advanced Bash;Martin/Anders;;;lab_linux_advanced.html;
+11/11/2020;Online;09:00;11:00;NGS Overview;Olga Petterson;;slide_Sequencing_technologies_2020b.pptx;;
+;;10:00;11:00;Sequencing Bias;Olga Petterson;;;;
+;;11:00;12:00;NGS Pipelines;Adam Ameur;;slide_ngs_pipelines.pptx;;
 ;;12:00;13:00;Lunch;;;;;
-;;13:00;14:00;Variant-calling workflow;Malin Larsson;;slide_vc.pptx;;
-;;14:00;17:00;Variant-calling workflow;Malin Larsson;AJ, PE, MD;;lab_vc.html;
-12/11/2020;E10:1309;09:00;11:30;Variant-calling workflow;Malin Larsson;AJ, PE;;;http://bit.ly/2PRscGA
-;;11:30;12:00;Variant-calling discussion;Malin Larsson;AJ, PE;;slide_vc_discussion.pptx;
+;;13:00;13:40;Variant-calling workflow;Malin Larsson;;slide_vc.pptx;;
+;;13:40;17:00;Variant-calling workflow;Malin Larsson;;;lab_vc.html;
+12/11/2020;Online;09:00;12:00;Variant-calling workflow;Malin Larsson;;;;
 ;;12:00;13:00;Lunch;;;;;
-;;13:00;14:00;Data management;Niclas Jareborg;;slide_data_management.pdf;;
-;;14:00;15:00;Intro to RNA-Seq;Roy Francis;;slide_rnaseq.html;;
-;;15:00;17:00;RNA-Seq workflow;Roy Francis;PE, BS, NR;;lab_rnaseq.html;
-13/11/2020;E10:1309;09:00;12:00;RNA-Seq workflow;Roy Francis;PE, BS, NR;;;http://bit.ly/2PRscGA
+;;13:00;17:00;RNA-Seq workflow;Roy Francis;;slide_rnaseq.html;lab_rnaseq.html;
+13/11/2020;Online;09:00;12:00;RNA-Seq workflow;Roy Francis;;;;
 ;;12:00;13:00;Lunch;;;;;
-;;13:00;13:30;NBIS and services;Björn Nystedt;;slide_nbis.pptx;;
-;;13:30;15:00;Open session;Roy Francis;PE, JD, AJ, OP;;;
+;;13:00;15:00;Open session;;;;;
