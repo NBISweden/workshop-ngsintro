@@ -25,6 +25,10 @@ background-color: red;
 datadir <- "/sw/courses/ngsintro/reseq/data"
 fastqdir <- "/sw/courses/ngsintro/reseq/data/fastq"
 refdir <- "/sw/courses/ngsintro/reseq/data/ref"
+bamdir <- "/sw/courses/ngsintro/reseq/data/bam"
+vcfdir <- "/sw/courses/ngsintro/reseq/data/vcf"
+bpbamdir <- "/sw/courses/ngsintro/reseq/data/best_practise_bam"
+bpvcfdir <- "/sw/courses/ngsintro/reseq/data/best_practise_vcf"
 col_uppmax <- "#f4f8e8"
 col_local <- "#e5f4f8"
 ```
@@ -325,17 +329,26 @@ If you have time, you can now try joint variant calling in all three samples. Ea
 ![](data/ngs-workflow/2_jointvc.png)
 
 
-You can run all commands one by one in the terminal as you did in the first step of the workshop. However, since some steps needs to be repeated for all samples, this is a good opportunity to learn how to write a simple SBATCH script and run all steps automatically. If you are interested in this, please see the [SBATCH script](#sbatchscript) section below.   
+You can run all commands one by one in the terminal as you did in the first step of the workshop.  
+However, if you are interested and if you have time, this is a good opportunity to learn how to write a simple SBATCH script and run all steps automatically. If you are interested in this, please see the [SBATCH script](#sbatchscript) section below.   
   
 ## BWA mem 
-Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly [as above](#bwamem) but with the new sample names. 
-  
+Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly [as above](#bwamem) but with the new sample names.  
+If you run out of time you can use the precompiled bam files HG00097.bam, HG00100.bam and HG00101.bam available in
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0(bamdir))
+```
+ 
 ## Generate g.vcf files
 `HaplotypeCaller` should also be run for all three samples, but this time the output for each sample needs to be in g.vcf format. This is accomplished with a small change in the `HaploteypCaller` command: 
 ```bash
 gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I <sample.bam -O <sample>.g.vcf 
 ```
 Please replace <sample> with the real sample names.
+If you run out of time you can use the precompiled g.vcf files available in
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0(vcfdir))
+```
   
 ## Joint genotyping
 Once you have the g.vcf files for all samples you should perform joint genotype calling. To do this you first need to combine all individual .g.vcf files to one file using `CombineGVCFs`:
@@ -348,6 +361,11 @@ Then run GATK's `GenoteypeGVC` to generate a vcf file:
 ```bash
 gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g.vcf -O cohort.vcf
 ```
+If you didn't have time to make the cohort.g.vcf file it is available in  
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0(vcfdir))
+```
+Please use this file to answer the questions below.
   
 ## SBATCH script {#sbatchscript}
 This section is for those of you who want to learn how to run analyses automatically in bash scripts. 
