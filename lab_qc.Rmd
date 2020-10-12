@@ -1,0 +1,150 @@
+---
+title: "QC"
+subtitle: "Quality control with FastQC"
+---
+
+```{r,child="assets/header-lab.Rmd"}
+```
+
+```{r,eval=TRUE,include=FALSE}
+library(yaml)
+upid <- yaml::read_yaml("_site.yml")$uppmax_project
+upres3 <- yaml::read_yaml("_site.yml")$uppmax_res_3
+upres4 <- yaml::read_yaml("_site.yml")$uppmax_res_4
+```
+
+```{css,include=FALSE}
+.workLocally{
+background-color: red;
+}
+```
+
+```{r,include=FALSE}
+## VARIABLES
+#colours
+
+fastqdir <- "/sw/courses/ngsintro/reseq/data/fastq"
+col_uppmax <- "#f4f8e8"
+col_local <- "#e5f4f8"
+```
+# Introduction
+Whole genome sequencing (WGS) is a comprehensive method for analyzing entire genomes. This workshop will illustrate quality control of WGS data using FastQC. 
+
+# Data description
+## Samples
+The 1000 Genomes Project was the first project to sequence the entire genomes of a large number of people, to provide a comprehensive resource on human genetic variation. Data from the 1000 Genomes Project available through freely accessible public databases, and in this workshop, we will use 3 samples from the low coverage phase of the 1000 Genomes project.
+
+Sample        | Population | Sequencing technology
+------------- | ---------- | --------
+HG00097       | British in England and Scotland    | Low coverage WGS
+HG00100       | British in England and Scotland    | Low coverage WGS
+HG00101       | British in England and Scotland    | Low coverage WGS 
+## Genomic region
+In this lab we will look at a small region on chromosome 2. This is the same reagion as we will work on durign the variant calling workflow later this week, and you will get more information about the region then. 
+  
+## Data folder on UPPMAX {#Data}
+All input data for this exercise is located in this folder on Rackham:
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0(datadir))
+```
+The fastq files are located in this folder:
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0(fastqdir))
+```
+Reference files, such as the reference genome in fasta format, are located in this folder: 
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0(refdir))
+```
+
+# Preparations
+## Local workspace  {#preparelaptop}
+The majority of the analyses in this workshop will be done on UPPMAX, but you will copy some of the resulting files to your laptop. Therefore, please start by creating a folder for this workshop on your laptop. It is up to you where you want to put this, but it can for example be a folder called *ngsworkflow* on Desktop. You need to have write permission in this folder. The folder you create here will be referred to as *local workspace* throughout this workshop.  
+  
+## UPPMAX
+Please connect to the Rackham cluster on UPPMAX using `ssh:
+```bash
+$ ssh -Y username@rackham.uppmax.uu.se
+```  
+  
+### Workspace on UPPMAX
+During this lab you should work in your folder under the course's nobackup folder, just like you have done during the previous labs. Start by creating a workspace for this exercise in your folder, and then move into it. This folder will be referred to as your *UPPMAX workspace* throughout this workshop.  
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0('mkdir /proj/',upid,'/nobackup/<username>/qc\n'))
+cat(paste0('cd /proj/',upid,'/nobackup/<username>/qc'))
+```
+  
+### Symbolic links to data
+The raw data files are located in the [Data](#Data) folder described above. Instead of copying the files to your workspace you should create symbolic links (soft-links) to them. Soft-linking files and folders allows you to work with them as if they were in your current directory, but without multiplying them.  
+Create a symbolic link to the reference genome in your workspace:
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0('ln -s ',refdir,'/human_g1k_v37_chr2.fasta'))  
+```
+Do the same with the fastq files:
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0('ln -s ',fastqdir,'/HG00097_1.fq\n')) 
+cat(paste0('ln -s ',fastqdir,'/HG00097_2.fq\n'))  
+cat(paste0('ln -s ',fastqdir,'/HG00100_1.fq\n'))
+cat(paste0('ln -s ',fastqdir,'/HG00100_2.fq\n'))
+cat(paste0('ln -s ',fastqdir,'/HG00101_1.fq\n')) 
+cat(paste0('ln -s ',fastqdir,'/HG00101_2.fq\n'))
+```
+The above links can also be created in one command using 
+
+### Book a node 
+When you login to Rackham you enter the *login node*, which is not intended for compute intensive tasks. To be able to run analyses directly in the terminal you should therefore book a compute node (or in this case just one core of a node). Make sure you only do this once each day because we have reserved one core per student for the course.    
+Use this reservation on day 1 of variant-calling:
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0('salloc -A ',upid,' -t 04:00:00 -p core -n 1 --no-shell --reservation=',upres3,' &'))
+```
+Use this reservation on day 2 of variant-calling:
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0('salloc -A ',upid,' -t 04:00:00 -p core -n 1 --no-shell --reservation=',upres4,' &'))
+```
+Once your job allocation has been granted (should not take long) you can connect to the node using `ssh`. To find out the name of your node, use:
+```bash
+squeue -u <username>
+```
+The node name is found under nodelist header, you should only see one. Connect to that node:  
+```bash
+ssh -Y <nodename>
+```
+  
+### Accessing programs {#Accessingprograms}
+We will use several programs that are installed in the module system on UPPMAX. These modules must be loaded *every time* you login to Rackham, or when you connect to a new compute node.  
+  
+First load the `bioinfo-tools` module:
+```bash
+module load bioinfo-tools
+```
+This makes it possible to load the individual programs:
+```bash
+module load FastQC/0.11.8
+```
+
+ 
+## FastQC  
+You will first use `FastQC` to check the quality scores of the reads in the fastq files. The output is a .html document that shows quality scores along the reads, and other information.  
+Start with creating a folder where the output from `FastQC` will be stored:
+```bash
+mkdir fastqc 
+```
+Then run `FastQC` on the HG00097 fastq files, and direct the output to your FastQC folder:
+```bash
+fastqc -q HG00097_1.fq HG00097_2.fq -o fastqc
+```
+### Download data to laptop {#downloaddata}
+You should now download the .html files generated by `FastQC` using `scp`, and look at them using a web-browser on your laptop. Open a new terminal and navigate to your [local workspace](#preparelaptop). Do not log in to UPPMAX. Copy the .html files generated above with this command:
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0('scp <username>@rackham.uppmax.uu.se:/proj/',upid,'/nobackup/<username>/ngsworkflow/fastqc/*.html .'))
+```
+Please replace `<username>` with your UPPMAX user name.  
+Check that the files are now present in the local workspace using `ls -lrt`.  
+Then open the two html files that you just downloaded in a web browser.  
+  
+### Questions   
+1. Look at the section "Sequence Length Distribution". How long are the reads?
+2. Look at the "per base sequence quality". How many bases in the reads have a median phred-score above 28?
+3. Are the quality scores higher for the first strand reads or the second strand reads?
+
+# Documentation
+  * [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
