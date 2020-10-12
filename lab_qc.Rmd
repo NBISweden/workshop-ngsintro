@@ -26,29 +26,27 @@ col_uppmax <- "#f4f8e8"
 col_local <- "#e5f4f8"
 ```
 # Introduction
-Whole genome sequencing (WGS) is a comprehensive method for analyzing entire genomes. This workshop will illustrate quality control of WGS data using FastQC. 
+In this workshop we will perform quality control of whole genome sequencing data using FastQC. 
 
-# Data description
-## Samples
-The 1000 Genomes Project was the first project to sequence the entire genomes of a large number of people, to provide a comprehensive resource on human genetic variation. Data from the 1000 Genomes Project available through freely accessible public databases, and in this workshop, we will use 3 samples from the low coverage phase of the 1000 Genomes project.
+# Data 
+We will use three samples from the public 1000 Genomes project to illustate quality control.  
+To speed up the analysis we will only use data from a small region on  chromosome 2.  
+You will use the same samples and genomic region during the variant-calling workflow session later this week.  
 
 Sample        | Population | Sequencing technology
 ------------- | ---------- | --------
 HG00097       | British in England and Scotland    | Low coverage WGS
 HG00100       | British in England and Scotland    | Low coverage WGS
 HG00101       | British in England and Scotland    | Low coverage WGS 
-## Genomic region
-In this lab we will look at a small region on chromosome 2. This is the same reagion as we will work on durign the variant calling workflow later this week, and you will get more information about the region then. 
-  
-## Data folder on UPPMAX {#Data}
-The fastq files used in this exercise are located in this folder on Rackham:
+
+Fastq files for these samples are located in this folder on Rackham:  
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0(fastqdir))
 ```
 
 # Preparations
 ## Local workspace  {#preparelaptop}
-You will run FastQC on UPPMAX, but you will copy the resulting files to your laptop. Therefore, please start by creating a folder for this workshop on your laptop. It is up to you where you want to put this, but it can for example be a folder called *ngsworkflow* on Desktop. You need to have write permission in this folder. The folder you create here will be referred to as *local workspace* throughout this workshop.  
+You will run FastQC on UPPMAX, but you will copy the resulting files to your laptop. Therefore, please start by creating a folder for this workshop on your laptop. It is up to you where you want to put this, but it can for example be a folder called *qc* on Desktop. You need to have write permission in this folder. The folder you create here will be referred to as *local workspace* throughout this workshop.  
   
 ## UPPMAX
 Please connect to the Rackham cluster on UPPMAX using `ssh:
