@@ -515,8 +515,8 @@ Open your filtered vcf with `less` and page through it. It still has all the var
 ## Precomputed files
 If you run out of time, please click below to get the path to precomputed bam and vcf files for the GATK's best practices section.
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
-cat(paste0('Path to intermediary and final bam files: ',bpbamdir))
-cat(paste0('Path to intermediary and final vcf files: ',bpvcfdir))
+cat(paste0('Path to intermediary and final bam files: ',bpbamdir,'\n'))
+cat(paste0('Path to intermediary and final vcf files: ',bpvcfdir,'\n'))
 ```
 
 
