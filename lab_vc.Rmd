@@ -307,13 +307,15 @@ If you have time, you can now try joint variant calling in all three samples. Ea
 ![](data/ngs-workflow/2_jointvc.png)
 
 
-You can run all commands one by one in the terminal as you did in the first step of the workshop.  
-However, if you are interested and if you have time, this is a good opportunity to learn how to write a simple SBATCH script and run all steps automatically. If you are interested in this, please see the [SBATCH script](#sbatchscript) section below.   
+You can run all commands one by one in the terminal as you did in the first step of the workshop. We have also made all intermediary files avaiable in case you don't have time to complete all steps, please see links under each analysis step below. 
+  
+*Optionally - If you are interested and have time*, this is also good opportunity to learn how to write a simple SBATCH script and run all steps automatically. Please chech out the [SBATCH script](#sbatchscript) section below if you would like to try this. 
   
 ## BWA mem 
-Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly [as above](#bwamem) but with the new sample names.  
-If you run out of time you can use the precompiled bam files HG00097.bam, HG00100.bam and HG00101.bam available in
-```{r,echo=FALSE,comment="",class.output="bash"}
+Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly [as above](#bwamem) but with the new sample names.
+  
+If you run out of time, please click on the arrow to get a link precomputed bam files: 
+```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0(bamdir))
 ```
  
@@ -323,6 +325,7 @@ cat(paste0(bamdir))
 gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I <sample.bam -O <sample>.g.vcf 
 ```
 Please replace <sample> with the real sample names.
+  
 If you run out of time you can use the precompiled g.vcf files available in
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0(vcfdir))
