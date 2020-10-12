@@ -314,7 +314,7 @@ You can run all commands one by one in the terminal as you did in the first step
 ## BWA mem 
 Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly [as above](#bwamem) but with the new sample names.
     
-If you run out of time, please click below to get a link precomputed bam files. 
+If you run out of time, please click below to get pathts to precomputed bam files. 
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0(bamdir,'/HG00097.bam\n')) 
 cat(paste0(bamdir,'/HG00100.bam\n')) 
@@ -328,7 +328,7 @@ gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF
 ```
 Please replace <sample> with the real sample names.
   
-If you run out of time, please click below to get a link to the precomputed g.vcf files.
+If you run out of time, please click below to get paths to the precomputed g.vcf files.
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0(vcfdir,'/HG00097.g.vcf\n')) 
 cat(paste0(vcfdir,'/HG00100.g.vcf\n')) 
@@ -347,15 +347,15 @@ Then run GATK's `GenoteypeGVC` to generate a vcf file:
 gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g.vcf -O cohort.vcf
 ```
   
-If you run out of time, please click below to get a link to the precomputed cohort.g.vcf and cohort.vcf files:
+If you run out of time, please click below to get paths to the precomputed cohort.g.vcf and cohort.vcf files:
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0(vcfdir,'/cohort.g.vcf\n')) 
 cat(paste0(vcfdir,'/cohort.vcf\n')) 
 ```
-Please use this file to answer the questions below.
+Please use the cohort.vcf file to answer the questions below.
   
 ## SBATCH script {#sbatchscript}
-This section is only for those of you who want to learn how to run analyses automatically in bash scripts. 
+This section is only for those of you who want to try to run all steps automatically in bash scripts. 
 To learn more about SLURM and SBATCH scripts please look the [SLURM user guide](https://www.uppmax.uu.se/support/user-guides/slurm-user-guide/) on UPPMAX website.  
 Below is a skeleton script that can be used as a template. Please modify it to run all the steps in part two of this workshop. You might find it helpful to try each step for one sample in the interactive terminal, so that you know that a particular command is working, before you incorporate it in the script.  
 ```bash
@@ -509,7 +509,15 @@ cat(paste0('gatk --java-options -Xmx7g MergeVcfs -I cohort.snvs.filtered.vcf -I 
 ```
   
 Open your filtered vcf with `less` and page through it. It still has all the variant lines, but the FILTER column that was blank before is now filled in, with PASS or a list of the filters it failed. Note also that the filters that were run are described in the header section.
-  
+
+## Precomputed files
+If you run out of time, please click below to get the path to precomputed bam and vcf files for the GATK's best practices section.
+```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
+cat(paste0('Path to intermediary and final bam files: ',bpbamdir))
+cat(paste0('Path to intermediary and final vcf files: ',bpvcfdir))
+```
+
+
 ## SBATCH script {#bpscript}
 We recommend you to incorporate the new steps into an SBATCH script similar to the one you created above for [joint variant calling](#sbatchscript). You might find it helpful to try each step for one sample in the interactive terminal, so that you know that a particular command is working before you incorporate it in the script. Please try to complete the script for GATK's best practices workflow. If you run out of time you can sneak peek at our example solution below. 
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
