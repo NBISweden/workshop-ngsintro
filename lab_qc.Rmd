@@ -21,7 +21,6 @@ background-color: red;
 ```{r,include=FALSE}
 ## VARIABLES
 #colours
-datadir <- "/sw/courses/ngsintro/reseq/data"
 fastqdir <- "/sw/courses/ngsintro/reseq/data/fastq"
 col_uppmax <- "#f4f8e8"
 col_local <- "#e5f4f8"
@@ -42,22 +41,14 @@ HG00101       | British in England and Scotland    | Low coverage WGS
 In this lab we will look at a small region on chromosome 2. This is the same reagion as we will work on durign the variant calling workflow later this week, and you will get more information about the region then. 
   
 ## Data folder on UPPMAX {#Data}
-All input data for this exercise is located in this folder on Rackham:
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0(datadir))
-```
-The fastq files are located in this folder:
+The fastq files used in this exercise are located in this folder on Rackham:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0(fastqdir))
-```
-Reference files, such as the reference genome in fasta format, are located in this folder: 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0(refdir))
 ```
 
 # Preparations
 ## Local workspace  {#preparelaptop}
-The majority of the analyses in this workshop will be done on UPPMAX, but you will copy some of the resulting files to your laptop. Therefore, please start by creating a folder for this workshop on your laptop. It is up to you where you want to put this, but it can for example be a folder called *ngsworkflow* on Desktop. You need to have write permission in this folder. The folder you create here will be referred to as *local workspace* throughout this workshop.  
+You will run FastQC on UPPMAX, but you will copy the resulting files to your laptop. Therefore, please start by creating a folder for this workshop on your laptop. It is up to you where you want to put this, but it can for example be a folder called *ngsworkflow* on Desktop. You need to have write permission in this folder. The folder you create here will be referred to as *local workspace* throughout this workshop.  
   
 ## UPPMAX
 Please connect to the Rackham cluster on UPPMAX using `ssh:
@@ -73,12 +64,8 @@ cat(paste0('cd /proj/',upid,'/nobackup/<username>/qc'))
 ```
   
 ### Symbolic links to data
-The raw data files are located in the [Data](#Data) folder described above. Instead of copying the files to your workspace you should create symbolic links (soft-links) to them. Soft-linking files and folders allows you to work with them as if they were in your current directory, but without multiplying them.  
-Create a symbolic link to the reference genome in your workspace:
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('ln -s ',refdir,'/human_g1k_v37_chr2.fasta'))  
-```
-Do the same with the fastq files:
+The raw data files are located in the [fastq](#Data) folder described above. Instead of copying the files to your workspace you should create symbolic links (soft-links) to them. Soft-linking files and folders allows you to work with them as if they were in your current directory, but without multiplying them.  
+Create symbolic links to the fastq files in your workspace:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('ln -s ',fastqdir,'/HG00097_1.fq\n')) 
 cat(paste0('ln -s ',fastqdir,'/HG00097_2.fq\n'))  
@@ -87,17 +74,12 @@ cat(paste0('ln -s ',fastqdir,'/HG00100_2.fq\n'))
 cat(paste0('ln -s ',fastqdir,'/HG00101_1.fq\n')) 
 cat(paste0('ln -s ',fastqdir,'/HG00101_2.fq\n'))
 ```
-The above links can also be created in one command using 
 
 ### Book a node 
 When you login to Rackham you enter the *login node*, which is not intended for compute intensive tasks. To be able to run analyses directly in the terminal you should therefore book a compute node (or in this case just one core of a node). Make sure you only do this once each day because we have reserved one core per student for the course.    
 Use this reservation on day 1 of variant-calling:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('salloc -A ',upid,' -t 04:00:00 -p core -n 1 --no-shell --reservation=',upres3,' &'))
-```
-Use this reservation on day 2 of variant-calling:
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('salloc -A ',upid,' -t 04:00:00 -p core -n 1 --no-shell --reservation=',upres4,' &'))
 ```
 Once your job allocation has been granted (should not take long) you can connect to the node using `ssh`. To find out the name of your node, use:
 ```bash
@@ -119,22 +101,17 @@ This makes it possible to load the individual programs:
 ```bash
 module load FastQC/0.11.8
 ```
-
  
 ## FastQC  
-You will first use `FastQC` to check the quality scores of the reads in the fastq files. The output is a .html document that shows quality scores along the reads, and other information.  
-Start with creating a folder where the output from `FastQC` will be stored:
-```bash
-mkdir fastqc 
-```
-Then run `FastQC` on the HG00097 fastq files, and direct the output to your FastQC folder:
+You will use `FastQC` to check the quality scores of the reads in the fastq files. The output is a .html document that shows quality scores along the reads, and other information.  
+Run `FastQC` on the HG00097 fastq files:
 ```bash
 fastqc -q HG00097_1.fq HG00097_2.fq -o fastqc
 ```
 ### Download data to laptop {#downloaddata}
 You should now download the .html files generated by `FastQC` using `scp`, and look at them using a web-browser on your laptop. Open a new terminal and navigate to your [local workspace](#preparelaptop). Do not log in to UPPMAX. Copy the .html files generated above with this command:
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('scp <username>@rackham.uppmax.uu.se:/proj/',upid,'/nobackup/<username>/ngsworkflow/fastqc/*.html .'))
+cat(paste0('scp <username>@rackham.uppmax.uu.se:/proj/',upid,'/nobackup/<username>/qc/*.html .'))
 ```
 Please replace `<username>` with your UPPMAX user name.  
 Check that the files are now present in the local workspace using `ls -lrt`.  
