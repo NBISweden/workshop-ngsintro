@@ -9,8 +9,7 @@ subtitle: "Quality control with FastQC"
 ```{r,eval=TRUE,include=FALSE}
 library(yaml)
 upid <- yaml::read_yaml("_site.yml")$uppmax_project
-upres3 <- yaml::read_yaml("_site.yml")$uppmax_res_3
-upres4 <- yaml::read_yaml("_site.yml")$uppmax_res_4
+upres3 <- yaml::read_yaml("_site.yml")$uppmax_res_2
 ```
 
 ```{css,include=FALSE}
@@ -22,7 +21,7 @@ background-color: red;
 ```{r,include=FALSE}
 ## VARIABLES
 #colours
-
+datadir <- "/sw/courses/ngsintro/reseq/data"
 fastqdir <- "/sw/courses/ngsintro/reseq/data/fastq"
 col_uppmax <- "#f4f8e8"
 col_local <- "#e5f4f8"
