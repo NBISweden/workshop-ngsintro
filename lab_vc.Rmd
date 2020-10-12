@@ -309,7 +309,7 @@ If you have time, you can now try joint variant calling in all three samples. Ea
 
 You can run all commands one by one in the terminal as you did in the first step of the workshop. We have also made intermediary files avaiable in case you don't have time to complete all steps, please see links under each analysis step. 
   
-**Optionally:** - If you are interested in programming and have time, you can also try to write a simple SBATCH script and run all steps automatically. Please check out the [SBATCH script](#sbatchscript) section below if you would like to try this. 
+**Optionally** - If you are interested in programming and have time, you can also try to write a simple SBATCH script and run all steps automatically. Please check out the [SBATCH script](#sbatchscript) section below if you would like to try this. 
   
 ## BWA mem 
 Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly [as above](#bwamem) but with the new sample names.
@@ -327,7 +327,7 @@ cat(paste0(bamdir,'/HG00101.bam\n'))
 gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I <sample.bam -O <sample>.g.vcf 
 ```
 Please replace <sample> with the real sample names.
-  
+   
 If you run out of time, please click below to get paths to the precomputed g.vcf files.
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0(vcfdir,'/HG00097.g.vcf\n')) 
@@ -346,16 +346,22 @@ Then run GATK's `GenoteypeGVC` to generate a vcf file:
 ```bash
 gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g.vcf -O cohort.vcf
 ```
-  
+   
 If you run out of time, please click below to get paths to the precomputed cohort.g.vcf and cohort.vcf files:
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0(vcfdir,'/cohort.g.vcf\n')) 
 cat(paste0(vcfdir,'/cohort.vcf\n')) 
 ```
-Please use the cohort.vcf file to answer the questions below.
+
+### Questions {#jointvariantcallingquestions}
+20. How many data lines do the cohort.g.vcf file have? You can use the linux command `grep -v "#" cohort.g.vcf` to extract all lines in "cohort.g.vcf" that don't start with "#", then `|`, and then `wc` to count those lines.  
+21. How many data lines do the cohort.vcf file have?  
+22. Explain the difference in number of data lines?  
+23. Look at the header line of the cohort.vcf file. What columns does it have? 
+24. What is encoded in the last three columns of the data lines?
   
 ## SBATCH script {#sbatchscript}
-This section is only for those of you who want to try to run all steps automatically in bash scripts. 
+**Optionally** - This section is only for those of you who want to try to run all steps automatically in bash scripts. 
 To learn more about SLURM and SBATCH scripts please look the [SLURM user guide](https://www.uppmax.uu.se/support/user-guides/slurm-user-guide/) on UPPMAX website.  
 Below is a skeleton script that can be used as a template. Please modify it to run all the steps in part two of this workshop. You might find it helpful to try each step for one sample in the interactive terminal, so that you know that a particular command is working, before you incorporate it in the script.  
 ```bash
@@ -417,16 +423,13 @@ gatk --java-options -Xmx7g CombineGVCFs -R human_g1k_v37_chr2.fasta -V HG00097.g
 gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g.vcf -O cohort.vcf'
 ))
 ```  
+
+Please answer the [questions ](#jointvariantcallingquestions) above.
   
 ## Check combined vcf file in IGV
-Download the combined vcf file to your *local workspace* as described [above]{#downloaddata}. Then open the combined vcf file in IGV as described [above]{#vcfinigv} and look at it.  
+Download the files cohort.g.vcf and cohort.vcf to your *local workspace* as described [above]{#downloaddata}. Then open the file in IGV as described [above]{#vcfinigv} and look at it.  
   
-## Questions 
-20. How many data lines do the comined.g.vcf file have? You can use the linux command `grep -v "#" filename.txt` to extract all lines in "filename.txt" that don't start with "#", then `|`, and then `wc` to count those lines.  
-21. How many data lines do the combined.vcf file have?  
-22. Explain the difference in number of data lines?  
-23. Look at the header line of the combined vcf file. What columns does it have? 
-24. What is encoded in the last three columns of the data lines?
+### Questions
 25. In IGV, can you find the variant shown to be associated with lactose tolerance in adults?  
 26. What is the approximate coverage in this region in all samples?  
 27. Which samples do you think should avoid drinking milk? Any heterozygotes?  
