@@ -307,16 +307,18 @@ If you have time, you can now try joint variant calling in all three samples. Ea
 ![](data/ngs-workflow/2_jointvc.png)
 
 
-You can run all commands one by one in the terminal as you did in the first step of the workshop. We have also made all intermediary files avaiable in case you don't have time to complete all steps, please see links under each analysis step below. 
+You can run all commands one by one in the terminal as you did in the first step of the workshop. We have also made intermediary files avaiable in case you don't have time to complete all steps, please see links under each analysis step. 
   
 *Optionally - If you are interested and have time*, this is also good opportunity to learn how to write a simple SBATCH script and run all steps automatically. Please chech out the [SBATCH script](#sbatchscript) section below if you would like to try this. 
   
 ## BWA mem 
 Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly [as above](#bwamem) but with the new sample names.
-  
-If you run out of time, please click on the arrow to get a link precomputed bam files: 
+    
+If you run out of time, please click below to get a link precomputed bam files. 
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
-cat(paste0(bamdir))
+cat(paste0(bamdir,'/HG00097.bam\n')) 
+cat(paste0(bamdir,'/HG00100.bam\n')) 
+cat(paste0(bamdir,'/HG00101.bam\n')) 
 ```
  
 ## Generate g.vcf files
@@ -326,9 +328,11 @@ gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF
 ```
 Please replace <sample> with the real sample names.
   
-If you run out of time you can use the precompiled g.vcf files available in
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0(vcfdir))
+If you run out of time, please click below to get a link to the precomputed g.vcf files.
+```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
+cat(paste0(vcfdir,'/HG00097.g.vcf\n')) 
+cat(paste0(vcfdir,'/HG00100.g.vcf\n')) 
+cat(paste0(vcfdir,'/HG00101.g.vcf\n')) 
 ```
   
 ## Joint genotyping
@@ -342,14 +346,16 @@ Then run GATK's `GenoteypeGVC` to generate a vcf file:
 ```bash
 gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g.vcf -O cohort.vcf
 ```
-If you didn't have time to make the cohort.g.vcf file it is available in  
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0(vcfdir))
+  
+If you run out of time, please click below to get a link to the precomputed cohort.g.vcf and cohort.vcf files:
+```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
+cat(paste0(vcfdir,'/cohort.g.vcf\n')) 
+cat(paste0(vcfdir,'/cohort.vcf\n')) 
 ```
 Please use this file to answer the questions below.
   
 ## SBATCH script {#sbatchscript}
-This section is for those of you who want to learn how to run analyses automatically in bash scripts. 
+This section is only for those of you who want to learn how to run analyses automatically in bash scripts. 
 To learn more about SLURM and SBATCH scripts please look the [SLURM user guide](https://www.uppmax.uu.se/support/user-guides/slurm-user-guide/) on UPPMAX website.  
 Below is a skeleton script that can be used as a template. Please modify it to run all the steps in part two of this workshop. You might find it helpful to try each step for one sample in the interactive terminal, so that you know that a particular command is working, before you incorporate it in the script.  
 ```bash
