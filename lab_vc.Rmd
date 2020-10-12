@@ -182,8 +182,7 @@ Now let's start the main part of the workshop, which will guide you through a ba
   
 ## Quality control
 ![](data/ngs-workflow/main_qc.png)
-  
-### FastQC  
+
 It is always recommended to perform quality control of new data, for example using FastQC, before alignment and variant calling. We analyzed these samples with FastQC earlier in the week. Please feel free to go back to the QC session if you want to repeat this, otherwise you can continue with alignment.  
   
 ## Aligning reads
