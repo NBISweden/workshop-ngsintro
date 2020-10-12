@@ -309,7 +309,7 @@ If you have time, you can now try joint variant calling in all three samples. Ea
 
 You can run all commands one by one in the terminal as you did in the first step of the workshop. We have also made intermediary files avaiable in case you don't have time to complete all steps, please see links under each analysis step. 
   
-*Optionally - If you are interested and have time*, this is also good opportunity to learn how to write a simple SBATCH script and run all steps automatically. Please chech out the [SBATCH script](#sbatchscript) section below if you would like to try this. 
+**Optionally:** - If you are interested in programming and have time, you can also try to write a simple SBATCH script and run all steps automatically. Please check out the [SBATCH script](#sbatchscript) section below if you would like to try this. 
   
 ## BWA mem 
 Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly [as above](#bwamem) but with the new sample names.
