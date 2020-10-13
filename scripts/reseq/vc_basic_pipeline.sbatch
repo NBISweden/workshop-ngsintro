@@ -116,6 +116,9 @@ if [ ${compute} == "long" ];
     echo "\n\nNow analyzing: "$sample"\n\n"
     bwa mem -R "@RG\\tID:readgroupx\\tPU:flowcellx_lanex\\tSM:"$sample"\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta $sample"_1.fq" $sample"_2.fq" | samtools sort > $sample".bam"
     samtools index $sample".bam"
+    #Per sample vcf file
+    gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -I $sample".bam" -O $sample".vcf"
+    #Per sample g.vcf file
     gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I $sample".bam" -O $sample".g.vcf"
  done
 fi
