@@ -1,6 +1,6 @@
 ---
 title: "Variant Calling Workflow"
-subtitle: "From reads to short variants"
+subtitle: From reads to short variants
 ---
 
 ```{r,child="assets/header-lab.Rmd"}
@@ -36,7 +36,7 @@ col_local <- "#e5f4f8"
 Whole genome sequencing (WGS) is a comprehensive method for analyzing entire genomes. This workshop will take you through the process of calling germline short variants (SNVs and INDELs) in WGS data from three human samples. 
   
 1. The first part of the workshop will guide you through a basic variant calling workflow in one sample. The aims are to get familiar with the bam and vcf file formats, and learn how to interpret the results of variant calling in Integrative Genomics Viewer (IGV).
-2. If you have time, the next part of the workshop will show you how to perform joint variant calling in three samples. The aim here is that after this section you should be able to explain the differences between the g.vcf and vcf file formats. Also, if you are intetersed in learnding programming, the aim is to be able to combine individual linux commands into an SBATCH script.  
+2. If you have time, the next part of the workshop will show you how to perform joint variant calling in three samples. The aim here is that you should be able to interpret multi-sample vcf files and explain the differences between the g.vcf and vcf file formats. Also, if you are interested in learnding programming, the aim is to be able to combine individual linux commands into an SBATCH script.  
 3. If you have time, the last part of the workshop will take you through the GATK best practices for germline short variant detection in three samples. The aim here is that you should learn how to use GATK's documentation so that you can analyze your own samples in the future.    
 
 **General guide**
@@ -65,9 +65,9 @@ HG00097       | British in England and Scotland    | Low coverage WGS
 HG00100       | British in England and Scotland    | Low coverage WGS
 HG00101       | British in England and Scotland    | Low coverage WGS 
 ## Genomic region
-The *LCT* gene on chromosome 2 encodes the lactase protein, which is responsible for the metabolism of lactose in mammals. Most mammals can not digest lactose as adults, but some humans can. Genetic variants upstream of the *LCT* gene lead to lactase persistence, wich means that the lactase protein is experssed also in aldulthood and the carrier can continue to digest lactose. The variant rs4988235, located at position chr2:136608646 in the HG19 reference assembly, has been shown to lead to lactose persistence. The alternative allele (A on the forward strand and T on the reverse strand) creates a new transcription factor binding site that enables continued expression of the gene after weaning.
+The *LCT* gene on chromosome 2 encodes the lactase protein, which is responsible for the metabolism of lactose in mammals. Most mammals can not digest lactose as adults, but some humans can. Genetic variants upstream of the *LCT* gene lead to lactase persistence, wich means that the lactase protein is experssed also in aldulthood and the carrier can continue to digest lactose. The variant rs4988235, located at position chr2:136608646 in the HG19 reference genome, has been shown to lead to lactose persistence. The alternative allele (A on the forward strand and T on the reverse strand) creates a new transcription factor binding site that enables continued expression of the gene after weaning.
   
-Here we will use sequencing data for the region chr2:136545000-136617000 in the 3 samples listed above to illustrate the process of variant calling in NGS data.  
+In this workshop we will use sequencing data for the region chr2:136545000-136617000 in the 3 samples listed above to illustrate variant calling in NGS data. We will use chromosome 2 from hg19 as reference genome.  
   
 For those interested in the details of the genetic bases for lactose tolerance, please read the first three pages of [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf) by Mattar et al. The variant rs4988235 is here referred to as LCT-13910C>T.  
   
@@ -117,7 +117,6 @@ cat(paste0('ln -s ',fastqdir,'/HG00100_2.fq\n'))
 cat(paste0('ln -s ',fastqdir,'/HG00101_1.fq\n')) 
 cat(paste0('ln -s ',fastqdir,'/HG00101_2.fq\n'))
 ```
-The above links can also be created in one command using 
 
 ### Book a node 
 When you login to Rackham you enter the *login node*, which is not intended for compute intensive tasks. To be able to run analyses directly in the terminal you should therefore book a compute node (or in this case just one core of a node). Make sure you only do this once each day because we have reserved one core per student for the course.    
@@ -152,12 +151,11 @@ module load bwa/0.7.17
 module load samtools/1.10
 module load GATK/4.1.4.1
 ```
-It is recommended that you specify the version number for reproducibility if you want to rerun the  exact same analyses later. Some programs, for example GATK, has different command syntax in different versions and therefore is important to know which version you used. The GATK commands in this tutorial is for GATK4.  
+You don't have to specify wich versions of the toos to use, but is recommended to do so for reproducibility if you want to rerun the  exact same analyses later.  
 When loading the module GATK/4.1.4.1 you will get a warning message about the fact that GATK commands have been updated since the previous version of GATK. This is fine and you don't have to do anything about it. 
- 
-  
+    
 ## Index the genome
-Tools that compare short reads with a large reference genome needs an index of the reference genome to allow efficient random access to it. Before you can begin analysing the samples you therefore need to create index files for each tool. The generated files are like "tables of contents" that the software use to reach specific parst of the reference genomes. You don't have to understand the details of the index files to continue with this lab.
+Tools that compare short reads with a large reference genome needs indexes of the reference genome to work efficiently. Before analysing the samples you therefore need to create index files for each tool. You don't have to understand the details of the generated index files to continue with this lab, just make sure that they are created.
   
 Generate BWA index files:
 ```bash
@@ -222,9 +220,10 @@ samtools view HG00097.bam | head -n 5
 For help with interpreting the bam file, please look at the sam/bam format definition at [Sequence Alignment/Map Format Specification](https://samtools.github.io/hts-specs/SAMv1.pdf).  
   
 ### Questions  
-4. How is your bam file sorted and what does it mean?  
-5. What is encoded in the @SQ tag, and what do "SN:2" and "LN:243199373" mean?
-6. What is encoded in the @RG tag?  
+1. What does "SO:coordinate" in the "@HD" tag on the first line of the bam file mean?    
+2. What does "SN:2" and "LN:243199373" in the "@SQ tag mean? 
+3. What is encoded in the @RG tag?  
+4. What is the leftmost mapping position of the first read in the bamfile? 
   
 ### Check bam in IGV
 **Install IGV**  
@@ -241,12 +240,12 @@ Check that the files are now present in your *local workspace* using `ls -lrt`.
 **Look at the bam file in IGV**  
 * In `IGV`, go to the popup menu in the upper left and set it to `Human hg19`.  
 * In the `Tools` menu, select `Run igvtools`. Choose the command `Count` and then use the `Browse` button next to the `Input File` line to select the bam file (not the bai) that you just downloaded. It will autofill the output file. Hit the `Run` button. This generates a .tdf file that allows you to see the coverage value for our bam file even at zoomed out views. `Close` the igvtools window.  
-* In the `File` menu, select `Load from File and select your BAMs (not the .bai or the .tdf), which should appear in the tracks window. You will have to zoom in before you can see any reads. You can either select a region by click and drag, or by typing a region (chr:from-to) or gene name in the text box at the top.  
+* In the `File` menu, select `Load from File and select your BAMs (not the .bai or the .tdf), which should appear in the tracks window. You will have to zoom in before you can see any reads. You can either select a region by click and drag, or by typing a region or a gene name in the text box at the top. Remeber that we have data for the region chr2:136545000-136617000.
   
 ### Questions  
-7. What is the read length?  
-8. How can you estimate the coverage in IGV? 
-9. Is the coverage evenly distributed across the genome?
+5. What is the read length?  
+6. How can you estimate the coverage in IGV? 
+7. Is the coverage evenly distributed across the genome?
   
 ## Variant Calling
 ![](data/ngs-workflow/main_vc.png)
@@ -273,15 +272,20 @@ To view the meta-information lines describing the *FORMAT* column use:
 ```bash
 grep '##FORMAT' HG00097.vcf
 ```
+Now lets look at the details of one specific genetic variant at position 2:136234279:
+```bash
+grep '136234279' HG00097.vcf
+```
 For more detailed information about vcf files please have a look at [The Variant Call Format specification](https://samtools.github.io/hts-specs/VCFv4.2.pdf).
   
 ### Questions
-10. What is in the HG00097.vcf.idx file?
-11. How many genetic variants was detected in the sample? The linux command `grep -v "#" filename.txt | wc ` extracts all lines in HG00097.vcf that *don't* start with "#", and counts these lines.  
-12. What columns does the header line contain? 
-13. What does *GT* in the *FORMAT* column of the data lines mean? Please use the variant at position 2:136220992 as example.
-14. What does *AD* in the *FORMAT* column of the data lines mean? Please use the variant at position 2:136220992 as example.
-15. What genotype does *HG00097* have at position 2:136220992?
+8. What column of the VCF file contains genotype information for the sample HG00097?
+9. What does *GT* in the *FORMAT* column of the data lines mean?
+10. What genotype does the sample HG00097 have at position 2:136234279?
+11. What does *AD* in the *FORMAT* column of the data lines mean? 
+12. What are the allelic depths for the reference and alternative alles for sample HG00097 at position 2:136234279?
+13. How many genetic variants was detected in the sample? The linux command `grep -v "#" HG00097.vcf | wc -l ` extracts all lines in HG00097.vcf that *don't* start with "#", and counts these lines.  
+
   
 ### Check vcf in IGV {#vcfinigv}
 Download the vcf file and its index to the *local workspace* on your laptop. Navigate to your local workspace, but do not log in to UPPMAX. Copy the files that you just generated:
@@ -346,7 +350,7 @@ Then run GATK's `GenoteypeGVC` to generate a vcf file:
 gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g.vcf -O cohort.vcf
 ```
    
-If you run out of time, please click below to get paths to the precomputed cohort.g.vcf and cohort.vcf files:
+If you run out of time, please click below to get paths to the precomputed cohort.g.vcf and cohort.vcf files.
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0(vcfdir,'/cohort.g.vcf\n')) 
 cat(paste0(vcfdir,'/cohort.vcf\n')) 
