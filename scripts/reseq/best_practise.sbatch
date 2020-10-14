@@ -13,6 +13,8 @@ module load GATK/4.1.4.1
 
 ref="/sw/courses/ngsintro/reseq/data/ref"
 
+
+
 ## loop through the samples:
 for sample in HG00097 HG00100 HG00101;
 do

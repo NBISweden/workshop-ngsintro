@@ -8,7 +8,7 @@ date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_r
 ;;14:00;17:00;Intro to Uppmax;Martin/Anders;;;lab_uppmax_intro.html;
 10/11/2020;Online;09:00;09:30;File types in Bioinformatics;Martin/Anders;;slide_linux_filetypes.pdf;;
 ;;09:30;10:00;File types in Bioinformatics;Martin/Anders;;;lab_linux_filetypes.html;
-;;11:00;12:00;Quality control;Malin Larsson;;;;
+;;11:00;12:00;Quality control;Malin Larsson;;;lab_qc.html;
 ;;12:00;13:00;Lunch;;;;;
 ;;13:00;13:30;Better terminal experience;Martin/Anders;;slide_qol_termexp.pdf;;
 ;;13:30;14:30;Advanced Bash;Martin/Anders;;slide_linux_advanced.pdf;;
