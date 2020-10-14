@@ -53,12 +53,12 @@ jobs:
         if: steps.cache-rp.outputs.cache-hit != 'true'
         run: |
           Rscript -e 'install.packages("yaml")'
-          Rscript -e 'if(!is.null(yaml::read_yaml("_site.yml")$packages$packages_cran_repo)) install.packages(yaml::read_yaml("_site.yml")$packages$packages_cran_repo)'
-          Rscript -e 'if(!is.null(yaml::read_yaml("_site.yml")$packages$packages_cran_student)) install.packages(yaml::read_yaml("_site.yml")$packages$packages_cran_student)'
-          Rscript -e 'if(!is.null(yaml::read_yaml("_site.yml")$packages$packages_bioc_repo)) BiocManager::install(as.character(yaml::read_yaml("_site.yml")$packages$packages_bioc_repo))'
-          Rscript -e 'if(!is.null(yaml::read_yaml("_site.yml")$packages$packages_bioc_student)) BiocManager::install(as.character(yaml::read_yaml("_site.yml")$packages$packages_bioc_student))'
-          Rscript -e 'if(!is.null(yaml::read_yaml("_site.yml")$packages$packages_github_repo)) remotes::install_github(yaml::read_yaml("_site.yml")$packages$packages_github_repo)'
-          Rscript -e 'if(!is.null(yaml::read_yaml("_site.yml")$packages$packages_github_student)) remotes::install_github(yaml::read_yaml("_site.yml")$packages$packages_github_student)'
+          Rscript -e 'if(!is.null(yaml::read_yaml("_site.yml")$packages$packages_cran_repo)) install.packages(yaml::read_yaml("_site.yml")$packages$packages_cran_repo,dependencies="Depends")'
+          Rscript -e 'if(!is.null(yaml::read_yaml("_site.yml")$packages$packages_cran_student)) install.packages(yaml::read_yaml("_site.yml")$packages$packages_cran_student,dependencies="Depends")'
+          Rscript -e 'if(!is.null(yaml::read_yaml("_site.yml")$packages$packages_bioc_repo)) BiocManager::install(as.character(yaml::read_yaml("_site.yml")$packages$packages_bioc_repo),dependencies="Depends")'
+          Rscript -e 'if(!is.null(yaml::read_yaml("_site.yml")$packages$packages_bioc_student)) BiocManager::install(as.character(yaml::read_yaml("_site.yml")$packages$packages_bioc_student),dependencies="Depends")'
+          Rscript -e 'if(!is.null(yaml::read_yaml("_site.yml")$packages$packages_github_repo)) remotes::install_github(yaml::read_yaml("_site.yml")$packages$packages_github_repo,dependencies="Depends")'
+          Rscript -e 'if(!is.null(yaml::read_yaml("_site.yml")$packages$packages_github_student)) remotes::install_github(yaml::read_yaml("_site.yml")$packages$packages_github_student,dependencies="Depends")'
           Rscript -e 'installed.packages()'
           echo "R directory size:"
           du -sh ${{ env.R_LIBS_USER }}
