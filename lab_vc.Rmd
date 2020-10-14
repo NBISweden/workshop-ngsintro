@@ -67,7 +67,9 @@ HG00101       | British in England and Scotland    | Low coverage WGS
 ## Genomic region
 The *LCT* gene on chromosome 2 encodes the lactase protein, which is responsible for the metabolism of lactose in mammals. Most mammals can not digest lactose as adults, but some humans can. Genetic variants upstream of the *LCT* gene lead to lactase persistence, wich means that the lactase protein is experssed also in aldulthood and the carrier can continue to digest lactose. The variant rs4988235, located at position chr2:136608646 in the HG19 reference genome, has been shown to lead to lactose persistence. The alternative allele (A on the forward strand and T on the reverse strand) creates a new transcription factor binding site that enables continued expression of the gene after weaning.
   
-In this workshop we will use sequencing data for the region chr2:136545000-136617000 in the 3 samples listed above to illustrate variant calling in NGS data. We will use chromosome 2 from hg19 as reference genome.  
+In this workshop we will use sequencing data for the region chr2:136545000-136617000 
+chr2:136,039,147-136,662,073
+in the 3 samples listed above to illustrate variant calling in NGS data. We will use chromosome 2 from hg19 as reference genome.  
   
 For those interested in the details of the genetic bases for lactose tolerance, please read the first three pages of [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf) by Mattar et al. The variant rs4988235 is here referred to as LCT-13910C>T.  
   
@@ -244,8 +246,8 @@ Check that the files are now present in your *local workspace* using `ls -lrt`.
   
 ### Questions  
 5. What is the read length?  
-6. How can you estimate the coverage in IGV? 
-7. Is the coverage evenly distributed across the genome?
+6. How can you estimate the coverage at a specific position in IGV? 
+7. Which RedSeq Genes are located within the region chr2:136545000-136617000?
   
 ## Variant Calling
 ![](data/ngs-workflow/main_vc.png)
@@ -272,23 +274,23 @@ To view the meta-information lines describing the *FORMAT* column use:
 ```bash
 grep '##FORMAT' HG00097.vcf
 ```
-Now lets look at the details of one specific genetic variant at position 2:136234279:
+Now lets look at the details of one specific genetic variant at position 2:136545844:
 ```bash
-grep '136234279' HG00097.vcf
+grep '136545844' HG00097.vcf
 ```
 For more detailed information about vcf files please have a look at [The Variant Call Format specification](https://samtools.github.io/hts-specs/VCFv4.2.pdf).
   
 ### Questions
 8. What column of the VCF file contains genotype information for the sample HG00097?
 9. What does *GT* in the *FORMAT* column of the data lines mean?
-10. What genotype does the sample HG00097 have at position 2:136234279?
+10. What genotype does the sample HG00097 have at position 2:136545844?
 11. What does *AD* in the *FORMAT* column of the data lines mean? 
-12. What are the allelic depths for the reference and alternative alles for sample HG00097 at position 2:136234279?
+12. What are the allelic depths for the reference and alternative alles in sample HG00097 at position 2:136545844?
 13. How many genetic variants was detected in the sample? The linux command `grep -v "#" HG00097.vcf | wc -l ` extracts all lines in HG00097.vcf that *don't* start with "#", and counts these lines.  
 
   
 ### Check vcf in IGV {#vcfinigv}
-Download the vcf file and its index to the *local workspace* on your laptop. Navigate to your local workspace, but do not log in to UPPMAX. Copy the files that you just generated:
+Download the vcf file and its index to the *local workspace* on your laptop, just like you did with the bam file and its index earlier. Navigate to your local workspace, but do not log in to UPPMAX. Copy the files that you just generated:
 ```{r,echo=FALSE,comment="",class.output="bash", class.source="workLocally"}
 cat(paste0('scp <username>@rackham.uppmax.uu.se:/proj/',upid,'/nobackup/<username>/ngsworkflow/HG00097.vcf* .'))
 ```
@@ -296,13 +298,12 @@ Please replace `<username>` with your UPPMAX user name.
 Note that the * in the end of the file name means that you will download all files that start with *HG00097.vcf*, so you will also download the vcf index.  
 Check that the files were properly downloaded to your *local workspace* using `ls -lrt`. 
 
-In `IGV`, in the `File` menu, select `Load from File` and select your vcf file (not the .idx file), which should appear in the tracks window. You will now see all the variants called in HG00097. You can view all variants in the *LCT* gene by typing the gene name in the search box.  
+In `IGV`, in the `File` menu, select `Load from File` and select your vcf file (not the .idx file) and the bam file (not the .bai file) that you downloaded earlier. The vcf and bam files should appear in the tracks window. You will now see all the variants called in HG00097. You can view all variants in the *LCT* gene by typing the gene name in the search box, and you can look specifically at the variant at position chr2:136545844 by typing that position in the serach box.  
   
 ### Questions  
-16. The vcf file is displayed on two rows; what is shown in the two rows in this case?  
-17. What does it mean if a variant has two colours in the upper row?  
-18. What colour do heterozygote variants have in the second row?  
-19. What does it mean if a variant is coloured in turquoise in the second row?  
+14. Hoover the mouse over the upper row of the vcf track. What is the reference and alternative alleles of the variant at position chr2:136545844? 
+15. Hoover the mouse over the lower row of the vcf track and look under "Genotype Information". What genotype does HG00097 have at position chr2:136545844? Is this the same as you found by looking directly in the vcf file in question 10?
+16. Look in the bam track and count the number of reads that have a "T", a "C", and potentially something else at position chr2:136545844. How this information is captured under "Genotype Attributes"? (Again, hoover the mouse over the lower row of the vcf track.)
  
 # Variant calling in cohort {#jointvc}
 If you have time, you can now try joint variant calling in all three samples. Each sample has to be processed with `BWA mem` as above, and then with `HaplotypeCaller` with the flag `-ERC` to generate sample specific g.vcf files. The individual g.vcf fiels should subsequently be combined with GATK's `CombineGVCFs`, and translated into vcf format with GATK's `GenotypeGVCFs`. The workflow below shows how the three samples should be processed and combined.  
@@ -357,11 +358,11 @@ cat(paste0(vcfdir,'/cohort.vcf\n'))
 ```
 
 ### Questions {#jointvariantcallingquestions}
-20. How many data lines do the cohort.g.vcf file have? You can use the linux command `grep -v "#" cohort.g.vcf` to extract all lines in "cohort.g.vcf" that don't start with "#", then `|`, and then `wc` to count those lines.  
-21. How many data lines do the cohort.vcf file have?  
-22. Explain the difference in number of data lines?  
-23. Look at the header line of the cohort.vcf file. What columns does it have? 
-24. What is encoded in the last three columns of the data lines?
+17. How many data lines do the cohort.g.vcf file have? You can use the linux command `grep -v "#" cohort.g.vcf` to extract all lines in "cohort.g.vcf" that don't start with "#", then `|`, and then `wc -l` to count those lines.  
+18. How many data lines do the cohort.vcf file have?  
+19. Explain the difference in number of data lines?  
+20. Look at the header line of the cohort.vcf file. What columns does it have? 
+21. What is encoded in the last three columns of the data lines?
   
 ## SBATCH script {#sbatchscript}
 **Optionally** - This section is only for those of you who want to try to run all steps automatically in bash scripts. 
