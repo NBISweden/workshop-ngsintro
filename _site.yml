@@ -72,7 +72,6 @@ packages:
    - pheatmap
    - stringr
    - tidyr
-   - pheatmap
   packages_bioc_student:
    - DESeq2
    - edgeR
