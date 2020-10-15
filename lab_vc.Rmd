@@ -64,7 +64,7 @@ Sample        | Population | Sequencing technology
 HG00097       | British in England and Scotland    | Low coverage WGS
 HG00100       | British in England and Scotland    | Low coverage WGS
 HG00101       | British in England and Scotland    | Low coverage WGS 
-## Genomic region
+## Genomic region {#Genomicregion}
 The *LCT* gene on chromosome 2 encodes the lactase protein, which is responsible for the metabolism of lactose in mammals. Most mammals can not digest lactose as adults, but some humans can. Genetic variants upstream of the *LCT* gene lead to lactase persistence, wich means that the lactase protein is experssed also in aldulthood and the carrier can continue to digest lactose. The variant rs4988235, located at position chr2:136608646 in the HG19 reference genome, has been shown to lead to lactose persistence. The alternative allele (A on the forward strand and T on the reverse strand) creates a new transcription factor binding site that enables continued expression of the gene after weaning.
   
 In this workshop we will use sequencing data for the region chr2:136545000-136617000 
@@ -303,7 +303,7 @@ In `IGV`, in the `File` menu, select `Load from File` and select your vcf file (
 ### Questions  
 14. Hoover the mouse over the upper row of the vcf track. What is the reference and alternative alleles of the variant at position chr2:136545844? 
 15. Hoover the mouse over the lower row of the vcf track and look under "Genotype Information". What genotype does HG00097 have at position chr2:136545844? Is this the same as you found by looking directly in the vcf file in question 10?
-16. Look in the bam track and count the number of reads that have a "T", a "C", and potentially something else at position chr2:136545844. How this information is captured under "Genotype Attributes"? (Again, hoover the mouse over the lower row of the vcf track.)
+16. Look in the bam track and count the number of reads that have "T" and "C", respectively,  at position chr2:136545844. How is this information captured under "Genotype Attributes"? (Again, hoover the mouse over the lower row of the vcf track.)
  
 # Variant calling in cohort {#jointvc}
 If you have time, you can now try joint variant calling in all three samples. Each sample has to be processed with `BWA mem` as above, and then with `HaplotypeCaller` with the flag `-ERC` to generate sample specific g.vcf files. The individual g.vcf fiels should subsequently be combined with GATK's `CombineGVCFs`, and translated into vcf format with GATK's `GenotypeGVCFs`. The workflow below shows how the three samples should be processed and combined.  
@@ -360,7 +360,7 @@ cat(paste0(vcfdir,'/cohort.vcf\n'))
 ### Questions {#jointvariantcallingquestions}
 17. How many data lines do the cohort.g.vcf file have? You can use the linux command `grep -v "#" cohort.g.vcf` to extract all lines in "cohort.g.vcf" that don't start with "#", then `|`, and then `wc -l` to count those lines.  
 18. How many data lines do the cohort.vcf file have?  
-19. Explain the difference in number of data lines?  
+19. Explain the difference in number of data lines.  
 20. Look at the header line of the cohort.vcf file. What columns does it have? 
 21. What is encoded in the last three columns of the data lines?
   
@@ -431,16 +431,20 @@ gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g
 Please answer the [questions ](#jointvariantcallingquestions) above.
   
 ## Check combined vcf file in IGV
-Download the files cohort.g.vcf and cohort.vcf to your *local workspace* as described [above]{#downloaddata}. Then open the file in IGV as described [above]{#vcfinigv} and look at it.  
+Download the file cohort.vcf and its index, as well as HG00100.bam and HG00101.bam and their indexes to your *local workspace* as described [above]{#downloaddata}. Then open cohort.vcf, HG00097.bam, HG00100.bam and HG00101.bam in IGV as described [above]{#vcfinigv}. This time lets look at the variant rs4988235, located at position chr2:136608646 in the HG19 reference genome, that has been shown to lead to lactose persistence. 
   
 ### Questions
-25. In IGV, can you find the variant shown to be associated with lactose tolerance in adults?  
-26. What is the approximate coverage in this region in all samples?  
-27. Which samples do you think should avoid drinking milk? Any heterozygotes?  
-28. Does this agree with the genotypes in the vcf file?   
+22. What is the reference and alternative alleles at chr2:136608646?
+23. What genotype do the three samples have at chr2:136608646? Note how genotypes are color coded in IGV.
+24. Should any of the individuals avoid drinking milk?   
+25. Now compare the data shown in IGV with the data in the VCF file. Extract the row for the chr2:136608646 variant in the cohort.vcf file, for example using `grep '136608646' cohort.vcf`. What columns of the vcf file contain the information shown in the upper part of the vcf track in IGV?
+26. What columns of the vcf file contain the information shown in the lower part of the vcf track?
+27. Zoom out so that you can see the *MCM6* and *LCT* genes. Is the variant at chr2:136608646 locate within the LCT gene?  
+If you are interested in how this variant affects lactose tolerance please read the article by Mattar et al presented [above](#Genomicregion), or in [OMIM](https://www.omim.org/entry/223100).
+  
 
 # GATK's best practices
-The third part of this workshop will take you through additional refinement steps that are recommended in [GATKs best practices for germline short variant discovery](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-), illustrated in the flowchart below. You can either run the steps command by command in your reserved node, or include the new steps in the SBATCH script that you created earlier. 
+The third part of this workshop will take you through additional refinement steps that are recommended in [GATKs best practices for germline short variant discovery](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-), illustrated in the flowchart below. You can either run the steps command by command in your reserved node, or a similar SBATCH script as described above. 
 
 ![](data/ngs-workflow/3_best_practise.png){width=80%}
   
@@ -573,12 +577,9 @@ gatk --java-options -Xmx7g MergeVcfs -I cohort.snvs.filtered.vcf -I cohort.indel
 ```  
   
 ## Questions  
-29. How many variants are present in the cohort.filtered.vcf file?  
-30. How many variants have passed the filters?  
-Upload the filtered variants, as well as the combined vcf file generated  [above](#jointvc), to IGV. Zoom in to the variants in *LCT* and *MCM6*.  
-31. Did the extra refinement steps in GATK's best practices short variant discovery make any difference to these variants? 
-  
-**Note:** In this workshop we use public data from low coverage sequencing, that has been processed before publication. The difference between variants processed with our simplified workflow and the best practices workflow may be small in this case, but with a real-life data set it is recommended to follow the best practices workflow!
+28. How many variants are present in the cohort.filtered.vcf file?  
+29. How many variants have passed the filters?  
+30. Look at the variants that did not pass the filters using `grep -v 'PASS' cohort.filtered.vcf`. Try to understand why these variants did't pass the filter.
 
 # Clean up
 When the analysis is done and you are sure that you have the desired output, it is a good practise to remove intermediary files that are no longer needed. This will save disk space, and will be a crucial part of the routines when you work with your own data. Please think about which files you need to keep if you would like to go back and look at this lab later on. Remove the other files.
