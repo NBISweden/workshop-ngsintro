@@ -12,6 +12,8 @@ output:
 ```{r,eval=TRUE,include=FALSE}
 library(yaml)
 upid <- yaml::read_yaml("_site.yml")$uppmax_project
+nscid <- yaml::read_yaml("_site.yml")$nsc_project
+
 ```
 
 # Precourse {.tabset .tabset-fade}
@@ -22,25 +24,33 @@ This workshop is aimed towards biologists, researchers, computer scientists or d
 
 These are steps to be completed before the workshop.
 
-### Uppmax ID
+### UPPMAX and NSC accounts
 
-A remote computing cluster (UPPMAX) will be use for data analyses. A SUPR/SNIC account is needed to use UPPMAX resources.
+Remote computing clusters (UPPMAX and NSC) will be use for data analyses. A SUPR/SNIC account is needed to use these resources.
 
 If you do not already have one, create an account at [https://supr.snic.se/](https://supr.snic.se/).
 
 <img src="data/common/supr-login.png" class="fancyimage">
 
-Log in to [SUPR/SNIC](https://supr.snic.se/) and request membership to the project ID **`r paste0(upid)`**.
+Log in to [SUPR/SNIC](https://supr.snic.se/) and request membership to the project IDs **`r paste0(upid)`** and **`r paste0(nscid)`**.
 
 <img src="data/common/supr-request.png" class="fancyimage">
 
-Once you are accepted to the project, you should see that project listed under your active projects.
+Once you are accepted to a project, you should see that project listed under your active projects.
 
 <img src="data/common/supr-projects.png" class="fancyimage">
 
+Finally you need to request a login account to NSC. Login to SUPR and go to the Accounts page. Under the "Possible Resource Account Requests" heading click on "Request Account on Tetralith @ NSC" button and confirm it on the next page.
+
+<img src="data/common/supr-tetralith.png" class="fancyimage">
+
+Checking your request and approving your account requires some manual work, so you might have to wait for some time (up to a working day) before the next step. When the account is ready to be created, you will receive an email to your registered email address (shown in your SUPR contact information) with information on how to proceed. You will get a URL that you use to choose the password (within seven days). When that has been done, the account ready for use within 15 minutes and you can then login using your chosen password.
+
+Note: You will get one user name & password for the account on UPPMAX, and one user name and password for the account on NSC. Please keep track of both, we will tell you when to use which account during the course. 
+
 ### SSH & SFTP access
 
-You need a program to connect to a remote cluster (UPPMAX). Linux and Mac users already have terminal on their systems.
+You need a program to connect to a remote cluster (UPPMAX and NSC). Linux and Mac users already have terminal on their systems.
 
 [![](data/common/mobaxterm.png)](http://mobaxterm.mobatek.net)
 
