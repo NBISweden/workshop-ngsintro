@@ -51,7 +51,7 @@ RNA-seq experiment does not necessarily end with a list of DE genes. If you have
 - 02 RNA-Seq figures and plots using **R**
 - 03 Visualisation of RNA-seq BAM files using **IGV** genome browser
 
-<div class="boxy boxy-exclamation">
+<div class="boxy boxy-primary boxy-exclamation">
 **General guide**
 
 * In paths, remember to change `<username>` with your actual UPPMAX username.
@@ -85,7 +85,7 @@ data.frame(Accession=c("SRR3222409","SRR3222410","SRR3222411","SRR3222412","SRR3
                 full_width=F,position="left")
 ```
 
-<div class="boxy boxy-exclamation">
+<div class="boxy boxy-primary boxy-exclamation">
 For the purpose of this tutorial, to shorten the time needed to run various bioinformatics steps, we have picked reads for a single chromosome (Chr 19) and downsampled the reads. We randomly sampled, without replacement, 25% reads from each sample, using `fastq-sample` from the toolset [fastq-tools](https://homes.cs.washington.edu/~dcjones/fastq-tools/).
 </div>
 
@@ -736,8 +736,9 @@ ls -l
 
 <i class="fas fa-comments"></i> Inspect the files and try to make sense of them.
 
-<div class="boxy boxy-exclamation">
+<div class="boxy boxy-primary boxy-exclamation">
 **Important**  
+
 For downstream steps, we will NOT use this counts.txt file. Instead we will use **counts_full.txt** from the back-up folder. This contains counts across all chromosomes. This is located here: ``r paste0(path_data,"/main/5_dge/")``.
 
 ```{r,accordion=TRUE,comment="",block.title=TRUE,class.output="sh",echo=FALSE}
@@ -859,7 +860,7 @@ cat(paste0("cp ",path_data,"/main/5_dge/counts_vst_full.Rds .\n"))
 
 # Bonus exercises
 
-<div class="boxy boxy-exclamation">
+<div class="boxy boxy-primary boxy-exclamation">
 These exercises are optional and to be run only if you have time and if it interests you.
 </div>
 
@@ -1064,7 +1065,7 @@ Integrated genomics viewer from Broad Institute is a nice graphical interface to
 
 For this tutorial you can chose to run IGV directly on your own computer <i class="fas fa-desktop"></i>  or on Uppmax <i class="fas fa-cloud"></i> . If you chose to run it on your own computer you will have to download some of the BAM files (and the corresponding index files) from Uppmax. If you have not yet installed IGV you also have to [download](http://software.broadinstitute.org/software/igv/download) the program.
 
-<div class="boxy boxy-desktop">
+<div class="boxy boxy-primary boxy-desktop">
 **Local**
 
 Copy two BAM files (one from each experimental group, for example; SRR3222409-19 and SRR3222412-19) and the associated index (`.bam.bai`) files to your computer by running the below command in a **LOCAL** terminal and **NOT** on Uppmax.
@@ -1079,7 +1080,7 @@ cat(paste0("scp user@rackham.uppmax.uu.se:",path_project,"/rnaseq/[user]/3_mappi
 Alternatively, all users can use an SFTP browser like [Filezilla](https://filezilla-project.org/) or [Cyberduck](https://cyberduck.io/) for a GUI interface. Windows users can also use the MobaXterm SFTP file browser to drag and drop.
 </div>
 
-<div class="boxy boxy-cloud">
+<div class="boxy boxy-primary boxy-cloud">
 **Uppmax**
 
 For Linux and Mac users, Log in to Uppmax in a way so that the generated graphics are exported via the network to your screen. This will allow any graphical interface that you start on your compute node to be exported to your computer. However, as the graphics are exported over the network, it can be fairly slow in redrawing windows and the experience can be fairly poor.
@@ -1126,7 +1127,7 @@ For more detailed information on the splice reads you can instead of just lookin
 
 # sbatch
 
-<div class="boxy boxy-exclamation">
+<div class="boxy boxy-primary boxy-exclamation">
 You are not required to run anything practically in this section. This is just to read and understand.
 </div>
 

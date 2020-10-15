@@ -17,8 +17,8 @@ library(formattable)
 library(yaml)
 ```
 
-<div class="alert alert-warning">
-<i class="fas fa-exclamation-circle"></i> <b>Note:</b> The schedule and materials are not final and are subject to change.
+<div class="boxy boxy-warning boxy-exclamation">
+**Note:** The schedule and materials are not final and are subject to change.
 </div>
 
 ```{r,eval=TRUE,include=FALSE}

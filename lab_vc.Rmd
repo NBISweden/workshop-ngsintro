@@ -40,7 +40,7 @@ Whole genome sequencing (WGS) is a comprehensive method for analyzing entire gen
 3. If you have time, the last part of the workshop will take you through the GATK best practices for germline short variant detection in three samples. The aim here is that you should learn how to use GATK's documentation so that you can analyze your own samples in the future.    
 
 **General guide**
-<div class="boxy boxy-lightbulb">
+<div class="boxy boxy-primary boxy-lightbulb">
 * In paths, please replace `<username>` with your actual UPPMAX username.
 * In commands, please replace `<parameter>` with the correct parameter, for example your input file name, output file name, directory name, etc.
 * Do not copy and paste commands from the exercise to terminal, as this can result in formatting errors. 

@@ -12,7 +12,7 @@ upid <- yaml::read_yaml("_site.yml")$uppmax_project
 upres <- yaml::read_yaml("_site.yml")$uppmax_res_2
 ```
 
-<div class="boxy boxy-exclamation">
+<div class="boxy boxy-primary boxy-exclamation">
 In code blocks, the dollar sign (`$`) is not to be printed. The dollar sign is usually an indicator that the text following it should be typed in a terminal window.
 </div>
 
@@ -230,7 +230,7 @@ done
 
 <i class="fas fa-clipboard-list"></i> Let's say it's New Year's Eve and you want to impress your friends with a computerized countdown of the last 10 seconds of the year (don't we all?).
 
-<div class="boxy boxy-lightbulb">
+<div class="boxy boxy-primary boxy-lightbulb">
 Start off with getting a loop to count down from 10 to 0 first. Notice how fast the computer counts? That won't do if it's seconds we want to be counting down. Try looking the man page for the `sleep` command (`man sleep`) and figure out how to use it. The point of using `sleep` is to tell the computer to wait for 1 second after printing the number, instead of rushing to the next iteration in the loop directly. Try to implement this on your own.
 </div>
 
@@ -257,7 +257,7 @@ In real life you will never do this, instead you will most likely always do it t
 
 <i class="fas fa-clipboard-list"></i> Write a script that converts all the SAM files in a specified directory to BAM files. Incidentally, you can find 50 SAM files in need of conversion in the folder called `sam` in the folder you copied to your folder earlier in this lab (``r paste0("/proj/",upid,"/nobackup/<username>/linux_advanced/sam")``). Bonus points if you make the program take the specified directory as an argument, and another bonus point if you get the program to name the resulting BAM file to the same name as the SAM file but with a .bam ending instead.
 
-<div class="boxy boxy-lightbulb">
+<div class="boxy boxy-primary boxy-lightbulb">
 Remember that you have to load the samtools module to be able to run it. The way you get samtools to convert a SAM file to a BAM file is by typing the following command:
 
 ```bash
@@ -406,7 +406,7 @@ The factorial of 5, written 5!, would be `1*2*3*4*5=120`. Doing this by hand wou
 
 <i class="fas fa-clipboard-list"></i> Write a loop that will calculate the factorial of a given number stored in the variable `$n`.
 
-<div class="boxy boxy-lightbulb">
+<div class="boxy boxy-primary boxy-lightbulb">
 A problem that you will encounter is that the sequence expression, `{1..10}`, from the previous exercise doesn't handle variables. This is because of the way bash is built. The sequence expressions are handled before handling the variables so when bash tries to generate the sequence, the variable names have not yet been replaced with the values they contain. This leads to bash trying to create a sequence from 1 to `$n`, which of course doesn't mean anything.
 
 To get around this we can use a different way of generating sequences (there are **always** alternatives). There is a program called `seq` that does pretty much the same thing as the sequence expression, and since it is a program it will be executed **after** the variables have been handled. It's as easy to use as the sequence expressions; instead of writing `{1..10}` just write `$( seq 1 10 )`.
