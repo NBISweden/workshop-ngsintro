@@ -11,6 +11,7 @@
   --color-code-bg:  #f4f6f6;
   --color-code-inline: #5d6d7e;
   --color-boxy-bg: #fbfcfc;
+  --color-shadow: #E0E0E0;
   --font-base: 'Source Sans Pro';
   --font-highlight: 'Source Sans Pro';
   --font-code: 'Ubuntu Mono';
@@ -20,7 +21,7 @@
 /* body font family */
 body,p,h1,h2,h3,h4,h5,h6 {
   font-family: var(--font-base, 'Roboto', 'DIN', 'Helvetica', sans-serif);
-  color: var(--color-text);
+  /*color: var(--color-text);*/
   font-weight: 400;
   font-size: 17px;
   line-height: 1.55;
@@ -29,7 +30,7 @@ body,p,h1,h2,h3,h4,h5,h6 {
 /* title font family, weight and size */
 h1,h2,h3 {
   font-family: var(--font-highlight, 'Roboto', 'DIN', 'Helvetica', sans-serif);
-  color: var(--color-text);
+  /*color: var(--color-text);*/
   font-weight: 600;
 }
 
@@ -325,8 +326,10 @@ img {
 }
 
 .fancyimage {
-  box-shadow: 1px 1px 5px grey;
-  border-radius: 2px;
+  -webkit-box-shadow: 1px 1px 6px var(--color-shadow);
+  -moz-box-shadow: 1px 1px 6px var(--color-shadow);
+  box-shadow: 1px 1px 6px var(--color-shadow);
+  border-radius: 3px;
 }
 
 .logo-navbar {
@@ -383,9 +386,9 @@ a:hover, table a:hover {
   display: inline-block;
   padding: 25px;
   border-radius: 4px;
-  -webkit-box-shadow: 1px 1px 6px #E0E0E0;
-  -moz-box-shadow: 1px 1px 6px #E0E0E0;
-  box-shadow:1px 1px 6px #E0E0E0;
+  -webkit-box-shadow: 1px 1px 6px var(--color-shadow);
+  -moz-box-shadow: 1px 1px 6px var(--color-shadow);
+  box-shadow: 1px 1px 6px var(--color-shadow);
   margin-bottom: 20px;
 }
 
