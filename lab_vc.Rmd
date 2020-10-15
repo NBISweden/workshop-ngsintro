@@ -178,7 +178,8 @@ gatk --java-options -Xmx7g CreateSequenceDictionary -R human_g1k_v37_chr2.fasta 
 Again, check what file(s) were created using `ls -lrt`. 
 
 # Variant calling in one sample
-Now let's start the main part of the workshop, which will guide you through a basic variant calling workflow in one sample. The worflow consists of aligning the reads with [BWA](http://bio-bwa.sourceforge.net) and detecting variants with [HaplotypeCaller](https://gatk.broadinstitute.org/hc/en-us/articles/360037225632-HaplotypeCaller) as illustrated below. 
+Now let's start the main part of the workshop, which will guide you through a basic variant calling workflow in one sample. The workflow consists of aligning the reads with [BWA](http://bio-bwa.sourceforge.net) and detecting variants with [HaplotypeCaller](https://gatk.broadinstitute.org/hc/en-us/articles/360037225632-HaplotypeCaller) as illustrated below. 
+  
 ![](data/ngs-workflow/1_onesamplevc.png)
 
 ## Quality control
