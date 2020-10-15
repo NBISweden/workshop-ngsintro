@@ -179,16 +179,16 @@ Again, check what file(s) were created using `ls -lrt`.
 
 # Variant calling in one sample
 Now let's start the main part of the workshop, which will guide you through a basic variant calling workflow in one sample.  
-  
+
 ## Quality control
-![](data/ngs-workflow/main_qc.png)
 
 It is always recommended to perform quality control of new data, for example using FastQC, before alignment and variant calling. We analyzed these samples with FastQC earlier in the week. Please feel free to go back to the QC session if you want to repeat this, otherwise you can continue with alignment.  
   
 ## Aligning reads
-![](data/ngs-workflow/main_align.png)
-  
+![](data/ngs-workflow/1_bwa.png)
+
 ### BWA mem {#bwamem}
+
 In the *UPPMAX workspace* you should now use `BWA mem` to align the reads to the reference genome.  
  
 At the same time, you should add something called *read groups* to the reads in the fastq files. Read groups allow us to trace various technical features, such as which flowcell was used to generate the reads, and this is needed in order to perform variant calling with HaplotypeCaller. You are not expected to learn all the details of read groups here, but if you are interested in more information please read this article at [GATK-forum](https://gatk.broadinstitute.org/hc/en-us/articles/360035890671-Read-groups). The samples in this workshop come from the 1000 Genomes project, and we don't know how these reads were generated. Let's assume that each fastq file was generated from one library preparation (called *libraryx*), derived from one biological sample (called *HG00097*), that was run on one lane of a flowcell (called *lanex_flowcellx*) in the Illumina machine, and create a read group with id *readgroupx* that contains this information.   
@@ -250,7 +250,7 @@ Check that the files are now present in your *local workspace* using `ls -lrt`.
 7. Which RedSeq Genes are located within the region chr2:136545000-136617000?
   
 ## Variant Calling
-![](data/ngs-workflow/main_vc.png)
+![](data/ngs-workflow/1_bwa.png)
   
 ### HaplotypeCaller {#haplotypecaller}
 Now we will detect short variants in the bam file using GATK's `HaplotypeCaller`. Go to your *UPPMAX workspace* and run:
@@ -440,7 +440,7 @@ Download the file cohort.vcf and its index, as well as HG00100.bam and HG00101.b
 25. Now compare the data shown in IGV with the data in the VCF file. Extract the row for the chr2:136608646 variant in the cohort.vcf file, for example using `grep '136608646' cohort.vcf`. What columns of the vcf file contain the information shown in the upper part of the vcf track in IGV?
 26. What columns of the vcf file contain the information shown in the lower part of the vcf track?
 27. Zoom out so that you can see the *MCM6* and *LCT* genes. Is the variant at chr2:136608646 locate within the LCT gene?  
-If you are interested in how this variant affects lactose tolerance please read the article by Mattar et al presented [above](#Genomicregion), or in [OMIM](https://www.omim.org/entry/223100).
+If you are interested in how this variant affects lactose tolerance please read the article by Mattar et al presented [above](#Genomicregion), or in [OMIM](https://www.omim.org/entry/601806#0001).
   
 
 # GATK's best practices
