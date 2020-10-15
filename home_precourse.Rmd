@@ -74,12 +74,18 @@ Note that it may take an hour or so from request approval, before you can actual
 
 ### Tools
 
-We will use IGV and R on Uppmax and therefore, you do not need to install it on your own system. Alternatively, if you would like to try it out on your own system, instructions are given below.
+Please install IGV on your local system before the start of the course. 
+
+<div class="boxy boxy-lightbulb">
+[![](data/common/IGVlogo.png)](https://www.broadinstitute.org/igv/)  
+
+**Download IGV** (Integrated Genome Browser) from the [Broad Institute](https://www.broadinstitute.org/igv/) on your own computer and have the mouse genome (mm10) as well as the human genome (hg19) available.
+</div>
+
+We will use R on Uppmax and therefore, you do not need to install it on your own system. Alternatively, if you would like to try it out on your own system, instructions are given below.
 
 <div class="boxy boxy-clipboard-list boxy-orange">
 **Optional**
-
-<i class="fas fa-chevron-circle-right"></i> **Download IGV** (Integrated Genome Browser) from the [Broad Institute](https://www.broadinstitute.org/igv/) on your own computer and have the mouse genome (mm10) available.
 
 If you plan to run R steps locally on your computer, R and RStudio need to be installed on your computer .
 
