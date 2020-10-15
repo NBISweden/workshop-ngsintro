@@ -182,12 +182,7 @@ Now let's start the main part of the workshop, which will guide you through a ba
   
 ![](data/ngs-workflow/1_onesamplevc.png)
 
-## Quality control
-
-It is always recommended to perform quality control of new data, for example using FastQC, before alignment and variant calling. We analyzed these samples with FastQC earlier in the week. Please feel free to go back to the QC session if you want to repeat this, otherwise you can continue with alignment.  
-  
 ## Aligning reads
-![](data/ngs-workflow/1_bwa.png)
 
 ### BWA mem {#bwamem}
 
@@ -252,8 +247,7 @@ Check that the files are now present in your *local workspace* using `ls -lrt`.
 7. Which RedSeq Genes are located within the region chr2:136545000-136617000?
   
 ## Variant Calling
-![](data/ngs-workflow/1_hc.png)
-  
+
 ### HaplotypeCaller {#haplotypecaller}
 Now we will detect short variants in the bam file using GATK's `HaplotypeCaller`. Go to your *UPPMAX workspace* and run:
 ```bash
