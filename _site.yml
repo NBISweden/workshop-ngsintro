@@ -72,6 +72,7 @@ packages:
    - pheatmap
    - stringr
    - tidyr
+   - pheatmap
   packages_bioc_student:
    - DESeq2
    - edgeR
@@ -79,7 +80,6 @@ packages:
    - GO.db
    - org.Mm.eg.db
    - reactome.db
-   - pheatmap
   packages_github_student:
   packages_cran_repo:
    - bookdown
