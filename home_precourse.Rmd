@@ -47,16 +47,20 @@ Finally you need to request a login account to NSC. Login to SUPR and go to the 
 Checking your request and approving your account requires some manual work, so you might have to wait for some time (up to a working day) before the next step. When the account is ready to be created, you will receive an email to your registered email address (shown in your SUPR contact information) with information on how to proceed. You will get a URL that you use to choose the password (within seven days). When that has been done, the account ready for use within 15 minutes and you can then login using your chosen password.
 
 <div class="boxy boxy-warning boxy-exclamation">
-**Note:** You will get one user name & password for the account on UPPMAX, and one user name and password for the account on NSC. Please keep track of both, we will tell you when to use which account during the course. 
+**Note:** You will get one username & password for the account on UPPMAX, and one username and password for the account on NSC. Please keep track of both, we will tell you when to use which account during the workshop. 
 </div>
 
 ### 2. SSH & SFTP access
+
+#### 2.1 SSH
 
 You need a program to connect to a remote cluster (UPPMAX and NSC). Linux and Mac users already have terminal on their systems.
 
 [![](data/common/mobaxterm.png)](http://mobaxterm.mobatek.net)
 
 If you are on a Windows system, we recommend [MobaXterm](http://mobaxterm.mobatek.net). It is recommended that you INSTALL the program and not use the portable version. MobaXterm also has an integrated SFTP file browser.
+
+#### 2.2 XQuartz
 
 [![](data/common/xquartz.png)](https://www.xquartz.org/)
 
@@ -66,13 +70,14 @@ Type `ssh -Y user@rackham.uppmax.uu.se` in the terminal and then enter your pass
 
 If you need to transfer data between UPPMAX and your computer, you can use tools SCP or SFTP through the terminal. Windows users can use the SFTP browser available with MobaXterm.
 
-<div class="boxy boxy-primary boxy-lightbulb">
+#### 2.3 SFTP Browser
+
 [![](data/common/filezilla.png)](https://filezilla-project.org/)
 
 For all users, if you prefer a GUI to upload and download files from UPPMAX, we recommend installing [FileZilla](https://filezilla-project.org/).
-</div>
 
-### 3. Course directory access
+
+### 3. Workshop directory access
 
 <div class="boxy boxy-primary boxy-lightbulb">
 For this step, you will have to use the terminal a bit. You can get started by following **Tutorial One** at this link *[Unix tutorial for beginners](http://www.ee.surrey.ac.uk/Teaching/Unix/)*. You must use [https://scilifelab.github.io/courses/ngsintro/common/emu/](https://scilifelab.github.io/courses/ngsintro/common/emu/) [(or this mirror)](https://bellard.org/jslinux/vm.html?url=https://bellard.org/jslinux/buildroot-x86.cfg) to try the commands in the tutorial, so that you don't mess up any real world system. If you any questions regarding this tutorial contact: *martin.dahlo@scilifelab.uu.se*.
@@ -80,15 +85,21 @@ For this step, you will have to use the terminal a bit. You can get started by f
 
 Make sure that you can read and write in the workshop folder. Go to ``r paste0("/proj/",upid,"/nobackup/")`` and create a directory with your username. For example `mkdir jody`. You will work inside this directory for the workshop. For example ``r paste0("/proj/",upid,"/nobackup/jody")``. If you cannot write to the folder, the most likely reason is that you have not requested access to the workshop project via SUPR. This is described in step 1.
 
-<div class="boxy boxy-warningboxy-exclamation">
+<div class="boxy boxy-warning boxy-exclamation">
 **Note:** It may take an hour or so from request approval, before you can actually write to the folder. We will check before the workshop that all students have logged in and done this, so do not forget!
 </div>
 
 ### 4. Tools
 
-#### 4.1 IGV
+#### 4.1 Zoom
 
-Please install IGV on your local system before the start of the course. 
+[![](data/common/zoom.png)](https://zoom.us/)  
+
+Please install the latest version of [Zoom](https://zoom.us/).
+
+#### 4.2 IGV
+
+Please install IGV on your local system before the start of the workshop. 
 
 <div class="boxy boxy-primary boxy-lightbulb">
 [![](data/common/IGVlogo.png)](https://www.broadinstitute.org/igv/)  
@@ -96,7 +107,7 @@ Please install IGV on your local system before the start of the course.
 **Download IGV** (Integrated Genome Browser) from the [Broad Institute](https://www.broadinstitute.org/igv/) on your own computer and have the mouse genome (mm10) as well as the human genome (hg19) available.
 </div>
 
-#### 4.2 R
+#### 4.3 R
 
 We will use R on Uppmax and therefore, you do not need to install it on your own system. Optionally, if you would like to try it out on your own system, instructions are given below.
 
@@ -199,7 +210,7 @@ The syllabus for this workshop are as follows.
 
 ## Learning outcomes
 
-After this course you should be able to:
+After this workshop you should be able to:
 
 * Describe the basic principles of next generation sequencing.
 * Use the Linux command line interface to manage simple file processing operations, and organize directory structures.
