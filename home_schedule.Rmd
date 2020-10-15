@@ -1,6 +1,6 @@
 ---
 title: "Schedule"
-subtitle: Note that the linked pages might be subject to changes
+subtitle: Note that the linked material might be subject to changes
 output:
   bookdown::html_document2:
     toc: false
