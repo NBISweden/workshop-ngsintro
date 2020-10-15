@@ -38,8 +38,6 @@ navbar:
       href: home_content.html
     - text: Precourse
       href: home_precourse.html
-    - text: Info
-      href: home_info.html
 output:
   bookdown::html_document2:
     highlight: textmate
