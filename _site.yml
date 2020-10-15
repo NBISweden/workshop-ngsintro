@@ -79,6 +79,7 @@ packages:
    - GO.db
    - org.Mm.eg.db
    - reactome.db
+   - pheatmap
   packages_github_student:
   packages_cran_repo:
    - bookdown
