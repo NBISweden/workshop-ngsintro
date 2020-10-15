@@ -3,6 +3,7 @@ name: Introduction to Bioinformatics using NGS data
 output_dir: 2011
 # used site-wide wherever uppmax project ids are used
 uppmax_project: g2020009
+nsc_project: snic2020-13-57
 # uppmax reservation ids. used site-wide
 uppmax_res_1: g2020009_09
 uppmax_res_2: g2020009_10
