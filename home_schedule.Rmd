@@ -1,6 +1,5 @@
 ---
 title: "Schedule"
-subtitle: Note that the linked material might be subject to changes
 output:
   bookdown::html_document2:
     toc: false
@@ -17,6 +16,10 @@ library(kableExtra)
 library(formattable)
 library(yaml)
 ```
+
+<div class="alert alert-warning">
+<i class="fas fa-exclamation-circle"></i> <b>Note:</b> The schedule and materials are not final and are subject to change.
+</div>
 
 ```{r,eval=TRUE,include=FALSE}
 s <- read.csv("schedule.csv",sep=";",stringsAsFactors=F,header=T,na.strings="",colClasses="character")
