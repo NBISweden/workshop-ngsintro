@@ -170,7 +170,8 @@ The syllabus for this workshop are as follows.
 * Commonly used bioinformatic tools and pipelines
 * Working with integrated genome viewer
 * Variant-calling workflow
-  * Best practise workflow for germline variant calling
+  * Mapping reads to the reference genome
+  * Variant detection
   * VCF file format
 * RNA-Seq workflow
   * RNA-Seq experimental design and considerations
@@ -182,11 +183,20 @@ The syllabus for this workshop are as follows.
 
 ## Learning outcomes
 
-* Awareness of the current state of NGS technologies
-* Familiarity with unix/linux command line interface to perform basic tasks
-* Connecting to and working on a remote computing cluster
-* Familiarity with general workflow for variant-calling and rna-seq
-* Follow basic NGS jargon in scientific papers
+After this course you should be able to:
+* Describe the basic principles of next generation sequencing. 
+* Use the Linux command line interface to manage simple file processing operations, and organize directory structures. 
+* Connect to and work on a remote high performance compute cluster.
+* Apply programs in Linux for analysis of NGS data.
+* Summarise the applications of current NGS technologies, including the weakness and strengths of the approaches and when it is appropriate to use which one of them. 
+* Explain common NGS file formats.
+* Interpret quality control of NGS reads.
+* Explain the steps involved in variant calling using whole genome sequencing data.
+* Independently perform a basic variant calling workflow on example data.
+* Explain the steps involved in differential gene expression using RNA seq data.
+* Independently perform differential gene expression analysis on example data. 
+
+
 
 ***
 
