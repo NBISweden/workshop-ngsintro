@@ -184,17 +184,18 @@ The syllabus for this workshop are as follows.
 ## Learning outcomes
 
 After this course you should be able to:
-* Describe the basic principles of next generation sequencing. 
-* Use the Linux command line interface to manage simple file processing operations, and organize directory structures. 
+
+* Describe the basic principles of next generation sequencing.
+* Use the Linux command line interface to manage simple file processing operations, and organize directory structures.
 * Connect to and work on a remote high performance compute cluster.
 * Apply programs in Linux for analysis of NGS data.
-* Summarise the applications of current NGS technologies, including the weakness and strengths of the approaches and when it is appropriate to use which one of them. 
+* Summarise the applications of current NGS technologies, including the weakness and strengths of the approaches and when it is appropriate to use which one of them.
 * Explain common NGS file formats.
 * Interpret quality control of NGS reads.
 * Explain the steps involved in variant calling using whole genome sequencing data.
 * Independently perform a basic variant calling workflow on example data.
 * Explain the steps involved in differential gene expression using RNA seq data.
-* Independently perform differential gene expression analysis on example data. 
+* Independently perform differential gene expression analysis on example data.
 
 
 
