@@ -50,7 +50,7 @@ Note: You will get one user name & password for the account on UPPMAX, and one u
 
 ### SSH & SFTP access
 
-You need a program to connect to a remote cluster (UPPMAX). Linux and Mac users already have terminal on their systems.
+You need a program to connect to a remote cluster (UPPMAX and NSC). Linux and Mac users already have terminal on their systems.
 
 [![](data/common/mobaxterm.png)](http://mobaxterm.mobatek.net)
 
