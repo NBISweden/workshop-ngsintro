@@ -46,7 +46,7 @@ Finally you need to request a login account to NSC. Login to SUPR and go to the 
 
 Checking your request and approving your account requires some manual work, so you might have to wait for some time (up to a working day) before the next step. When the account is ready to be created, you will receive an email to your registered email address (shown in your SUPR contact information) with information on how to proceed. You will get a URL that you use to choose the password (within seven days). When that has been done, the account ready for use within 15 minutes and you can then login using your chosen password.
 
-Note: You will get one user name & password for the account on UPPMAX, and one user name and account on NSC. Please keep track of both of them, we will tell you when to use which account during the course. 
+Note: You will get one user name & password for the account on UPPMAX, and one user name and password for the account on NSC. Please keep track of both, we will tell you when to use which account during the course. 
 
 ### SSH & SFTP access
 
