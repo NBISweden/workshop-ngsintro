@@ -65,16 +65,11 @@ You need a program to connect to a remote cluster (UPPMAX and NSC). Linux and Ma
 Mac users will need to download and install [XQuartz](https://www.xquartz.org/) for X11 forwarding. *ie*; to forward remotely opened windows to local machine.
 
 
-
-Type `ssh -Y user@rackham.uppmax.uu.se` in the terminal and then enter your password. The password will not be visible as you type.
-
-If you need to transfer data between UPPMAX and your computer, you can use tools SCP or SFTP through the terminal. Windows users can use the SFTP browser available with MobaXterm.
-
 #### 2.3 SFTP Browser
 
 [![](data/common/filezilla.png)](https://filezilla-project.org/)
 
-For all users, if you prefer a GUI to upload and download files from UPPMAX, we recommend installing [FileZilla](https://filezilla-project.org/).
+When you need to transfer data between UPPMAX and your computer, you can use the tools SCP or SFTP through the terminal. Windows users can use the SFTP browser available with MobaXterm. If you prefer a GUI to upload and download files from UPPMAX, we recommend installing [FileZilla](https://filezilla-project.org/).
 
 
 ### 3. Test the connection to UPPMAX
@@ -83,8 +78,10 @@ For all users, if you prefer a GUI to upload and download files from UPPMAX, we 
 For this step, you will have to use the terminal a bit. You can get started by following **Tutorial One** at this link *[Unix tutorial for beginners](http://www.ee.surrey.ac.uk/Teaching/Unix/)*. You must use [https://scilifelab.github.io/courses/ngsintro/common/emu/](https://scilifelab.github.io/courses/ngsintro/common/emu/) [(or this mirror)](https://bellard.org/jslinux/vm.html?url=https://bellard.org/jslinux/buildroot-x86.cfg) to try the commands in the tutorial, so that you don't mess up any real world system. If you any questions regarding this tutorial contact: *martin.dahlo@scilifelab.uu.se*.
 </div>
 
-First connect to UPPMAX. Open the terminal (Window users can use MobaXterm) and type `ssh -Y user@rackham.uppmax.uu.se`, then enter your password. The password will not be visible as you type.
+**Connect to UPPMAX**
+Open the terminal (Window users can use MobaXterm) and type `ssh -Y user@rackham.uppmax.uu.se`, then enter your password. The password will not be visible as you type.
 
+**Create a user folder**
 Then make sure that you can read and write in the workshop folder at UPPMAX. Go to ``r paste0("/proj/",upid,"/nobackup/")`` and create a directory with your username. For example `mkdir jody`. You will work inside this directory for the workshop. For example ``r paste0("/proj/",upid,"/nobackup/jody")``. If you cannot write to the folder, the most likely reason is that you have not requested access to the workshop project via SUPR. This is described in step 1 above.
 
 <div class="boxy boxy-warning boxy-exclamation">
