@@ -69,7 +69,7 @@ Mac users will need to download and install [XQuartz](https://www.xquartz.org/) 
 
 [![](data/common/filezilla.png)](https://filezilla-project.org/)
 
-When you need to transfer data between UPPMAX and your computer, you can use the tools SCP or SFTP through the terminal. Windows users can use the SFTP browser available with MobaXterm. If you prefer a GUI to upload and download files from UPPMAX, we recommend installing [FileZilla](https://filezilla-project.org/).
+When you need to transfer data between the remote cluster and your computer, you can use the tools SCP or SFTP through the terminal. Windows users can use the SFTP browser available with MobaXterm. If you prefer a GUI to upload and download files from the remote cluster, we recommend installing [FileZilla](https://filezilla-project.org/).
 
 
 ### 3. Test the connection to UPPMAX
