@@ -43,7 +43,7 @@ Whole genome sequencing (WGS) is a comprehensive method for analyzing entire gen
 <div class="boxy boxy-primary boxy-lightbulb">
 * In this workshop you will work on the computing cluster Tetralith at NSC.
 * In paths, please replace `<nsc_username>` with your NSC username.
-* You will use a singularity image (a virtual computer) that mimics the UPPMAX cluster, and once you have started the singularity image everything works like at UPPMAX.
+* You will use a singularity container (a virtual computer) that mimics the UPPMAX cluster, and once you have started the singularity container everything works like at UPPMAX.
 * In commands, please replace `<parameter>` with the correct parameter, for example your input file name, output file name, directory name, etc.
 * Do not copy and paste commands from the exercise to terminal, as this can result in formatting errors. 
 * Use tab completion.
