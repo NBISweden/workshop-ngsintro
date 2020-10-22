@@ -43,7 +43,7 @@ Whole genome sequencing (WGS) is a comprehensive method for analyzing entire gen
 <div class="boxy boxy-primary boxy-lightbulb">
 * In this workshop you will work on the computing cluster Tetralith at NSC.
 * In paths, please replace `<nsc_username>` with your NSC username.
-* You will use a singularity container (a virtual computer) that mimics the UPPMAX cluster, and once you have started the singularity container everything works like at UPPMAX.
+* You will use a singularity container (a virtual computer) that mimics the UPPMAX environment. 
 * In commands, please replace `<parameter>` with the correct parameter, for example your input file name, output file name, directory name, etc.
 * Do not copy and paste commands from the exercise to terminal, as this can result in formatting errors. 
 * Use tab completion.
@@ -105,6 +105,7 @@ When you login to Tetralith you enter the *login node*, which is not intended fo
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('<nsc_username>@tetralith1$ interactive -A ',nscid,' -t 04:00:00 -n 1'))
 ```
+Notise that your terminal prompt changed to something like `<nsc_username>`@n424, which means that you are now running on one of the compute nodes.
 
 ### UPPMAX singularity container
 We will use a singularity container (a virtual computer) that mimics the UPPMAX computing environment. Once you have started the singularity container your environment will look exaclty as on the Rackham cluster at UPPMAX, and all the software used in this workshop will be available through the module system just like on UPPMAX.  
@@ -112,7 +113,7 @@ Use this command to start the singularity container:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('<nsc_username>@n424$ singularity shell -B /proj/snic2020-13-57/users:/proj/g2020009/nobackup /proj/snic2020-13-57/ngsintro_homemade.5.sif'))
 ```
-Notise that your terminal prompt changed to `<nsc_username>`@fake-uppmax. This means that you have moved into a "virtual computer" that mimics the UPPMAX environment.   
+Note that your terminal prompt changed to `<nsc_username>`@fake-uppmax. This means that you have moved into a "virtual computer" that mimics the UPPMAX environment.   
 To close the singularity container  later on, just type `exit`in the terminal, but don't do that now.
 
 ### Cluster workspace
