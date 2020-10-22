@@ -236,8 +236,7 @@ For help with interpreting the bam file, please look at the sam/bam format defin
 Integrative Genomics Viewer (IGV) provides an interactive visualisation of the reads in a bam file. Here we will show you how to run IGV on your laptop. If you have not used IGV on your laptop before, then go to the IGV [download page](https://software.broadinstitute.org/software/igv/download), and follow the instructions to download it. It will prompt you to fill in some information and agree to license. Launch the viewer through web start. The 1.2 Gb version should be sufficient for our data.
   
 **Download the bam file**  
-You also need to download the bam file and the corresponding .bai file to your laptop. 
-Open a new terminal window on your laptop and navigate to your [local workspace](#preparelaptop), **but do not log in to NSC**. Copy the .bam and .bam.bai files you just generated with this command:
+Open a new terminal window on your laptop and navigate to your [local workspace](#preparelaptop), **but do not log in to NSC**. Download the .bam and .bam.bai files you just generated with this command:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('scp <nsc_username>@tetralith.nsc.uu.se:/proj/',nscid,'/users/<nsc_username>/ngsworkflow/HG00097.bam* .'))
 ```
@@ -293,7 +292,7 @@ For more detailed information about vcf files please have a look at [The Variant
 
   
 ### Check vcf in IGV {#vcfinigv}
-Download the vcf file and its index to the *local workspace* on your laptop, just like you did with the bam file and its index earlier. Open a new terminal window on your laptop and navigate to your local workspace, **but do not log in to NSC**. Copy the files that you just generated:
+Download the vcf file and its index to the *local workspace* on your laptop, just like you did with the bam file and its index earlier. Open a new terminal window on your laptop and navigate to your local workspace, **but do not log in to NSC**. Download the files that you just generated with:
 ```{r,echo=FALSE,comment="",class.output="bash", class.source="workLocally"}
 cat(paste0('scp <nsc_username>@tetralith.nsc.uu.se:/proj/',nscid,'/users/<nsc_username>/ngsworkflow/HG00097.vcf* .'))
 ```
