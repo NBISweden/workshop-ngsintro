@@ -129,7 +129,7 @@ cat(paste0('<nsc_username>@tetralith1$ /proj/',nscid,'/users/<nsc_username>/ngsw
 ```
 When it is time to copy files to your *Local workspace* you must use this path, but worry, this is specified in the instructions then.
   
-**The rest of the instructions assumes that you runnig the UPPMAX singularity container from an interactive session on Tetralith, and that you are located in your *Cluster worksplace*, unless something else is specified.** 
+**The rest of the instructions assumes that you runnig the UPPMAX singularity container from an interactive session on Tetralith, and that you are located in your *Cluster workspace*, unless something else is specified.** 
 
 ### Symbolic links to data
 The raw data files are located in the [Data](#Data) folder described above. Instead of copying the files to your workspace you should create symbolic links (soft-links) to them. Soft-linking files and folders allows you to work with them as if they were in your current directory, but without multiplying them.  
