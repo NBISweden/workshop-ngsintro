@@ -124,15 +124,15 @@ While running the UPPMAX singularity cotainer, create a workspace folder for thi
 cat(paste0('fake-uppmax$ mkdir /proj/',upid,'/nobackup/<nsc_username>/ngsworkflow\n'))
 cat(paste0('fake-uppmax$ cd /proj/',upid,'/nobackup/<nsc_username>/ngsworkflow'))
 ```
-The folder you just created will be referred to as your *Cluster workspace* throughout this workshop.  
+The folder you just created will be referred to as your *cluster workspace* throughout this workshop.  
 
-The *Cluster workspace* and its content can be reached also from outside of the UPPMAX singularity container in:
+The *cluster workspace* can be reached also from outside of the UPPMAX singularity container, in this folder on Tetralith:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('tetralith$ /proj/',nscid,'/users/<nsc_username>/ngsworkflow\n'))
 ```
-This is the path you must use when downloading files to your *Local workspace* later on (but don't worry, it will be specified in the instructions).
+This is the path you must use when downloading files to your *local workspace* later on (but don't worry, it will be specified in the instructions).
   
-**The rest of the instructions assumes that you runnig the UPPMAX singularity container from an interactive session on Tetralith, and that you are located in your *Cluster workspace*, unless something else is specified.** 
+**The rest of the instructions assumes that you runnig the UPPMAX singularity container from an interactive session on Tetralith, and that you are located in your *cluster workspace*, unless something else is specified.** 
 
 ### Symbolic links to data
 The raw data files are located in the [Data](#Data) folder described above. Instead of copying the files to your workspace you should create symbolic links (soft-links) to them. Soft-linking files and folders allows you to work with them as if they were in your current directory, but without multiplying them.  
