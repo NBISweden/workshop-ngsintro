@@ -95,7 +95,7 @@ cat(paste0(refdir))
 The majority of the analyses in this workshop will be done on the computing cluster, but you will copy some of the resulting files to your laptop. Therefore, please start by creating a folder for this workshop on your laptop. It is up to you where you want to put this, but it can for example be a folder called *ngsworkflow* on Desktop. You need to have write permission in this folder. The folder you create here will be referred to as *local workspace* throughout this workshop.  
   
 ## The NCS cluster
-Please connect to the Tetralith cluster at NSC using `ssh:
+Please connect to the Tetralith cluster at NSC using `ssh`:
 ```bash
 $ ssh -Y username@tetralith.nsc.liu.se
 ```  
@@ -103,28 +103,28 @@ $ ssh -Y username@tetralith.nsc.liu.se
 ### Interactive session 
 When you login to Tetralith you enter the *login node*, which is not intended for compute intensive tasks. You should therefore book a compute node, or in this case just one core of a node.
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('interactive -A ',nscid,' -t 04:00:00 -n 1 &'))
+cat(paste0('<username>@tetralith1$ interactive -A ',nscid,' -t 04:00:00 -n 1'))
 ```
 
 ### UPPMAX singularity container
 We will use a singularity container (a virtual computer) that mimics the UPPMAX computing environment. Once you have started the singularity container your environment will look exaclty as on the Rackham cluster at UPPMAX, and all the software used in this workshop will be available through the module system just like on UPPMAX.  
 Use this command to start the singularity container:
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('singularity shell -B /proj/snic2020-13-57/users:/proj/g2020009/nobackup /proj/snic2020-13-57/ngsintro_homemade.5.sif'))
+cat(paste0('<username>@n424$ singularity shell -B /proj/snic2020-13-57/users:/proj/g2020009/nobackup /proj/snic2020-13-57/ngsintro_homemade.5.sif'))
 ```
 Notise that your terminal prompt changed to `<username>`@fake-uppmax. This means that you have moved into a "virtual computer" that mimics the UPPMAX environment.   
 To close the singularity container  later on, just type `exit`in the terminal, but don't do that now.
 
 ### Cluster workspace
-Creating a workspace for this exercise, and then move into it. This folder will be referred to as your *Cluster workspace* throughout this workshop.
+Create a new folder that will be the workspace for this exercise, and then move into it. This folder will be referred to as your *Cluster workspace* throughout this workshop.
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('<username>@fake-uppmax mkdir /proj/',upid,'/nobackup/<username>/ngsworkflow\n'))
-cat(paste0('<username>@fake-uppmax cd /proj/',upid,'/nobackup/<username>/ngsworkflow'))
+cat(paste0('<username>@fake-uppmax$ mkdir /proj/',upid,'/nobackup/<username>/ngsworkflow\n'))
+cat(paste0('<username>@fake-uppmax$ cd /proj/',upid,'/nobackup/<username>/ngsworkflow'))
 ```
 The newly created folder is reachable while you are running the singularity container that mimics the UPPMAX environment.
 When you exit the singularity container, your newly created folder is available in:
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('/proj/',nscid,'/users/<username>/ngsworkflow\n'))
+cat(paste0('<username>@tetralith1$ /proj/',nscid,'/users/<username>/ngsworkflow\n'))
 ```
 When it is time to copy files to your *Local workspace* you will have to use the path to the folder that is reachable outside of the singularity container. Dont worry, this is specified in the instructions then.
 
