@@ -130,9 +130,9 @@ The *cluster workspace* can be reached also from outside of the UPPMAX singulari
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('tetralith$ /proj/',nscid,'/users/<nsc_username>/ngsworkflow\n'))
 ```
-This is the path you must use when downloading files to your *local workspace* later on (but don't worry, it will be specified in the instructions).
+This is the path you must use when downloading files to your *local workspace* later on.
   
-**The rest of the instructions assumes that you runnig the UPPMAX singularity container from an interactive session on Tetralith, and that you are located in your *cluster workspace*, unless something else is specified.** 
+**The rest of the instructions assumes that you are runnig the UPPMAX singularity container from an interactive session on Tetralith, and that you are located in your *cluster workspace*, unless something else is specified.** 
 
 ### Symbolic links to data
 The raw data files are located in the [Data](#Data) folder described above. Instead of copying the files to your workspace you should create symbolic links (soft-links) to them. Soft-linking files and folders allows you to work with them as if they were in your current directory, but without multiplying them.  
@@ -240,7 +240,7 @@ For help with interpreting the bam file, please look at the sam/bam format defin
 **Install IGV**  
 Integrative Genomics Viewer (IGV) provides an interactive visualisation of the reads in a bam file. Here we will show you how to run IGV on your laptop. If you have not used IGV on your laptop before, then go to the IGV [download page](https://software.broadinstitute.org/software/igv/download), and follow the instructions to download it. It will prompt you to fill in some information and agree to license. Launch the viewer through web start. The 1.2 Gb version should be sufficient for our data.
   
-**Download the bam file**  
+**Download the bam file to your laptop**  
 Open a new terminal window on your laptop and navigate to your [local workspace](#preparelaptop), **but do not log in to NSC**. Download the .bam and .bam.bai files you just generated with this command:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('scp <nsc_username>@tetralith.nsc.uu.se:/proj/',nscid,'/users/<nsc_username>/ngsworkflow/HG00097.bam* .'))
