@@ -42,7 +42,7 @@ Whole genome sequencing (WGS) is a comprehensive method for analyzing entire gen
 **General guide**
 <div class="boxy boxy-primary boxy-lightbulb">
 * In this workshop you will work on the computing cluster Tetralith at NSC.
-* In paths, please replace `<username>` with your NSC username.
+* In paths, please replace `<nsc_username>` with your NSC username.
 * You will use a singularity image (a virtual computer) that mimics the UPPMAX cluster, and once you have started the singularity image everything works like at UPPMAX.
 * In commands, please replace `<parameter>` with the correct parameter, for example your input file name, output file name, directory name, etc.
 * Do not copy and paste commands from the exercise to terminal, as this can result in formatting errors. 
@@ -97,50 +97,52 @@ The majority of the analyses in this workshop will be done on the computing clus
 ## The NCS cluster
 Please connect to the Tetralith cluster at NSC using `ssh`:
 ```bash
-$ ssh -Y username@tetralith.nsc.liu.se
+$ ssh -Y nsc_username@tetralith.nsc.liu.se
 ```  
 
 ### Interactive session 
 When you login to Tetralith you enter the *login node*, which is not intended for compute intensive tasks. You should therefore book a compute node, or in this case just one core of a node.
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('<username>@tetralith1$ interactive -A ',nscid,' -t 04:00:00 -n 1'))
+cat(paste0('<nsc_username>@tetralith1$ interactive -A ',nscid,' -t 04:00:00 -n 1'))
 ```
 
 ### UPPMAX singularity container
 We will use a singularity container (a virtual computer) that mimics the UPPMAX computing environment. Once you have started the singularity container your environment will look exaclty as on the Rackham cluster at UPPMAX, and all the software used in this workshop will be available through the module system just like on UPPMAX.  
 Use this command to start the singularity container:
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('<username>@n424$ singularity shell -B /proj/snic2020-13-57/users:/proj/g2020009/nobackup /proj/snic2020-13-57/ngsintro_homemade.5.sif'))
+cat(paste0('<nsc_username>@n424$ singularity shell -B /proj/snic2020-13-57/users:/proj/g2020009/nobackup /proj/snic2020-13-57/ngsintro_homemade.5.sif'))
 ```
-Notise that your terminal prompt changed to `<username>`@fake-uppmax. This means that you have moved into a "virtual computer" that mimics the UPPMAX environment.   
+Notise that your terminal prompt changed to `<nsc_username>`@fake-uppmax. This means that you have moved into a "virtual computer" that mimics the UPPMAX environment.   
 To close the singularity container  later on, just type `exit`in the terminal, but don't do that now.
 
 ### Cluster workspace
 Create a workspace folder for this exercise, and then move into it. This folder will be referred to as your *Cluster workspace* throughout this workshop.
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('<username>@fake-uppmax$ mkdir /proj/',upid,'/nobackup/<username>/ngsworkflow\n'))
-cat(paste0('<username>@fake-uppmax$ cd /proj/',upid,'/nobackup/<username>/ngsworkflow'))
+cat(paste0('<nsc_username>@fake-uppmax$ mkdir /proj/',upid,'/nobackup/<nsc_username>/ngsworkflow\n'))
+cat(paste0('<nsc_username>@fake-uppmax$ cd /proj/',upid,'/nobackup/<nsc_username>/ngsworkflow'))
 ```
 When you exit the singularity container you will find the *Cluster workspace* and its content in:
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('<username>@tetralith1$ /proj/',nscid,'/users/<username>/ngsworkflow\n'))
+cat(paste0('<nsc_username>@tetralith1$ /proj/',nscid,'/users/<nsc_username>/ngsworkflow\n'))
 ```
 When it is time to copy files to your *Local workspace* you must use this path, but worry, this is specified in the instructions then.
+  
+Unless something else is specified, the rest of the instructions assumes that you are runnig the UPPMAX singularity container from an interactive session on Tetralith, and that you are located in your *Clusetr worksplace*.  
 
 ### Symbolic links to data
-From now on you will be working in The raw data files are located in the [Data](#Data) folder described above. Instead of copying the files to your workspace you should create symbolic links (soft-links) to them. Soft-linking files and folders allows you to work with them as if they were in your current directory, but without multiplying them.  
+The raw data files are located in the [Data](#Data) folder described above. Instead of copying the files to your workspace you should create symbolic links (soft-links) to them. Soft-linking files and folders allows you to work with them as if they were in your current directory, but without multiplying them.  
 Create a symbolic link to the reference genome in your workspace:
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('<username>@fake-uppmax$ ln -s ',refdir,'/human_g1k_v37_chr2.fasta'))  
+cat(paste0('<nsc_username>@fake-uppmax$ ln -s ',refdir,'/human_g1k_v37_chr2.fasta'))  
 ```
 Do the same with the fastq files:
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('<username>@fake-uppmax$ ln -s ',fastqdir,'/HG00097_1.fq\n')) 
-cat(paste0('<username>@fake-uppmax$ ln -s ',fastqdir,'/HG00097_2.fq\n'))  
-cat(paste0('<username>@fake-uppmax$ ln -s ',fastqdir,'/HG00100_1.fq\n'))
-cat(paste0('<username>@fake-uppmax$ ln -s ',fastqdir,'/HG00100_2.fq\n'))
-cat(paste0('<username>@fake-uppmax$ ln -s ',fastqdir,'/HG00101_1.fq\n')) 
-cat(paste0('<username>@fake-uppmax$ ln -s ',fastqdir,'/HG00101_2.fq\n'))
+cat(paste0('<nsc_username>@fake-uppmax$ ln -s ',fastqdir,'/HG00097_1.fq\n')) 
+cat(paste0('<nsc_username>@fake-uppmax$ ln -s ',fastqdir,'/HG00097_2.fq\n'))  
+cat(paste0('<nsc_username>@fake-uppmax$ ln -s ',fastqdir,'/HG00100_1.fq\n'))
+cat(paste0('<nsc_username>@fake-uppmax$ ln -s ',fastqdir,'/HG00100_2.fq\n'))
+cat(paste0('<nsc_username>@fake-uppmax$ ln -s ',fastqdir,'/HG00101_1.fq\n')) 
+cat(paste0('<nsc_username>@fake-uppmax$ ln -s ',fastqdir,'/HG00101_2.fq\n'))
 ```
 
 
@@ -149,14 +151,14 @@ We will use several programs that are installed in the module system on UPPMAX. 
   
 First load the `bioinfo-tools` module:
 ```bash
-module load bioinfo-tools
+<nsc_username>@fake-uppmax$ module load bioinfo-tools
 ```
 This makes it possible to load the individual programs:
 ```bash
-<username>@fake-uppmax$ module load FastQC/0.11.8
-<username>@fake-uppmax$ module load bwa/0.7.17
-<username>@fake-uppmax$ module load samtools/1.10
-<username>@fake-uppmax$ module load GATK/4.1.4.1
+<nsc_username>@fake-uppmax$ module load FastQC/0.11.8
+<nsc_username>@fake-uppmax$ module load bwa/0.7.17
+<nsc_username>@fake-uppmax$ module load samtools/1.10
+<nsc_username>@fake-uppmax$ module load GATK/4.1.4.1
 ```
 You don't have to specify wich versions of the toos to use, but is recommended to do so for reproducibility if you want to rerun the  exact same analyses later.  
 When loading the module GATK/4.1.4.1 you will get a warning message about the fact that GATK commands have been updated since the previous version of GATK. This is fine and you don't have to do anything about it. 
@@ -166,19 +168,19 @@ Tools that compare short reads with a large reference genome needs indexes of th
   
 Generate BWA index files:
 ```bash
-<username>@fake-uppmax$ bwa index -a bwtsw human_g1k_v37_chr2.fasta
+<nsc_username>@fake-uppmax$ bwa index -a bwtsw human_g1k_v37_chr2.fasta
 ```
 Check to see that several new files have been created using `ls -l`.
   
 Generate a Samtool index: 
 ```bash
-<username>@fake-uppmax$ samtools faidx human_g1k_v37_chr2.fasta
+<nsc_username>@fake-uppmax$ samtools faidx human_g1k_v37_chr2.fasta
 ```
 Check to see what file(s) were created using `ls -lrt`.
 
 Genereate a GATK sequence dictionary:
 ```bash
-<username>@fake-uppmax$ gatk --java-options -Xmx7g CreateSequenceDictionary -R human_g1k_v37_chr2.fasta -O human_g1k_v37_chr2.dict
+<nsc_username>@fake-uppmax$ gatk --java-options -Xmx7g CreateSequenceDictionary -R human_g1k_v37_chr2.fasta -O human_g1k_v37_chr2.dict
 ```
 Again, check what file(s) were created using `ls -lrt`. 
 
@@ -198,7 +200,7 @@ At the same time, you should add something called *read groups* to the reads in 
 The output from `BWA` should be parsed to `samtools sort`, which sorts the sam file according to chromosome position and then converts the sam file to the binary bam format. This saves space since no intermediary sam file is created.  
 Please use this command for all of this:
 ```bash
-<username>@fake-uppmax$ bwa mem -R "@RG\\tID:readgroupx\\tPU:lanex_flowcellx\\tSM:HG00097\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta HG00097_1.fq HG00097_2.fq | samtools sort > HG00097.bam
+<nsc_username>@fake-uppmax$ bwa mem -R "@RG\\tID:readgroupx\\tPU:lanex_flowcellx\\tSM:HG00097\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta HG00097_1.fq HG00097_2.fq | samtools sort > HG00097.bam
 ```
 Where -t 1 is the number of threads, which should be equal to the number of cores you booked. If you would have analysed the entire genome more threads would have been necessary.  
 You have to use a file redirect `>` for the output, otherwise it will be written to stdout (your screen).  
@@ -207,7 +209,7 @@ Please check that the expected output file was generated and that it has content
 
 Next you need to index the output bam file so that programs can randomly access the sorted data without reading the whole file. This command creates an index file with the same name as the input bam file, except with a .bai extension:  
 ```bash
-<username>@fake-uppmax$ samtools index HG00097.bam
+<nsc_username>@fake-uppmax$ samtools index HG00097.bam
 ```
 Please check what output file was generated this time. 
   
@@ -215,11 +217,11 @@ Please check what output file was generated this time.
 The bam file is binary so we cannot read it, but we can view it with `samtools view`. 
 The header section of the bam file can be viewed separatedly with the `-H` flag:
 ```bash
-<username>@fake-uppmax$ samtools view -H HG00097.bam 
+<nsc_username>@fake-uppmax$ samtools view -H HG00097.bam 
 ```
 To look at the reads in the bam file just use `samtools view` without the `-H`. This will display the entire bam file which is quite large, so if you just want to look at the first 5 lines (for example) you can combine `samtools view` with `head`:
 ```bash
-<username>@fake-uppmax$ samtools view HG00097.bam | head -n 5 
+<nsc_username>@fake-uppmax$ samtools view HG00097.bam | head -n 5 
 ```
 For help with interpreting the bam file, please look at the sam/bam format definition at [Sequence Alignment/Map Format Specification](https://samtools.github.io/hts-specs/SAMv1.pdf).  
   
@@ -235,9 +237,9 @@ Integrative Genomics Viewer (IGV) provides an interactive visualisation of the r
   
 **Download the bam file**  
 You also need to download the bam file and the corresponding .bai file to your laptop. 
-Navigate to your [local workspace](#preparelaptop), but do not log in to NSC. Copy the .bam and .bam.bai files you just generated with this command:
+Open a new terminal window on your laptop and navigate to your [local workspace](#preparelaptop), **but do not log in to NSC**. Copy the .bam and .bam.bai files you just generated with this command:
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('scp <username>@tetralith.nsc.uu.se:/proj/',nscid,'/users/<username>/ngsworkflow/HG00097.bam* .'))
+cat(paste0('scp <nsc_username>@tetralith.nsc.uu.se:/proj/',nscid,'/users/<nsc_username>/ngsworkflow/HG00097.bam* .'))
 ```
 Check that the files are now present in your *local workspace* using `ls -lrt`. 
   
@@ -256,7 +258,7 @@ Check that the files are now present in your *local workspace* using `ls -lrt`.
 ### HaplotypeCaller {#haplotypecaller}
 Now we will detect short variants in the bam file using GATK's `HaplotypeCaller`. Go to your *Cluster workspace* and run:
 ```bash
-<username>@fake-uppmax$ gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -I HG00097.bam -O HG00097.vcf 
+<nsc_username>@fake-uppmax$ gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -I HG00097.bam -O HG00097.vcf 
 ```
 Check what new files were generated with `ls -lrt`.  
   
@@ -265,19 +267,19 @@ Now you have your first vcf file containing the raw variants in the region chr2:
   
 Vcf files contains meta-information lines starting with *##*, a header line starting with *#CHROM*, and then data lines each containing information about one variant position in the genome. The header line defines the columns of the data lines, and to view the header line you can type this command:  
 ```bash
-<username>@fake-uppmax$ grep '#CHROM' HG00097.vcf
+<nsc_username>@fake-uppmax$ grep '#CHROM' HG00097.vcf
 ```
 The meta-information lines starting with *##INFO* defines how the data in the *INFO* column is encoded, and the meta-information lines starting with *##FORMAT* defines how the data in the *FORMAT* column is encoded. To view the meta-information lines describing the *INFO* column use:
 ```bash
-<username>@fake-uppmax$ grep '##INFO' HG00097.vcf
+<nsc_username>@fake-uppmax$ grep '##INFO' HG00097.vcf
 ```
 To view the meta-information lines describing the *FORMAT* column use: 
 ```bash
-<username>@fake-uppmax$ grep '##FORMAT' HG00097.vcf
+<nsc_username>@fake-uppmax$ grep '##FORMAT' HG00097.vcf
 ```
 Now lets look at the details of one specific genetic variant at position 2:136545844:
 ```bash
-<username>@fake-uppmax$ grep '136545844' HG00097.vcf
+<nsc_username>@fake-uppmax$ grep '136545844' HG00097.vcf
 ```
 For more detailed information about vcf files please have a look at [The Variant Call Format specification](https://samtools.github.io/hts-specs/VCFv4.2.pdf).
   
@@ -291,11 +293,11 @@ For more detailed information about vcf files please have a look at [The Variant
 
   
 ### Check vcf in IGV {#vcfinigv}
-Download the vcf file and its index to the *local workspace* on your laptop, just like you did with the bam file and its index earlier. Navigate to your local workspace, but do not log in to UPPMAX. Copy the files that you just generated:
+Download the vcf file and its index to the *local workspace* on your laptop, just like you did with the bam file and its index earlier. Open a new terminal window on your laptop and navigate to your local workspace, **but do not log in to NSC**. Copy the files that you just generated:
 ```{r,echo=FALSE,comment="",class.output="bash", class.source="workLocally"}
-cat(paste0('scp <username>@tetralith.nsc.uu.se:/proj/',nscid,'/users/<username>/ngsworkflow/HG00097.vcf* .'))
+cat(paste0('scp <nsc_username>@tetralith.nsc.uu.se:/proj/',nscid,'/users/<nsc_username>/ngsworkflow/HG00097.vcf* .'))
 ```
-Please replace `<username>` with your UPPMAX user name.  
+Please replace `<nsc_nsc_username>` with your NSC user name.  
 Note that the * in the end of the file name means that you will download all files that start with *HG00097.vcf*, so you will also download the vcf index.  
 Check that the files were properly downloaded to your *local workspace* using `ls -lrt`. 
 
@@ -329,7 +331,7 @@ cat(paste0(bamdir,'/HG00101.bam\n'))
 ## Generate g.vcf files
 `HaplotypeCaller` should also be run for all three samples, but this time the output for each sample needs to be in g.vcf format. This is accomplished with a small change in the `HaploteypCaller` command: 
 ```bash
-<username>@fake-uppmax$ gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I <sample.bam -O <sample>.g.vcf 
+<nsc_username>@fake-uppmax$ gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I <sample.bam -O <sample>.g.vcf 
 ```
 Please replace <sample> with the real sample names.
    
@@ -343,13 +345,13 @@ cat(paste0(vcfdir,'/HG00101.g.vcf\n'))
 ## Joint genotyping
 Once you have the g.vcf files for all samples you should perform joint genotype calling. To do this you first need to combine all individual .g.vcf files to one file using `CombineGVCFs`:
 ```bash
-<username>@fake-uppmax$ gatk --java-options -Xmx7g CombineGVCFs -R human_g1k_v37_chr2.fasta -V <sample1>.g.vcf -V <sample2>.g.vcf -V <sample3>.g.vcf -O cohort.g.vcf
+<nsc_username>@fake-uppmax$ gatk --java-options -Xmx7g CombineGVCFs -R human_g1k_v37_chr2.fasta -V <sample1>.g.vcf -V <sample2>.g.vcf -V <sample3>.g.vcf -O cohort.g.vcf
 ```
 Please replace `<sample1>`, `<sample2>`, `<sample3>` with the real sample names.
   
 Then run GATK's `GenoteypeGVC` to generate a vcf file:
 ```bash
-<username>@fake-uppmax$ gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g.vcf -O cohort.vcf
+<nsc_username>@fake-uppmax$ gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g.vcf -O cohort.vcf
 ```
    
 If you run out of time, please click below to get paths to the precomputed cohort.g.vcf and cohort.vcf files.
@@ -455,14 +457,14 @@ If a duplicated read contains a genetic variant, the ratio of the two alleles mi
   
 Please read about Picard's `MarkDuplicates` [here](https://gatk.broadinstitute.org/hc/en-us/articles/360037225972-MarkDuplicates-Picard-). Picard's MarkDuplicates has recently been incorporated into the GATK suite, but the usage example in GATKs documentation still describes how to call it via the stand alone Picard program. A usage example for the version of MarkDuplicates that is incorporated in GATK is (with this you don't have to load the Picard module): 
 ```bash
-<username>@fake-uppmax$ gatk --java-options -Xmx7g MarkDuplicates \
+<nsc_username>@fake-uppmax$ gatk --java-options -Xmx7g MarkDuplicates \
       -I input.bam \
       -O marked_duplicates.bam \
       -M marked_dup_metrics.txt
 ```
 If you would like more help you can sneak peek at our example solution for HG00097 below. 
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
-cat(paste0('<username>@fake-uppmax$ gatk --java-options -Xmx7g MarkDuplicates -I HG00097.bam -O HG00097.md.bam -M HG00097_mdmetrics.txt'))
+cat(paste0('<nsc_username>@fake-uppmax$ gatk --java-options -Xmx7g MarkDuplicates -I HG00097.bam -O HG00097.md.bam -M HG00097_mdmetrics.txt'))
 ```
   
 ## Recalibrate Base Quality Scores
@@ -474,8 +476,8 @@ cat(paste0(refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf'))
 ```
  Please use GATK's documentation to recalibrate the base quality scores in your data. If you would like more help you can sneak peek at our example solution for HG00097 below. 
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
-cat(paste0('<username>@fake-uppmax$ gatk --java-options -Xmx7g BaseRecalibrator -R human_g1k_v37_chr2.fasta -I HG00097.md.bam> --known-sites ',refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf -O HG00097.recal.table\n'))
-cat(paste0('<username>@fake-uppmax$ gatk --java-options -Xmx7g ApplyBQSR -R human_g1k_v37_chr2.fasta -I HG00097.md.bam --bqsr-recal-file HG00097.recal.table -O HG00097.recal.bam'))
+cat(paste0('<nsc_username>@fake-uppmax$ gatk --java-options -Xmx7g BaseRecalibrator -R human_g1k_v37_chr2.fasta -I HG00097.md.bam> --known-sites ',refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf -O HG00097.recal.table\n'))
+cat(paste0('<nsc_username>@fake-uppmax$ gatk --java-options -Xmx7g ApplyBQSR -R human_g1k_v37_chr2.fasta -I HG00097.md.bam --bqsr-recal-file HG00097.recal.table -O HG00097.recal.bam'))
 ```
    
 ## Variant Filtering
@@ -486,13 +488,13 @@ HaplotypeCaller is designed to be very sensitive, which is good because it minim
 Since we have very little data we will use hard filters. The parameters are slightly different for SNVs and INDELs, so you need to first select all SNVs using [SelectVariants](https://gatk.broadinstitute.org/hc/en-us/articles/360037225432-SelectVariants) and filter them using [VariantFiltration](https://gatk.broadinstitute.org/hc/en-us/articles/360037226192-VariantFiltration) with the parameters suggested for SNVs. Then select all INDELs and filter them with the parameters suggested for INDELs. Finally merge the SNVs and INDELs to get all variants in one file using [MergeVCFs](https://gatk.broadinstitute.org/hc/en-us/articles/360037226612-MergeVcfs-Picard-). If you would like more help you can sneak peek at our example solution for HG00097 below.  
 Filter SNVs:
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
-cat(paste0('<username>@fake-uppmax$ gatk --java-options -Xmx7g SelectVariants \
+cat(paste0('<nsc_username>@fake-uppmax$ gatk --java-options -Xmx7g SelectVariants \
   -R human_g1k_v37_chr2.fasta \
   -V cohort.vcf \
   --select-type-to-include SNP \
   -O cohort.snvs.vcf
   
-<username>@fake-uppmax$ gatk --java-options -Xmx7g VariantFiltration \
+<nsc_username>@fake-uppmax$ gatk --java-options -Xmx7g VariantFiltration \
   -R human_g1k_v37_chr2.fasta \
   -V cohort.snvs.vcf \
   -O cohort.snvs.filtered.vcf \
@@ -502,13 +504,13 @@ cat(paste0('<username>@fake-uppmax$ gatk --java-options -Xmx7g SelectVariants \
 ```
 Filter INDELs: 
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
-cat(paste0('<username>@fake-uppmax$ gatk --java-options -Xmx7g SelectVariants \
+cat(paste0('<nsc_username>@fake-uppmax$ gatk --java-options -Xmx7g SelectVariants \
   -R human_g1k_v37_chr2.fasta \
   -V cohort.vcf \
   --select-type-to-include INDEL \
   -o cohort.indels.vcf
 
-<username>@fake-uppmax$ gatk --java-options -Xmx7g VariantFiltration \
+<nsc_username>@fake-uppmax$ gatk --java-options -Xmx7g VariantFiltration \
   -R human_g1k_v37_chr2.fasta \
   -V cohort.indels.vcf \
   -O cohort.indels.filtered.vcf \
@@ -517,7 +519,7 @@ cat(paste0('<username>@fake-uppmax$ gatk --java-options -Xmx7g SelectVariants \
 ```
 Merge filtered SNVs and INDELs: 
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
-cat(paste0('<username>@fake-uppmax$ gatk --java-options -Xmx7g MergeVcfs -I cohort.snvs.filtered.vcf -I cohort.indels.filtered.vcf -O cohort.filtered.vcf'))
+cat(paste0('<nsc_username>@fake-uppmax$ gatk --java-options -Xmx7g MergeVcfs -I cohort.snvs.filtered.vcf -I cohort.indels.filtered.vcf -O cohort.filtered.vcf'))
 ```
   
 Open your filtered vcf with `less` and page through it. It still has all the variant lines, but the FILTER column that was blank before is now filled in, with PASS or a list of the filters it failed. Note also that the filters that were run are described in the header section.
