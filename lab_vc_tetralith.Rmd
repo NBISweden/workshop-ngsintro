@@ -116,17 +116,16 @@ Notise that your terminal prompt changed to `<username>`@fake-uppmax. This means
 To close the singularity container  later on, just type `exit`in the terminal, but don't do that now.
 
 ### Cluster workspace
-Create a new folder that will be the workspace for this exercise, and then move into it. This folder will be referred to as your *Cluster workspace* throughout this workshop.
+Create a workspace folder for this exercise, and then move into it. This folder will be referred to as your *Cluster workspace* throughout this workshop.
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('<username>@fake-uppmax$ mkdir /proj/',upid,'/nobackup/<username>/ngsworkflow\n'))
 cat(paste0('<username>@fake-uppmax$ cd /proj/',upid,'/nobackup/<username>/ngsworkflow'))
 ```
-The newly created folder is reachable while you are running the singularity container that mimics the UPPMAX environment.
-When you exit the singularity container, your newly created folder is available in:
+When you exit the singularity container you will find the *Cluster workspace* and its content in:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('<username>@tetralith1$ /proj/',nscid,'/users/<username>/ngsworkflow\n'))
 ```
-When it is time to copy files to your *Local workspace* you will have to use the path to the folder that is reachable outside of the singularity container. Dont worry, this is specified in the instructions then.
+When it is time to copy files to your *Local workspace* you must use this path, but worry, this is specified in the instructions then.
 
 ### Symbolic links to data
 From now on you will be working in The raw data files are located in the [Data](#Data) folder described above. Instead of copying the files to your workspace you should create symbolic links (soft-links) to them. Soft-linking files and folders allows you to work with them as if they were in your current directory, but without multiplying them.  
