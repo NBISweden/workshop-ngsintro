@@ -1,0 +1,26 @@
+ 
+ BiocManager
+ DESeq2
+ GO.db
+ bookdown
+ captioner
+ dplyr
+ edgeR
+ formattable
+ ggplot2
+ goseq
+ kableExtra
+ knitr
+ leaflet
+ lubridate
+ markdown
+ org.Mm.eg.db
+ pheatmap
+ reactome.db
+ remotes
+ rmarkdown
+ rstudio/fontawesome
+ stringr
+ tidyr
+ xaringan
+ yaml
