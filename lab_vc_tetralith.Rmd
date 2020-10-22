@@ -99,13 +99,14 @@ Please connect to the Tetralith cluster at NSC using `ssh`:
 ```bash
 $ ssh -Y nsc_username@tetralith.nsc.liu.se
 ```  
+Note that your terminal prompt changed to something like `[nsc_username@tetralith1 ~]$` which means that you have entered your home directory on Tetralith. 
 
 ### Interactive session 
 When you login to Tetralith you enter the *login node*, which is not intended for compute intensive tasks. You should therefore book a compute node, or in this case just one core of a node.
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('tetralith1 $ interactive -A ',nscid,' -t 04:00:00 -n 1'))
 ```
-Notise that your terminal prompt changed to something like `<nsc_username>`@n424, which means that you are now running on one of the compute nodes.
+Note that your terminal prompt changed to something like `[<nsc_username>@n424 ~ ]$`, which means that you are now running on one of the compute nodes and you are still located in your home directory on Tetralith.
 
 ### UPPMAX singularity container
 We will use a singularity container (a virtual computer) that mimics the UPPMAX computing environment. Once you have started the singularity container your environment will look exaclty as on the Rackham cluster at UPPMAX, and all the software used in this workshop will be available through the module system just like on UPPMAX.  
@@ -113,8 +114,8 @@ Use this command to start the singularity container:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('n424 $ singularity shell -B /proj/snic2020-13-57/users:/proj/g2020009/nobackup /proj/snic2020-13-57/ngsintro_homemade.5.sif'))
 ```
-Note that your terminal prompt changed to `<nsc_username>`@fake-uppmax. This means that you have moved into a "virtual computer" that mimics the UPPMAX environment.   
-To close the singularity container  later on, just type `exit`in the terminal, but don't do that now.
+Note that your terminal prompt changed to `[hour:minute:second] <nsc_username>@fake-uppmax ~ $`. This means that you have moved into a "virtual computer" that mimics the UPPMAX environment, but you are still located in your home directory on Tetralith.   
+To close the singularity container  later on type `exit`in the terminal, but don't do that now.
 
 ### Cluster workspace
 Create a workspace folder for this exercise, and then move into it. This folder will be referred to as your *Cluster workspace* throughout this workshop.
@@ -128,7 +129,7 @@ cat(paste0('<nsc_username>@tetralith1$ /proj/',nscid,'/users/<nsc_username>/ngsw
 ```
 When it is time to copy files to your *Local workspace* you must use this path, but worry, this is specified in the instructions then.
   
-Unless something else is specified, the rest of the instructions assumes that you are runnig the UPPMAX singularity container from an interactive session on Tetralith, and that you are located in your *Clusetr worksplace*.  
+Unless something else is specified, the rest of the instructions assumes that you runnig the UPPMAX singularity container from an interactive session on Tetralith, and that you are located in your *Clusetr worksplace*.  
 
 ### Symbolic links to data
 The raw data files are located in the [Data](#Data) folder described above. Instead of copying the files to your workspace you should create symbolic links (soft-links) to them. Soft-linking files and folders allows you to work with them as if they were in your current directory, but without multiplying them.  
