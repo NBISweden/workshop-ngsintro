@@ -95,7 +95,7 @@ cat(paste0(refdir))
 ## Local workspace  {#preparelaptop}
 The majority of the analyses in this workshop will be done on the computing cluster, but you will copy some of the resulting files to your laptop. Therefore, please start by creating a folder for this workshop on your laptop. It is up to you where you want to put this, but it can for example be a folder called *ngsworkflow* on Desktop. You need to have write permission in this folder. The folder you create here will be referred to as *local workspace* throughout this workshop.  
   
-## The NCS cluster
+## The NSC cluster
 Please connect to the Tetralith cluster at NSC using `ssh`:
 ```bash
 $ ssh -Y nsc_username@tetralith.nsc.liu.se
@@ -103,11 +103,11 @@ $ ssh -Y nsc_username@tetralith.nsc.liu.se
 Note that your terminal prompt changed to something like `nsc_username@tetralith1 $` which means that you have entered Tetralith. 
 
 ### Interactive session 
-When you connect to Tetralith you enter the *login node*, which is not intended for compute intensive tasks. You should therefore book a compute node, or in this case just one core of a node:
+On Tetralith you enter the *login node*, which is not intended for compute intensive tasks. You should therefore book a compute node, or in this case three cores:
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('tetralith1$ interactive -A ',nscid,' -t 04:00:00 -n 1'))
+cat(paste0('tetralith1$ interactive -A ',nscid,' -t 04:00:00 -n 3'))
 ```
-Note that your terminal prompt changed to something like `<nsc_username>@n424 $`, which means that you are now running on one of the compute nodes. 
+Note that your terminal prompt changed to something like `<nsc_username>@n424 $` (or another node name), which means that you are now running on one of the compute nodes. 
 
 ### UPPMAX singularity container
 We will use a singularity container (a virtual computer) that mimics the UPPMAX computing environment. Once you have started the singularity container your environment will look exactly as on UPPMAX, and the software used in this workshop will be available through the module system.
@@ -116,6 +116,10 @@ Use this command to start the singularity container:
 cat(paste0('n424$ singularity shell -B /proj/snic2020-13-57/users:/proj/g2020009/nobackup /proj/snic2020-13-57/ngsintro_homemade.5.sif'))
 ```
 Note that your terminal prompt changed to something like `<nsc_username>@fake-uppmax$`. This means that you have moved into a "virtual computer" that mimics the UPPMAX environment.    
+In the singularity container then type (this will make modules based on Java to load properly):
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0('export MODULES_MACH=x86_64'))
+```
 To close the singularity container  later on just type `exit`in the terminal, but don't do that now.
 
 ### Cluster workspace
@@ -152,7 +156,7 @@ cat(paste0('fake-uppmax$ ln -s ',fastqdir,'/HG00101_2.fq\n'))
 
 
 ### Accessing programs {#Accessingprograms}
-We will use several programs that are installed in the module system on UPPMAX. These modules must be loaded *every time* you login to Rackham, or when you connect to a new compute node.  
+We will use several programs that are installed in the module system on UPPMAX. These modules must be loaded *every time* you start the singularity container.
   
 First load the `bioinfo-tools` module:
 ```bash
@@ -320,7 +324,7 @@ If you have time, you can now try joint variant calling in all three samples. Ea
 
 You can run all commands one by one in the terminal as you did in the first step of the workshop. We have also made intermediary files avaiable in case you don't have time to complete all steps, please see links under each analysis step. 
   
-**Optionally** - If you are interested in programming and have time, you can also try to write a simple SBATCH script and run all steps automatically. Please check out the [SBATCH script](#sbatchscript) section below if you would like to try this. 
+**Optionally** - If you are interested in programming and have time, you can also try to write a simple bash script and run all steps automatically. Please check out the [bash script](#sbatchscript) section below if you would like to try this. 
   
 ## BWA mem 
 Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly [as above](#bwamem) but with the new sample names.
@@ -335,7 +339,7 @@ cat(paste0(bamdir,'/HG00101.bam\n'))
 ## Generate g.vcf files
 `HaplotypeCaller` should also be run for all three samples, but this time the output for each sample needs to be in g.vcf format. This is accomplished with a small change in the `HaploteypCaller` command: 
 ```bash
-fake-uppmax$ gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I <sample.bam -O <sample>.g.vcf 
+fake-uppmax$ gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I <sample.bam> -O <sample>.g.vcf 
 ```
 Please replace <sample> with the real sample names.
    
@@ -371,17 +375,11 @@ cat(paste0(vcfdir,'/cohort.vcf\n'))
 20. Look at the header line of the cohort.vcf file. What columns does it have? 
 21. What is encoded in the last three columns of the data lines?
   
-## SBATCH script {#sbatchscript}
+## bash script {#sbatchscript}
 **Optionally** - This section is only for those of you who want to try to run all steps automatically in bash scripts. 
-To learn more about SLURM and SBATCH scripts please look the [SLURM user guide](https://www.uppmax.uu.se/support/user-guides/slurm-user-guide/) on UPPMAX website.  
 Below is a skeleton script that can be used as a template. Please modify it to run all the steps in part two of this workshop. You might find it helpful to try each step for one sample in the interactive terminal, so that you know that a particular command is working, before you incorporate it in the script.  
 ```bash
 #!/bin/bash
-#SBATCH -A g2019031
-#SBATCH -p core
-#SBATCH -n 1
-#SBATCH -t 1:00:00
-#SBATCH -J jointGenotyping
 module load bioinfo-tools
 module load bwa/0.7.17
 module load samtools/1.10
@@ -397,26 +395,17 @@ done
 #Fill in the code for CombineGVCFs for all samples here
 #Fill in the code for GenotypeGVCFs here
 ```
-Please save the sbatch script in your UPPMAX folder and call it "joint_genotyping.sbatch" or similar. Make the script executable by this command:
+Please save the sbatch script in your cluster folder and call it "joint_genotyping.sh" or similar. Make the script executable by this command:
 ```bash
-chmod u+x joint_genotyping.sbatch
+chmod u+x joint_genotyping.sh
 ```
-To run the sbatch script in the SLURM queue, use this command:  
+Use this command to run the script in the singularity container:
 ```bash
-sbatch joint_genotyping.sbatch
+./joint_genotyping.sh
 ```
-If you have an active node reservation you can run the script as a normal bash script:
-```bash
-./joint_genotyping.sbatch
-```
-If you would like more help with creating the sbatch script, please look at our example solution:
+If you would like more help with creating the bahs script, please look at our example solution:
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('#!/bin/bash
-#SBATCH -A g2019031
-#SBATCH -p core
-#SBATCH -n 1
-#SBATCH -t 1:00:00
-#SBATCH -J jointGenotyping
 
 module load bioinfo-tools
 module load bwa/0.7.17
@@ -451,7 +440,7 @@ If you are interested in how this variant affects lactose tolerance please read 
   
 
 # GATK's best practices
-The third part of this workshop will take you through additional refinement steps that are recommended in [GATKs best practices for germline short variant discovery](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-), illustrated in the flowchart below. You can either run the steps command by command in your reserved node, or a similar SBATCH script as described above. 
+The third part of this workshop will take you through additional refinement steps that are recommended in [GATKs best practices for germline short variant discovery](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-), illustrated in the flowchart below. You can either run the steps command by command in your reserved node, or using a similar cript as described above. 
 
 ![](data/ngs-workflow/3_best_practise.png){width=80%}
   
@@ -536,15 +525,10 @@ cat(paste0('Path to intermediary and final vcf files: ',bpvcfdir,'\n'))
 ```
 
 
-## SBATCH script {#bpscript}
+## bash script {#bpscript}
 We recommend you to incorporate the new steps into an SBATCH script similar to the one you created above for [joint variant calling](#sbatchscript). You might find it helpful to try each step for one sample in the interactive terminal, so that you know that a particular command is working before you incorporate it in the script. Please try to complete the script for GATK's best practices workflow. If you run out of time you can sneak peek at our example solution below. 
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('#!/bin/bash
-#SBATCH -A g2019031
-#SBATCH -p core
-#SBATCH -n 1
-#SBATCH -t 1:00:00
-#SBATCH -J BestPractise
 
 ## load modules
 module load bioinfo-tools
