@@ -325,7 +325,7 @@ cat(paste0(bamdir,'/HG00101.bam\n'))
 ## Generate g.vcf files
 `HaplotypeCaller` should also be run for all three samples, but this time the output for each sample needs to be in g.vcf format. This is accomplished with a small change in the `HaploteypCaller` command: 
 ```bash
-gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I <sample.bam -O <sample>.g.vcf 
+gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I <sample.bam> -O <sample>.g.vcf 
 ```
 Please replace <sample> with the real sample names.
    
@@ -542,7 +542,22 @@ module load bwa/0.7.17
 module load samtools/1.10
 module load GATK/4.1.4.1
 
+#Define path to reference genome
 ref="/sw/courses/ngsintro/reseq/data/ref"
+
+#Make symbolic links
+ln -s /sw/courses/ngsintro/reseq/data/ref/human_g1k_v37_chr2.fasta
+ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00097_1.fq
+ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00097_2.fq
+ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00100_1.fq
+ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00100_2.fq
+ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00101_1.fq
+ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00101_2.fq
+
+#Index reference genome
+bwa index -a bwtsw human_g1k_v37_chr2.fasta
+samtools faidx human_g1k_v37_chr2.fasta
+gatk --java-options -Xmx7g CreateSequenceDictionary -R human_g1k_v37_chr2.fasta -O human_g1k_v37_chr2.dict
 
 ## loop through the samples:
 for sample in HG00097 HG00100 HG00101;
