@@ -90,7 +90,7 @@ $ ssh -Y r292
 
 # Copy lab files
 
-Now you will need some files. To avoid all the course participants editing the same file all at once, undoing each other's edits, each participant will get their own copy of the needed files. The files are located in the folder `/sw/share/compstore/courses/ngsintro/filetypes`
+Now you will need some files. To avoid all the course participants editing the same file all at once, undoing each other's edits, each participant will get their own copy of the needed files. The files are located in the folder `/sw/courses/ngsintro/linux/filetypes`
 
 Next, copy the lab files from this folder. `-r` means recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, NOT sub-folders and files in sub-folders.
 
@@ -98,7 +98,7 @@ Next, copy the lab files from this folder. `-r` means recursively, which means a
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat("$ cp -r <source> <destination>\n")
-cat(paste0("$ cp -r /sw/share/compstore/courses/ngsintro/filetypes /proj/",upid,"/nobackup/<username>/"))
+cat(paste0("$ cp -r /sw/courses/ngsintro/linux/filetypes /proj/",upid,"/nobackup/<username>/"))
 ```
 
 Have a look in **`r paste0("/proj/",upid,"/nobackup/<username>/")`**.
@@ -160,7 +160,7 @@ dahlo@rackham2 work $ echo $PATH
 To pretend that we are loading a module, we will just add a the directory containing my dummy scripts to the `$PATH` variable, and it will be like we loaded the module for them.
 
 ```bash
-$ export PATH=$PATH:/sw/share/compstore/courses/ngsintro/uppmax_pipeline_exercise/dummy_scripts
+$ export PATH=$PATH:/sw/courses/ngsintro/linux/uppmax_pipeline_exercise/dummy_scripts
 ```
 
 This will set the `$PATH` variable to whatever it is at the moment, and add a directory at the end of it. Note the lack of a dollar sign in front of the variable name directly after `export`. You don't use dollar sign when  **assigning** values to variables, and you always use dollar signs when **getting** values from variables.

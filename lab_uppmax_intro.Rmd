@@ -92,7 +92,7 @@ cat(paste0("$ salloc -A ",upid," -t 03:30:00 -p core -n 1 --no-shell --reservati
 
 # Copy files for lab
 
-Now, you will need some files. To avoid all the course participants editing the same file all at once, undoing each other's edits, each participant will get their own copy of the needed files. The files are located in the folder **/sw/share/compstore/courses/ngsintro/uppmax_tutorial**
+Now, you will need some files. To avoid all the course participants editing the same file all at once, undoing each other's edits, each participant will get their own copy of the needed files. The files are located in the folder **/sw/courses/ngsintro/linux/uppmax_tutorial**
 
 Next, copy the lab files from this folder. `-r` means recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, NOT sub-folders and files in sub-folders.
 
@@ -100,7 +100,7 @@ Next, copy the lab files from this folder. `-r` means recursively, which means a
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat("$ cp -r <source> <destination>\n")
-cat(paste0("$ cp -r /sw/share/compstore/courses/ngsintro/uppmax_tutorial /proj/",upid,"/nobackup/<username>"))
+cat(paste0("$ cp -r /sw/courses/ngsintro/linux/uppmax_tutorial /proj/",upid,"/nobackup/<username>"))
 ```
 
 Have a look in **`r paste0("/proj/",upid,"/nobackup/<username>/uppmax_tutorial")`**.

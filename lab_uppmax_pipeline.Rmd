@@ -92,7 +92,7 @@ cat(paste0("$ salloc -A ",upid," -t 03:30:00 -p core -n 1 --no-shell --reservati
 
 # Copy files for lab
 
-Now, you will need some files. To avoid all the course participants editing the same file all at once, undoing each other's edits, each participant will get their own copy of the needed files. The files are located in the folder **`/sw/share/compstore/courses/ngsintro/uppmax_pipeline_exercise/data`**.
+Now, you will need some files. To avoid all the course participants editing the same file all at once, undoing each other's edits, each participant will get their own copy of the needed files. The files are located in the folder **`/sw/courses/ngsintro/linux/uppmax_pipeline_exercise/data`**.
 
 Next, copy the lab files from this folder. `-r` means recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, NOT sub-folders and files in sub-folders.
 
@@ -100,7 +100,7 @@ Next, copy the lab files from this folder. `-r` means recursively, which means a
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat("$ cp -r <source> <destination>\n")
-cat(paste0("$ cp -r /sw/share/compstore/courses/ngsintro/uppmax_pipeline_exercise /proj/",upid,"/nobackup/<username>/uppmax_pipeline_exercise"))
+cat(paste0("$ cp -r /sw/courses/ngsintro/linux/uppmax_pipeline_exercise /proj/",upid,"/nobackup/<username>/uppmax_pipeline_exercise"))
 ```
 
 Have a look in **`r paste0("/proj/",upid,"/nobackup/<username>/uppmax_pipeline_exercise")`**.
@@ -161,7 +161,7 @@ $ echo $PATH
 To pretend that we are loading a module, instead of actually loading a module for them, we'll manually do what the module system would have done. We will just add a the directory containing my dummy scripts to the `$PATH` variable, and it will be like we loaded the module for them. Now, when we type the name of one of my scripts, the computer will look in all the directories specified in the `$PATH` variable, which now includes the location where i keep my scripts. The computer will now find programs named as my scripts are and it will run them.
 
 ```bash
-$ export PATH=$PATH:/sw/share/compstore/courses/ngsintro/uppmax_pipeline_exercise/dummy_scripts
+$ export PATH=$PATH:/sw/courses/ngsintro/linux/uppmax_pipeline_exercise/dummy_scripts
 ```
 
 This will set the `$PATH` variable to whatever it is at the moment, and add a directory at the end of it. Note the lack of a dollar sign infront of the variable name directly after **export**. You don't use dollar signs when **assigning** values to variables, and you always use dollar signs when **getting** values from variables.
