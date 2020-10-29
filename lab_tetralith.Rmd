@@ -61,7 +61,7 @@ cat(paste0('source /uppmax_init'))
 ```
 To close the singularity container  later on just type `exit`in the terminal, but don't do that now.
 
-All the files you create during the labs, usually in `r paste0('/proj/',upid,'/nobackup/<username>/')` can be reached also from outside of the UPPMAX singularity container, in this folder on Tetralith:
+All the files you create during the labs, usually in `r paste0('/proj/',upid,'/nobackup/username/')` can be reached also from outside of the UPPMAX singularity container, in this folder on Tetralith:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('tetralith$ /proj/',nscid,'/users/<username>/\n'))
 ```
