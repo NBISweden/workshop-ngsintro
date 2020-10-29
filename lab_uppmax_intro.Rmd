@@ -1,5 +1,5 @@
 ---
-title:  'Introduction to UPPMAX'
+title:  'Introduction to UPPMAX '
 ---
 
 ```{r,child="assets/header-lab.Rmd"}
