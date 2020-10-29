@@ -103,7 +103,7 @@ cat("$ cp -r <source> <destination>\n")
 cat(paste0("$ cp -r /sw/courses/ngsintro/linux/uppmax_pipeline_exercise /proj/",upid,"/nobackup/<username>/uppmax_pipeline_exercise"))
 ```
 
-Have a look in **`r paste0("/proj/",upid,"/nobackup/<username>/uppmax_pipeline_exercise")`**.
+Have a look in **`r paste0("/proj/",upid,"/nobackup/&lt;username&gt;/uppmax_pipeline_exercise")`**.
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0("$ cd /proj/",upid,"/nobackup/<username>/uppmax_pipeline_exercise\n"))
