@@ -25,25 +25,44 @@
 ## Runs bonus functional annotation
 ## Runs bonus R plots
 
-## INSTRUCTIONS TO RUN THIS SCRIPT
+## INSTRUCTIONS TO RUN THIS SCRIPT 
 ## Add your email to the SBATCH command
 ## Provide path to base directory
 ## Make sure the modules are available
 ## Run the script in an empty directory anywhere on Rackham as shown below
-## sbatch /sw/courses/ngsintro/rnaseq/main/scripts/rnaseq-master.sh
+## sbatch /sw/courses/ngsintro/rnaseq/main/scripts/rnaseq-master.sh /sw/courses/ngsintro/rnaseq short
+
+# check argument 1
+if [ -z "$1" ]; then
+    echo "Error: path-to-dir not provided."
+    echo "Usage: $(basename $0) path-to-dir compute"
+    echo "Example: rnaseq-master.sh /sw/courses/ngsintro/rnaseq	short"
+    exit 1
+fi
+
+# check argument 2
+if [ -z "$2" ]; then
+    echo "Error: compute not provided."
+    echo "Usage: $(basename $0) path-to-dir compute"
+    echo "Set compute as 'short' or 'long'. short takes 4 mins while long takes 12 mins."
+    echo "Example: rnaseq-master.sh /sw/courses/ngsintro/rnaseq	short"
+    exit 1
+fi
 
 ## VARIABLES --------------------------------------------------------------------
 
 # fail fast
 set -e
 
-## path to base directory (WITHOUT forward slash at the end)
-path_base="/sw/courses/ngsintro/rnaseq/"
-#path_base="/home/roy/Documents/nbis/teaching/ngsintro/test/source"
+## path to base directory (with trailing slash)
+## path_base="/sw/courses/ngsintro/copy/rnaseq/"
+## path_base="/home/roy/Documents/nbis/teaching/ngsintro/test/source/"
+path_base=${1}
 
 ## if compute is set to long, all steps are run, takes ~12 mins on 1 core (6 GB RAM), final directory size: 1.5GB
 ## if compute is set to short, long computations are not run, takes ~4 mins on 1 core (6 GB RAM), final directory size: 33MB
-compute="long"
+## compute="short"
+compute=${2}
 
 ## number of cores to use
 cores="1"
@@ -66,7 +85,7 @@ start_time=`date +%s`
 echo "Loading modules ..."
 
 ## load modules
-if ( hostname | grep -q uppmax );
+if ( type module | grep -q function );
 then
   module load bioinfo-tools
   module load FastQC/0.11.8
@@ -85,7 +104,7 @@ fi
 # copy scripts directory
 mkdir rnaseq
 cd rnaseq
-cp -r ${path_base}/main/scripts .
+cp -r ${path_base}main/scripts .
 
 ## make directories
 echo "Creating directories ..."
@@ -97,7 +116,7 @@ cd ..
 ## create links to fastq raw data
 cd 1_raw
 echo "Creating softlinks ..."
-ln -s ${path_base}/main/1_raw/*.gz .
+ln -s ${path_base}main/1_raw/*.gz .
 cd ..
 
 ## fastqc ----------------------------------------------------------------------
@@ -145,7 +164,7 @@ mappingindex_end_time=`date +%s`
 echo "HISAT2 indexing took $((${mappingindex_end_time}-${mappingindex_start_time})) seconds."
 
 ## soft-link reference index
-## ln -s ${path_base}/main/reference/mouse_chr19_hisat2/* ./mouse_chr19_hisat2/
+## ln -s ${path_base}main/reference/mouse_chr19_hisat2/* ./mouse_chr19_hisat2/
 
 ## mapping ----------------------------------------------------------------
 
@@ -230,17 +249,17 @@ echo "Running DGE ..."
 dge_start_time=`date +%s`
 
 cd 5_dge
-cp ${path_base}/main/5_dge/dge.R .
-cp ${path_base}/main/5_dge/counts_full.txt .
+cp ${path_base}main/5_dge/dge.R .
+cp ${path_base}main/5_dge/counts_full.txt .
 
 if [ ${compute} == "long" ];
  then
   Rscript --no-environ --no-site-file --no-init-file --no-save dge.R
  else
-  cp ${path_base}/main/5_dge/dge_results_full.Rds .
-  cp ${path_base}/main/5_dge/counts_vst_full.Rds .
-  cp ${path_base}/main/5_dge/dge_results_full.txt .
-  cp ${path_base}/main/5_dge/counts_vst_full.txt .
+  cp ${path_base}main/5_dge/dge_results_full.Rds .
+  cp ${path_base}main/5_dge/counts_vst_full.Rds .
+  cp ${path_base}main/5_dge/dge_results_full.txt .
+  cp ${path_base}main/5_dge/counts_vst_full.txt .
 fi
 
 cd ..
@@ -255,11 +274,11 @@ echo "DGE took $((${dge_end_time}-${dge_start_time})) seconds."
 echo "Running Functional annotation ..."
 funannot_start_time=`date +%s`
 
-cp ${path_base}/main/reference/mm*gz ./reference
+cp ${path_base}main/reference/mm*gz ./reference
 gunzip ./reference/*.gz
 
 mkdir funannot
-cp -r ${path_base}/bonus/funannot/annotate_de_results.R ./funannot/
+cp -r ${path_base}bonus/funannot/annotate_de_results.R ./funannot/
 cd funannot
 Rscript --no-environ --no-site-file --no-init-file --no-save annotate_de_results.R
 cd ..
@@ -274,7 +293,7 @@ plots_start_time=`date +%s`
 
 mkdir plots
 cd plots
-cp ${path_base}/bonus/plots/*.R .
+cp ${path_base}bonus/plots/*.R .
 
 Rscript --no-environ --no-site-file --no-init-file --no-save pca.R
 Rscript --no-environ --no-site-file --no-init-file --no-save ma.R
