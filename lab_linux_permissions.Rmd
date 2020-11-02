@@ -307,7 +307,7 @@ The `*` will ensure that any file starting with **text** and then anything follo
 Copy the file sample_1.sam to your folder using the command below
 
 ```bash
-$ cp /sw/share/compstore/courses/ngsintro/linux_additional-files/sample_1.sam .
+$ cp /sw/courses/ngsintro/linux/linux_additional-files/sample_1.sam .
 ```
 
 <i class="fas fa-clipboard-list"></i> Use `grep` to search in the file for a specific string of nucleotides, for example:

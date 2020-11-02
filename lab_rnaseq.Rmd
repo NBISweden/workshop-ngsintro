@@ -56,7 +56,7 @@ RNA-seq experiment does not necessarily end with a list of DE genes. If you have
 
 * In paths, remember to change `<username>` with your actual UPPMAX username.
 
-* You are welcome to try your own solutions to the problems, before checking the solution. Click the `r paste0('<code style="background-color:',color_primary,';color:white;">+</code>')` button to see the suggested solution. There is more than one way to complete a task. Discuss with person next to you and ask us when in doubt.
+* You are welcome to try your own solutions to the problems, before checking the solution. Click the `r paste0('<code style="background-color:',color_primary,';color:white;">\f078</code>')` button to see the suggested solution. There is more than one way to complete a task. Discuss with person next to you and ask us when in doubt.
 
 * Input code blocks are displayed like shown below. The code language is displayed above the block. Shell scripts (**SH**) are to be executed in the linux terminal such as bash. **R** scripts are to be run in R after running  R` in the terminal or in R/RStudio locally. Output text blocks are marked as **OUTPUT**.
 
@@ -433,7 +433,7 @@ hisat2 \
 -x ../reference/mouse_chr19_hisat2/mouse_chr19_hisat2 \
 --summary-file "SRR3222409-19.summary" \
 -1 SRR3222409-19_1.fq.gz \
--2 SRR3222409-19_1.fq.gz \ 
+-2 SRR3222409-19_1.fq.gz \
 -S SRR3222409-19.sam
 ```
 
@@ -464,7 +464,7 @@ hisat2 \
 -2 $2 | samtools sort -O BAM > "${prefix}.bam"
 ```
 
-In the above script, the two input fasta files are not hard coded, rather we use `$1` and `$2` because they will be passed in as arguments. 
+In the above script, the two input fasta files are not hard coded, rather we use `$1` and `$2` because they will be passed in as arguments.
 
 The output filename prefix is automatically created using this line `prefix=$( basename $1 | sed -E 's/_.+$//' )` from input filename of `$1`. For example, a file with path `/bla/bla/sample_1.fq.gz` will have the directory stripped off using the function `basename` to get `sample_1.fq.gz`. This is piped (`|`) to `sed` where all text starting from `_` to end of string (specified by this regular expression `_.+$` matching `_1.fq.gz`) is removed and the prefix will be just `sample`. This approach will work only if your filenames are labelled suitably.
 
@@ -736,10 +736,10 @@ ls -l
 
 <i class="fas fa-comments"></i> Inspect the files and try to make sense of them.
 
-<div class="boxy boxy-primary boxy-exclamation">
+<div class="boxy boxy-warning boxy-exclamation">
 **Important**  
 
-For downstream steps, we will NOT use this counts.txt file. Instead we will use **counts_full.txt** from the back-up folder. This contains counts across all chromosomes. This is located here: ``r paste0(path_data,"/main/5_dge/")``.
+For downstream steps, we will NOT use this counts.txt file. Instead we will use **counts_full.txt** from the back-up folder. This contains counts across all chromosomes. This is located here: ``r paste0(path_data,"/main/5_dge/")``. Copy this file to your `5_dge` directory.
 
 ```{r,accordion=TRUE,comment="",block.title=TRUE,class.output="sh",echo=FALSE}
 cat(paste0("cp ",path_data,"/main/5_dge/counts_full.txt ",path_project_rnaseq,"/5_dge/"))
@@ -860,7 +860,7 @@ cat(paste0("cp ",path_data,"/main/5_dge/counts_vst_full.Rds .\n"))
 
 # Bonus exercises
 
-<div class="boxy boxy-primary boxy-exclamation">
+<div class="boxy boxy-warning boxy-exclamation">
 These exercises are optional and to be run only if you have time and if it interests you.
 </div>
 
@@ -1127,7 +1127,7 @@ For more detailed information on the splice reads you can instead of just lookin
 
 # sbatch
 
-<div class="boxy boxy-primary boxy-exclamation">
+<div class="boxy boxy-warning boxy-exclamation">
 You are not required to run anything practically in this section. This is just to read and understand.
 </div>
 

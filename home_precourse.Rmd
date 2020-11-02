@@ -47,7 +47,7 @@ Finally you need to request a login account to NSC. Login to SUPR and go to the 
 Checking your request and approving your account requires some manual work, so you might have to wait for some time (up to a working day) before the next step. When the account is ready to be created, you will receive an email to your registered email address (shown in your SUPR contact information) with information on how to proceed. You will get a URL that you use to choose the password (within seven days). When that has been done, the account ready for use within 15 minutes and you can then login using your chosen password.
 
 <div class="boxy boxy-warning boxy-exclamation">
-**Note:** You will get one username & password for the account on UPPMAX, and one username and password for the account on NSC. Please keep track of both, we will tell you when to use which account during the workshop. 
+**Note:** You will get one username & password for the account on UPPMAX, and one username and password for the account on NSC. Please keep track of both, we will tell you when to use which account during the workshop.
 </div>
 
 ### 2. Install tools for SSH & SFTP access
@@ -96,13 +96,11 @@ Please install the latest version of [Zoom](https://zoom.us/).
 
 #### 4.2 IGV
 
-Please install IGV on your local system before the start of the workshop. 
+Please install IGV on your local system before the start of the workshop.
 
-<div class="boxy boxy-primary boxy-lightbulb">
 [![](data/common/IGVlogo.png)](https://www.broadinstitute.org/igv/)  
 
 **Download IGV** (Integrated Genome Browser) from the [Broad Institute](https://www.broadinstitute.org/igv/) on your own computer and have the mouse genome (mm10) as well as the human genome (hg19) available.
-</div>
 
 #### 4.3 R
 

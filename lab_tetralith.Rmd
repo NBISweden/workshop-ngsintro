@@ -1,0 +1,68 @@
+---
+title: "Alternative cluster instructions"
+subtitle: ""
+---
+
+```{r,child="assets/header-lab.Rmd"}
+```
+
+```{r,eval=TRUE,include=FALSE}
+library(yaml)
+upid <- yaml::read_yaml("_site.yml")$uppmax_project
+nscid <- yaml::read_yaml("_site.yml")$nsc_project
+upres3 <- yaml::read_yaml("_site.yml")$uppmax_res_3
+upres4 <- yaml::read_yaml("_site.yml")$uppmax_res_4
+```
+
+```{css,include=FALSE}
+.workLocally{
+background-color: red;
+}
+```
+
+```{r,include=FALSE}
+## VARIABLES
+#colours
+datadir <- "/sw/courses/ngsintro/reseq/data"
+fastqdir <- "/sw/courses/ngsintro/reseq/data/fastq"
+refdir <- "/sw/courses/ngsintro/reseq/data/ref"
+bamdir <- "/sw/courses/ngsintro/reseq/data/bam"
+vcfdir <- "/sw/courses/ngsintro/reseq/data/vcf"
+bpbamdir <- "/sw/courses/ngsintro/reseq/data/best_practise_bam"
+bpvcfdir <- "/sw/courses/ngsintro/reseq/data/best_practise_vcf"
+col_uppmax <- "#f4f8e8"
+col_local <- "#e5f4f8"
+```  
+
+# The NSC cluster
+Please connect to the Tetralith cluster at NSC using `ssh` (NOTE: use your NSC username and password, not your UPPMAX username and password):
+```bash
+$ ssh -Y nsc_username@tetralith.nsc.liu.se
+```  
+Note that your terminal prompt changed to something like `nsc_username@tetralith1 $` which means that you have entered Tetralith. 
+
+# Interactive session 
+On Tetralith you enter the *login node*, which is not intended for compute intensive tasks. You should therefore book a compute node, or in this case three cores:
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0('tetralith1$ interactive -A ',nscid,' -t 04:00:00 -n 3'))
+```
+After a minute or so you should have gotten your interactive job. Note that your terminal prompt changed to something like `<nsc_username>@n424 $` (or another node name), which means that you are now running on one of the compute nodes. 
+
+# UPPMAX singularity container
+We will use a singularity container (a virtual computer) that mimics the UPPMAX computing environment. Once you have started the singularity container your environment will look exactly as on UPPMAX, and the software used in this workshop will be available through the module system inside the container.
+Use this command to start the singularity container:
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0('n424$ singularity shell -B /proj/',nscid,'/users:/proj/',upid,'/nobackup /proj/',nscid,'/ngsintro.sif'))
+```
+Note that your terminal prompt changed to something like `<nsc_username>@offline-uppmax$`. This means that you have moved into a "virtual computer" that mimics the UPPMAX environment. Everything from this point and onwards should be identical from running the exercise on UPPMAX.
+In the singularity container type this to make the module system behave properly:
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0('source /uppmax_init'))
+```
+To close the singularity container  later on just type `exit`in the terminal, but don't do that now.
+
+All the files you create during the labs, usually in `r paste0('/proj/',upid,'/nobackup/username/')` can be reached also from outside of the UPPMAX singularity container, in this folder on Tetralith:
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0('tetralith$ /proj/',nscid,'/users/<username>/\n'))
+```
+

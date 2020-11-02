@@ -174,7 +174,7 @@ $ ll ~/
 
 Now you will need some files. To avoid all the course participants editing the same file all at once, undoing each other's edits, each participant will get their own copy of the needed files.
 
-The files are located in the folder **/sw/share/compstore/courses/ngsintro/linux_tutorial**
+The files are located in the folder **/sw/courses/ngsintro/linux/linux_tutorial**
 
 or they can be downloaded if you are not on UPPMAX at the moment, [files.tar.gz](data/linux/files.tar.gz) (instruction on how to download further down)
 
@@ -202,7 +202,7 @@ cp -r <source-folder> <destination-folder>
 ```
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("cp -r /sw/share/compstore/courses/ngsintro/linux_tutorial/* /proj/",upid,"/nobackup/<username>/linux_tutorial"))
+cat(paste0("cp -r /sw/courses/ngsintro/linux/linux_tutorial/* /proj/",upid,"/nobackup/<username>/linux_tutorial"))
 ```
 
 `-r` denotes recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, NOT sub-folders and files in sub-folders.
@@ -473,7 +473,7 @@ First, open the file with `nano`.
 
 ```bash
 $ nano <filename>
-$ nano /sw/share/compstore/courses/ngsintro/linux_additional-files/large_file
+$ nano /sw/courses/ngsintro/linux/linux_additional-files/large_file
 ```
 
 <i class="fas fa-lightbulb"></i> Press <kbd>Ctrl+X</kbd> to close it down, use arrows to scroll up/down).
@@ -487,7 +487,7 @@ To view the first rows of the large file, use `head`.
 ```bash
 $ head <filename>
 
-$ head /sw/share/compstore/courses/ngsintro/linux_additional-files/large_file
+$ head /sw/courses/ngsintro/linux/linux_additional-files/large_file
 ```
 
 Remember how to view an arbitrary number of first rows in a file?
@@ -495,7 +495,7 @@ Remember how to view an arbitrary number of first rows in a file?
 ```bash
 $ head -n <number of rows to view> <filename>
 
-$ head -n 23 /sw/share/compstore/courses/ngsintro/linux_additional-files/large_file
+$ head -n 23 /sw/courses/ngsintro/linux/linux_additional-files/large_file
 ```
 
 The same syntax for viewing the last rows of a file with tail:
@@ -503,11 +503,11 @@ The same syntax for viewing the last rows of a file with tail:
 ```bash
 $ tail <filename>
 
-$ tail /sw/share/compstore/courses/ngsintro/linux_additional-files/large_file
+$ tail /sw/courses/ngsintro/linux/linux_additional-files/large_file
 
 $ tail -n <number of rows to view> <filename>
 
-$ tail -n 23 /sw/share/compstore/courses/ngsintro/linux_additional-files/large_file
+$ tail -n 23 /sw/courses/ngsintro/linux/linux_additional-files/large_file
 ```
 
 # Wildcards
