@@ -606,7 +606,7 @@ When the analysis is done and you are sure that you have the desired output, it 
   * [GATK](https://software.broadinstitute.org/gatk/)
   * [samtools](http://www.htslib.org/)
 
-# Alternative cluster
-The teachers may inform you that we will use the high performance computing center NSC instead of UPPMAX during this workshop. If so, please follow this link to [run the workshop on NSC](lab_vc_tetralith.html).
+<!--# Alternative cluster
+The teachers may inform you that we will use the high performance computing center NSC instead of UPPMAX during this workshop. If so, please follow this link to [run the workshop on NSC](lab_vc_tetralith.html).-->
 
 # Thanks for today!
