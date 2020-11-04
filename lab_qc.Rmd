@@ -25,17 +25,15 @@ col_uppmax <- "#f4f8e8"
 col_local <- "#e5f4f8"
 ```
 # Data
-In this workshop we will perform quality control of whole genome sequencing data using FastQC. 
-We will run FastQC on three low-coverage whole genome sequencing (WGS) samples from the public 1000 Genomes project. To speed up the analysis we will only use data from a small region on  chromosome 2. These are the exact same samples as will be used in the variant-calling workflow lab on Wednesday.  
+We will run FastQC on three low-coverage whole genome sequencing (WGS) samples from the public 1000 Genomes project. To speed up the analysis we will only use data from a small genomic region. These are the exact same samples as will be used in the variant-calling workflow lab on Wednesday.  
 
-Sample        | Population | Sequencing technology
-------------- | ---------- | --------
-HG00097       | British in England and Scotland    | Low coverage WGS
-HG00100       | British in England and Scotland    | Low coverage WGS
-HG00101       | British in England and Scotland    | Low coverage WGS 
+Sample        | Description
+------------- | ---------- 
+HG00097       | Low coverage WGS
+HG00100       | Low coverage WGS
+HG00101       | Low coverage WGS 
 
-
-# Running FastQC 
+# Run FastQC 
 
 ## Connect to Uppmax
 Please connect to the Rackham cluster on UPPMAX using `ssh`:
@@ -82,7 +80,7 @@ The node name is found under nodelist header, you should only see one. Connect t
 ssh -Y <nodename>
 ```
   
-## Accessing programs {#Accessingprograms}
+## Accessing FastQC
 FastQC is installed in the module system on UPPMAX. Modules must be loaded *every time* you login to Rackham, or when you connect to a new compute node.  
 First load the `bioinfo-tools` module:
 ```bash
@@ -94,22 +92,30 @@ module load FastQC/0.11.8
 ```
  
 ## Run FastQC  
-You will use `FastQC` to check the quality scores of the reads in the fastq files. The output is a .html document that shows quality scores along the reads, and other information.  
 Run `FastQC` on the HG00097 fastq files:
 ```bash
 fastqc -q *.fastqc
 ```
-
+The output is a .html document that shows quality scores along the reads, and other information.  
   
 # Check the results
-Now its time to look at the results. You can download the files you just generated to you laptop and open them in your webbrowser. To do that you can use this command:
+Now its time to look at the results. 
+
+## Option 1 - Download output to your laptop
+You can download the files you just generated to you laptop and open them in your webbrowser. To do that you can use this command:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('scp <username>@rackham.uppmax.uu.se:/proj/',upid,'/nobackup/<username>/qc/*.html .'))
 ```
 Please replace `<username>` with your UPPMAX user name.  
 
+## Option 2 - Look at precomputed output
 Alternatively, you can look at the files that we have uploaded to the course website: 
 [HG00097_1.fq](data/qc/HG00097_1_fastqc.html)
+[HG00097_2.fq](data/qc/HG00097_2_fastqc.html)
+[HG00100_1.fq](data/qc/HG00100_1_fastqc.html)
+[HG00100_2.fq](data/qc/HG00100_2_fastqc.html)
+[HG00101_1.fq](data/qc/HG00101_1_fastqc.html)
+[HG00101_2.fq](data/qc/HG00101_2_fastqc.html)
   
 ### Questions   
 1. Look at the section "Sequence Length Distribution". How long are the reads?
