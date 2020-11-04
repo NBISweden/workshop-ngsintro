@@ -101,22 +101,22 @@ The output is a .html document that shows quality scores along the reads, and ot
 # Check the results
 Now its time to look at the results. 
 
-## Option 1 - Download output to your laptop
+## Option 1 - use your results
 You can download the files you just generated to you laptop and open them in your webbrowser. To do that you can use this command:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('scp <username>@rackham.uppmax.uu.se:/proj/',upid,'/nobackup/<username>/qc/*.html .'))
 ```
 Please replace `<username>` with your UPPMAX user name.  
 
-## Option 2 - Look at precomputed output
+## Option 2 - use precomputed results
 Alternatively, you can look at the files that we have uploaded to the course website: 
-[HG00097_1.fq](data/qc/HG00097_1_fastqc.html)
-[HG00097_2.fq](data/qc/HG00097_2_fastqc.html)
-[HG00100_1.fq](data/qc/HG00100_1_fastqc.html)
-[HG00100_2.fq](data/qc/HG00100_2_fastqc.html)
-[HG00101_1.fq](data/qc/HG00101_1_fastqc.html)
-[HG00101_2.fq](data/qc/HG00101_2_fastqc.html)
-  
+
+Sample        | Read 1 | Read 2
+------------- | ---------- | --------
+HG00097       | [HG00097_1.fq](data/qc/HG00097_1_fastqc.html) | [HG00097_2.fq](data/qc/HG00097_2_fastqc.html) 
+HG00100       | [HG00100_1.fq](data/qc/HG00100_1_fastqc.html) | [HG00100_2.fq](data/qc/HG00100_2_fastqc.html)
+HG00101       | [HG00101_1.fq](data/qc/HG00101_1_fastqc.html) | [HG00101_2.fq](data/qc/HG00101_2_fastqc.html) 
+
 ### Questions   
 1. Look at the section "Sequence Length Distribution". How long are the reads?
 2. Look at the "per base sequence quality". How many bases in the reads have a median phred-score above 28?
