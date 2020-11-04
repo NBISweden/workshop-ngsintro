@@ -98,7 +98,7 @@ The output is a .html document that shows quality scores along the reads, and ot
   
 # Check the results
 
-## Option 1 - use your results
+## Option 1 - use your output files
 You can download the files you just generated to you laptop and open them in your webbrowser. Open a new terminal window in your laptop and navigate to a suitable folder, but do not log in to UPPMAX. Download the generated .html files to your laptop with this command:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('scp <username>@rackham.uppmax.uu.se:/proj/',upid,'/nobackup/<username>/qc/*.html .'))
@@ -106,7 +106,7 @@ cat(paste0('scp <username>@rackham.uppmax.uu.se:/proj/',upid,'/nobackup/<usernam
 Please replace `<username>` with your UPPMAX user name.  
 Then open a web browser and open the downloaded files in the browser. 
 
-## Option 2 - use precomputed results
+## Option 2 - use precomputed output files
 Alternatively, you can look at the same files that we have uploaded to the course website by clickin on the links below: 
 
 Sample        | Read 1 | Read 2
