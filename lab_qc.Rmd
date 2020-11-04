@@ -38,7 +38,7 @@ HG00101       | British in England and Scotland    | Low coverage WGS
 # Running FastQC 
 
 ## Connect to Uppmax
-Please connect to the Rackham cluster on UPPMAX using `ssh:
+Please connect to the Rackham cluster on UPPMAX using `ssh`:
 ```bash
 $ ssh -Y username@rackham.uppmax.uu.se
 ```  
@@ -52,9 +52,10 @@ cat(paste0('cd /proj/',upid,'/nobackup/<username>/qc'))
 
 ## Symbolic links to data   
 The raw data files are located in 
-```bash
-/sw/courses/ngsintro/reseq/data/fastq
-```  
+```{r,echo=FALSE,comment="",class.output="bash"}		
+ cat(paste0(fastqdir))
+```
+
 Instead of copying the files to your workspace you should create symbolic links (soft-links) to them. Soft-linking files and folders allows you to work with them as if they were in your current directory, but without multiplying them.  
 Create symbolic links to the fastq files in your workspace:
 ```{r,echo=FALSE,comment="",class.output="bash"}
