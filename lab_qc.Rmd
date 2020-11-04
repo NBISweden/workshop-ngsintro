@@ -8,7 +8,7 @@ title: "Quality control with FastQC"
 ```{r,eval=TRUE,include=FALSE}
 library(yaml)
 upid <- yaml::read_yaml("_site.yml")$uppmax_project
-upres3 <- yaml::read_yaml("_site.yml")$uppmax_res_2
+upres2 <- yaml::read_yaml("_site.yml")$uppmax_res_2
 ```
 
 ```{css,include=FALSE}
