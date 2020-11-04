@@ -33,6 +33,8 @@ HG00097       | Low coverage WGS
 HG00100       | Low coverage WGS
 HG00101       | Low coverage WGS 
 
+If you want to learn more details about FastQC please have a look at this video by the [Babraham Bioinformatics Institute]( http://www.youtube.com/watch?v=bz93ReOv87Y).
+
 # Run FastQC 
 
 ## Connect to Uppmax
