@@ -108,7 +108,7 @@ cat(paste0('scp <username>@rackham.uppmax.uu.se:/proj/',upid,'/nobackup/<usernam
 Please replace `<username>` with your UPPMAX user name.  
 
 ## Option 2 - use precomputed results
-Alternatively, you can look at the files that we have uploaded to the course website: 
+Alternatively, you can look at the same files that we have uploaded to the course website: 
 
 Sample        | Read 1 | Read 2
 ------------- | ---------- | --------
