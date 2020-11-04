@@ -97,10 +97,9 @@ fastqc -q *.fastqc
 The output is a .html document that shows quality scores along the reads, and other information.  
   
 # Check the results
-Now its time to look at the results. 
 
 ## Option 1 - use your results
-You can download the files you just generated to you laptop and open them in your webbrowser. To do that you can use this command:
+You can download the files you just generated to you laptop and open them in your webbrowser. Download the files to your laptop with this command:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('scp <username>@rackham.uppmax.uu.se:/proj/',upid,'/nobackup/<username>/qc/*.html .'))
 ```
@@ -116,9 +115,10 @@ HG00100       | [HG00100_1.fq](data/qc/HG00100_1_fastqc.html) | [HG00100_2.fq](d
 HG00101       | [HG00101_1.fq](data/qc/HG00101_1_fastqc.html) | [HG00101_2.fq](data/qc/HG00101_2_fastqc.html) 
 
 ### Questions   
-1. Look at the section "Sequence Length Distribution". How long are the reads?
-2. Look at the "per base sequence quality". How many bases in the reads have a median phred-score above 28?
-3. Are the quality scores higher for the first strand reads or the second strand reads?
+1. The section "per base sequence quality" shows the distribution of quality scores for each position in the reads. The red line indicates the medial value. How many bases in the reads have a median phred-score above 28?
+2. Look at the section "Sequence Length Distribution". How long are the reads?
+3. The section "Adapter Content" would show if there are traces of adapter sequence in the reads. Do you see any?
+4. Does any of the sequences have any red x marks? These are indications of potential problems.
 
 # Documentation
   * [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
