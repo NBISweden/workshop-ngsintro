@@ -33,8 +33,6 @@ HG00097       | Low coverage WGS
 HG00100       | Low coverage WGS
 HG00101       | Low coverage WGS 
 
-If you want to learn more details about FastQC please have a look at this video by the [Babraham Bioinformatics Institute]( http://www.youtube.com/watch?v=bz93ReOv87Y).
-
 # Run FastQC 
 
 ## Connect to Uppmax
@@ -92,7 +90,7 @@ module load FastQC/0.11.8
 ```
  
 ## Run FastQC  
-Run `FastQC` on the HG00097 fastq files:
+Run `FastQC` on all fastq files:
 ```bash
 fastqc -q *.fastq
 ```
@@ -124,3 +122,4 @@ HG00101       | [HG00101_1.fq](data/qc/HG00101_1_fastqc.html) | [HG00101_2.fq](d
 
 # Documentation
   * [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
+  * If you want to learn more details about FastQC please have a look at this video by the [Babraham Bioinformatics Institute]( http://www.youtube.com/watch?v=bz93ReOv87Y).
