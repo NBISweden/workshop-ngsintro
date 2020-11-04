@@ -94,7 +94,7 @@ module load FastQC/0.11.8
 ## Run FastQC  
 Run `FastQC` on the HG00097 fastq files:
 ```bash
-fastqc -q *.fastqc
+fastqc -q *.fastq
 ```
 The output is a .html document that shows quality scores along the reads, and other information.  
   
@@ -117,10 +117,10 @@ HG00100       | [HG00100_1.fq](data/qc/HG00100_1_fastqc.html) | [HG00100_2.fq](d
 HG00101       | [HG00101_1.fq](data/qc/HG00101_1_fastqc.html) | [HG00101_2.fq](data/qc/HG00101_2_fastqc.html) 
 
 ### Questions   
-1. The section "per base sequence quality" shows the distribution of quality scores for each position in the reads. The red line indicates the medial value. How many bases in the reads have a median phred-score above 28?
+1. The section "Per base sequence quality" shows the distribution of quality scores for each position in the reads. The red lines indicate the median value for each base position. How many bases in the reads have a median phred-score above 28?
 2. Look at the section "Sequence Length Distribution". How long are the reads?
 3. The section "Adapter Content" would show if there are traces of adapter sequence in the reads. Do you see any?
-4. Does any of the sequences have any red x marks? These are indications of potential problems.
+4. Does any of the samples have red x-marks? These are indications of potential problems.
 
 # Documentation
   * [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
