@@ -24,7 +24,7 @@ fastqdir <- "/sw/courses/ngsintro/reseq/data/fastq"
 col_uppmax <- "#f4f8e8"
 col_local <- "#e5f4f8"
 ```
-# Introduction
+# Data
 In this workshop we will perform quality control of whole genome sequencing data using FastQC. 
 We will run FastQC on three low-coverage whole genome sequencing (WGS) samples from the public 1000 Genomes project. To speed up the analysis we will only use data from a small region on  chromosome 2. These are the exact same samples as will be used in the variant-calling workflow lab on Wednesday.  
 
@@ -35,22 +35,22 @@ HG00100       | British in England and Scotland    | Low coverage WGS
 HG00101       | British in England and Scotland    | Low coverage WGS 
 
 
+# Running FastQC 
 
-
-# Connect to UPPMAX
+## Connect to Uppmax
 Please connect to the Rackham cluster on UPPMAX using `ssh:
 ```bash
 $ ssh -Y username@rackham.uppmax.uu.se
 ```  
 
-# Create a workspace 
+## Create a workspace 
 You should work in your folder under the course's nobackup folder, just like you have done during the previous labs. Start by creating a workspace for this exercise in your folder, and then move into it. 
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('mkdir /proj/',upid,'/nobackup/<username>/qc\n'))
 cat(paste0('cd /proj/',upid,'/nobackup/<username>/qc'))
 ```
 
-# Symbolic links to data   
+## Symbolic links to data   
 The raw data files are located in 
 ```bash
 /sw/courses/ngsintro/reseq/data/fastq
@@ -66,7 +66,7 @@ cat(paste0('ln -s ',fastqdir,'/HG00101_1.fq\n'))
 cat(paste0('ln -s ',fastqdir,'/HG00101_2.fq\n'))
 ```
 
-### Book a node 
+## Book a node 
 When you login to Rackham you enter the *login node*, which is not intended for compute intensive tasks. To be able to run analyses directly in the terminal you should therefore book a compute node (or in this case just one core of a node). Make sure you only do this once each day because we have reserved one core per student for the course.    
 Use this reservation on day 1 of variant-calling:
 ```{r,echo=FALSE,comment="",class.output="bash"}
@@ -81,7 +81,7 @@ The node name is found under nodelist header, you should only see one. Connect t
 ssh -Y <nodename>
 ```
   
-### Accessing programs {#Accessingprograms}
+## Accessing programs {#Accessingprograms}
 FastQC is installed in the module system on UPPMAX. Modules must be loaded *every time* you login to Rackham, or when you connect to a new compute node.  
 First load the `bioinfo-tools` module:
 ```bash
@@ -92,7 +92,7 @@ This makes it possible to load FastQC:
 module load FastQC/0.11.8
 ```
  
-## FastQC  
+## Run FastQC  
 You will use `FastQC` to check the quality scores of the reads in the fastq files. The output is a .html document that shows quality scores along the reads, and other information.  
 Run `FastQC` on the HG00097 fastq files:
 ```bash
@@ -100,8 +100,8 @@ fastqc -q *.fastqc
 ```
 
   
-## View results in web browser
-You should now look at the results from `FastQC` in your laptop. You can download the files you just generated to you laptop and open them in your webbrowser. To do that you can use this command:
+# Check the results
+Now its time to look at the results. You can download the files you just generated to you laptop and open them in your webbrowser. To do that you can use this command:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('scp <username>@rackham.uppmax.uu.se:/proj/',upid,'/nobackup/<username>/qc/*.html .'))
 ```
