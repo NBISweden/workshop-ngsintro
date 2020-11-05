@@ -17,8 +17,8 @@ date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_r
 ;;10:00;11:00;Sequencing Bias;Olga Petterson;;;;
 ;;11:00;12:00;NGS Pipelines;Adam Ameur;;slide_ngs_pipelines.pptx;;
 ;;12:00;13:00;Lunch;;;;;
-;;13:00;13:40;Variant-calling workflow;Malin Larsson;;slide_vc.pdf;;
-;;13:40;17:00;Variant-calling workflow;Malin Larsson;;;lab_vc.html;
+;;13:00;13:45;Variant-calling workflow;Malin Larsson;;slide_vc.pdf;;
+;;14:00;17:00;Variant-calling workflow;Malin Larsson;;;lab_vc.html;
 12/11/2020;Online;09:00;12:00;Variant-calling workflow;Malin Larsson;;;;https://uu-se.zoom.us/j/65145908155
 ;;12:00;13:00;Lunch;;;;;
 ;;13:00;17:00;RNA-Seq workflow;Roy Francis;;slide_rnaseq.html;lab_rnaseq.html;
