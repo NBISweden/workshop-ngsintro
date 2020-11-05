@@ -104,10 +104,10 @@ You can download the files you just generated to you laptop and open them in you
 cat(paste0('scp <username>@rackham.uppmax.uu.se:/proj/',upid,'/nobackup/<username>/qc/*.html .'))
 ```
 Please replace `<username>` with your UPPMAX user name.  
-Then open a web browser and open the downloaded files in the browser. The files are located in the folder that you were standing in when you downloaded them. 
+Then open a web browser and open the downloaded files in the browser. The files are located in the folder you navigeted to before the download.  
 
 ## Option 2 - use precomputed output files
-Alternatively, you can look at the same files that we have uploaded to the course website by clickin on the links below: 
+Alternatively, we have made the same files available through the links below:
 
 Sample        | Read 1 | Read 2
 ------------- | ---------- | --------
