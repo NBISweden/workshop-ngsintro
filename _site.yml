@@ -13,14 +13,21 @@ uppmax_res_5: g2020009_13
 # location options are linkoping, lund, umea or uppsala. For rendering the info page.
 location: uppsala
 assistants:
- - "MD: Martin Dalhö"
- - "JD: Jacques Dainat"
- - "PE: Payam Emami"
- - "AS: Anders Sjölander"
  - "AJ: Anna Johansson"
+ - "AS: Anders Sjölander"
  - "BS: Bengt Sennblad"
+ - "CM: Claudio Mirabello"
+ - "DA: Dag Ahren"
+ - "DE: Diana Ekman"
+ - "IH: Ingrid Hyltander"
+ - "LM: Lokesh Manoharan"
+ - "LV: Louella Vasquez"
+ - "ML: Malin Larsson"
+ - "MD: Martin Dalhö"
  - "NR: Nima Rafati"
  - "OP: Olga Petterson"
+ - "PE: Payam Emami"
+ - "RF: Roy Francis"
 
 favicon: assets/favicon.png
 exclude: ["docs","README.md","schedule.csv","LICENSE","LICENSE.md","scripts","tmprepo"]
@@ -88,6 +95,7 @@ packages:
    - leaflet
    - lubridate
    - markdown
+   - pagedown
    - rmarkdown
    - xaringan
    - yaml
