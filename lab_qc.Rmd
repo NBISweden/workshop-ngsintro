@@ -92,14 +92,36 @@ module load FastQC/0.11.8
 ## Run FastQC  
 Run `FastQC` on all fastq files:
 ```bash
-fastqc -q *.fastq
+fastqc -q *.fq
 ```
 The output is a .html document that shows quality scores along the reads, and other information.  
   
 # Check the results
 
 ## Option 1 - use your output files
-You can download the files you just generated to you laptop and open them in your webbrowser. Open a new terminal window in your laptop and navigate to a suitable folder. Do not log in to UPPMAX. Download the generated .html files to your laptop with this command:
+You can download the files you just generated to you laptop and open them in your webbrowser. 
+
+**Extra step for MobaXterm users**
+If you work in Windows and use MobaXterm, please follow the instructions behind the arrow below.
+```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
+cat('MobaXtert users need to set the **persistent home directory** to your local workspace. This means that your home directory in MobaXterm will be set to the folder that you created in the previous step.\n') 
+cat('1. In MobaXterm click on the **Settings** tab, then choose **Configurations**.\n') 
+cat('2. Click on the yellow folder icon in the line of **Persistent home directory**. Browse to the desired folder and click on **OK**.\n') 
+cat('3. Then click **OK** to exit the **Configurations** window.\n') 
+cat('4. Let MobaXterm restart to make the settings effective.\n') 
+cat('Now your MobaXterm home directory is set to the folder you created for this lab. More details about this can be found in this [video](https://www.youtube.com/watch?v=ycUBjqyjORE&feature=youtu.be&t=2m47s)') 
+```
+
+ 
+ 
+
+ 
+
+Now your MobaXterm home directory is set to the folder you created for this lab. More details about this can be found in this [video](https://www.youtube.com/watch?v=ycUBjqyjORE&feature=youtu.be&t=2m47s)
+
+
+
+Open a new terminal window in your laptop and navigate to a suitable folder. Do not log in to UPPMAX. Download the generated .html files to your laptop with this command:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('scp <username>@rackham.uppmax.uu.se:/proj/',upid,'/nobackup/<username>/qc/*.html .'))
 ```
