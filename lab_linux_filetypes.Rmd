@@ -150,9 +150,9 @@ dahlo@rackham2 work $ echo $PATH
 Try loading a module, and then look at the `$PATH` variable again. You'll see that there are a few extra directories there now, after the module has been loaded.
 
 ```bash
-dahlo@rackham2 work $ module load bioinfo-tools samtools/1.6
+dahlo@rackham2 work $ module load bioinfo-tools samtools/1.10
 dahlo@rackham2 work $ echo $PATH
-/sw/apps/bioinfo/samtools/1.6/rackham/bin:/home/dahlo/perl/bin:/home/dahlo/.pyenv/shims:
+/sw/apps/bioinfo/samtools/1.10/rackham/bin:/home/dahlo/perl/bin:/home/dahlo/.pyenv/shims:
 /home/dahlo/.pyenv/bin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:
 /usr/sbin:/sbin:/opt/thinlinc/bin:/sw/uppmax/bin:/home/dahlo/usr/bin
 ```
@@ -360,7 +360,7 @@ The reference genome, a fasta file containing the DNA sequence of the reference 
 The CRAM format is even more efficient than the BAM format. To create a CRAM file we'll have to use **samtools**, so we will load the module for it.
 
 ```bash
-$ module load bioinfo-tools samtools/1.3
+$ module load bioinfo-tools samtools/1.10
 ```
 
 <i class="fas fa-clipboard-list"></i> Tell samtools that you want CRAM output (**`-C`**) and specify which reference genome it should use to do the CRAM conversion (**`-T`**)
@@ -381,6 +381,10 @@ $ ll -h 3_sorted/ad2.sorted.bam 4_cram/ad2.cram
 
 This will list both the files, and print the file size in a human readable format (**`-h`**). The CRAM file is roughly 1/3 of the size of the BAM file. This is probably because all the reads in the simulated data has the same quality value (BBBBBBBBBB). Fewer types of quality values are easier to compress, hence this amazing compression ratio. Real data will have much more diverse quality scores, and the CRAM file would be pethaps 70-80% of the original BAM file.
 
+<div class="boxy boxy-clipboard-list boxy-orange">
+**Optional**
+
 If you have been fast to finish this lab and you still have time left (or just can't get enough of linux stuff), please have a look at the [advanced linux tutorial](lab_linux_advanced.html) where you can learn the basics in bash programming using variables, loops and control statements. This is the lab that is scheduled for after lunch today.
+</div>
 
 ***
