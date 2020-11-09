@@ -112,15 +112,6 @@ cat('4. Let MobaXterm restart to make the settings effective.\n')
 cat('Now your MobaXterm home directory is set to the folder you created for this lab. More details about this can be found in this [video](https://www.youtube.com/watch?v=ycUBjqyjORE&feature=youtu.be&t=2m47s)') 
 ```
 
- 
- 
-
- 
-
-Now your MobaXterm home directory is set to the folder you created for this lab. More details about this can be found in this [video](https://www.youtube.com/watch?v=ycUBjqyjORE&feature=youtu.be&t=2m47s)
-
-
-
 Open a new terminal window in your laptop and navigate to a suitable folder. Do not log in to UPPMAX. Download the generated .html files to your laptop with this command:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('scp <username>@rackham.uppmax.uu.se:/proj/',upid,'/nobackup/<username>/qc/*.html .'))
