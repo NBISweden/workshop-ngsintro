@@ -92,7 +92,7 @@ cat(paste0(refdir))
 ## Local workspace  {#preparelaptop}
 The majority of the analyses in this workshop will be done on UPPMAX, but you will copy some of the resulting files to your laptop. Therefore, please start by creating a folder for this workshop on your laptop. It is up to you where you want to put this, but it can for example be a folder called *ngsworkflow* on Desktop. You need to have write permission in this folder. The folder you create here will be referred to as *local workspace* throughout this workshop. 
 
-**Additional steps if you are working on a windows machine and using MobaXterm**
+**For MobaXterm users**  
 MobaXtert users need to set the **persistent home directory** to your local workspace. This means that your home directory in MobaXterm will be set to the folder that you created in the previous step.  
 1. In MobaXterm click on the **Settings** tab, then choose **Configurations**. 
 2. Click on the yellow folder icon in the line of **Persistent home directory**. Browse to the desired folder and click on **OK**. 
