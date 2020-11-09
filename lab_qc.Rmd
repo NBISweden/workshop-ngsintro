@@ -94,7 +94,7 @@ Run `FastQC` on all fastq files:
 ```bash
 fastqc -q *.fq
 ```
-The output is a .html document that shows quality scores along the reads, and other information. Before you go on, please check what files were created when you run fastqc.  
+The output is .html documents that shows quality scores along the reads, and other information. Please check what new files were generated with the command `ls -lrt`.  
   
 # Check the results
 The output from FastQC is .html documents that should be opened in a web browser. You can download the .html documents to your local computer and open them in your local web browser, or alternatively open them directly at UPPMAX if your graphical interface works well. In the interest of saving time in this short lab, we have made the output files that you just created available through the links below:
