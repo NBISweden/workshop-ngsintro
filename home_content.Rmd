@@ -47,6 +47,7 @@ This page contains links to different lectures (slides) and practical exercises 
 **Other**
 
 * [NGS: technologies and challenges (Slides)](Sequencing_2020c.pdf)
+* [NGS Pipelines (Slides)](slide_ngs_pipelines.pdf)
 <!--* [Data management (Slides)](slide_data_management.pdf)-->
 
 **Useful resources**

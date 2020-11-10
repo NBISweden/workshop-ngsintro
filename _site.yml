@@ -26,7 +26,6 @@ assistants:
  - "MD: Martin Dalhö"
  - "NR: Nima Rafati"
  - "OP: Olga Petterson"
- - "PE: Payam Emami"
  - "RF: Roy Francis"
 
 favicon: assets/favicon.png
@@ -102,4 +101,3 @@ packages:
   packages_bioc_repo:
   packages_github_repo:
    - rstudio/fontawesome
-  
