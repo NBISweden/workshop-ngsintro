@@ -397,11 +397,11 @@ Other good things to look for could be:
 
 Remember the commands **`uquota`** (show how much of your storage space you are using) and **`projinfo`** (shows you how much of your allocated time you have used) from the lecture? Try running them and see how you are doing.
 
-## Pipelines
 
 <div class="boxy boxy-clipboard-list boxy-orange">
 **Optional**
 
+## Pipelines
 This optional material on [UPPMAX pipeline exercise](lab_uppmax_pipeline.html) will teach you the basics in creating pipelines. Continue with this if you finish the current lab ahead of time.
 </div>
 
