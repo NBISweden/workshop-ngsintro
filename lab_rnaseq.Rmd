@@ -619,7 +619,7 @@ qualimap rnaseq -pe \
   --java-mem-size=6G >& "${prefix}-qualimap.log"
 ```
 
-The line `prefix=$( basename "$1" .bam)` is used to remove directory path and `.bam` from the input filename and create a prefix which will be used to label output. The `unset DISPLAY` forces  a 'headless mode' on the JAVA application, which would otherwise throw an error about X11 display. If that doesn't work, one can also try `export DISPLAY=:0` or `export DISPLAY=""`. The last part `>& "${prefix}-qualimap.log"` saves the **standard-out** as a log file.
+The line `prefix=$( basename "$1" .bam)` is used to remove directory path and `.bam` from the input filename and create a prefix which will be used to label output. The export `unset DISPLAY` forces  a 'headless mode' on the JAVA application, which would otherwise throw an error about X11 display. If that doesn't work, one can also try `export DISPLAY=:0` or `export DISPLAY=""`. The last part `>& "${prefix}-qualimap.log"` saves the **standard-out** as a log file.
 
 <i class="fas fa-clipboard-list"></i> Create a new bash loop script named `qualimap_batch.sh` with a bash loop to run the qualimap script over all BAM files. The loop should look like below.
 
