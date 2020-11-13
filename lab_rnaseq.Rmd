@@ -56,7 +56,7 @@ RNA-seq experiment does not necessarily end with a list of DE genes. If you have
 
 * In paths, remember to change `<username>` with your actual UPPMAX username.
 
-* You are welcome to try your own solutions to the problems, before checking the solution. Click the `r paste0('<code style="background-color:',color_primary,';color:white;">\f078</code>')` button to see the suggested solution. There is more than one way to complete a task. Discuss with person next to you and ask us when in doubt.
+* You are welcome to try your own solutions to the problems, before checking the solution. Click the button to see the suggested solution. There is more than one way to complete a task. Discuss with person next to you and ask us when in doubt.
 
 * Input code blocks are displayed like shown below. The code language is displayed above the block. Shell scripts (**SH**) are to be executed in the linux terminal such as bash. **R** scripts are to be run in R after running  R` in the terminal or in R/RStudio locally. Output text blocks are marked as **OUTPUT**.
 
@@ -433,7 +433,7 @@ hisat2 \
 -x ../reference/mouse_chr19_hisat2/mouse_chr19_hisat2 \
 --summary-file "SRR3222409-19.summary" \
 -1 SRR3222409-19_1.fq.gz \
--2 SRR3222409-19_1.fq.gz \
+-2 SRR3222409-19_2.fq.gz \
 -S SRR3222409-19.sam
 ```
 
