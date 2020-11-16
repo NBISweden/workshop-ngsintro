@@ -16,6 +16,9 @@ htmltools::tagList(fa)
 tc <- captioner::captioner(prefix="<b>Tab. </b>")
 fc <- captioner::captioner(prefix="<b>Fig. </b>")
 
+# turn off terminal colors
+options(crayon.enabled = FALSE)
+
 # knitr options
 knitr::opts_knit$set(progress=TRUE,verbose=TRUE)
 knitr::opts_chunk$set(dev="svg",results="hold",fig.show="hold",fig.align="left",
