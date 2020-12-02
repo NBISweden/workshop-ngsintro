@@ -42,7 +42,7 @@ s <- s %>%
   # add links to topic
   dplyr::mutate(topic=ifelse(is.na(link_slide),topic,paste0("<span>",topic,"<a href='",link_slide,"'><i class='fas fa-file-powerpoint' style='margin-left:4px;margin-right:4px;'></i></a></span>"))) %>%
   mutate(topic=ifelse(is.na(link_lab),topic,paste0("<span>",topic,"<a href='",link_lab,"'><i class='fas fa-file-alt' style='margin-left:4px;margin-right:4px;'></i></a></span>"))) %>%
-   mutate(topic=ifelse(is.na(link_room),topic,paste0("<span>",topic,"<a href='",link_room,"'><i class='fab fa-youtube' style='margin-left:4px;margin-right:4px;'></i></a></span>"))) %>%
+   mutate(topic=ifelse(is.na(link_youtube),topic,paste0("<span>",topic,"<a href='",link_youtube,"'><i class='fab fa-youtube' style='margin-left:4px;margin-right:4px;'></i></a></span>"))) %>%
   dplyr::mutate(time=paste0(start_time," - ",end_time)) %>%
   dplyr::mutate(teacher=ifelse(is.na(teacher),"",teacher)) %>%
   dplyr::mutate(assistant=ifelse(is.na(assistant),"",assistant)) %>%
