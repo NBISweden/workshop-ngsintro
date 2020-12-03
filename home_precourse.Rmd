@@ -79,7 +79,6 @@ For this step, you will have to use the terminal a bit. You can get started by f
 </div>
 
 **Connect to UPPMAX:** Open the terminal (Windows users can use MobaXterm) and type `ssh -Y user@rackham.uppmax.uu.se`, then enter your password. The password will not be visible as you type.
-If you are working from home you may need to connect to your local university via VPN before connecting to Uppmax. 
 
 **Create a user folder: ** Go to ``r paste0("/proj/",upid,"/nobackup/")`` and create a directory with your username. For example `mkdir jody`. You will work inside this directory for the workshop. For example ``r paste0("/proj/",upid,"/nobackup/jody")``. If you cannot write to the folder, the most likely reason is that you have not requested access to the workshop project via SUPR. This is described in step 1 above.
 
