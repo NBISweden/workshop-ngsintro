@@ -8,7 +8,7 @@ date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_y
 ;;14:00;17:00;Intro to Uppmax;Martin/Anders;LM,DA;;lab_uppmax_intro.html;;
 10/11/2020;Online;09:00;09:30;File types in Bioinformatics;Martin/Anders;ML;slide_linux_filetypes.pdf;;;https://uu-se.zoom.us/j/65145908155
 ;;09:30;10:00;File types in Bioinformatics;Martin/Anders;ML,CM;;lab_linux_filetypes.html;;
-;;11:00;12:00;Quality control;Malin Larsson;AJ,CM;slide_qc.pdf;lab_qc.html;https://youtu.be/axXAesc5xFo;
+;;11:00;12:00;Quality control;Malin Larsson;AJ,CM;slide_qc.pdf;lab_qc.html;https://youtu.be/KIcQpMOFYPs;
 ;;12:00;13:00;Lunch;;;;;;
 ;;13:00;13:30;Better terminal experience;Martin/Anders;;slide_qol_termexp.pdf;;;
 ;;13:30;14:30;Advanced Bash;Martin/Anders;;slide_linux_advanced.pdf;;;
@@ -16,7 +16,7 @@ date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_y
 11/11/2020;Online;09:00;11:00;NGS: technologies and challenges;Olga Vinnere Petterson;;slide_sequencing.pdf;;;https://uu-se.zoom.us/j/65145908155
 ;;11:00;12:00;NGS Pipelines;Adam Ameur;;slide_ngs_pipelines.pdf;;https://youtu.be/P8ayQnGLzJ8;
 ;;12:00;13:00;Lunch;;;;;;
-;;13:00;13:45;Variant-calling workflow;Malin Larsson;;slide_vc.pdf;;https://youtu.be/TcynKtxj7HA;
+;;13:00;13:45;Variant-calling workflow;Malin Larsson;;slide_vc.pdf;;https://youtu.be/OO8CHGzi6pQ;
 ;;14:00;17:00;Variant-calling workflow;Malin Larsson;AJ,DE,CM;;lab_vc.html;;
 12/11/2020;Online;09:00;12:00;Variant-calling workflow;Malin Larsson;AJ,DE,RF;;lab_vc.html;https://youtu.be/b7VV6e5q6ss;https://uu-se.zoom.us/j/65145908155
 ;;12:00;13:00;Lunch;;;;;;
