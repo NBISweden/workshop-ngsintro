@@ -13,7 +13,8 @@ date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_y
 ;;13:00;13:30;Better terminal experience;Martin/Anders;;slide_qol_termexp.pdf;;;
 ;;13:30;14:30;Advanced Bash;Martin/Anders;;slide_linux_advanced.pdf;;;
 ;;14:30;17:00;Advanced Bash;Martin/Anders;IH,ML,CM;;lab_linux_advanced.html;;
-11/11/2020;Online;09:00;11:00;NGS: technologies and challenges;Olga Vinnere Petterson;;slide_sequencing.pdf;;;https://uu-se.zoom.us/j/65145908155
+11/11/2020;Online;09:00;10:00;NGS: technologies and challenges;Olga Vinnere Petterson;;slide_sequencing.pdf;;https://youtu.be/IckQGJ60NnM;https://uu-se.zoom.us/j/65145908155
+11/11/2020;Online;10:00;11:00;NGS: technologies and challenges;Olga Vinnere Petterson;;slide_sequencing.pdf;;https://youtu.be/iFcq_FEAtkI;https://uu-se.zoom.us/j/65145908155
 ;;11:00;12:00;NGS Pipelines;Adam Ameur;;slide_ngs_pipelines.pdf;;https://youtu.be/29z9JxrS5hg;
 ;;12:00;13:00;Lunch;;;;;;
 ;;13:00;13:45;Variant-calling workflow;Malin Larsson;;slide_vc.pdf;;https://youtu.be/OO8CHGzi6pQ;
