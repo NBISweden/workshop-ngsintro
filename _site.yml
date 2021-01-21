@@ -11,7 +11,7 @@ uppmax_res_3: g2020009_11
 uppmax_res_4: g2020009_12
 uppmax_res_5: g2020009_13
 # location options are linkoping, lund, umea or uppsala. For rendering the info page.
-location: online
+location: uppsala
 assistants:
  - "AJ: Anna Johansson"
  - "AS: Anders Sjölander"
