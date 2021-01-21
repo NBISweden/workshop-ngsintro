@@ -1,27 +1,27 @@
 date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_youtube;link_room
-09/11/2020;Online;09:00;09:20;Welcome;Martin/Anders;;;;;https://uu-se.zoom.us/j/65145908155
-;;09:20;10:00;Presentations (Breakout);Martin/Anders;;;;;
-;;10:00;11:00;Intro to Linux;Martin/Anders;;slide_linux_intro.pdf;;;
-;;11:00;12:00;Intro to Linux;Martin/Anders;LM,IH;;lab_linux_intro.html;;
+17/05/2021;Online;09:00;09:20;Welcome;Martin Dahlö;;;;;https://uu-se.zoom.us/j/65145908155
+;;09:20;10:00;Presentations (Breakout);Martin Dahlö;;;;;
+;;10:00;11:00;Intro to Linux;Martin Dahlö;;slide_linux_intro.pdf;;;
+;;11:00;12:00;Intro to Linux;Martin Dahlö;;;lab_linux_intro.html;;
 ;;12:00;13:00;Lunch;;;;;;
-;;13:00;14:00;Intro to Uppmax;Martin/Anders;LM,DA;slide_uppmax_intro.pdf;;;
-;;14:00;17:00;Intro to Uppmax;Martin/Anders;LM,DA;;lab_uppmax_intro.html;;
-10/11/2020;Online;09:00;09:30;File types in Bioinformatics;Martin/Anders;ML;slide_linux_filetypes.pdf;;;https://uu-se.zoom.us/j/65145908155
-;;09:30;10:00;File types in Bioinformatics;Martin/Anders;ML,CM;;lab_linux_filetypes.html;;
-;;11:00;12:00;Quality control;Malin Larsson;AJ,CM;slide_qc.pdf;lab_qc.html;https://youtu.be/KIcQpMOFYPs;
+;;13:00;14:00;Intro to Uppmax;Martin Dahlö;;slide_uppmax_intro.pdf;;;
+;;14:00;17:00;Intro to Uppmax;Martin Dahlö;;;lab_uppmax_intro.html;;
+18/05/2021;Online;09:00;09:30;File types in Bioinformatics;Martin Dahlö;;slide_linux_filetypes.pdf;;;https://uu-se.zoom.us/j/65145908155
+;;09:30;10:00;File types in Bioinformatics;Martin Dahlö;;;lab_linux_filetypes.html;;
+;;11:00;12:00;Quality control;Malin Larsson;;slide_qc.pdf;lab_qc.html;https://youtu.be/KIcQpMOFYPs;
 ;;12:00;13:00;Lunch;;;;;;
-;;13:00;13:30;Better terminal experience;Martin/Anders;;slide_qol_termexp.pdf;;;
-;;13:30;14:30;Advanced Bash;Martin/Anders;;slide_linux_advanced.pdf;;;
-;;14:30;17:00;Advanced Bash;Martin/Anders;IH,ML,CM;;lab_linux_advanced.html;;
-11/11/2020;Online;09:00;10:00;NGS: technologies and challenges 1;Olga Vinnere Petterson;;slide_sequencing.pdf;;https://youtu.be/IckQGJ60NnM;https://uu-se.zoom.us/j/65145908155
-11/11/2020;Online;10:00;11:00;NGS: technologies and challenges 2;Olga Vinnere Petterson;;slide_sequencing.pdf;;https://youtu.be/iFcq_FEAtkI;https://uu-se.zoom.us/j/65145908155
+;;13:00;13:30;Better terminal experience;Martin Dahlö;;slide_qol_termexp.pdf;;;
+;;13:30;14:30;Advanced Bash;Martin Dahlö;;slide_linux_advanced.pdf;;;
+;;14:30;17:00;Advanced Bash;Martin Dahlö;;;lab_linux_advanced.html;;
+19/05/2021;Online;09:00;10:00;NGS: technologies and challenges 1;Olga Vinnere Petterson;;slide_sequencing.pdf;;https://youtu.be/IckQGJ60NnM;https://uu-se.zoom.us/j/65145908155
+;;10:00;11:00;NGS: technologies and challenges 2;Olga Vinnere Petterson;;slide_sequencing.pdf;;https://youtu.be/iFcq_FEAtkI;https://uu-se.zoom.us/j/65145908155
 ;;11:00;12:00;NGS Pipelines;Adam Ameur;;slide_ngs_pipelines.pdf;;https://youtu.be/29z9JxrS5hg;
 ;;12:00;13:00;Lunch;;;;;;
 ;;13:00;13:45;Variant-calling workflow;Malin Larsson;;slide_vc.pdf;;https://youtu.be/OO8CHGzi6pQ;
-;;14:00;17:00;Variant-calling workflow;Malin Larsson;AJ,DE,CM;;lab_vc.html;;
-12/11/2020;Online;09:00;12:00;Variant-calling workflow;Malin Larsson;AJ,DE,RF;;lab_vc.html;https://youtu.be/b7VV6e5q6ss;https://uu-se.zoom.us/j/65145908155
+;;14:00;17:00;Variant-calling workflow;Malin Larsson;AJ,DE;;lab_vc.html;;
+20/05/2021;Online;09:00;12:00;Variant-calling workflow;Malin Larsson;AJ,DE;;lab_vc.html;https://youtu.be/b7VV6e5q6ss;https://uu-se.zoom.us/j/65145908155
 ;;12:00;13:00;Lunch;;;;;;
-;;13:00;17:00;RNA-Seq workflow;Roy Francis;LM,LV,ML;slide_rnaseq.html;lab_rnaseq.html;https://youtu.be/uKebwpW0R28;
-13/11/2020;Online;09:00;12:00;RNA-Seq workflow;Roy Francis;LM,LV,NR;;;;https://uu-se.zoom.us/j/65145908155
+;;13:00;17:00;RNA-Seq workflow;Roy Francis;;slide_rnaseq.html;lab_rnaseq.html;https://youtu.be/uKebwpW0R28;
+21/05/2021;Online;09:00;12:00;RNA-Seq workflow;Roy Francis;;;;;https://uu-se.zoom.us/j/65145908155
 ;;12:00;13:00;Lunch;;;;;;
 ;;13:00;15:00;Open session;;;;;;
