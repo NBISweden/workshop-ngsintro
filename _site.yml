@@ -1,6 +1,6 @@
 name: Introduction to Bioinformatics using NGS data
 # output directory used on gh-pages branch. format: YYMM
-output_dir: 2011
+output_dir: 2105
 # used site-wide wherever uppmax project ids are used
 uppmax_project: g2020009
 nsc_project: snic2020-13-57
@@ -11,7 +11,7 @@ uppmax_res_3: g2020009_11
 uppmax_res_4: g2020009_12
 uppmax_res_5: g2020009_13
 # location options are linkoping, lund, umea or uppsala. For rendering the info page.
-location: uppsala
+location: online
 assistants:
  - "AJ: Anna Johansson"
  - "AS: Anders Sjölander"
