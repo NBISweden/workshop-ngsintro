@@ -117,16 +117,22 @@ This module shows the distribution of the quality scores at each position in the
 * The upper and lower whiskers represent the 10% and 90% points  
 * The blue line represents the mean quality  
 The background of the graph divides the y axis into very good quality calls (green), calls of reasonable quality (orange), and calls of poor quality (red).
-For more information and reason for failed tests, please look at the [FastQC documentation](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/2%20Per%20Base%20Sequence%20Quality.html). 
+For more information and reason for failed tests, please look at the [FastQC documentation]. 
 ### Questions
 1. Which positions in the reads have a median phred-score above 28 (very good quality calls) in each sample?
-2. Red x-marks are indications of potential problems. Does any of the samples have red x-marks? Why are they marked in red? Please look in the documentation linked above.
+2. Red x-marks indicate failed QC tests. Have any of the samples failed the Per Base Sequence Quality test?  
+3. Why? Please look in the [FastQC documentation](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/2%20Per%20Base%20Sequence%20Quality.html).
 
 ## Sequence Lenght Distribution 
 This module shows the length distribution of the reads in the file. 
 ### Questions
-3. How long are the reads?
-4. Does any sample have more than one peak in the lenght distribution?
+4. How long are the reads?
+5. Orange !-marks indicate QC warnings. Have any of the samples raised warnings in the Sequence Length Distribution test?  
+6. Why? Please look in the [FastQC documentation](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/7%20Sequence%20Length%20Distribution.html)
+
+# Answers
+When you have finished the exercise, please have a look at this document with [answers to questions](lab_qc_answers.pdf), and compare them with your answers. 
+
 
 
 # Documentation
