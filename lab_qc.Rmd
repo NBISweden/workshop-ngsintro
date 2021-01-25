@@ -110,8 +110,8 @@ HG00100       | [HG00100_1.fq](data/qc/HG00100_1_fastqc.html) | [HG00100_2.fq](d
 HG00101       | [HG00101_1.fq](data/qc/HG00101_1_fastqc.html) | [HG00101_2.fq](data/qc/HG00101_2_fastqc.html) 
 
   
-## Per Base Sequence Quality
-This module shows the distribution of the quality scores at each position in the reads. The quality scores are represented by a Box and Whisker plot with the following elements:
+# Per Base Sequence Quality
+This module shows the distribution of the quality scores at each position in the reads. The quality scores are represented by a Box and Whisker plot with the following elements:  
  * The central red line is the median value
  * The yellow box represents the inter-quartile range (25-75%)
  * The upper and lower whiskers represent the 10% and 90% points
