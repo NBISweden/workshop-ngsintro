@@ -101,7 +101,7 @@ The output from FastQC is a .html document that should be opened in a web browse
 ```bash
 firefox --no-remote filename.html
 ```
-Sometimes it can be slow to look at graphical files via SSH. In the interest of saving time in this short lab, we have made the output files that you just created available through the links below:
+It can be slow to look at graphical files via SSH. We have therefore made the output files that you just created available through the links below, so that you can look at them via your local web-browser:
 
 Sample        | Read 1 | Read 2
 ------------- | ---------- | --------
@@ -109,11 +109,25 @@ HG00097       | [HG00097_1.fq](data/qc/HG00097_1_fastqc.html) | [HG00097_2.fq](d
 HG00100       | [HG00100_1.fq](data/qc/HG00100_1_fastqc.html) | [HG00100_2.fq](data/qc/HG00100_2_fastqc.html)
 HG00101       | [HG00101_1.fq](data/qc/HG00101_1_fastqc.html) | [HG00101_2.fq](data/qc/HG00101_2_fastqc.html) 
 
-### Questions   
-1. The section "Per base sequence quality" shows the distribution of quality scores for each position in the reads. The red lines indicate the median value for each base position. How many bases in the reads have a median phred-score above 28?
-2. Look at the section "Sequence Length Distribution". How long are the reads?
-3. The section "Adapter Content" would show if there are traces of adapter sequence in the reads. Do you see any?
-4. Does any of the samples have red x-marks? These are indications of potential problems.
+  
+## Per Base Sequence Quality
+This module shows the distribution of the quality scores at each position in the reads. The quality scores are represented by a Box and Whisker plot with the following elements:  
+* The central red line is the median value  
+* The yellow box represents the inter-quartile range (25-75%)  
+* The upper and lower whiskers represent the 10% and 90% points  
+* The blue line represents the mean quality  
+The background of the graph divides the y axis into very good quality calls (green), calls of reasonable quality (orange), and calls of poor quality (red).
+For more information and reason for failed tests, please look at the [FastQC documentation](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/2%20Per%20Base%20Sequence%20Quality.html). 
+### Questions
+1. Which positions in the reads have a median phred-score above 28 (very good quality calls) in each sample?
+2. Red x-marks are indications of potential problems. Does any of the samples have red x-marks? Why are they marked in red? Please look in the documentation linked above.
+
+## Sequence Lenght Distribution 
+This module shows the length distribution of the reads in the file. 
+### Questions
+3. How long are the reads?
+4. Does any sample have more than one peak in the lenght distribution?
+
 
 # Documentation
   * [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
