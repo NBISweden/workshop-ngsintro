@@ -119,9 +119,9 @@ This module shows the distribution of the quality scores at each position in the
 The background of the graph divides the y axis into very good quality calls (green), calls of reasonable quality (orange), and calls of poor quality (red).
 
 # Per Base Sequence Quality
-This module shows the distribution of the quality scores at each position in the reads. The quality scores are represented by a Box and Whisker plot with the following elements:
-  * The central red line is the median value
-  * The yellow box represents the inter-quartile range (25-75%)
+This module shows the distribution of the quality scores at each position in the reads. The quality scores are represented by a Box and Whisker plot with the following elements:  
+  * The central red line is the median value  
+  * The yellow box represents the inter-quartile range (25-75%)  
   
   
 ### Questions
