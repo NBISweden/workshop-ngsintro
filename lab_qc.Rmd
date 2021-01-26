@@ -123,7 +123,10 @@ This module shows the distribution of the quality scores at each position in the
   
   * The central red line is the median value.
   * The yellow box represents the inter-quartile range (25-75%).
-  
+  * The upper and lower whiskers represent the 10% and 90% points
+  * The blue line represents the mean quality
+   
+The background of the graph divides the y axis into very good quality calls (green), calls of reasonable quality (orange), and calls of poor quality (red).
   
 ### Questions
 1. Which positions in the reads have a median phred-score above 28 (very good quality calls) in each sample?  
