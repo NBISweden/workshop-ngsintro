@@ -33,6 +33,13 @@ HG00097       | Low coverage WGS
 HG00100       | Low coverage WGS
 HG00101       | Low coverage WGS 
 
+# FastQC
+FastQC performes a series of quality control analyses, called modules. The output is a HTML report with one section for each module, and a summary evaluation of whether the results of the module seem entirely normal (green tick), slightly abnormal (orange triangle) or very unusual (red cross). 
+  
+It is important to stress that although the analysis results appear to give a pass/fail result, these evaluations must be taken in the context of what you expect from your library. A 'normal' sample as far as FastQC is concerned is random and diverse. Some experiments may be expected to produce libraries which are biased in particular ways. You should treat the summary evaluations therefore as pointers to where you should concentrate your attention and understand why your library may not look random and diverse. 
+  
+In this lab we will mainly focus on the Per Base Sequence Quality and Sequence Length Distribution modules. 
+
 # Run FastQC 
 
 ## Connect to Uppmax
@@ -108,13 +115,6 @@ Sample        | Read 1 | Read 2
 HG00097       | [HG00097_1.fq](data/qc/HG00097_1_fastqc.html) | [HG00097_2.fq](data/qc/HG00097_2_fastqc.html) 
 HG00100       | [HG00100_1.fq](data/qc/HG00100_1_fastqc.html) | [HG00100_2.fq](data/qc/HG00100_2_fastqc.html)
 HG00101       | [HG00101_1.fq](data/qc/HG00101_1_fastqc.html) | [HG00101_2.fq](data/qc/HG00101_2_fastqc.html) 
-
-FastQC performes a series of analyses, called modules. The left hand side of the main interactive display or the top of the HTML report show a summary of the modules which were run, and a quick evaluation of whether the results of the module seem entirely normal (green tick), slightly abnormal (orange triangle) or very unusual (red cross).
-  
-It is important to stress that although the analysis results appear to give a pass/fail result, these evaluations must be taken in the context of what you expect from your library. A 'normal' sample as far as FastQC is concerned is random and diverse. Some experiments may be expected to produce libraries which are biased in particular ways. You should treat the summary evaluations therefore as pointers to where you should concentrate your attention and understand why your library may not look random and diverse. 
-  
-In this lab we will focus on the Per Base Sequence Quality and Sequence Length Distribution modules. 
-
   
 # Per Base Sequence Quality
 This module shows the distribution of the quality scores at each position in the reads. The quality scores are represented by a Box and Whisker plot with the following elements:
