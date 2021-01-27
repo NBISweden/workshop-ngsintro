@@ -102,7 +102,7 @@ fastqc -q *.fq
 The output is .html documents that shows quality scores along the reads, and other information. Please check what new files were generated with the command `ls -lrt`.  
   
 # Check the results
-The output from FastQC is a .html document that should be opened in a web browser. To open the generated .html document on Rackham you need to have X-forwarding enabled. Then you can open the file with: 
+The output from FastQC is a HTML report that should be opened in a web browser. When you have X-forwarding enabled you can open it on Rackham with this command: 
 ```bash
 firefox --no-remote filename.html
 ```
