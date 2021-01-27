@@ -41,7 +41,7 @@ HG00101       | Low coverage WGS
 # Run FastQC 
 
 ## Connect to Uppmax
-Please connect to the Rackham cluster on UPPMAX using `ssh`:
+Please connect to the Rackham cluster on UPPMAX using ssh:
 ```bash
 $ ssh -Y username@rackham.uppmax.uu.se
 ```  
@@ -74,7 +74,7 @@ To be able to run analyses in the terminal you should book a  compute node (or i
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('salloc -A ',upid,' -t 04:00:00 -p core -n 1 --no-shell --reservation=',upres2,' &'))
 ```
-Once your job allocation has been granted (should not take long) you can connect to the node using `ssh`. To find out the name of your node, use:
+Once your job allocation has been granted (should not take long) you can connect to the node using ssh. To find out the name of your node, use:
 ```bash
 squeue -u <username>
 ```
@@ -85,7 +85,7 @@ ssh -Y <nodename>
   
 ## Accessing FastQC
 FastQC is installed in the module system on UPPMAX. Modules must be loaded *every time* you login to Rackham, or when you connect to a new compute node.  
-First load the `bioinfo-tools` module:
+First load the bioinfo-tools module:
 ```bash
 module load bioinfo-tools
 ```
@@ -95,11 +95,14 @@ module load FastQC/0.11.8
 ```
  
 ## Run FastQC  
-Run `FastQC` on all fastq files:
+Run FastQC on all fastq files:
 ```bash
 fastqc -q *.fq
 ```
-The output is .html documents that shows quality scores along the reads, and other information. Please check what new files were generated with the command `ls -lrt`.  
+The output is .html documents that shows quality scores along the reads, and other information. Please check what new files were generated with the command:
+```bash
+ls -lrt.  
+``` 
   
 # Check the results
 The output from FastQC is a HTML report that should be opened in a web browser. When you have X-forwarding enabled you can open it on Rackham with this command: 
