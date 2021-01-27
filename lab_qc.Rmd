@@ -28,7 +28,7 @@ col_local <- "#e5f4f8"
 FastQC performes a series of quality control analyses, called modules. The output is a HTML report with one section for each module, and a summary evaluation of whether the results of the module seem entirely normal (green tick), slightly abnormal (orange exclamation mark) or very unusual (red cross). 
   
 It is important to stress that although the analyses appear to give a pass/fail result, these evaluations must be taken in the context of what you expect from your library. A 'normal' sample as far as FastQC is concerned is random and diverse. Some experiments may be expected to produce libraries which are biased in particular ways. You should treat the summary evaluations therefore as pointers to where you should concentrate your attention and understand why your library may not look random and diverse. 
-
+  
 # Data
 We will run FastQC on three low-coverage whole genome sequencing (WGS) samples from the public 1000 Genomes project. To speed up the analysis we will only use data from a small genomic region. These are the exact same samples as will be used in the variant-calling workflow lab on Wednesday.  
 
