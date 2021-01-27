@@ -144,5 +144,5 @@ This module shows the length distribution of the reads in the file.
 When you have finished the exercise, please have a look at this document with [answers to questions](lab_qc_answers.pdf), and compare them with your answers.  
 
 # Documentation
-  * [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/)
+  * [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc)
   * If you want to learn more details about FastQC please have a look at this video by the [Babraham Bioinformatics Institute]( http://www.youtube.com/watch?v=bz93ReOv87Y).
