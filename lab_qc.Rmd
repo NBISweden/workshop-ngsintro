@@ -25,7 +25,7 @@ col_uppmax <- "#f4f8e8"
 col_local <- "#e5f4f8"
 ```
 # FastQC
-FastQC performes a series of quality control analyses, called modules. The output is a HTML report with one section for each module, and an evaluation of whether the results seem entirely normal (green tick), slightly abnormal (orange exclamation mark) or very unusual (red cross). 
+FastQC performes a series of quality control analyses, called modules. The output is a HTML report with one section for each module, and a summary evaluation of the results in the top. Entirely normal results are marked with a green tick, slightly abnormal results raise warnings (orange exclamation mark), and very unusual results raise failures (red cross).
   
 It is important to stress that although the analyses appear to give a pass/fail result, these evaluations must be taken in the context of what you expect from your library. A 'normal' sample as far as FastQC is concerned is random and diverse. Some experiments may be expected to produce libraries which are biased in particular ways. You should treat the summary evaluations therefore as pointers to where you should concentrate your attention and understand why your library may not look random and diverse. 
   
@@ -129,7 +129,7 @@ The background of the graph divides the y axis into very good quality calls (gre
   
 ### Questions
 1. Which positions in the reads have a median phred-score above 28 (very good quality calls) in each sample?  
-2. Is there any warnings or failures in the Per Base Sequence Quality module? 
+2. Do any of the samples have warnings or failures in the Per Base Sequence Quality module? 
 3. Why? Please look in the [documentation of this module](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/2%20Per%20Base%20Sequence%20Quality.html).  
   
 ## Sequence Length Distribution
@@ -137,7 +137,7 @@ This module shows the length distribution of the reads in the file.
 
 ### Questions
 4. How long are the reads?
-5. Is there ay warnings or failures in the Sequence Length Distribution module?
+5. Do any of the samples have warnings or failures in the Sequence Length Distribution module?
 6. Why? Please look in the [documentation of this module](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/7%20Sequence%20Length%20Distribution.html)
   
 # Answers  
