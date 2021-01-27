@@ -108,6 +108,13 @@ Sample        | Read 1 | Read 2
 HG00097       | [HG00097_1.fq](data/qc/HG00097_1_fastqc.html) | [HG00097_2.fq](data/qc/HG00097_2_fastqc.html) 
 HG00100       | [HG00100_1.fq](data/qc/HG00100_1_fastqc.html) | [HG00100_2.fq](data/qc/HG00100_2_fastqc.html)
 HG00101       | [HG00101_1.fq](data/qc/HG00101_1_fastqc.html) | [HG00101_2.fq](data/qc/HG00101_2_fastqc.html) 
+
+FastQC performes a series of analyses, called modules. The left hand side of the main interactive display or the top of the HTML report show a summary of the modules which were run, and a quick evaluation of whether the results of the module seem entirely normal (green tick), slightly abnormal (orange triangle) or very unusual (red cross).
+  
+It is important to stress that although the analysis results appear to give a pass/fail result, these evaluations must be taken in the context of what you expect from your library. A 'normal' sample as far as FastQC is concerned is random and diverse. Some experiments may be expected to produce libraries which are biased in particular ways. You should treat the summary evaluations therefore as pointers to where you should concentrate your attention and understand why your library may not look random and diverse. 
+  
+In this lab we will focus on the Per Base Sequence Quality and Sequence Length Distribution modules. 
+
   
 # Per Base Sequence Quality
 This module shows the distribution of the quality scores at each position in the reads. The quality scores are represented by a Box and Whisker plot with the following elements:
@@ -121,20 +128,20 @@ The background of the graph divides the y axis into very good quality calls (gre
   
 ### Questions
 1. Which positions in the reads have a median phred-score above 28 (very good quality calls) in each sample?  
-2. Red x-marks indicate failed QC tests. Have any of the samples failed the Per Base Sequence Quality test? 
+2. Is there any warnings or failures in the Per Base Sequence Quality module? 
 3. Why? Please look in the [documentation of this module](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/2%20Per%20Base%20Sequence%20Quality.html).  
   
-## Sequence Lenght Distribution
+## Sequence Length Distribution
 This module shows the length distribution of the reads in the file.  
 
 ### Questions
 4. How long are the reads?
-5. Orange !-marks indicate QC warnings. Have any of the samples raised warnings in the Sequence Length Distribution test?
+5. Is there ay warnings or failures in the Sequence Length Distribution module?
 6. Why? Please look in the [documentation of this module](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/7%20Sequence%20Length%20Distribution.html)
   
 # Answers  
 When you have finished the exercise, please have a look at this document with [answers to questions](lab_qc_answers.pdf), and compare them with your answers.  
 
 # Documentation
-  * [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
+  * [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/)
   * If you want to learn more details about FastQC please have a look at this video by the [Babraham Bioinformatics Institute]( http://www.youtube.com/watch?v=bz93ReOv87Y).
