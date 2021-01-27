@@ -38,8 +38,6 @@ HG00097       | Low coverage WGS
 HG00100       | Low coverage WGS
 HG00101       | Low coverage WGS 
   
-In this lab we will mainly focus on the Per Base Sequence Quality and Sequence Length Distribution modules. 
-
 # Run FastQC 
 
 ## Connect to Uppmax
