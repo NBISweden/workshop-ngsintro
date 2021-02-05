@@ -74,7 +74,7 @@ in the 3 samples listed above to illustrate variant calling in NGS data. We will
   
 For those interested in the details of the genetic bases for lactose tolerance, please read the first three pages of [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf) by Mattar et al. The variant rs4988235 is here referred to as LCT-13910C>T.  
   
-## Data folder on UPPMAX {#Data}  {-}
+## Data folder on UPPMAX {#Data -}  
 All input data for this exercise is located in this folder on Rackham:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0(datadir))
@@ -89,7 +89,7 @@ cat(paste0(refdir))
 ```
 
 # Preparations {-}
-## Local workspace  {#preparelaptop}  
+## Local workspace  {#preparelaptop -}  
 The majority of the analyses in this workshop will be done on UPPMAX, but you will copy some of the resulting files to your laptop. Therefore, please start by creating a folder for this workshop on your laptop. It is up to you where you want to put this, but it can for example be a folder called *ngsworkflow* on Desktop. You need to have write permission in this folder. The folder you create here will be referred to as *local workspace* throughout this workshop. 
 
 **For MobaXterm users**  
@@ -100,20 +100,20 @@ MobaXtert users need to set the **persistent home directory** to your local work
 4. Let MobaXterm restart to make the settings effective.  
 Now your MobaXterm home directory is set to the folder you created for this lab. More details about this can be found in this [video](https://www.youtube.com/watch?v=ycUBjqyjORE&feature=youtu.be&t=2m47s)
   
-## UPPMAX
+## UPPMAX {-}
 Please connect to the Rackham cluster on UPPMAX using `ssh:
 ```bash
 $ ssh -Y username@rackham.uppmax.uu.se
 ```  
   
-### Workspace on UPPMAX
+### Workspace on UPPMAX {-}
 During this lab you should work in your folder under the course's nobackup folder, just like you have done during the previous labs. Start by creating a workspace for this exercise in your folder, and then move into it. This folder will be referred to as your *UPPMAX workspace* throughout this workshop.  
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('mkdir /proj/',upid,'/nobackup/<username>/ngsworkflow\n'))
 cat(paste0('cd /proj/',upid,'/nobackup/<username>/ngsworkflow'))
 ```
   
-### Symbolic links to data
+### Symbolic links to data {-}
 The raw data files are located in the [Data](#Data) folder described above. Instead of copying the files to your workspace you should create symbolic links (soft-links) to them. Soft-linking files and folders allows you to work with them as if they were in your current directory, but without multiplying them.  
 Create a symbolic link to the reference genome in your workspace:
 ```{r,echo=FALSE,comment="",class.output="bash"}
@@ -129,7 +129,7 @@ cat(paste0('ln -s ',fastqdir,'/HG00101_1.fq\n'))
 cat(paste0('ln -s ',fastqdir,'/HG00101_2.fq\n'))
 ```
 
-### Book a node 
+### Book a node {-}
 When you login to Rackham you enter the *login node*, which is not intended for compute intensive tasks. To be able to run analyses directly in the terminal you should therefore book a compute node (or in this case just one core of a node). Make sure you only do this once each day because we have reserved one core per student for the course.    
 Use this reservation on day 1 of variant-calling:
 ```{r,echo=FALSE,comment="",class.output="bash"}
@@ -148,7 +148,7 @@ The node name is found under nodelist header, you should only see one. Connect t
 ssh -Y <nodename>
 ```
   
-### Accessing programs {#Accessingprograms}
+### Accessing programs {#Accessingprograms -}
 We will use several programs that are installed in the module system on UPPMAX. These modules must be loaded *every time* you login to Rackham, or when you connect to a new compute node.  
   
 First load the `bioinfo-tools` module:
@@ -165,7 +165,7 @@ module load GATK/4.1.4.1
 You don't have to specify wich versions of the toos to use, but is recommended to do so for reproducibility if you want to rerun the  exact same analyses later.  
 When loading the module GATK/4.1.4.1 you will get a warning message about the fact that GATK commands have been updated since the previous version of GATK. This is fine and you don't have to do anything about it. 
     
-## Index the genome
+## Index the genome {-}
 Tools that compare short reads with a large reference genome needs indexes of the reference genome to work efficiently. Before analysing the samples you therefore need to create index files for each tool. You don't have to understand the details of the generated index files to continue with this lab, just make sure that they are created.
   
 Generate BWA index files:
@@ -186,7 +186,7 @@ gatk --java-options -Xmx7g CreateSequenceDictionary -R human_g1k_v37_chr2.fasta 
 ```
 Again, check what file(s) were created using `ls -lrt`. 
 
-# Variant calling in one sample
+# Main exercise: variant calling in one sample
 Now let's start the main part of the workshop, which will guide you through a basic variant calling workflow in one sample. The workflow consists of aligning the reads with [BWA](http://bio-bwa.sourceforge.net) and detecting variants with [HaplotypeCaller](https://gatk.broadinstitute.org/hc/en-us/articles/360037225632-HaplotypeCaller) as illustrated below. 
   
 ![](data/ngs-workflow/1_onesamplevc.png)
@@ -310,7 +310,7 @@ In `IGV`, in the `File` menu, select `Load from File` and select your vcf file (
 15. Hoover the mouse over the lower row of the vcf track and look under "Genotype Information". What genotype does HG00097 have at position chr2:136545844? Is this the same as you found by looking directly in the vcf file in question 10?
 16. Look in the bam track and count the number of reads that have "T" and "C", respectively,  at position chr2:136545844. How is this information captured under "Genotype Attributes"? (Again, hoover the mouse over the lower row of the vcf track.)
  
-# Variant calling in cohort {#jointvc}
+# Bonus exercise: Variant calling in cohort {#jointvc}
 If you have time, you can now try joint variant calling in all three samples. Each sample has to be processed with `BWA mem` as above, and then with `HaplotypeCaller` with the flag `-ERC` to generate sample specific g.vcf files. The individual g.vcf fiels should subsequently be combined with GATK's `CombineGVCFs`, and translated into vcf format with GATK's `GenotypeGVCFs`. The workflow below shows how the three samples should be processed and combined.  
   
 ![](data/ngs-workflow/2_jointvc.png)
@@ -448,7 +448,7 @@ Download the file cohort.vcf and its index, as well as HG00100.bam and HG00101.b
 If you are interested in how this variant affects lactose tolerance please read the article by Mattar et al presented [above](#Genomicregion), or in [OMIM](https://www.omim.org/entry/601806#0001).
   
 
-# GATK's best practices
+# Bonus exercise: GATK's best practices
 The third part of this workshop will take you through additional refinement steps that are recommended in [GATKs best practices for germline short variant discovery](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-), illustrated in the flowchart below. You can either run the steps command by command in your reserved node, or a similar SBATCH script as described above.  
 The additional steps in the best practise workflow was not covered in the variant-calling lecture on Wednesday afternoon. There will be a short lecture about this on Thursday morning at 9 am. However, if you reach this step earlier you can have a look at this [prerecorded video of the same lecture](https://youtu.be/b7VV6e5q6ss).  
 
@@ -602,13 +602,13 @@ gatk --java-options -Xmx7g MergeVcfs -I cohort.snvs.filtered.vcf -I cohort.indel
 29. How many variants have passed the filters?  
 30. Look at the variants that did not pass the filters using `grep -v 'PASS' cohort.filtered.vcf`. Try to understand why these variants did't pass the filter.
 
-# Clean up
+# Clean up {-}
 When the analysis is done and you are sure that you have the desired output, it is a good practise to remove intermediary files that are no longer needed. This will save disk space, and will be a crucial part of the routines when you work with your own data. Please think about which files you need to keep if you would like to go back and look at this lab later on. Remove the other files.
   
-# Answers
+# Answers {-}
 When you have finished the exercise, please have a look at this document with [answers to all questions](lab_vc_answers.pdf), and compare them with your answers. 
 
-# Additional information
+# Additional information {-}
 * Here is a technical documentation of [Illumina Quality Scores](https://www.illumina.com/documents/products/technotes/technote_understanding_quality_scores.pdf)
 * Tools used or referenced 
   * [BWA](http://bio-bwa.sourceforge.net/bwa.shtml)
@@ -621,4 +621,4 @@ When you have finished the exercise, please have a look at this document with [a
 <!--# Alternative cluster
 The teachers may inform you that we will use the high performance computing center NSC instead of UPPMAX during this workshop. If so, please follow this link to [run the workshop on NSC](lab_vc_tetralith.html).-->
 
-# Thanks for today!
+# Thanks for today! {-}
