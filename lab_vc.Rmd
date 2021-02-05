@@ -323,7 +323,7 @@ You can run all commands one by one in the terminal as you did in the first step
 **Optionally** - If you are interested in programming and have time, you can also try to write a simple SBATCH script and run all steps automatically. Please check out the [SBATCH script](#sbatchscript) section below if you would like to try this. 
   
 ## BWA mem 
-Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly [as above](#bwamem) but with the new sample names. Please note that you also need to adjust the SM tag in the read group, because it needs to be unique for each sample in the cohort. 
+Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly [as above](#bwamem) but with the new sample names. Please note that you also need to adjust the SM tag in the read group in each call so that it matches the sample name. Otherwise the [joint genotyping step] (#jointgenotyping) will not work properly.  
   
 If you run out of time, please click below to get pathts to precomputed bam files. 
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
@@ -332,7 +332,7 @@ cat(paste0(bamdir,'/HG00100.bam\n'))
 cat(paste0(bamdir,'/HG00101.bam\n')) 
 ```
  
-## Generate g.vcf files
+## Generate g.vcf files {#generategvcf}
 `HaplotypeCaller` should also be run for all three samples, but this time the output for each sample needs to be in g.vcf format. This is accomplished with a small change in the `HaploteypCaller` command: 
 ```bash
 gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I <sample.bam> -O <sample>.g.vcf 
@@ -346,7 +346,7 @@ cat(paste0(vcfdir,'/HG00100.g.vcf\n'))
 cat(paste0(vcfdir,'/HG00101.g.vcf\n')) 
 ```
   
-## Joint genotyping
+## Joint genotyping {#jointgenotyping}
 Once you have the g.vcf files for all samples you should perform joint genotype calling. To do this you first need to combine all individual .g.vcf files to one file using `CombineGVCFs`:
 ```bash
 gatk --java-options -Xmx7g CombineGVCFs -R human_g1k_v37_chr2.fasta -V <sample1>.g.vcf -V <sample2>.g.vcf -V <sample3>.g.vcf -O cohort.g.vcf
@@ -374,7 +374,7 @@ cat(paste0(vcfdir,'/cohort.vcf\n'))
 ## SBATCH script {#sbatchscript}
 **Optionally** - This section is only for those of you who want to try to run all steps automatically in bash scripts. 
 To learn more about SLURM and SBATCH scripts please look the [SLURM user guide](https://www.uppmax.uu.se/support/user-guides/slurm-user-guide/) on UPPMAX website.  
-Below is a skeleton script that can be used as a template. Please modify it to run all the steps in part two of this workshop. You might find it helpful to try each step for one sample in the interactive terminal, so that you know that a particular command is working, before you incorporate it in the script.  
+Below is a skeleton script that can be used as a template. Please modify it to run all the steps in part two of this workshop. 
 ```bash
 #!/bin/bash
 #SBATCH -A g2019031
@@ -455,6 +455,8 @@ The third part of this workshop will take you through additional refinement step
 The additional steps in the best practise workflow was not covered in the variant-calling lecture on Wednesday afternoon. There will be a short lecture about this on Thursday morning at 9 am. However, if you reach this step earlier you can have a look at this [prerecorded video of the same lecture](https://youtu.be/b7VV6e5q6ss).  
 
 ![](data/ngs-workflow/3_best_practise.png){width=80%}
+## BWA mem 
+Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly [as above](#bwamem) but with the new sample names. Please note that you also need to adjust the SM tag in the read group, because it needs to be unique for each sample in the cohort. 
   
 ## Mark Duplicates
 Sometimes the same DNA fragment is sequenced multiple times, which leads to multiple reads from the same fragment in the fastq file. This can occur due to PCR amplification in the library preparation, or if one read cluster is incorrectly detected as multiple clusters by the sequencing instrument. 
@@ -484,7 +486,13 @@ cat(paste0(refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf'))
 cat(paste0('gatk --java-options -Xmx7g BaseRecalibrator -R human_g1k_v37_chr2.fasta -I HG00097.md.bam> --known-sites ',refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf -O HG00097.recal.table\n'))
 cat(paste0('gatk --java-options -Xmx7g ApplyBQSR -R human_g1k_v37_chr2.fasta -I HG00097.md.bam --bqsr-recal-file HG00097.recal.table -O HG00097.recal.bam'))
 ```
-   
+
+## Generate g.vcf files
+`HaplotypeCaller` should also be run for all three samples, and the output should be in g.vcf exactly as described [above] (#generategvcf). This time use recalibrated bam files as input. 
+  
+## Joint genotyping
+Once you have the g.vcf files for all samples you should perform joint genotype calling. This should be done with the commands CombineGVCFs and GenotypeGVCFs exactly as described  [above] (#jointgenotyping), but you should use the g.vcf files generated from the recalibrated bam files as input.
+     
 ## Variant Filtering
 HaplotypeCaller is designed to be very sensitive, which is good because it minimizes the chance of missing real variants. However, it means that the number of false positives can be quite large, so we need to filter the raw callset. GATK offers two ways to filter variants:  
 1. The variant quality score recalibration (VQSR) method uses machine learning to identify variants that are likely to be real. This is the best method if you have a lot of data, for example one whole genome sequence sample or several whole exome samples.  
