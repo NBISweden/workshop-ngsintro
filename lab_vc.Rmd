@@ -57,7 +57,7 @@ Whole genome sequencing (WGS) is a comprehensive method for analyzing entire gen
 </div>
 
 # Data description {-}
-## Samples
+## Samples  {-}
 The 1000 Genomes Project was the first project to sequence the entire genomes of a large number of people, to provide a comprehensive resource on human genetic variation. Data from the 1000 Genomes Project available through freely accessible public databases, and in this workshop, we will use 3 samples from the low coverage phase of the 1000 Genomes project.
 
 Sample        | Population | Sequencing technology
@@ -65,7 +65,7 @@ Sample        | Population | Sequencing technology
 HG00097       | British in England and Scotland    | Low coverage WGS
 HG00100       | British in England and Scotland    | Low coverage WGS
 HG00101       | British in England and Scotland    | Low coverage WGS 
-## Genomic region {#Genomicregion}
+## Genomic region {#Genomicregion}  {-}
 The *LCT* gene on chromosome 2 encodes the lactase protein, which is responsible for the metabolism of lactose in mammals. Most mammals can not digest lactose as adults, but some humans can. Genetic variants upstream of the *LCT* gene lead to lactase persistence, wich means that the lactase protein is experssed also in aldulthood and the carrier can continue to digest lactose. The variant rs4988235, located at position chr2:136608646 in the HG19 reference genome, has been shown to lead to lactose persistence. The alternative allele (A on the forward strand and T on the reverse strand) creates a new transcription factor binding site that enables continued expression of the gene after weaning.
   
 In this workshop we will use sequencing data for the region chr2:136545000-136617000 
@@ -74,7 +74,7 @@ in the 3 samples listed above to illustrate variant calling in NGS data. We will
   
 For those interested in the details of the genetic bases for lactose tolerance, please read the first three pages of [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf) by Mattar et al. The variant rs4988235 is here referred to as LCT-13910C>T.  
   
-## Data folder on UPPMAX {#Data}
+## Data folder on UPPMAX {#Data}  {-}
 All input data for this exercise is located in this folder on Rackham:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0(datadir))
@@ -89,7 +89,7 @@ cat(paste0(refdir))
 ```
 
 # Preparations {-}
-## Local workspace  {#preparelaptop}
+## Local workspace  {#preparelaptop}  
 The majority of the analyses in this workshop will be done on UPPMAX, but you will copy some of the resulting files to your laptop. Therefore, please start by creating a folder for this workshop on your laptop. It is up to you where you want to put this, but it can for example be a folder called *ngsworkflow* on Desktop. You need to have write permission in this folder. The folder you create here will be referred to as *local workspace* throughout this workshop. 
 
 **For MobaXterm users**  
