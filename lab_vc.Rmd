@@ -32,7 +32,7 @@ bpvcfdir <- "/sw/courses/ngsintro/reseq/data/best_practise_vcf"
 col_uppmax <- "#f4f8e8"
 col_local <- "#e5f4f8"
 ```
-# Introduction
+# Introduction {-}
 Whole genome sequencing (WGS) is a comprehensive method for analyzing entire genomes. This workshop will take you through the process of calling germline short variants (SNVs and INDELs) in WGS data from three human samples. 
   
 1. The first part of the workshop will guide you through a basic variant calling workflow in one sample. The aims are to get familiar with the bam and vcf file formats, and learn how to interpret the results of variant calling in Integrative Genomics Viewer (IGV).
