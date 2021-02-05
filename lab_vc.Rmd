@@ -207,7 +207,7 @@ bwa mem -R "@RG\\tID:readgroupx\\tPU:lanex_flowcellx\\tSM:HG00097\\tLB:libraryx\
 ```
 Where -t 1 is the number of threads, which should be equal to the number of cores you booked. If you would have analysed the entire genome more threads would have been necessary.  You have to use a file redirect `>` for the output, otherwise it will be written to stdout (your screen).  
 
-**NOTE: the read group is specific for each sample, so if you perform this step for another sample later on you need to change the sample tag from HG00097 to the new sample name.** 
+**NOTE: the read group is specific for each sample, so if you perform this step for another sample later on you need to change the SM tag in the read group from HG00097 to the new sample name.** 
 
 Please check that the expected output file was generated and that it has content using `ls -lrt`. 
 
@@ -323,7 +323,7 @@ You can run all commands one by one in the terminal as you did in the first step
 **Optionally** - If you are interested in programming and have time, you can also try to write a simple SBATCH script and run all steps automatically. Please check out the [SBATCH script](#sbatchscript) section below if you would like to try this. 
   
 ## BWA mem 
-Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly [as above](#bwamem) but with the new sample names. Please note that you also need to adjust the sample tag in the read group because the sample tag needs to be unique for each sample in the cohort. 
+Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly [as above](#bwamem) but with the new sample names. Please note that you also need to adjust the SM tag in the read group, because it needs to be unique for each sample in the cohort. 
   
 If you run out of time, please click below to get pathts to precomputed bam files. 
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
