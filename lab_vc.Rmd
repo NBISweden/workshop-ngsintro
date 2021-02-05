@@ -186,7 +186,7 @@ gatk --java-options -Xmx7g CreateSequenceDictionary -R human_g1k_v37_chr2.fasta 
 ```
 Again, check what file(s) were created using `ls -lrt`. 
 
-# Main exercise: variant calling in one sample
+# Variant calling in one sample
 Now let's start the main part of the workshop, which will guide you through a basic variant calling workflow in one sample. The workflow consists of aligning the reads with [BWA](http://bio-bwa.sourceforge.net) and detecting variants with [HaplotypeCaller](https://gatk.broadinstitute.org/hc/en-us/articles/360037225632-HaplotypeCaller) as illustrated below. 
   
 ![](data/ngs-workflow/1_onesamplevc.png)
@@ -310,7 +310,7 @@ In `IGV`, in the `File` menu, select `Load from File` and select your vcf file (
 15. Hoover the mouse over the lower row of the vcf track and look under "Genotype Information". What genotype does HG00097 have at position chr2:136545844? Is this the same as you found by looking directly in the vcf file in question 10?
 16. Look in the bam track and count the number of reads that have "T" and "C", respectively,  at position chr2:136545844. How is this information captured under "Genotype Attributes"? (Again, hoover the mouse over the lower row of the vcf track.)
  
-# Bonus exercise: Variant calling in cohort {#jointvc}
+# Variant calling in cohort {#jointvc}
 If you have time, you can now try joint variant calling in all three samples. Each sample has to be processed with `BWA mem` as above, and then with `HaplotypeCaller` with the flag `-ERC` to generate sample specific g.vcf files. The individual g.vcf fiels should subsequently be combined with GATK's `CombineGVCFs`, and translated into vcf format with GATK's `GenotypeGVCFs`. The workflow below shows how the three samples should be processed and combined.  
   
 ![](data/ngs-workflow/2_jointvc.png)
@@ -448,7 +448,7 @@ Download the file cohort.vcf and its index, as well as HG00100.bam and HG00101.b
 If you are interested in how this variant affects lactose tolerance please read the article by Mattar et al presented [above](#Genomicregion), or in [OMIM](https://www.omim.org/entry/601806#0001).
   
 
-# Bonus exercise: GATK's best practices
+# GATK's best practices
 The third part of this workshop will take you through additional refinement steps that are recommended in [GATKs best practices for germline short variant discovery](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-), illustrated in the flowchart below. You can either run the steps command by command in your reserved node, or a similar SBATCH script as described above.  
 The additional steps in the best practise workflow was not covered in the variant-calling lecture on Wednesday afternoon. There will be a short lecture about this on Thursday morning at 9 am. However, if you reach this step earlier you can have a look at this [prerecorded video of the same lecture](https://youtu.be/b7VV6e5q6ss).  
 
