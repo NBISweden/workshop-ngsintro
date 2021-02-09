@@ -35,9 +35,9 @@ col_local <- "#e5f4f8"
 # Introduction {-}
 Whole genome sequencing (WGS) is a comprehensive method for analyzing entire genomes. This workshop will take you through the process of calling germline short variants (SNVs and INDELs) in WGS data from three human samples. 
   
-1. The first part of the workshop will guide you through a basic variant calling workflow in one sample. The aims are to get familiar with the bam and vcf file formats, and learn how to interpret the results of variant calling in Integrative Genomics Viewer (IGV).
-2. If you have time, the next part of the workshop will show you how to perform joint variant calling in three samples. The aim here is that you should be able to interpret multi-sample vcf files and explain the differences between the g.vcf and vcf file formats. Also, if you are interested in learnding programming, the aim is to be able to combine individual linux commands into an SBATCH script.  
-3. If you have time, the last part of the workshop will take you through the GATK best practices for germline short variant detection in three samples. The aim here is that you should learn how to use GATK's documentation so that you can analyze your own samples in the future.    
+1. The first part of the workshop will guide you through a basic variant calling workflow in one sample. The goals are that you should get familiar with the bam and vcf file formats, and learn how to interpret the results of variant calling in Integrative Genomics Viewer (IGV).
+2. If you have time, the next part of the workshop will show you how to perform joint variant calling in three samples. The goals here is that you should be able to interpret multi-sample vcf files and explain the differences between the g.vcf and vcf file formats. Also, if you are interested in programming, another goal is that you should learn to combine individual linux commands into an SBATCH script.  
+3. If you have time, the last part of the workshop will take you through the GATK best practices for germline short variant detection in three samples. The goal here is that you should learn how to use GATK's documentation so that you can analyze your own samples in the future.    
 
 **General guide**
 <div class="boxy boxy-primary boxy-lightbulb">
@@ -58,7 +58,7 @@ Whole genome sequencing (WGS) is a comprehensive method for analyzing entire gen
 
 # Data description {-}
 ## Samples  {-}
-The 1000 Genomes Project was the first project to sequence the entire genomes of a large number of people, to provide a comprehensive resource on human genetic variation. Data from the 1000 Genomes Project available through freely accessible public databases, and in this workshop, we will use 3 samples from the low coverage phase of the 1000 Genomes project.
+The 1000 Genomes Project provides open access to the whole genome sequence of a large number of people. In this workshop we will use 3 samples from the low coverage phase of the 1000 Genomes project.
 
 Sample        | Population | Sequencing technology
 ------------- | ---------- | --------
@@ -66,7 +66,7 @@ HG00097       | British in England and Scotland    | Low coverage WGS
 HG00100       | British in England and Scotland    | Low coverage WGS
 HG00101       | British in England and Scotland    | Low coverage WGS 
 ## Genomic region {#Genomicregion -}  
-The *LCT* gene on chromosome 2 encodes the lactase protein, which is responsible for the metabolism of lactose in mammals. Most mammals can not digest lactose as adults, but some humans can. Genetic variants upstream of the *LCT* gene lead to lactase persistence, wich means that the lactase protein is experssed also in aldulthood and the carrier can continue to digest lactose. The variant rs4988235, located at position chr2:136608646 in the HG19 reference genome, has been shown to lead to lactose persistence. The alternative allele (A on the forward strand and T on the reverse strand) creates a new transcription factor binding site that enables continued expression of the gene after weaning.
+The *LCT* gene on chromosome 2 encodes the enzyme lactase, which is responsible for the metabolism of lactose in mammals. Most mammals can not digest lactose as adults, but some humans can. Genetic variants upstream of the *LCT* gene lead to lactase persistence, wich means that lactase is experssed also in aldulthood and the carrier can continue to digest lactose. The variant rs4988235, located at position chr2:136608646 in the HG19 reference genome, has been shown to lead to lactose persistence. The alternative allele (A on the forward strand and T on the reverse strand) creates a new transcription factor binding site that enables continued expression of the gene after weaning.
   
 In this workshop we will use sequencing data for the region chr2:136545000-136617000 
 chr2:136,039,147-136,662,073
@@ -90,7 +90,7 @@ cat(paste0(refdir))
 
 # Preparations {-}
 ## Local workspace  {#preparelaptop -}  
-The majority of the analyses in this workshop will be done on UPPMAX, but you will copy some of the resulting files to your laptop. Therefore, please start by creating a folder for this workshop on your laptop. It is up to you where you want to put this, but it can for example be a folder called *ngsworkflow* on Desktop. You need to have write permission in this folder. The folder you create here will be referred to as *local workspace* throughout this workshop. 
+The majority of the analyses in this workshop will be done on UPPMAX, but you will copy some of the resulting files to your laptop. Therefore, please start by creating a folder for this workshop on your laptop, for example a folder called *ngsworkflow* on Desktop. You need to have write permission in this folder. The folder you create here will be referred to as *local workspace* throughout this workshop. 
 
 **For MobaXterm users**  
 MobaXtert users need to set the *persistent home directory* to your local workspace. This means that your home directory in MobaXterm will be set to the folder that you created in the previous step.  
@@ -107,19 +107,19 @@ $ ssh -Y username@rackham.uppmax.uu.se
 ```  
   
 ### Workspace on UPPMAX {-}
-During this lab you should work in your folder under the course's nobackup folder, just like you have done during the previous labs. Start by creating a workspace for this exercise in your folder, and then move into it. This folder will be referred to as your *UPPMAX workspace* throughout this workshop.  
+Start by creating a workspace for this exercise in your folder under the course's nobackup folder, and then move into it. This folder will be referred to as your *UPPMAX workspace* throughout this workshop.  
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('mkdir /proj/',upid,'/nobackup/<username>/ngsworkflow\n'))
 cat(paste0('cd /proj/',upid,'/nobackup/<username>/ngsworkflow'))
 ```
   
 ### Symbolic links to data {-}
-The raw data files are located in the [Data](#Data) folder described above. Instead of copying the files to your workspace you should create symbolic links (soft-links) to them. Soft-linking files and folders allows you to work with them as if they were in your current directory, but without multiplying them.  
-Create a symbolic link to the reference genome in your workspace:
+The raw data files are located in the [Data](#Data) folder described above.   
+Create a symbolic link to the reference genome in your workspace:  
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('ln -s ',refdir,'/human_g1k_v37_chr2.fasta'))  
 ```
-Do the same with the fastq files:
+Do the same with the fastq files:  
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('ln -s ',fastqdir,'/HG00097_1.fq\n')) 
 cat(paste0('ln -s ',fastqdir,'/HG00097_2.fq\n'))  
@@ -130,7 +130,7 @@ cat(paste0('ln -s ',fastqdir,'/HG00101_2.fq\n'))
 ```
 
 ### Book a node {-}
-When you login to Rackham you enter the *login node*, which is not intended for compute intensive tasks. To be able to run analyses directly in the terminal you should therefore book a compute node (or in this case just one core of a node). Make sure you only do this once each day because we have reserved one core per student for the course.    
+Book a compute node (or actually just one core of a node) so that you can run compute intensive tasks in the terminal.  **Make sure you only do this once each day** because we have reserved one core per student for the course.    
 Use this reservation on day 1 of variant-calling:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('salloc -A ',upid,' -t 04:00:00 -p core -n 1 --no-shell --reservation=',upres3,' &'))
@@ -149,9 +149,8 @@ ssh -Y <nodename>
 ```
   
 ### Accessing programs {#Accessingprograms -}
-We will use several programs that are installed in the module system on UPPMAX. These modules must be loaded every time you login to Rackham, or when you connect to a new compute node.  
-  
-First load the `bioinfo-tools` module:
+Load the modules that are needed during this workshop. Remember that these modules must be loaded every time you login to Rackham, or when you connect to a new compute node.  
+First load the `bioinfo-tools` module:  
 ```bash
 module load bioinfo-tools
 ```
@@ -162,11 +161,11 @@ module load bwa/0.7.17
 module load samtools/1.10
 module load GATK/4.1.4.1
 ```
-You don't have to specify wich versions of the toos to use, but is recommended to do so for reproducibility if you want to rerun the  exact same analyses later.  
+Although you don't have to specify wich versions of the toos to use, it is recommended to do so for reproducibility if you want to rerun the  exact same analyses later.  
 When loading the module GATK/4.1.4.1 you will get a warning message about the fact that GATK commands have been updated since the previous version of GATK. This is fine and you don't have to do anything about it. 
     
 ## Index the genome {-}
-Tools that compare short reads with a large reference genome needs indexes of the reference genome to work efficiently. Before analysing the samples you therefore need to create index files for each tool. You don't have to understand the details of the generated index files to continue with this lab, just make sure that they are created.
+Tools that compare short reads with a large reference genome needs indexes of the reference genome to work efficiently. You therefore need to create index files for each tool. 
   
 Generate BWA index files:
 ```bash
@@ -197,17 +196,21 @@ Now let's start the main part of the workshop, which will guide you through a ba
 
 In the *UPPMAX workspace* you should now use `BWA mem` to align the reads to the reference genome.  
  
-At the same time, you should add something called *read groups* to the reads in the fastq files. Read groups allow us to trace various technical features, such as which flowcell was used to generate the reads, and this is needed in order to perform variant calling with HaplotypeCaller. You are not expected to learn all the details of read groups here, but if you are interested in more information please read this article at [GATK-forum](https://gatk.broadinstitute.org/hc/en-us/articles/360035890671-Read-groups). The samples in this workshop come from the 1000 Genomes project, and we don't know how these reads were generated. Let's assume that each fastq file was generated from one library preparation (called *libraryx*), derived from one biological sample (called *HG00097*), that was run on one lane of a flowcell (called *lanex_flowcellx*) in the Illumina machine, and create a read group with id *readgroupx* that contains this information.   
-
+At the same time, you should add something called *read group* information. In practice, a read group is a set of reads that are generated from a single run of a sequencing instrument, and this information is needed when performing variant calling with HaplotypeCaller. 
+The samples in this workshop come from the 1000 Genomes project, and we don't know the details of how these reads were generated. We will therefore assume that each fastq file was generated from one library preparation (we call it *libraryx*), derived from one biological sample (*HG00097*), that was run on one lane of a flowcell (we call it *lanex_flowcellx*) on the Illumina machine, and create a read group with id *readgroupx* that contains this information.   
+You are not expected to understand all the details of read groups here, but if you are interested in more information please read this article at [GATK-forum](https://gatk.broadinstitute.org/hc/en-us/articles/360035890671-Read-groups). 
   
-The output from `BWA` should be parsed to `samtools sort`, which sorts the sam file according to chromosome position and then converts the sam file to the binary bam format. This saves space since no intermediary sam file is created.  
-Please use this command for all of this:
+The output from `BWA` should be parsed to `samtools sort`, which sorts the sam file according to chromosome position and then converts the sam file to the binary bam format. This saves space since no intermediary sam file is created. 
+
+Please use this command for all of the above:
 ```bash
 bwa mem -R "@RG\\tID:readgroupx\\tPU:lanex_flowcellx\\tSM:HG00097\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta HG00097_1.fq HG00097_2.fq | samtools sort > HG00097.bam
 ```
-Where -t 1 is the number of threads, which should be equal to the number of cores you booked. If you would have analysed the entire genome more threads would have been necessary.  You have to use a file redirect `>` for the output, otherwise it will be written to stdout (your screen).  
+Where  
+-t 1 is the number of threads, which should be equal to the number of cores you booked. If you would have analysed the entire genome more threads would have been necessary.  You have to use a file redirect `>` for the output, otherwise it will be written to stdout (your screen).  
+-R is the readgroup, and when you run this command for another sample you have to change the SM tag to the new sample name.  
 
-**NOTE: the read group is specific for each sample, so if you perform this step for another sample later on you need to change the SM tag in the read group from HG00097 to the new sample name.** 
+
 
 Please check that the expected output file was generated and that it has content using `ls -lrt`. 
 
