@@ -455,6 +455,7 @@ The third part of this workshop will take you through additional refinement step
 The additional steps in the best practise workflow was not covered in the variant-calling lecture on Wednesday afternoon. There will be a short lecture about this on Thursday morning at 9 am. However, if you reach this step earlier you can have a look at this [prerecorded video of the same lecture](https://youtu.be/b7VV6e5q6ss).  
 
 ![](data/ngs-workflow/3_best_practise.png){width=80%}
+  
 ## BWA mem 
 Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly [as above](#bwamem) but with the new sample names. Please note that you also need to adjust the SM tag in the read group, because it needs to be unique for each sample in the cohort. 
   
@@ -488,10 +489,10 @@ cat(paste0('gatk --java-options -Xmx7g ApplyBQSR -R human_g1k_v37_chr2.fasta -I 
 ```
 
 ## Generate g.vcf files
-`HaplotypeCaller` should also be run for all three samples, and the output should be in g.vcf exactly as described [above] (#generategvcf). This time use recalibrated bam files as input. 
+`HaplotypeCaller` should also be run for all three samples, and the output should be in g.vcf exactly as described [above](#generategvcf). This time use recalibrated bam files as input. 
   
 ## Joint genotyping
-Once you have the g.vcf files for all samples you should perform joint genotype calling. This should be done with the commands CombineGVCFs and GenotypeGVCFs exactly as described  [above] (#jointgenotyping), but you should use the g.vcf files generated from the recalibrated bam files as input.
+Once you have the g.vcf files for all samples you should perform joint genotype calling. This should be done with the commands CombineGVCFs and GenotypeGVCFs exactly as described  [above](#jointgenotyping), but you should use the g.vcf files generated from the recalibrated bam files as input.
      
 ## Variant Filtering
 HaplotypeCaller is designed to be very sensitive, which is good because it minimizes the chance of missing real variants. However, it means that the number of false positives can be quite large, so we need to filter the raw callset. GATK offers two ways to filter variants:  
