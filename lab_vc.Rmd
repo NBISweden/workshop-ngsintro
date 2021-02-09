@@ -547,7 +547,7 @@ cat(paste0('Path to intermediary and final vcf files: ',bpvcfdir,'\n'))
 
 
 ## SBATCH script {#bpscript}
-We recommend you to incorporate the new steps into an SBATCH script similar to the one you created above for [joint variant calling](#sbatchscript). You might find it helpful to try each step for one sample in the interactive terminal, so that you know that a particular command is working before you incorporate it in the script. Please try to complete the script for GATK's best practices workflow. If you run out of time you can sneak peek at our example solution below. 
+We recommend you to incorporate the new steps into an SBATCH script similar to the one you created above for [joint variant calling](#sbatchscript). Please try to complete the script for GATK's best practices workflow. If you run out of time you can sneak peek at our example solution below. 
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('#!/bin/bash
 #SBATCH -A g2019031
