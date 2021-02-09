@@ -323,7 +323,7 @@ You can run all commands one by one in the terminal as you did in the first step
 **Optionally** - If you are interested in programming and have time, you can also try to write a simple SBATCH script and run all steps automatically. Please check out the [SBATCH script](#sbatchscript) section below if you would like to try this. 
   
 ## BWA mem 
-Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly [as above](#bwamem) but with the new sample names. Please note that you also need to adjust the SM tag in the read group in each call so that it matches the sample name. Otherwise the [joint genotyping step] (#jointgenotyping) will not work properly.  
+Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly [as above](#bwamem) but with the new sample names. Please note that you also need to adjust the SM tag in the read group in each call so that it matches the sample name. Otherwise the [joint genotyping step](#jointgenotyping) will not work properly.  
   
 If you run out of time, please click below to get pathts to precomputed bam files. 
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
