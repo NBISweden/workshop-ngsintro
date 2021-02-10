@@ -314,17 +314,17 @@ In `IGV`, in the `File` menu, select `Load from File` and select your vcf file (
 16. Look in the bam track and count the number of reads that have "T" and "C", respectively,  at position chr2:136545844. How is this information captured under "Genotype Attributes"? (Again, hoover the mouse over the lower row of the vcf track.)
  
 # Variant calling in cohort {#jointvc}
-If you have time, you can now try joint variant calling in all three samples. Each sample has to be processed with `BWA mem` as above, and then with `HaplotypeCaller` with the flag `-ERC` to generate sample specific g.vcf files. The individual g.vcf fiels should subsequently be combined with GATK's `CombineGVCFs`, and translated into vcf format with GATK's `GenotypeGVCFs`. The workflow below shows how the three samples should be processed and combined.  
+If you have time, you can now try joint variant calling in all three samples. Each sample has to be processed with `BWA mem` as above, and then with `HaplotypeCaller` with the flag `-ERC` to generate one g.vcf file per sample. The individual g.vcf files should subsequently be combined with GATK's `CombineGVCFs`, and translated into vcf format with GATK's `GenotypeGVCFs`. The workflow below shows how the three samples should be processed and combined.  
   
 ![](data/ngs-workflow/2_jointvc.png)
 
 
-You can run all commands one by one in the terminal as you did in the first step of the workshop. We have also made intermediary files avaiable in case you don't have time to complete all steps, please see links under each analysis step. 
+You can run the commands one by one in the terminal as you did before. We have also made intermediary files avaiable in case you don't have time to complete all steps, please see links under each analysis step. 
   
 **Optionally** - If you are interested in programming and have time, you can also try to write a simple SBATCH script and run all steps automatically. Please check out the [SBATCH script](#sbatchscript) section below if you would like to try this. 
   
 ## BWA mem 
-Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly [as above](#bwamem) but with the new sample names. Please note that you also need to adjust the SM tag in the read group in each call so that it matches the sample name. Otherwise the [joint genotyping step](#jointgenotyping) will not work properly.  
+Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly [as above](#bwamem) but with the new sample names. Please note that you also need to adjust the SM field in the read group so that it matches the sample name. Otherwise the [joint genotyping step](#jointgenotyping) will not work properly.  
   
 If you run out of time, please click below to get pathts to precomputed bam files. 
 ```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
