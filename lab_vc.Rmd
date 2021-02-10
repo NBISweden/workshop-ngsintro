@@ -196,19 +196,21 @@ Now let's start the main part of the workshop, which will guide you through a ba
 
 You should use `BWA mem` to align the reads to the reference genome.  
  
-In the call to `BWA` you need to add something called a *read group*, which contain information about how the reads were generated. This is required by HaplotypeCaller later on. We don't know exactly how the reads in the 1000 Genomes project were generated, but let's assume that each fastq file was generated from one library preparation (we call it *libraryx*), derived from one biological sample (*HG00097*), that was run on one lane of a flowcell (we call it *lanex_flowcellx*) on the Illumina machine. A read group called *readgroupx* containing this information is added with `-R "@RG\\tID:readgroupx\\tPU:lanex_flowcellx\\tSM:HG00097\\tLB:libraryx\\tPL:illumina"` in the command below. 
+In the call to `BWA mem` you need to add something called a *read group*, which contain information about how the reads were generated. Read group information is required by HaplotypeCaller. Since we don't know exactly how the reads in the 1000 Genomes were generated we will have to make some assumptions and generate a "dummy" read group. Let's assume that each fastq file was generated from one library preparation (*libraryx*), derived from one biological sample (*HG00097*), that was run on one lane of a flowcell (*lanex_flowcellx*) on the Illumina machine, and let's define a readgroup (*readgroupx*) with this information. The code for adding this readgroup is:  
+`-R "@RG\\tID:readgroupx\\tPU:lanex_flowcellx\\tSM:HG00097\\tLB:libraryx\\tPL:illumina"`. 
 
-You don't need to understand the details about read groups here, but if ou would like to know more please read this article at [GATK-forum](https://gatk.broadinstitute.org/hc/en-us/articles/360035890671-Read-groups). The most important thing to know for today's workshop is that **readgroups are needed for HaplotypeCaller**, and **the SM flag should be the same as the sample name**, so you have to update the command when running BWA for another sample. 
+You don't need to understand the details about read groups here, but if ou would like to know more please read this article at [GATK-forum](https://gatk.broadinstitute.org/hc/en-us/articles/360035890671-Read-groups). The most important thing to know for today's workshop is that **readgroups are needed for HaplotypeCaller**, and **the SM flag should be the same as the sample name**, so you have to modify the code when running BWA for another sample. 
   
 The output from `BWA` should be parsed to `samtools sort`, which sorts the sam file according to chromosome position and then converts the sam file to the binary bam format. This saves space since no intermediary sam file is created. 
 
-Please use this command to align the reads, add the read group, and sort the bam file:
+You need to specify how many threads `BWA mem`should use, and this should be the same as the number of cores you have access to. This is defined by the code `-t 1`below.
+
+Finally, you have to use a file redirect > for the output, otherwise it will be written to stdout (your screen).
+
+Please use this command to align the reads, add the read group, sort the reads and write them to a bam file:
 ```bash
 bwa mem -R "@RG\\tID:readgroupx\\tPU:lanex_flowcellx\\tSM:HG00097\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta HG00097_1.fq HG00097_2.fq | samtools sort > HG00097.bam
 ```
--t 1 is the number of threads, which should be equal to the number of cores you booked.  
-You have to use a file redirect `>` for the output, otherwise it will be written to stdout (your screen).  
-
 Please check that the expected output file was generated and that it has content using `ls -lrt`. 
 
 Next you need to index the output bam file so that programs can randomly access the sorted data without reading the whole file. This command creates an index file with the same name as the input bam file, except with a .bai extension:  
