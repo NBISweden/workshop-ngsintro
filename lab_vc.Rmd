@@ -200,8 +200,9 @@ In the call to `BWA mem` you need to add something called a *read group*, which 
 `-R "@RG\\tID:readgroupx\\tPU:lanex_flowcellx\\tSM:HG00097\\tLB:libraryx\\tPL:illumina"`   
   
 For now you need to know that:
-* read groups are needed for HaplotypeCaller  
-* the SM field should contain the sample name  
+  
+    * read groups are needed for HaplotypeCaller  
+    * the SM field should contain the sample name  
 When running BWA for another sample later on you have to replace "HG00097" in the read group with the new sample name.  
 Please read [this article](https://gatk.broadinstitute.org/hc/en-us/articles/360035890671-Read-groups) at GATK forum if you would like to know more about read groups.  
   
