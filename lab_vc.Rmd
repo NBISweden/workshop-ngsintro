@@ -194,9 +194,9 @@ Now let's start the main part of the workshop, which will guide you through a ba
 
 ### BWA mem {#bwamem}
 
-In the *UPPMAX workspace* you should now use `BWA mem` to align the reads to the reference genome.  
+You should now use `BWA mem` to align the reads to the reference genome.  
  
-At the same time, you should add something called *read group* information. In practice, a read group is a set of reads that are generated from a single run of a sequencing instrument, and this information is needed when performing variant calling with HaplotypeCaller. 
+When running `BWA` you should include something called *read group information*. A read group is a set of reads that are generated from a single run of a sequencing instrument, and `HaplotypeCaller`needs . 
 The samples in this workshop come from the 1000 Genomes project, and we don't know the details of how these reads were generated. We will therefore assume that each fastq file was generated from one library preparation (we call it *libraryx*), derived from one biological sample (*HG00097*), that was run on one lane of a flowcell (we call it *lanex_flowcellx*) on the Illumina machine, and create a read group with id *readgroupx* that contains this information.   
 You are not expected to understand all the details of read groups here, but if you are interested in more information please read this article at [GATK-forum](https://gatk.broadinstitute.org/hc/en-us/articles/360035890671-Read-groups). 
   
