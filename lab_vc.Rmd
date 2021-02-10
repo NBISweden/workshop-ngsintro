@@ -198,8 +198,7 @@ You should use `BWA mem` to align the reads to the reference genome.
  
 In the call to `BWA mem` you need to add something called a *read group*, which contains information about how the reads were generated. This is required by HaplotypeCaller. Since we don't know exactly how the reads in the 1000 Genomes Project were generated we have to make some assumptions. Let's assume that each pair of fastq files was generated from one library preparation (*libraryx*), derived from one biological sample (*HG00097*), that was run on one lane of a flowcell on the Illumina machine (*lanex_flowcellx*) , and let's define a read group with this information (*readgroupx*). The code for adding this read group is:  
 `-R "@RG\\tID:readgroupx\\tPU:lanex_flowcellx\\tSM:HG00097\\tLB:libraryx\\tPL:illumina"`   
-  
-To run this workshop you need to know that **read groups are needed for HaplotypeCaller** and **the SM field should contain the sample name**. When running BWA for another sample later on you therefore have to replace "HG00097" in the read group with the new sample name.  
+**Note: when running BWA for another sample later on you have to replace *HG00097* in the read group with the new sample name.**  
 To learn more about read groups for your future work, please read [this article](https://gatk.broadinstitute.org/hc/en-us/articles/360035890671-Read-groups) at GATK forum.  
   
 The output from `BWA` should be parsed to `samtools sort`, which sorts the sam file according to chromosome position and then converts the sam file to the binary bam format. This saves space since no intermediary sam file is created. 
