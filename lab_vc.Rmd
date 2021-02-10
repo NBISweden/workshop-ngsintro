@@ -196,11 +196,12 @@ Now let's start the main part of the workshop, which will guide you through a ba
 
 You should use `BWA mem` to align the reads to the reference genome.  
  
-In the call to `BWA mem` you need to add something called a *read group*, which contains information about how the reads were generated. This is required by HaplotypeCaller. Since we don't know exactly how the reads in the 1000 Genomes were generated we will have to make some assumptions. Let's assume that each fastq file was generated from one library preparation (*libraryx*), derived from one biological sample (*HG00097*), that was run on one lane of a flowcell on the Illumina machine (*lanex_flowcellx*) , and let's define a read group (*readgroupx*) with this information.  
+In the call to `BWA mem` you need to add something called a *read group*, which contains information about how the reads were generated. This is required by HaplotypeCaller. Since we don't know exactly how the reads in the 1000 Genomes project were generated we have to make some assumptions. Let's assume that each pair of fastq files was generated from one library preparation (*libraryx*), derived from one biological sample (*HG00097*), that was run on one lane of a flowcell on the Illumina machine (*lanex_flowcellx*) , and let's define a read group (*readgroupx*) with this information.  
 The code for adding this read group is:  
 `-R "@RG\\tID:readgroupx\\tPU:lanex_flowcellx\\tSM:HG00097\\tLB:libraryx\\tPL:illumina"`   
-What you need to know about read groups for today's workshop is that **read groups are needed for HaplotypeCaller**, and **the SM tag should hold the sample name**. This means that you have to modify the code when running BWA for another sample by replacing "HG00097" with the new sample name. 
-If ou would like to know more about read groups please read this article at [GATK-forum](https://gatk.broadinstitute.org/hc/en-us/articles/360035890671-Read-groups). 
+  
+What you need to know about read groups for today's workshop is that **read groups are needed for HaplotypeCaller**, and **the SM field should hold the sample name**. This means that you have to modify the code when running BWA for another sample by replacing "HG00097" with the new sample name. 
+If you would like to know more about read groups please read this article at [GATK-forum](https://gatk.broadinstitute.org/hc/en-us/articles/360035890671-Read-groups). 
   
 The output from `BWA` should be parsed to `samtools sort`, which sorts the sam file according to chromosome position and then converts the sam file to the binary bam format. This saves space since no intermediary sam file is created. 
 
