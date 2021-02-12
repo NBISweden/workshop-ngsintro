@@ -58,7 +58,7 @@ Whole genome sequencing (WGS) is a comprehensive method for analyzing entire gen
 
 # Data description {-}
 ## Samples  {-}
-The 1000 Genomes Project ran between 2008 and 2015, creating the largest public catalogue of human variation and genotype data. In this workshop we will use low coverage whole genome sequence data from three individuals, generated in the first phase of the 1000 Genomes project. 
+The 1000 Genomes Project ran between 2008 and 2015, creating the largest public catalogue of human variation and genotype data. In this workshop we will use low coverage whole genome sequence data from three individuals, generated in the first phase of the 1000 Genomes Project. 
 
 Sample        | Population | Sequencing technology
 ------------- | ---------- | --------
