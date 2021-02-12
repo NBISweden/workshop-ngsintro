@@ -58,7 +58,7 @@ Whole genome sequencing (WGS) is a comprehensive method for analyzing entire gen
 
 # Data description {-}
 ## Samples  {-}
-The 1000 Genomes Project provides open access to the whole genome sequence of a large number of people. In this workshop we will use 3 samples from the low coverage phase of the 1000 Genomes project.
+The 1000 Genomes Project ran between 2008 and 2015, creating the largest public catalogue of human variation and genotype data. In this workshop we will use low coverage whole genome sequence data from three individuals, generated in the first phase of the 1000 Genomes project. 
 
 Sample        | Population | Sequencing technology
 ------------- | ---------- | --------
@@ -458,7 +458,7 @@ The additional steps in the best practise workflow was not covered in the varian
 ![](data/ngs-workflow/3_best_practise.png){width=80%}
   
 ## BWA mem 
-Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly [as above](#bwamem) but with the new sample names. Please note that you also need to update the SM tag in the read group to the new sample name. 
+Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly [as above](#bwamem) but with the new sample names. Please note that you also need to adjust the SM field in the read group so that it matches the new sample name. 
   
 ## Mark Duplicates
 Sometimes the same DNA fragment is sequenced multiple times, which leads to multiple reads from the same fragment in the fastq file. This can occur due to PCR amplification in the library preparation, or if one read cluster is incorrectly detected as multiple clusters by the sequencing instrument. 
