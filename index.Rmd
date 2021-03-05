@@ -26,10 +26,10 @@ output:
 
 <div class="col-md-12 flex-box">
 <p class="medium landing-bullets">
-<span style="display:block;">Unix and command line</span>
-<span style="display:block;">Data formats and QC</span>
-<span style="display:block;">Variant calling workflow</span>
-<span style="display:block;">RNA-Seq workflow</span>
+<span style="display:block;">Working on the Linux command line</span>
+<span style="display:block;">Sequence data formats and QC</span>
+<span style="display:block;">DNA variant calling workflow</span>
+<span style="display:block;">RNA sequence analyses workflow</span>
 </p>
 </div>
 
@@ -46,4 +46,3 @@ output:
 </div>
 
 </div>
-
