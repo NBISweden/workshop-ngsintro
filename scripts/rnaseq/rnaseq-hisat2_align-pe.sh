@@ -1,7 +1,7 @@
 #!/bin/bash
 ## 2020 Roy Francis
 
-#SBATCH -A g2020009
+#SBATCH -A g2021013
 #SBATCH -p core
 #SBATCH -n 1
 #SBATCH -t 2:00:00
