@@ -28,6 +28,7 @@ jobs:
         run: |
           echo "path_repo=$(pwd)" >> $GITHUB_ENV
           echo "path_export=$(grep -E '^output_dir' _site.yml | sed 's/^output_dir://' | xargs)" >> $GITHUB_ENV
+          echo "path_export_canvas=${path_export}-canvas" >> $GITHUB_ENV
           echo "repo=$(echo $GITHUB_REPOSITORY | sed 's/.*\///')" >> $GITHUB_ENV
       - name: Check R installation and variables
         run: |
@@ -77,8 +78,32 @@ jobs:
           # Render website
           Rscript -e "rmarkdown::render_site()"
 
+          # Render canvas website
+          # removes navbar block and suffixes output directory with -canvas
+          awk '$1 == "navbar:"{t=1}
+             t==1 && $1 == "title:"{t++; next}
+             t==2 && /:[[:blank:]]*$/{t=0}
+             t != 2' _site.yml | \
+          awk '$1 == "navbar:"{t=1}
+             t==1 && $1 == "right:"{t++; next}
+             t==2 && /:[[:blank:]]*$/{t=0}
+             t != 2' | \
+          awk '$1 == "navbar:"{t=1}
+             t==1 && $1 == "logo:"{t++; next}
+             t==2 && /:[[:blank:]]*$/{t=0}
+             t != 2' | \
+          sed 's/include://' | \
+          sed 's/after_body: assets\/footer-lab.html//' | \
+          sed 's/navbar://' | \
+          sed 's/\(output_dir:\)\s*\([0-9]*\)/\1 \2-canvas/' > _site.yml
+
+          Rscript -e "rmarkdown::render_site()"
+
           # Generate PDFs
           cd ${path_export}
+          Rscript -e "l <- list.files('.',pattern='slide.+html');if(length(l)!=0) {for(i in 1:length(l)) pagedown::chrome_print(l[i])};"
+          cd ..
+          cd ${path_export}-canvas
           Rscript -e "l <- list.files('.',pattern='slide.+html');if(length(l)!=0) {for(i in 1:length(l)) pagedown::chrome_print(l[i])};"
           cd ..
 
@@ -87,6 +112,8 @@ jobs:
           ls -lh
           echo "Folder contents at ${path_repo}/${path_export}:"
           ls -lh ${path_repo}/${path_export}
+          echo "Folder contents at ${path_repo}/${path_export_canvas}:"
+          ls -lh ${path_repo}/${path_export_canvas}
 
           # Clone gh-pages branch
           git clone --single-branch --branch gh-pages "https://${{ secrets.TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" tmprepo
@@ -96,6 +123,12 @@ jobs:
             git rm -r $path_export
             git commit -m "Old directory ${path_export} deleted."
           fi
+          if [ -d $path_export_canvas ]; then
+            echo "Directory ${path_export_canvas} already exists. Removing the directory."
+            git rm -r $path_export_canvas
+            git commit -m "Old directory ${path_export_canvas} deleted."
+          fi
+
           cd ${path_repo}
           cp -r $path_export tmprepo/
           cd tmprepo
@@ -111,7 +144,7 @@ jobs:
           printf "All current and previous workshop materials are listed below.\n\n" > index.md
           printf "<div style='display:block;'><p style='line-height:2;'>\n" >> index.md
           months=(Zero Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec)
-          dirs=$(ls -d */ | sed 's/\///' | tac)
+          dirs=$(ls -d [0-9]*[0-9]/ | sed 's/\///' | tac)
           for i in $dirs
           do
            printf "<span style='display:block;'><a href='https://${str_user}.github.io/${repo}/${i}/'>20${i:0:2} ${months[${i:(-2)}]}</a></span>" >> index.md
