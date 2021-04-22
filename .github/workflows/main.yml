@@ -78,7 +78,7 @@ jobs:
           # Render website
           Rscript -e "rmarkdown::render_site()"
 
-          # Render canvas website
+          # Render canvas version of website by changing _site.yml
           # removes navbar block and suffixes output directory with -canvas
           awk '$1 == "navbar:"{t=1}
              t==1 && $1 == "title:"{t++; next}
@@ -103,7 +103,7 @@ jobs:
           cd ${path_export}
           Rscript -e "l <- list.files('.',pattern='slide.+html');if(length(l)!=0) {for(i in 1:length(l)) pagedown::chrome_print(l[i])};"
           cd ..
-          cd ${path_export}-canvas
+          cd ${path_export_canvas}
           Rscript -e "l <- list.files('.',pattern='slide.+html');if(length(l)!=0) {for(i in 1:length(l)) pagedown::chrome_print(l[i])};"
           cd ..
 
@@ -115,7 +115,7 @@ jobs:
           echo "Folder contents at ${path_repo}/${path_export_canvas}:"
           ls -lh ${path_repo}/${path_export_canvas}
 
-          # Clone gh-pages branch
+          # Clone gh-pages branch and remove old directories with same name
           git clone --single-branch --branch gh-pages "https://${{ secrets.TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" tmprepo
           cd tmprepo
           if [ -d $path_export ]; then
