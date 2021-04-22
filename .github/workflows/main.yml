@@ -80,7 +80,9 @@ jobs:
           Rscript -e "rmarkdown::render_site()"
 
           # Render canvas version of website by changing _site.yml
-          # removes navbar block and suffixes output directory with -canvas
+          # removes navbar block
+          # suffixes output directory with -canvas
+          # removes footer from home and lab pages
           awk '$1 == "navbar:"{t=1}
              t==1 && $1 == "title:"{t++; next}
              t==2 && /:[[:blank:]]*$/{t=0}
@@ -98,6 +100,7 @@ jobs:
           sed 's/navbar://' | \
           sed 's/\(output_dir:\)\s*\([0-9]*\)/\1 \2-canvas/' > _site.yml
 
+          cat _site.yml
           Rscript -e "rmarkdown::render_site()"
 
           # Generate PDFs
