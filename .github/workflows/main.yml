@@ -44,6 +44,7 @@ jobs:
           ls -lh
           echo "---------------------------------------------------------------------------------------------"
           printenv
+          sed --version
       - name: Print R packages
         run: |
           # parse r packages from Rmd amd md files
@@ -80,26 +81,19 @@ jobs:
           Rscript -e "rmarkdown::render_site()"
 
           # Render canvas version of website by changing _site.yml
-          # removes navbar block
           # suffixes output directory with -canvas
-          # removes footer from home and lab pages
-          awk '$1 == "navbar:"{t=1}
-             t==1 && $1 == "title:"{t++; next}
-             t==2 && /:[[:blank:]]*$/{t=0}
-             t != 2' _site.yml | \
-          awk '$1 == "navbar:"{t=1}
-             t==1 && $1 == "right:"{t++; next}
-             t==2 && /:[[:blank:]]*$/{t=0}
-             t != 2' | \
-          awk '$1 == "navbar:"{t=1}
-             t==1 && $1 == "logo:"{t++; next}
-             t==2 && /:[[:blank:]]*$/{t=0}
-             t != 2' | \
-          sed 's/include://' | \
-          sed 's/after_body: assets\/footer-lab.html//' | \
-          sed 's/navbar://' | \
-          sed 's/\(output_dir:\)\s*\([0-9]*\)/\1 \2-canvas/' > _site.yml
+          # adds current output directory to be ignored
+          # renames navbar block to remove menu
+          # removes footer
+          #sed 's/\(output_dir:\)\s*\([0-9]*\)/\1 \2-canvas/' _site.yml | \
+          #sed "/^exclude/s/\]$/,\"${path_export}\"]/" | \
+          #sed 's/navbar:/unused:/' | \
+          #sed 's/include://' | \
+          #sed 's/after_body: assets\/footer-lab.html//' > _site.yml
 
+          Rscript -e 'y <- yaml::read_yaml("_site.yml"); y$exclude <- append(y$exclude,y$output_dir); y$output_dir <- paste0(y$output_dir,"-canvas"); y$navbar <- NULL; y$output$`bookdown::html_document2`$include <- NULL; yaml::write_yaml(y,"_site.yml");'
+
+          ls -lh
           cat _site.yml
           Rscript -e "rmarkdown::render_site()"
 
@@ -135,6 +129,7 @@ jobs:
 
           cd ${path_repo}
           cp -r $path_export tmprepo/
+          cp -r $path_export_canvas tmprepo/
           cd tmprepo
           echo "Folder contents at $(pwd):"
           ls -lh
