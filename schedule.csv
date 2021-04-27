@@ -5,7 +5,7 @@ date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_y
 ;;11:00;12:00;Intro to Linux;Martin Dahlö / Anders Sjölander;LS,JT;;lab_linux_intro.html;;
 ;;12:00;13:00;Lunch;;;;;;
 ;;13:00;14:00;Intro to Uppmax;Martin Dahlö / Anders Sjölander;NR;slide_uppmax_intro.pdf;;;
-;;14:00;17:00;Intro to Uppmax;Martin Dahlö / Anders Sjölander;LS,JT;;lab_uppmax_intro.html;;
+;;14:00;17:00;Intro to Uppmax;Martin Dahlö / Anders Sjölander;LS,JT,NR;;lab_uppmax_intro.html;;
 18/05/2021;Online;09:00;09:30;File types in Bioinformatics;Martin Dahlö / Anders Sjölander;NR;slide_linux_filetypes.pdf;;;
 ;;09:30;10:00;File types in Bioinformatics;Martin Dahlö / Anders Sjölander;JT,NR;;lab_linux_filetypes.html;;
 ;;11:00;12:00;Quality control;Malin Larsson;JT,NR;slide_qc.pdf;lab_qc.html;https://youtu.be/KIcQpMOFYPs;
@@ -21,7 +21,7 @@ date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_y
 ;;14:00;17:00;Variant-calling workflow;Malin Larsson;DE,NN,AJ;;lab_vc.html;;
 20/05/2021;Online;09:00;12:00;Variant-calling workflow;Malin Larsson;DE,NN,AJ;;lab_vc.html;https://youtu.be/b7VV6e5q6ss;
 ;;12:00;13:00;Lunch;;;;;;
-;;13:00;17:00;RNA-Seq workflow;Roy Francis;;slide_rnaseq.html;lab_rnaseq.html;https://youtu.be/uKebwpW0R28;
+;;13:00;17:00;RNA-Seq workflow;Roy Francis;JL,DA,SR;slide_rnaseq.html;lab_rnaseq.html;https://youtu.be/uKebwpW0R28;
 21/05/2021;Online;09:00;12:00;RNA-Seq workflow;Roy Francis;JL,DA,SR;;;;
 ;;12:00;13:00;Lunch;;;;;;
 ;;13:00;15:00;Open session;Dag Ahrén;RF,ML,OP;;;;
