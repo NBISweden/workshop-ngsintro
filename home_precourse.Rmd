@@ -48,6 +48,7 @@ Checking your request and approving your account requires some manual work, so y
 
 <div class="boxy boxy-warning boxy-exclamation">
 **Note:** You will get one username & password for the account on UPPMAX, and one username and password for the account on NSC. Please keep track of both, we will tell you when to use which account during the workshop.
+
 </div>
 
 ### 2. Install tools for SSH & SFTP access

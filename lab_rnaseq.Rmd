@@ -483,7 +483,7 @@ bash ../scripts/hisat2_align.sh sample_1.fq.gz sample_2.fq.gz
 
 Try to create a new bash loop script (`hisat2_align_batch.sh`) to iterate over all fastq files in the directory and run the mapping using the `hisat2_align.sh` script. Note that there is a bit of a tricky issue here. You need to use two fastq files (`_1` and `_2`) per run rather than one file. There are many ways to do this and here is one.
 
-```{sh,accordion=TRUE,block.title=TRUE,eval=FALSE,btntype="optional"}
+```{sh,accordion=TRUE,block.title=TRUE,eval=FALSE}
 ## find only files for read 1 and extract the sample name
 lines=$(find *_1.fq.gz | sed "s/_1.fq.gz//")
 

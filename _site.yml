@@ -31,7 +31,7 @@ assistants:
 favicon: assets/favicon.png
 exclude: ["docs","README.md","schedule.csv","LICENSE","LICENSE.md","scripts","tmprepo"]
 navbar:
-  title: '<img src="assets/logo.svg" id="logo" style="height:22px;margin:0;"/>'
+  title: '<img src="assets/logo.svg" id="logo" style="height:20px;margin:0;"/>'
   type: default
   logo:
     image: "assets/logo.svg"

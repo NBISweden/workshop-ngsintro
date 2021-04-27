@@ -76,6 +76,10 @@ if(loc!="online") {
 
 ## Contact
 
+This workshop is run by the **National Bioinformatics Infrastructure Sweden (NBIS)** in collaboration with **National Genomics Infrastructure (NGI)**. Both, NGI and NBIS are platforms at SciLifeLab.
+
 If you would like to get in touch with us regarding this workshop, please contact us at **edu.intro-ngs [at] nbis.se**.
 
 ***
+
+<img src="assets/logo1.svg" style="height:26px;">

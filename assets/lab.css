@@ -5,7 +5,9 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i|Ubuntu+Mono&display=swap&subset=latin-ext');
 
 :root {
-  --color-primary: #4C979F;
+  --color-primary: #96b43f;
+  --color-primary-light: #f6f9ec;
+  --color-primary-dark: #85a038;
   --color-border: #ccc;
   --color-text: #424949;
   --color-code-bg:  #f4f6f6;
@@ -161,6 +163,18 @@ blockquote {
 /* div styles --------------------------------------------------------------- */
 
 /** div style for instructions **/
+
+/*
+boxy blue
+
+.boxy-primary {
+  color: #3c787f;
+  background-color: #edf4f5;
+  border-color: #c9dfe2;
+  border-left-color: #3c787f;
+}
+*/
+
 .boxy {
  /*border: 1px solid var(--color-primary);*/
  background-color: var(--color-boxy-bg);
@@ -177,14 +191,14 @@ blockquote {
 }
 
 .boxy-primary {
-  color: #3c787f;
-  background-color: #edf4f5;
-  border-color: #c9dfe2;
-  border-left-color: #3c787f;
+  color: var(--color-primary);
+  background-color: var(--color-primary-light);
+  border-color: #e4eec7;
+  border-left-color: var(--color-primary);
 }
 
 .boxy-primary::before {
-  background-color: #3c787f !important;
+  background-color: var(--color-primary) !important;
 }
 
 .boxy-orange {
@@ -419,35 +433,28 @@ blockquote {
 }
 
 /* change colours for blockquote and links inside boxy */
-.boxy-orange > a {
-  color: #bf6300;
-}
-.boxy-success > a {
-  color: #3c763d;
-}
-.boxy-warning > a {
-  color: #8a6d3b;
-}
-.boxy-danger > a {
-  color: #a94442;
-}
-.boxy-info > a {
-  color: #31708f;
+.boxy a {
+  color: var(--color-text);
 }
 
-.boxy-orange > blockquote {
+.boxy a:hover {
+  color: var(--color-text);
+  text-decoration: underline;
+}
+
+.boxy-orange blockquote {
   border-left-color: #bf6300;
 }
-.boxy-success > blockquote {
+.boxy-success blockquote {
   border-left-color: #3c763d;
 }
-.boxy-warning > blockquote{
+.boxy-warning blockquote{
   border-left-color: #8a6d3b;
 }
-.boxy-danger > blockquote {
+.boxy-danger blockquote {
   border-left-color: #a94442;
 }
-.boxy-info > blockquote {
+.boxy-info blockquote {
   border-left-color: #31708f;
 }
 
@@ -550,15 +557,12 @@ button.btn-collapse {
   transition-duration: 0.4s;
   letter-spacing: 1px;
   margin-bottom: 5px;
-}
-
-button.btn-collapse-normal {
   color: white;
   border-color: var(--color-primary);
   background-color: var(--color-primary);
 }
 
-button.btn-collapse-normal:hover {
+button.btn-collapse:hover, button.btn-collapse:active, button.btn-collapse:focus {
     background-color: white;
     color: var(--color-primary);
     border-color: white;
@@ -567,13 +571,13 @@ button.btn-collapse-normal:hover {
     -moz-box-shadow: 0px 3px 40px -9px var(--color-primary);
 }
 
-button.btn-collapse-optional {
+.boxy-orange button.btn-collapse, button.btn-collapse-optional {
   color: white;
   border-color: var(--color-optional);
   background-color: var(--color-optional);
 }
 
-button.btn-collapse-optional:hover {
+.boxy-orange button.btn-collapse:hover, button.btn-collapse-optional:hover {
     background-color: white;
     color: var(--color-optional);
     border-color: white;
@@ -582,13 +586,13 @@ button.btn-collapse-optional:hover {
     -moz-box-shadow: 0px 3px 30px -9px var(--color-optional);
 }
 
-button.btn-collapse-warning {
+.boxy-warning button.btn-collapse, button.btn-collapse-warning {
   color: white;
   border-color: #8a6d3b;
   background-color: #8a6d3b;
 }
 
-button.btn-collapse-warning:hover {
+.boxy-warning button.btn-collapse:hover, button.btn-collapse-warning:hover {
     background-color: white;
     color: #8a6d3b;
     border-color: white;
@@ -597,13 +601,13 @@ button.btn-collapse-warning:hover {
     -moz-box-shadow: 0px 3px 30px -9px #8a6d3b;
 }
 
-button.btn-collapse-success {
+.boxy-success button.btn-collapse, button.btn-collapse-success {
   color: white;
   border-color: #3c763d;
   background-color: #3c763d;
 }
 
-button.btn-collapse-success:hover {
+.boxy-success button.btn-collapse:hover, button.btn-collapse-success:hover {
     background-color: white;
     color: #3c763d;
     border-color: white;
@@ -612,13 +616,13 @@ button.btn-collapse-success:hover {
     -moz-box-shadow: 0px 3px 30px -9px #3c763d;
 }
 
-button.btn-collapse-danger {
+.boxy-danger button.btn-collapse, button.btn-collapse-danger {
   color: white;
   border-color: #a94442;
   background-color: #a94442;
 }
 
-button.btn-collapse-danger:hover {
+.boxy-danger button.btn-collapse:hover, button.btn-collapse-danger:hover {
     background-color: white;
     color: #a94442;
     border-color: white;
@@ -627,13 +631,13 @@ button.btn-collapse-danger:hover {
     -moz-box-shadow: 0px 3px 30px -9px #a94442;
 }
 
-button.btn-collapse-info {
+.boxy-info button.btn-collapse, button.btn-collapse-info {
   color: white;
   border-color: #31708f;
   background-color: #31708f;
 }
 
-button.btn-collapse-info:hover {
+.boxy-info button.btn-collapse:hover, button.btn-collapse-info:hover {
     background-color: white;
     color: #31708f;
     border-color: white;
@@ -726,7 +730,7 @@ ul.nav a:hover {
 
 /* footer ------------------------------------------------------------------- */
 
-.footer-container {
+container-footer {
   max-width: 940px !important;
 }
 
@@ -749,13 +753,13 @@ ul.nav a:hover {
 }*/
 
 .footer a {
-  color: var(--color-primary);
+  color: #bdbdbd;
   text-decoration: none;
 }
 
 .footer a:hover {
   /*color: lightgrey;*/
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 /* homepage -------------------------------------------------------------------- */
