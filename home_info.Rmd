@@ -70,7 +70,7 @@ if(loc=="online") {
 ```{r,eval=TRUE,echo=FALSE,results="asis",block.title=NULL}
 if(loc!="online") {
   cat("## Travel info")
-  cat(dfr$description)
+  cat("\n",dfr$description)
 }
 ```
 
