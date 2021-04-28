@@ -5,9 +5,10 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i|Ubuntu+Mono&display=swap&subset=latin-ext');
 
 :root {
-  --color-primary: #96b43f;
-  --color-primary-light: #f6f9ec;
-  --color-primary-dark: #85a038;
+  --color-primary: #95b540;
+  --color-primary-light: #E9F2D1;
+  --color-primary-lighter: #f6f9ec;
+  --color-primary-dark: #96b43f;
   --color-border: #ccc;
   --color-text: #424949;
   --color-code-bg:  #f4f6f6;
@@ -164,22 +165,11 @@ blockquote {
 
 /** div style for instructions **/
 
-/*
-boxy blue
-
-.boxy-primary {
-  color: #3c787f;
-  background-color: #edf4f5;
-  border-color: #c9dfe2;
-  border-left-color: #3c787f;
-}
-*/
-
 .boxy {
- /*border: 1px solid var(--color-primary);*/
- background-color: var(--color-boxy-bg);
- border: 1px solid var(--color-border);
- border-left: 6px solid var(--color-border);
+ color: var(--color-primary-dark);
+ background-color: var(--color-primary-lighter);
+ border: 1px solid var(--color-primary-light);
+ border-left: 6px solid var(--color-primary-dark);
  border-radius: 0px 4px 4px 0px;
  padding: 10px 10px 0px 10px;
  margin: 10px 0px 10px 0px;
@@ -187,18 +177,17 @@ boxy blue
 }
 
 .boxy::before {
+  background-color: var(--color-primary-dark) !important;
+}
+
+.boxy-grey {
+  color: var(--color-text);
+  background-color: var(--color-boxy-bg);
+  border-color: var(--color-border);
+}
+
+.boxy-grey::before {
   background-color: var(--color-border) !important;
-}
-
-.boxy-primary {
-  color: var(--color-primary);
-  background-color: var(--color-primary-light);
-  border-color: #e4eec7;
-  border-left-color: var(--color-primary);
-}
-
-.boxy-primary::before {
-  background-color: var(--color-primary) !important;
 }
 
 .boxy-orange {
@@ -552,6 +541,7 @@ button.btn {
  width: 35px;
 }
 
+/* accordion buttons by themselves or inside boxy-primary by default take primary colour */
 button.btn-collapse {
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
@@ -571,6 +561,43 @@ button.btn-collapse:hover, button.btn-collapse:active, button.btn-collapse:focus
     -moz-box-shadow: 0px 3px 40px -9px var(--color-primary);
 }
 
+/* accordion buttons inside default boxy by default takes primary colour */
+.boxy button.btn-collapse {
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+  color: white;
+  border-color: var(--color-primary);
+  background-color: var(--color-primary);
+}
+
+.boxy button.btn-collapse:hover, .boxy button.btn-collapse:active, .boxy button.btn-collapse:focus {
+    background-color: white;
+    color: var(--color-primary);
+    border-color: white;
+    box-shadow: 0px 3px 40px -9px var(--color-primary);
+    -webkit-box-shadow: 0px 3px 40px -9px var(--color-primary);
+    -moz-box-shadow: 0px 3px 40px -9px var(--color-primary);
+}
+
+/* accordion buttons inside boxy-grey by default take grey colour */
+.boxy-grey button.btn-collapse {
+  color: white;
+  border-color: var(--color-border);
+  background-color: var(--color-border);
+}
+
+.boxy-grey button.btn-collapse:hover {
+    background-color: white;
+    color: var(--color-border);
+    border-color: white;
+    box-shadow: 0px 3px 30px -9px var(--color-border);
+    -webkit-box-shadow: 0px 3px 30px -9px var(--color-border);
+    -moz-box-shadow: 0px 3px 30px -9px var(--color-border);
+}
+
+/* accordion buttons inside boxy-orange by default takes orange colour */
 .boxy-orange button.btn-collapse, button.btn-collapse-optional {
   color: white;
   border-color: var(--color-optional);
@@ -586,6 +613,7 @@ button.btn-collapse:hover, button.btn-collapse:active, button.btn-collapse:focus
     -moz-box-shadow: 0px 3px 30px -9px var(--color-optional);
 }
 
+/* accordion buttons inside boxy-warning by default takes yellow colour */
 .boxy-warning button.btn-collapse, button.btn-collapse-warning {
   color: white;
   border-color: #8a6d3b;
@@ -601,6 +629,7 @@ button.btn-collapse:hover, button.btn-collapse:active, button.btn-collapse:focus
     -moz-box-shadow: 0px 3px 30px -9px #8a6d3b;
 }
 
+/* accordion buttons inside boxy-success by default takes green colour */
 .boxy-success button.btn-collapse, button.btn-collapse-success {
   color: white;
   border-color: #3c763d;
@@ -616,6 +645,7 @@ button.btn-collapse:hover, button.btn-collapse:active, button.btn-collapse:focus
     -moz-box-shadow: 0px 3px 30px -9px #3c763d;
 }
 
+/* accordion buttons inside boxy-danger by default takes red colour */
 .boxy-danger button.btn-collapse, button.btn-collapse-danger {
   color: white;
   border-color: #a94442;
@@ -630,6 +660,8 @@ button.btn-collapse:hover, button.btn-collapse:active, button.btn-collapse:focus
     -webkit-box-shadow: 0px 3px 30px -9px #a94442;
     -moz-box-shadow: 0px 3px 30px -9px #a94442;
 }
+
+/* accordion buttons inside boxy-info by default takes blue colour */
 
 .boxy-info button.btn-collapse, button.btn-collapse-info {
   color: white;
@@ -730,7 +762,7 @@ ul.nav a:hover {
 
 /* footer ------------------------------------------------------------------- */
 
-container-footer {
+.footer-container {
   max-width: 940px !important;
 }
 

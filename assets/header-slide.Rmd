@@ -15,7 +15,7 @@ htmltools::tagList(fa)
 library(knitr) # runs pandoc
 library(bookdown) # for markdown
 
-color_primary <- "#96b43f"
+color_primary <- "#95b540"
 color_text <- "#424949"
 
 # turn off terminal colors
