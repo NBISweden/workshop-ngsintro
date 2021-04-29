@@ -1,7 +1,7 @@
 #!/bin/bash
 ## 2020 Roy Francis
 
-#SBATCH -A g2020009
+#SBATCH -A g2021013
 #SBATCH -p core
 #SBATCH -n 1
 #SBATCH -t 2:00:00
@@ -25,7 +25,7 @@
 ## Runs bonus functional annotation
 ## Runs bonus R plots
 
-## INSTRUCTIONS TO RUN THIS SCRIPT 
+## INSTRUCTIONS TO RUN THIS SCRIPT
 ## Add your email to the SBATCH command
 ## Provide path to base directory
 ## Make sure the modules are available

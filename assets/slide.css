@@ -6,7 +6,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto|Source+Sans+Pro:300,400,600|Ubuntu+Mono&subset=latin-ext');
 
 :root {
-  --color-primary: #4C979F;
+  --color-primary: #96b43f;
   --color-border: #e8e8e8;
   --color-text: #202020;
   --color-code-bg: #f9f9f9;
@@ -191,16 +191,13 @@ p {
 .title-slide {
   background-image: url(cover.jpg);
   background-size: cover;
-  vertical-align: bottom !important; 
   text-align: left !important;
-  padding-bottom: 3em;
 }
 
 /* end slide image */
 .end-slide {
   background-image: url(end.jpg);
   background-size: cover;
-  vertical-align: bottom !important; 
   text-align: left !important;
   padding-bottom: 2em;
   padding-left: 80px;
@@ -212,9 +209,9 @@ p {
   position: absolute;
   content:url(logo.svg);
   /* height:96px; */
-  width:300px;
-  margin-top: 1em;
-  right: 2.5em;
+  width:80px;
+  margin-top: 2.5em;
+  left: 2.5em;
   /* -webkit-filter: drop-shadow(1px 1px 3px grey); */
   /* filter: drop-shadow(1px 1px 3px grey); */
 }
@@ -227,10 +224,8 @@ p {
 .title-slide h1 {
   text-align: left;
   font-weight: 600;
-  border-bottom-style: solid;
-  border-bottom-color: var(--color-primary);
-  padding-bottom: 0.3em;
-  margin-bottom: 0.3em;
+  padding-bottom: 0;
+  margin-bottom: 0;
   color: var(--color-primary);
 }
 
@@ -239,13 +234,14 @@ p {
   font-weight: 500;
   color: #808080;
   margin-bottom: 0.5em;
-  margin-top: 0.3em;
+  margin-top: 0.2em;
 }
 
 .title-slide h3 {
   font-size: 120% !important;
   text-align: left;
   font-weight: 500;
+  color: #808080;
   margin-bottom: 0;
   margin-top: 0.1em;
 }
@@ -288,11 +284,11 @@ img, video, iframe {
 /* logo every slide top right */
 .remark-slide-content:before {
   content: url(logo.svg);
-  width: 180px;
+  width: 60px;
   float: right;
   right: 4em;
   top: 0;
-  margin-top: 0.4em;
+  margin-top: 0.55em;
 }
 
 /* image size classes */

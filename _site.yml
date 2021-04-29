@@ -2,36 +2,36 @@ name: Introduction to Bioinformatics using NGS data
 # output directory used on gh-pages branch. format: YYMM
 output_dir: 2105
 # used site-wide wherever uppmax project ids are used
-uppmax_project: g2020009
-nsc_project: snic2020-13-57
+uppmax_project: g2021013
+nsc_project: snic2021-22-101
 # uppmax reservation ids. used site-wide
-uppmax_res_1: g2020009_09
-uppmax_res_2: g2020009_10
-uppmax_res_3: g2020009_11
-uppmax_res_4: g2020009_12
-uppmax_res_5: g2020009_13
-# location options are linkoping, lund, umea or uppsala. For rendering the info page.
-location: uppsala
+uppmax_res_1: g2021013_09
+uppmax_res_2: g2021013_10
+uppmax_res_3: g2021013_11
+uppmax_res_4: g2021013_12
+uppmax_res_5: g2021013_13
+# location options are linkoping, lund, umea, uppsala or online. For rendering the info page.
+location: online
 assistants:
  - "AJ: Anna Johansson"
  - "AS: Anders Sjölander"
- - "BS: Bengt Sennblad"
- - "CM: Claudio Mirabello"
  - "DA: Dag Ahren"
  - "DE: Diana Ekman"
- - "IH: Ingrid Hyltander"
- - "LM: Lokesh Manoharan"
- - "LV: Louella Vasquez"
+ - "JN: Jon Ander Nouvella"
+ - "JT: Jeanette Tångrot"
+ - "LS: Lucile Soler"
  - "ML: Malin Larsson"
  - "MD: Martin Dalhö"
  - "NR: Nima Rafati"
+ - "NN: Nina Norgren"
  - "OP: Olga Petterson"
  - "RF: Roy Francis"
+ - "SR: Susanne Reinsbach"
 
 favicon: assets/favicon.png
 exclude: ["docs","README.md","schedule.csv","LICENSE","LICENSE.md","scripts","tmprepo"]
 navbar:
-  title: '<img src="assets/logo.svg" id="logo" style="height:22px;margin:0;"/>'
+  title: '<img src="assets/logo.svg" id="logo" style="height:20px;margin:0;"/>'
   type: default
   logo:
     image: "assets/logo.svg"
@@ -45,6 +45,9 @@ navbar:
       href: home_content.html
     - text: Precourse
       href: home_precourse.html
+    - text: Info
+      href: home_info.html
+
 output:
   bookdown::html_document2:
     highlight: textmate

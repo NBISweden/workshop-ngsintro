@@ -52,21 +52,34 @@ if(loc=="linkoping") {
 ```
 
 ```{r,eval=TRUE,echo=FALSE,block.title=NULL}
-address <- paste(unlist(strsplit(dfr$venue_address,split=",")),collapse="<br>")
-leaflet(height=450,width="auto") %>%
-  addTiles(urlTemplate='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png') %>%
-  addMarkers(lat=dfr$venue_lat,lng=dfr$venue_lon,popup=address) %>%
-  setView(lat=dfr$venue_lat,lng=dfr$venue_lon,zoom=15)
+if(loc!="online") {
+  address <- paste(unlist(strsplit(dfr$venue_address,split=",")),collapse="<br>")
+  leaflet(height=450,width="auto") %>%
+    addTiles(urlTemplate='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png') %>%
+    addMarkers(lat=dfr$venue_lat,lng=dfr$venue_lon,popup=address) %>%
+    setView(lat=dfr$venue_lat,lng=dfr$venue_lon,zoom=15)
+}
 ```
 
-## Travel info
+```{r,eval=TRUE,echo=FALSE,block.title=NULL,results="asis"}
+if(loc=="online") {
+  cat("The workshop is online only. Zoom and Slack links are sent to participants by email.")
+}
+```
 
 ```{r,eval=TRUE,echo=FALSE,results="asis",block.title=NULL}
-cat(dfr$description)
+if(loc!="online") {
+  cat("## Travel info")
+  cat("\n",dfr$description)
+}
 ```
 
 ## Contact
 
-If you would like to get in touch with us regarding the contents of this workshop, kindly submit an issue on the Github [issues](https://github.com/NBISweden/workshop-ngsintro/issues) page.
+This workshop is run by the **National Bioinformatics Infrastructure Sweden (NBIS)** in collaboration with **National Genomics Infrastructure (NGI)**. Both, NGI and NBIS are platforms at SciLifeLab.
+
+If you would like to get in touch with us regarding this workshop, please contact us at **edu.intro-ngs [at] nbis.se**.
 
 ***
+
+<img src="assets/logo1.svg" style="height:26px;">

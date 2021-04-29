@@ -48,6 +48,7 @@ Checking your request and approving your account requires some manual work, so y
 
 <div class="boxy boxy-warning boxy-exclamation">
 **Note:** You will get one username & password for the account on UPPMAX, and one username and password for the account on NSC. Please keep track of both, we will tell you when to use which account during the workshop.
+
 </div>
 
 ### 2. Install tools for SSH & SFTP access
@@ -58,7 +59,7 @@ Checking your request and approving your account requires some manual work, so y
 
 You need a program to connect to a remote cluster (UPPMAX and NSC). Linux and Mac users already have terminal on their systems. If you are on a Windows system, we recommend [MobaXterm](http://mobaxterm.mobatek.net). It is recommended that you INSTALL the program and not use the portable version. MobaXterm also has an integrated SFTP file browser.
 
-#### 2.2 XQuartz 
+#### 2.2 XQuartz
 
 [![](data/common/xquartz.png)](https://www.xquartz.org/)
 
@@ -75,7 +76,7 @@ When you need to transfer data between the remote cluster and your computer, you
 ### 3. Test the connection to UPPMAX
 
 <div class="boxy boxy-primary boxy-lightbulb">
-For this step, you will have to use the terminal a bit. You can get started by following **Tutorial One** at this link *[Unix tutorial for beginners](http://www.ee.surrey.ac.uk/Teaching/Unix/)*. You must use [https://scilifelab.github.io/courses/ngsintro/common/emu/](https://scilifelab.github.io/courses/ngsintro/common/emu/) [(or this mirror)](https://bellard.org/jslinux/vm.html?url=https://bellard.org/jslinux/buildroot-x86.cfg) to try the commands in the tutorial, so that you don't mess up any real world system. If you any questions regarding this tutorial contact: *martin.dahlo@scilifelab.uu.se*.
+For this step, you will have to use the terminal a bit. You can get started by following **Tutorial One** at this link *[Unix tutorial for beginners](http://www.ee.surrey.ac.uk/Teaching/Unix/)*. You can use [https://scilifelab.github.io/courses/ngsintro/common/emu/](https://scilifelab.github.io/courses/ngsintro/common/emu/) [(or this mirror)](https://bellard.org/jslinux/vm.html?url=https://bellard.org/jslinux/buildroot-x86.cfg) to try the commands in the tutorial, so that you don't mess up any real world system. If you any questions regarding this tutorial contact: *martin.dahlo [at] scilifelab.uu.se*.
 </div>
 
 **Connect to UPPMAX:** Open the terminal (Windows users can use MobaXterm) and type `ssh -Y user@rackham.uppmax.uu.se`, then enter your password. The password will not be visible as you type.
@@ -101,75 +102,6 @@ Please install IGV on your local system before the start of the workshop.
 [![](data/common/IGVlogo.png)](https://www.broadinstitute.org/igv/)  
 
 **Download IGV** (Integrated Genome Browser) from the [Broad Institute](https://www.broadinstitute.org/igv/) on your own computer and have the mouse genome (mm10) as well as the human genome (hg19) available.
-
-#### 4.3 R
-
-We will use R on Uppmax and therefore, you do not need to install it on your own system. Optionally, if you would like to try it out on your own system, instructions are given below.
-
-<div class="boxy boxy-clipboard-list boxy-orange">
-**Optional**
-
-Install R and RStudio on your system.
-
-[![](data/common/r.png)](https://cloud.r-project.org/)
-
-<i class="fas fa-chevron-circle-right"></i> **Install R statistical software** from [r-project.org](https://cloud.r-project.org/). If you have an old version of R and you do not use it, uninstall it and then install a newer version. Make sure you have one of the recent versions of R (Preferably one version older than the latest). For Windows users, it is recommended that you DO NOT install to `C:\Program Files\R\`. Instead, install to `C:\R\`.
-
-[![](data/common/rstudio.png)](https://www.rstudio.com/products/rstudio/download/)
-
-<i class="fas fa-chevron-circle-right"></i> **Install [RStudio](https://www.rstudio.com/products/rstudio/download/)**. RStudio provides you with tools like code editor with highlighting, project management, version control, package building, debugger, profiler and more.
-
-<i class="fas fa-chevron-circle-right"></i> Extra R packages used in the workshop exercises (if any) are listed below. It is recommended that you install this in advance. Simply copy and paste the code into R.
-
-For Linux and Mac users, you may have to install some extra OS specific libraries before installing the R packages. Pick the packages as needed based on your system below.
-
-**libcurl**
-
-* deb: `libcurl4-openssl-dev` (Debian, Ubuntu, etc)
-* rpm: `libcurl-devel` (Fedora, CentOS, RHEL)
-* csw: `libcurl_dev` (Solaris)
-
-**libssl**
-
-* deb: `libssl-dev` (Debian, Ubuntu, etc)
-* rpm: `openssl-devel` (Fedora, CentOS, RHEL)
-* csw: `libssl_dev` (Solaris)
-* brew: `openssl@1.1` (Mac OSX)
-
-**libxml2**
-
-* deb: `libxml2-dev` (Debian, Ubuntu, etc)
-* rpm: `libxml2-devel` (Fedora, CentOS, RHEL)
-* csw: `libxml2_dev` (Solaris)
-
-`libudunits2-dev`  
-`libopenblas-base`
-
-Install the R packages. Simply copy and paste the code into R.
-
-```{r,eval=TRUE,block.title=NULL,echo=FALSE,comment="",class.output="r"}
-# this code block reads package names from '_site.yml' and prints them as installation instruction.
-
-pkg <- yaml::read_yaml("_site.yml")
-
-if(!is.null(pkg$packages$packages_cran_student)) {
- cat("# install from cran\n")
- cat(paste0("install.packages(c('",paste(pkg$packages$packages_cran_student,sep="",collapse="','"),"'))"))
- cat("\n")
-}
-
-if(!is.null(pkg$packages$packages_bioc_student)) {
- cat("# install from bioconductor\n")
- cat(paste0("BiocManager::install(c('",paste(pkg$packages$packages_bioc_student,sep="",collapse="','"),"'))"))
-}
-
-if(!is.null(pkg$packages$packages_github_student)) {
- cat("# install from github\n")
- cat(paste0("remotes::install_github(c('",paste(pkg$packages$packages_github_student,sep="",collapse="','"),"'))"))
-}
-```
-
-</div>
 
 ***
 
@@ -208,16 +140,17 @@ The syllabus for this workshop are as follows.
 After this workshop you should be able to:
 
 * Describe the basic principles of next generation sequencing.
-* Use the Linux command line interface to manage simple file processing operations, and organize directory structures.
-* Connect to and work on a remote high performance compute cluster.
+* Use the Linux command line interface to manage simple file processing operations, and organise directory structures.
+* Connect to and work on a remote compute cluster.
 * Apply programs in Linux for analysis of NGS data.
 * Summarise the applications of current NGS technologies, including the weakness and strengths of the approaches and when it is appropriate to use which one of them.
 * Explain common NGS file formats.
 * Interpret quality control of NGS reads.
 * Explain the steps involved in variant calling using whole genome sequencing data.
 * Independently perform a basic variant calling workflow on example data.
-* Explain the steps involved in differential gene expression using RNA seq data.
-* Independently perform differential gene expression analysis on example data.
+* Explain the steps involved in a differential gene expression workflow using RNA seq data.
+* Hands-on experience with handling of raw RNA sequencing data, QC and quantification of gene expression.
+* Conceptual understanding of differential gene expression analysis.
 
 
 

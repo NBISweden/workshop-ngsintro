@@ -9,21 +9,21 @@ output:
 ```{r,child="assets/header-lab.Rmd"}
 ```
 
-This page contains links to different lectures (slides) and practical exercises (labs) that are part of this workshop. The links below are similar to that under [Schedule](home_schedule.html) but organised here by topic.
+This page contains links to different lectures (slides) and practical exercises (labs) that are part of this workshop. The links below are similar to that under [Schedule](home_schedule.html) but organised here by topic. The schedule is intended for those following a live workshop (in-person or online).
 
 **Introduction to Linux**
 
-* [Intro to Linux (Slides)](slide_linux_intro.pdf)
-* [Intro to Linux (Lab)](lab_linux_intro.html)
+* [Introduction to Linux (Slides)](slide_linux_intro.pdf)
+* [Introduction to Linux (Lab)](lab_linux_intro.html)
 
 **File types in Linux**
 
-* [Filetypes (Slides)](slide_linux_filetypes.pdf)
-* [Filetypes (Lab)](lab_linux_filetypes.html)  
+* [File types in Bioinformatics (Slides)](slide_linux_filetypes.pdf)
+* [File types in Bioinformatics (Lab)](lab_linux_filetypes.html)  
 
 **Uppmax**
 
-* [Intro to Uppmax (Slides)](slide_uppmax_intro.pdf)
+* [Introduction to UPPMAX (Slides)](slide_uppmax_intro.pdf)
 * [Introduction to UPPMAX (Lab)](lab_uppmax_intro.html)  
 * [UPPMAX Pipelines (Lab)](lab_uppmax_pipeline.html)
 
@@ -31,7 +31,7 @@ This page contains links to different lectures (slides) and practical exercises 
 
 * [Better terminal experience (Slides)](slide_qol_termexp.pdf)
 * [Advanced Linux (Slides)](slide_linux_advanced.pdf)
-* [Advanced linux (Lab)](lab_linux_advanced.html)
+* [Advanced Linux (Lab)](lab_linux_advanced.html)
 
 **Variant-calling workflow**
 
@@ -46,7 +46,7 @@ This page contains links to different lectures (slides) and practical exercises 
 
 **Other**
 
-* [NGS: technologies and challenges (Slides)](slide_sequencing.pdf)
+* [NGS technologies and challenges (Slides)](slide_sequencing.pdf)
 * [NGS Pipelines (Slides)](slide_ngs_pipelines.pdf)
 <!--* [Data management (Slides)](slide_data_management.pdf)-->
 
