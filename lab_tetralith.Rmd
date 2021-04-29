@@ -48,7 +48,7 @@ On Tetralith you enter the *login node*, which is not intended for compute inten
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('tetralith1$ interactive -A ',nscid,' -t 04:00:00 -n 3'))
 ```
-Please adjust the requested time depending on what lab you will be working on.  
+Please adjust the requested time depending on what lab you will be working on.
 After a minute or so you should have gotten your interactive job.
 <div class="boxy boxy-primary boxy-lightbulb">
 Note that your terminal prompt changed to something like `<nsc_username>@n424 $` (or another node name), which means that you are now running on one of the compute nodes.
@@ -83,4 +83,4 @@ All files and folders that you create in `r paste0('/proj/',upid,'/nobackup/nsc_
 cat(paste0('tetralith$ /proj/',nscid,'/users/<nsc_username>/\n'))
 ```
 
-When you have the UPPMAX singularity image up and running you can follow regular lab instructions, except that you should not do the step "connect to UPPMAX" and "logon to a node" in the regular instructions, and you should work in the cluster workspace defined here.
+When you have the UPPMAX singularity image up and running you can follow regular lab instructions, except that you should not connect to UPPMAX or book a node, and you should work in the cluster workspace defined here.
