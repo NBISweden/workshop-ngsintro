@@ -78,6 +78,7 @@ jobs:
           git config --global user.name "gh_action"
 
           # Render website
+          echo "Rendering Rmd files ..."
           Rscript -e "rmarkdown::render_site()"
 
           # Render canvas version of website by changing _site.yml
@@ -91,17 +92,38 @@ jobs:
           #sed 's/include://' | \
           #sed 's/after_body: assets\/footer-lab.html//' > _site.yml
 
+          echo "Removing lab and slide links from schedule for canvas ..."
+          Rscript -e 'x <- read.csv("schedule.csv",sep=";",header=T,stringsAsFactors=F);x$link_lab <- x$link_slide <- NA;write.table(x,"schedule.csv",sep=";",col.names=T,row.names=F,quote=FALSE,na="")'
+          echo "Fixing _site.yml for canvas ..."
           Rscript -e 'y <- yaml::read_yaml("_site.yml"); y$exclude <- append(y$exclude,y$output_dir); y$output_dir <- paste0(y$output_dir,"-canvas"); y$navbar <- NULL; y$output$`bookdown::html_document2`$include <- NULL; yaml::write_yaml(y,"_site.yml");'
 
           ls -lh
           cat _site.yml
+          echo "Rendering Rmd files for canvas ..."
           Rscript -e "rmarkdown::render_site()"
 
-          # Generate PDFs
+          # Modify links and generate PDFs
           cd ${path_export}
           Rscript -e "l <- list.files('.',pattern='slide.+html');if(length(l)!=0) {for(i in 1:length(l)) pagedown::chrome_print(l[i])};"
           cd ..
           cd ${path_export_canvas}
+          # all links (except those starting with #) in all html files are set to open in new tab
+          # all links (those pointing within website and ends with html) in all html files are removed
+          # display links to be fixed
+          echo "Number of links to be corrected:"
+          grep -E '(<a href="[^#][^(https?)&^(www)?].+html.*">)([^(a>).]+)(<\/a>)' *.html | \
+              grep -E '(<a href="[^#][-a-zA-Z0-9@:%._\+~#=/?&]+")(>)' | wc -l
+          echo "List of links to be corrected:"
+          grep -E '(<a href="[^#][^(https?)&^(www)?].+html.*">)([^(a>).]+)(<\/a>)' *.html | \
+              grep -E '(<a href="[^#][-a-zA-Z0-9@:%._\+~#=/?&]+")(>)'
+          echo "Fixing bad links ..."
+          for i in *.html; do
+              sed -E 's/(<a href="[^#][^(https?)&^(www)?].+html.*">)([^(a>).]+)(<\/a>)/\2/g' $i | \
+              sed -E 's/(<a href="[^#][-a-zA-Z0-9@:%._\+~#=/?&]+")(>)/\1 target="_blank">/g' > temp
+              cat temp > $i
+              rm -rf temp
+          done
+          echo "Generating PDFs for HTML slides ..."
           Rscript -e "l <- list.files('.',pattern='slide.+html');if(length(l)!=0) {for(i in 1:length(l)) pagedown::chrome_print(l[i])};"
           cd ..
 
