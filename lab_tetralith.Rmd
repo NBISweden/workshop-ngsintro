@@ -72,7 +72,7 @@ Everything from this point and onwards should be identical to running the exerci
 To close the singularity container  later on just type `exit`in the terminal, but don't do that now.
 
 # Cluster workspace
-While running the UPPMAX singularity container, create a workspace for this exercise. This will be the "cluster workspace" in which you should perform the analyses, as if you would have worked on Uppmax.
+While running the UPPMAX singularity container, create a workspace for this exercise. This will be the "cluster workspace" in which you should perform the analyses, as if you would have worked on UPPMAX.
 The name of the workspace depends on what lab you are working on. For example, if you are working on the introduction to Linux lab then call the workspace "linux_tutorial". Once the workspace is created you should go into it.
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('offline-uppmax$ mkdir /proj/',upid,'/nobackup/<nsc_username>/workspace\n'))
@@ -83,4 +83,4 @@ All files and folders that you create in `r paste0('/proj/',upid,'/nobackup/user
 cat(paste0('tetralith$ /proj/',nscid,'/users/<username>/\n'))
 ```
 
-When you have the UPPMAX singularity image up and running you can follow regular lab instructions, except that you should not do the step "logon to a node" in the regular instructions and you should work in the "cluster workspace" defined here.
+When you have the UPPMAX singularity image up and running you can follow regular lab instructions, except that you should not do the step "connect to UPPMAX" and "logon to a node" in the regular instructions, and you should work in the cluster workspace defined here.
