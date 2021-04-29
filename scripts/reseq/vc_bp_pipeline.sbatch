@@ -63,7 +63,7 @@ start_time=`date +%s`
 echo "Loading modules ..."
 
 ## load modules
-if ( hostname | grep -q uppmax ) ;
+if ( type module | grep -q function );
  then
   module load bioinfo-tools
   module load bwa/0.7.17
