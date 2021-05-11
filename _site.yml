@@ -5,11 +5,11 @@ output_dir: 2105
 uppmax_project: g2021013
 nsc_project: snic2021-22-101
 # uppmax reservation ids. used site-wide
-uppmax_res_1: g2021013_09
-uppmax_res_2: g2021013_10
-uppmax_res_3: g2021013_11
-uppmax_res_4: g2021013_12
-uppmax_res_5: g2021013_13
+uppmax_res_1: g2021013_17
+uppmax_res_2: g2021013_18
+uppmax_res_3: g2021013_19
+uppmax_res_4: g2021013_20
+uppmax_res_5: g2021013_21
 # location options are linkoping, lund, umea, uppsala or online. For rendering the info page.
 location: online
 assistants:
