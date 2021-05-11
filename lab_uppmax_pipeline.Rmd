@@ -100,7 +100,7 @@ Next, copy the lab files from this folder. `-r` means recursively, which means a
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat("$ cp -r <source> <destination>\n")
-cat(paste0("$ cp -r /sw/courses/ngsintro/linux/uppmax_pipeline_exercise /proj/",upid,"/nobackup/<username>/uppmax_pipeline_exercise"))
+cat(paste0("$ cp -r /sw/courses/ngsintro/linux/uppmax_pipeline_exercise/data/* /proj/",upid,"/nobackup/<username>/uppmax_pipeline_exercise"))
 ```
 
 Have a look in **`r paste0("/proj/",upid,"/nobackup/&lt;username&gt;/uppmax_pipeline_exercise")`**.
