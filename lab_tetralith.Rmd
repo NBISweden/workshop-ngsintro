@@ -71,12 +71,14 @@ cat(paste0('offline-uppmax$ source /uppmax_init'))
 Everything from this point and onwards should be identical to running the exercise on UPPMAX.
 To close the singularity container  later on just type `exit`in the terminal, but don't do that now.
 
+**NOTE:** Since this is not actually running on uppmax, none of the queue system commands (`squeue`, `sbatch`, `jobinfo` etc) will work. 
+
 # Cluster workspace
 While running the UPPMAX singularity container, create a workspace for this exercise. This will be the "cluster workspace" in which you should perform the analyses, as if you would have worked on UPPMAX.
 The name of the workspace depends on what lab you are working on. For example, if you are working on the introduction to Linux lab then call the workspace "linux_tutorial". Once the workspace is created you should go into it.
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('offline-uppmax$ mkdir /proj/',upid,'/nobackup/<nsc_username>/workspace\n'))
-cat(paste0('offline-uppmax$ cd /proj/',upid,'/nobackup/<nsc_username>/workspace'))
+cat(paste0('offline-uppmax$ mkdir /proj/',upid,'/nobackup/<nsc_username>/linux_tutorial\n'))
+cat(paste0('offline-uppmax$ cd /proj/',upid,'/nobackup/<nsc_username>/linux_tutorial'))
 ```
 All files and folders that you create in `r paste0('/proj/',upid,'/nobackup/nsc_username/')` while running the UPPMAX singularity container can be reached also from outside of the container, in this folder on Tetralith:
 ```{r,echo=FALSE,comment="",class.output="bash"}
