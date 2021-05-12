@@ -1,0 +1,1 @@
+We had [Simon Andrews](https://www.babraham.ac.uk/science-services/bioinformatics/simon-andrews) from the Babraham institute with us on one of the workshops and he did his own exploration into the dataset from this paper using his tool [SeqMonk](http://www.bioinformatics.babraham.ac.uk/projects/seqmonk/). This is his slides and report.
