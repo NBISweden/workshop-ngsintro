@@ -14,7 +14,7 @@ cd /proj/$projid/nobackup/$user/uppmax_tutorial
 ls -l
 
 echo "4 Run programs"
-module load bioinfo-tools samtools/1.6
+module load bioinfo-tools samtools/1.10
 #samtools
 samtools view -h data.bam
 samtools view -h data.bam > data.sam

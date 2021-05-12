@@ -141,11 +141,11 @@ $
 That did not work, try it again after loading the module:
 
 ```bash
-$ module load bioinfo-tools samtools/1.6
+$ module load bioinfo-tools samtools/1.10
 $ samtools
 
 Program: samtools (Tools for alignments in the SAM format)
-Version: 1.6 (using htslib 1.6)
+Version: 1.10 (using htslib 1.10)
 
 Usage:   samtools <command> [options]
 
@@ -153,13 +153,13 @@ Commands:
   -- Indexing
      dict           create a sequence dictionary file
      faidx          index/extract FASTA
+     fqidx          index/extract FASTQ
      index          index alignment
 
   -- Editing
      calmd          recalculate MD/NM tags and '=' bases
      fixmate        fix mate information
      reheader       replace BAM header
-     rmdup          remove PCR duplicates
      targetcut      cut fosmid regions (for fosmid pool only)
      addreplacerg   adds or replaces RG tags
      markdup        mark duplicates
@@ -177,6 +177,7 @@ Commands:
 
   -- Statistics
      bedcov         read depth per BED region
+     coverage       alignment depth and percent coverage
      depth          compute the depth
      flagstat       simple stats
      idxstats       BAM index stats
@@ -188,6 +189,7 @@ Commands:
      tview          text alignment viewer
      view           SAM<->BAM<->CRAM conversion
      depad          convert padded BAM to unpadded BAM
+
 ```
 
 <i class="fas fa-exclamation-circle"></i> All modules are unloaded when you disconnect from UPPMAX, so you will have to load the modules again every time you log in. If you load a module in a terminal window, it will not affect the modules you have loaded in another terminal window, even if both terminals are connected to UPPMAX. Each terminal is independent of the others.
@@ -251,10 +253,10 @@ To view which module you have loaded at the moment, type
 $ module list
 
 Currently Loaded Modules:
-  1) uppmax   2) bioinfo-tools   3) samtools/1.6
+  1) uppmax   2) bioinfo-tools   3) samtools/1.10
 ```
 
-Let's say that you want to make sure you are using the latest version samtools. Look at which version you have loaded at the moment (`samtools/1.6`).
+Let's say that you want to make sure you are using the latest version samtools. Look at which version you have loaded at the moment (`samtools/1.10`).
 
 Now type
 
