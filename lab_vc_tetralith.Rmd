@@ -137,7 +137,7 @@ We will use a singularity container (a virtual computer) that mimics the UPPMAX 
 Use this command to start the singularity container:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('n424$ singularity shell -B /proj/",nscid,"/users:/proj/",upid,"/nobackup /proj/",nscid,"/ngsintro.sif'))
+cat(paste0('n424$ singularity shell -B /proj/',nscid,'/users:/proj/',upid,'/nobackup /proj/',nscid,'/ngsintro.sif'))
 ```
 
 <div class="boxy boxy-primary boxy-lightbulb">
