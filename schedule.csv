@@ -1,6 +1,6 @@
 date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_youtube;link_room
 17/05/2021;Online;09:00;09:20;Welcome;Martin Dahlö / Anders Sjölander;;;;;
-;;09:20;10:00;Presentations (Breakout);Martin Dahlö / Anders Sjölander;;;;;
+;;09:20;10:00;Presentations;Martin Dahlö / Anders Sjölander;;;;;
 ;;10:00;11:00;Intro to Linux;Martin Dahlö / Anders Sjölander;JT,LS,NR;slide_linux_intro.pdf;;https://youtu.be/bPsereCdJT8;
 ;;11:00;12:00;Intro to Linux;Martin Dahlö / Anders Sjölander;JT,LS,NR;;lab_linux_intro.html;;
 ;;12:00;13:00;Lunch;;;;;;
