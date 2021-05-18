@@ -9,11 +9,13 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: ubuntu-18.04, r: '4.0'}
+          - {os: ubuntu-18.04, r: '4.0.0'}
     runs-on: ${{ matrix.config.os }}
     steps:
       - uses: actions/checkout@v1
       - uses: r-lib/actions/setup-r@master
+        with:
+          r-version: ${{ matrix.config.r }}
       - uses: r-lib/actions/setup-pandoc@master
         with:
           r-version: ${{ matrix.config.r }}
