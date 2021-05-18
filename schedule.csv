@@ -1,10 +1,10 @@
 date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_youtube;link_room
 17/05/2021;Online;09:00;09:20;Welcome;Martin Dahlö / Anders Sjölander;;;;;
 ;;09:20;10:00;Presentations (Breakout);Martin Dahlö / Anders Sjölander;;;;;
-;;10:00;11:00;Intro to Linux;Martin Dahlö / Anders Sjölander;JT,LS,NR;slide_linux_intro.pdf;;;
+;;10:00;11:00;Intro to Linux;Martin Dahlö / Anders Sjölander;JT,LS,NR;slide_linux_intro.pdf;;https://youtu.be/bPsereCdJT8;
 ;;11:00;12:00;Intro to Linux;Martin Dahlö / Anders Sjölander;JT,LS,NR;;lab_linux_intro.html;;
 ;;12:00;13:00;Lunch;;;;;;
-;;13:00;14:00;Intro to Uppmax;Martin Dahlö / Anders Sjölander;LS,NR;slide_uppmax_intro.pdf;;;
+;;13:00;14:00;Intro to Uppmax;Martin Dahlö / Anders Sjölander;LS,NR;slide_uppmax_intro.pdf;;https://youtu.be/-lFlJbp2LE0;
 ;;14:00;17:00;Intro to Uppmax;Martin Dahlö / Anders Sjölander;LS,NR;;lab_uppmax_intro.html;;
 18/05/2021;Online;09:00;09:30;File types in Bioinformatics;Martin Dahlö / Anders Sjölander;JT,NR;slide_linux_filetypes.pdf;;;
 ;;09:30;10:00;File types in Bioinformatics;Martin Dahlö / Anders Sjölander;JT,NR;;lab_linux_filetypes.html;;
