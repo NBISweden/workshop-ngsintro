@@ -131,6 +131,7 @@ class: spaced
 .citation[
 .cite[<i class="fas fa-link"></i> Busby, Michele A., *et al.* "Scotty: a web tool for designing RNA-Seq experiments to measure differential gene expression." [Bioinformatics 29.5 (2013): 656-657](https://academic.oup.com/bioinformatics/article/29/5/656/252753)]  
 .cite[<i class="fas fa-link"></i> Marioni, John C., *et al.* "RNA-seq: an assessment of technical reproducibility and comparison with gene expression arrays." [Genome research (2008)](https://genome.cshlp.org/content/18/9/1509.long)]  
+.cite[<i class="fas fa-link"></i> Hart, S. N., Therneau, T. M., Zhang, Y., Poland, G. A., & Kocher, J. P. (2013). Calculating sample size estimates for RNA sequencing data. [Journal of computational biology, 20(12), 970-978](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3842884/).]  
 .cite[<i class="fas fa-link"></i> Schurch, Nicholas J., *et al.* "How many biological replicates are needed in an RNA-seq experiment and which differential expression tool should you use?." [Rna (2016)](http://rnajournal.cshlp.org/content/early/2016/03/30/rna.053959.115.abstract)]  
 .cite[<i class="fas fa-link"></i> Zhao, Shilin, *et al.* "RnaSeqSampleSize: real data based sample size estimation for RNA sequencing." [BMC bioinformatics 19.1 (2018): 191](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-018-2191-5)]  
 ]
@@ -215,7 +216,7 @@ name: sequencing
 .citation[
 .cite[<i class="fas fa-link"></i> Chhangawala, Sagar, et al. "The impact of read length on quantification of differentially expressed genes and splice junction detection." [Genome biology 16.1 (2015): 131](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4531809/)]  
 .cite[<i class="fas fa-link"></i> Corley, Susan M., et al. "Differentially expressed genes from RNA-Seq and functional enrichment results are affected by the choice of single-end versus paired-end reads and stranded versus non-stranded protocols." [BMC genomics 18.1 (2017): 399](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5442695/)]  
-.cite[<i class="fas fa-link"></i> Liu, Yuwen, Jie Zhou, and Kevin P. White. "RNA-seq differential expression studies: more sequence or more replication?." [Bioinformatics 30.3 (2013): 301-304](https://academic.oup.com/bioinformatics/article/30/3/301/228651)]
+.cite[<i class="fas fa-link"></i> Liu, Yuwen, Jie Zhou, and Kevin P. White. "RNA-seq differential expression studies: more sequence or more replication?." [Bioinformatics 30.3 (2013): 301-304](https://academic.oup.com/bioinformatics/article/30/3/301/228651)]  
 .cite[<i class="fas fa-link"></i> Comparison of PE and SE for RNA-Seq, [SciLifeLab](https://ngisweden.scilifelab.se/file/1540-1_Comparison_of_PE_and_SE_for_RNA-seq.pdf)]  
 ]
 
@@ -782,6 +783,13 @@ name: dge-1
 
 ## DGE
 
+.size-90[![](data/rnaseq/dge.png)]
+
+---
+name: dge-2
+
+## DGE
+
 - DESeq2, edgeR (Neg-binom > GLM > Test), Limma-Voom (Neg-binom > Voom-transform > LM > Test)
 - DESeq2 `~age+condition`
   - Estimate size factors `estimateSizeFactors()`
@@ -829,7 +837,7 @@ par(mfrow=c(1,1))
 ]
 
 ---
-name: dge-2
+name: dge-3
 
 ## DGE
 
@@ -873,7 +881,7 @@ low counts [2]     : 0, 0%
 ```
 
 ---
-name: dge-3
+name: dge-4
 
 ## DGE
 
