@@ -13,19 +13,26 @@ uppmax_res_5: g2021013_21
 # location options are linkoping, lund, umea, uppsala or online. For rendering the info page.
 location: online
 assistants:
+ - "AA: Adam Ameur"
+ - "AB: Åsa Björklund"
+ - "AGM: Agata Smialowska"
  - "AJ: Anna Johansson"
  - "AS: Anders Sjölander"
  - "DA: Dag Ahren"
  - "DE: Diana Ekman"
- - "JL: Julie Lorent"
- - "JN: Jon Ander Nouvella"
  - "JT: Jeanette Tångrot"
+ - "JR: Johan Reimegård"
+ - "JN: Jon Ander Nouvella"
+ - "JL: Julie Lorent"
+ - "LM: Lokeshwaran Manoharan"
  - "LS: Lucile Soler"
+ - "MP: Mahesh Panchal"
  - "ML: Malin Larsson"
  - "MD: Martin Dalhö"
  - "NR: Nima Rafati"
  - "NN: Nina Norgren"
  - "OP: Olga Petterson"
+ - "PC: Paulo Czarnewski"
  - "RF: Roy Francis"
  - "SR: Susanne Reinsbach"
 
