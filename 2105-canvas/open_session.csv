@@ -1,0 +1,9 @@
+room;topic;staff
+Room 1;Whole genome sequencing, variant calling;Anna Johansson, Malin Larsson
+Room 2;Bulk RNA-Seq, small RNA-Seq;Julie Lorent, Johan Reimegård, Roy Francis
+Room 3;Single-cell RNA-Seq;Åsa Björklund, Paulo Czarnewski
+Room 4;Genome and transcriptome assembly, annotation;Lucile Soler, Mahesh Panchal
+Room 5;Epigenetics, Chip-Seq, Crispr-Cas;Agata Smialowska
+Room 6;Metagenomics;Dag Ahrén, Lokeshwaran Manoharan
+Room 7;NGI, wet-lab, library-prep, long-read sequencing;Olga Petterson, Adam Ameur
+Room 8;Bash, Uppmax, Computing;Martin Dahlö
