@@ -506,6 +506,11 @@ a:hover, table a:hover {
   text-decoration: underline;
 }
 
+a:focus, table a:focus{
+  color: var(--color-primary-dark);
+  text-decoration: underline;
+}
+
 /* table even shading colour */
 .even {
     background-color: var(--color-code-bg);
