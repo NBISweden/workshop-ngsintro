@@ -170,7 +170,7 @@ jobs:
 
           printf "All current and previous workshop materials are listed below.\n\n" > index.md
           printf "<div style='display:block;'><p style='line-height:2;'>\n" >> index.md
-          dirs=$(ls -d */ | sed 's/\///' | tac)
+          dirs=$(ls -d [0-9]*[0-9]/ | sed 's/\///' | tac)
           for i in ${dirs[@]}
           do
           	if [ ${i:2:2} -lt 1 ] || [ ${i:2:2} -gt 12 ]
