@@ -162,18 +162,25 @@ jobs:
           ls -lh
 
           # Create index file
-          url_git=$(git config --get remote.origin.url)
-          echo "Repo: $url_git"
-          str_user=$(echo $url_git | sed -E 's/http.+github.com\/|\.git//g' | sed 's/\/.*//')
+          echo "Full repo: ${GITHUB_REPOSITORY}"
+          str_user=$(dirname ${GITHUB_REPOSITORY})
           echo "User: $str_user"
+          repo=$(basename ${GITHUB_REPOSITORY})
+          echo "Repo: $repo"
 
           printf "All current and previous workshop materials are listed below.\n\n" > index.md
           printf "<div style='display:block;'><p style='line-height:2;'>\n" >> index.md
-          months=(Zero Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec)
-          dirs=$(ls -d [0-9]*[0-9]/ | sed 's/\///' | tac)
-          for i in $dirs
+          dirs=$(ls -d */ | sed 's/\///' | tac)
+          for i in ${dirs[@]}
           do
-           printf "<span style='display:block;'><a href='https://${str_user}.github.io/${repo}/${i}/'>20${i:0:2} ${months[${i:(-2)}]}</a></span>" >> index.md
+          	if [ ${i:2:2} -lt 1 ] || [ ${i:2:2} -gt 12 ]
+          		then echo "Month: ${i:2:2}. Last 2 values in output_dir must be a month between 01 and 12."
+          	fi
+          	# This code works for year 2000 and later
+          	printf -v thedate '2000-01-01 +%s years +%s months -1 day' "${i:0:2}" "${i:2}"
+          	dt=$(date -d "$thedate" +'%Y %b')
+          	echo $dt
+          	printf "<span style='display:block;'><a href='https://${str_user}.github.io/${repo}/${i}/'>$dt</a></span>" >> index.md
           done
           printf "</p></div>" >> index.md
 
