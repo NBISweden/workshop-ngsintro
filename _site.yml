@@ -1,6 +1,6 @@
 name: Introduction to Bioinformatics using NGS data
 # output directory used on gh-pages branch. format: YYMM
-output_dir: 2105
+output_dir: 2111
 # used site-wide wherever uppmax project ids are used
 uppmax_project: g2021013
 nsc_project: snic2021-22-101
