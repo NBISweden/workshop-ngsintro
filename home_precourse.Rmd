@@ -13,7 +13,6 @@ output:
 library(yaml)
 upid <- yaml::read_yaml("_site.yml")$uppmax_project
 nscid <- yaml::read_yaml("_site.yml")$nsc_project
-
 ```
 
 # Precourse {.tabset .tabset-fade}
@@ -46,9 +45,8 @@ Finally you need to request a login account to NSC. Login to SUPR and go to the 
 
 Checking your request and approving your account requires some manual work, so you might have to wait for some time (up to a working day) before the next step. When the account is ready to be created, you will receive an email to your registered email address (shown in your SUPR contact information) with information on how to proceed. You will get a URL that you use to choose the password (within seven days). When that has been done, the account ready for use within 15 minutes and you can then login using your chosen password.
 
-<div class="boxy boxy-warning boxy-exclamation">
+<div class="boxy boxy-yellow boxy-exclamation">
 **Note:** You will get one username & password for the account on UPPMAX, and one username and password for the account on NSC. Please keep track of both, we will tell you when to use which account during the workshop.
-
 </div>
 
 ### 2. Install tools for SSH & SFTP access
@@ -75,7 +73,7 @@ When you need to transfer data between the remote cluster and your computer, you
 
 ### 3. Test the connection to UPPMAX
 
-<div class="boxy boxy-primary boxy-lightbulb">
+<div class="boxy boxy-grey boxy-lightbulb">
 For this step, you will have to use the terminal a bit. You can get started by following **Tutorial One** at this link *[Unix tutorial for beginners](http://www.ee.surrey.ac.uk/Teaching/Unix/)*. You can use [https://scilifelab.github.io/courses/ngsintro/common/emu/](https://scilifelab.github.io/courses/ngsintro/common/emu/) [(or this mirror)](https://bellard.org/jslinux/vm.html?url=https://bellard.org/jslinux/buildroot-x86.cfg) to try the commands in the tutorial, so that you don't mess up any real world system. If you any questions regarding this tutorial contact: *martin.dahlo [at] scilifelab.uu.se*.
 </div>
 
@@ -83,7 +81,7 @@ For this step, you will have to use the terminal a bit. You can get started by f
 
 **Create a user folder: ** Go to ``r paste0("/proj/",upid,"/nobackup/")`` and create a directory with your username. For example `mkdir jody`. You will work inside this directory for the workshop. For example ``r paste0("/proj/",upid,"/nobackup/jody")``. If you cannot write to the folder, the most likely reason is that you have not requested access to the workshop project via SUPR. This is described in step 1 above.
 
-<div class="boxy boxy-warning boxy-exclamation">
+<div class="boxy boxy-yellow boxy-exclamation">
 **Note:** It may take an hour or so from request approval, before you can actually write to the folder. We will check before the workshop that all students have logged in and done this, so do not forget!
 </div>
 

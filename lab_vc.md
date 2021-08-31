@@ -3,34 +3,20 @@ title: "Variant Calling Workflow"
 subtitle: From reads to short variants
 ---
 
-```{r,child="assets/header-lab.Rmd"}
-```
 
-```{r,eval=TRUE,include=FALSE}
-library(yaml)
-upid <- yaml::read_yaml("_site.yml")$uppmax_project
-upres3 <- yaml::read_yaml("_site.yml")$uppmax_res_3
-upres4 <- yaml::read_yaml("_site.yml")$uppmax_res_4
-```
+<!-- rmd lab header -->
 
-```{css,include=FALSE}
-.workLocally{
-background-color: red;
-}
-```
 
-```{r,include=FALSE}
-## VARIABLES
-datadir <- "/sw/courses/ngsintro/reseq/data"
-fastqdir <- "/sw/courses/ngsintro/reseq/data/fastq"
-refdir <- "/sw/courses/ngsintro/reseq/data/ref"
-bamdir <- "/sw/courses/ngsintro/reseq/data/bam"
-vcfdir <- "/sw/courses/ngsintro/reseq/data/vcf"
-bpbamdir <- "/sw/courses/ngsintro/reseq/data/best_practise_bam"
-bpvcfdir <- "/sw/courses/ngsintro/reseq/data/best_practise_vcf"
-col_uppmax <- "#f4f8e8"
-col_local <- "#e5f4f8"
-```
+
+
+
+<br>
+
+
+
+
+
+
 
 # Introduction {-}
 
@@ -41,9 +27,7 @@ Whole genome sequencing (WGS) is a comprehensive method for analyzing entire gen
 3. If you have time, the last part of the workshop will take you through the GATK best practices for germline short variant detection in three samples. The goal here is that you should learn how to use GATK's documentation so that you can analyze your own samples in the future.    
 
 **General guide**
-
-<div class="boxy boxy-lightbulb">
-
+<div class="boxy boxy-primary boxy-lightbulb">
 * You will work on the computing cluster Rackham at Uppmax
 * In paths, please replace `<username>` with your actual UPPMAX username.
 * In commands, please replace `<parameter>` with the correct parameter, for example your input file name, output file name, directory name, etc.
@@ -56,6 +40,7 @@ Whole genome sequencing (WGS) is a comprehensive method for analyzing entire gen
 * Use output file names that describes what was done in the command.
 * If you change the node you are working on you will need to reload the tool modules. 
 * Google errors, someone in the world has run into EXACTLY the same problem you had and asked about it on a forum somewhere.
+</p>
 </div>
 
 # Data description {-}
@@ -83,20 +68,23 @@ For those interested in the details of the genetic bases for lactose tolerance, 
 
 All input data for this exercise is located in this folder on Rackham:
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0(datadir))
+
+```{.bash}
+/sw/courses/ngsintro/reseq/data
 ```
 
 The fastq files are located in this folder:
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0(fastqdir))
+
+```{.bash}
+/sw/courses/ngsintro/reseq/data/fastq
 ```
 
 Reference files, such as the reference genome in fasta format, are located in this folder: 
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0(refdir))
+
+```{.bash}
+/sw/courses/ngsintro/reseq/data/ref
 ```
 
 # Preparations {-}
@@ -104,7 +92,7 @@ cat(paste0(refdir))
 
 The majority of the analyses in this workshop will be done on UPPMAX, but you will copy some of the resulting files to your laptop. Therefore, please start by creating a folder for this workshop on your laptop, for example a folder called *ngsworkflow* on Desktop. You need to have write permission in this folder. The folder you create here will be referred to as *local workspace* throughout this workshop. 
 
-<div class="boxy boxy-lightbulb">
+<div class="boxy boxy-primary boxy-lightbulb">
 
 **For MobaXterm users**  
 
@@ -129,9 +117,10 @@ $ ssh -Y username@rackham.uppmax.uu.se
 
 Start by creating a workspace for this exercise in your folder under the course's nobackup folder, and then move into it. This folder will be referred to as your *UPPMAX workspace* throughout this workshop.  
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('mkdir /proj/',upid,'/nobackup/<username>/ngsworkflow\n'))
-cat(paste0('cd /proj/',upid,'/nobackup/<username>/ngsworkflow'))
+
+```{.bash}
+mkdir /proj/g2021013/nobackup/<username>/ngsworkflow
+cd /proj/g2021013/nobackup/<username>/ngsworkflow
 ```
   
 ### Symbolic links to data {-}
@@ -139,19 +128,21 @@ cat(paste0('cd /proj/',upid,'/nobackup/<username>/ngsworkflow'))
 The raw data files are located in the [Data](#Data) folder described above.   
 Create a symbolic link to the reference genome in your workspace:  
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('ln -s ',refdir,'/human_g1k_v37_chr2.fasta'))  
+
+```{.bash}
+ln -s /sw/courses/ngsintro/reseq/data/ref/human_g1k_v37_chr2.fasta
 ```
 
 Do the same with the fastq files:  
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('ln -s ',fastqdir,'/HG00097_1.fq\n')) 
-cat(paste0('ln -s ',fastqdir,'/HG00097_2.fq\n'))  
-cat(paste0('ln -s ',fastqdir,'/HG00100_1.fq\n'))
-cat(paste0('ln -s ',fastqdir,'/HG00100_2.fq\n'))
-cat(paste0('ln -s ',fastqdir,'/HG00101_1.fq\n')) 
-cat(paste0('ln -s ',fastqdir,'/HG00101_2.fq\n'))
+
+```{.bash}
+ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00097_1.fq
+ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00097_2.fq
+ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00100_1.fq
+ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00100_2.fq
+ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00101_1.fq
+ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00101_2.fq
 ```
 
 ### Book a node {-}
@@ -160,14 +151,16 @@ Book a compute node (or actually just one core of a node) so that you can run co
 
 Use this reservation on day 1 of variant-calling:
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('salloc -A ',upid,' -t 04:00:00 -p core -n 1 --no-shell --reservation=',upres3,' &'))
+
+```{.bash}
+salloc -A g2021013 -t 04:00:00 -p core -n 1 --no-shell --reservation=g2021013_19 &
 ```
 
 Use this reservation on day 2 of variant-calling:
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('salloc -A ',upid,' -t 04:00:00 -p core -n 1 --no-shell --reservation=',upres4,' &'))
+
+```{.bash}
+salloc -A g2021013 -t 04:00:00 -p core -n 1 --no-shell --reservation=g2021013_20 &
 ```
 
 Once your job allocation has been granted (should not take long) you can connect to the node using `ssh`. To find out the name of your node, use:
@@ -248,7 +241,7 @@ In the call to `BWA mem` you need to add something called a *read group*, which 
 -R "@RG\\tID:readgroupx\\tPU:lanex_flowcellx\\tSM:HG00097\\tLB:libraryx\\tPL:illumina"
 ```
 
-<div class="boxy boxy-yellow boxy-exclamation">
+<div class="boxy boxy-orange boxy-exclamation">
 When running BWA for another sample later on you have to replace *HG00097* in the read group with the new sample name. To learn more about read groups  please read [this article](https://gatk.broadinstitute.org/hc/en-us/articles/360035890671-Read-groups) at GATK forum.  
 </div>
 
@@ -307,8 +300,9 @@ Integrated Genomics Viewer (IGV) provides an interactive visualisation of the re
 
 You also need to download the bam file and the corresponding .bai file to your laptop. 
 Navigate to your [local workspace](#preparelaptop), but do not log in to UPPMAX. Copy the .bam and .bam.bai files you just generated with this command:
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('scp <username>@rackham.uppmax.uu.se:/proj/',upid,'/nobackup/<username>/ngsworkflow/HG00097.bam* .'))
+
+```{.bash}
+scp <username>@rackham.uppmax.uu.se:/proj/g2021013/nobackup/<username>/ngsworkflow/HG00097.bam* .
 ```
 
 Check that the files are now present in your *local workspace* using `ls -lrt`. 
@@ -380,8 +374,9 @@ For more detailed information about vcf files please have a look at [The Variant
 
 Download the vcf file and its index to the *local workspace* on your laptop, just like you did with the bam file and its index earlier. Navigate to your local workspace, but do not log in to UPPMAX. Copy the files that you just generated:
 
-```{r,echo=FALSE,comment="",class.output="bash", class.source="workLocally"}
-cat(paste0('scp <username>@rackham.uppmax.uu.se:/proj/',upid,'/nobackup/<username>/ngsworkflow/HG00097.vcf* .'))
+
+```{.bash}
+scp <username>@rackham.uppmax.uu.se:/proj/g2021013/nobackup/<username>/ngsworkflow/HG00097.vcf* .
 ```
 
 Please replace `<username>` with your UPPMAX user name.  
@@ -405,7 +400,7 @@ If you have time, you can now try joint variant calling in all three samples. Ea
 
 You can run the commands one by one in the terminal as you did before. We have also made intermediary files available in case you don't have time to complete all steps, please see links under each analysis step. 
 
-<div class="boxy boxy-orange boxy-clipboard-list">
+<div class="boxy boxy-warning boxy-clipboard-list">
 **Optional**: If you are interested in programming and have time, you can also try to write a simple SBATCH script and run all steps automatically. Please check out the [SBATCH script](#sbatchscript) section below if you would like to try this.
 </div>
 
@@ -415,11 +410,15 @@ Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exa
   
 If you run out of time, please click below to get paths to precomputed bam files. 
 
-```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
-cat(paste0(bamdir,'/HG00097.bam\n')) 
-cat(paste0(bamdir,'/HG00100.bam\n')) 
-cat(paste0(bamdir,'/HG00101.bam\n')) 
+<p><button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2021052717547755" aria-expanded="false" aria-controls="acc2021052717547755"></button></p><div class="collapse" id="acc2021052717547755"><div class="card card-body"><div class="block-title-parent"><div class="block-title small">sh</div>
+
+```{.sh}
+/sw/courses/ngsintro/reseq/data/bam/HG00097.bam
+/sw/courses/ngsintro/reseq/data/bam/HG00100.bam
+/sw/courses/ngsintro/reseq/data/bam/HG00101.bam
 ```
+
+</div></div></div>
  
 ## Generate g.vcf files {#generategvcf}
 
@@ -433,11 +432,15 @@ Please replace <sample> with the real sample names.
    
 If you run out of time, please click below to get paths to the precomputed g.vcf files.
 
-```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
-cat(paste0(vcfdir,'/HG00097.g.vcf\n')) 
-cat(paste0(vcfdir,'/HG00100.g.vcf\n')) 
-cat(paste0(vcfdir,'/HG00101.g.vcf\n')) 
+<p><button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2021052717549996" aria-expanded="false" aria-controls="acc2021052717549996"></button></p><div class="collapse" id="acc2021052717549996"><div class="card card-body"><div class="block-title-parent"><div class="block-title small">sh</div>
+
+```{.sh}
+/sw/courses/ngsintro/reseq/data/vcf/HG00097.g.vcf
+/sw/courses/ngsintro/reseq/data/vcf/HG00100.g.vcf
+/sw/courses/ngsintro/reseq/data/vcf/HG00101.g.vcf
 ```
+
+</div></div></div>
   
 ## Joint genotyping {#jointgenotyping}
 
@@ -457,10 +460,14 @@ gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g
 
 If you run out of time, please click below to get paths to the precomputed cohort.g.vcf and cohort.vcf files.
 
-```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
-cat(paste0(vcfdir,'/cohort.g.vcf\n')) 
-cat(paste0(vcfdir,'/cohort.vcf\n')) 
+<p><button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2021052717542795" aria-expanded="false" aria-controls="acc2021052717542795"></button></p><div class="collapse" id="acc2021052717542795"><div class="card card-body"><div class="block-title-parent"><div class="block-title small">sh</div>
+
+```{.sh}
+/sw/courses/ngsintro/reseq/data/vcf/cohort.g.vcf
+/sw/courses/ngsintro/reseq/data/vcf/cohort.vcf
 ```
+
+</div></div></div>
 
 ### Questions {#jointvariantcallingquestions}
 
@@ -472,7 +479,7 @@ cat(paste0(vcfdir,'/cohort.vcf\n'))
   
 ## SBATCH script {#sbatchscript}
 
-<div class="boxy boxy-orange boxy-clipboard-list">
+<div class="boxy boxy-warning boxy-clipboard-list">
 **Optional**
 
 This section is only for those of you who want to try to run all steps automatically in bash scripts. 
@@ -522,8 +529,10 @@ If you have an active node reservation you can run the script as a normal bash s
 
 If you would like more help with creating the sbatch script, please look at our example solution:
 
-```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
-cat(paste0('#!/bin/bash
+<p><button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2021052717542877" aria-expanded="false" aria-controls="acc2021052717542877"></button></p><div class="collapse" id="acc2021052717542877"><div class="card card-body"><div class="block-title-parent"><div class="block-title small">sh</div>
+
+```{.sh}
+#!/bin/bash
 #SBATCH -A g2019031
 #SBATCH -p core
 #SBATCH -n 1
@@ -538,14 +547,15 @@ module load GATK/4.1.4.1
 for sample in HG00097 HG00100 HG00101;
 do
   echo "Now analyzing: "$sample
-  bwa mem -R "@RG\\tID:readgroupx\\tPU:flowcellx_lanex\\tSM:"$sample"\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta $sample"_1.fq" $sample"_2.fq" | samtools sort > $sample".bam"
+  bwa mem -R "@RG\tID:readgroupx\tPU:flowcellx_lanex\tSM:"$sample"\tLB:libraryx\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta $sample"_1.fq" $sample"_2.fq" | samtools sort > $sample".bam"
   samtools index $sample".bam"
   gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I $sample".bam" -O $sample".g.vcf"
 done
 gatk --java-options -Xmx7g CombineGVCFs -R human_g1k_v37_chr2.fasta -V HG00097.g.vcf -V HG00100.g.vcf -V HG00101.g.vcf -O cohort.g.vcf
-gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g.vcf -O cohort.vcf'
-))
-```  
+gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g.vcf -O cohort.vcf
+```
+
+</div></div></div>
 
 Please answer the [questions ](#jointvariantcallingquestions) above.
 
@@ -591,9 +601,13 @@ gatk --java-options -Xmx7g MarkDuplicates \
 ```
 If you would like more help you can sneak peek at our example solution for HG00097 below. 
 
-```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
-cat(paste0('gatk --java-options -Xmx7g MarkDuplicates -I HG00097.bam -O HG00097.md.bam -M HG00097_mdmetrics.txt'))
+<p><button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2021052717546462" aria-expanded="false" aria-controls="acc2021052717546462"></button></p><div class="collapse" id="acc2021052717546462"><div class="card card-body"><div class="block-title-parent"><div class="block-title small">sh</div>
+
+```{.sh}
+gatk --java-options -Xmx7g MarkDuplicates -I HG00097.bam -O HG00097.md.bam -M HG00097_mdmetrics.txt
 ```
+
+</div></div></div>
   
 ## Recalibrate Base Quality Scores
 
@@ -601,16 +615,21 @@ Another source of error is systematic biases in the assignment of base quality s
 In short, you first use [BaseRecalibrator](https://gatk.broadinstitute.org/hc/en-us/articles/360037593511-BaseRecalibrator) to build a recalibration model, and then [ApplyBQSR](https://gatk.broadinstitute.org/hc/en-us/articles/360037225212-ApplyBQSR) to recalibrate the base qualities in your bam file.  
 `BaseRecalibrator` requires a file with known SNPs as input. This file is available in the data folder on UPPMAX:
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0(refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf'))
+
+```{.bash}
+/sw/courses/ngsintro/reseq/data/ref/1000G_phase1.snps.high_confidence.b37.chr2.vcf
 ```
 
 Please use GATK's documentation to recalibrate the base quality scores in your data. If you would like more help you can sneak peek at our example solution for HG00097 below. 
 
-```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
-cat(paste0('gatk --java-options -Xmx7g BaseRecalibrator -R human_g1k_v37_chr2.fasta -I HG00097.md.bam --known-sites ',refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf -O HG00097.recal.table\n'))
-cat(paste0('gatk --java-options -Xmx7g ApplyBQSR -R human_g1k_v37_chr2.fasta -I HG00097.md.bam --bqsr-recal-file HG00097.recal.table -O HG00097.recal.bam'))
+<p><button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2021052717540550" aria-expanded="false" aria-controls="acc2021052717540550"></button></p><div class="collapse" id="acc2021052717540550"><div class="card card-body"><div class="block-title-parent"><div class="block-title small">sh</div>
+
+```{.sh}
+gatk --java-options -Xmx7g BaseRecalibrator -R human_g1k_v37_chr2.fasta -I HG00097.md.bam --known-sites /sw/courses/ngsintro/reseq/data/ref/1000G_phase1.snps.high_confidence.b37.chr2.vcf -O HG00097.recal.table
+gatk --java-options -Xmx7g ApplyBQSR -R human_g1k_v37_chr2.fasta -I HG00097.md.bam --bqsr-recal-file HG00097.recal.table -O HG00097.recal.bam
 ```
+
+</div></div></div>
 
 ## Generate g.vcf files
 
@@ -631,62 +650,80 @@ Since we have very little data we will use hard filters. The parameters are slig
 
 Filter SNVs:
 
-```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
-cat(paste0('gatk --java-options -Xmx7g SelectVariants \
-  -R human_g1k_v37_chr2.fasta \
-  -V cohort.vcf \
-  --select-type-to-include SNP \
+<p><button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2021052717545885" aria-expanded="false" aria-controls="acc2021052717545885"></button></p><div class="collapse" id="acc2021052717545885"><div class="card card-body"><div class="block-title-parent"><div class="block-title small">sh</div>
+
+```{.sh}
+gatk --java-options -Xmx7g SelectVariants 
+  -R human_g1k_v37_chr2.fasta 
+  -V cohort.vcf 
+  --select-type-to-include SNP 
   -O cohort.snvs.vcf
   
-gatk --java-options -Xmx7g VariantFiltration \
-  -R human_g1k_v37_chr2.fasta \
-  -V cohort.snvs.vcf \
-  -O cohort.snvs.filtered.vcf \
-  --filter-name QDfilter --filter-expression "QD < 2.0"  \
-  --filter-name MQfilter --filter-expression "MQ < 40.0"  \
-  --filter-name FSfilter --filter-expression "FS > 60.0"'))
+gatk --java-options -Xmx7g VariantFiltration 
+  -R human_g1k_v37_chr2.fasta 
+  -V cohort.snvs.vcf 
+  -O cohort.snvs.filtered.vcf 
+  --filter-name QDfilter --filter-expression "QD < 2.0"  
+  --filter-name MQfilter --filter-expression "MQ < 40.0"  
+  --filter-name FSfilter --filter-expression "FS > 60.0"
 ```
+
+</div></div></div>
 
 Filter INDELs: 
 
-```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
-cat(paste0('gatk --java-options -Xmx7g SelectVariants \
-  -R human_g1k_v37_chr2.fasta \
-  -V cohort.vcf \
-  --select-type-to-include INDEL \
+<p><button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2021052717545064" aria-expanded="false" aria-controls="acc2021052717545064"></button></p><div class="collapse" id="acc2021052717545064"><div class="card card-body"><div class="block-title-parent"><div class="block-title small">sh</div>
+
+```{.sh}
+gatk --java-options -Xmx7g SelectVariants 
+  -R human_g1k_v37_chr2.fasta 
+  -V cohort.vcf 
+  --select-type-to-include INDEL 
   -o cohort.indels.vcf
 
-gatk --java-options -Xmx7g VariantFiltration \
-  -R human_g1k_v37_chr2.fasta \
-  -V cohort.indels.vcf \
-  -O cohort.indels.filtered.vcf \
-  --filter-name QDfilter --filter-expression "QD < 2.0" \
-  --filter-name FSfilter --filter-expression "FS > 200.0"'))
+gatk --java-options -Xmx7g VariantFiltration 
+  -R human_g1k_v37_chr2.fasta 
+  -V cohort.indels.vcf 
+  -O cohort.indels.filtered.vcf 
+  --filter-name QDfilter --filter-expression "QD < 2.0" 
+  --filter-name FSfilter --filter-expression "FS > 200.0"
 ```
+
+</div></div></div>
 
 Merge filtered SNVs and INDELs: 
 
-```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
-cat(paste0('gatk --java-options -Xmx7g MergeVcfs -I cohort.snvs.filtered.vcf -I cohort.indels.filtered.vcf -O cohort.filtered.vcf'))
+<p><button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2021052717541994" aria-expanded="false" aria-controls="acc2021052717541994"></button></p><div class="collapse" id="acc2021052717541994"><div class="card card-body"><div class="block-title-parent"><div class="block-title small">sh</div>
+
+```{.sh}
+gatk --java-options -Xmx7g MergeVcfs -I cohort.snvs.filtered.vcf -I cohort.indels.filtered.vcf -O cohort.filtered.vcf
 ```
+
+</div></div></div>
   
 Open your filtered vcf with `less` and page through it. It still has all the variant lines, but the FILTER column that was blank before is now filled in, with PASS or a list of the filters it failed. Note also that the filters that were run are described in the header section.
 
 ## Precomputed files
 If you run out of time, please click below to get the path to precomputed bam and vcf files for the GATK's best practices section.
 
-```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
-cat(paste0('Path to intermediary and final bam files: ',bpbamdir,'\n'))
-cat(paste0('Path to intermediary and final vcf files: ',bpvcfdir,'\n'))
+<p><button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2021052717545288" aria-expanded="false" aria-controls="acc2021052717545288"></button></p><div class="collapse" id="acc2021052717545288"><div class="card card-body"><div class="block-title-parent"><div class="block-title small">sh</div>
+
+```{.sh}
+Path to intermediary and final bam files: /sw/courses/ngsintro/reseq/data/best_practise_bam
+Path to intermediary and final vcf files: /sw/courses/ngsintro/reseq/data/best_practise_vcf
 ```
+
+</div></div></div>
 
 ## SBATCH script {#bpscript}
 
 We recommend you to incorporate the new steps into an SBATCH script similar to the one you created above for [joint variant calling](#sbatchscript). Please try to complete the script for GATK's best practices workflow. If you run out of time you can sneak peek at our example solution below. 
 
-```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
-cat(paste0('#!/bin/bash
-#SBATCH -A ',upid,'
+<p><button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2021052717544290" aria-expanded="false" aria-controls="acc2021052717544290"></button></p><div class="collapse" id="acc2021052717544290"><div class="card card-body"><div class="block-title-parent"><div class="block-title small">sh</div>
+
+```{.sh}
+#!/bin/bash
+#SBATCH -A g2021013
 #SBATCH -p core
 #SBATCH -n 1
 #SBATCH -t 1:00:00
@@ -720,7 +757,7 @@ for sample in HG00097 HG00100 HG00101;
 do
   echo "Now analyzing: ${sample}"
   # map the reads
-  bwa mem -R "@RG\\tID:readgroupx\\tPU:flowcellx_lanex\\tSM:"$sample"\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta $sample"_1.fq" $sample"_2.fq" | samtools sort > $sample".bam"
+  bwa mem -R "@RG\tID:readgroupx\tPU:flowcellx_lanex\tSM:"$sample"\tLB:libraryx\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta $sample"_1.fq" $sample"_2.fq" | samtools sort > $sample".bam"
   samtools index $sample".bam"
   # mark duplicates
   gatk --java-options -Xmx7g MarkDuplicates -I $sample".bam" -O $sample".md.bam" -M $sample"_mdmetrics.txt"
@@ -741,9 +778,10 @@ gatk --java-options -Xmx7g VariantFiltration -R human_g1k_v37_chr2.fasta -V coho
 gatk --java-options -Xmx7g SelectVariants -R human_g1k_v37_chr2.fasta -V cohort.vcf --select-type-to-include INDEL -O cohort.indels.vcf
 gatk --java-options -Xmx7g VariantFiltration -R human_g1k_v37_chr2.fasta -V cohort.indels.vcf -O cohort.indels.filtered.vcf --filter-name QDfilter --filter-expression "QD < 2.0" --filter-name FSfilter --filter-expression "FS > 200.0"
 # merge filtered SNPs and indels
-gatk --java-options -Xmx7g MergeVcfs -I cohort.snvs.filtered.vcf -I cohort.indels.filtered.vcf -O cohort.filtered.vcf'
-))
-```  
+gatk --java-options -Xmx7g MergeVcfs -I cohort.snvs.filtered.vcf -I cohort.indels.filtered.vcf -O cohort.filtered.vcf
+```
+
+</div></div></div>
   
 ## Questions  
 

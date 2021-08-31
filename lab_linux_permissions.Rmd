@@ -11,7 +11,7 @@ upid <- yaml::read_yaml("_site.yml")$uppmax_project
 upres <- yaml::read_yaml("_site.yml")$uppmax_res_2
 ```
 
-<div class="boxy boxy-primary boxy-exclamation">
+<div class="boxy boxy-yellow boxy-exclamation">
 In code blocks, the dollar sign (`$`) is not to be printed. The dollar sign is usually an indicator that the text following it should be typed in a terminal window.
 </div>
 

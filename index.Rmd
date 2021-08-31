@@ -1,10 +1,16 @@
 ---
-title: "&nbsp;"
 output:
   bookdown::html_document2:
     toc: false
     number_sections: false
 ---
+
+```{r,child="assets/header-lab.Rmd"}
+```
+
+<div class="boxy boxy-yellow boxy-exclamation">
+The contents and schedule are being revised. They will be finalised before the workshop.
+</div>
 
 <div class="container landing-container">
 <div class="row landing-div" style="position:relative;">

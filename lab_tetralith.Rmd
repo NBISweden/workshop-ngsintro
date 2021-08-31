@@ -35,52 +35,70 @@ col_local <- "#e5f4f8"
 ```  
 
 # The NSC cluster
+
 Please connect to the Tetralith cluster at NSC using `ssh` (NOTE: use your NSC username and password, not your UPPMAX username and password):
+
 ```bash
 $ ssh -Y nsc_username@tetralith.nsc.liu.se
 ```
-<div class="boxy boxy-primary boxy-lightbulb">
+
+<div class="boxy boxy-yellow boxy-lightbulb">
 Note that your terminal prompt changed to something like `nsc_username@tetralith1 $` which means that you have entered Tetralith. 
 </div>
 
-# Interactive session 
+# Interactive session
+
 On Tetralith you enter the *login node*, which is not intended for compute intensive tasks. You should therefore book a compute node, or in this case three cores:
+
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('tetralith1$ interactive -A ',nscid,' -t 04:00:00 -n 3'))
 ```
-Please adjust the requested time depending on what lab you will be working on.
-After a minute or so you should have gotten your interactive job.
-<div class="boxy boxy-primary boxy-lightbulb">
+
+Please adjust the requested time depending on what lab you will be working on. After a minute or so you should have gotten your interactive job.
+
+<div class="boxy boxy-lightbulb">
 Note that your terminal prompt changed to something like `<nsc_username>@n424 $` (or another node name), which means that you are now running on one of the compute nodes.
 </div>
 
 # UPPMAX singularity container
+
 We will use a singularity container (a virtual computer) that mimics the UPPMAX computing environment. Once you have started the singularity container your environment will look exactly as on UPPMAX, and the software used in this workshop will be available through the module system inside the container.
 Use this command to start the singularity container:
+
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('n424$ singularity shell -B /proj/',nscid,'/users:/proj/',upid,'/nobackup /proj/',nscid,'/ngsintro.sif'))
 ```
-<div class="boxy boxy-primary boxy-lightbulb">
-Note that your terminal prompt changed to something like `<nsc_username>@offline-uppmax$`. This means that you have moved into a "virtual computer" that mimics the UPPMAX environment.
+
+<div class="boxy boxy-lightbulb">
+Your terminal prompt changed to something like `<nsc_username>@offline-uppmax$`. This means that you have moved into a "virtual computer" that mimics the UPPMAX environment.
 </div>
 
 In the singularity container type this to make the module system behave properly:
+
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('offline-uppmax$ source /uppmax_init'))
 ```
+
 Everything from this point and onwards should be identical to running the exercise on UPPMAX.
 To close the singularity container  later on just type `exit`in the terminal, but don't do that now.
 
-**NOTE:** Since this is not actually running on uppmax, none of the queue system commands (`squeue`, `sbatch`, `jobinfo` etc) will work. 
+<div class="boxy boxy-yellow boxy-exclamation">
+**Note:** Since this is not actually running on uppmax, none of the queue system commands (`squeue`, `sbatch`, `jobinfo` etc) will work. 
+</div>
 
 # Cluster workspace
+
 While running the UPPMAX singularity container, create a workspace for this exercise. This will be the "cluster workspace" in which you should perform the analyses, as if you would have worked on UPPMAX.
+
 The name of the workspace depends on what lab you are working on. For example, if you are working on the introduction to Linux lab then call the workspace "linux_tutorial". Once the workspace is created you should go into it.
+
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('offline-uppmax$ mkdir /proj/',upid,'/nobackup/<nsc_username>/linux_tutorial\n'))
 cat(paste0('offline-uppmax$ cd /proj/',upid,'/nobackup/<nsc_username>/linux_tutorial'))
 ```
+
 All files and folders that you create in `r paste0('/proj/',upid,'/nobackup/nsc_username/')` while running the UPPMAX singularity container can be reached also from outside of the container, in this folder on Tetralith:
+
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('tetralith$ /proj/',nscid,'/users/<nsc_username>/\n'))
 ```
