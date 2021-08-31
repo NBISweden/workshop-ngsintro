@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title></title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link id="font-awesome-1-attachment" rel="attachment" href="site_libs/font-awesome-5.1.0/fonts/fontawesome-webfont.ttf"/>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="assets/lab.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div id="header">
+
+
+
+
+</div>
+
+
+<!-- rmd lab header -->
+<p><br></p>
+<div id="precourse" class="section level1 tabset tabset-fade">
+<h1>Precourse</h1>
+<p>This workshop is aimed towards biologists, researchers, computer scientists or data analysts with limited experience in analysing NGS data.</p>
+<div id="preparation" class="section level2">
+<h2>Preparation</h2>
+<p>These are steps to be completed before the workshop.</p>
+<div id="create-uppmax-and-nsc-accounts" class="section level3">
+<h3>1. Create UPPMAX and NSC accounts</h3>
+<p>Remote computing clusters (UPPMAX and NSC) will be use for data analyses. A SUPR/SNIC account is needed to use these resources.</p>
+<p>If you do not already have one, create an account at <a href="https://supr.snic.se/" target="_blank">https://supr.snic.se/</a>.</p>
+<p><img src="data/common/supr-login.png" class="fancyimage" style="width:70%;"></p>
+<p>Log in to <a href="https://supr.snic.se/" target="_blank">SUPR/SNIC</a> and request membership to the project IDs <strong>g2021013</strong> and <strong>snic2021-22-101</strong>.</p>
+<p><img src="data/common/supr-request.png" class="fancyimage" style="width:70%;"></p>
+<p>Once you are accepted to a project, you should see that project listed under your active projects.</p>
+<p><img src="data/common/supr-projects.png" class="fancyimage" style="width:70%;"></p>
+<p>Finally you need to request a login account to NSC. Login to SUPR and go to the Accounts page. Under the <strong>Possible Resource Account Requests</strong> heading click on <strong>Request Account on Tetralith @ NSC</strong> button and confirm it on the next page.</p>
+<p><img src="data/common/supr-tetralith.png" class="fancyimage" style="width:70%;"></p>
+<p>Checking your request and approving your account requires some manual work, so you might have to wait for some time (up to a working day) before the next step. When the account is ready to be created, you will receive an email to your registered email address (shown in your SUPR contact information) with information on how to proceed. You will get a URL that you use to choose the password (within seven days). When that has been done, the account ready for use within 15 minutes and you can then login using your chosen password.</p>
+<div class="boxy boxy-yellow boxy-exclamation">
+<p><strong>Note:</strong> You will get one username &amp; password for the account on UPPMAX, and one username and password for the account on NSC. Please keep track of both, we will tell you when to use which account during the workshop.</p>
+</div>
+</div>
+<div id="install-tools-for-ssh-sftp-access" class="section level3">
+<h3>2. Install tools for SSH &amp; SFTP access</h3>
+<div id="ssh" class="section level4">
+<h4>2.1 SSH</h4>
+<p><a href="http://mobaxterm.mobatek.net" target="_blank"><img src="data/common/mobaxterm.png" /></a></p>
+<p>You need a program to connect to a remote cluster (UPPMAX and NSC). Linux and Mac users already have terminal on their systems. If you are on a Windows system, we recommend <a href="http://mobaxterm.mobatek.net" target="_blank">MobaXterm</a>. It is recommended that you INSTALL the program and not use the portable version. MobaXterm also has an integrated SFTP file browser.</p>
+</div>
+<div id="xquartz" class="section level4">
+<h4>2.2 XQuartz</h4>
+<p><a href="https://www.xquartz.org/" target="_blank"><img src="data/common/xquartz.png" /></a></p>
+<p>Mac users will need to download and install <a href="https://www.xquartz.org/" target="_blank">XQuartz</a> for X11 forwarding. <em>ie</em>; to forward remotely opened windows to local machine.</p>
+</div>
+<div id="sftp-browser" class="section level4">
+<h4>2.3 SFTP Browser</h4>
+<p><a href="https://filezilla-project.org/" target="_blank"><img src="data/common/filezilla.png" /></a></p>
+<p>When you need to transfer data between the remote cluster and your computer, you can use the tools SCP or SFTP through the terminal. Windows users can use the SFTP browser available with MobaXterm. If you prefer a GUI to upload and download files from the remote cluster, we recommend installing <a href="https://filezilla-project.org/" target="_blank">FileZilla</a>.</p>
+</div>
+</div>
+<div id="test-the-connection-to-uppmax" class="section level3">
+<h3>3. Test the connection to UPPMAX</h3>
+<div class="boxy boxy-grey boxy-lightbulb">
+<p>For this step, you will have to use the terminal a bit. You can get started by following <strong>Tutorial One</strong> at this link <em><a href="http://www.ee.surrey.ac.uk/Teaching/Unix/" target="_blank">Unix tutorial for beginners</a></em>. You can use <a href="https://scilifelab.github.io/courses/ngsintro/common/emu/" target="_blank">https://scilifelab.github.io/courses/ngsintro/common/emu/</a> <a href="https://bellard.org/jslinux/vm.html?url=https://bellard.org/jslinux/buildroot-x86.cfg" target="_blank">(or this mirror)</a> to try the commands in the tutorial, so that you don’t mess up any real world system. If you any questions regarding this tutorial contact: <em>martin.dahlo [at] scilifelab.uu.se</em>.</p>
+</div>
+<p><strong>Connect to UPPMAX:</strong> Open the terminal (Windows users can use MobaXterm) and type <code>ssh -Y user@rackham.uppmax.uu.se</code>, then enter your password. The password will not be visible as you type.</p>
+<p><strong>Create a user folder: </strong> Go to <code>/proj/g2021013/nobackup/</code> and create a directory with your username. For example <code>mkdir jody</code>. You will work inside this directory for the workshop. For example <code>/proj/g2021013/nobackup/jody</code>. If you cannot write to the folder, the most likely reason is that you have not requested access to the workshop project via SUPR. This is described in step 1 above.</p>
+<div class="boxy boxy-yellow boxy-exclamation">
+<p><strong>Note:</strong> It may take an hour or so from request approval, before you can actually write to the folder. We will check before the workshop that all students have logged in and done this, so do not forget!</p>
+</div>
+</div>
+<div id="install-other-tools" class="section level3">
+<h3>4. Install other tools</h3>
+<div id="zoom" class="section level4">
+<h4>4.1 Zoom</h4>
+<p><a href="https://zoom.us/" target="_blank"><img src="data/common/zoom.png" /></a></p>
+<p>Please install the latest version of <a href="https://zoom.us/" target="_blank">Zoom</a>.</p>
+</div>
+<div id="igv" class="section level4">
+<h4>4.2 IGV</h4>
+<p>Please install IGV on your local system before the start of the workshop.</p>
+<p><a href="https://www.broadinstitute.org/igv/" target="_blank"><img src="data/common/IGVlogo.png" /></a></p>
+<p><strong>Download IGV</strong> (Integrated Genome Browser) from the <a href="https://www.broadinstitute.org/igv/" target="_blank">Broad Institute</a> on your own computer and have the mouse genome (mm10) as well as the human genome (hg19) available.</p>
+<hr />
+</div>
+</div>
+</div>
+<div id="syllabus" class="section level2">
+<h2>Syllabus</h2>
+<p>The syllabus for this workshop are as follows.</p>
+<ul>
+<li>Working on the unix/linux command line
+<ul>
+<li>Command line navigation and related commands: cd, mkdir, rm, rmdir</li>
+<li>Commonly used linux tools: cp, mv, tar, less, more, head, tail, nano, grep, top, man</li>
+<li>Wildcards</li>
+<li>Ownership and permissions</li>
+<li>Symbolic links</li>
+<li>Piping commands</li>
+</ul></li>
+<li>Working on remote computing cluster
+<ul>
+<li>Logging on to UPPMAX</li>
+<li>Booking resources</li>
+<li>Job templates, submission and queues</li>
+<li>Modules</li>
+</ul></li>
+<li>Commonly used bioinformatic tools and pipelines</li>
+<li>Working with integrated genome viewer</li>
+<li>Variant-calling workflow
+<ul>
+<li>Mapping reads to the reference genome</li>
+<li>Variant detection</li>
+<li>VCF file format</li>
+</ul></li>
+<li>RNA-Seq workflow
+<ul>
+<li>RNA-Seq experimental design and considerations</li>
+<li>QC, mapping and gene expression counts</li>
+<li>Differential gene expression analyses</li>
+</ul></li>
+<li>Current advances in NGS technologies</li>
+</ul>
+<hr />
+</div>
+<div id="learning-outcomes" class="section level2">
+<h2>Learning outcomes</h2>
+<p>After this workshop you should be able to:</p>
+<ul>
+<li>Describe the basic principles of next generation sequencing.</li>
+<li>Use the Linux command line interface to manage simple file processing operations, and organise directory structures.</li>
+<li>Connect to and work on a remote compute cluster.</li>
+<li>Apply programs in Linux for analysis of NGS data.</li>
+<li>Summarise the applications of current NGS technologies, including the weakness and strengths of the approaches and when it is appropriate to use which one of them.</li>
+<li>Explain common NGS file formats.</li>
+<li>Interpret quality control of NGS reads.</li>
+<li>Explain the steps involved in variant calling using whole genome sequencing data.</li>
+<li>Independently perform a basic variant calling workflow on example data.</li>
+<li>Explain the steps involved in a differential gene expression workflow using RNA seq data.</li>
+<li>Hands-on experience with handling of raw RNA sequencing data, QC and quantification of gene expression.</li>
+<li>Conceptual understanding of differential gene expression analysis.</li>
+</ul>
+<hr />
+</div>
+</div>
+<div id="section" class="section level1">
+<h1></h1>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
