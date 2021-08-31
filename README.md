@@ -42,4 +42,4 @@ The contents of these scripts should use identical steps and tools as the studen
 
 ---
 
-**2020** NBIS • SciLifeLab
+**2021** • NBIS • SciLifeLab
