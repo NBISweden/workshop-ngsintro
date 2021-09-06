@@ -691,7 +691,7 @@ ul.nav a:hover {
 
 .landing-container {
   max-width: 940px !important;
-  margin-top: -60px;
+  margin-top: -20px;
 }
 
 .landing-div {
@@ -906,4 +906,3 @@ ul.nav a:hover {
  transition: .2s ease;
  filter: none;
 }
-
