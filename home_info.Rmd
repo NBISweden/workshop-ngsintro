@@ -51,7 +51,7 @@ if(loc=="linkoping") {
 }
 ```
 
-```{r,eval=TRUE,echo=FALSE,block.title=NULL}
+```{r,eval=TRUE,echo=FALSE,chunk.title=NULL}
 if(loc!="online") {
   address <- paste(unlist(strsplit(dfr$venue_address,split=",")),collapse="<br>")
   leaflet(height=450,width="auto") %>%
@@ -61,13 +61,13 @@ if(loc!="online") {
 }
 ```
 
-```{r,eval=TRUE,echo=FALSE,block.title=NULL,results="asis"}
+```{r,eval=TRUE,echo=FALSE,chunk.title=NULL,results="asis"}
 if(loc=="online") {
   cat("The workshop is online only. Zoom and Slack links are sent to participants by email.")
 }
 ```
 
-```{r,eval=TRUE,echo=FALSE,results="asis",block.title=NULL}
+```{r,eval=TRUE,echo=FALSE,results="asis",chunk.title=NULL}
 if(loc!="online") {
   cat("## Travel info")
   cat("\n",dfr$description)

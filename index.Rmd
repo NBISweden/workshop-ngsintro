@@ -1,4 +1,5 @@
 ---
+title: "&nbsp;"
 output:
   bookdown::html_document2:
     toc: false
@@ -8,12 +9,13 @@ output:
 ```{r,child="assets/header-lab.Rmd"}
 ```
 
+<div class="container landing-container">
+<div class="row landing-div" style="position:relative;">
+
 <div class="boxy boxy-yellow boxy-exclamation">
 The contents and schedule are being revised. They will be finalised before the workshop.
 </div>
 
-<div class="container landing-container">
-<div class="row landing-div" style="position:relative;">
 <div class="col" style="align-self:center;position:absolute;top:80px;">
 <div class="row">
 

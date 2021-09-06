@@ -426,7 +426,7 @@ Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exa
   
 If you run out of time, please click below to get paths to precomputed bam files. 
 
-```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
+```{r,accordion=TRUE,chunk.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0(bamdir,'/HG00097.bam\n')) 
 cat(paste0(bamdir,'/HG00100.bam\n')) 
 cat(paste0(bamdir,'/HG00101.bam\n')) 
@@ -444,7 +444,7 @@ Please replace <sample> with the real sample names.
    
 If you run out of time, please click below to get paths to the precomputed g.vcf files.
 
-```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
+```{r,accordion=TRUE,chunk.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0(vcfdir,'/HG00097.g.vcf\n')) 
 cat(paste0(vcfdir,'/HG00100.g.vcf\n')) 
 cat(paste0(vcfdir,'/HG00101.g.vcf\n')) 
@@ -468,7 +468,7 @@ offline-uppmax$ gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.f
 
 If you run out of time, please click below to get paths to the precomputed cohort.g.vcf and cohort.vcf files.
 
-```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
+```{r,accordion=TRUE,chunk.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0(vcfdir,'/cohort.g.vcf\n')) 
 cat(paste0(vcfdir,'/cohort.vcf\n')) 
 ```
@@ -520,7 +520,7 @@ Use this command to run the script in the singularity container:
 
 If you would like more help with creating the bash script, please look at our example solution:
 
-```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
+```{r,accordion=TRUE,chunk.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('#!/bin/bash
 
 module load bioinfo-tools
@@ -584,7 +584,7 @@ offline-uppmax$ gatk --java-options -Xmx7g MarkDuplicates \
 
 If you would like more help you can sneak peek at our example solution for HG00097 below. 
 
-```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
+```{r,accordion=TRUE,chunk.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('offline-uppmax$ gatk --java-options -Xmx7g MarkDuplicates -I HG00097.bam -O HG00097.md.bam -M HG00097_mdmetrics.txt'))
 ```
   
@@ -600,7 +600,7 @@ cat(paste0(refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf'))
 
 Please use GATK's documentation to recalibrate the base quality scores in your data. If you would like more help you can sneak peek at our example solution for HG00097 below. 
 
-```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
+```{r,accordion=TRUE,chunk.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('offline-uppmax$ gatk --java-options -Xmx7g BaseRecalibrator -R human_g1k_v37_chr2.fasta -I HG00097.md.bam> --known-sites ',refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf -O HG00097.recal.table\n'))
 cat(paste0('offline-uppmax$ gatk --java-options -Xmx7g ApplyBQSR -R human_g1k_v37_chr2.fasta -I HG00097.md.bam --bqsr-recal-file HG00097.recal.table -O HG00097.recal.bam'))
 ```
@@ -624,7 +624,7 @@ Since we have very little data we will use hard filters. The parameters are slig
 
 Filter SNVs:
 
-```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
+```{r,accordion=TRUE,chunk.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('offline-uppmax$ gatk --java-options -Xmx7g SelectVariants \
   -R human_g1k_v37_chr2.fasta \
   -V cohort.vcf \
@@ -642,7 +642,7 @@ offline-uppmax$ gatk --java-options -Xmx7g VariantFiltration \
 
 Filter INDELs: 
 
-```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
+```{r,accordion=TRUE,chunk.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('offline-uppmax$ gatk --java-options -Xmx7g SelectVariants \
   -R human_g1k_v37_chr2.fasta \
   -V cohort.vcf \
@@ -659,7 +659,7 @@ offline-uppmax$ gatk --java-options -Xmx7g VariantFiltration \
 
 Merge filtered SNVs and INDELs: 
 
-```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
+```{r,accordion=TRUE,chunk.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('offline-uppmax$ gatk --java-options -Xmx7g MergeVcfs -I cohort.snvs.filtered.vcf -I cohort.indels.filtered.vcf -O cohort.filtered.vcf'))
 ```
   
@@ -669,7 +669,7 @@ Open your filtered vcf with `less` and page through it. It still has all the var
 
 If you run out of time, please click below to get the path to precomputed bam and vcf files for the GATK's best practices section.
 
-```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
+```{r,accordion=TRUE,chunk.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('Path to intermediary and final bam files: ',bpbamdir,'\n'))
 cat(paste0('Path to intermediary and final vcf files: ',bpvcfdir,'\n'))
 ```
@@ -678,7 +678,7 @@ cat(paste0('Path to intermediary and final vcf files: ',bpvcfdir,'\n'))
 
 We recommend you to incorporate the new steps into an SBATCH script similar to the one you created above for [joint variant calling](#sbatchscript). Please try to complete the script for GATK's best practices workflow. If you run out of time you can sneak peek at our example solution below. 
 
-```{r,accordion=TRUE,block.title=TRUE,echo=FALSE,comment="",class.output="sh"}
+```{r,accordion=TRUE,chunk.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('#!/bin/bash
 
 ## load modules

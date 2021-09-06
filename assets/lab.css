@@ -20,11 +20,12 @@
   --font-code: 'Ubuntu Mono';
 }
 
-/* body font */
+/* FONTS -------------------------------------------------------------------- */
+
 /* body font family */
 body,p,h1,h2,h3,h4,h5,h6 {
   font-family: var(--font-base, 'Roboto', 'DIN', 'Helvetica', sans-serif);
-  /*color: var(--color-text);*/
+  color: var(--color-text);
   font-weight: 400;
   font-size: 17px;
   line-height: 1.55;
@@ -33,7 +34,6 @@ body,p,h1,h2,h3,h4,h5,h6 {
 /* title font family, weight and size */
 h1,h2,h3 {
   font-family: var(--font-highlight, 'Roboto', 'DIN', 'Helvetica', sans-serif);
-  /*color: var(--color-text);*/
   font-weight: 600;
 }
 
@@ -129,13 +129,18 @@ code {
 .smallest{ font-size: 0.579em; }
 
 blockquote {
-  border-left: 5px solid var(--color-primary);
+  display: inline-block;
   background: var(--color-code-bg);
-  padding: 10px;
-  padding-left: 12px;
-  margin-left: 16px;
-  margin-right: 0;
-  border-radius: 0px 4px 4px 0px;
+  padding: 20px;
+  border-radius: 4px 4px 4px 4px;
+}
+
+blockquote::before {
+  content: '"';
+  font-size: 200%;
+  position: absolute;
+  margin-left: -30px;
+  margin-top: -6px;
 }
 
 /* abstract paragraph style */
@@ -587,7 +592,7 @@ button.btn:before
 }
 
 /** top title code **/
-div.block-title {
+div.chunk-title {
   font-weight: bold;
   text-transform: uppercase;
   background-color: var(--color-border);
@@ -686,7 +691,7 @@ ul.nav a:hover {
 
 .landing-container {
   max-width: 940px !important;
-  margin-top: -40px;
+  margin-top: -60px;
 }
 
 .landing-div {
@@ -901,3 +906,4 @@ ul.nav a:hover {
  transition: .2s ease;
  filter: none;
 }
+
