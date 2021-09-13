@@ -2,7 +2,6 @@
 title: "Analysis of bulk RNA-Seq data"
 subtitle: "Introduction To Bioinformatics Using NGS Data"
 author: "`r format(Sys.time(), '%d-%b-%Y')`"
-institute: NBIS
 keywords: rnaseq, bioinformatics, course, scilifelab, nbis
 output:
   xaringan::moon_reader:
@@ -40,7 +39,7 @@ class: spaced
 #library(DESeq2)
 ```
 
-## Contents
+# Contents
 
 * [RNA Sequencing](#intro)
 * [Workflow](#workflow)
@@ -60,7 +59,7 @@ class: spaced
 name: intro
 class: spaced
 
-## RNA Sequencing
+# RNA Sequencing
 
 ![](data/rnaseq/rnaseq_transcription.svg)
 
@@ -83,7 +82,7 @@ class: spaced
 name: applications
 class: spaced
 
-## Applications
+# Applications
 
 - Identify gene sequences in genomes
 - Learn about gene function
@@ -97,50 +96,41 @@ class: spaced
 name: workflow
 class: spaced
 
-## Workflow
+# Workflow
 
 .size-80[![](data/rnaseq/rnaseq_workflow.svg)]
 
 <img src="data/rnaseq/sequence.jpg" style="height:250px; position:fixed; right:0px; bottom:0px; margin-right: 100px; margin-bottom: 130px; border-radius:4px;">
 
-.citation[
-.cite[<i class="fas fa-link"></i> Conesa, Ana, *et al.* "A survey of best practices for RNA-seq data analysis." [Genome biology 17.1 (2016): 13](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-0881-8)]
-]
+.cite[[Conesa et. al, 2016](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-0881-8)]
 
 ---
 name: exp-design
 class: spaced
 
-## Experimental design
+# Experimental design
 
 .pull-left-50[
+
 - Balanced design
-- Technical replicates not necessary (.altcol[Marioni *et al.*, 2008])
-- Biological replicates: 6 - 12 (.altcol[Schurch *et al.*, 2016])
+- Technical replicates not necessary .cite[[Marioni et al, 2008](https://genome.cshlp.org/content/18/9/1509.long)]
+- Biological replicates: 6 - 12 .cite[[Schurch *et al.*, 2016](http://rnajournal.cshlp.org/content/early/2016/03/30/rna.053959.115.abstract)]
 - ENCODE consortium
 - Previous publications
-- Power analysis
+- Sample size estimation .cite[[Hart et al, 2013](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3842884/)]
+- Power analysis .cite[[RNASeqPower](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-018-2191-5)] .tool[[RNASeqPower web app](https://rshiny.nbis.se/shiny-server-apps/shiny-rnaseq-power/)]
 
-<i class="fas fa-toolbox"></i> [RnaSeqSampleSize](https://cqs.mc.vanderbilt.edu/shiny/RnaSeqSampleSize/) (Power analysis), [Scotty](http://scotty.genetics.utah.edu/) (Power analysis with cost)
 ]
 
 .pull-right-50[
 .size-90[![](data/rnaseq/batch-effect.svg)]
 ]
 
-.citation[
-.cite[<i class="fas fa-link"></i> Busby, Michele A., *et al.* "Scotty: a web tool for designing RNA-Seq experiments to measure differential gene expression." [Bioinformatics 29.5 (2013): 656-657](https://academic.oup.com/bioinformatics/article/29/5/656/252753)]  
-.cite[<i class="fas fa-link"></i> Marioni, John C., *et al.* "RNA-seq: an assessment of technical reproducibility and comparison with gene expression arrays." [Genome research (2008)](https://genome.cshlp.org/content/18/9/1509.long)]  
-.cite[<i class="fas fa-link"></i> Hart, S. N., Therneau, T. M., Zhang, Y., Poland, G. A., & Kocher, J. P. (2013). Calculating sample size estimates for RNA sequencing data. [Journal of computational biology, 20(12), 970-978](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3842884/).]  
-.cite[<i class="fas fa-link"></i> Schurch, Nicholas J., *et al.* "How many biological replicates are needed in an RNA-seq experiment and which differential expression tool should you use?." [Rna (2016)](http://rnajournal.cshlp.org/content/early/2016/03/30/rna.053959.115.abstract)]  
-.cite[<i class="fas fa-link"></i> Zhao, Shilin, *et al.* "RnaSeqSampleSize: real data based sample size estimation for RNA sequencing." [BMC bioinformatics 19.1 (2018): 191](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-018-2191-5)]  
-]
-
 ---
 name: rna-extraction
 class: spaced
 
-## RNA extraction
+# RNA extraction
 
 .pull-left-50[
 - Sample processing and storage
@@ -150,29 +140,30 @@ class: spaced
 - RIN values (Strong effect)
 - Batch effect
 - Extraction method bias (GC bias)
+
+.cite[[Romero et al, 2014](https://bmcbiol.biomedcentral.com/articles/10.1186/1741-7007-12-42)]
+.cite[[Kim et al, 2012](https://doi.org/10.1016/j.molcel.2012.05.036)]
+
 ]
 
 .pull-right-50[
-.size-70[![](data/rnaseq/degradation.jpg)]
-]
 
-.citation[
-.cite[<i class="fas fa-link"></i> Romero, Irene Gallego, *et al*. "RNA-seq: impact of RNA degradation on transcript quantification." [BMC biology 12.1 (2014): 42](https://bmcbiol.biomedcentral.com/articles/10.1186/1741-7007-12-42)]  
-.cite[<i class="fas fa-link"></i> Kim, Young-Kook, *et al*. "Short structured RNAs with low GC content are selectively lost during extraction from a small number of cells." [Molecular cell 46.6 (2012): 893-895](https://www.cell.com/molecular-cell/fulltext/S1097-2765(12)00481-9).]  
-]  
+.size-70[![](data/rnaseq/degradation.jpg)]
+
+]
 
 ---
 name: library-prep
 class: spaced
 
-## Library prep
+# Library prep
 
 .pull-left-50[
 - PolyA selection
 - rRNA depletion
 - Size selection
 - PCR amplification (See section PCR duplicates)
-- Stranded (directional) libraries
+- Stranded (directional) libraries .cite[[Zhao et al, 2015](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4559181/)] .cite[[Levin et al, 2010](https://www.nature.com/articles/nmeth.1491)]
   - Accurately identify sense/antisense transcript
   - Resolve overlapping genes
 - Exome capture
@@ -184,19 +175,14 @@ class: spaced
 ![](data/rnaseq/rnaseq_library_prep.svg)
 ]
 
-.citation[
-.cite[<i class="fas fa-link"></i> Zhao, Shanrong, et al. "Comparison of stranded and non-stranded RNA-seq transcriptome profiling and investigation of gene overlap." [BMC genomics 16.1 (2015): 675](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4559181/)]  
-.cite[<i class="fas fa-link"></i> Levin, Joshua Z., et al. "Comprehensive comparative analysis of strand-specific RNA sequencing methods." [Nature methods 7.9 (2010): 709](https://www.nature.com/articles/nmeth.1491)]  
-]  
-
 ---
 name: sequencing
 
-## Sequencing
+# Sequencing
 
 .pull-left-60[
 - Sequencer (Illumina/PacBio)
-- Read length
+- Read length .cite[[Chhangawala et al, 2015](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4531809/)]
   - Greater than 50bp does not improve DGE
   - Longer reads better for isoforms
 - Pooling samples
@@ -207,23 +193,21 @@ name: sequencing
   - Increased power in assemblies
   - Better for structural variation and isoforms
   - Decreased false-positives for DGE
+- More replicates are better than more depth .cite[[Liu et al, 2013](https://academic.oup.com/bioinformatics/article/30/3/301/228651)]
+
+.cite[[Corley et al, 2017](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5442695/)]
+.cite[[SciLifeLab](https://ngisweden.scilifelab.se/file/1540-1_Comparison_of_PE_and_SE_for_RNA-seq.pdf)]
+
 ]
 
 .pull-right-40[
 ![](data/rnaseq/rnaseq_read_type.svg)
 ]
 
-.citation[
-.cite[<i class="fas fa-link"></i> Chhangawala, Sagar, et al. "The impact of read length on quantification of differentially expressed genes and splice junction detection." [Genome biology 16.1 (2015): 131](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4531809/)]  
-.cite[<i class="fas fa-link"></i> Corley, Susan M., et al. "Differentially expressed genes from RNA-Seq and functional enrichment results are affected by the choice of single-end versus paired-end reads and stranded versus non-stranded protocols." [BMC genomics 18.1 (2017): 399](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5442695/)]  
-.cite[<i class="fas fa-link"></i> Liu, Yuwen, Jie Zhou, and Kevin P. White. "RNA-seq differential expression studies: more sequence or more replication?." [Bioinformatics 30.3 (2013): 301-304](https://academic.oup.com/bioinformatics/article/30/3/301/228651)]  
-.cite[<i class="fas fa-link"></i> Comparison of PE and SE for RNA-Seq, [SciLifeLab](https://ngisweden.scilifelab.se/file/1540-1_Comparison_of_PE_and_SE_for_RNA-seq.pdf)]  
-]
-
 ---
 name: workflow-dge
 
-## Workflow • DGE
+# Workflow • DGE
 
 ![](data/rnaseq/rnaseq_workflow_dge.svg)
 
@@ -231,7 +215,7 @@ name: workflow-dge
 name: de-novo-assembly
 class: spaced
 
-## De-Novo assembly
+# De-Novo assembly
 
 - When no reference genome available
 - To identify novel genes/transcripts/isoforms
@@ -240,17 +224,15 @@ class: spaced
 - Access quality of assembly and refine
 - Map reads back to assembled transcriptome
 
-<i class="fas fa-toolbox"></i> [Trinity](https://github.com/trinityrnaseq/trinityrnaseq/wiki), [SOAPdenovo-Trans](http://soap.genomics.org.cn/SOAPdenovo-Trans.html), [Oases](https://www.ebi.ac.uk/~zerbino/oases/), [rnaSPAdes](http://cab.spbu.ru/software/rnaspades/)
-
-.citation[
-.cite[<i class="fas fa-link"></i> Hsieh, Ping-Han *et al*., "Effect of de novo transcriptome assembly on transcript quantification" [2018 bioRxiv 380998](https://www.biorxiv.org/content/early/2018/08/22/380998)]  
-.cite[<i class="fas fa-link"></i> Wang, Sufang, and Michael Gribskov. "Comprehensive evaluation of de novo transcriptome assembly programs and their effects on differential gene expression analysis." [Bioinformatics 33.3 (2017): 327-333](https://academic.oup.com/bioinformatics/article/33/3/327/2580374)]  
-]
+.tool[[Trinity](https://github.com/trinityrnaseq/trinityrnaseq/wiki)] .tool[[SOAPdenovo-Trans](http://soap.genomics.org.cn/SOAPdenovo-Trans.html)]
+.tool[[Oases](https://www.ebi.ac.uk/~zerbino/oases/)] .tool[[rnaSPAdes](http://cab.spbu.ru/software/rnaspades/)]
+.cite[[Hsieh et al, 2018](https://www.biorxiv.org/content/early/2018/08/22/380998)]
+.cite[[Wang et al, 2017](https://academic.oup.com/bioinformatics/article/33/3/327/2580374)]
 
 ---
 name: read-qc
 
-## Read QC
+# Read QC
 
 - Number of reads
 - Per base sequence quality
@@ -266,7 +248,8 @@ name: read-qc
 
 <img src="data/rnaseq/qc.jpg" style="height:250px; position:fixed; right:0px; bottom: 0px; margin-right: 100px; margin-bottom: 310px;">
 
-<i class="fas fa-toolbox"></i> [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/), [MultiQC](http://multiqc.info/)
+.tool[[FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)]
+.tool[[MultiQC](http://multiqc.info/)]
 
 https://sequencing.qcfail.com/
 
@@ -275,7 +258,7 @@ https://sequencing.qcfail.com/
 ---
 name: fastqc
 
-## FastQC
+# FastQC
 
 Good quality  
 
@@ -288,7 +271,7 @@ Poor quality
 ---
 name: read-qc-2
 
-## Read QC • PBSQ, PSQS
+# Read QC • PBSQ, PSQS
 
 .size-85[.small[**Per base sequence quality**] ![](data/rnaseq/pbsq.jpg)]
 .size-85[.small[**Per sequence quality scores**] ![](data/rnaseq/psqs.jpg)]
@@ -296,7 +279,7 @@ name: read-qc-2
 ---
 name: read-qc-3
 
-## Read QC • PBSC, PSGC
+# Read QC • PBSC, PSGC
 
 .size-85[.small[**Per base sequence content**] ![](data/rnaseq/pbsc.jpg)]
 .size-85[.small[**Per sequence GC content**] ![](data/rnaseq/psgc.jpg)]
@@ -304,7 +287,7 @@ name: read-qc-3
 ---
 name: read-qc-4
 
-## Read QC • SDL, AC
+# Read QC • SDL, AC
 
 .size-85[.small[**Sequence duplication level**] ![](data/rnaseq/sdl.jpg)]
 .size-85[.small[**Adapter content**] ![](data/rnaseq/ac.jpg)]
@@ -312,7 +295,7 @@ name: read-qc-4
 ---
 name: trimming
 
-## Trimming
+# Trimming
 
 .pull-left-50[
 - Trim IF necessary
@@ -326,7 +309,9 @@ name: trimming
   - Remove reads less than ~18nt
 - Demultiplexing/Splitting
 
-<i class="fas fa-toolbox"></i> [Cutadapt](https://github.com/marcelm/cutadapt/), [fastp](https://github.com/OpenGene/fastp), [Skewer](https://github.com/relipmoc/skewer), [Prinseq](http://prinseq.sourceforge.net/)
+.tool[[Cutadapt](https://github.com/marcelm/cutadapt/)]
+.tool[[fastp](https://github.com/OpenGene/fastp)]
+.tool[[Prinseq](http://prinseq.sourceforge.net/)]
 ]
 
 .pull-right-50[
@@ -336,7 +321,7 @@ name: trimming
 ---
 name: mapping-intro
 
-## Mapping
+# Mapping
 
 ![](data/rnaseq/rnaseq_mapping.svg)
 
@@ -344,16 +329,14 @@ name: mapping-intro
 - Mapping to genome vs transcriptome
 - Splice-aware alignment (genome)
 
-<i class="fas fa-toolbox"></i> [STAR](https://github.com/alexdobin/STAR),  [HiSat2](https://ccb.jhu.edu/software/hisat2/index.shtml), [GSNAP](http://research-pub.gene.com/gmap/), [Novoalign](http://www.novocraft.com/products/novoalign/) (Commercial)
-
-.citation[
-.cite[<i class="fas fa-link"></i> Baruzzo, Giacomo, *et al*. "Simulation-based comprehensive benchmarking of RNA-seq aligners." [Nature methods 14.2 (2017): 135](https://www.nature.com/articles/nmeth.4106)]
-]  
+.tool[[STAR](https://github.com/alexdobin/STAR)]
+.tool[[HiSat2](https://ccb.jhu.edu/software/hisat2/index.shtml)] .tool[[GSNAP](http://research-pub.gene.com/gmap/)]
+.cite[[Baruzzo et al, 2017](https://www.nature.com/articles/nmeth.4106)]
 
 ---
 name: aligner-speed
 
-## Aligners • Speed
+# Aligners • Speed
 
 .pull-left-50[
 ![](data/rnaseq/compare-aligners-speed.jpg)
@@ -371,29 +354,21 @@ name: aligner-speed
 |TopHat2|1170|4.3|
 ]
 
-.citation[
-.cite[<i class="fas fa-link"></i> Baruzzo, Giacomo, *et al*. "Simulation-based comprehensive benchmarking of RNA-seq aligners." [Nature methods 14.2 (2017): 135](https://www.nature.com/articles/nmeth.4106)]  
-]
+.cite[[Baruzzo et al, 2017](https://www.nature.com/articles/nmeth.4106)]
 
 ---
 name: aligner-accuracy
 
-## Aligners • Accuracy
+# Aligners • Accuracy
 
 .size-70[![](data/rnaseq/compare-aligners-quality.jpg)]
 
 .size-40[![](data/rnaseq/accuracy.svg)]
 
-<i class="fas fa-toolbox"></i> [STAR](https://github.com/alexdobin/STAR),  [HiSat2](https://ccb.jhu.edu/software/hisat2/index.shtml), [GSNAP](http://research-pub.gene.com/gmap/), [Novoalign](http://www.novocraft.com/products/novoalign/) (Commercial)
-
-.citation[
-.cite[<i class="fas fa-link"></i> Baruzzo, Giacomo, *et al*. "Simulation-based comprehensive benchmarking of RNA-seq aligners." [Nature methods 14.2 (2017): 135](https://www.nature.com/articles/nmeth.4106)]  
-]  
-
 ---
 name: mapping-required
 
-## Mapping
+# Mapping
 
 - Reads (FASTQ)
 
@@ -424,14 +399,13 @@ CAAATTAAATTTAGCCAGAGGCGCACAACATACGACCTCTAAAAAAGGTGCTGTAACATG
 
 `seq source feature start end score strand frame attribute`
 
-.citation[
-.cite[<i class="fas fa-link"></i> Illumina read name [format](http://support.illumina.com/content/dam/illumina-support/help/BaseSpaceHelp_v2/Content/Vault/Informatics/Sequencing_Analysis/BS/swSEQ_mBS_FASTQFiles.htm), GTF [format](https://www.ensembl.org/info/website/upload/gff.html)]  
-]
+.cite[Illumina read name [format](http://support.illumina.com/content/dam/illumina-support/help/BaseSpaceHelp_v2/Content/Vault/Informatics/Sequencing_Analysis/BS/swSEQ_mBS_FASTQFiles.htm)]
+.cite[GTF [format](https://www.ensembl.org/info/website/upload/gff.html)]
 
 ---
 name: alignment
 
-## Alignment
+# Alignment
 
 - SAM/BAM (Sequence Alignment Map format)
 
@@ -451,14 +425,13 @@ ST-E00274:188:H3JWNCCXY:4:1102:32431:49900      163     1       1       60      
 |CRAM 8 bins Q|0.8|
 |CRAM no Q|0.26|
 
-.citation[
-.cite[<i class="fas fa-link"></i> SAM file [format](http://www.htslib.org/doc/sam.html)]
-]
+
+.cite[SAM file [format](http://www.htslib.org/doc/sam.html)]
 
 ---
 name: vis-tview
 
-## Visualisation • `tview`
+# Visualisation • `tview`
 
 `samtools tview alignment.bam genome.fasta`
 
@@ -467,26 +440,27 @@ name: vis-tview
 ---
 name: vis-igv
 
-## Visualisation • IGV
+# Visualisation • IGV
 
 ![](data/rnaseq/igv.png)
 
-<i class="fas fa-toolbox"></i> [IGV](http://software.broadinstitute.org/software/igv/), [UCSC Genome Browser](https://genome.ucsc.edu/)
+.tool[[IGV](http://software.broadinstitute.org/software/igv/)]
+.tool[[UCSC Genome Browser](https://genome.ucsc.edu/)]
 
 ---
 name: vis-seqmonk
 
-## Visualisation • SeqMonk
+# Visualisation • SeqMonk
 
 ![](data/rnaseq/seqmonk.jpg)
 
-<i class="fas fa-toolbox"></i> [SeqMonk](https://www.bioinformatics.babraham.ac.uk/projects/seqmonk/)
+.tool[[SeqMonk](https://www.bioinformatics.babraham.ac.uk/projects/seqmonk/)]
 
 ---
 name: alignment-qc
 class: spaced
 
-## Alignment QC
+# Alignment QC
 
 - Number of reads mapped/unmapped/paired etc
 - Uniquely mapped
@@ -498,12 +472,17 @@ class: spaced
 - Sequencing saturation
 - Strand specificity
 
-<i class="fas fa-toolbox"></i> STAR (final log file), samtools > stats, bamtools > stats, [QoRTs](https://hartleys.github.io/QoRTs/), [RSeQC](http://rseqc.sourceforge.net/), [Qualimap](http://qualimap.bioinfo.cipf.es/)
+.tool[STAR (final log file)]
+.tool[samtools stats]
+.tool[bamtools stats]
+.tool[[QoRTs](https://hartleys.github.io/QoRTs/)]
+.tool[[RSeQC](http://rseqc.sourceforge.net/)]
+.tool[[Qualimap](http://qualimap.bioinfo.cipf.es/)]
 
 ---
 name: star-log
 
-## Alignment QC • STAR Log
+# Alignment QC • STAR Log
 
 MultiQC can be used to summarise and plot STAR log files.
 
@@ -512,7 +491,7 @@ MultiQC can be used to summarise and plot STAR log files.
 ---
 name: qorts-region
 
-## Alignment QC • Features
+# Alignment QC • Features
 
 QoRTs was run on all samples and summarised using MultiQC.
 
@@ -521,14 +500,14 @@ QoRTs was run on all samples and summarised using MultiQC.
 ---
 name: qorts-plots
 
-## Alignment QC • QoRTs
+# Alignment QC • QoRTs
 
 .size-95[![](data/rnaseq/qorts.png)]
 
 ---
 name: alignment-qc-1
 
-## Alignment QC • Examples
+# Alignment QC • Examples
 
 .pull-left-50[
 **Soft clipping**
@@ -543,7 +522,7 @@ name: alignment-qc-1
 ---
 name: alignment-qc-2
 
-## Alignment QC • Examples
+# Alignment QC • Examples
 
 .pull-left-50[
 **Insert size**
@@ -559,7 +538,7 @@ name: alignment-qc-2
 name: quantification-counts
 class: spaced
 
-## Quantification • Counts
+# Quantification • Counts
 
 .pull-left-50[
 - Read counts = gene expression
@@ -569,8 +548,10 @@ class: spaced
 
 ![](data/rnaseq/rnaseq_counts.svg)
 
-<i class="fas fa-toolbox"></i> [featureCounts](http://bioinf.wehi.edu.au/featureCounts/), [HTSeq](https://github.com/simon-anders/htseq)
-]  
+.tool[[featureCounts](http://bioinf.wehi.edu.au/featureCounts/)]
+.tool[[HTSeq](https://github.com/simon-anders/htseq)]  
+
+]
 
 .pull-right-50[
 .size-85[.center[![](data/rnaseq/rnaseq_union.svg)]]
@@ -579,7 +560,7 @@ class: spaced
 ---
 name: quant-pcr-multi
 
-## Quantification
+# Quantification
 
 .pull-left-50[
 **PCR duplicates**
@@ -587,7 +568,7 @@ name: quant-pcr-multi
 - Ignore for RNA-Seq data
 - Computational deduplication (Don't!)
 - Use PCR-free library-prep kits
-- Use UMIs during library-prep
+- Use UMIs during library-prep .cite[[Fu et al, 2018](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-018-4933-1)]
 
 **Multi-mapping**
 
@@ -598,22 +579,22 @@ name: quant-pcr-multi
   - Probabilistic assignment (Rcount, Cufflinks)
   - Prioritise features (Rcount)
   - Probabilistic assignment with EM (RSEM)
+
+.cite[[Parekh et al, 2016](https://www.nature.com/articles/srep25533)]
+.cite[[Klepikova et al, 2017](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5357343/)]
+
 ]
 
 .pull-right-50[
 ![](data/rnaseq/pcr-duplicates.png)
 ]
 
-.citation[
-.cite[<i class="fas fa-link"></i> Fu, Yu, *et al*. "Elimination of PCR duplicates in RNA-seq and small RNA-seq using unique molecular identifiers." [BMC genomics 19.1 (2018): 531](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-018-4933-1)]  
-.cite[<i class="fas fa-link"></i> Parekh, Swati, *et al*. "The impact of amplification on differential expression analyses by RNA-seq." [Scientific reports 6 (2016): 25533](https://www.nature.com/articles/srep25533)]  
-.cite[<i class="fas fa-link"></i> Klepikova, Anna V., *et al*. "Effect of method of deduplication on estimation of differential gene expression using RNA-seq." [PeerJ 5 (2017): e3091](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5357343/)]  
-]  
+
 
 ---
 name: quantification-abundance
 
-## Quantification • Abundance
+# Quantification • Abundance
 
 - Count methods
   - Provide no inference on isoforms
@@ -631,17 +612,15 @@ name: quantification-abundance
 - Transcript-level estimates improves gene-level estimates
 - Kallisto/Salmon > transcript-counts > `tximport()` > gene-counts
 
-<i class="fas fa-toolbox"></i> [RSEM](https://deweylab.github.io/RSEM/), [Kallisto](https://pachterlab.github.io/kallisto/), [Salmon](https://combine-lab.github.io/salmon/), [Cufflinks2](http://cole-trapnell-lab.github.io/cufflinks/)
-
-.citation[
-.cite[<i class="fas fa-link"></i> Soneson, Charlotte, *et al*. "Differential analyses for RNA-seq: transcript-level estimates improve gene-level inferences." [F1000Research 4 (2015)](https://f1000research.com/articles/4-1521/v2)]  
-.cite[<i class="fas fa-link"></i> Zhang, Chi, *et al*. "Evaluation and comparison of computational tools for RNA-seq isoform quantification." [BMC genomics 18.1 (2017): 583](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-017-4002-1)]  
-]
+.tool[[RSEM](https://deweylab.github.io/RSEM/)]
+.tool[[Kallisto](https://pachterlab.github.io/kallisto/)] .tool[[Salmon](https://combine-lab.github.io/salmon/)]
+.cite[[Soneson et al, 2015](https://f1000research.com/articles/4-1521/v2)]
+.cite[[Zhang et al, 2017](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-017-4002-1)]
 
 ---
 name: quantification-qc
 
-## Quantification QC
+# Quantification QC
 
 ```
 ENSG00000000003    140   242   188   143   287   344   438   280   253
@@ -668,23 +647,20 @@ ENSG00000001036    79    154   74    80    128   167   220   147   72
 
 ]
 
-<i class="fas fa-toolbox"></i> [RNASeqComp](https://bioconductor.org/packages/release/bioc/html/rnaseqcomp.html)
-
-.citation[
-.cite[<i class="fas fa-link"></i> Teng, Mingxiang, *et al*. "A benchmark for RNA-seq quantification pipelines." [Genome biology 17.1 (2016): 74](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-0940-1)]  
-]
+.tool[[RNASeqComp](https://bioconductor.org/packages/release/bioc/html/rnaseqcomp.html)]
+.cite[[Teng et al, 2016](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-0940-1)]
 
 ---
 name: multiqc
 
-## MultiQC
+# MultiQC
 
 [![](data/rnaseq/multiqc.png)](https://multiqc.info/examples/rna-seq/multiqc_report.html)
 
 ---
 name: normalisation
 
-## Normalisation
+# Normalisation
 
 - Control for Sequencing depth & compositional bias
 - Median of Ratios (DESeq2) and TMM (edgeR) perform the best
@@ -698,16 +674,14 @@ name: normalisation
 
 <img src="data/rnaseq/distribution.jpg" style="height:240px; position:fixed; right:0px; bottom: 0px; margin-right: 70px; margin-bottom: 140px;">
 
-.citation[
-.cite[<i class="fas fa-link"></i> Dillies, Marie-Agnes, *et al*. "A comprehensive evaluation of normalization methods for Illumina high-throughput RNA sequencing data analysis." [Briefings in bioinformatics 14.6 (2013): 671-683](https://www.ncbi.nlm.nih.gov/pubmed/22988256)]  
-.cite[<i class="fas fa-link"></i> Evans, Ciaran, Johanna Hardin, and Daniel M. Stoebel. "Selecting between-sample RNA-Seq normalization methods from the perspective of their assumptions." [Briefings in bioinformatics (2017)](https://arxiv.org/abs/1609.00959)]  
-.cite[<i class="fas fa-link"></i> Wagner, Gunter P., Koryu Kin, and Vincent J. Lynch. "Measurement of mRNA abundance using RNA-seq data: RPKM measure is inconsistent among samples." [Theory in biosciences 131.4 (2012): 281-285](https://link.springer.com/article/10.1007/s12064-012-0162-3)]  
-]
+.cite[[Dillies et al, 2013](https://www.ncbi.nlm.nih.gov/pubmed/22988256)]
+.cite[[Evans et al, 2017](https://arxiv.org/abs/1609.00959)]
+.cite[[Wagner et al, 2012](https://link.springer.com/article/10.1007/s12064-012-0162-3)]
 
 ---
 name: exploratory-heatmap
 
-## Exploratory • Heatmap
+# Exploratory • Heatmap
 
 - Remove lowly expressed genes
 - Transform raw counts to VST, VOOM, RLOG, TPM etc
@@ -735,12 +709,12 @@ pheatmap(temp,border_color=NA,annotation_col=df_annot,
 
 .size-70[![](data/rnaseq/dge-clustering.png)]
 
-<i class="fas fa-toolbox"></i> [`pheatmap()`](https://github.com/raivokolde/pheatmap)
+.tool[[pheatmap](https://github.com/raivokolde/pheatmap)]
 
 ---
 name: exploratory-pca
 
-## Exploratory • PCA
+# Exploratory • PCA
 
 ```{r,echo=FALSE,eval=FALSE}
 mat1 <- as.data.frame(cmdscale(dist(t(cvst),method="euclidean"),eig=F,k=3))
@@ -760,7 +734,7 @@ add_markers(p1,color=~patient)
 name: batch-correction
 class: spaced
 
-## Batch correction
+# Batch correction
 
 - Estimate variation explained by variables (PVCA)
 
@@ -771,24 +745,23 @@ class: spaced
 - Correct known batches (ComBat)(Harsh!)
 - Interactively evaluate batch effects and correction (BatchQC)
 
-<i class="fas fa-toolbox"></i> [SVA](http://bioconductor.org/packages/release/bioc/html/sva.html), [PVCA](https://bioconductor.org/packages/release/bioc/html/pvca.html), [BatchQC](http://bioconductor.org/packages/release/bioc/html/BatchQC.html)
-
-.citation[
-.cite[<i class="fas fa-link"></i> Liu, Qian, and Marianthi Markatou. "Evaluation of methods in removing batch effects on RNA-seq data." [Infectious Diseases and Translational Medicine 2.1 (2016): 3-9](http://www.tran-med.com/article/2016/2411-2917-2-1-3.html)]  
-.cite[<i class="fas fa-link"></i> Manimaran, Solaiappan, et al. "BatchQC: interactive software for evaluating sample and batch effects in genomic data." [Bioinformatics 32.24 (2016): 3836-3838](https://academic.oup.com/bioinformatics/article/32/24/3836/2525651)]  
-]
+.tool[[SVA](http://bioconductor.org/packages/release/bioc/html/sva.html)]
+.tool[[PVCA](https://bioconductor.org/packages/release/bioc/html/pvca.html)]
+.tool[[BatchQC](http://bioconductor.org/packages/release/bioc/html/BatchQC.html)]
+.cite[[Liu et al, 2016](http://www.tran-med.com/article/2016/2411-2917-2-1-3.html)]
+.cite[[Manimaran et al, 2016](https://academic.oup.com/bioinformatics/article/32/24/3836/2525651)]
 
 ---
 name: dge-1
 
-## DGE
+# DGE
 
 .size-90[![](data/rnaseq/dge.png)]
 
 ---
 name: dge-2
 
-## DGE
+# DGE
 
 - DESeq2, edgeR (Neg-binom > GLM > Test), Limma-Voom (Neg-binom > Voom-transform > LM > Test)
 - DESeq2 `~age+condition`
@@ -830,16 +803,15 @@ par(mfrow=c(1,1))
 
 .size-50[![](data/rnaseq/dge-dispersion.png)]
 
-<i class="fas fa-toolbox"></i> [DESeq2](), [edgeR](), [Limma-Voom]()
-
-.citation[
-.cite[<i class="fas fa-link"></i> Seyednasrollah, Fatemeh, *et al*. "Comparison of software packages for detecting differential expression in RNA-seq studies." [Briefings in bioinformatics 16.1 (2013): 59-70](https://academic.oup.com/bib/article/16/1/59/240754)]  
-]
+.tool[[DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html)]
+.tool[[edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html)]
+.tool[[limma](https://bioconductor.org/packages/release/bioc/html/limma.html)]
+.cite[[Seyednasrollah et al, 2013](https://academic.oup.com/bib/article/16/1/59/240754)]
 
 ---
 name: dge-3
 
-## DGE
+# DGE
 
 - Results `results()`
 
@@ -883,7 +855,7 @@ low counts [2]     : 0, 0%
 ---
 name: dge-4
 
-## DGE
+# DGE
 
 .pull-left-50[
 
@@ -935,7 +907,7 @@ plotCounts(d1,"ENSG00000000003",intgroup="type")
 ---
 name: functional-analysis-1
 
-## Functional analysis • GO
+# Functional analysis • GO
 
 - Gene set analysis (GSA)
 - Gene set enrichment analysis (GSEA)
@@ -948,19 +920,22 @@ name: functional-analysis-1
 ---
 name: functional-analysis-2
 
-## Functional analysis • Kegg
+# Functional analysis • Kegg
 
 - Pathway analysis (Kegg)
 
 ![](data/rnaseq/kegg.png)
 
-<i class="fas fa-toolbox"></i> [DAVID](https://david.ncifcrf.gov/), [clusterProfiler](https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html), [ClueGO](http://apps.cytoscape.org/apps/cluego), [ErmineJ](https://erminej.msl.ubc.ca/), [pathview](https://bioconductor.org/packages/release/bioc/html/pathview.html)
+.cite[[DAVID](https://david.ncifcrf.gov/)]
+.cite[[clusterProfiler](https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html)]
+.cite[[ClueGO](http://apps.cytoscape.org/apps/cluego)] .cite[[ErmineJ](https://erminej.msl.ubc.ca/)]
+.cite[[pathview](https://bioconductor.org/packages/release/bioc/html/pathview.html)]
 
 ---
 name: summary
 class: spaced
 
-  ## Summary
+## Summary
 
 - Sound experimental design to avoid confounding
 - Plan carefully about lib prep, sequencing etc based on experimental objective
@@ -970,13 +945,13 @@ class: spaced
 - Experiment with multiple pipelines and tools
 - QC! QC everything at every step
 
-.large[<i class="fas fa-link"></i> Conesa, Ana, *et al.* "A survey of best practices for RNA-seq data analysis." [Genome biology 17.1 (2016): 13](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-0881-8)]  
+> .large[Conesa, Ana, *et al.* "A survey of best practices for RNA-seq data analysis." [Genome biology 17.1 (2016): 13](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-0881-8)]  
 
 ---
 name: help
 class: spaced
 
-## Further learning
+# Further learning
 
 - Griffith lab [RNA-Seq using HiSat & StringTie tutorial](https://github.com/griffithlab/rnaseq_tutorial/wiki)
 - SciLifeLab [courses](https://www.scilifelab.se/education/courses%26training)
@@ -984,7 +959,7 @@ class: spaced
 - Hemberg lab [scRNA-Seq tutorial](http://hemberg-lab.github.io/scRNA.seq.course/index.html)
 - [RNA-Seq Blog](https://www.rna-seqblog.com/)
 
-<img src="data/rnaseq/help.png" style="height:200px; position:fixed; right:0px; bottom:0px; margin-right: 100px; margin-bottom: 20px;">
+<img src="data/rnaseq/help.png" style="height:250px; position:fixed; right:0px; bottom:0px; margin-right: 35px; margin-bottom: 40px;">
 
 ---
 name: end_slide
@@ -995,6 +970,70 @@ count: false
 
 ```{r,echo=FALSE,child="assets/footer-slide.Rmd"}
 ```
+
+---
+name: references-1
+exclude: true
+
+# References
+
+1. Baruzzo, Giacomo, *et al*. "Simulation-based comprehensive benchmarking of RNA-seq aligners." [Nature methods 14.2 (2017): 135](https://www.nature.com/articles/nmeth.4106)
+
+2. Busby, Michele A., *et al.* "Scotty: a web tool for designing RNA-Seq experiments to measure differential gene expression." [Bioinformatics 29.5 (2013): 656-657](https://academic.oup.com/bioinformatics/article/29/5/656/252753)
+
+3. Conesa, Ana, *et al.* "A survey of best practices for RNA-seq data analysis." [Genome biology 17.1 (2016): 13](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-0881-8)
+
+4. Corley, Susan M., et al. "Differentially expressed genes from RNA-Seq and functional enrichment results are affected by the choice of single-end versus paired-end reads and stranded versus non-stranded protocols." [BMC genomics 18.1 (2017): 399](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5442695/)
+
+5. Chhangawala, Sagar, et al. "The impact of read length on quantification of differentially expressed genes and splice junction detection." [Genome biology 16.1 (2015): 131](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4531809/)
+
+6. Dillies, Marie-Agnes, *et al*. "A comprehensive evaluation of normalization methods for Illumina high-throughput RNA sequencing data analysis." [Briefings in bioinformatics 14.6 (2013): 671-683](https://www.ncbi.nlm.nih.gov/pubmed/22988256)
+
+7. Evans, Ciaran, Johanna Hardin, and Daniel M. Stoebel. "Selecting between-sample RNA-Seq normalization methods from the perspective of their assumptions." [Briefings in bioinformatics (2017)](https://arxiv.org/abs/1609.00959)
+
+8. Fu, Yu, *et al*. "Elimination of PCR duplicates in RNA-seq and small RNA-seq using unique molecular identifiers." [BMC genomics 19.1 (2018): 531](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-018-4933-1)
+
+9. Hart, S. N., Therneau, T. M., Zhang, Y., Poland, G. A., & Kocher, J. P. (2013). Calculating sample size estimates for RNA sequencing data. [Journal of computational biology, 20(12), 970-978](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3842884/)
+
+10. Hsieh, Ping-Han *et al*., "Effect of de novo transcriptome assembly on transcript quantification" [2018 bioRxiv 380998](https://www.biorxiv.org/content/early/2018/08/22/380998)
+
+11. Kim, Young-Kook, *et al*. "Short structured RNAs with low GC content are selectively lost during extraction from a small number of cells." [Molecular cell 46.6 (2012): 893-895](https://www.cell.com/molecular-cell/fulltext/S1097-2765(12)00481-9)
+
+12. Klepikova, Anna V., *et al*. "Effect of method of deduplication on estimation of differential gene expression using RNA-seq." [PeerJ 5 (2017): e3091](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5357343/)
+
+13. Levin, Joshua Z., et al. "Comprehensive comparative analysis of strand-specific RNA sequencing methods." [Nature methods 7.9 (2010): 709](https://www.nature.com/articles/nmeth.1491)
+
+14. Liu, Qian, and Marianthi Markatou. "Evaluation of methods in removing batch effects on RNA-seq data." [Infectious Diseases and Translational Medicine 2.1 (2016): 3-9](http://www.tran-med.com/article/2016/2411-2917-2-1-3.html)
+
+15. Liu, Yuwen, Jie Zhou, and Kevin P. White. "RNA-seq differential expression studies: more sequence or more replication?." [Bioinformatics 30.3 (2013): 301-304](https://academic.oup.com/bioinformatics/article/30/3/301/228651)
+
+16. Manimaran, Solaiappan, et al. "BatchQC: interactive software for evaluating sample and batch effects in genomic data." [Bioinformatics 32.24 (2016): 3836-3838](https://academic.oup.com/bioinformatics/article/32/24/3836/2525651)
+
+17. Marioni, John C., *et al.* "RNA-seq: an assessment of technical reproducibility and comparison with gene expression arrays." [Genome research (2008)](https://genome.cshlp.org/content/18/9/1509.long)
+
+18. Parekh, Swati, *et al*. "The impact of amplification on differential expression analyses by RNA-seq." [Scientific reports 6 (2016): 25533](https://www.nature.com/articles/srep25533)
+
+19. Romero, Irene Gallego, *et al*. "RNA-seq: impact of RNA degradation on transcript quantification." [BMC biology 12.1 (2014): 42](https://bmcbiol.biomedcentral.com/articles/10.1186/1741-7007-12-42)
+
+20. Schurch, Nicholas J., *et al.* "How many biological replicates are needed in an RNA-seq experiment and which differential expression tool should you use?." [Rna (2016)](http://rnajournal.cshlp.org/content/early/2016/03/30/rna.053959.115.abstract)
+
+21. SciLifeLab. Comparison of PE and SE for RNA-Seq, [SciLifeLab](https://ngisweden.scilifelab.se/file/1540-1_Comparison_of_PE_and_SE_for_RNA-seq.pdf)
+
+22. Seyednasrollah, Fatemeh, *et al*. "Comparison of software packages for detecting differential expression in RNA-seq studies." [Briefings in bioinformatics 16.1 (2013): 59-70](https://academic.oup.com/bib/article/16/1/59/240754)
+
+23. Soneson, Charlotte, *et al*. "Differential analyses for RNA-seq: transcript-level estimates improve gene-level inferences." [F1000Research 4 (2015)](https://f1000research.com/articles/4-1521/v2)
+
+24. Teng, Mingxiang, *et al*. "A benchmark for RNA-seq quantification pipelines." [Genome biology 17.1 (2016): 74](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-0940-1)
+
+25. Wagner, Gunter P., Koryu Kin, and Vincent J. Lynch. "Measurement of mRNA abundance using RNA-seq data: RPKM measure is inconsistent among samples." [Theory in biosciences 131.4 (2012): 281-285](https://link.springer.com/article/10.1007/s12064-012-0162-3)
+
+26. Wang, Sufang, and Michael Gribskov. "Comprehensive evaluation of de novo transcriptome assembly programs and their effects on differential gene expression analysis." [Bioinformatics 33.3 (2017): 327-333](https://academic.oup.com/bioinformatics/article/33/3/327/2580374)
+
+27. Zhang, Chi, *et al*. "Evaluation and comparison of computational tools for RNA-seq isoform quantification." [BMC genomics 18.1 (2017): 583](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-017-4002-1)
+
+28. Zhao, Shanrong, et al. "Comparison of stranded and non-stranded RNA-seq transcriptome profiling and investigation of gene overlap." [BMC genomics 16.1 (2015): 675](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4559181/)
+
+29. Zhao, Shilin, *et al.* "RnaSeqSampleSize: real data based sample size estimation for RNA sequencing." [BMC bioinformatics 19.1 (2018): 191](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-018-2191-5)
 
 ---
 name: lab1

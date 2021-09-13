@@ -1,4 +1,4 @@
-/* CSS Bootstrap custom style for workshop */
+/* bootstrap css custom styles for workshop */
 /* 2021 Roy Francis */
 
 /* define font */
@@ -25,7 +25,6 @@
 /* body font family */
 body,p,h1,h2,h3,h4,h5,h6 {
   font-family: var(--font-base, 'Roboto', 'DIN', 'Helvetica', sans-serif);
-  color: var(--color-text);
   font-weight: 400;
   font-size: 17px;
   line-height: 1.55;
@@ -61,19 +60,19 @@ h6 {
   font-size: 1.125em;
 }
 
-.section .level1 {
+.level1 {
   margin-bottom: 2.5em;
 }
 
-.section .level2 {
+.level2 {
   margin-bottom: 1.8em;
 }
 
-.section .level3 {
+.level3 {
   margin-bottom: 1.3em;
 }
 
-.section .level4 {
+.level4 {
   margin-bottom: 1em;
 }
 
@@ -87,7 +86,6 @@ pre {
 
 code {
   font-family: var(--font-code,"Menlo","Monaco", "Consolas","Liberation Mono", "Courier New", monospace);
-  font-size: 16px;
   word-break: break-all;
 }
 
@@ -107,7 +105,7 @@ code {
 
 /* report author style */
 .author {
-  font-size: 1em;
+  font-size: 1.6em;
   margin-top: -6px;
   margin-bottom: 5px;
   font-weight: 600;
@@ -115,7 +113,8 @@ code {
 
 /* report date style */
 .date {
-  margin-top: 0;
+  font-size: 1.5em;
+  margin-top: -12px;
   margin-bottom: 10px;
 }
 
@@ -149,9 +148,17 @@ blockquote::before {
 }
 
 /* kbd */
-.kbd {
+kbd, .kbd {
+  background-color: var(--color-text);
+  color: white;
   padding: 2px 5px;
-  font-family: var(--font-code,"Menlo","Monaco", "Consolas","Liberation Mono", "Courier New", monospace);
+  border-radius: 4px;
+  font-size: 85%;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin: 0em 0.05em;
+  font-family: var(--font-code);
+  text-align: center;
 }
 
 /* danger alert text style */
@@ -649,15 +656,7 @@ ul.nav a:hover {
   background-color: #566573;
 }
 
-.navbar .container {
-  max-width: 940px !important;
-}
-
 /* footer ------------------------------------------------------------------- */
-
-.footer-container {
-  max-width: 940px !important;
-}
 
 .footer {
   color: #bdbdbd;
@@ -673,9 +672,19 @@ ul.nav a:hover {
   border: none;
 }
 
-/* .footer p {
-  color: lightgrey;
-}*/
+.footer-left {
+  text-align: left;
+  vertical-align: middle;
+}
+
+.footer-right {
+  text-align:right;
+  vertical-align:middle;
+}
+
+.footer p {
+  color: #bdbdbd;
+}
 
 .footer a {
   color: #bdbdbd;
@@ -689,51 +698,65 @@ ul.nav a:hover {
 
 /* homepage -------------------------------------------------------------------- */
 
-.landing-container {
-  max-width: 940px !important;
-  margin-top: -20px;
+.container {
+  max-width: 940px;
 }
 
-.landing-div {
-  background-image: url('landing.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: left bottom;
-  height: 580px;
+.landing {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-weight: 300;
 }
+
+.landing-title h1 {
+  font-size: 2.5em;
+  line-height: 1.1;
+  font-weight: 300;
+  margin-bottom: 0.5em;
+}
+
+.landing-subtitle h2 {
+  font-size: 1.5em;
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+
+.landing-features {
+  font-size: 120%;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+.landing-features ul {
+  padding-left: 1em;
+}
+
+.landing-right {
+  align-self: center;
+}
+
+.landing-left {
+  align-self: center;
+}
+
 
 @media only screen and (max-width: 575px) {
-  .flex-box {
-    text-align: center;
-  }
-  .landing-update {
-    text-align: center;
-  }
-  .landing-div {
-    height: 680px;
-  }
+
+ .landing {
+   grid-template-columns: 100%;
+   text-align: center;
+ }
+
+ .landing-update {
+   text-align: center;
+ }
+
+ .landing-right {
+   padding: 2em;
+ }
+
 }
 
-.landing-subtitle {
-  font-size: 1.3em;
-  font-weight: 200;
-  line-height: 1;
-  margin-bottom: 1em;
-  margin-left: 2px;
-}
-
-.landing-title {
-  font-size: 2.8em;
-  font-weight: 200;
-  line-height: 1.2;
-  margin-bottom: 0.7em;
-}
-
-.landing-bullets {
-  font-size:1.5em;
-  font-weight:200;
-  line-height:1.4;
-}
 
 /* tocify ---------------------------------------------------------------------- */
 
@@ -906,3 +929,4 @@ ul.nav a:hover {
  transition: .2s ease;
  filter: none;
 }
+

@@ -9,39 +9,34 @@ output:
 ```{r,child="assets/header-lab.Rmd"}
 ```
 
-<div class="container landing-container">
-<div class="row landing-div" style="position:relative;">
+```{css,echo=FALSE}
+.title{
+  display: none;
+}
+```
 
-<div class="boxy boxy-yellow boxy-exclamation">
+<div class="boxy boxy-yellow boxy-exclamation" style="margin-bottom:2em;">
 The contents and schedule are being revised. They will be finalised before the workshop.
 </div>
 
-<div class="col" style="align-self:center;position:absolute;top:80px;">
-<div class="row">
-
-<div class="col-md-12 flex-box">
-<p class="landing-subtitle">
-<span style="display:block;">NBIS • Workshop</span>
-</p>
+<div class="container">
+<div class="landing">
+<div class="landing-left">
+<div class="landing-subtitle">
+## NBIS • Workshop
 </div>
-
-<div class="col-md-12 flex-box">
-<p class="landing-title">
-<span style="display:block;">Introduction to Bioinformatics</span>
-<span style="display:block;">using NGS data</span>
-</p>
+<div class="landing-title">
+# Introduction to Bioinformatics using NGS data
 </div>
-
-<div class="col-md-12 flex-box">
-<p class="medium landing-bullets">
-<span style="display:block;">Working on the Linux command line</span>
-<span style="display:block;">Sequence data formats and QC</span>
-<span style="display:block;">DNA variant calling workflow</span>
-<span style="display:block;">RNA sequence analyses workflow</span>
-</p>
+<div class="landing-features">
+- Working on the Linux command line
+- Sequence data formats and QC
+- DNA variant calling workflow
+- RNA sequence analyses workflow
 </div>
-
 </div>
+<div class="landing-right">
+<img src="assets/landing.png">
 </div>
 </div>
 
