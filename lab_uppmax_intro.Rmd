@@ -404,7 +404,7 @@ Remember the commands **`uquota`** (show how much of your storage space you are 
 **Optional**
 
 ## Pipelines
-This optional material on [UPPMAX pipeline exercise](lab_uppmax_pipeline.html) will teach you the basics in creating pipelines. Continue with this if you finish the current lab ahead of time.
+This optional material on uppmax pipelines will teach you the basics in creating pipelines. Continue with this if you finish the current lab ahead of time. Navigate to the exercise **Uppmax Pipelines** on the **Content** page.
 </div>
 
 ***

@@ -1216,7 +1216,7 @@ cat slurm-XXXX.out
 
 # Simon's analysis
 
-We had [Simon Andrews](https://www.babraham.ac.uk/science-services/bioinformatics/simon-andrews) from the Babraham institute with us on one of the workshops and he did his own exploration into the dataset from this paper using his tool [SeqMonk](http://www.bioinformatics.babraham.ac.uk/projects/seqmonk/). It's an excellent read and highly recommended. His report is available [here](data/rnaseq/simon-report/validating_knockout.html).
+We had [Simon Andrews](https://www.babraham.ac.uk/science-services/bioinformatics/simon-andrews) from the Babraham institute with us on one of the workshops and he did his own exploration into the dataset from this paper using his tool [SeqMonk](http://www.bioinformatics.babraham.ac.uk/projects/seqmonk/). It's an excellent read and highly recommended. His report is available on the **Content** page.
 
 # Conclusion
 

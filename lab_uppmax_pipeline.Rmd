@@ -334,6 +334,4 @@ Typical RNAseq analysis consists of multiple samples / time points:
 
 The difficulty here is that you have not just 1 sample, you have 3 of them. And they all need to be filtered and aligned separately, and then compared to each other. The program that does the differential expression analysis in this exercise is called `diff_exp` and is located in the same directory as the previous scripts. The samples are filtered and aligned individually.
 
-For the really fast ones: Continue with this tutorial on [Linux file permissions](lab_linux_permissions.html) if you still have time left on the lab.
-
 ***

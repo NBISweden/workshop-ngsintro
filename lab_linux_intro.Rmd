@@ -205,7 +205,7 @@ cat(paste0("cp -r /sw/courses/ngsintro/linux/linux_tutorial/* /proj/",upid,"/nob
 If you are unable to copy the files on UPPMAX, you can [download the files from this link](data/linux/files.tar.gz) instead of copying them. This is done with the command `wget` (*web get*). It works kind of the same way as the `cp` command, but you give it a source URL instead of a source file, and you specify the destination by giving it a prefix, a path that will be appended in front on the file name when it's downloaded.
 
 *i.e*; if you want to download the file http://somewhere.com/my.file and you give it the prefix `~/analysis/`, the downloaded file will be saved as `~/analysis/my.file`.
-[Linux file permissions exercises](lab_linux_permissions.html)
+
 ```bash
 Ex: wget -P <destination prefix> <source URL>
 ```
@@ -647,7 +647,7 @@ The `man` pages can be a bit tricky to understand at first, but you get used to 
 <div class="boxy boxy-clipboard-list boxy-orange">
 **Optional**
 
-If you still have time left on the lab and you finished early, check out the [Linux file permissions exercises](lab_linux_permissions.html)!
+If you still have time left on the lab and you finished early, check out the **Linux file permissions** lab on the **Content** page.
 </div>
 
 
