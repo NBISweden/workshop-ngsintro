@@ -1056,7 +1056,7 @@ class: spaced
 - 03 Visualisation of RNA-seq BAM files using **IGV** genome browser
 
 .large[**Data:** `/sw/courses/ngsintro/rnaseq/`]  
-.large[**Work:** `/proj/gXXXXXXX/nobackup/<user>/rnaseq/`]  
+.large[**Work:** `/proj/XXXXXXXX/nobackup/<user>/rnaseq/`]  
 
 ---
 name: lab2
@@ -1096,7 +1096,7 @@ rnaseq/
 
 - Your work directory
 
-.large[`/proj/gXXXX/nobackup/<user>/`]  
+.large[`/proj/XXXXX/nobackup/<user>/`]  
 
 .large[
 ```
