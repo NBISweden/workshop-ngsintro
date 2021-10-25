@@ -1,5 +1,5 @@
 date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_youtube;link_room
-22/11/2021;Online;09:00;09:30;General introduction;Martin Dahlö;;;;;
+22/11/2021;Online;09:00;09:30;Welcome and general introduction;Martin Dahlö;;;;;
 ;;09:30;10:30;Intro to Linux;Martin Dahlö;LS,SR,IH;slide_linux_intro.pdf;;https://youtu.be/bPsereCdJT8;
 ;;10:30;12:00;Intro to Linux;Martin Dahlö;LS,SR,IH;;lab_linux_intro.html;;
 ;;12:00;13:00;Lunch;;;;;;
