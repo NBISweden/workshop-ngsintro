@@ -3,7 +3,8 @@ name: Introduction to Bioinformatics using NGS data
 output_dir: 2111
 # used site-wide wherever uppmax project ids are used
 uppmax_project: "snic2021-22-644"
-nsc_project: snicXXXX-XX-XXX
+uppmax_storage: "snic2021-23-591"
+nsc_project: "snic2021-22-750"
 # uppmax reservation ids. used site-wide
 uppmax_res_1: XXXX
 uppmax_res_2: XXXX

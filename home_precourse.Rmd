@@ -12,6 +12,7 @@ output:
 ```{r,eval=TRUE,include=FALSE}
 library(yaml)
 upid <- yaml::read_yaml("_site.yml")$uppmax_project
+upstore <- yaml::read_yaml("_site.yml")$uppmax_storage
 nscid <- yaml::read_yaml("_site.yml")$nsc_project
 ```
 
@@ -31,7 +32,7 @@ If you do not already have one, create an account at [https://supr.snic.se/](htt
 
 <img src="data/common/supr-login.png" class="fancyimage" style="width:70%;">
 
-Log in to [SUPR/SNIC](https://supr.snic.se/) and request membership to the project IDs **`r paste0(upid)`** and **`r paste0(nscid)`**.
+Log in to [SUPR/SNIC](https://supr.snic.se/) and request membership to the project IDs **`r paste0(upid)`**, **`r paste0(upstore)`** and **`r paste0(nscid)`**.
 
 <img src="data/common/supr-request.png" class="fancyimage" style="width:70%;">
 
