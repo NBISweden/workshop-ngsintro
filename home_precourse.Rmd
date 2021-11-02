@@ -40,7 +40,7 @@ Once you are accepted to a project, you should see that project listed under you
 
 <img src="data/common/supr-projects.png" class="fancyimage" style="width:70%;">
 
-Finally you need to request a login account to NSC. Login to SUPR and go to the Accounts page. Under the **Possible Resource Account Requests** heading click on **Request Account on Tetralith @ NSC** button and confirm it on the next page.
+Finally you need to request login accounts to NSC and UPPMAX. These are the accounts you use to log in to the actual computers, so they are not the same as your SUPR account. Login to SUPR and go to the Accounts page. Under the **Possible Resource Account Requests** heading click on **Request Account on Tetralith @ NSC** and **Request Account on Rackham @ UPPMAX** button and confirm it on the next page. If either of them are missing from this page, it could be because you already have a login account created (only 1 account per person allowed), or that you have not yet gotten your project memberships approved.
 
 <img src="data/common/supr-tetralith.png" class="fancyimage" style="width:70%;">
 
