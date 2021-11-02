@@ -86,7 +86,7 @@ For this step, you will have to use the terminal a bit. You can get started by f
 
 **Create a user folder: ** Run the following below.
 
-```{r,echo=FALSE,comment=""}
+```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0("mkdir /proj/",upid,"/nobackup/username"))
 ```
 
