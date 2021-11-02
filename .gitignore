@@ -1,2 +1,5 @@
 .*.sw*
 .Rhistory
+libs/
+*_files/
+*.html
