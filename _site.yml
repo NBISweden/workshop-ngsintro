@@ -48,6 +48,8 @@ navbar:
       href: home_content.html
     - text: Precourse
       href: home_precourse.html
+    - text: Syllabus
+      href: home_syllabus.html
     - text: Info
       href: home_info.html
 
