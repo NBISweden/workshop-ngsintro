@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -A g2021013
+#SBATCH -A snic2021-22-750
 #SBATCH -p core
 #SBATCH -n 1
 #SBATCH -t 1:00:00
@@ -11,9 +11,19 @@ module load bwa/0.7.17
 module load samtools/1.10
 module load GATK/4.1.4.1
 
-ref="/sw/courses/ngsintro/reseq/data/ref"
+path_base="/sw/courses/ngsintro/reseq/data"
 
+ln -s ${path_base}/ref/human_g1k_v37_chr2.fasta
+ln -s ${path_base}/fastq/HG00097_1.fq
+ln -s ${path_base}/fastq/HG00097_2.fq
+ln -s ${path_base}/fastq/HG00100_1.fq
+ln -s ${path_base}/fastq/HG00100_2.fq
+ln -s ${path_base}/fastq/HG00101_1.fq
+ln -s ${path_base}/fastq/HG00101_2.fq
 
+bwa index -a bwtsw human_g1k_v37_chr2.fasta
+samtools faidx human_g1k_v37_chr2.fasta
+gatk --java-options -Xmx7g CreateSequenceDictionary -R human_g1k_v37_chr2.fasta -O human_g1k_v37_chr2.dict
 
 ## loop through the samples:
 for sample in HG00097 HG00100 HG00101;
