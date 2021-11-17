@@ -34,7 +34,7 @@ class: spaced
 ```{r,include=FALSE}
 # load packages
 library(yaml)
-upid <- yaml::read_yaml("_site1.yml")$uppmax_project
+upid <- yaml::read_yaml("_site.yml")$uppmax_project
 #library(dplyr)
 #library(pheatmap)
 #library(plotly)
