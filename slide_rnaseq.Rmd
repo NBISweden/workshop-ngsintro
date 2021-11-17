@@ -33,6 +33,8 @@ class: spaced
 
 ```{r,include=FALSE}
 # load packages
+library(yaml)
+upid <- yaml::read_yaml("_site1.yml")$uppmax_project
 #library(dplyr)
 #library(pheatmap)
 #library(plotly)
@@ -59,7 +61,7 @@ class: spaced
 name: intro
 class: spaced
 
-# RNA Sequencing
+# What is RNA?
 
 ![](data/rnaseq/rnaseq_transcription.svg)
 
@@ -69,14 +71,14 @@ class: spaced
 
 ???
 
-* What is RNA?
-* Central dogma of molecular biology. DNA -> RNA -> Protein.
-* We have gene models to explain organisation of the DNA into functional units.
-* Very tiny portion of the genome transcribes to RNA.
-* There are many types of RNA. Commonly protein coding RNA or mRNA. There are tRNA, sRNA, miRNA, siRNA, lincRNA etc.
-* What is the most abundant RNA? rRNA.
-* Why are we interested in RNA? While DNA is constant in all cells, expressed RNA varies from cell to cell and from time to time.
-* When we say RNA sequencing, what we sequencing?. For most part we are converting RNA to DNA and sequencing the DNA just like regular DNA sequencing.
+- Central dogma of molecular biology. DNA -> RNA -> Protein.
+- We have gene models to explain organisation of the DNA into functional units.
+- Very tiny portion of the genome transcribes to RNA.
+- There are many types of RNA. Commonly protein coding RNA or mRNA. There are tRNA, sRNA, miRNA, siRNA, lincRNA etc.
+- What is the most abundant RNA? rRNA.
+- Why are we interested in RNA? While DNA is constant in all cells, expressed RNA varies from cell to cell and from time to time.
+- When we say RNA sequencing, what we sequencing?. For most part we are converting RNA to DNA and sequencing the DNA just like regular DNA sequencing.
+- Gene model
 
 ---
 name: applications
@@ -84,7 +86,7 @@ class: spaced
 
 # Applications
 
-- Identify gene sequences in genomes
+- Identify gene sequences in genomes (annotation)
 - Learn about gene function
 - Differential gene expression
 - Explore isoform and allelic expression
@@ -112,76 +114,57 @@ class: spaced
 
 .pull-left-50[
 
-- Balanced design
-- Technical replicates not necessary .cite[[Marioni et al, 2008](https://genome.cshlp.org/content/18/9/1509.long)]
 - Biological replicates: 6 - 12 .cite[[Schurch *et al.*, 2016](http://rnajournal.cshlp.org/content/early/2016/03/30/rna.053959.115.abstract)]
-- ENCODE consortium
-- Previous publications
 - Sample size estimation .cite[[Hart et al, 2013](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3842884/)]
 - Power analysis .cite[[RNASeqPower](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-018-2191-5)] .tool[[RNASeqPower web app](https://rshiny.nbis.se/shiny-server-apps/shiny-rnaseq-power/)]
-
+- Balanced design to avoid batch effects (.tool[[experDesign](https://experdesign.llrs.dev/index.html)] .tool[[DeclareDesign](https://declaredesign.org/)])
+- RIN values have strong effect .cite[[Romero et al, 2014](https://bmcbiol.biomedcentral.com/articles/10.1186/1741-7007-12-42)]
 ]
 
 .pull-right-50[
 .size-90[![](data/rnaseq/batch-effect.svg)]
 ]
 
----
-name: rna-extraction
-class: spaced
+???
 
-# RNA extraction
-
-.pull-left-50[
-- Sample processing and storage
-- Total RNA/mRNA/small RNA
-- DNAse treatment
-- Quantity & quality
-- RIN values (Strong effect)
-- Batch effect
-- Extraction method bias (GC bias)
-
-.cite[[Romero et al, 2014](https://bmcbiol.biomedcentral.com/articles/10.1186/1741-7007-12-42)]
-.cite[[Kim et al, 2012](https://doi.org/10.1016/j.molcel.2012.05.036)]
-
-]
-
-.pull-right-50[
-
-.size-70[![](data/rnaseq/degradation.jpg)]
-
-]
+- Technical replicates are not necessary .cite[[Marioni *et al.*, 2008](https://genome.cshlp.org/content/18/9/1509.long)]
+- Previous publications can be useful in experimental planning to avoid repeating the same mistakes
 
 ---
-name: library-prep
+name: library-sequencing
 class: spaced
 
-# Library prep
+# Library & Sequencing
 
 .pull-left-50[
-- PolyA selection
-- rRNA depletion
-- Size selection
-- PCR amplification (See section PCR duplicates)
-- Stranded (directional) libraries .cite[[Zhao et al, 2015](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4559181/)] .cite[[Levin et al, 2010](https://www.nature.com/articles/nmeth.1491)]
-  - Accurately identify sense/antisense transcript
-  - Resolve overlapping genes
-- Exome capture
-- Library normalisation
-- Batch effect
+![](data/rnaseq/rnaseq_library_prep.svg)
 ]  
 
 .pull-right-50[
-![](data/rnaseq/rnaseq_library_prep.svg)
+![](data/rnaseq/rnaseq_read_type.svg)
+- polyA selection/Ribosomal RNA depletion
+- single-end/Paired-end
 ]
 
----
-name: sequencing
+???
+
+# Library prep
+
+- 80% of the RNA in a cell is ribosomal RNA (rRNA)
+- rRNA can be eliminated using polyA selection or rRNA depletion 
+- PolyA selection mostly captures only protein-coding genes / mRNA but gives cleaner results
+- Depletion of rRNA is the solution if it's important to retain all RNA species
+- smallRNAs are purified through size selection
+- PCR amplification may be needed for low quantity input (See section PCR duplicates)
+- Preferably opt for stranded (directional) libraries .cite[[Zhao et al, 2015](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4559181/)] .cite[[Levin et al, 2010](https://www.nature.com/articles/nmeth.1491)]
+  - Accurately identify sense/antisense transcript
+  - Resolve overlapping genes
+- Exome capture
+- Library normalisation to concentrate specific transcripts
 
 # Sequencing
 
-.pull-left-60[
-- Sequencer (Illumina/PacBio)
+- Short reads vs long reads (Illumina/PacBio)
 - Read length .cite[[Chhangawala et al, 2015](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4531809/)]
   - Greater than 50bp does not improve DGE
   - Longer reads better for isoforms
@@ -198,12 +181,6 @@ name: sequencing
 .cite[[Corley et al, 2017](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5442695/)]
 .cite[[SciLifeLab](https://ngisweden.scilifelab.se/file/1540-1_Comparison_of_PE_and_SE_for_RNA-seq.pdf)]
 
-]
-
-.pull-right-40[
-![](data/rnaseq/rnaseq_read_type.svg)
-]
-
 ---
 name: workflow-dge
 
@@ -211,9 +188,7 @@ name: workflow-dge
 
 ![](data/rnaseq/rnaseq_workflow_dge.svg)
 
----
-name: de-novo-assembly
-class: spaced
+???
 
 # De-Novo assembly
 
@@ -276,16 +251,12 @@ name: read-qc-2
 .size-85[.small[**Per base sequence quality**] ![](data/rnaseq/pbsq.jpg)]
 .size-85[.small[**Per sequence quality scores**] ![](data/rnaseq/psqs.jpg)]
 
----
-name: read-qc-3
+???
 
 # Read QC • PBSC, PSGC
 
 .size-85[.small[**Per base sequence content**] ![](data/rnaseq/pbsc.jpg)]
 .size-85[.small[**Per sequence GC content**] ![](data/rnaseq/psgc.jpg)]
-
----
-name: read-qc-4
 
 # Read QC • SDL, AC
 
@@ -327,22 +298,33 @@ name: mapping-intro
 
 - Aligning reads back to a reference sequence
 - Mapping to genome vs transcriptome
-- Splice-aware alignment (genome)
+- Splice-aware alignment (genome) (STAR, HISAT2 etc)
 
 .tool[[STAR](https://github.com/alexdobin/STAR)]
-.tool[[HiSat2](https://ccb.jhu.edu/software/hisat2/index.shtml)] .tool[[GSNAP](http://research-pub.gene.com/gmap/)]
+.tool[[HiSat2](https://ccb.jhu.edu/software/hisat2/index.shtml)]
 .cite[[Baruzzo et al, 2017](https://www.nature.com/articles/nmeth.4106)]
 
 ---
-name: aligner-speed
+name: aligner-metrics
 
-# Aligners • Speed
+# Aligners • Metrics
 
-.pull-left-50[
+.pull-left-40[
 ![](data/rnaseq/compare-aligners-speed.jpg)
 ]
 
-.pull-right-50[
+.pull-right-60[
+![](data/rnaseq/compare-aligners-quality.jpg)
+
+.size-70[![](data/rnaseq/accuracy.svg)]
+]
+
+.cite[[Baruzzo et al, 2017](https://www.nature.com/articles/nmeth.4106)]
+
+???
+
+# Aligners time and RAM
+
 |Program|Time_Min|Memory_GB|
 |-------|--------|---------|
 |HISATx1|22.7|4.3|
@@ -352,18 +334,6 @@ name: aligner-speed
 |STARx2|50.5|28|
 |GSNAP|291.9|20.2|
 |TopHat2|1170|4.3|
-]
-
-.cite[[Baruzzo et al, 2017](https://www.nature.com/articles/nmeth.4106)]
-
----
-name: aligner-accuracy
-
-# Aligners • Accuracy
-
-.size-70[![](data/rnaseq/compare-aligners-quality.jpg)]
-
-.size-40[![](data/rnaseq/accuracy.svg)]
 
 ---
 name: mapping-required
@@ -399,8 +369,8 @@ CAAATTAAATTTAGCCAGAGGCGCACAACATACGACCTCTAAAAAAGGTGCTGTAACATG
 
 `seq source feature start end score strand frame attribute`
 
-.cite[Illumina read name [format](http://support.illumina.com/content/dam/illumina-support/help/BaseSpaceHelp_v2/Content/Vault/Informatics/Sequencing_Analysis/BS/swSEQ_mBS_FASTQFiles.htm)]
-.cite[GTF [format](https://www.ensembl.org/info/website/upload/gff.html)]
+.cite[[Illumina FASTQ format](https://emea.support.illumina.com/bulletins/2016/04/fastq-files-explained.html)]
+.cite[[GTF format](https://www.ensembl.org/info/website/upload/gff.html)]
 
 ---
 name: alignment
@@ -426,29 +396,25 @@ ST-E00274:188:H3JWNCCXY:4:1102:32431:49900      163     1       1       60      
 |CRAM no Q|0.26|
 
 
-.cite[SAM file [format](http://www.htslib.org/doc/sam.html)]
+.cite[[SAM format](http://www.htslib.org/doc/sam.html)]
 
 ---
-name: vis-tview
-
-# Visualisation • `tview`
-
-`samtools tview alignment.bam genome.fasta`
-
-![](data/rnaseq/tview.png)
-
----
-name: vis-igv
+name: vis
 
 # Visualisation • IGV
 
 ![](data/rnaseq/igv.png)
 
 .tool[[IGV](http://software.broadinstitute.org/software/igv/)]
-.tool[[UCSC Genome Browser](https://genome.ucsc.edu/)]
+.tool[[UCSC Genome Browser](https://genome.ucsc.edu/)] .tool[[SeqMonk](https://www.bioinformatics.babraham.ac.uk/projects/seqmonk/)]
 
----
-name: vis-seqmonk
+???
+
+# Visualisation • `tview`
+
+`samtools tview alignment.bam genome.fasta`
+
+![](data/rnaseq/tview.png)
 
 # Visualisation • SeqMonk
 
@@ -543,7 +509,7 @@ class: spaced
 .pull-left-50[
 - Read counts = gene expression
 - Reads can be quantified on any feature (gene, transcript, exon etc)
-- Intersection on gene models
+- Intersection on [gene models](#intro)
 - Gene/Transcript level
 
 ![](data/rnaseq/rnaseq_counts.svg)
@@ -565,8 +531,7 @@ name: quant-pcr-multi
 .pull-left-50[
 **PCR duplicates**
 
-- Ignore for RNA-Seq data
-- Computational deduplication (Don't!)
+- Computational deduplication not recommended .cite[[Klepikova et al, 2017](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5357343/)] .cite[[Parekh et al, 2016](https://www.nature.com/articles/srep25533)]
 - Use PCR-free library-prep kits
 - Use UMIs during library-prep .cite[[Fu et al, 2018](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-018-4933-1)]
 
@@ -579,10 +544,6 @@ name: quant-pcr-multi
   - Probabilistic assignment (Rcount, Cufflinks)
   - Prioritise features (Rcount)
   - Probabilistic assignment with EM (RSEM)
-
-.cite[[Parekh et al, 2016](https://www.nature.com/articles/srep25533)]
-.cite[[Klepikova et al, 2017](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5357343/)]
-
 ]
 
 .pull-right-50[
@@ -679,19 +640,23 @@ name: normalisation
 .cite[[Wagner et al, 2012](https://link.springer.com/article/10.1007/s12064-012-0162-3)]
 
 ---
-name: exploratory-heatmap
+name: exploratory
 
-# Exploratory • Heatmap
+# Exploratory
 
 - Remove lowly expressed genes
 - Transform raw counts to VST, VOOM, RLOG, TPM etc
-- Sample-sample clustering heatmap
+- Heatmaps, MDS, PCA etc.
+
+--
 
 ```{r,echo=FALSE,eval=FALSE}
 # read vst data
 cvst <- readRDS("data/rnaseq/counts-filtered-vst.Rds")
 mf <- readRDS("data/rnaseq/metadata-filtered.Rds")
 ```
+
+.pull-left-60[
 
 ```{r,echo=FALSE,fig.height=4.9,fig.width=6.8,dev="svg",eval=FALSE}
 temp <- as.matrix(dist(t(cvst)))
@@ -702,25 +667,45 @@ col_patient <- c("#A6CEE3","#1F78B4","#B2DF8A","#33A02C","#FB9A99",
 ann_col_patient <- col_patient
 names(ann_col_patient) <- levels(factor(df_annot$patient))
 
-pheatmap(temp,border_color=NA,annotation_col=df_annot,
+p <- pheatmap::pheatmap(temp,border_color=NA,annotation_col=df_annot,
          annotation_row=df_annot,annotation_legend=T,
-         annotation_colors=list(patient=ann_col_patient))
+         annotation_colors=list(patient=ann_col_patient),
+         fontsize_row=7,fontsize_col=7)
+ggsave("data/rnaseq/dge-clustering.png",p,height=5,width=7)
 ```
 
-.size-70[![](data/rnaseq/dge-clustering.png)]
+![](data/rnaseq/dge-clustering.png)
 
 .tool[[pheatmap](https://github.com/raivokolde/pheatmap)]
+]
 
----
-name: exploratory-pca
+--
 
-# Exploratory • PCA
+.pull-right-40[
 
 ```{r,echo=FALSE,eval=FALSE}
+# MDS
 mat1 <- as.data.frame(cmdscale(dist(t(cvst),method="euclidean"),eig=F,k=3))
 mat1$nid <- row.names(mat1)
 mat1 <- merge(mat1,mf,by="nid")
+```
 
+```{r,echo=FALSE,eval=FALSE}
+# static plot
+p <- ggplot(mat1,aes(V1,V2,group=patient,colour=patient))+
+  geom_point()+
+  stat_ellipse()+
+  scale_colour_manual(values=ann_col_patient)+
+  guides(colour=guide_legend(nrow=3))+
+  labs(x="MDS1",y="MDS2")+
+  theme_bw()+
+  theme(panel.border=element_blank(),
+        legend.position="top")
+ggsave("data/rnaseq/dge-mds.png",p,height=5.5,width=5)
+```
+
+```{r,echo=FALSE,eval=FALSE}
+# interactive plot
 mat1$tt <- paste0("<b>ID: </b>",mat1$id,"\n",
                    "<b>NGS ID: </b>",mat1$nid)
 p1 <- plot_ly(mat1,x=~V1,y=~V2,z=~V3,text=~tt,hoverinfo="text",
@@ -728,7 +713,8 @@ p1 <- plot_ly(mat1,x=~V1,y=~V2,z=~V3,text=~tt,hoverinfo="text",
 add_markers(p1,color=~patient)
 ```
 
-.size-90[![](data/rnaseq/dge-pca.png)]
+![](data/rnaseq/dge-mds.png)
+]
 
 ---
 name: batch-correction
@@ -754,14 +740,15 @@ class: spaced
 ---
 name: dge-1
 
-# DGE
+# Differential expression
 
 .size-90[![](data/rnaseq/dge.png)]
 
----
-name: dge-2
+- Univariate testing gene-by-gene
 
-# DGE
+???
+
+# Differential expression
 
 - DESeq2, edgeR (Neg-binom > GLM > Test), Limma-Voom (Neg-binom > Voom-transform > LM > Test)
 - DESeq2 `~age+condition`
@@ -935,11 +922,11 @@ name: functional-analysis-2
 name: summary
 class: spaced
 
-## Summary
+# Summary
 
 - Sound experimental design to avoid confounding
 - Plan carefully about lib prep, sequencing etc based on experimental objective
-- Biological replicates may be more important than paired-end reads or long reads
+- For DGE, biological replicates may be more important than other considerations (paired-end, sequencing depth, long reads etc)
 - Discard low quality bases, reads, genes and samples
 - Verify that tools and methods align with data assumptions
 - Experiment with multiple pipelines and tools
@@ -954,10 +941,10 @@ class: spaced
 # Further learning
 
 - Griffith lab [RNA-Seq using HiSat & StringTie tutorial](https://github.com/griffithlab/rnaseq_tutorial/wiki)
-- SciLifeLab [courses](https://www.scilifelab.se/education/courses%26training)
 - HBC Training [DGE using DeSeq2 tutorial](https://github.com/hbctraining/Intro-to-R-with-DGE)
 - Hemberg lab [scRNA-Seq tutorial](http://hemberg-lab.github.io/scRNA.seq.course/index.html)
 - [RNA-Seq Blog](https://www.rna-seqblog.com/)
+- SciLifeLab [courses](https://www.scilifelab.se/education/courses%26training)
 
 <img src="data/rnaseq/help.png" style="height:250px; position:fixed; right:0px; bottom:0px; margin-right: 35px; margin-bottom: 40px;">
 
@@ -1039,7 +1026,7 @@ exclude: true
 name: lab1
 class: spaced
 
-## Hands-On tutorial
+# Hands-On tutorial
 
 **Main exercise**
 
@@ -1047,7 +1034,7 @@ class: spaced
 - 02 Map the reads to the reference genome using **HISAT2**
 - 03 Assess the post-alignment quality using **QualiMap**
 - 04 Count the reads overlapping with genes using **featureCounts**
-- 05 Find DE genes using **DESeq2** in R
+- 05 Find differentially expressed genes using **DESeq2** in R
 
 **Bonus exercises**
 
@@ -1056,14 +1043,14 @@ class: spaced
 - 03 Visualisation of RNA-seq BAM files using **IGV** genome browser
 
 .large[**Data:** `/sw/courses/ngsintro/rnaseq/`]  
-.large[**Work:** `/proj/XXXXXXXX/nobackup/<user>/rnaseq/`]  
+.large[**Work:** ``r paste0("/proj/",upid,"/nobackup/user/rnaseq/")``]  
 
 ---
 name: lab2
 
-## Hands-On tutorial
+# Hands-On tutorial
 
-.pull-left-50[
+.pull-left-40[
 
 - Course data directory
 
@@ -1092,11 +1079,11 @@ rnaseq/
 ]
 ]
 
-.pull-right-50[
+.pull-right-60[
 
 - Your work directory
 
-.large[`/proj/XXXXX/nobackup/<user>/`]  
+.large[``r paste0("/proj/",upid,"/nobackup/user/rnaseq/")``]  
 
 .large[
 ```

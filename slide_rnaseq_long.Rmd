@@ -33,6 +33,8 @@ class: spaced
 
 ```{r,include=FALSE}
 # load packages
+library(yaml)
+upid <- yaml::read_yaml("_site1.yml")$uppmax_project
 #library(dplyr)
 #library(pheatmap)
 #library(plotly)
@@ -115,9 +117,8 @@ class: spaced
 - Balanced design
 - Technical replicates not necessary .cite[[Marioni et al, 2008](https://genome.cshlp.org/content/18/9/1509.long)]
 - Biological replicates: 6 - 12 .cite[[Schurch *et al.*, 2016](http://rnajournal.cshlp.org/content/early/2016/03/30/rna.053959.115.abstract)]
-- ENCODE consortium (for human data)
+- ENCODE consortium
 - Previous publications
-- Avoid batch effects (.tool[[experDesign](https://experdesign.llrs.dev/index.html)] .tool[[DeclareDesign](https://declaredesign.org/)])
 - Sample size estimation .cite[[Hart et al, 2013](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3842884/)]
 - Power analysis .cite[[RNASeqPower](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-018-2191-5)] .tool[[RNASeqPower web app](https://rshiny.nbis.se/shiny-server-apps/shiny-rnaseq-power/)]
 
@@ -1040,7 +1041,7 @@ exclude: true
 name: lab1
 class: spaced
 
-## Hands-On tutorial
+# Hands-On tutorial
 
 **Main exercise**
 
@@ -1057,14 +1058,14 @@ class: spaced
 - 03 Visualisation of RNA-seq BAM files using **IGV** genome browser
 
 .large[**Data:** `/sw/courses/ngsintro/rnaseq/`]  
-.large[**Work:** `/proj/gXXXXXXX/nobackup/<user>/rnaseq/`]  
+.large[**Work:** ``r paste0("/proj/",upid,"/nobackup/user/rnaseq/")``]  
 
 ---
 name: lab2
 
-## Hands-On tutorial
+# Hands-On tutorial
 
-.pull-left-50[
+.pull-left-40[
 
 - Course data directory
 
@@ -1093,11 +1094,11 @@ rnaseq/
 ]
 ]
 
-.pull-right-50[
+.pull-right-60[
 
 - Your work directory
 
-.large[`/proj/gXXXX/nobackup/<user>/`]  
+.large[``r paste0("/proj/",upid,"/nobackup/user/rnaseq/")``]  
 
 .large[
 ```
