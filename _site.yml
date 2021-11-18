@@ -6,11 +6,11 @@ uppmax_project: "snic2021-22-644"
 uppmax_storage: "snic2021-23-591"
 nsc_project: "snic2021-22-750"
 # uppmax reservation ids. used site-wide
-uppmax_res_1: XXXX
-uppmax_res_2: XXXX
-uppmax_res_3: XXXX
-uppmax_res_4: XXXX
-uppmax_res_5: XXXX
+uppmax_res_1: snic2021-22-644_mon
+uppmax_res_2: snic2021-22-644_tue
+uppmax_res_3: snic2021-22-644_wed
+uppmax_res_4: snic2021-22-644_thu
+uppmax_res_5: snic2021-22-644_fri
 # location options are linkoping, lund, umea, uppsala or online. For rendering the info page.
 location: online
 assistants:
