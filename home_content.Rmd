@@ -20,6 +20,7 @@ This page contains links to different lectures (slides) and practical exercises 
 
 * [File types in Bioinformatics (Slides)](slide_linux_filetypes.pdf)
 * [File types in Bioinformatics (Lab)](lab_linux_filetypes.html)  
+* [Linux file permissions (Lab)](lab_linux_permissions.html)
 
 **Uppmax**
 
@@ -48,6 +49,8 @@ This page contains links to different lectures (slides) and practical exercises 
 
 * [NGS technologies and challenges (Slides)](slide_sequencing.pdf)
 * [NGS Pipelines (Slides)](slide_ngs_pipelines.pdf)
+
+
 <!--* [Data management (Slides)](slide_data_management.pdf)-->
 
 **Useful resources**
