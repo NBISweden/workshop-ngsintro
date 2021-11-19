@@ -404,16 +404,25 @@ If you have time, you can now try joint variant calling in all three samples. Ea
 ![](data/ngs-workflow/2_jointvc.png)
 
 
-You can run the commands one by one in the terminal as you did before. We have also made intermediary files available in case you don't have time to complete all steps, please see links under each analysis step. 
+If you don't have time to complete all steps we have made precomputed intermediary file available. Please see links under each analysis step.
 
-<div class="boxy boxy-orange boxy-clipboard-list">
-**Optional**: If you are interested in programming and have time, you can also try to write a simple SBATCH script and run all steps automatically. Please check out the [SBATCH script](#sbatchscript) section below if you would like to try this.
-</div>
+#<div class="boxy boxy-orange boxy-clipboard-list">
+#**Optional**: If you are interested in programming and have time, you can also try to write a simple SBATCH script and run all steps automatically. Please check out the [SBATCH script](#sbatchscript) section below if you would like to try this.
+#</div>
 
-## BWA mem 
+## BWA mem {#bwa_joint}
 
-Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly [as above](#bwamem) but with the new sample names. Please note that you also need to adjust the SM field in the read group so that it matches the new sample name, otherwise the [joint genotyping step](#jointgenotyping) will not work properly.  
-  
+Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly as above, but with the new sample names. You also need to adjust the SM field in the read group so that it matches the new sample name, otherwise the [joint genotyping step](#jointgenotyping) will not work properly.
+Please use this command to align the reads, add the read group, sort the reads and write them to a bam file:
+
+```bash
+bwa mem -R "@RG\\tID:readgroupx\\tPU:lanex_flowcellx\\tSM:<sample>\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta <sample>_1.fq <sample>_2.fq | samtools sort > <sample>.bam
+```
+
+Where <sample> should be replaced with the real samples names, i.e. HG00097, HG00100 and HG00101.
+Please check that the expected output file was generated and that it has content using `ls -lrt`.
+
+
 If you run out of time, please click below to get paths to precomputed bam files. 
 
 ```{r,accordion=TRUE,chunk.title=TRUE,echo=FALSE,comment="",class.output="sh"}
@@ -427,7 +436,7 @@ cat(paste0(bamdir,'/HG00101.bam\n'))
 `HaplotypeCaller` should also be run for all three samples, but this time the output for each sample needs to be in g.vcf format. This is accomplished with a small change in the `HaploteypCaller` command: 
 
 ```bash
-gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I <sample.bam> -O <sample>.g.vcf 
+gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I <sample>.bam -O <sample>.g.vcf
 ```
 
 Please replace <sample> with the real sample names.
@@ -488,16 +497,16 @@ If you are interested in how this variant affects lactose tolerance please read 
 
 
 
-# GATK's best practices
+# GATK's best practices {#gatk_bp}
 
-The third part of this workshop will take you through additional refinement steps that are recommended in [GATKs best practices for germline short variant discovery](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-), illustrated in the flowchart below. You can either run the steps command by command in the terminal, or write an SBATCH script as described above.  
+The third part of this workshop will take you through additional refinement steps that are recommended in [GATKs best practices for germline short variant discovery](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-), illustrated in the flowchart below.
 The additional steps in the best practice workflow was not covered in the variant-calling lecture on Wednesday afternoon. There will be a short lecture about this on Thursday morning at 9 am. However, if you reach this step earlier you can have a look at this [prerecorded video of the same lecture](https://youtu.be/b7VV6e5q6ss).  
 
 ![](data/ngs-workflow/3_best_practise.png){width=80%}
   
 ## BWA mem 
 
-Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly [as above](#bwamem) but with the new sample names. Please note that you also need to adjust the SM field in the read group so that it matches the new sample name. 
+Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly [as above]{#bwa_joint} for the three samples. Please note that you need to adjust the SM field in the read group so that it matches the sample name.
   
 ## Mark Duplicates
 
@@ -611,15 +620,14 @@ cat(paste0('Path to intermediary and final vcf files: ',bpvcfdir,'\n'))
 30. Look at the variants that did not pass the filters using `grep -v 'PASS' cohort.filtered.vcf`. Try to understand why these variants didn't pass the filter.
 
 # SBATCH script
+This section is supplementary material intended only for those of you who want to learn how to run all steps automatically in bash scripts. I tis not needed to complete the course.
+To learn more about SLURM and SBATCH scripts please look the [SLURM user guide](https://www.uppmax.uu.se/support/user-guides/slurm-user-guide/) on UPPMAX website.
 
 ## SBATCH script for variant calling in cohort {#sbatchscript}
-
-<div class="boxy boxy-orange boxy-clipboard-list">
-**Optional**
-
-This section is only for those of you who want to try to run all steps automatically in bash scripts.
-To learn more about SLURM and SBATCH scripts please look the [SLURM user guide](https://www.uppmax.uu.se/support/user-guides/slurm-user-guide/) on UPPMAX website.
 Below is a skeleton script that can be used as a template. Please modify it to run all the steps in part two of this workshop.
+
+#<div class="boxy boxy-orange boxy-clipboard-list">
+**Optional**
 
 ```bash
 #!/bin/bash
@@ -689,13 +697,11 @@ gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g
 ))
 ```
 
-Please answer the [questions ](#jointvariantcallingquestions) above.
-
-</div>
+#</div>
 
 ## SBATCH script for GATK best practices {#bpscript}
 
-We recommend you to incorporate the new steps into an SBATCH script similar to the one you created above for [joint variant calling](#sbatchscript). Please try to complete the script for GATK's best practices workflow. If you run out of time you can sneak peek at our example solution below.
+ Now please try to incorporate the additional steps from [GATK's best practices]{#gatk_bp} into the workflow. If you run out of time you can sneak peek at our example solution below.
 
 ```{r,accordion=TRUE,chunk.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('#!/bin/bash
