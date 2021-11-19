@@ -39,7 +39,7 @@ Whole genome sequencing (WGS) is a comprehensive method for analyzing entire gen
 1. The first part of the workshop will guide you through a basic variant calling workflow in one sample. The goals are that you should get familiar with the bam and vcf file formats, and learn how to interpret the results of variant calling in Integrative Genomics Viewer (IGV).
 2. If you have time, the next part of the workshop will show you how to perform joint variant calling in three samples. The goals here is that you should be able to interpret multi-sample vcf files and explain the differences between the g.vcf and vcf file formats.
 3. If you have time, the last part of the workshop will take you through the GATK best practices for germline short variant detection in three samples. The goal here is that you should learn how to use GATK's documentation so that you can analyze your own samples in the future.
-  
+
 **General guide**
 
 <div class="boxy boxy-lightbulb">
@@ -622,11 +622,11 @@ When the analysis is done and you are sure that you have the desired output, it 
 
 When you have finished the exercise, please have a look at this document with [answers to all questions](lab_vc_answers.pdf), and compare them with your answers.
 
-# Supplementary material about SBATCH scripts {-}
+# SBATCH scripts {-}
 This section is supplementary material intended only for those of you who want to learn how to run all steps automatically in bash scripts. Please make sure that you have understood how all the individual steps work before you start with this.
 To learn more about SLURM and SBATCH scripts please look the [SLURM user guide](https://www.uppmax.uu.se/support/user-guides/slurm-user-guide/) on UPPMAX website.
 
-## Variant calling in cohort
+## Variant calling in cohort {-}
 Below is a skeleton script that can be used as a template for running [variant calling in a cohort](#jointvc). Please modify it to run all the steps in part two of this workshop.
 
 ```bash
@@ -697,7 +697,7 @@ gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g
 ))
 ```
 
-## GATK best practices
+## GATK best practices {-}
 
  Now please try to incorporate the additional steps from [GATK's best practices](#gatk_bp) into the workflow. If you run out of time you can sneak peek at our example solution below.
 
