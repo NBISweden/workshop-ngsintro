@@ -506,7 +506,7 @@ The additional steps in the best practice workflow was not covered in the varian
   
 ## BWA mem 
 
-Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly [as above]{#bwa_joint} for the three samples. Please note that you need to adjust the SM field in the read group so that it matches the sample name.
+Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly [as above](#bwa_joint) for the three samples. Please note that you need to adjust the SM field in the read group so that it matches the sample name.
   
 ## Mark Duplicates
 
@@ -624,7 +624,7 @@ This section is supplementary material intended only for those of you who want t
 To learn more about SLURM and SBATCH scripts please look the [SLURM user guide](https://www.uppmax.uu.se/support/user-guides/slurm-user-guide/) on UPPMAX website.
 
 ## Variant calling in cohort
-Below is a skeleton script that can be used as a template for running variant calling in a cohort. Please modify it to run all the steps in part two of this workshop.
+Below is a skeleton script that can be used as a template for running [variant calling in a cohort](#jointvc). Please modify it to run all the steps in part two of this workshop.
 
 #<div class="boxy boxy-orange boxy-clipboard-list">
 #**Optional**
@@ -701,7 +701,7 @@ gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g
 
 ## GATK best practices
 
- Now please try to incorporate the additional steps from GATK's best practices into the workflow. If you run out of time you can sneak peek at our example solution below.
+ Now please try to incorporate the additional steps from [GATK's best practices](#gatk_bp) into the workflow. If you run out of time you can sneak peek at our example solution below.
 
 ```{r,accordion=TRUE,chunk.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('#!/bin/bash
