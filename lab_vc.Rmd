@@ -406,10 +406,6 @@ If you have time, you can now try joint variant calling in all three samples. Ea
 
 If you don't have time to complete all steps we have made precomputed intermediary file available. Please see links under each analysis step.
 
-#<div class="boxy boxy-orange boxy-clipboard-list">
-#**Optional**: If you are interested in programming and have time, you can also try to write a simple SBATCH script and run all steps automatically. Please check out the [SBATCH script](#sbatchscript) section below if you would like to try this.
-#</div>
-
 ## BWA mem {#bwa_joint}
 
 Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly as above, but with the new sample names. You also need to adjust the SM field in the read group so that it matches the new sample name, otherwise the [joint genotyping step](#jointgenotyping) will not work properly.
@@ -624,10 +620,7 @@ This section is supplementary material intended only for those of you who want t
 To learn more about SLURM and SBATCH scripts please look the [SLURM user guide](https://www.uppmax.uu.se/support/user-guides/slurm-user-guide/) on UPPMAX website.
 
 ## Variant calling in cohort
-Below is a skeleton script that can be used as a template for running [variant calling in a cohort](#jointvc). Please modify it to run all the steps in part two of this workshop.
-
-#<div class="boxy boxy-orange boxy-clipboard-list">
-#**Optional**
+Below is a skeleton script that can be used as a template for running [variant calling in a cohort](#jointvc). Please modify it to run all the steps in part two of this workshop.  
 
 ```bash
 #!/bin/bash
@@ -697,7 +690,6 @@ gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g
 ))
 ```
 
-#</div>
 
 ## GATK best practices
 
