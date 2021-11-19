@@ -394,7 +394,7 @@ In `IGV`, in the `File` menu, select `Load from File` and select your vcf file (
 
 14. Hover the mouse over the upper row of the vcf track. What is the reference and alternative alleles of the variant at position chr2:136545844? 
 15. Hover the mouse over the lower row of the vcf track and look under "Genotype Information". What genotype does HG00097 have at position chr2:136545844? Is this the same as you found by looking directly in the vcf file in question 10?
-16. Look in the bam track and count the number of reads that have "T" and "C", respectively,  at position chr2:136545844. How is this information captured under "Genotype Attributes"? (Again, hoover the mouse over the lower row of the vcf track.)
+16. Look in the bam track and count the number of reads that have "G" and "C", respectively,  at position chr2:136545844. How is this information captured under "Genotype Attributes"? (Again, hoover the mouse over the lower row of the vcf track.)
  
 # Variant calling in cohort {#jointvc}
 
@@ -627,7 +627,7 @@ HaplotypeCaller is designed to be very sensitive, which is good because it minim
 1. The variant quality score recalibration (VQSR) method uses machine learning to identify variants that are likely to be real. This is the best method if you have a lot of data, for example one whole genome sequence sample or several whole exome samples.  
 2. If you have less data you can use hard filters as described [here](https://gatk.broadinstitute.org/hc/en-us/articles/360035531112?id=2806#2). 
   
-Since we have very little data we will use hard filters. The parameters are slightly different for SNVs and INDELs, so you need to first select all SNVs using [SelectVariants](https://gatk.broadinstitute.org/hc/en-us/articles/360037225432-SelectVariants) and filter them using [VariantFiltration](https://gatk.broadinstitute.org/hc/en-us/articles/360037226192-VariantFiltration) with the parameters suggested for SNVs. Then select all INDELs and filter them with the parameters suggested for INDELs. Finally merge the SNVs and INDELs to get all variants in one file using [MergeVCFs](https://gatk.broadinstitute.org/hc/en-us/articles/360037226612-MergeVcfs-Picard-). If you would like more help you can sneak peek at our example solution for HG00097 below.  
+Since we have very little data we will use hard filters. The parameters are slightly different for SNVs and INDELs, so you need to first select all SNVs using [SelectVariants](https://gatk.broadinstitute.org/hc/en-us/articles/360037225432-SelectVariants) and filter them using [VariantFiltration](https://gatk.broadinstitute.org/hc/en-us/articles/360037226192-VariantFiltration) with the parameters suggested for SNVs. Then select all INDELs and filter them with the parameters suggested for INDELs. Finally merge the SNVs and INDELs to get all variants in one file using [MergeVCFs](https://gatk.broadinstitute.org/hc/en-us/articles/360037226612-MergeVcfs-Picard-). If you would like more help you can sneak peek at our example solution below.
 
 Filter SNVs:
 
@@ -654,7 +654,7 @@ cat(paste0('gatk --java-options -Xmx7g SelectVariants \
   -R human_g1k_v37_chr2.fasta \
   -V cohort.vcf \
   --select-type-to-include INDEL \
-  -o cohort.indels.vcf
+  -O cohort.indels.vcf
 
 gatk --java-options -Xmx7g VariantFiltration \
   -R human_g1k_v37_chr2.fasta \
