@@ -619,15 +619,15 @@ cat(paste0('Path to intermediary and final vcf files: ',bpvcfdir,'\n'))
 29. How many variants have passed the filters?  
 30. Look at the variants that did not pass the filters using `grep -v 'PASS' cohort.filtered.vcf`. Try to understand why these variants didn't pass the filter.
 
-# SBATCH script
-This section is supplementary material intended only for those of you who want to learn how to run all steps automatically in bash scripts. I tis not needed to complete the course.
+# SBATCH scripts {#sbatchscript}
+This section is supplementary material intended only for those of you who want to learn how to run all steps automatically in bash scripts. Please make sure that you have understood how all the individual steps work before you start with this.
 To learn more about SLURM and SBATCH scripts please look the [SLURM user guide](https://www.uppmax.uu.se/support/user-guides/slurm-user-guide/) on UPPMAX website.
 
-## SBATCH script for variant calling in cohort {#sbatchscript}
-Below is a skeleton script that can be used as a template. Please modify it to run all the steps in part two of this workshop.
+## Variant calling in cohort
+Below is a skeleton script that can be used as a template for running variant calling in a cohort. Please modify it to run all the steps in part two of this workshop.
 
 #<div class="boxy boxy-orange boxy-clipboard-list">
-**Optional**
+#**Optional**
 
 ```bash
 #!/bin/bash
@@ -699,9 +699,9 @@ gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g
 
 #</div>
 
-## SBATCH script for GATK best practices {#bpscript}
+## GATK best practices
 
- Now please try to incorporate the additional steps from [GATK's best practices]{#gatk_bp} into the workflow. If you run out of time you can sneak peek at our example solution below.
+ Now please try to incorporate the additional steps from GATK's best practices into the workflow. If you run out of time you can sneak peek at our example solution below.
 
 ```{r,accordion=TRUE,chunk.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('#!/bin/bash
