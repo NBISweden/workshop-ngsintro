@@ -615,12 +615,12 @@ cat(paste0('Path to intermediary and final vcf files: ',bpvcfdir,'\n'))
 29. How many variants have passed the filters?  
 30. Look at the variants that did not pass the filters using `grep -v 'PASS' cohort.filtered.vcf`. Try to understand why these variants didn't pass the filter.
 
-# SBATCH scripts {#sbatchscript}
+# Supplementary material about SBATCH scripts {-}
 This section is supplementary material intended only for those of you who want to learn how to run all steps automatically in bash scripts. Please make sure that you have understood how all the individual steps work before you start with this.
 To learn more about SLURM and SBATCH scripts please look the [SLURM user guide](https://www.uppmax.uu.se/support/user-guides/slurm-user-guide/) on UPPMAX website.
 
 ## Variant calling in cohort
-Below is a skeleton script that can be used as a template for running [variant calling in a cohort](#jointvc). Please modify it to run all the steps in part two of this workshop.  
+Below is a skeleton script that can be used as a template for running [variant calling in a cohort](#jointvc). Please modify it to run all the steps in part two of this workshop.
 
 ```bash
 #!/bin/bash
