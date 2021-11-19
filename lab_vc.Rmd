@@ -37,8 +37,9 @@ col_local <- "#e5f4f8"
 Whole genome sequencing (WGS) is a comprehensive method for analyzing entire genomes. This workshop will take you through the process of calling germline short variants (SNVs and INDELs) in WGS data from three human samples. 
   
 1. The first part of the workshop will guide you through a basic variant calling workflow in one sample. The goals are that you should get familiar with the bam and vcf file formats, and learn how to interpret the results of variant calling in Integrative Genomics Viewer (IGV).
-2. If you have time, the next part of the workshop will show you how to perform joint variant calling in three samples. The goals here is that you should be able to interpret multi-sample vcf files and explain the differences between the g.vcf and vcf file formats. Also, if you are interested in programming, another goal is that you should learn to combine individual Linux commands into an SBATCH script.  
-3. If you have time, the last part of the workshop will take you through the GATK best practices for germline short variant detection in three samples. The goal here is that you should learn how to use GATK's documentation so that you can analyze your own samples in the future.    
+2. If you have time, the next part of the workshop will show you how to perform joint variant calling in three samples. The goals here is that you should be able to interpret multi-sample vcf files and explain the differences between the g.vcf and vcf file formats.
+3. If you have time, the last part of the workshop will take you through the GATK best practices for germline short variant detection in three samples. The goal here is that you should learn how to use GATK's documentation so that you can analyze your own samples in the future.
+4. If you have even more time, this section is for those of you who want to try to run the workflow as a SBATCH script.
 
 **General guide**
 
@@ -470,86 +471,6 @@ cat(paste0(vcfdir,'/cohort.vcf\n'))
 20. Look at the header line of the cohort.vcf file. What columns does it have? 
 21. What is encoded in the last three columns of the data lines?
   
-## SBATCH script {#sbatchscript}
-
-<div class="boxy boxy-orange boxy-clipboard-list">
-**Optional**
-
-This section is only for those of you who want to try to run all steps automatically in bash scripts. 
-To learn more about SLURM and SBATCH scripts please look the [SLURM user guide](https://www.uppmax.uu.se/support/user-guides/slurm-user-guide/) on UPPMAX website.  
-Below is a skeleton script that can be used as a template. Please modify it to run all the steps in part two of this workshop. 
-
-```bash
-#!/bin/bash
-#SBATCH -A g2019031
-#SBATCH -p core
-#SBATCH -n 1
-#SBATCH -t 1:00:00
-#SBATCH -J jointGenotyping
-module load bioinfo-tools
-module load bwa/0.7.17
-module load samtools/1.10
-module load GATK/4.1.4.1
-## loop through the samples:
-for sample in HG00097 HG00100 HG00101;
-do
-  echo "Now analyzing: "$sample
-  #Fill in the code for running bwa-mem for each sample here
-  #Fill in the code for samtools index for each sample here 
-  #Fill in the code for HaplotypeCaller for each sample here
-done
-#Fill in the code for CombineGVCFs for all samples here
-#Fill in the code for GenotypeGVCFs here
-
-```
-Please save the sbatch script in your UPPMAX folder and call it "joint_genotyping.sbatch" or similar. Make the script executable by this command:
-
-```bash
-chmod u+x joint_genotyping.sbatch
-```
-
-To run the sbatch script in the SLURM queue, use this command:  
-
-```bash
-sbatch joint_genotyping.sbatch
-```
-
-If you have an active node reservation you can run the script as a normal bash script:
-
-```bash
-./joint_genotyping.sbatch
-```
-
-If you would like more help with creating the sbatch script, please look at our example solution:
-
-```{r,accordion=TRUE,chunk.title=TRUE,echo=FALSE,comment="",class.output="sh"}
-cat(paste0('#!/bin/bash
-#SBATCH -A g2019031
-#SBATCH -p core
-#SBATCH -n 1
-#SBATCH -t 1:00:00
-#SBATCH -J jointGenotyping
-
-module load bioinfo-tools
-module load bwa/0.7.17
-module load samtools/1.10
-module load GATK/4.1.4.1
-
-for sample in HG00097 HG00100 HG00101;
-do
-  echo "Now analyzing: "$sample
-  bwa mem -R "@RG\\tID:readgroupx\\tPU:flowcellx_lanex\\tSM:"$sample"\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta $sample"_1.fq" $sample"_2.fq" | samtools sort > $sample".bam"
-  samtools index $sample".bam"
-  gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I $sample".bam" -O $sample".g.vcf"
-done
-gatk --java-options -Xmx7g CombineGVCFs -R human_g1k_v37_chr2.fasta -V HG00097.g.vcf -V HG00100.g.vcf -V HG00101.g.vcf -O cohort.g.vcf
-gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g.vcf -O cohort.vcf'
-))
-```  
-
-Please answer the [questions ](#jointvariantcallingquestions) above.
-
-</div>
 
 ## Check combined vcf file in IGV
 
@@ -564,6 +485,8 @@ Download the file cohort.vcf and its index, as well as HG00100.bam and HG00101.b
 26. What columns of the vcf file contain the information shown in the lower part of the vcf track?
 27. Zoom out so that you can see the *MCM6* and *LCT* genes. Is the variant at chr2:136608646 locate within the LCT gene?  
 If you are interested in how this variant affects lactose tolerance please read the article by Mattar et al presented [above](#Genomicregion), or in [OMIM](https://www.omim.org/entry/601806#0001).
+
+
 
 # GATK's best practices
 
@@ -680,9 +603,99 @@ cat(paste0('Path to intermediary and final bam files: ',bpbamdir,'\n'))
 cat(paste0('Path to intermediary and final vcf files: ',bpvcfdir,'\n'))
 ```
 
-## SBATCH script {#bpscript}
 
-We recommend you to incorporate the new steps into an SBATCH script similar to the one you created above for [joint variant calling](#sbatchscript). Please try to complete the script for GATK's best practices workflow. If you run out of time you can sneak peek at our example solution below. 
+## Questions  
+
+28. How many variants are present in the cohort.filtered.vcf file?  
+29. How many variants have passed the filters?  
+30. Look at the variants that did not pass the filters using `grep -v 'PASS' cohort.filtered.vcf`. Try to understand why these variants didn't pass the filter.
+
+# SBATCH script
+
+## SBATCH script for variant calling in cohort {#sbatchscript}
+
+<div class="boxy boxy-orange boxy-clipboard-list">
+**Optional**
+
+This section is only for those of you who want to try to run all steps automatically in bash scripts.
+To learn more about SLURM and SBATCH scripts please look the [SLURM user guide](https://www.uppmax.uu.se/support/user-guides/slurm-user-guide/) on UPPMAX website.
+Below is a skeleton script that can be used as a template. Please modify it to run all the steps in part two of this workshop.
+
+```bash
+#!/bin/bash
+#SBATCH -A g2019031
+#SBATCH -p core
+#SBATCH -n 1
+#SBATCH -t 1:00:00
+#SBATCH -J jointGenotyping
+module load bioinfo-tools
+module load bwa/0.7.17
+module load samtools/1.10
+module load GATK/4.1.4.1
+## loop through the samples:
+for sample in HG00097 HG00100 HG00101;
+do
+  echo "Now analyzing: "$sample
+  #Fill in the code for running bwa-mem for each sample here
+  #Fill in the code for samtools index for each sample here
+  #Fill in the code for HaplotypeCaller for each sample here
+done
+#Fill in the code for CombineGVCFs for all samples here
+#Fill in the code for GenotypeGVCFs here
+
+```
+Please save the sbatch script in your UPPMAX folder and call it "joint_genotyping.sbatch" or similar. Make the script executable by this command:
+
+```bash
+chmod u+x joint_genotyping.sbatch
+```
+
+To run the sbatch script in the SLURM queue, use this command:
+
+```bash
+sbatch joint_genotyping.sbatch
+```
+
+If you have an active node reservation you can run the script as a normal bash script:
+
+```bash
+./joint_genotyping.sbatch
+```
+
+If you would like more help with creating the sbatch script, please look at our example solution:
+
+```{r,accordion=TRUE,chunk.title=TRUE,echo=FALSE,comment="",class.output="sh"}
+cat(paste0('#!/bin/bash
+#SBATCH -A g2019031
+#SBATCH -p core
+#SBATCH -n 1
+#SBATCH -t 1:00:00
+#SBATCH -J jointGenotyping
+
+module load bioinfo-tools
+module load bwa/0.7.17
+module load samtools/1.10
+module load GATK/4.1.4.1
+
+for sample in HG00097 HG00100 HG00101;
+do
+  echo "Now analyzing: "$sample
+  bwa mem -R "@RG\\tID:readgroupx\\tPU:flowcellx_lanex\\tSM:"$sample"\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta $sample"_1.fq" $sample"_2.fq" | samtools sort > $sample".bam"
+  samtools index $sample".bam"
+  gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I $sample".bam" -O $sample".g.vcf"
+done
+gatk --java-options -Xmx7g CombineGVCFs -R human_g1k_v37_chr2.fasta -V HG00097.g.vcf -V HG00100.g.vcf -V HG00101.g.vcf -O cohort.g.vcf
+gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g.vcf -O cohort.vcf'
+))
+```
+
+Please answer the [questions ](#jointvariantcallingquestions) above.
+
+</div>
+
+## SBATCH script for GATK best practices {#bpscript}
+
+We recommend you to incorporate the new steps into an SBATCH script similar to the one you created above for [joint variant calling](#sbatchscript). Please try to complete the script for GATK's best practices workflow. If you run out of time you can sneak peek at our example solution below.
 
 ```{r,accordion=TRUE,chunk.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('#!/bin/bash
@@ -728,7 +741,7 @@ do
   gatk --java-options -Xmx7g BaseRecalibrator -R human_g1k_v37_chr2.fasta -I $sample".md.bam" --known-sites $ref"/1000G_phase1.snps.high_confidence.b37.chr2.vcf" -O $sample".recal.table"
   gatk --java-options -Xmx7g ApplyBQSR -R human_g1k_v37_chr2.fasta -I $sample".md.bam" --bqsr-recal-file $sample".recal.table" -O $sample".recal.bam"
   # haplotypeCaller in -ERC mode
-  gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I $sample".bam" -O $sample".g.vcf" 
+  gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I $sample".bam" -O $sample".g.vcf"
 done
 
 # joint genotyping
@@ -743,13 +756,7 @@ gatk --java-options -Xmx7g VariantFiltration -R human_g1k_v37_chr2.fasta -V coho
 # merge filtered SNPs and indels
 gatk --java-options -Xmx7g MergeVcfs -I cohort.snvs.filtered.vcf -I cohort.indels.filtered.vcf -O cohort.filtered.vcf'
 ))
-```  
-  
-## Questions  
-
-28. How many variants are present in the cohort.filtered.vcf file?  
-29. How many variants have passed the filters?  
-30. Look at the variants that did not pass the filters using `grep -v 'PASS' cohort.filtered.vcf`. Try to understand why these variants didn't pass the filter.
+```
 
 # Clean up {-}
 
