@@ -245,7 +245,7 @@ You should use `BWA mem` to align the reads to the reference genome.
 In the call to `BWA mem` you need to add something called a *read group*, which contains information about how the reads were generated. This is required by HaplotypeCaller. Since we don't know exactly how the reads in the 1000 Genomes Project were generated we have to make some assumptions. Let's assume that each pair of fastq files was generated from one library preparation (*libraryx*), derived from one biological sample (*HG00097*), that was run on one lane of a flowcell on the Illumina machine (*lanex_flowcellx*) , and let's define a read group with this information (*readgroupx*). The code for adding this read group is:  
 
 ```
--R "@RG\\tID:readgroupx\\tPU:lanex_flowcellx\\tSM:HG00097\\tLB:libraryx\\tPL:illumina"
+-R "@RG\\tID:readgroup_HG00097\\tPU:lanex_flowcellx\\tSM:HG00097\\tLB:libraryx\\tPL:illumina"
 ```
 
 <div class="boxy boxy-yellow boxy-exclamation">
@@ -412,16 +412,14 @@ You also need to adjust the read group information so that it matches each new s
 ```
 -R "@RG\\tID:<readgroup_<sample>\\tPU:lanex_flowcellx\\tSM:<sample>\\tLB:libraryx\\tPL:illumina"
 ```
-Where <sample> should be replaced with the real samples names, i.e. HG00097, HG00100 and HG00101.
+Where `<sample>` should be replaced with the real samples name, i.e. HG00097, HG00100 and HG00101.
 
 Please use this command to align the reads, add the read group, sort the reads and write them to a bam file:
 
 ```bash
-bwa mem -R "@RG\\tID:readgroupx\\tPU:lanex_flowcellx\\tSM:<sample>\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta <sample>_1.fq <sample>_2.fq | samtools sort > <sample>.bam
+bwa mem -R "@RG\\tID:readgroup_<sample>\\tPU:lanex_flowcellx\\tSM:<sample>\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta <sample>_1.fq <sample>_2.fq | samtools sort > <sample>.bam
 ```
-
-Where <sample> should be replaced with the real samples names, i.e. HG00097, HG00100 and HG00101.
-Please check that the expected output file was generated and that it has content using `ls -lrt`.
+Please check that the expected output files were generated and have content using `ls -lrt`.
 
 If you run out of time, please click below to get paths to precomputed bam files.
 
@@ -439,7 +437,7 @@ cat(paste0(bamdir,'/HG00101.bam\n'))
 gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I <sample>.bam -O <sample>.g.vcf
 ```
 
-Please replace <sample> with the real sample names.
+Please replace `<sample>`` with the real sample names.
 
 If you run out of time, please click below to get paths to the precomputed g.vcf files.
 
