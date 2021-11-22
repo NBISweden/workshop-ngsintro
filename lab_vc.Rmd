@@ -510,7 +510,7 @@ The additional steps in the best practice workflow was not covered in the varian
 
 ## BWA mem
 
-The first step in GATK's best pracice variant calling workflow is to run BWA mem for each sample exactly as you did in [Variant calling in cohort](#bwa_joint). Please continue with the bam files generated in step 2.1 for the subsequent steps here.  
+The first step in GATK's best pracice variant calling workflow is to run BWA mem for each sample exactly as you did in [Variant calling in cohort](#bwa_joint). Please use the bam files generated in step 2.1 for the subsequent steps here.
 
 ## Mark Duplicates
 
