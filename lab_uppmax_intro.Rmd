@@ -100,13 +100,13 @@ Next, copy the lab files from this folder. `-r` means recursively, which means a
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat("$ cp -r <source> <destination>\n")
-cat(paste0("$ cp -r /sw/courses/ngsintro/linux/uppmax_tutorial /proj/",upid,"/nobackup/<username>"))
+cat(paste0("$ cp -r /sw/courses/ngsintro/linux/uppmax_tutorial /proj/",upid,"/nobackup/username"))
 ```
 
 Have a look in **`r paste0("/proj/",upid,"/nobackup/&lt;username&gt;/uppmax_tutorial")`**.
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("$ cd /proj/",upid,"/nobackup/<username>/uppmax_tutorial"))
+cat(paste0("$ cd /proj/",upid,"/nobackup/username/uppmax_tutorial"))
 ```
 
 ```bash
@@ -317,7 +317,7 @@ If you want to know how your jobs are doing in the queue, you can check their st
 Rewrite the previous sbatch file so that you book 3 days of time, and to use a node instead of a core. This will cause your job to stand in the queue for a bit longer, so that we can have a look at it while it is queuing. Submit it to the queue and run **`jobinfo`**.
 
 ```bash
-$ jobinfo -u <username>
+$ jobinfo -u username
 
 CLUSTER: rackham
 Running jobs:
