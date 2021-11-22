@@ -425,7 +425,7 @@ You also need to index each output bam file:
 ```bash
 samtools index <sample>.bam
 ```
-Please check what output file was generated this time.  
+Please check what output file was generated this time.
 
 If you run out of time, please click below to get paths to precomputed bam files.
 
@@ -510,7 +510,7 @@ The additional steps in the best practice workflow was not covered in the varian
 
 ## BWA mem
 
-The first step in GATK's best pracice variant calling workflow is to run BWA mem exactly as you did for the three samples above. Please use the bamfiles generated with BWA mem as described in the [joint variant calling](#bwa_joint) as input for the subsequent steps in this part of the workshop.
+The first step in GATK's best pracice variant calling workflow is to run BWA mem for each sample exactly as you did in [Variant calling in cohort](#bwa_joint). Please continue with the bam files generated in step 2.1 for the subsequent steps here.  
 
 ## Mark Duplicates
 
