@@ -6,7 +6,7 @@ date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_y
 ;;13:00;14:00;Intro to Uppmax;Martin Dahlö;AS,IH,LS,SR;slide_uppmax_intro.pdf;;https://youtu.be/-lFlJbp2LE0;
 ;;14:00;17:00;Intro to Uppmax;Martin Dahlö;AS,IH,LS,SR;;lab_uppmax_intro.html;;
 23/11/2021;Online;09:00;09:30;File types in Bioinformatics;Martin Dahlö;AS,IH,SR;slide_linux_filetypes.pdf;;https://youtu.be/Xue8f-eh_bo;
-;;09:30;10:00;File types in Bioinformatics;Martin Dahlö;AS,IH,SR;;lab_linux_filetypes.html;;
+;;09:30;11:00;File types in Bioinformatics;Martin Dahlö;AS,IH,SR;;lab_linux_filetypes.html;;
 ;;11:00;12:00;Quality control;Malin Larsson;AS,IH,SR;slide_qc.pdf;lab_qc.html;https://youtu.be/NBlizZEZGYI;
 ;;12:00;13:00;Lunch;;;;;;
 ;;13:00;13:15;Quality control wrap-up;Malin Larsson;;;;;
