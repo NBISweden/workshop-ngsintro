@@ -437,7 +437,7 @@ cat(paste0(bamdir,'/HG00101.bam\n'))
 gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I <sample>.bam -O <sample>.g.vcf
 ```
 
-Please replace `<sample>`` with the real sample names.
+Please replace `<sample>` with the real sample names.
 
 If you run out of time, please click below to get paths to the precomputed g.vcf files.
 
