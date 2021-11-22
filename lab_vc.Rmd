@@ -420,6 +420,12 @@ Please use this command for every sample to align the reads, add the read group,
 bwa mem -R "@RG\\tID:readgroup_<sample>\\tPU:lanex_flowcellx\\tSM:<sample>\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta <sample>_1.fq <sample>_2.fq | samtools sort > <sample>.bam
 ```
 Please check that the expected output files were generated and have content using `ls -lrt`.
+You also need to index each output bam file:
+
+```bash
+samtools index HG00097.bam
+```
+Please check what output file was generated this time.
 
 If you run out of time, please click below to get paths to precomputed bam files.
 
@@ -504,7 +510,7 @@ The additional steps in the best practice workflow was not covered in the varian
 
 ## BWA mem
 
-Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly [as above](#bwa_joint) for the three samples. Please note that you need to adjust the SM field in the read group so that it matches the sample name.
+The first step in GATK's best pracice variant calling workflow is to run BWA mem exactly as you did for the three samples above. Please use the bamfiles generated with BWA mem as described in the [joint variant calling](#bwa_joint) as input for the subsequent steps in this part of the workshop.
 
 ## Mark Duplicates
 
