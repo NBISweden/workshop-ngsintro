@@ -423,9 +423,9 @@ Please check that the expected output files were generated and have content usin
 You also need to index each output bam file:
 
 ```bash
-samtools index HG00097.bam
+samtools index <sample>.bam
 ```
-Please check what output file was generated this time.
+Please check what output file was generated this time.  
 
 If you run out of time, please click below to get paths to precomputed bam files.
 
