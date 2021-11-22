@@ -261,7 +261,7 @@ Finally, use a file redirect `>` so that the output ends up in a file and not on
 Please use this command to align the reads, add the read group, sort the reads and write them to a bam file:
 
 ```bash
-bwa mem -R "@RG\\tID:readgroupx\\tPU:lanex_flowcellx\\tSM:HG00097\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta HG00097_1.fq HG00097_2.fq | samtools sort > HG00097.bam
+bwa mem -R "@RG\\tID:readgroup_HG00097\\tPU:lanex_flowcellx\\tSM:HG00097\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta HG00097_1.fq HG00097_2.fq | samtools sort > HG00097.bam
 ```
 
 Please check that the expected output file was generated and that it has content using `ls -lrt`.
@@ -407,7 +407,13 @@ If you don't have time to complete all steps we have made precomputed intermedia
 
 ## BWA mem {#bwa_joint}
 
-Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly as above, but with the new sample names. You also need to adjust the SM field in the read group so that it matches the new sample name, otherwise the [joint genotyping step](#jointgenotyping) will not work properly.
+Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly as above, but with the new sample names.
+You also need to adjust the read group information so that it matches each new sample name, like this:
+```
+-R "@RG\\tID:<readgroup_<sample>\\tPU:lanex_flowcellx\\tSM:<sample>\\tLB:libraryx\\tPL:illumina"
+```
+Where <sample> should be replaced with the real samples names, i.e. HG00097, HG00100 and HG00101.
+
 Please use this command to align the reads, add the read group, sort the reads and write them to a bam file:
 
 ```bash
@@ -416,7 +422,6 @@ bwa mem -R "@RG\\tID:readgroupx\\tPU:lanex_flowcellx\\tSM:<sample>\\tLB:libraryx
 
 Where <sample> should be replaced with the real samples names, i.e. HG00097, HG00100 and HG00101.
 Please check that the expected output file was generated and that it has content using `ls -lrt`.
-
 
 If you run out of time, please click below to get paths to precomputed bam files.
 
