@@ -414,7 +414,7 @@ You also need to adjust the read group information so that it matches each new s
 ```
 Where `<sample>` should be replaced with the real samples name, i.e. HG00097, HG00100 and HG00101.
 
-Please use this command to align the reads, add the read group, sort the reads and write them to a bam file:
+Please use this command for every sample to align the reads, add the read group, sort the reads and write them to a bam file:
 
 ```bash
 bwa mem -R "@RG\\tID:readgroup_<sample>\\tPU:lanex_flowcellx\\tSM:<sample>\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta <sample>_1.fq <sample>_2.fq | samtools sort > <sample>.bam
