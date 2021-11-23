@@ -106,6 +106,22 @@ class: spaced
 
 .cite[[Conesa et. al, 2016](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-0881-8)]
 
+???
+
+# De-Novo assembly
+
+- When no reference genome available
+- To identify novel genes/transcripts/isoforms
+- Identify fusion genes
+- Assemble transcriptome from short reads
+- Access quality of assembly and refine
+- Map reads back to assembled transcriptome
+
+.tool[[Trinity](https://github.com/trinityrnaseq/trinityrnaseq/wiki)] .tool[[SOAPdenovo-Trans](http://soap.genomics.org.cn/SOAPdenovo-Trans.html)]
+.tool[[Oases](https://www.ebi.ac.uk/~zerbino/oases/)] .tool[[rnaSPAdes](http://cab.spbu.ru/software/rnaspades/)]
+.cite[[Hsieh et al, 2018](https://www.biorxiv.org/content/early/2018/08/22/380998)]
+.cite[[Wang et al, 2017](https://academic.oup.com/bioinformatics/article/33/3/327/2580374)]
+
 ---
 name: exp-design
 class: spaced
@@ -117,7 +133,7 @@ class: spaced
 - Biological replicates: 6 - 12 .cite[[Schurch *et al.*, 2016](http://rnajournal.cshlp.org/content/early/2016/03/30/rna.053959.115.abstract)]
 - Sample size estimation .cite[[Hart et al, 2013](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3842884/)]
 - Power analysis .cite[[RNASeqPower](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-018-2191-5)] .tool[[RNASeqPower web app](https://rshiny.nbis.se/shiny-server-apps/shiny-rnaseq-power/)]
-- Balanced design to avoid batch effects (.tool[[experDesign](https://experdesign.llrs.dev/index.html)] .tool[[DeclareDesign](https://declaredesign.org/)])
+- Balanced design to avoid batch effects .tool[[experDesign](https://experdesign.llrs.dev/index.html)] .tool[[DeclareDesign](https://declaredesign.org/)]
 - RIN values have strong effect .cite[[Romero et al, 2014](https://bmcbiol.biomedcentral.com/articles/10.1186/1741-7007-12-42)]
 ]
 
@@ -161,6 +177,7 @@ class: spaced
   - Resolve overlapping genes
 - Exome capture
 - Library normalisation to concentrate specific transcripts
+- Libraries should have high complexity/low duplication. .cite[[Daley et al, 2013](https://www.nature.com/articles/nmeth.2375)]
 
 # Sequencing
 
@@ -187,22 +204,6 @@ name: workflow-dge
 # Workflow • DGE
 
 ![](data/rnaseq/rnaseq_workflow_dge.svg)
-
-???
-
-# De-Novo assembly
-
-- When no reference genome available
-- To identify novel genes/transcripts/isoforms
-- Identify fusion genes
-- Assemble transcriptome from short reads
-- Access quality of assembly and refine
-- Map reads back to assembled transcriptome
-
-.tool[[Trinity](https://github.com/trinityrnaseq/trinityrnaseq/wiki)] .tool[[SOAPdenovo-Trans](http://soap.genomics.org.cn/SOAPdenovo-Trans.html)]
-.tool[[Oases](https://www.ebi.ac.uk/~zerbino/oases/)] .tool[[rnaSPAdes](http://cab.spbu.ru/software/rnaspades/)]
-.cite[[Hsieh et al, 2018](https://www.biorxiv.org/content/early/2018/08/22/380998)]
-.cite[[Wang et al, 2017](https://academic.oup.com/bioinformatics/article/33/3/327/2580374)]
 
 ---
 name: read-qc
@@ -269,16 +270,18 @@ name: trimming
 # Trimming
 
 .pull-left-50[
-- Trim IF necessary
-  - Synthetic bases can be an issue for SNP calling
-  - Insert size distribution may be more important for assemblers
-- Trim/Clip/Filter reads
-- Remove adapter sequences
-- Trim reads by quality
+- Trimming reads to remove adapter/readthrough or low quality bases
+- Related options are hard clipping, filtering reads
 - Sliding window trimming
 - Filter by min/max read length
   - Remove reads less than ~18nt
 - Demultiplexing/Splitting
+
+**When to avoid trimming?**
+
+- Read trimming may not always be necessary .cite[[Liao et al, 2020](https://pubmed.ncbi.nlm.nih.gov/33575617/)]
+- Fixed read length may sometimes be more important
+- Expected insert size distribution may be more important for assemblers
 
 .tool[[Cutadapt](https://github.com/marcelm/cutadapt/)]
 .tool[[fastp](https://github.com/OpenGene/fastp)]
@@ -310,7 +313,7 @@ name: aligner-metrics
 # Aligners • Metrics
 
 .pull-left-40[
-![](data/rnaseq/compare-aligners-speed.jpg)
+![](data/rnaseq/compare-aligners-speed.png)
 ]
 
 .pull-right-60[
@@ -476,14 +479,22 @@ name: alignment-qc-1
 # Alignment QC • Examples
 
 .pull-left-50[
-**Soft clipping**
+**Read mapping profile**
 ![](data/rnaseq/clipping_good.png)
 ]
 
 .pull-right-50[
 **Gene body coverage**
 ![](data/rnaseq/gene-body-coverage.png)
+.cite[[Sigurgeirsson et al,2014](https://pubmed.ncbi.nlm.nih.gov/24632678/)]
+
 ]
+
+???
+
+The read mapping profile shows how well bases along a read mapped to the reference for all reads. Mapability usually decreases towards the 5' and 3' ends due to soft-clipping. This is is more pronounced in untrimmed reads.
+
+Gene body coverage shows read coverage over the gene for all genes. An even coverage is ideally expected. A bias in either direction could be indicative of library quality. A bias toward the 3' end is usually seen in polyA selected libraries.
 
 ---
 name: alignment-qc-2
@@ -498,7 +509,16 @@ name: alignment-qc-2
 .pull-right-50[
 **Saturation curve**
 ![](data/rnaseq/saturation.jpg)
+
+.cite[[Francis et al, 2013](https://bmcgenomics.biomedcentral.com/articles/10.1186/1471-2164-14-167)]
+
 ]
+
+???
+
+Negative insert size implies overlapping mate pairs.
+
+Conserved genes in the mouse transcriptome. Saturation curves of discovery of genes in the mouse heart from a set of a subset of 248 conserved orthologs; genes which have any blast hit are shown in circles; genes which the translated protein was within the expected size range of the conserved gene are in squares; proteins which are 100% identical to a canonical protein in Uniprot/Swissprot mouse database are shown in triangles.
 
 ---
 name: quantification-counts
@@ -550,7 +570,9 @@ name: quant-pcr-multi
 ![](data/rnaseq/pcr-duplicates.png)
 ]
 
+???
 
+Tools that detect duplicate reads (like Picard MarkDuplicates) is looking for reads that start and end at the same coordinates. Such reads are expected to be PCR derived and can be collapsed down to 1 read. This makes sense in whole genome sequencing, but in RNA-Seq, this is naturally expected since highly expressed genes create huge number of identical transcripts which may fragment at hotspots leading to fragmentation bias .cite[[Patcher et al, 2011](https://genomebiology.biomedcentral.com/articles/10.1186/gb-2011-12-3-r22)]. Therefore, removing PCR duplicates may remove real duplicates as well.
 
 ---
 name: quantification-abundance
@@ -560,7 +582,9 @@ name: quantification-abundance
 - Count methods
   - Provide no inference on isoforms
   - Cannot accurately measure fold change
+  
 <!--.size-60[![](data/rnaseq/rnaseq_count_issues.svg)]-->
+
 - Probabilistic assignment
   - Deconvolute ambiguous mappings
   - Transcript-level
@@ -569,14 +593,21 @@ name: quantification-abundance
 **Kallisto, Salmon**
 
 - Ultra-fast & alignment-free
-- Subsampling & quantification confidence
-- Transcript-level estimates improves gene-level estimates
-- Kallisto/Salmon > transcript-counts > `tximport()` > gene-counts
+- Bootstrapping & quantification confidence
+- Transcript-level counts
+- Transcript-level estimates improves gene-level estimates .cite[[Soneson et al, 2015](https://f1000research.com/articles/4-1521/v2)] .tool[[tximport](https://bioconductor.org/packages/release/bioc/html/tximport.html)]
+- Evaluation and comparison of isoform quantification tools .cite[[Zhang et al, 2017](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-017-4002-1)]
 
 .tool[[RSEM](https://deweylab.github.io/RSEM/)]
 .tool[[Kallisto](https://pachterlab.github.io/kallisto/)] .tool[[Salmon](https://combine-lab.github.io/salmon/)]
-.cite[[Soneson et al, 2015](https://f1000research.com/articles/4-1521/v2)]
-.cite[[Zhang et al, 2017](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-017-4002-1)]
+
+???
+
+Gene expression counts may be literal counts (reads overlapping to gene models) or probabilistically estimated based on the data. Proponents of probabilistically estimation claims that it is a better estimate that corrects for sampling biases.
+
+Tools such as RSEM, Kallisto and Salmon produce probabilistic abundance estimates. [Soneson et al, 2015](https://f1000research.com/articles/4-1521/v2) claims that estimating abundance using Kallisto at the transcript levels and then summarising down to gene-level counts results in improved estimates of gene expression.
+
+Kallisto/Salmon > transcript-counts > [`tximport()`](https://bioconductor.org/packages/release/bioc/html/tximport.html) > gene-counts
 
 ---
 name: quantification-qc
@@ -623,7 +654,7 @@ name: normalisation
 
 # Normalisation
 
-- Control for Sequencing depth & compositional bias
+- Control for Sequencing depth, compositional bias and more
 - Median of Ratios (DESeq2) and TMM (edgeR) perform the best
 
 ![](data/rnaseq/normalisation.png)
@@ -722,20 +753,14 @@ class: spaced
 
 # Batch correction
 
-- Estimate variation explained by variables (PVCA)
+- Estimate variation explained by variables (PVCA) .tool[[PVCA](https://bioconductor.org/packages/release/bioc/html/pvca.html)]
 
 .size-70[![](data/rnaseq/pvca.png)]
 
-- Find confounding effects as surrogate variables (SVA)
+- Find confounding effects as surrogate variables (SVA) .tool[[SVA](http://bioconductor.org/packages/release/bioc/html/sva.html)]
 - Model known batches in the LM/GLM model
-- Correct known batches (ComBat)(Harsh!)
-- Interactively evaluate batch effects and correction (BatchQC)
-
-.tool[[SVA](http://bioconductor.org/packages/release/bioc/html/sva.html)]
-.tool[[PVCA](https://bioconductor.org/packages/release/bioc/html/pvca.html)]
-.tool[[BatchQC](http://bioconductor.org/packages/release/bioc/html/BatchQC.html)]
-.cite[[Liu et al, 2016](http://www.tran-med.com/article/2016/2411-2917-2-1-3.html)]
-.cite[[Manimaran et al, 2016](https://academic.oup.com/bioinformatics/article/32/24/3836/2525651)]
+- Correct known batches (ComBat from SVA)(Only if you are desperate! .cite[[Zindler et al, 2020](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-020-03559-6)])
+- Interactively evaluate batch effects and correction (BatchQC) .cite[[Manimaran et al, 2016](https://academic.oup.com/bioinformatics/article/32/24/3836/2525651)] .tool[[BatchQC](http://bioconductor.org/packages/release/bioc/html/BatchQC.html)]
 
 ---
 name: dge-1
@@ -745,6 +770,7 @@ name: dge-1
 .size-90[![](data/rnaseq/dge.png)]
 
 - Univariate testing gene-by-gene
+- More descriptive, less predictive
 
 ???
 
