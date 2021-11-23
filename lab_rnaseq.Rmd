@@ -13,7 +13,7 @@ upres4 <- yaml::read_yaml("_site.yml")$uppmax_res_4
 upres5 <- yaml::read_yaml("_site.yml")$uppmax_res_5
 path_data <- "/sw/courses/ngsintro/rnaseq"
 path_project <- paste0("/proj/",upid,"/nobackup")
-path_project_rnaseq <- paste0(path_project,"/<username>/rnaseq")
+path_project_rnaseq <- paste0(path_project,"/username/rnaseq")
 ```
 
 <!-- ------------ Only edit title, subtitle & author above this ------------ -->
@@ -54,7 +54,7 @@ RNA-seq experiment does not necessarily end with a list of DE genes. If you have
 <div class="boxy boxy-exclamation">
 **General guide**
 
-* In paths, remember to change `<username>` with your actual UPPMAX username.
+* In paths, remember to change `username` with your actual UPPMAX username.
 
 * You are welcome to try your own solutions to the problems, before checking the solution. Click the button to see the suggested solution. There is more than one way to complete a task. Discuss with person next to you and ask us when in doubt.
 
@@ -119,7 +119,7 @@ cat(paste0("salloc -A ",upid," -t 04:00:00 -p core -n 1 --reservation=",upres5))
 
 ### Set-up directory
 
-Setting up the directory structure is an important step as it helps to keep our raw data, intermediate data and results in an organised manner. All work must be carried out at this location ``r paste0(path_project,"/","<username>/")`` where `<username>` is your user name.
+Setting up the directory structure is an important step as it helps to keep our raw data, intermediate data and results in an organised manner. All work must be carried out at this location ``r paste0(path_project,"/","username/")`` where `username` is your user name.
 
 Create a directory named `rnaseq`. All RNA-Seq related activities must be carried out in this sub-directory named `rnaseq`.
 
@@ -130,7 +130,7 @@ mkdir rnaseq
 <i class="fas fa-clipboard-list"></i> Set up the below directory structure in your project directory.
 
 ```
-<username>/
+username/
 rnaseq/
   +-- 1_raw/
   +-- 2_fastqc/

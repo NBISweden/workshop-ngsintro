@@ -26,19 +26,19 @@ col_local <- "#e5f4f8"
 ```
 # FastQC
 FastQC performes a series of quality control analyses, called modules. The output is a HTML report with one section for each module, and a summary evaluation of the results in the top. Entirely normal results are marked with a green tick, slightly abnormal results raise warnings (orange exclamation mark), and very unusual results raise failures (red cross).
-  
-It is important to stress that although the analyses appear to give a pass/fail result, these evaluations must be taken in the context of what you expect from your library. A 'normal' sample as far as FastQC is concerned is random and diverse. Some experiments may be expected to produce libraries which are biased in particular ways. You should treat the summary evaluations therefore as pointers to where you should concentrate your attention and understand why your library may not look random and diverse. 
-  
+
+It is important to stress that although the analyses appear to give a pass/fail result, these evaluations must be taken in the context of what you expect from your library. A 'normal' sample as far as FastQC is concerned is random and diverse. Some experiments may be expected to produce libraries which are biased in particular ways. You should treat the summary evaluations therefore as pointers to where you should concentrate your attention and understand why your library may not look random and diverse.
+
 # Data
 We will run FastQC on three low-coverage whole genome sequencing (WGS) samples from the public 1000 Genomes project. To speed up the analysis we will only use data from a small genomic region. These are the exact same samples as will be used in the variant-calling workflow lab on Wednesday.  
 
 Sample        | Description
-------------- | ---------- 
+------------- | ----------
 HG00097       | Low coverage WGS
 HG00100       | Low coverage WGS
-HG00101       | Low coverage WGS 
-  
-# Run FastQC 
+HG00101       | Low coverage WGS
+
+# Run FastQC
 
 ## Connect to Uppmax
 Please connect to the Rackham cluster on UPPMAX using ssh:
@@ -46,43 +46,43 @@ Please connect to the Rackham cluster on UPPMAX using ssh:
 $ ssh -Y username@rackham.uppmax.uu.se
 ```  
 
-## Create a workspace 
-You should work in your folder under the course's nobackup folder, just like you have done during the previous labs. Start by creating a workspace for this exercise in your folder, and then move into it. 
+## Create a workspace
+You should work in your folder under the course's nobackup folder, just like you have done during the previous labs. Start by creating a workspace for this exercise in your folder, and then move into it.
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('mkdir /proj/',upid,'/nobackup/<username>/qc\n'))
-cat(paste0('cd /proj/',upid,'/nobackup/<username>/qc'))
+cat(paste0('mkdir /proj/',upid,'/nobackup/username/qc\n'))
+cat(paste0('cd /proj/',upid,'/nobackup/username/qc'))
 ```
 
 ## Symbolic links to data   
-The raw data files are located in 
+The raw data files are located in
 ```{r,echo=FALSE,comment="",class.output="bash"}		
  cat(paste0(fastqdir))
 ```
 
 Instead of copying the files to your workspace you should create symbolic links (soft-links) to them. Soft-linking files and folders allows you to work with them as if they were in your current directory, but without multiplying them. Create symbolic links to the fastq files in your workspace:
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('ln -s ',fastqdir,'/HG00097_1.fq\n')) 
+cat(paste0('ln -s ',fastqdir,'/HG00097_1.fq\n'))
 cat(paste0('ln -s ',fastqdir,'/HG00097_2.fq\n'))  
 cat(paste0('ln -s ',fastqdir,'/HG00100_1.fq\n'))
 cat(paste0('ln -s ',fastqdir,'/HG00100_2.fq\n'))
-cat(paste0('ln -s ',fastqdir,'/HG00101_1.fq\n')) 
+cat(paste0('ln -s ',fastqdir,'/HG00101_1.fq\n'))
 cat(paste0('ln -s ',fastqdir,'/HG00101_2.fq\n'))
 ```
 
-## Book a node 
+## Book a node
 To be able to run analyses in the terminal you should book a  compute node (or in this case just one core of a node). Make sure you only do this once each day because we have reserved one core per student for the course. If you haven't already reserved a core today please use this command:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('salloc -A ',upid,' -t 04:00:00 -p core -n 1 --no-shell --reservation=',upres2,' &'))
 ```
 Once your job allocation has been granted (should not take long) you can connect to the node using ssh. To find out the name of your node, use:
 ```bash
-squeue -u <username>
+squeue -u username
 ```
 The node name is found under nodelist header, you should only see one. Connect to that node:  
 ```bash
 ssh -Y <nodename>
 ```
-  
+
 ## Accessing FastQC
 FastQC is installed in the module system on UPPMAX. Modules must be loaded *every time* you login to Rackham, or when you connect to a new compute node.  
 First load the bioinfo-tools module:
@@ -93,7 +93,7 @@ This makes it possible to load FastQC:
 ```bash
 module load FastQC/0.11.8
 ```
- 
+
 ## Run FastQC  
 Run FastQC on all fastq files:
 ```bash
@@ -102,10 +102,10 @@ fastqc -q *.fq
 The output is .html documents that shows quality scores along the reads, and other information. Please check what new files were generated with the command:
 ```bash
 ls -lrt.  
-``` 
-  
+```
+
 # Check the results
-The output from FastQC is a HTML report that should be opened in a web browser. When you have X-forwarding enabled you can open it on Rackham with this command: 
+The output from FastQC is a HTML report that should be opened in a web browser. When you have X-forwarding enabled you can open it on Rackham with this command:
 ```bash
 firefox --no-remote filename.html
 ```
@@ -113,25 +113,25 @@ It can be slow to look at graphical files via SSH. We have therefore made the ou
 
 Sample        | Read 1 | Read 2
 ------------- | ---------- | --------
-HG00097       | [HG00097_1.fq](data/qc/HG00097_1_fastqc.html) | [HG00097_2.fq](data/qc/HG00097_2_fastqc.html) 
+HG00097       | [HG00097_1.fq](data/qc/HG00097_1_fastqc.html) | [HG00097_2.fq](data/qc/HG00097_2_fastqc.html)
 HG00100       | [HG00100_1.fq](data/qc/HG00100_1_fastqc.html) | [HG00100_2.fq](data/qc/HG00100_2_fastqc.html)
-HG00101       | [HG00101_1.fq](data/qc/HG00101_1_fastqc.html) | [HG00101_2.fq](data/qc/HG00101_2_fastqc.html) 
-  
+HG00101       | [HG00101_1.fq](data/qc/HG00101_1_fastqc.html) | [HG00101_2.fq](data/qc/HG00101_2_fastqc.html)
+
 ## Per Base Sequence Quality
 This module shows the distribution of the quality scores at each position in the reads. The quality scores are represented by a Box and Whisker plot with the following elements:
-  
+
   * The central red line is the median value.
   * The yellow box represents the inter-quartile range (25-75%).
   * The upper and lower whiskers represent the 10% and 90% points
   * The blue line represents the mean quality
-   
+
 The background of the graph divides the y axis into very good quality calls (green), calls of reasonable quality (orange), and calls of poor quality (red).
-  
+
 ### Questions
 1. Which positions in the reads have a median phred-score above 28 (very good quality calls) in each sample?  
-2. Do any of the samples have warnings or failures in the Per Base Sequence Quality module? 
+2. Do any of the samples have warnings or failures in the Per Base Sequence Quality module?
 3. Why? Please look in the [documentation of this module](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/2%20Per%20Base%20Sequence%20Quality.html).  
-  
+
 ## Sequence Length Distribution
 This module shows the length distribution of the reads in the file.  
 
@@ -139,7 +139,7 @@ This module shows the length distribution of the reads in the file.
 4. How long are the reads?
 5. Do any of the samples have warnings or failures in the Sequence Length Distribution module?
 6. Why? Please look in the [documentation of this module](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/7%20Sequence%20Length%20Distribution.html)
-  
+
 # Answers  
 When you have finished the exercise, please have a look at this document with [answers to questions](lab_qc_answers.pdf), and compare them with your answers.  
 

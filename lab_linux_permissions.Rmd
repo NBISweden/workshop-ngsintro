@@ -59,7 +59,7 @@ cat(paste0("$ salloc -A ",upid," -t 04:30:00 -p core --no-shell --reservation=",
 make an empty directory we can work in and make a file.
 
 ```{r,echo=FALSE,class.output="bash",comment='',results='markup'}
-cat(paste0('$ cd /proj/',upid,'/nobackup/<username>
+cat(paste0('$ cd /proj/',upid,'/nobackup/username
 $ mkdir advlinux
 $ cd advlinux
 $ touch  filename
@@ -161,7 +161,7 @@ $ chmod o+wx filename'))
 
 Much like a windows user has a shortcut on his desktop to *WorldOfWarcraft.exe*, being able to create links to files or directories is good to know in Linux. An important thing to remember about symbolic links is that they are not updated, so if you or someone else moves or removes the original file/directory the link will stop working.
 
-Make sure you are standing in the directory **`r cat(paste0('/proj/',upid,'/nobackup/<username>/advlinux'))`**. Then remove our old file and directory.
+Make sure you are standing in the directory **`r paste0('/proj/',upid,'/nobackup/username/advlinux')`**. Then remove our old file and directory.
 
 <i class="fas fa-exclamation-circle"></i> **IMPORTANT**: Using `rm -r *` removes all folder and subfolders from where you are standing. Be extremely careful when using this. Always double check current working directory or path.
 

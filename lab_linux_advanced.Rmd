@@ -125,13 +125,13 @@ Next, copy the lab files from this folder. `-r` means recursively, which means a
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat("$ cp -r <source> <destination>\n")
-cat(paste0("$ cp -r /sw/courses/ngsintro/linux/linux_advanced /proj/",upid,"/nobackup/<username>"))
+cat(paste0("$ cp -r /sw/courses/ngsintro/linux/linux_advanced /proj/",upid,"/nobackup/username"))
 ```
 
-Have a look in ``r paste0("/proj/",upid,"/nobackup/<username>/linux_advanced")``.
+Have a look in ``r paste0("/proj/",upid,"/nobackup/username/linux_advanced")``.
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("$ cd /proj/",upid,"/nobackup/<username>/linux_advanced"))
+cat(paste0("$ cd /proj/",upid,"/nobackup/username/linux_advanced"))
 ```
 
 ```bash
@@ -191,7 +191,7 @@ $ echo The volume of the rectangular cuboid with the sides $x,$y,$z is $(($x*$y*
 
 First off, let's open another terminal to UPPMAX so that you have 2 of them open. Scripting is a lot easier if you have one terminal on the command line ready to run commands and test things, and another one with a text editor where you write the actual code. That way you will never have to close down the text editor when you want to run the script you are writing on, and then open it up again when you want to continue editing the code.
 
-So open a new terminal window, connect it to UPPMAX and then connect it to the node you have booked. Make sure both terminals are in the ``r paste0("/proj/",upid,"/nobackup/<username>/linux_advanced")`` directory, and start editing a new file with gedit or nano where you write your script. Name the file whatever you want, but in the examples I will refer to it as `loop_01.sh`. Write your loops to this file (or create a new file for each new example) and test run it in the other terminal.
+So open a new terminal window, connect it to UPPMAX and then connect it to the node you have booked. Make sure both terminals are in the ``r paste0("/proj/",upid,"/nobackup/username/linux_advanced")`` directory, and start editing a new file with gedit or nano where you write your script. Name the file whatever you want, but in the examples I will refer to it as `loop_01.sh`. Write your loops to this file (or create a new file for each new example) and test run it in the other terminal.
 
 The most simple loops are the ones that loop over a predefined list. You saw examples of this in the lecture slides, for example:
 
@@ -255,7 +255,7 @@ echo Happy New Year everyone!!'))
 Let's try to do something similar to the example in the lecture slides, to run the same commands on multiple files. In the Introduction to UPPMAX, we learned how to use samtools to convert BAM files to SAM files so that humans can read them.
 In real life you will never do this, instead you will most likely always do it the other way around. SAM files take up ~4x more space on the hard drive compared to the same file in BAM format, so as soon as you see a SAM file you should convert it to a BAM file instead to conserve hard drive space. If you have many SAM files that needs converting you don't want to sit there and type all the commands by hand like a pleb.
 
-<i class="fas fa-clipboard-list"></i> Write a script that converts all the SAM files in a specified directory to BAM files. Incidentally, you can find 50 SAM files in need of conversion in the folder called `sam` in the folder you copied to your folder earlier in this lab (``r paste0("/proj/",upid,"/nobackup/<username>/linux_advanced/sam")``). Bonus points if you make the program take the specified directory as an argument, and another bonus point if you get the program to name the resulting BAM file to the same name as the SAM file but with a .bam ending instead.
+<i class="fas fa-clipboard-list"></i> Write a script that converts all the SAM files in a specified directory to BAM files. Incidentally, you can find 50 SAM files in need of conversion in the folder called `sam` in the folder you copied to your folder earlier in this lab (``r paste0("/proj/",upid,"/nobackup/username/linux_advanced/sam")``). Bonus points if you make the program take the specified directory as an argument, and another bonus point if you get the program to name the resulting BAM file to the same name as the SAM file but with a .bam ending instead.
 
 <div class="boxy boxy-lightbulb">
 Remember that you have to load the samtools module to be able to run it. The way you get samtools to convert a SAM file to a BAM file is by typing the following command:
@@ -450,7 +450,7 @@ When the analysis is done, only fastq files and sorted and indexed BAM files sho
 
 <i class="fas fa-lightbulb"></i> Read more about the `$SNIC_TMP` variable in the [disk storage guide](http://www.uppmax.uu.se/support/user-guides/disk-storage-guide/) on the UPPMAX homepage.
 
-There is a bunch of fastq files in the directory ``r paste0("/proj/",upid,"/nobackup/<username>/linux_advanced/fastq/")`` that is to be used for this exercise.
+There is a bunch of fastq files in the directory ``r paste0("/proj/",upid,"/nobackup/username/linux_advanced/fastq/")`` that is to be used for this exercise.
 
 Basic solution:
 
@@ -459,7 +459,7 @@ cat(paste0('# make the dummy pipeline available
 export PATH=$PATH:/sw/courses/ngsintro/linux/uppmax_pipeline_exercise/dummy_scripts
 
 # index the reference genome
-reference_indexer -r /proj/',upid,'/nobackup/<username>/filetypes/0_ref/ad2.fa
+reference_indexer -r /proj/',upid,'/nobackup/username/filetypes/0_ref/ad2.fa
 
 # go to the input files
 cd $1
@@ -469,7 +469,7 @@ for file in *.fastq;
 do
 
     # align the reads
-    align_reads -r /proj/',upid,'/nobackup/<username>/filetypes/0_ref/ad2.fa -i $file -o $file.sam
+    align_reads -r /proj/',upid,'/nobackup/username/filetypes/0_ref/ad2.fa -i $file -o $file.sam
 
     # convert the sam file to a bam file
     sambam_tool -f bam -i $file.sam -o $file.bam
@@ -490,9 +490,9 @@ cat(paste0('# make the dummy pipeline available in this script
 export PATH=$PATH:/sw/courses/ngsintro/linux/uppmax_pipeline_exercise/dummy_scripts
 
 # index the reference genome once, only if needed
-if [ ! -f /proj/',upid,'/nobackup/<username>/filetypes/0_ref/ad2.fa.idx ];
+if [ ! -f /proj/',upid,'/nobackup/username/filetypes/0_ref/ad2.fa.idx ];
 then
-    reference_indexer -r /proj/',upid,'/nobackup/<username>/filetypes/0_ref/ad2.fa
+    reference_indexer -r /proj/',upid,'/nobackup/username/filetypes/0_ref/ad2.fa
 fi
 
 
@@ -535,7 +535,7 @@ do
     # You have to escape the dollar sign in SNIC_TMP to keep bash from resolving
     # it to its value in the submitter script already.
     echo "Copying data to node local hard drive"
-    cp /proj/',upid,'/nobackup/<username>/filetypes/0_ref/ad2.fa* $file $SNIC_TMP/
+    cp /proj/',upid,'/nobackup/username/filetypes/0_ref/ad2.fa* $file $SNIC_TMP/
 
     # go the the nodes local hard drive
     echo "Changing directory to node local hard drive"

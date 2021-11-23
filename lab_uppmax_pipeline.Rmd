@@ -100,13 +100,13 @@ Next, copy the lab files from this folder. `-r` means recursively, which means a
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat("$ cp -r <source> <destination>\n")
-cat(paste0("$ cp -r /sw/courses/ngsintro/linux/uppmax_pipeline_exercise/data/* /proj/",upid,"/nobackup/<username>/uppmax_pipeline_exercise"))
+cat(paste0("$ cp -r /sw/courses/ngsintro/linux/uppmax_pipeline_exercise/data/* /proj/",upid,"/nobackup/username/uppmax_pipeline_exercise"))
 ```
 
 Have a look in **`r paste0("/proj/",upid,"/nobackup/&lt;username&gt;/uppmax_pipeline_exercise")`**.
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("$ cd /proj/",upid,"/nobackup/<username>/uppmax_pipeline_exercise\n"))
+cat(paste0("$ cd /proj/",upid,"/nobackup/username/uppmax_pipeline_exercise\n"))
 cat("ll")
 ```
 
@@ -235,7 +235,7 @@ Right, so now you know how to figure out how to run programs (just type the prog
 First, go to the exome directory in the lab directory that you copied to your folder in step 2 in this lab:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("$ cd /proj/",upid,"/nobackup/<username>/uppmax_pipeline_exercise/exomeSeq"))
+cat(paste0("$ cd /proj/",upid,"/nobackup/username/uppmax_pipeline_exercise/exomeSeq"))
 ```
 
 In there, you will find a folder called `raw_data`, containing a fastq file: `my_reads.rawdata.fastq`. This file contains the raw data that you will analyse.
@@ -263,7 +263,7 @@ The simplest way to work with scripts is to have 2 terminals open. One will have
 Start writing you script with `nano`:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("$ cd /proj/",upid,"/nobackup/<username>/uppmax_pipeline_exercise/exomeSeq\n"))
+cat(paste0("$ cd /proj/",upid,"/nobackup/username/uppmax_pipeline_exercise/exomeSeq\n"))
 cat("nano exome_analysis_script.sh")
 ```
 

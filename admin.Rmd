@@ -1,0 +1,98 @@
+---
+title:  "Admin resources"
+---
+
+```{r,child="assets/header-lab.Rmd"}
+```
+
+```{r,eval=TRUE,include=FALSE}
+library(yaml)
+upid <- yaml::read_yaml("_site.yml")$uppmax_project
+upres1 <- yaml::read_yaml("_site.yml")$uppmax_res_1
+upres2 <- yaml::read_yaml("_site.yml")$uppmax_res_2
+upres3 <- yaml::read_yaml("_site.yml")$uppmax_res_3
+upres4 <- yaml::read_yaml("_site.yml")$uppmax_res_4
+upres5 <- yaml::read_yaml("_site.yml")$uppmax_res_5
+```
+
+<div class="boxy boxy-lightbulb">
+Useful utility commands/scripts for course managers.
+</div>
+
+# UPPMAX
+
+Useful commands for monitoring user activity on UPPMAX.
+
+## List jobs
+
+List all jobs running an a project
+
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0("squeue -A ",upid," | sort -k 4"))
+```
+
+Sample output
+
+```
+  23186770      core _interac analopez  R    2:15:00      1 r55
+  23175660      core   (null)   anitav  R    6:52:28      1 r480
+  23188713      core   (null)    annha  R    1:42:59      1 r480
+  23185442      core   (null)    annha  R    2:47:11      1 r480
+  23185433      core   (null) inene424  R    2:47:42      1 r479
+  23185391      core   (null) inene424  R    2:50:04      1 r479
+  23185540      core   (null)  shengyz  R    2:46:20      1 r480
+     JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+  23185119      core   (null)    wingf  R    2:53:40      1 r479
+```
+
+## Core usage
+
+Total number of cores used on a project
+
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0("squeue -A ",upid," -o %C | awk '{total += $0} END{print total}'"))
+```
+## Reservation use
+
+List users by reservation ID
+
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0("squeue -R ",upres1," | sort -k 4\n"))
+cat(paste0("squeue -R ",upres2," | sort -k 4\n"))
+cat(paste0("squeue -R ",upres3," | sort -k 4\n"))
+cat(paste0("squeue -R ",upres4," | sort -k 4\n"))
+cat(paste0("squeue -R ",upres5," | sort -k 4\n"))
+```
+Sample output
+
+```
+23188713      core   (null)    annha  R    2:01:15      1 r480
+23185442      core   (null)    annha  R    3:05:27      1 r480
+23187840      core   (null)   evangc  R    2:11:02      1 r479
+23186811      core   (null)  shengyz  R    2:34:45      1 r479
+23185540      core   (null)  shengyz  R    3:04:36      1 r480
+   JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+23185119      core   (null)    wingf  R    3:11:56      1 r479
+
+```
+
+## User activity
+
+List last activity in a directory for all users
+
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0("bash /sw/courses/utils/list_modification_times.sh /proj/",upid,"/nobackup/"))
+```
+Sample output
+
+```
+hkyle           2021-11-22 13:59:59     (/proj/snic2021-22-644/nobackup/hkyle/uppmax_tutorial/job_template)
+malinh          2021-11-22 14:12:10     (/proj/snic2021-22-644/nobackup/malinh/slurm-23182638.out)
+aliraz          2021-11-22 14:23:16     (/proj/snic2021-22-644/nobackup/aliraz/slurm-23184022.out)
+kristaps        2021-11-22 14:25:08     (/proj/snic2021-22-644/nobackup/kristaps/uppmax_tutorial/jobData.sam)
+anapin          2021-11-22 14:56:14     (/proj/snic2021-22-644/nobackup/anapin/uppmax_tutorial/uppmax_tutorial/jobData.sam)
+analopez        2021-11-22 14:56:16     (/proj/snic2021-22-644/nobackup/analopez/uppmax_tutorial/jobData.sam)
+private         Not available     ()
+```
+
+***

@@ -98,14 +98,14 @@ Next, copy the lab files from this folder. `-r` means recursively, which means a
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat("$ cp -r <source> <destination>\n")
-cat(paste0("$ cp -r /sw/courses/ngsintro/linux/filetypes /proj/",upid,"/nobackup/<username>/"))
+cat(paste0("$ cp -r /sw/courses/ngsintro/linux/filetypes /proj/",upid,"/nobackup/username/"))
 ```
 
-Have a look in **`r paste0("/proj/",upid,"/nobackup/<username>/")`**.
+Have a look in **`r paste0("/proj/",upid,"/nobackup/username/")`**.
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat("$ cp -r <source> <destination>\n")
-cat(paste0("cd /proj/",upid,"/nobackup/<username>/filetypes\n"))
+cat(paste0("cd /proj/",upid,"/nobackup/username/filetypes\n"))
 cat("$ tree")
 ```
 

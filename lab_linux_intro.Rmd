@@ -143,10 +143,10 @@ Typing `ls -l` all the time is.. more annoying than one would think, so someone 
 
 Now we have practised moving around and looking at what we have in folders. The next step will show you how to do the same thing, but without the moving around part.
 
-If we want to look at what we have in our home folder, while standing in the course's project folder, we type `$ ll /home/<username>/` and remember to substitute **\<username\>** with your own user name.
+If we want to look at what we have in our home folder, while standing in the course's project folder, we type `$ ll /home/username/` and remember to substitute **\<username\>** with your own user name.
 
 ```bash
-$ ll /home/<username>
+$ ll /home/username
 ```
 
 Since most programmers are lazy (efficient), there is a shortcut to your home folder so that you don't have to write it all the time. If you write **`~/`** it means the same as if you would write **/home/\<username\>/**
@@ -154,7 +154,7 @@ Since most programmers are lazy (efficient), there is a shortcut to your home fo
 Try using it with `ls`:
 
 ```bash
-$ ll /home/<username>
+$ ll /home/username
 ```
 
 or
@@ -176,14 +176,14 @@ For structures sake, first create a folder with your username in the **nobackup*
 This can be done in 2 ways:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("$ mkdir /proj/",upid,"/nobackup/<username>\n"))
-cat(paste0("$ mkdir /proj/",upid,"/nobackup/<username>/linux_tutorial"))
+cat(paste0("$ mkdir /proj/",upid,"/nobackup/username\n"))
+cat(paste0("$ mkdir /proj/",upid,"/nobackup/username/linux_tutorial"))
 ```
 
 or
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("$ mkdir -p /proj/",upid,"/nobackup/<username>/linux_tutorial"))
+cat(paste0("$ mkdir -p /proj/",upid,"/nobackup/username/linux_tutorial"))
 ```
 
 The reason for this is that Linux will not like it if you try to create the folder **linux_tutorial** inside a folder (the one named like your username) that does not exist yet. Then, you have the choice to either first create the one named like your username (the first way), or to tell Linux to create it for you by giving it the **`-p`** option (the second way).
@@ -195,7 +195,7 @@ cp -r <source-folder> <destination-folder>
 ```
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("cp -r /sw/courses/ngsintro/linux/linux_tutorial/* /proj/",upid,"/nobackup/<username>/linux_tutorial"))
+cat(paste0("cp -r /sw/courses/ngsintro/linux/linux_tutorial/* /proj/",upid,"/nobackup/username/linux_tutorial"))
 ```
 
 `-r` denotes recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, NOT sub-folders and files in sub-folders.
@@ -217,7 +217,7 @@ Go to the folder you just copied and see what is in it.
 <i class="fas fa-lightbulb"></i> Remember to tab-complete to avoid typos and too much writing.
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("$ cd /proj/",upid,"/nobackup/<username>/linux_tutorial\n"))
+cat(paste0("$ cd /proj/",upid,"/nobackup/username/linux_tutorial\n"))
 cat("ll")
 ```
 
