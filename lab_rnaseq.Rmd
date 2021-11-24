@@ -108,13 +108,13 @@ For the RNA-Seq part of the course, we will work on the Rackham cluster. A stand
 Book resources for RNA-Seq day 1.
 
 ```{r,comment="",chunk.title=TRUE,class.output="sh",echo=FALSE}
-cat(paste0("salloc -A ",upid," -t 03:00:00 -p core -n 1 --reservation=",upres4))
+cat(paste0("interactive -A ",upid," -t 03:00:00 -p core -n 1 --reservation=",upres4))
 ```
 
 Book resources for RNA-Seq day 2.
 
 ```{r,comment="",chunk.title=TRUE,class.output="sh",echo=FALSE}
-cat(paste0("salloc -A ",upid," -t 04:00:00 -p core -n 1 --reservation=",upres5))
+cat(paste0("interactive -A ",upid," -t 04:00:00 -p core -n 1 --reservation=",upres5))
 ```
 
 ### Set-up directory
@@ -127,7 +127,7 @@ Create a directory named `rnaseq`. All RNA-Seq related activities must be carrie
 mkdir rnaseq
 ```
 
-<i class="fas fa-clipboard-list"></i> Set up the below directory structure in your project directory.
+<i class="fas fa-clipboard-list"></i> Create the directory structure as shown below.
 
 ```
 username/
@@ -159,7 +159,13 @@ The `1_raw` directory will hold the raw fastq files (soft-links). `2_fastqc` wil
 
 ### Create symbolic links
 
-We have the raw fastq files in this remote directory: ``r paste0(path_data,"/main/1_raw/")``. We are going to create symbolic links (soft-links) for these files from our `1_raw` directory to the remote directory. We do this because fastq files tend to be large files and simply copying them would use up a lot of storage space. Soft-linking files and folders allows us to work with those files as if they were actually there. Use `pwd` to check if you are standing in the correct directory. You should be standing here:
+We have the raw fastq files in this remote directory: ``r paste0(path_data,"/main/1_raw/")``. We are going to create symbolic links (soft-links) for these files from our `1_raw` directory to the remote directory. We do this because fastq files tend to be large files and simply copying them would use up a lot of storage space. Soft-linking files and folders allows us to work with those files as if they were actually there. 
+
+Change to `1_raw` directory. Use `pwd` to check if you are standing in the correct directory.
+
+```{r,comment="",chunk.title=TRUE,class.output="sh",echo=FALSE}
+cat("cd 1_raw\npwd")
+```
 
 ```{r,comment="",echo=FALSE}
 cat(paste0(path_project_rnaseq,"/1_raw"))
@@ -198,28 +204,36 @@ SRR3222414-19_2.fq.gz -> /sw/courses/ngsintro/rnaseq/main/1_raw/SRR3222414-19_2.
 
 After receiving raw reads from a high throughput sequencing centre it is essential to check their quality.  [FastQC](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/) provides a simple way to do some quality control check on raw sequence data. It provides a modular set of analyses which you can use to get a quick impression of whether your data has any problems of which you should be aware before doing any further analysis.
 
-<i class="fas fa-clipboard-list"></i> Change into the `2_fastqc` directory. Use `pwd` to check if you are standing in the correct directory. You should be standing here:
+<i class="fas fa-clipboard-list"></i> Change into the `2_fastqc` directory. Use `pwd` to check if you are standing in the correct directory.
+
+```{r,comment="",chunk.title=TRUE,class.output="sh",echo=FALSE}
+cat("cd ../2_fastqc\npwd")
+```
 
 ```{r,comment="",echo=FALSE}
 cat(paste0(path_project_rnaseq,"/2_fastqc"))
 ```
 
-Load Uppmax modules `bioinfo-tools` and FastQC `FastQC/0.11.5`.
+Load Uppmax modules `bioinfo-tools` and FastQC `FastQC/0.11.9`.
 
 ```{sh,chunk.title=TRUE,eval=FALSE}
 module load bioinfo-tools
-module load FastQC/0.11.8
+module load FastQC/0.11.9
 ```
 
-Once the module is loaded, FastQC program is available through the command `fastqc`. Use `fastqc --help` to see the various parameters available to the program. We will use `-o` to specify the output directory path and finally, the name of the input fastq file to analyse. The syntax will look like below.
+Once the module is loaded, FastQC program is available through the command `fastqc`. Use `fastqc --help` to see the various parameters available to the program. We will use `-o` to specify the output directory path and finally, the name of the input fastq file to analyse. The syntax to run one file will look like below.
+
+<i class="fas fa-exclamation-circle"></i> Don't run this. It's just a template.
 
 ```{sh,chunk.title=TRUE,eval=FALSE}
 fastqc -o . ../1_raw/filename.fq.gz
 ```
 
-Based on the above command, we will write a bash loop to process all fastq files in the directory. Writing multi-line commands through the terminal can be a pain. Therefore, we will run larger scripts from a bash script file. Move to your `scripts` directory and create a new file named `fastqc.sh`.
+Based on the above command, we will write a bash loop script to process all fastq files in the directory. Writing multi-line commands through the terminal can be a pain. Therefore, we will run larger scripts from a bash script file. Move to your `scripts` directory and create a new file named `fastqc.sh`.
 
-You should be standing here to run this:
+```{r,comment="",chunk.title=TRUE,class.output="sh",echo=FALSE}
+cat("cd ../scripts\npwd")
+```
 
 ```{r,comment="",echo=FALSE}
 cat(paste0(path_project_rnaseq,"/scripts"))
@@ -236,7 +250,7 @@ Use a text editor (`nano`,`Emacs`,`gedit` etc.) to edit `fastqc.sh`.
 <i class="fas fa-lightbulb"></i> `gedit` behaves like a regular text editor with a standard graphical interface.
 
 ```{sh,chunk.title=TRUE,eval=FALSE}
-gedit fastqc.sh&
+gedit fastqc.sh &
 ```
 
 <i class="fas fa-lightbulb"></i> Adding `&` at the end sends that process to the background, so that the console is free to accept new commands.
@@ -247,7 +261,7 @@ Then add the lines below and save the file.
 #!/bin/bash
 
 module load bioinfo-tools
-module load FastQC/0.11.8
+module load FastQC/0.11.9
 
 for i in ../1_raw/*.gz
 do
@@ -256,11 +270,13 @@ do
 done
 ```
 
-This script loops through all files ending in .gz. In each iteration of the loop, it executes fastqc on the file. The `-o .` flag to fastqc indicates that the output must be exported in this current directory.
+This script loops through all files ending in .gz. In each iteration of the loop, it executes fastqc on the file. The `-o .` flag to fastqc indicates that the output must be exported in this current directory (ie; the directory where this script is run).
 
-While standing in the `2_fastqc` directory, run the file `fastqc.sh`.  Use `pwd` to check if you are standing in the correct directory.
+Change to the `2_fastqc` directory.  Use `pwd` to check if you are standing in the correct directory. Run the script file `fastqc.sh`
 
-You should be standing here to run this:
+```{r,comment="",chunk.title=TRUE,class.output="sh",echo=FALSE}
+cat("cd ../2_fastqc\npwd")
+```
 
 ```{r,comment="",echo=FALSE}
 cat(paste0(path_project_rnaseq,"/2_fastqc"))
@@ -283,11 +299,20 @@ Download the `.html` file to your computer and view it.
 
 <i class="fas fa-lightbulb"></i> All users can use an SFTP browser like [Filezilla](https://filezilla-project.org/) or [Cyberduck](https://cyberduck.io/) for a GUI interface. Windows users can also use the MobaXterm SFTP file browser to drag and drop.
 
-Linux and Mac users can use SFTP or SCP by running the below command in a **LOCAL** terminal and **NOT** on Uppmax. Open a terminal locally on your computer, move to a suitable download directory and run the command below.
+Linux and Mac users can use SFTP or SCP by running the below command in a **LOCAL** terminal and **NOT** on Uppmax. Open a terminal locally on your computer, move to a suitable download directory and run the command below to download one html report.
+
+<i class="fas fa-exclamation-circle"></i> Remember to replace username (twice).
 
 ```{r,comment="",echo=FALSE,chunk.title=TRUE,class.output="sh"}
-cat(paste0("scp user@rackham.uppmax.uu.se:",path_project_rnaseq,"/2_fastqc/SRR3222409_1_fastqc.html ./"))
+cat(paste0("scp username@rackham.uppmax.uu.se:",path_project_rnaseq,"/2_fastqc/SRR3222409-19_1_fastqc.html ."))
 ```
+
+or download the whole directory.
+
+```{r,comment="",echo=FALSE,chunk.title=TRUE,class.output="sh"}
+cat(paste0("scp -r username@rackham.uppmax.uu.se:",path_project_rnaseq,"/2_fastqc ."))
+```
+
 </div>
 
 <i class="fas fa-clipboard-list"></i> Go back to the FastQC website and compare your report with the sample report for [Good Illumina data](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html) and [Bad Illumina data](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc.html).
@@ -299,7 +324,7 @@ cat(paste0("scp user@rackham.uppmax.uu.se:",path_project_rnaseq,"/2_fastqc/SRR32
 **Mapping reads using HISAT2**  
 
 After verifying that the quality of the raw sequencing reads is acceptable, we will map the reads to the reference genome. There are many mappers/aligners available, so it may be good to choose one that is adequate for your type of data. Here, we will use a software called [HISAT2](http://www.ccb.jhu.edu/software/hisat/index.shtml) (Hierarchical Indexing for Spliced Alignment of Transcripts) as it is a good general purpose splice-aware aligner. It is fast and does not require a lot of RAM. Before we begin mapping, we need to obtain genome reference sequence (`.fasta` file) and build an aligner index. Due to time constraints, we will build an index only on chromosome 19.
-
+´
 ### Get reference
 
 It is best if the reference genome (`.fasta`) and annotation (`.gtf`) files come from the same source to avoid potential naming conventions problems. It is also good to check in the manual of the aligner you use for hints on what type of files are needed to do the mapping. We will not be using the annotation (`.gtf`) during mapping, but we will use it during quantification.
@@ -356,7 +381,7 @@ module load bioinfo-tools
 module load HISAT2/2.1.0
 ```
 
-<i class="fas fa-lightbulb"></i> To search for the tool or other versions of a tool, use `module spider fastqc`.
+<i class="fas fa-lightbulb"></i> To search for the tool or other versions of a tool, use `module spider hisat`.
 
 Create a new bash script in your `scripts` directory named `hisat2_index.sh` and add the following lines:
 
@@ -373,7 +398,7 @@ hisat2-build \
   mouse_chr19_hisat2/mouse_chr19_hisat2
 ```
 
-The above script builds a HISAT2 index using the command `hisat2-build`. It should use 1 core for computation. The paths to the `.fasta` genome file is specified. And the output path is specified. The output describes the output directory and the prefix for output files. The output directory must be present before running this script. Check `hisat2-build --help` for the arguments and descriptions.
+The above script builds a HISAT2 index using the command `hisat2-build`. It should use 1 core for computation. The paths to the FASTA (.fa) genome file is specified. And the output path is specified. The output describes the output directory and the prefix for output files. The output directory must be present before running this script. Check `hisat2-build --help` for the arguments and descriptions.
 
 Use `pwd` to check if you are standing in the correct directory. Then, run the script from the `reference` directory.
 
@@ -384,7 +409,7 @@ bash ../scripts/hisat2_index.sh
 Once the indexing is complete, move into the `mouse_chr19_hisat2` directory and make sure you have all the files.
 
 ```{sh,accordion=TRUE,chunk.title=TRUE,eval=FALSE}
-ls -l
+ls -l mouse_chr19_hisat2/
 ```
 
 ```{output,eval=FALSE,chunk.title=TRUE}
@@ -429,12 +454,12 @@ HISAT2 aligner arguments can be obtained by running `hisat2 --help`. We should e
 
 ```{sh,chunk.title=TRUE,eval=FALSE}
 hisat2 \
--p 1 \
--x ../reference/mouse_chr19_hisat2/mouse_chr19_hisat2 \
---summary-file "SRR3222409-19.summary" \
--1 SRR3222409-19_1.fq.gz \
--2 SRR3222409-19_2.fq.gz \
--S SRR3222409-19.sam
+  -p 1 \
+  -x ../reference/mouse_chr19_hisat2/mouse_chr19_hisat2 \
+  --summary-file "SRR3222409-19.summary" \
+  -1 SRR3222409-19_1.fq.gz \
+  -2 SRR3222409-19_2.fq.gz \
+  -S SRR3222409-19.sam
 ```
 
 Let's break this down a bit. `-p` options denotes that it will use 1 thread. In a real world scenario, we might want to use 8 to 12 threads. `-x` denotes the full path (with prefix) to the aligner index we built in the previous step. `--summary-file` specifies a summary file to write alignments metrics such as mapping rate etc. `-1` and `-2` specifies the input fastq files. Both are used here because this is a paired-end sequencing. `-S` denotes the output SAM file.
@@ -457,11 +482,11 @@ module load samtools/1.8
 prefix=$( basename $1 | sed -E 's/_.+$//' )
 
 hisat2 \
--p 1 \
--x ../reference/mouse_chr19_hisat2/mouse_chr19_hisat2 \
---summary-file "${prefix}.summary" \
--1 $1 \
--2 $2 | samtools sort -O BAM > "${prefix}.bam"
+  -p 1 \
+  -x ../reference/mouse_chr19_hisat2/mouse_chr19_hisat2 \
+  --summary-file "${prefix}.summary" \
+  -1 $1 \
+  -2 $2 | samtools sort -O BAM > "${prefix}.bam"
 ```
 
 In the above script, the two input fasta files are not hard coded, rather we use `$1` and `$2` because they will be passed in as arguments.
@@ -527,7 +552,7 @@ SRR3222409.13658290	83	19	3084404	60	101M	=	3084385	-120	TGCAGCCAGCTGTGAGAGCTGCA
 SRR3222409.13741570	163	19	3085066	60	15M2I84M	=	3085166	201	ATAGTACCTGGCAACAAAAAAAAAAAAGCTTTTGGCTAAAGACCAATGTGTTTAAGAGATAAAAAAAGGGGTGCTAATACAGAAGCTGAGGCCTTAGAAGA	0B@DB@HCCH1<<CGECCCGCHHIDD?01<<G1</<1<FH1F11<1111<<<<11<CGC1<G1<F//DHHI0/01<<1FG11111111<111<1D1<1D1<	AS:i:-20	XN:i:0	XM:i:3	XO:i:1	XG:i:2	NM:i:5	MD:Z:40T19C27T10	YS:i:0	YT:Z:CP	NH:i:1
 ```
 
-<i class="fas fa-comments"></i> Can you identify what some of these columns are? SAM format description is available [here](https://samtools.github.io/hts-specs/).
+<i class="fas fa-comments"></i> Can you identify what some of these columns are? SAM format description is available [here](https://www.metagenomics.wiki/tools/samtools/bam-sam-file-format). SAM output specifically from HISAT is described [here](http://www.ccb.jhu.edu/software/hisat/manual.shtml), especially the tags.
 
 <i class="fas fa-clipboard-list"></i> The summary file gives a summary of the mapping run. This file is used by MultiQC later to collect mapping statistics. Inspect one of the mapping log files to identify the number of uniquely mapped reads and multi-mapped reads.
 
@@ -581,7 +606,7 @@ ls -l
 <i class="fas fa-exclamation-circle"></i> If you are running short of time or unable to run the mapping, you can copy over results for all samples that have been prepared for you before class. They are available at this location: ``r paste0(path_data,"/main/3_mapping/")``.
 
 ```{r,comment="",echo=FALSE,chunk.title=TRUE,class.output="sh"}
-cat(paste0("cp -r ",path_data,"/main/3_mapping/* ",path_project,"/[user]/rnaseq/3_mapping/"))
+cat(paste0("cp -r ",path_data,"/main/3_mapping/* ",path_project,"/username/rnaseq/3_mapping/"))
 ```
 
 <br>
@@ -592,7 +617,9 @@ cat(paste0("cp -r ",path_data,"/main/3_mapping/* ",path_project,"/[user]/rnaseq/
 
 Some important quality aspects, such as saturation of sequencing depth, read distribution between different genomic features or coverage uniformity along transcripts, can be measured only after mapping reads to the reference genome. One of the tools to perform this post-alignment quality control is QualiMap. QualiMap examines sequencing alignment data in SAM/BAM files according to the features of the mapped reads and provides an overall view of the data that helps to the detect biases in the sequencing and/or mapping of the data and eases decision-making for further analysis.
 
-<i class="fas fa-clipboard-list"></i> Read through [QualiMap](http://qualimap.bioinfo.cipf.es/doc_html/intro.html) documentation and see if you can figure it out how to run it to assess post-alignment quality on the RNA-seq mapped samples. Here is the RNA-Seq specific tool [explanation](http://qualimap.bioinfo.cipf.es/doc_html/analysis.html#rnaseqqc). The tool is already installed on Uppmax as a module.
+There are other tools with similar functionality such as [RNASeqQC](http://qualimap.bioinfo.cipf.es/doc_html/analysis.html#rnaseqqc) or [QoRTs](https://hartleys.github.io/QoRTs/).
+
+<i class="fas fa-clipboard-list"></i> Read through [QualiMap](http://qualimap.conesalab.org/doc_html/index.html) documentation and see if you can figure it out how to run it to assess post-alignment quality on the RNA-seq mapped samples.
 
 <i class="fas fa-clipboard-list"></i> Load the QualiMap module version 2.2.1 and create a bash script named `qualimap.sh` in your `scripts` directory.
 
@@ -682,7 +709,7 @@ cat(paste0("cp -r ",path_data,"/main/4_qualimap/* ",path_project_rnaseq,"/4_qual
 
 After ensuring mapping quality, we can move on to enumerating reads mapping to genomic features of interest. Here we will use **featureCounts**, an ultrafast and accurate read summarisation program, that can count mapped reads for genomic features such as genes, exons, promoter, gene bodies, genomic bins and chromosomal locations.
 
-<i class="fas fa-clipboard-list"></i> Read featureCounts [documentation](http://bioinf.wehi.edu.au/subread-package/SubreadUsersGuide.pdf) and see if you can figure it out how to use paired-end reads using an unstranded library to count fragments overlapping with exonic regions and summarise over genes.
+<i class="fas fa-clipboard-list"></i> Read featureCounts [documentation](http://subread.sourceforge.net/SubreadUsersGuide.pdf) and see if you can figure it out how to use paired-end reads using an unstranded library to count fragments overlapping with exonic regions and summarise over genes.
 
 <i class="fas fa-clipboard-list"></i> Load the subread module on Uppmax. Create a bash script named `featurecounts.sh` in the directory `scripts`.
 
@@ -739,7 +766,9 @@ ls -l
 <div class="boxy boxy-yellow boxy-exclamation">
 **Important**  
 
-For downstream steps, we will NOT use this counts.txt file. Instead we will use **counts_full.txt** from the back-up folder. This contains counts across all chromosomes. This is located here: ``r paste0(path_data,"/main/5_dge/")``. Copy this file to your `5_dge` directory.
+For downstream steps, we will NOT use this `counts.txt` file. Instead we will use **counts_full.txt** from the back-up folder. This contains counts across all chromosomes. This is located here: ``r paste0(path_data,"/main/5_dge/")``. Copy this file to your `5_dge` directory.
+
+<i class="fas fa-exclamation-circle"></i> Remember to replace username.
 
 ```{r,accordion=TRUE,comment="",chunk.title=TRUE,class.output="sh",echo=FALSE}
 cat(paste0("cp ",path_data,"/main/5_dge/counts_full.txt ",path_project_rnaseq,"/5_dge/"))
@@ -754,32 +783,34 @@ cat(paste0("cp ",path_data,"/main/5_dge/counts_full.txt ",path_project_rnaseq,"/
 
 We will use the tool **MultiQC** to crawl through the output, log files etc from FastQC, HISAT2, QualiMap and featureCounts to create a combined QC report.
 
-Run MultiQC as shown below in the `6_multiqc` directory. You should be standing here to run this:
+Move to the `6_multiqc` directory. You should be standing here to run this:
 
 ```{r,comment="",echo=FALSE}
 cat(paste0(path_project_rnaseq,"/6_multiqc"))
 ```
 
+And run this in the terminal.
+
 ```{sh,chunk.title=TRUE,eval=FALSE}
 module load bioinfo-tools
-module load MultiQC/1.8
+module load MultiQC/1.11
 
 multiqc --interactive ../
 ```
 
 ```{sh,chunk.title=TRUE,eval=FALSE,class.output="output"}
-[INFO   ]         multiqc : This is MultiQC v1.8
-[INFO   ]         multiqc : Template    : default
-[INFO   ]         multiqc : Searching   : /crex/proj/gXXXXXXX/nobackup/<user>/rnaseq
-Searching 297 files..  [####################################]  100%          
-[INFO   ]        qualimap : Found 6 RNASeq reports
-[INFO   ]  feature_counts : Found 6 reports
-[INFO   ]         bowtie2 : Found 6 reports
-[INFO   ]          fastqc : Found 12 reports
-[INFO   ]         multiqc : Compressing plot data
-[INFO   ]         multiqc : Report      : multiqc_report.html
-[INFO   ]         multiqc : Data        : multiqc_data
-[INFO   ]         multiqc : MultiQC complete
+  /// MultiQC 🔍 | v1.11
+
+|           multiqc | Search path : /crex/proj/XXXXXXX/nobackup/username/rnaseq
+|         searching | ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 298/298  
+|          qualimap | Found 6 RNASeq reports
+|    feature_counts | Found 6 reports
+|           bowtie2 | Found 6 reports
+|            fastqc | Found 12 reports
+|           multiqc | Compressing plot data
+|           multiqc | Report      : multiqc_report.html
+|           multiqc | Data        : multiqc_data
+|           multiqc | MultiQC complete
 ```
 
 The output should look like below:
@@ -828,6 +859,7 @@ Now, run the R script from the schell in `5_dge` directory.
 ```{sh,chunk.title=TRUE,eval=FALSE}
 Rscript dge.R
 ```
+
 If you are curious what's inside dge.R, you are welcome to explore it using a text editor.
 
 This should have produced the following output files:
@@ -878,19 +910,27 @@ In this part, we will use the same data as in the main workflow. The starting po
 
 ### Preparation
 
+Change to the `funannot` directory in your `rnaseq` directory.
+
+```{sh,chunk.title=TRUE,eval=FALSE}
+cd funannot
+```
+
 Copy this file ``r paste0(path_data,"/bonus/funannot/annotate_de_results.R")`` to your `rnaseq/funannot` directory.
 
+<i class="fas fa-exclamation-circle"></i> Remember to replace username.
+
 ```{r,comment="",chunk.title=TRUE,class.output="sh",echo=FALSE}
-cat(paste0("cp ",path_data,"/bonus/funannot/annotate_de_results.R ",path_project,"/[user]/rnaseq/funannot/"))
+cat(paste0("cp ",path_data,"/bonus/funannot/annotate_de_results.R ",path_project,"/username/rnaseq/funannot/"))
 ```
 
 We need some annotation information, so we will copy this file ``r paste0(path_data,"/main/reference/mm-biomart99-genes.txt.gz")`` to your `rnaseq/reference` directory.
 
 ```{r,comment="",chunk.title=TRUE,class.output="sh",echo=FALSE}
-cat(paste0("cp ",path_data,"/main/reference/mm-biomart99-genes.txt.gz ",path_project,"/[user]/rnaseq/reference/"))
+cat(paste0("cp ",path_data,"/main/reference/mm-biomart99-genes.txt.gz ",path_project,"/username/rnaseq/reference/"))
 ```
 
-Then uncompress the file. `gunzip mm-biomart99-genes.txt.gz`
+Then uncompress the file. `gunzip ../reference/mm-biomart99-genes.txt.gz`
 
 Load R module and R packages
 
@@ -899,17 +939,12 @@ module load R/4.0.0
 module load R_packages/4.0.0
 ```
 
-Change to the `funannot` directory in your `rnaseq` directory.
-
-```{sh,chunk.title=TRUE,eval=FALSE}
-cd funannot
-```
-
 Run the functional annotation script from the linux terminal.
 
 ```{sh,chunk.title=TRUE,eval=FALSE}
 Rscript annotate_de_results.R
 ```
+
 It will fetch **dge_results_full.Rds** from `5_dge/` and annotation files from `reference/`. When completed, you should find a directory named **funannot_results**.
 
 ```{sh,chunk.title=TRUE,eval=FALSE}
@@ -958,6 +993,8 @@ Creating high quality plots of RNA-seq analysis are most easily done using R. De
 
 Copy the R script files from the following directory: ``r paste0(path_data,"/bonus/plots/")`` to your `plots` directory.
 
+<i class="fas fa-exclamation-circle"></i> Remember to replace username.
+
 ```{r,comment="",chunk.title=TRUE,class.output="sh",echo=FALSE}
 cat(paste0("cp ",path_data,"/bonus/plots/*.R ",path_project_rnaseq,"/plots/"))
 ```
@@ -987,7 +1024,7 @@ module load R_packages/4.0.0
 
 A popular way to visualise general patterns of gene expression in your data is to produce either PCA (Principal Component Analysis) or MDS (Multi Dimensional Scaling) plots. These methods aim at summarising the main patterns of expression in the data and display them on a two-dimensional space and still retain as much information as possible. To properly evaluate these kind of results is non-trivial, but in the case of RNA-seq data we often use them to get an idea of the difference in expression between treatments and also to get an idea of the similarity among replicates. If the plots shows clear clusters of samples that corresponds to treatment it is an indication of treatment actually having an effect on gene expression. If the distance between replicates from a single treatment is very large it suggests large variance within the treatment, something that will influence the detection of differentially expressed genes between treatments.
 
-Run the `pca.R` script like below in the `plots` folder.
+Move to the `plots/` directory. Then run the `pca.R` script like below.
 
 ```{sh,chunk.title=TRUE,eval=FALSE}
 Rscript pca.R
@@ -1071,10 +1108,10 @@ For this tutorial you can chose to run IGV directly on your own computer <i clas
 Copy two BAM files (one from each experimental group, for example; SRR3222409-19 and SRR3222412-19) and the associated index (`.bam.bai`) files to your computer by running the below command in a **LOCAL** terminal and **NOT** on Uppmax.
 
 ```{r,comment="",chunk.title=TRUE,class.output="sh",echo=FALSE}
-cat(paste0("scp user@rackham.uppmax.uu.se:",path_project,"/rnaseq/[user]/3_mapping/SRR3222409-19.bam ./\n"))
-cat(paste0("scp user@rackham.uppmax.uu.se:",path_project,"/rnaseq/[user]/3_mapping/SRR3222409-19.bam.bai ./\n"))
-cat(paste0("scp user@rackham.uppmax.uu.se:",path_project,"/rnaseq/[user]/3_mapping/SRR3222412-19.bam ./\n"))
-cat(paste0("scp user@rackham.uppmax.uu.se:",path_project,"/rnaseq/[user]/3_mapping/SRR3222412-19.bam.bai ./\n"))
+cat(paste0("scp user@rackham.uppmax.uu.se:",path_project,"/rnaseq/username/3_mapping/SRR3222409-19.bam ./\n"))
+cat(paste0("scp user@rackham.uppmax.uu.se:",path_project,"/rnaseq/username/3_mapping/SRR3222409-19.bam.bai ./\n"))
+cat(paste0("scp user@rackham.uppmax.uu.se:",path_project,"/rnaseq/username/3_mapping/SRR3222412-19.bam ./\n"))
+cat(paste0("scp user@rackham.uppmax.uu.se:",path_project,"/rnaseq/username/3_mapping/SRR3222412-19.bam.bai ./\n"))
 ```
 
 Alternatively, all users can use an SFTP browser like [Filezilla](https://filezilla-project.org/) or [Cyberduck](https://cyberduck.io/) for a GUI interface. Windows users can also use the MobaXterm SFTP file browser to drag and drop.
@@ -1098,18 +1135,14 @@ Load necessary modules and start IGV
 
 ```{sh,chunk.title=TRUE,eval=FALSE}
 module load bioinfo-tools
-module load IGV/2.4.2
+module load IGV/2.8.13
 igv-core
 ```
 
 This should start the IGV so that it is visible on your screen. If not please try to reconnect to Uppmax or consider running IGV locally as that is often the fastest and most convenient solution.
 </div>
 
-Once we have the program running, you select the genome that you would like to load. As seen in the image below. Choose `Mouse mm10`.
-
-![](data/rnaseq/igv.png)
-
-Note that if you are working with a genome that are not part of the available genomes in IGV, one can create genome files from within IGV. Please check the manual of IGV for more information on that.
+Once we have the program running, you select the genome that you would like to load. Choose `Mouse mm10`. Note that if you are working with a genome that are not part of the available genomes in IGV, one can create genome files from within IGV. Please check the manual of IGV for more information on that.
 
 To open your BAM files, go to `File > Load from file...` and select your BAM file and make sure that you have a `.bai` index for that BAM file in the same folder. You can repeat this and open multiple BAM files in the same window, which makes it easy to compare samples. Then select **Chr19** since we only have data for that one chromosome.
 
@@ -1117,13 +1150,64 @@ For every file you open a number of panels are opened that visualise the data in
 
 To see actual reads you have to zoom in until the reads are drawn on screen. If you have a gene of interest you can also use the search box to directly go to that gene.
 
-Have a look at few of the interesting genes on Chr19. Look into gene **Lbx1**. Do you expect this gene to be differentially expressed? To see a gene with large number of reads, see **Scd2**. Here are a few more **Cuedc2**, **Ahnak** and **Scd1**.
+Here is the list of top 30 differentially expressed genes on Chr19 ordered by absolute fold change. The adjusted p value is shown as padj, the average expression of the gene is shown as baseMean.
+
+```
+      ensembl_gene_id external_gene_name    baseMean log2FoldChange         padj   gene_biotype
+1  ENSMUSG00000117896           AA387883    59.94083     -2.7846887 1.943690e-17         lncRNA
+2  ENSMUSG00000024799             Tm7sf2   947.63388     -2.0385744 1.677171e-44 protein_coding
+3  ENSMUSG00000025172             Ankrd2    59.28633      1.7519899 1.261004e-08 protein_coding
+4  ENSMUSG00000049134               Nrap   220.59983      1.6993887 1.067822e-08 protein_coding
+5  ENSMUSG00000024935             Slc1a1    63.82987      1.6821634 1.652208e-09 protein_coding
+6  ENSMUSG00000037071               Scd1  6678.59981     -1.4473717 2.961722e-14 protein_coding
+7  ENSMUSG00000024665              Fads2  3269.79425     -1.4152150 3.134559e-29 protein_coding
+8  ENSMUSG00000024747            Aldh1a7    65.81205     -1.3544431 1.002599e-06 protein_coding
+9  ENSMUSG00000025216               Lbx1    26.03640      1.3356124 1.328372e-04 protein_coding
+10 ENSMUSG00000056290             Ms4a4b    23.27050      1.3299845 5.015617e-05 protein_coding
+11 ENSMUSG00000025221             Kcnip2    34.13675     -1.3165310 1.463369e-04 protein_coding
+12 ENSMUSG00000032648               Pygm  1129.47092      1.2452572 2.736196e-04 protein_coding
+13 ENSMUSG00000043639              Rbm20    51.36261      1.1816554 7.774718e-04 protein_coding
+14 ENSMUSG00000118032            Gm50147    39.53043     -1.1797580 3.794393e-04         lncRNA
+15 ENSMUSG00000036278            Macrod1   244.02353      1.0824415 4.984802e-07 protein_coding
+16 ENSMUSG00000025203               Scd2 44054.03491     -1.0504733 1.874759e-11 protein_coding
+17 ENSMUSG00000010663              Fads1  4074.38868     -1.0503935 1.470460e-18 protein_coding
+18 ENSMUSG00000060675             Plaat3  5284.36470     -1.0462725 2.114719e-13 protein_coding
+19 ENSMUSG00000016496              Cd274    35.91671      1.0175443 5.632932e-03 protein_coding
+20 ENSMUSG00000024673              Ms4a1    25.80723      1.0130356 6.294275e-03 protein_coding
+21 ENSMUSG00000032773              Chrm1    76.11444      0.9262597 7.665519e-04 protein_coding
+22 ENSMUSG00000067279            Ppp1r3c   162.14777      0.9018589 3.672613e-04 protein_coding
+23 ENSMUSG00000025013               Tll2   108.20333     -0.9012959 1.249858e-03 protein_coding
+24 ENSMUSG00000006457              Actn3  1322.01659      0.8988003 1.352229e-02 protein_coding
+25 ENSMUSG00000075289             Carns1  1003.91026     -0.8819988 4.982949e-10 protein_coding
+26 ENSMUSG00000075010           AW112010    56.94897      0.8128744 4.027595e-02         lncRNA
+27 ENSMUSG00000025227            Mfsd13a   107.55434     -0.8126676 1.107050e-03 protein_coding
+28 ENSMUSG00000067242               Lgi1   506.42577     -0.7842945 2.570293e-06 protein_coding
+29 ENSMUSG00000024812               Tjp2  1478.96029     -0.7627251 9.004722e-07 protein_coding
+30 ENSMUSG00000047368            Abhd17b  1562.07350     -0.7625545 5.750875e-07 protein_coding
+```
+
+Have a look at few of the interesting genes on Chr19 using the `external_gene_name` identifier. Look into gene **Tm7sf2** or **Ankrd2**. You might have to right-click and change option to **Squished** to see more reads.
+
+<i class="fas fa-comments"></i>  Do you expect these genes to be differentially expressed?
+
+To see some genes with large number of reads, see **Scd1** or **Scd2**. 
+
+![](data/rnaseq/igv-tm7sf2.png)
+IGV view of gene **Tm7sf2** across 6 samples.
+
+![](data/rnaseq/igv-ankrd2.png)
+
+IGV view of gene **Ankrd2** across 6 samples.
+
+![](data/rnaseq/igv-scd1.png)
+
+IGV view of gene **Scd1** across 6 samples.
 
 For more detailed information on the splice reads you can instead of just looking at the splice panel right click on the read panel and select **Sashimi plots**. This will open a new window showing in an easy readable fashion how reads are spliced in mapping and you will also be able to see that there are differences in between what locations reads are spliced. This hence gives some indication on the isoform usage of the gene.
 
-<i class="fas fa-clipboard-list"></i> Are the reads you mapped from a stranded or unstranded library?
+<i class="fas fa-clipboard-list"></i> Do you think the reads are from a stranded or unstranded library?
 
-<i class="fas fa-clipboard-list"></i> One can visualise all genes in a given pathway using the gene list option under **Regions** in the menu. If you need hints for how to proceed, see [Gene List tutorial](http://software.broadinstitute.org/software/igv/gene_list_view) at Broad.
+<i class="fas fa-clipboard-list"></i> One can visualise all genes in a given pathway using the gene list option under **Regions** in the menu. If you need hints for how to proceed, see [Gene List tutorial](http://software.broadinstitute.org/software/igv/gene_list_view) at Broad. But, we only have data from one chromosome, so this is not that useful now.
 
 # sbatch
 

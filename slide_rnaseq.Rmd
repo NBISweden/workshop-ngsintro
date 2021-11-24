@@ -130,7 +130,7 @@ class: spaced
 
 .pull-left-50[
 
-- Biological replicates: 6 - 12 .cite[[Schurch *et al.*, 2016](http://rnajournal.cshlp.org/content/early/2016/03/30/rna.053959.115.abstract)]
+- Biological replicates: 6 - 12 .cite[[Schurch et al, 2016](http://rnajournal.cshlp.org/content/early/2016/03/30/rna.053959.115.abstract)]
 - Sample size estimation .cite[[Hart et al, 2013](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3842884/)]
 - Power analysis .cite[[RNASeqPower](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-018-2191-5)] .tool[[RNASeqPower web app](https://rshiny.nbis.se/shiny-server-apps/shiny-rnaseq-power/)]
 - Balanced design to avoid batch effects .tool[[experDesign](https://experdesign.llrs.dev/index.html)] .tool[[DeclareDesign](https://declaredesign.org/)]
@@ -143,7 +143,7 @@ class: spaced
 
 ???
 
-- Technical replicates are not necessary .cite[[Marioni *et al.*, 2008](https://genome.cshlp.org/content/18/9/1509.long)]
+- Technical replicates are not necessary .cite[[Marioni et al, 2008](https://genome.cshlp.org/content/18/9/1509.long)]
 - Previous publications can be useful in experimental planning to avoid repeating the same mistakes
 
 ---
@@ -486,7 +486,7 @@ name: alignment-qc-1
 .pull-right-50[
 **Gene body coverage**
 ![](data/rnaseq/gene-body-coverage.png)
-.cite[[Sigurgeirsson et al,2014](https://pubmed.ncbi.nlm.nih.gov/24632678/)]
+.cite[[Sigurgeirsson et al, 2014](https://pubmed.ncbi.nlm.nih.gov/24632678/)]
 
 ]
 
@@ -958,7 +958,7 @@ class: spaced
 - Experiment with multiple pipelines and tools
 - QC! QC everything at every step
 
-> .large[Conesa, Ana, *et al.* "A survey of best practices for RNA-seq data analysis." [Genome biology 17.1 (2016): 13](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-0881-8)]  
+> .large[Conesa, A., Madrigal, P., Tarazona, S., Gomez-Cabrero, D., Cervera, A., McPherson, A., ... & Mortazavi, A. (2016). A survey of best practices for RNA-seq data analysis. [Genome biology, 17(1), 1-19.](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-0881-8)]  
 
 ---
 name: help
