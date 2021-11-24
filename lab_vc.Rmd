@@ -126,13 +126,13 @@ $ ssh -Y username@rackham.uppmax.uu.se
 ```  
 
 ### Workspace on UPPMAX {-}
-
-Start by creating a workspace for this exercise in your folder under the course's nobackup folder, and then move into it. This folder will be referred to as your *UPPMAX workspace* throughout this workshop.  
-
+You should work in your folder under the course’s nobackup folder, just like you have done during the previous labs. Start by creating a workspace for this exercise in your folder, and then move into it. If you haven't yet created a folder with your username in the course's nobackup folder you have to do that first.
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('mkdir /proj/',upid,'/nobackup/username/ngsworkflow\n'))
-cat(paste0('cd /proj/',upid,'/nobackup/username/ngsworkflow'))
+cat(paste0('mkdir /proj/',upid,'/nobackup/<username>/ngsworkflow\n'))
+cat(paste0('cd /proj/',upid,'/nobackup/<username>/ngsworkflow'))
 ```
+Please note that `<username>` should be replaced with your real username.
+Make sure that you are located in this folder through out the exercise.
 
 ### Symbolic links to data {-}
 
@@ -299,7 +299,7 @@ For help with interpreting the bam file, please look at the sam/bam format defin
 
 ### Check bam in IGV
 
-**Install IGV**  
+**Install IGV**
 
 Integrated Genomics Viewer (IGV) provides an interactive visualisation of the reads in a bam file. Here we will show you how to run IGV on your laptop. If you have not used IGV on your laptop before, then go to the IGV [download page](https://software.broadinstitute.org/software/igv/download), and follow the instructions to download it. It will prompt you to fill in some information and agree to license. Launch the viewer through web start. The 1.2 Gb version should be sufficient for our data.
 
@@ -310,7 +310,6 @@ Navigate to your [local workspace](#preparelaptop), but do not log in to UPPMAX.
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('scp username@rackham.uppmax.uu.se:/proj/',upid,'/nobackup/username/ngsworkflow/HG00097.bam* .'))
 ```
-
 Check that the files are now present in your *local workspace* using `ls -lrt`.
 
 **Look at the bam file in IGV**  
@@ -318,6 +317,17 @@ Check that the files are now present in your *local workspace* using `ls -lrt`.
 * In `IGV`, go to the popup menu in the upper left and set it to `Human hg19`.  
 * In the `Tools` menu, select `Run igvtools`. Choose the command `Count` and then use the `Browse` button next to the `Input File` line to select the bam file (not the bai) that you just downloaded. It will autofill the output file. Hit the `Run` button. This generates a .tdf file that allows you to see the coverage value for our bam file even at zoomed out views. `Close` the igvtools window.  
 * In the `File` menu, select `Load from File` and select your BAMs (not the .bai or the .tdf), which should appear in the tracks window. You will have to zoom in before you can see any reads. You can either select a region by click and drag, or by typing a region or a gene name in the text box at the top. Remember that we have data for the region chr2:136545000-136617000.
+
+If you have problems with downloading the data or installing IGV on your local computer you can also do this part on uppmax like you did yesterday.
+First load the IGV module:
+```bash
+$ module load bioinfo-tools IGV/2.4.2
+```
+Then start it by typing the following command:
+
+```bash
+$ igv.sh
+```
 
 ### Questions  
 
@@ -408,17 +418,11 @@ If you don't have time to complete all steps we have made precomputed intermedia
 ## BWA mem {#bwa_joint}
 
 Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly as above, but with the new sample names.
-You also need to adjust the read group information so that it matches each new sample name, like this:
-```
--R "@RG\\tID:<readgroup_<sample>\\tPU:lanex_flowcellx\\tSM:<sample>\\tLB:libraryx\\tPL:illumina"
-```
-Where `<sample>` should be replaced with the real samples name, i.e. HG00097, HG00100 and HG00101.
-
-Please use this command for every sample to align the reads, add the read group, sort the reads and write them to a bam file:
-
+You also need to adjust the read group information so that it matches each new sample name. Please use this command for every sample to align the reads, add the read group, sort the reads and write them to a bam file:
 ```bash
 bwa mem -R "@RG\\tID:readgroup_<sample>\\tPU:lanex_flowcellx\\tSM:<sample>\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta <sample>_1.fq <sample>_2.fq | samtools sort > <sample>.bam
 ```
+Where `<sample>` should be replaced with the real samples name, i.e. HG00097, HG00100 and HG00101.
 Please check that the expected output files were generated and have content using `ls -lrt`.
 You also need to index each output bam file:
 
