@@ -244,7 +244,8 @@ Now let's start the main part of the workshop, which will guide you through a ba
 
 You should use `BWA mem` to align the reads to the reference genome.  
 
-In the call to `BWA mem` you need to add something called a *read group*, which contains information about how the reads were generated. This is required by HaplotypeCaller. Since we don't know exactly how the reads in the 1000 Genomes Project were generated we have to make some assumptions. Let's assume that each pair of fastq files was generated from one library preparation (*libraryx*), derived from one biological sample (*HG00097*), that was run on one lane of a flowcell on the Illumina machine (*lanex_flowcellx*) , and let's define a read group with this information (*readgroupx*). The code for adding this read group is:
+In the call to `BWA mem` you need to add something called a *read group*, which contains information about how the reads were generated. This is required by HaplotypeCaller. Since we don't know exactly how the reads in the 1000 Genomes Project were generated we have to make some assumptions. Let's assume that each pair of fastq files was generated from one library preparation (*libraryx*), derived from one biological sample (*HG00097*), that was run on one lane of a flowcell on the Illumina machine (*lanex_flowcellx*) , and let's define a read group with this information (*readgroupx*).
+The code for adding this read group is:  
 **-R "@RG\\tID:readgroup_HG00097\\tPU:lanex_flowcellx\\tSM:HG00097\\tLB:libraryx\\tPL:illumina"**
 
 <div class="boxy boxy-yellow boxy-exclamation">
