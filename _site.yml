@@ -1,16 +1,16 @@
 name: Introduction to Bioinformatics using NGS data
 # output directory used on gh-pages branch. format: YYMM
-output_dir: 2111
+output_dir: 2203
 # used site-wide wherever uppmax project ids are used
-uppmax_project: "snic2021-22-644"
-uppmax_storage: "snic2021-23-591"
-nsc_project: "snic2021-22-750"
+uppmax_project: "snicXXXX-XX-XXX"
+uppmax_storage: "snicXXXX-XX-XXX"
+nsc_project: "snicXXXX-XX-XXX"
 # uppmax reservation ids. used site-wide
-uppmax_res_1: snic2021-22-644_mon
-uppmax_res_2: snic2021-22-644_tue
-uppmax_res_3: snic2021-22-644_wed
-uppmax_res_4: snic2021-22-644_thu
-uppmax_res_5: snic2021-22-644_fri
+uppmax_res_1: snicXXXX-XX-XXX_mon
+uppmax_res_2: snicXXXX-XX-XXX_tue
+uppmax_res_3: snicXXXX-XX-XXX_wed
+uppmax_res_4: snicXXXX-XX-XXX_thu
+uppmax_res_5: snicXXXX-XX-XXX_fri
 # location options are linkoping, lund, umea, uppsala or online. For rendering the info page.
 location: online
 assistants:
