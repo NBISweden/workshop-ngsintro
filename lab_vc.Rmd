@@ -236,7 +236,7 @@ Now let's start the main part of the workshop, which will guide you through a ba
 You should use `BWA mem` to align the reads to the reference genome.  
 
 In the call to `BWA mem` you need to add something called a *read group*, which contains information about how the reads were generated. This is required by HaplotypeCaller. Since we don't know exactly how the reads in the 1000 Genomes Project were generated we have to make some assumptions. Let's assume that each pair of fastq files was generated from one library preparation (*libraryx*), derived from one biological sample (*HG00097*), that was run on one lane (*lanex*) of a flowcell (*flowcellx*) on the Illumina machine, and let's define a read group with this information.
-The code for adding this read group is
+The code for adding this read group is<br/>
 **-R "@RG\\tID:readgroup_HG00097\\tPU:lanex_flowcellx\\tSM:HG00097\\tLB:libraryx\\tPL:illumina"**.
 <div class="boxy boxy-yellow boxy-exclamation">
 When running BWA for another sample later on you have to replace *HG00097* in the read group with the new sample name. To learn more about read groups  please read [this article](https://gatk.broadinstitute.org/hc/en-us/articles/360035890671-Read-groups) at GATK forum.
@@ -329,7 +329,11 @@ $ igv.sh
 
 ### HaplotypeCaller {#haplotypecaller}
 
-Now we will detect short variants in the bam file using GATK's `HaplotypeCaller`. Go to your *UPPMAX workspace* and run:
+Now we will detect short variants in the bam file using GATK's `HaplotypeCaller`. This should be done in your *UPPMAX workspace. Use pwd to check if you are standing in the correct directory:
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0('/proj/',upid,'/nobackup/<username>/ngsworkflow'))
+```
+Then run:
 
 ```bash
 gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -I HG00097.bam -O HG00097.vcf
@@ -408,20 +412,23 @@ If you don't have time to complete all steps we have made precomputed intermedia
 ## BWA mem {#bwa_joint}
 
 Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly as above, but with the new sample names.
-You also need to adjust the read group information so that it matches each new sample name. Please use this command for every sample to align the reads, add the read group, sort the reads and write them to a bam file:
+You also need to adjust the read group information so that it matches each new sample name. <br/>
+First use pwd to check if you are standing in the correct directory:
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0('/proj/',upid,'/nobackup/<username>/ngsworkflow'))
+```
+Then use this command for every sample to align the reads, add the read group, sort the reads and write them to a bam file:
 ```bash
 bwa mem -R "@RG\\tID:readgroup_<sample>\\tPU:lanex_flowcellx\\tSM:<sample>\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta <sample>_1.fq <sample>_2.fq | samtools sort > <sample>.bam
 ```
 Where `<sample>` should be replaced with the real samples name, i.e. HG00097, HG00100 and HG00101.
 Please check that the expected output files were generated and have content using `ls -lrt`.
 You also need to index each output bam file:
-
 ```bash
 samtools index <sample>.bam
 ```
 Please check what output file was generated this time.
-
-If you run out of time, please click below to get paths to precomputed bam files.
+If you run out of time you can click below to get paths to precomputed bam files.
 
 ```{r,accordion=TRUE,chunk.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0(bamdir,'/HG00097.bam\n'))
@@ -431,15 +438,18 @@ cat(paste0(bamdir,'/HG00101.bam\n'))
 
 ## Generate g.vcf files {#generategvcf}
 
-`HaplotypeCaller` should also be run for all three samples, but this time the output for each sample needs to be in g.vcf format. This is accomplished with a small change in the `HaploteypCaller` command:
-
+`HaplotypeCaller` should also be run for all three samples, but this time the output for each sample needs to be in g.vcf format. This is accomplished with a small change in the `HaploteypCaller` command.<br/>
+First use pwd to check if you are standing in the correct directory:
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0('/proj/',upid,'/nobackup/<username>/ngsworkflow'))
+```
+Then:
 ```bash
 gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I <sample>.bam -O <sample>.g.vcf
 ```
-
 Please replace `<sample>` with the real sample names.
 
-If you run out of time, please click below to get paths to the precomputed g.vcf files.
+If you run out of time you can click below to get paths to the precomputed g.vcf files.
 
 ```{r,accordion=TRUE,chunk.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0(vcfdir,'/HG00097.g.vcf\n'))
@@ -449,22 +459,21 @@ cat(paste0(vcfdir,'/HG00101.g.vcf\n'))
 
 ## Joint genotyping {#jointgenotyping}
 
-Once you have the g.vcf files for all samples you should perform joint genotype calling. To do this you first need to combine all individual .g.vcf files to one file using `CombineGVCFs`:
-
+Once you have the g.vcf files for all samples you should perform joint genotype calling. To do this you first need to combine all individual .g.vcf files to one file using `CombineGVCFs`.<br/>
+First use pwd to check if you are standing in the correct directory:
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0('/proj/',upid,'/nobackup/<username>/ngsworkflow'))
+```
+Then:
 ```bash
 gatk --java-options -Xmx7g CombineGVCFs -R human_g1k_v37_chr2.fasta -V <sample1>.g.vcf -V <sample2>.g.vcf -V <sample3>.g.vcf -O cohort.g.vcf
 ```
-
 Please replace `<sample1>`, `<sample2>`, `<sample3>` with the real sample names.
-
 Then run GATK's `GenoteypeGVC` to generate a vcf file:
-
 ```bash
 gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g.vcf -O cohort.vcf
 ```
-
-If you run out of time, please click below to get paths to the precomputed cohort.g.vcf and cohort.vcf files.
-
+If you run out of time you can click below to get paths to the precomputed cohort.g.vcf and cohort.vcf files.
 ```{r,accordion=TRUE,chunk.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0(vcfdir,'/cohort.g.vcf\n'))
 cat(paste0(vcfdir,'/cohort.vcf\n'))
