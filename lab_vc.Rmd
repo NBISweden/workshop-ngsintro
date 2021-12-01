@@ -150,14 +150,13 @@ ssh -Y <nodename>
 ```
 
 ### Workspace on UPPMAX {-}
-You should work in your folder under the course’s nobackup folder, just like you have done during the previous labs. Start by creating a workspace for this exercise in your folder, and then move into it.
-If you haven't yet created a folder with your username in the course's nobackup folder you have to do that first.
+You should work in your folder under the course’s nobackup folder, just like you have done during the previous labs. Start by creating a workspace for this exercise in your folder, and then move into it. **Make sure that you are located in this folder through out the exercise.**
+(If you haven't yet created a folder with your username in the course's nobackup folder you have to do that first.)
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('mkdir /proj/',upid,'/nobackup/<username>/ngsworkflow\n'))
 cat(paste0('cd /proj/',upid,'/nobackup/<username>/ngsworkflow'))
 ```
-Please note that `<username>` should be replaced with your real username.
-Make sure that you are located in this folder through out the exercise.
+Where `<username>` should be replaced with your real username.
 
 ### Symbolic links to data {-}
 
