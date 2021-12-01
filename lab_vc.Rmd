@@ -146,7 +146,7 @@ Once your job allocation has been granted (should not take long) please check th
 squeue -u <username>
 ```
 You should now see that you have an active job allocation. The node name for your job is listed under the nodelist header.<br/>
-Connect to the node: 
+Connect to the node:
 ```bash
 ssh -Y <nodename>
 ```
@@ -241,20 +241,18 @@ Now let's start the main part of the workshop, which will guide you through a ba
 
 You should use `BWA mem` to align the reads to the reference genome.  
 
-In the call to `BWA mem` you need to add something called a *read group*, which contains information about how the reads were generated. This is required by HaplotypeCaller. Since we don't know exactly how the reads in the 1000 Genomes Project were generated we have to make some assumptions. Let's assume that each pair of fastq files was generated from one library preparation (*libraryx*), derived from one biological sample (*HG00097*), that was run on one lane of a flowcell on the Illumina machine (*lanex_flowcellx*) , and let's define a read group with this information (*readgroupx*).
-The code for adding this read group is:  
-**-R "@RG\\tID:readgroup_HG00097\\tPU:lanex_flowcellx\\tSM:HG00097\\tLB:libraryx\\tPL:illumina"**
-
+In the call to `BWA mem` you need to add something called a *read group*, which contains information about how the reads were generated. This is required by HaplotypeCaller. Since we don't know exactly how the reads in the 1000 Genomes Project were generated we have to make some assumptions. Let's assume that each pair of fastq files was generated from one library preparation (*libraryx*), derived from one biological sample (*HG00097*), that was run on one lane (*lanex*) of a flowcell (*flowcellx*) on the Illumina machine, and let's define a read group with this information.
+The code for adding this read group is **-R "@RG\\tID:readgroup_HG00097\\tPU:lanex_flowcellx\\tSM:HG00097\\tLB:libraryx\\tPL:illumina"**.
 <div class="boxy boxy-yellow boxy-exclamation">
-When running BWA for another sample later on you have to replace *HG00097* in the read group with the new sample name. To learn more about read groups  please read [this article](https://gatk.broadinstitute.org/hc/en-us/articles/360035890671-Read-groups) at GATK forum.  
+When running BWA for another sample later on you have to replace *HG00097* in the read group with the new sample name. To learn more about read groups  please read [this article](https://gatk.broadinstitute.org/hc/en-us/articles/360035890671-Read-groups) at GATK forum.
 </div>
 
-You also need to specify how many threads the program should use (should be the same as the number of cores you have access to and is defined by the code `-t 1` below), what reference genome file to use and what fasta files to align.
+You also need to specify how many threads the program should use (should be the same as the number of cores you have access to and is defined by the code `-t 1` below), what reference genome file to use and what fasta files to align. The output from `BWA` should be parsed to `samtools sort`, which sorts the sam file according to chromosome position and then converts the sam file to the binary bam format. Finally, use a file redirect `>` so that the output ends up in a file and not on your screen.
 
-The output from `BWA` should be parsed to `samtools sort`, which sorts the sam file according to chromosome position and then converts the sam file to the binary bam format.  
-
-Finally, use a file redirect `>` so that the output ends up in a file and not on your screen.
-
+Before running BWA use pwd to check if you are standing in the correct directory.
+```bash
+cat(paste0('/proj/',upid,'/nobackup/<username>/ngsworkflow'))
+```
 Please use this command to align the reads, add the read group, sort the reads and write them to a bam file:
 
 ```bash
