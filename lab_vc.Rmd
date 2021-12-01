@@ -216,7 +216,9 @@ First use pwd to check if you are standing in the correct directory:
 ```bash
 pwd
 ```
-Should return **'/proj/',upid,'/nobackup/`<username>`/ngsworkflow'**
+Should return
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0('/proj/',upid,'/nobackup/<username>/ngsworkflow'))
 ```
 Generate BWA index files:
 ```bash
@@ -256,6 +258,10 @@ When running BWA for another sample later on you have to replace *HG00097* in th
 You also need to specify how many threads the program should use (should be the same as the number of cores you have access to and is defined by the code `-t 1` below), what reference genome file to use and what fasta files to align. The output from `BWA` should be parsed to `samtools sort`, which sorts the sam file according to chromosome position and then converts the sam file to the binary bam format. Finally, use a file redirect `>` so that the output ends up in a file and not on your screen.
 
 First use pwd to check if you are standing in the correct directory:
+```bash
+pwd
+```
+Should return
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('/proj/',upid,'/nobackup/<username>/ngsworkflow'))
 ```
@@ -341,6 +347,10 @@ $ igv.sh
 ### HaplotypeCaller {#haplotypecaller}
 
 Now we will detect short variants in the bam file using GATK's `HaplotypeCaller`. This should be done in your *UPPMAX workspace*. Use pwd to check if you are standing in the correct directory:
+```bash
+pwd
+```
+Should return
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('/proj/',upid,'/nobackup/<username>/ngsworkflow'))
 ```
