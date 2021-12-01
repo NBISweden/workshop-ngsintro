@@ -127,27 +127,26 @@ $ ssh -Y username@rackham.uppmax.uu.se
 
 ### Book a node {-}
 
-Book a compute node so that you can run compute intensive tasks in the terminal.  
-**Make sure you only do this once each day.**
-
-Use this reservation on day 1 of variant-calling:
+You should run the lab on a compute node (not the login node). If you haven't already booked a node today, please start with that. Before you book a new node, please check that you don't already have any active jobs using this command:
+```bash
+squeue -u username
+```
+If no jobs are listed for your username please go ahead and reserve a node.
+Use this code to make a reservation on day 1 of variant-calling:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('salloc -A ',upid,' -t 04:00:00 -p core -n 1 --no-shell --reservation=',upres3,' &'))
 ```
 
-Use this reservation on day 2 of variant-calling:
+Use this code to make a reservation on day 2 of variant-calling:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('salloc -A ',upid,' -t 04:00:00 -p core -n 1 --no-shell --reservation=',upres4,' &'))
 ```
-
 Once your job allocation has been granted (should not take long) you can connect to the node using `ssh`. To find out the name of your node, use:
-
 ```bash
 squeue -u username
-```
-
+```  
 The node name is found under nodelist header, you should only see one. Connect to that node:
 ```bash
 ssh -Y <nodename>
