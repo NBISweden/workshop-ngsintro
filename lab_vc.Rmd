@@ -127,7 +127,7 @@ $ ssh -Y username@rackham.uppmax.uu.se
 Where `<username>` should be replaced with your username.
 
 ### Logon to a node {-}
-This lab should be done on a compute node (not the login node). First check if you already have active allocations using this command:
+This lab should be done on a compute node (not the login node). First check if you already have active an allocation using this command:
 ```bash
 squeue -u <username>
 ```
