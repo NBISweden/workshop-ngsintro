@@ -127,7 +127,7 @@ $ ssh -Y username@rackham.uppmax.uu.se
 
 ### Book a node {-}
 
-Book a compute node so that you can run compute intensive tasks in the terminal.
+Book a compute node so that you can run compute intensive tasks in the terminal.  
 **Make sure you only do this once each day.**
 
 Use this reservation on day 1 of variant-calling:
