@@ -346,7 +346,7 @@ $ igv.sh
 
 ### HaplotypeCaller {#haplotypecaller}
 
-Now we will detect short variants in the bam file using GATK's `HaplotypeCaller`. This should be done in your *UPPMAX workspace*. Use pwd to check if you are standing in the correct directory:
+Now we will detect short variants in the bam file using GATK's `HaplotypeCaller`. This should be done in your *UPPMAX workspace*. First use pwd to check if you are standing in the correct directory:
 ```bash
 pwd
 ```
@@ -435,6 +435,10 @@ If you don't have time to complete all steps we have made precomputed intermedia
 Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly as above, but with the new sample names.
 You also need to adjust the read group information so that it matches each new sample name. <br/>
 First use pwd to check if you are standing in the correct directory:
+```bash
+pwd
+```
+Should return
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('/proj/',upid,'/nobackup/<username>/ngsworkflow'))
 ```
@@ -461,6 +465,10 @@ cat(paste0(bamdir,'/HG00101.bam\n'))
 
 `HaplotypeCaller` should also be run for all three samples, but this time the output for each sample needs to be in g.vcf format. This is accomplished with a small change in the `HaploteypCaller` command.<br/>
 First use pwd to check if you are standing in the correct directory:
+```bash
+pwd
+```
+Should return
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('/proj/',upid,'/nobackup/<username>/ngsworkflow'))
 ```
@@ -482,6 +490,10 @@ cat(paste0(vcfdir,'/HG00101.g.vcf\n'))
 
 Once you have the g.vcf files for all samples you should perform joint genotype calling. To do this you first need to combine all individual .g.vcf files to one file using `CombineGVCFs`.<br/>
 First use pwd to check if you are standing in the correct directory:
+```bash
+pwd
+```
+Should return
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('/proj/',upid,'/nobackup/<username>/ngsworkflow'))
 ```
