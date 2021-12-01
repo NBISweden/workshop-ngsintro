@@ -124,13 +124,14 @@ Please connect to the Rackham cluster on UPPMAX using `ssh`:
 ```bash
 $ ssh -Y username@rackham.uppmax.uu.se
 ```
+Where `<username>` should be replaced with your username.
 
 ### Logon to a node {-}
-This lab should be done on a compute node (not the login node). If you haven't already allocated a core today then please start with that. First check if you have any active allocations using this command:
+This lab should be done on a compute node (not the login node). If you haven't already allocated a job today then please start with that. First check if you have any active allocations using this command:
 ```bash
 squeue -u <username>
 ```
-Where <username> should be replaced with your username. If you already have an active allocation please connect to that node as described below. If no jobs are listed please go ahead and allocate a core for this lab.
+Where `<username>` should be replaced with your username. If you already have an active allocation please connect to that node as described below. If no jobs are listed please go ahead and allocate a job for this lab.
 Use this code to allocate a core on day 1 of variant-calling:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('salloc -A ',upid,' -t 04:00:00 -p core -n 1 --no-shell --reservation=',upres3,' &'))
