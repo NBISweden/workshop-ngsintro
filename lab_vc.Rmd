@@ -125,21 +125,17 @@ Please connect to the Rackham cluster on UPPMAX using `ssh`:
 $ ssh -Y username@rackham.uppmax.uu.se
 ```
 
-### Book a node {-}
-
-You should run the lab on a compute node (not the login node). If you haven't already booked a node today, please start with that. Before you book a new node, please check that you don't already have any active jobs using this command:
+### Logon to a node {-}
+This lab should be done on a compute node (not the login node). If you haven't already allocated a core today then please start with that. First check if you have any active allocations using this command:
 ```bash
-squeue -u username
+squeue -u <username>
 ```
-If no jobs are listed for your username please go ahead and reserve a node. If you already have an active reservation please connect to that node using ssh as described below.   
-Use this code to make a reservation on day 1 of variant-calling:
-
+Where <username> should be replaced with your username. If you already have an active allocation please connect to that node as described below. If no jobs are listed please go ahead and allocate a core for this lab.
+Use this code to allocate a core on day 1 of variant-calling:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('salloc -A ',upid,' -t 04:00:00 -p core -n 1 --no-shell --reservation=',upres3,' &'))
 ```
-
 Use this code to make a reservation on day 2 of variant-calling:
-
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('salloc -A ',upid,' -t 04:00:00 -p core -n 1 --no-shell --reservation=',upres4,' &'))
 ```
