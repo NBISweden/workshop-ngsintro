@@ -132,7 +132,7 @@ This lab should be done on a compute node (not the login node). First check if y
 squeue -u <username>
 ```
 Where `<username>` should be replaced with your username.<br/>
-If no jobs are listed you should allocate a job for this lab. If you already have an active job allocation please proceed to Connect to the node](#connecttonode) below.<br/>
+If no jobs are listed you should allocate a job for this lab. If you already have an active job allocation please proceed to **Connect to the node** below.<br/>
 Use this code to allocate a job on day 1 of variant-calling:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('salloc -A ',upid,' -t 04:00:00 -p core -n 1 --no-shell --reservation=',upres3,' &'))
@@ -146,7 +146,7 @@ Once your job allocation has been granted (should not take long) please check th
 squeue -u <username>
 ```
 You should now see that you have an active job allocation. The node name for your job is listed under the nodelist header.<br/>
-#### Connect to the node: {#connecttonode -}
+Connect to the node: 
 ```bash
 ssh -Y <nodename>
 ```
