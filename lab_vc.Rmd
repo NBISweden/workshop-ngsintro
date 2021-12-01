@@ -202,8 +202,7 @@ Although you don't have to specify which versions of the tools to use, it is rec
 When loading the module GATK/4.1.4.1 you will get a warning message about the fact that GATK commands have been updated since the previous version of GATK. This is fine and you don't have to do anything about it.
 
 ## Index the genome {-}
-
-Tools that compare short reads with a large reference genome needs indexes of the reference genome to work efficiently. You therefore need to create index files for each tool.
+Tools that compare short reads with a large reference genome needs indexes of the reference genome to work efficiently. You therefore need to create index files for each tool.<br/>
 First use pwd to check if you are standing in the correct directory:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('/proj/',upid,'/nobackup/<username>/ngsworkflow'))
