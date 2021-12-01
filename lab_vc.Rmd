@@ -163,7 +163,11 @@ Create a folder for this exercise and move into it:
 mkdir ngsworkflow
 cd ngsworkflow
 ```
-**Make sure you are located in /proj/snicXXXX-XX-XXX/nobackup/`<username>`/ngsworkflow for the rest of this lab.**
+Make sure you are located in
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0('/proj/',upid,'/nobackup/<username>/ngsworkflow'))
+```
+for the rest of this lab.
 
 ### Symbolic links to data {-}
 
