@@ -159,11 +159,11 @@ cat(paste0('cd /proj/',upid,'/nobackup/<username>'))
 ```
 Where `<username>` should be replaced with your real username.
 Create a folder for this exercise and move into it:
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('mkdir /proj/',upid,'/nobackup/<username>/ngsworkflow\n'))
-cat(paste0('cd /proj/',upid,'/nobackup/<username>/ngsworkflow'))
+```bash
+mkdir ngsworkflow
+cd ngsworkflow
 ```
-**Make sure you are located in /proj/snicXXXX-XX-XXX/nobackup/<username>/ngsworkflow for the rest of this lab.** T
+**Make sure you are located in /proj/snicXXXX-XX-XXX/nobackup/´<username>/ngsworkflow for the rest of this lab.**
 
 ### Symbolic links to data {-}
 
