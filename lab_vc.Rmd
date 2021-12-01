@@ -131,7 +131,7 @@ You should run the lab on a compute node (not the login node). If you haven't al
 ```bash
 squeue -u username
 ```
-If no jobs are listed for your username please go ahead and reserve a node.
+If no jobs are listed for your username please go ahead and reserve a node. If you already have an active reservation please connect to that node using ssh as described below.   
 Use this code to make a reservation on day 1 of variant-calling:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
@@ -146,7 +146,7 @@ cat(paste0('salloc -A ',upid,' -t 04:00:00 -p core -n 1 --no-shell --reservation
 Once your job allocation has been granted (should not take long) you can connect to the node using `ssh`. To find out the name of your node, use:
 ```bash
 squeue -u username
-```  
+```
 The node name is found under nodelist header, you should only see one. Connect to that node:
 ```bash
 ssh -Y <nodename>
