@@ -45,7 +45,7 @@ Whole genome sequencing (WGS) is a comprehensive method for analyzing entire gen
 <div class="boxy boxy-lightbulb">
 
 * You will work on the computing cluster Rackham at Uppmax
-* In paths, please replace `username` with your actual UPPMAX username.
+* In paths, please replace `<username>` with your actual UPPMAX username.
 * In commands, please replace `<parameter>` with the correct parameter, for example your input file name, output file name, directory name, etc.
 * Do not copy and paste commands from the exercise to terminal, as this can result in formatting errors.
 * Use tab completion.
@@ -146,7 +146,7 @@ Once your job allocation has been granted (should not take long) please check th
 squeue -u <username>
 ```
 You should now see that you have an active job allocation. The node name for your job is listed under the nodelist header.<br/>
-Connect to the node:
+**Connect to the node:**
 ```bash
 ssh -Y <nodename>
 ```
@@ -299,8 +299,7 @@ For help with interpreting the bam file, please look at the sam/bam format defin
 
 ### Questions  
 
-1. What does "SO:coordinate" in the "@HD" tag on the first line of the bam file mean?    
-2. What does "SN:2" and "LN:243199373" in the "@SQ tag mean?
+2. What does "SN:2" and "LN:243199373" in the "@SQ tag of the bam header mean?
 3. What is encoded in the @RG tag?  
 4. What is the leftmost mapping position of the first read in the bamfile?
 
