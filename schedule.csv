@@ -24,5 +24,5 @@ date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_y
 ;;13:00;17:00;RNA-Seq workflow;Dag Ahren;JL,LS,NR;slide_rnaseq.html;lab_rnaseq.html;https://youtu.be/uKebwpW0R28;
 26/11/2021;Online;09:00;12:00;RNA-Seq workflow;Dag Ahren;JL,LS,NR;;;;
 ;;12:00;13:00;Lunch;;;;;;
-;;13:00;13:15;Presenting NBIS;Dag Ahrén;;slide_nbis_1.pdf;;;
+;;13:00;13:15;Presenting NBIS;Dag Ahrén;;slide_nbis.pdf;;;
 ;;13:15;15:00;Open session;Dag Ahrén;AA,MD,ML,OP,RF;;lab_open_session.html;;
