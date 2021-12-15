@@ -95,7 +95,7 @@ The main exercise covers Differential Gene Expression (DGE) workflow from raw re
 
 ## Using Uppmax
 
-Connect to UPPMAX.
+Connect to UPPMAX. <i class="fas fa-exclamation-circle"></i> Remember to replace username.
 
 ```{sh,chunk.title=TRUE,eval=FALSE}
 ssh -Y username@rackham.uppmax.uu.se
@@ -108,18 +108,30 @@ For the RNA-Seq part of the course, we will work on the Rackham cluster. A stand
 Book resources for RNA-Seq day 1.
 
 ```{r,comment="",chunk.title=TRUE,class.output="sh",echo=FALSE}
-cat(paste0("interactive -A ",upid," -t 03:00:00 -p core -n 1 --reservation=",upres4))
+cat(paste0("salloc -A ",upid," -t 03:00:00 -p core -n 1 --no-shell --reservation=",upres4))
 ```
 
 Book resources for RNA-Seq day 2.
 
 ```{r,comment="",chunk.title=TRUE,class.output="sh",echo=FALSE}
-cat(paste0("interactive -A ",upid," -t 04:00:00 -p core -n 1 --reservation=",upres5))
+cat(paste0("salloc -A ",upid," -t 04:00:00 -p core -n 1 --no-shell --reservation=",upres5))
+```
+
+Check allocation. <i class="fas fa-exclamation-circle"></i> Remember to replace **username**.
+
+```sh
+squeue -u username
+```
+
+Once allocation is granted, log on to the compute node. <i class="fas fa-exclamation-circle"></i> Remember to replace **nodename**.
+
+```sh
+ssh -Y nodename
 ```
 
 ### Set-up directory
 
-Setting up the directory structure is an important step as it helps to keep our raw data, intermediate data and results in an organised manner. All work must be carried out at this location ``r paste0(path_project,"/","username/")`` where `username` is your user name.
+Setting up the directory structure is an important step as it helps to keep our raw data, intermediate data and results in an organised manner. All work must be carried out at this location ``r paste0(path_project,"/","username/")`` where **username** is your user name.
 
 Create a directory named `rnaseq`. All RNA-Seq related activities must be carried out in this sub-directory named `rnaseq`.
 
@@ -159,7 +171,7 @@ The `1_raw` directory will hold the raw fastq files (soft-links). `2_fastqc` wil
 
 ### Create symbolic links
 
-We have the raw fastq files in this remote directory: ``r paste0(path_data,"/main/1_raw/")``. We are going to create symbolic links (soft-links) for these files from our `1_raw` directory to the remote directory. We do this because fastq files tend to be large files and simply copying them would use up a lot of storage space. Soft-linking files and folders allows us to work with those files as if they were actually there. 
+We have the raw fastq files in this remote directory: ``r paste0(path_data,"/main/1_raw/")``. We are going to create symbolic links (soft-links) for these files from our `1_raw` directory to the remote directory. We do this because fastq files tend to be large files and simply copying them would use up a lot of storage space. Soft-linking files and folders allows us to work with those files as if they were actually there.
 
 Change to `1_raw` directory. Use `pwd` to check if you are standing in the correct directory.
 
@@ -286,22 +298,11 @@ cat(paste0(path_project_rnaseq,"/2_fastqc"))
 bash ../scripts/fastqc.sh
 ```
 
-After the fastqc run, there should be a `.zip` file and a `.html` file for every fastq file. The `.html` file is the report that you need. Open the `.html` in the browser and view it. You do not need to necessarily look at all files now. We will do a comparison with all samples when using the MultiQC tool.
+After the fastqc run, there should be a `.zip` file and a `.html` file for every fastq file. The `.html` file is the report that you need. Download the `.html` files to your computer and open them in a web browser. You do not need to necessarily look at all files now. We will do a comparison with all samples when using the MultiQC tool.
 
-```{sh,chunk.title=TRUE,eval=FALSE}
-firefox file.html &
-```
+<i class="fas fa-exclamation-circle"></i> Run this step in a **LOCAL** terminal and **NOT** on Uppmax. Open a terminal locally on your computer, move to a suitable download directory and run the command below to download one html report.
 
-<div class="boxy boxy-clipboard-list boxy-orange">
-**Optional**
-
-Download the `.html` file to your computer and view it.
-
-<i class="fas fa-lightbulb"></i> All users can use an SFTP browser like [Filezilla](https://filezilla-project.org/) or [Cyberduck](https://cyberduck.io/) for a GUI interface. Windows users can also use the MobaXterm SFTP file browser to drag and drop.
-
-Linux and Mac users can use SFTP or SCP by running the below command in a **LOCAL** terminal and **NOT** on Uppmax. Open a terminal locally on your computer, move to a suitable download directory and run the command below to download one html report.
-
-<i class="fas fa-exclamation-circle"></i> Remember to replace username (twice).
+<i class="fas fa-exclamation-circle"></i> Remember to replace **username** (twice).
 
 ```{r,comment="",echo=FALSE,chunk.title=TRUE,class.output="sh"}
 cat(paste0("scp username@rackham.uppmax.uu.se:",path_project_rnaseq,"/2_fastqc/SRR3222409-19_1_fastqc.html ."))
@@ -312,6 +313,11 @@ or download the whole directory.
 ```{r,comment="",echo=FALSE,chunk.title=TRUE,class.output="sh"}
 cat(paste0("scp -r username@rackham.uppmax.uu.se:",path_project_rnaseq,"/2_fastqc ."))
 ```
+
+<div class="boxy boxy-lightbulb boxy-yellow">
+**Downloading using a GUI**
+
+<i class="fas fa-lightbulb"></i> You can optionally use an SFTP browser like [Filezilla](https://filezilla-project.org/) or [Cyberduck](https://cyberduck.io/) for a GUI interface. Those using MobaXterm, it has an embedded SFTP file browser to drag and drop.
 
 </div>
 
@@ -358,6 +364,8 @@ From the full gtf file, we will also extract chr 19 alone to create a new gtf fi
 ```{sh,chunk.title=TRUE,eval=FALSE}
 cat Mus_musculus.GRCm38.99.gtf | grep -E "^#|^19" > Mus_musculus.GRCm38.99-19.gtf
 ```
+
+<i class="fas fa-lightbulb"></i> The `grep` command is set to use regular expression with the `-E` argument. And it's looking for lines starting with `#` or `19`. `#` fetches the header and comments while `19` denotes all rows with annotations for chromosome 19.
 
 Check what you have in your directory.
 
@@ -685,21 +693,21 @@ drwxrwsr-x 2 user gXXXXXXX 4.0K Jan 22 22:53 raw_data_qualimapReport
 -rw-rw-r-- 1 user gXXXXXXX 1.2K Jan 22 22:53 rnaseq_qc_results.txt
 ```
 
-<i class="fas fa-exclamation-circle"></i> You can download the HTML files locally to your computer if you wish. If you do so, note that you MUST also download the dependency files (ie; css folder and images_qualimapReport folder), otherwise the HTML file may not render correctly.
+<i class="fas fa-clipboard-list"></i> Download the results.
 
-<i class="fas fa-clipboard-list"></i> Inspect the HTML output file and try to make sense of it.
+<i class="fas fa-exclamation-circle"></i> When downloading the HTML files, note that you MUST also download the dependency files (ie; css folder and images_qualimapReport folder), otherwise the HTML file may not render correctly. Remember to replace **username** (twice).
 
-```{sh,chunk.title=TRUE,eval=FALSE}
-firefox qualimapReport.html &
+```{r,comment="",echo=FALSE,chunk.title=TRUE,class.output="sh"}
+cat(paste0("scp -r username@rackham.uppmax.uu.se:",path_project_rnaseq,"/4_qualimap ."))
 ```
+
+<i class="fas fa-comments"></i> Check the QualiMap report for one sample and discuss if the sample is of good quality. You only need to do this for one file now. We will do a comparison with all samples when using the MultiQC tool.
 
 <i class="fas fa-exclamation-circle"></i> If you are running out of time or were unable to run QualiMap, you can also copy pre-run QualiMap output from this location: ``r paste0(path_data,"/main/4_qualimap/")``.
 
 ```{r,comment="",chunk.title=TRUE,class.output="sh",echo=FALSE}
 cat(paste0("cp -r ",path_data,"/main/4_qualimap/* ",path_project_rnaseq,"/4_qualimap/"))
 ```
-
-<i class="fas fa-comments"></i> Check the QualiMap report for one sample and discuss if the sample is of good quality. You only need to do this for one file now. We will do a comparison with all samples when using the MultiQC tool.
 
 <br>
 
@@ -824,10 +832,12 @@ drwxrwsr-x 2 user gXXXXXXX 4.0K Sep  6 22:33 multiqc_data
 -rw-rw-r-- 1 user gXXXXXXX 1.3M Sep  6 22:33 multiqc_report.html
 ```
 
-<i class="fas fa-comments"></i> Open the MultiQC HTML report using `firefox` and/or transfer to your computer and inspect the report. You can also download the file locally to your computer.
+<i class="fas fa-comments"></i> Download the MultiQC HTML report to your computer and inspect the report.
 
-```{sh,chunk.title=TRUE,eval=FALSE}
-firefox multiqc_report.html &
+<i class="fas fa-exclamation-circle"></i> Run this step in a **LOCAL** terminal and **NOT** on Uppmax. Remember to replace username (twice).
+
+```{r,comment="",echo=FALSE,chunk.title=TRUE,class.output="sh"}
+cat(paste0("scp username@rackham.uppmax.uu.se:",path_project_rnaseq,"/6_multiqc/multiqc_report.html ."))
 ```
 
 <br>
@@ -1107,14 +1117,16 @@ For this tutorial you can chose to run IGV directly on your own computer <i clas
 
 Copy two BAM files (one from each experimental group, for example; SRR3222409-19 and SRR3222412-19) and the associated index (`.bam.bai`) files to your computer by running the below command in a **LOCAL** terminal and **NOT** on Uppmax.
 
+<i class="fas fa-exclamation-circle"></i> Remember to replace **username**.
+
 ```{r,comment="",chunk.title=TRUE,class.output="sh",echo=FALSE}
-cat(paste0("scp user@rackham.uppmax.uu.se:",path_project,"/rnaseq/username/3_mapping/SRR3222409-19.bam ./\n"))
-cat(paste0("scp user@rackham.uppmax.uu.se:",path_project,"/rnaseq/username/3_mapping/SRR3222409-19.bam.bai ./\n"))
-cat(paste0("scp user@rackham.uppmax.uu.se:",path_project,"/rnaseq/username/3_mapping/SRR3222412-19.bam ./\n"))
-cat(paste0("scp user@rackham.uppmax.uu.se:",path_project,"/rnaseq/username/3_mapping/SRR3222412-19.bam.bai ./\n"))
+cat(paste0("scp username@rackham.uppmax.uu.se:",path_project,"/rnaseq/username/3_mapping/SRR3222409-19.bam ./\n"))
+cat(paste0("scp username@rackham.uppmax.uu.se:",path_project,"/rnaseq/username/3_mapping/SRR3222409-19.bam.bai ./\n"))
+cat(paste0("scp username@rackham.uppmax.uu.se:",path_project,"/rnaseq/username/3_mapping/SRR3222412-19.bam ./\n"))
+cat(paste0("scp username@rackham.uppmax.uu.se:",path_project,"/rnaseq/username/3_mapping/SRR3222412-19.bam.bai ./\n"))
 ```
 
-Alternatively, all users can use an SFTP browser like [Filezilla](https://filezilla-project.org/) or [Cyberduck](https://cyberduck.io/) for a GUI interface. Windows users can also use the MobaXterm SFTP file browser to drag and drop.
+Alternatively, you can use an SFTP browser like [Filezilla](https://filezilla-project.org/) or [Cyberduck](https://cyberduck.io/) for a GUI interface. Windows users can also use the MobaXterm SFTP file browser to drag and drop.
 </div>
 
 <div class="boxy boxy-cloud">
@@ -1190,7 +1202,7 @@ Have a look at few of the interesting genes on Chr19 using the `external_gene_na
 
 <i class="fas fa-comments"></i>  Do you expect these genes to be differentially expressed?
 
-To see some genes with large number of reads, see **Scd1** or **Scd2**. 
+To see some genes with large number of reads, see **Scd1** or **Scd2**.
 
 ![](data/rnaseq/igv-tm7sf2.png)
 IGV view of gene **Tm7sf2** across 6 samples.
@@ -1242,10 +1254,9 @@ hisat2 \
 
 We add `SBATCH` commands to the above script. The new script looks like this:
 
-```{sh,chunk.title=TRUE,eval=FALSE}
-#!/bin/bash
-
-#SBATCH -A g2021013
+```{r,chunk.title=TRUE,echo=FALSE,comment="",class.output="sh"}
+cat(paste0('#!/bin/bash
+#SBATCH -A ',upid,'
 #SBATCH -p core
 #SBATCH -n 8
 #SBATCH -t 3:00:00
@@ -1257,14 +1268,15 @@ module load HISAT2/2.1.0
 module load samtools/1.8
 
 # create output filename prefix
-prefix=$( basename "$1" | sed -E 's/_.+$//' )
+prefix=$( basename "$1" | sed -E "s/_.+$//" )
 
-hisat2 \
--p 8 \
--x ../reference/mouse_chr19_hisat2/mouse_chr19_hisat2 \
---summary-file "${prefix}-summary.txt" \
--1 $1 \
--2 $2 | samtools sort -O BAM > "${prefix}.bam"
+hisat2 \\
+ -p 8 \\
+ -x ../reference/mouse_chr19_hisat2/mouse_chr19_hisat2 \\
+ --summary-file "${prefix}-summary.txt" \\
+ -1 $1 \\
+ -2 $2 | samtools sort -O BAM > "${prefix}.bam"'
+))
 ```
 
 The `SBATCH` commands in the above script is specifying the account name to use resources from, the required number of cores, the time required for the job and a job name.
