@@ -1,0 +1,165 @@
+---
+title: "National Bioinformatics infrastructure Sweden (NBIS)"
+subtitle: "Introduction To Bioinformatics Using NGS Data"
+author: "`r format(Sys.time(), '%d-%b-%Y')`"
+keywords: bioinformatics, course, scilifelab, nbis
+output:
+  xaringan::moon_reader:
+    encoding: 'UTF-8'
+    self_contained: false
+    chakra: 'assets/remark-latest.min.js'
+    css: 'assets/slide.css'
+    lib_dir: libs
+    include: NULL
+    nature:
+      ratio: '4:3'
+      highlightLanguage: r
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      slideNumberFormat: "%current%/%total%"
+---
+exclude: true
+count: false
+
+```{r,echo=FALSE,child="assets/header-slide.Rmd"}
+```
+
+<!-- ------------ Only edit title, subtitle & author above this ------------ -->
+
+---
+name: intro
+
+**Enable world-class life science research and maximise scientific and societal impact of collected data by:**
+- Providing Providing expert knowledge, innovative data integration, 
+advanced training, efficient data publication for open science, 
+and access to high-performance data analysis methods
+- Coordinating bioinformatics support within Sweden and making 
+bioinformatics easily accessible for life science researchers
+- Swiftly responding to changes in support needs as new 
+techniques are developed and utilised
+- Forming the Swedish ELIXIR node and participating in relevant 
+international projects
+
+[Insert group photo here]
+[Insert map here]
+[Nbis units]
+
+---
+name: services
+
+# Services
+
+## Topics
+
+- Genomics/NGS/Metagenomics
+- Genome annotation and assembly
+- MS-Proteomics and Protein bioinformatics
+- Systems biology and Metabolomics
+- Integrative bioinformatics
+- Biostatistics 
+- Data publication and FAIRification of data
+- Data management and Data stewardship 
+- Computational structural and chemical biology
+
+## [Support](https://nbis.se/support/)
+
+- Drop-Ins
+- Consultation
+- Short and medium term support (Fee based)
+- Long term support
+- Partner projects
+- Bioimage informatics
+
+## [Infrastructure](https://nbis.se/infrastructure/)
+
+- Computational resources
+- Data management
+- Tools & guidelines
+
+## [Training](https://nbis.se/training/)
+
+- ~13 workshops
+- Introduction to bioinformatics using NGS data
+- Introduction to data management practices
+- Introduction to python - with applications in bioinformatics
+- Tools for reproducible research
+- R foundations for life scientists
+- RNA-seq data analysis
+- Single-cell RNA-seq data analysis
+- Elixir omics integration and systems biology
+- Introduction to biostatistics and machine learning
+- Workshop in epigenomics data analysis
+- Neural nets and deep learning
+- Quick and clean advanced python
+- Workshop on plotting in R
+
+---
+name: support-stats
+
+- 267 PIs (104 female, 163 male)
+- 212 active projects
+- 104 consultations
+- ~13 workshops
+
+---
+name: support
+
+---
+name: training
+
+---
+name: infrastructure
+
+---
+name: compute
+
+---
+
+nbis mission
+funding sources
+part of scilifelab
+part of elixir
+nbis locations, map
+nbis units - support, infrastructure, training
+
+support stats
+
+support
+- consultaion
+- sms
+- long-term
+- partner
+- bioimage bioinformatics
+- focus areas
+
+training
+- workshops
+- advisory program
+
+infrastructure
+- repositories
+- hosting
+
+compute and storage
+snoc, uppmax, hpc
+
+data management
+- data centre
+- data stewards, fair data
+
+tools
+- maintanence
+- development
+- pipelines
+
+elixir
+map
+swedish contributions
+- human protein atlas
+- human data community
+- federated ega and beacons
+- data management
+- biodiversity
+- training
+
