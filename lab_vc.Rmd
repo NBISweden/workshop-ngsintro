@@ -207,7 +207,7 @@ module load samtools/1.10
 module load GATK/4.1.4.1
 ```
 
-Although you hhhhhhh don't have to specify which versions of the tools to use, it is recommended to do so for reproducibility if you want to rerun the  exact same analyses later.
+Although you don't have to specify which versions of the tools to use, it is recommended to do so for reproducibility if you want to rerun the  exact same analyses later.
 When loading the module GATK/4.1.4.1 you will get a warning message about the fact that GATK commands have been updated since the previous version of GATK. This is fine and you don't have to do anything about it.
 
 ## Index the genome {-}
