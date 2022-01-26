@@ -45,7 +45,7 @@ Whole genome sequencing (WGS) is a comprehensive method for analyzing entire gen
 <div class="boxy boxy-lightbulb">
 
 * You will work on the computing cluster Rackham at Uppmax
-* In paths, please replace `<username>` with your actual UPPMAX username.
+* In paths, please replace `username` with your actual UPPMAX username.
 * In commands, please replace `<parameter>` with the correct parameter, for example your input file name, output file name, directory name, etc.
 * Do not copy and paste commands from the exercise to terminal, as this can result in formatting errors.
 * Use tab completion.
@@ -122,42 +122,42 @@ Now your MobaXterm home directory is set to the folder you created for this lab.
 Please connect to the Rackham cluster on UPPMAX using `ssh`:
 
 ```bash
-$ ssh -Y <username>@rackham.uppmax.uu.se
+$ ssh -Y username@rackham.uppmax.uu.se
 ```
-Where `<username>` should be replaced with your username.
+Where `username` should be replaced with your username.
 
 ### Logon to a node {-}
 This lab should be done on a compute node (not the login node). First check if you already have an active job allocation using this command:
 ```bash
-squeue -u <username>
+squeue -u username
 ```
-Where `<username>` should be replaced with your username.<br/>
+Where `username` should be replaced with your username.<br/>
 If no jobs are listed you should allocate a job for this lab. If you already have an active job allocation please proceed to **Connect to the node** below.<br/>
 Use this code to allocate a job on day 1 of variant-calling:
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('salloc -A ',upid,' -t 04:00:00 -p core -n 1 --no-shell --reservation=',upres3,' &'))
+cat(paste0('salloc -A ',upid,' -t 04:00:00 -p core -n 1 --no-shell --reservation=',upres3))
 ```
 Use this code to allocate a job on day 2 of variant-calling:
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('salloc -A ',upid,' -t 04:00:00 -p core -n 1 --no-shell --reservation=',upres4,' &'))
+cat(paste0('salloc -A ',upid,' -t 04:00:00 -p core -n 1 --no-shell --reservation=',upres4))
 ```
 Once your job allocation has been granted (should not take long) please check the allocation again using:
 ```bash
-squeue -u <username>
+squeue -u username
 ```
 You should now see that you have an active job allocation. The node name for your job is listed under the nodelist header.<br/>
 **Connect to the node:**
 ```bash
-ssh -Y <nodename>
+ssh -Y nodename
 ```
 
 ### Workspace on UPPMAX {-}
 You should work in your folder under the course’s nobackup folder, just like you have done during the previous labs.
 Start by going there using this command:
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('cd /proj/',upid,'/nobackup/<username>'))
+cat(paste0('cd /proj/',upid,'/nobackup/username'))
 ```
-Where `<username>` should be replaced with your real username.
+Where `username` should be replaced with your real username.
 Create a folder for this exercise and move into it:
 ```bash
 mkdir ngsworkflow
@@ -165,7 +165,7 @@ cd ngsworkflow
 ```
 Make sure you are located in
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('/proj/',upid,'/nobackup/<username>/ngsworkflow'))
+cat(paste0('/proj/',upid,'/nobackup/username/ngsworkflow'))
 ```
 for the rest of this lab.
 
@@ -218,7 +218,7 @@ pwd
 ```
 Should return
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('/proj/',upid,'/nobackup/<username>/ngsworkflow'))
+cat(paste0('/proj/',upid,'/nobackup/username/ngsworkflow'))
 ```
 Generate BWA index files:
 ```bash
@@ -250,7 +250,7 @@ You should use `BWA mem` to align the reads to the reference genome.
 
 In the call to `BWA mem` you need to add something called a *read group*, which contains information about how the reads were generated. This is required by HaplotypeCaller. Since we don't know exactly how the reads in the 1000 Genomes Project were generated we have to make some assumptions. Let's assume that each pair of fastq files was generated from one library preparation (*libraryx*), derived from one biological sample (*HG00097*), that was run on one lane (*lanex*) of a flowcell (*flowcellx*) on the Illumina machine, and let's define a read group with this information.
 The code for adding this read group is<br/>
-**-R "@RG\\tID:readgroup_HG00097\\tPU:lanex_flowcellx\\tSM:HG00097\\tLB:libraryx\\tPL:illumina"**.
+**-R "@RG\tID:readgroup_HG00097\tPU:lanex_flowcellx\tSM:HG00097\tLB:libraryx\tPL:illumina"**.
 <div class="boxy boxy-yellow boxy-exclamation">
 When running BWA for another sample later on you have to replace *HG00097* in the read group with the new sample name. To learn more about read groups  please read [this article](https://gatk.broadinstitute.org/hc/en-us/articles/360035890671-Read-groups) at GATK forum.
 </div>
@@ -263,12 +263,12 @@ pwd
 ```
 Should return
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('/proj/',upid,'/nobackup/<username>/ngsworkflow'))
+cat(paste0('/proj/',upid,'/nobackup/username/ngsworkflow'))
 ```
 Then use this command to align the reads, add the read group, sort the reads and write them to a bam file:
 
 ```bash
-bwa mem -R "@RG\\tID:readgroup_HG00097\\tPU:lanex_flowcellx\\tSM:HG00097\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta HG00097_1.fq HG00097_2.fq | samtools sort > HG00097.bam
+bwa mem -R "@RG\tID:readgroup_HG00097\tPU:lanex_flowcellx\tSM:HG00097\tLB:libraryx\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta HG00097_1.fq HG00097_2.fq | samtools sort > HG00097.bam
 ```
 
 Please check that the expected output file was generated and that it has content using `ls -lrt`.
@@ -351,7 +351,7 @@ pwd
 ```
 Should return
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('/proj/',upid,'/nobackup/<username>/ngsworkflow'))
+cat(paste0('/proj/',upid,'/nobackup/username/ngsworkflow'))
 ```
 Then run:
 
@@ -439,11 +439,11 @@ pwd
 ```
 Should return
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('/proj/',upid,'/nobackup/<username>/ngsworkflow'))
+cat(paste0('/proj/',upid,'/nobackup/username/ngsworkflow'))
 ```
 Then use this command for every sample to align the reads, add the read group, sort the reads and write them to a bam file:
 ```bash
-bwa mem -R "@RG\\tID:readgroup_<sample>\\tPU:lanex_flowcellx\\tSM:<sample>\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta <sample>_1.fq <sample>_2.fq | samtools sort > <sample>.bam
+bwa mem -R "@RG\tID:readgroup_<sample>\tPU:lanex_flowcellx\tSM:<sample>\tLB:libraryx\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta <sample>_1.fq <sample>_2.fq | samtools sort > <sample>.bam
 ```
 Where `<sample>` should be replaced with the real samples name, i.e. HG00097, HG00100 and HG00101.
 Please check that the expected output files were generated and have content using `ls -lrt`.
@@ -469,7 +469,7 @@ pwd
 ```
 Should return
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('/proj/',upid,'/nobackup/<username>/ngsworkflow'))
+cat(paste0('/proj/',upid,'/nobackup/username/ngsworkflow'))
 ```
 Then:
 ```bash
@@ -494,7 +494,7 @@ pwd
 ```
 Should return
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('/proj/',upid,'/nobackup/<username>/ngsworkflow'))
+cat(paste0('/proj/',upid,'/nobackup/username/ngsworkflow'))
 ```
 Then:
 ```bash
@@ -718,7 +718,7 @@ If you would like more help with creating the sbatch script, please look at our 
 
 ```{r,accordion=TRUE,chunk.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('#!/bin/bash
-#SBATCH -A g2019031
+#SBATCH -A ',upid,'
 #SBATCH -p core
 #SBATCH -n 1
 #SBATCH -t 1:00:00
@@ -732,7 +732,7 @@ module load GATK/4.1.4.1
 for sample in HG00097 HG00100 HG00101;
 do
   echo "Now analyzing: "$sample
-  bwa mem -R "@RG\\tID:readgroupx\\tPU:flowcellx_lanex\\tSM:"$sample"\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta $sample"_1.fq" $sample"_2.fq" | samtools sort > $sample".bam"
+  bwa mem -R "@RG\tID:readgroupx\tPU:flowcellx_lanex\tSM:"$sample"\tLB:libraryx\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta $sample"_1.fq" $sample"_2.fq" | samtools sort > $sample".bam"
   samtools index $sample".bam"
   gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I $sample".bam" -O $sample".g.vcf"
 done
@@ -781,7 +781,7 @@ for sample in HG00097 HG00100 HG00101;
 do
   echo "Now analyzing: ${sample}"
   # map the reads
-  bwa mem -R "@RG\\tID:readgroupx\\tPU:flowcellx_lanex\\tSM:"$sample"\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta $sample"_1.fq" $sample"_2.fq" | samtools sort > $sample".bam"
+  bwa mem -R "@RG\tID:readgroupx\tPU:flowcellx_lanex\tSM:"$sample"\tLB:libraryx\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta $sample"_1.fq" $sample"_2.fq" | samtools sort > $sample".bam"
   samtools index $sample".bam"
   # mark duplicates
   gatk --java-options -Xmx7g MarkDuplicates -I $sample".bam" -O $sample".md.bam" -M $sample"_mdmetrics.txt"
