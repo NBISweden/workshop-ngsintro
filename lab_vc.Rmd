@@ -593,18 +593,18 @@ cat(paste0(refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf'))
 
 Please recalibrate the base quality scores in all the bam files generated in the previous step. Here is our example solution for sample HG00097:
 
-```bash
-gatk --java-options -Xmx7g BaseRecalibrator \
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0('gatk --java-options -Xmx7g BaseRecalibrator \
     -R human_g1k_v37_chr2.fasta \
     -I HG00097.md.bam \
     --known-sites ',refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf \
-    -O HG00097.recal.table
+    -O HG00097.recal.table'))
 
-gatk --java-options -Xmx7g ApplyBQSR \
+cat(paste('gatk --java-options -Xmx7g ApplyBQSR \
     -R human_g1k_v37_chr2.fasta \
     -I HG00097.md.bam
     --bqsr-recal-file HG00097.recal.table \
-    -O   HG00097.recal.bam
+    -O   HG00097.recal.bam'))
 ```
 
 ## Generate g.vcf files
@@ -659,7 +659,7 @@ gatk --java-options -Xmx7g VariantFiltration \
   --filter-name FSfilter --filter-expression "FS > 200.0"
 ```
 
-Example soliion for merging filtered SNVs and INDELs:
+Example solution for merging filtered SNVs and INDELs:
 
 ```bash
 gatk --java-options -Xmx7g MergeVcfs \
