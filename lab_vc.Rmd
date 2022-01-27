@@ -593,18 +593,17 @@ cat(paste0(refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf'))
 
 Please recalibrate the base quality scores in all the bam files generated in the previous step. Here is our example solution for sample HG00097:
 
-```{r,echo=FALSE,comment="",class.output="bash"}
+```{r,accordion=TRUE,chunk.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('gatk --java-options -Xmx7g BaseRecalibrator \
     -R human_g1k_v37_chr2.fasta \
     -I HG00097.md.bam \
     --known-sites ',refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf \
     -O HG00097.recal.table'))
-\
 cat(paste0('gatk --java-options -Xmx7g ApplyBQSR \
     -R human_g1k_v37_chr2.fasta \
     -I HG00097.md.bam \
     --bqsr-recal-file HG00097.recal.table \
-    -O   HG00097.recal.bam test222'))
+    -O   HG00097.recal.bam'))
 ```
 
 ## Generate g.vcf files
@@ -761,7 +760,7 @@ module load GATK/4.1.4.1
 for sample in HG00097 HG00100 HG00101;
 do
   echo "Now analyzing: "$sample
-  bwa mem -R "@RG\tID:readgroupx\tPU:flowcellx_lanex\tSM:"$sample"\tLB:libraryx\tPL:illumina" \
+  bwa mem -R "@RG\tID:readgroupx\tPU:flowcellx_lanex\tSM:${sample}\tLB:libraryx\tPL:illumina" \
   -t 1 human_g1k_v37_chr2.fasta "${sample}_1.fq" "${sample}_2.fq" | samtools sort > "${sample.bam"
 
   samtools index "${sample}.bam"
