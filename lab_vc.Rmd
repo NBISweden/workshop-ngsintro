@@ -599,12 +599,11 @@ cat(paste0('gatk --java-options -Xmx7g BaseRecalibrator \
     -I HG00097.md.bam \
     --known-sites ',refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf \
     -O HG00097.recal.table',\n))
-print('gatk --java-options -Xmx7g ApplyBQSR \
+cat(paste0('gatk --java-options -Xmx7g ApplyBQSR \
     -R human_g1k_v37_chr2.fasta \
     -I HG00097.md.bam \
     --bqsr-recal-file HG00097.recal.table \
-    -O   HG00097.recal.bam \
-    test')
+    -O   HG00097.recal.bam test'))
 ```
 
 ## Generate g.vcf files
