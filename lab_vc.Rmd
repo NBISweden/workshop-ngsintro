@@ -603,7 +603,8 @@ print('gatk --java-options -Xmx7g ApplyBQSR \
     -R human_g1k_v37_chr2.fasta \
     -I HG00097.md.bam \
     --bqsr-recal-file HG00097.recal.table \
-    -O   HG00097.recal.bam')
+    -O   HG00097.recal.bam \
+    test')
 ```
 
 ## Generate g.vcf files
