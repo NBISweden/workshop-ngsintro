@@ -46,13 +46,13 @@ Whole genome sequencing (WGS) is a comprehensive method for analyzing entire gen
 
 * You will work on the computing cluster Rackham at Uppmax
 * In paths, please replace `username` with your actual UPPMAX username.
-* In commands, please replace `<parameter>` with the correct parameter, for example your input file name, output file name, directory name, etc.
-* Do not copy and paste commands from the exercise to terminal, as this can result in formatting errors.
-* Use tab completion.
+* In commands, please replace `parameter` with the correct parameter, for example your input file name, output file name, directory name, etc.
 * A line starting with `#` is a comment
+* Please type commands in the terminal instead of copying and pasting them which often result in formatting errors.
+* Use tab completion.
 * Running a command without parameters will often return a help message on how to run the command.
 * After a command is completed, please check that the desired output file was generated and that it has a reasonable size (use `ls -l`).
-* A common mistake is to attempt to load input files that do not exist, or create output files where you don't have permission to write.
+* A common mistake is to attempt to use input files that do not exist, or create output files where you don't have permission to write.
 * Use output file names that describes what was done in the command.
 * If you change the node you are working on you will need to reload the tool modules.
 * Google errors, someone in the world has run into EXACTLY the same problem you had and asked about it on a forum somewhere.
@@ -224,7 +224,7 @@ Generate BWA index files:
 ```bash
 bwa index -a bwtsw human_g1k_v37_chr2.fasta
 ```
-Check to see that several new files have been created using `ls -l`.
+Check to see that several new files have been created using `ls -l`.  
 Generate a samtools index:
 ```bash
 samtools faidx human_g1k_v37_chr2.fasta
