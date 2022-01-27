@@ -224,13 +224,11 @@ Generate BWA index files:
 ```bash
 bwa index -a bwtsw human_g1k_v37_chr2.fasta
 ```
-Check to see that several new files have been created using `ls -l`.  
-Generate a samtools index:
+Check to see that several new files have been created using `ls -l`. Then Generate a samtools index:
 ```bash
 samtools faidx human_g1k_v37_chr2.fasta
 ```
-Check to see what file(s) were created using `ls -lrt`.
-Generate a GATK sequence dictionary:
+Check to see what file(s) were created using `ls -lrt`. Then Generate a GATK sequence dictionary:
 ```bash
 gatk --java-options -Xmx7g CreateSequenceDictionary -R human_g1k_v37_chr2.fasta -O human_g1k_v37_chr2.dict
 ```
