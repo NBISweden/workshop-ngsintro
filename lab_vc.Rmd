@@ -593,7 +593,7 @@ cat(paste0(refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf'))
 
 Please recalibrate the base quality scores in all the bam files generated in the previous step. Here is our example solution for sample HG00097:
 
-```{r,accordion=TRUE,chunk.title=TRUE,echo=FALSE,comment="",class.output="sh"}
+```{r,chunk.title=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('gatk --java-options -Xmx7g BaseRecalibrator \
     -R human_g1k_v37_chr2.fasta \
     -I HG00097.md.bam \
