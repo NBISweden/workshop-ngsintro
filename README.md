@@ -24,6 +24,26 @@ If you are not added as a collaborator, first fork this repo to your account, th
 
 :exclamation: Do not push any rendered .html files or intermediates.
 
+### Local build/preview using Docker
+
+You can preview changes and build the whole website locally without a local installation of R or dependency packages by using the pre-built Docker image.
+
+Clone the repo if not already done. Make sure you are standing in the repo directory.
+
+To build the complete site,
+
+```
+docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/rmd royfrancis/workshop-ngsintro:1.0.0
+```
+
+To build a single file (for example `index.Rmd`),
+
+```
+docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/rmd royfrancis/workshop-ngsintro:1.0.0 Rscript -e 'rmarkdown::render("index.Rmd")'
+```
+
+:exclamation: Output files are for local preview only. Do not push any rendered .html files or intermediates.
+
 ## Repo organisation
 
 The source material is located on the *master* branch (default). The rendered material is located on the *gh-pages* branch. For most part, one only needs to update content in master. Changes pushed to the *master* branch is automatically rendered to the *gh-pages* branch.
