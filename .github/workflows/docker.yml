@@ -1,0 +1,150 @@
+name: build-from-image
+on:
+  push:
+    branches-ignore:
+      - gh-pages
+env:
+  REGISTRY: ghcr.io
+  ORG: nbisweden
+  IMAGE: workshop-base:latest
+
+jobs:
+  rmd-render-job:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Pull image
+        run: docker pull ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }}
+      - name: Define variables
+        run: |
+          echo "PATH_REPO=$(pwd)" >> $GITHUB_ENV
+          echo "PATH_EXPORT=$(grep -E '^output_dir' _site.yml | sed 's/^output_dir://' | xargs)" >> $GITHUB_ENV
+          echo "PATH_EXPORT_CANVAS=$(grep -E '^output_dir' _site.yml | sed 's/^output_dir://' | xargs)-canvas" >> $GITHUB_ENV
+          echo "REPO=$(basename ${GITHUB_REPOSITORY})" >> $GITHUB_ENV
+      - name: Check docker and variables
+        run: |
+          docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/rmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }} Rscript -e "print('R in docker works!')"
+          echo "GITHUB_ACTOR: ${GITHUB_ACTOR}"
+          echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}"
+          echo "REPO: ${REPO}"
+          echo "env.PATH_REPO: ${{ env.PATH_REPO }}"
+          echo "PATH_EXPORT: ${PATH_EXPORT}"
+          echo "PATH_EXPORT_CANVAS: ${PATH_EXPORT_CANVAS}"
+          echo "GITHUB_REPOSITORY_OWNER: ${GITHUB_REPOSITORY_OWNER}"
+          echo "---------------------------------------------------------------------------------------------"
+          echo "Folder contents at $(pwd):"
+          ls -lh
+          echo "---------------------------------------------------------------------------------------------"
+          printenv
+          sed --version
+      - name: Render site, pull repo, copy folder, create index, push repo
+        run: |
+          # Add git info
+          git config --global user.email "do_not_email@example.com"
+          git config --global user.name "gh_action"
+
+          # Render website
+          echo "Rendering Rmd files ..."
+          docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/rmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }}
+          # Generate PDFs
+          cd ${PATH_EXPORT}
+          echo "Generating PDFs ..."
+          docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/rmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }} Rscript -e "l <- list.files('.',pattern='slide.+html');if(length(l)!=0) {for(i in 1:length(l)) pagedown::chrome_print(l[i])};"
+          cd ..
+
+          # Render canvas version of website by changing _site.yml
+          # suffixes output directory with -canvas
+          # adds current output directory to be ignored
+          # renames navbar block to remove menu
+          # removes footer
+
+          echo "Removing lab and slide links from schedule for canvas ..."
+          docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/rmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }} Rscript -e 'x <- read.csv("schedule.csv",sep=";",header=T,stringsAsFactors=F);x$link_youtube <- x$link_lab <- x$link_slide <- NA;write.table(x,"schedule.csv",sep=";",col.names=T,row.names=F,quote=FALSE,na="")'
+          echo "Fixing _site.yml for canvas ..."
+          docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/rmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }} Rscript -e 'y <- yaml::read_yaml("_site.yml"); y$exclude <- append(y$exclude,y$output_dir); y$output_dir <- paste0(y$output_dir,"-canvas"); y$navbar <- NULL; y$output$`bookdown::html_document2`$include <- NULL; yaml::write_yaml(y,"_site.yml");'
+
+          ls -lh
+          cat _site.yml
+          echo "Rendering Rmd files for canvas ..."
+          docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/rmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }}
+
+          cd ${PATH_EXPORT_CANVAS}
+
+          # Fix links
+          # all links (except those starting with #) in all html files are set to open in new tab
+          # all links (those pointing within website and ends with html) in all html files are removed
+          # display links to be fixed
+          echo "Number of links to be corrected:"
+          grep -E '(<a href="[^#][^(https?)&^(www)?].+html.*">)([^(a>).]+)(<\/a>)' *.html | \
+              grep -E '(<a href="[^#][-a-zA-Z0-9@:%._\+~#=/?&]+")(>)' | wc -l
+          echo "List of links to be corrected:"
+          grep -E '(<a href="[^#][^(https?)&^(www)?].+html.*">)([^(a>).]+)(<\/a>)' *.html | \
+              grep -E '(<a href="[^#][-a-zA-Z0-9@:%._\+~#=/?&]+")(>)'
+          echo "Fixing bad links ..."
+          for i in *.html; do
+              sed -E 's/<h1 class="title toc-ignore">[^>.]*<\/h1>//g' $i | \
+              sed -E 's/<h3 class="subtitle">[^>.]*<\/h3>//g' | \
+              sed -E 's/<h4 class="author">[^>.]*<\/h4>//g' | \
+              sed -E 's/(<a href="[^#][^(https?)&^(www)?].+(html|pdf).*">)([^(a>).]+)(<\/a>)/[link removed]/g' | \
+              sed -E 's/(<a href="[^#][-a-zA-Z0-9@:%._\+~#=/?&]+")(>)/\1 target="_blank">/g' > temp
+              cat temp > $i
+              rm -rf temp
+          done
+          echo "Generating PDFs for HTML slides ..."
+          docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/rmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }} Rscript -e "l <- list.files('.',pattern='slide.+html');if(length(l)!=0) {for(i in 1:length(l)) pagedown::chrome_print(l[i])};"
+          cd ..
+
+          # List folder contents
+          echo "Folder contents at $(pwd):"
+          ls -lh
+          echo "Folder contents at ${PATH_REPO}/${PATH_EXPORT}:"
+          ls -lh ${PATH_REPO}/${PATH_EXPORT}
+          echo "Folder contents at ${PATH_REPO}/${PATH_EXPORT_CANVAS}:"
+          ls -lh ${PATH_REPO}/${PATH_EXPORT_CANVAS}
+
+          # Clone gh-pages branch and remove old directories with same name
+          git clone --single-branch --branch gh-pages "https://${{ secrets.TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" tmprepo
+          cd tmprepo
+          if [ -d ${PATH_EXPORT} ]; then
+            echo "Directory ${PATH_EXPORT} already exists. Removing the directory."
+            git rm -r ${PATH_EXPORT}
+            git commit -m "Old directory ${PATH_EXPORT} deleted."
+          fi
+          if [ -d ${PATH_EXPORT}_canvas ]; then
+            echo "Directory ${PATH_EXPORT_CANVAS} already exists. Removing the directory."
+            git rm -r ${PATH_EXPORT}_canvas
+            git commit -m "Old directory ${PATH_EXPORT_CANVAS} deleted."
+          fi
+
+          cd ${PATH_REPO}
+          cp -r ${PATH_EXPORT} tmprepo/
+          cp -r ${PATH_EXPORT_CANVAS} tmprepo/
+          cd tmprepo
+          echo "Folder contents at $(pwd):"
+          ls -lh
+
+          # Create index file
+          printf "All current and previous workshop materials are listed below.\n\n" > index.md
+          printf "<div style='display:block;'><p style='line-height:2;'>\n" >> index.md
+          dirs=$(ls -d [0-9]*[0-9]/ | sed 's/\///' | tac)
+          for i in ${dirs[@]}
+          do
+          	if [ ${i:2:2} -lt 1 ] || [ ${i:2:2} -gt 12 ]
+          		then echo "Month: ${i:2:2}. Last 2 values in output_dir must be a month between 01 and 12."
+          	fi
+          	# This code works for year 2000 and later
+          	printf -v thedate '2000-01-01 +%s years +%s months -1 day' "${i:0:2}" "${i:2}"
+          	dt=$(date -d "$thedate" +'%Y %b')
+          	echo $dt
+          	printf "<span style='display:block;'><a href='https://${GITHUB_REPOSITORY_OWNER}.github.io/${REPO}/${i}/'>$dt</a></span>" >> index.md
+          done
+          printf "</p></div>" >> index.md
+
+          echo "Folder contents at $(pwd):"
+          ls -lh
+
+          # Push changes back
+          git add .
+          git commit -m "Updated contents at $(date +%Y%m%d-%H%M%S)"
+          git push origin
