@@ -13,7 +13,8 @@
 
 <title>UPPMAX Pipeline</title>
 
-<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.5.1/jquery-3.5.1.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -255,7 +256,7 @@ div.tocify {
 <div class="boxy boxy-yellow boxy-exclamation">
 <p>In code blocks, the dollar sign (<code>$</code>) is not to be printed. The dollar sign is usually an indicator that the text following it should be typed in a terminal window.</p>
 </div>
-<div id="connect-to-uppmax" class="section level1">
+<div id="connect-to-uppmax" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Connect to UPPMAX</h1>
 <p>The first step of this lab is to open a ssh connection to UPPMAX. You will need an SSH program to do this:</p>
 <p><i class="fab fa-linux"></i> Linux: Use <strong>Terminal</strong> (Included by default).<br />
@@ -285,7 +286,7 @@ Last login: Fri May 18 15:03:59 2018 from micro046.icm.uu.se
 
 dahlo@rackham4 ~ $</code></pre>
 </div>
-<div id="logon-to-a-node" class="section level1">
+<div id="logon-to-a-node" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Logon to a node</h1>
 <p>Usually you would do most of the work in this lab directly on one of the login nodes at UPPMAX, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.</p>
 <p>Check which node you got when you booked resources this morning (replace <strong>username</strong> with your UPPMAX username)</p>
@@ -302,7 +303,7 @@ Note the numbers in the Time column. They show for how long the job has been run
 <pre class="bash"><code>$ salloc -A snicXXXX-XX-XXX -t 03:30:00 -p core -n 1 --no-shell --reservation=snicXXXX-XX-XXX_mon &amp;</code></pre>
 <p><i class="fas fa-lightbulb"></i> There is a UPPMAX specific tool called <code>jobinfo</code> that supplies the same kind of information as <code>squeue</code> that you can use as well (<code>$ jobinfo -u username</code>).</p>
 </div>
-<div id="copy-files-for-lab" class="section level1">
+<div id="copy-files-for-lab" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Copy files for lab</h1>
 <p>Now, you will need some files. To avoid all the course participants editing the same file all at once, undoing each other’s edits, each participant will get their own copy of the needed files. The files are located in the folder <strong><code>/sw/courses/ngsintro/linux/uppmax_pipeline_exercise/data</code></strong>.</p>
 <p>Next, copy the lab files from this folder. <code>-r</code> means recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, NOT sub-folders and files in sub-folders.</p>
@@ -314,11 +315,11 @@ $ cp -r /sw/courses/ngsintro/linux/uppmax_pipeline_exercise/data/* /proj/snicXXX
 ll</code></pre>
 <p>If you see files, the copying was successful.</p>
 </div>
-<div id="running-dummy-pipelines" class="section level1">
+<div id="running-dummy-pipelines" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> Running dummy pipelines</h1>
 <p>Most of the work you will do in the future will be about running multiple programs after each other. This can be done manually, with you sitting by the computer and typing commands, waiting for them to finish, then start the next program. But what happens if the first program finished sometime during the night? You will not be there to start the next program, and the computer will stand idle until you have time to start the program.</p>
 <p>To avoid this, scripts can be used. First, we’ll do an analysis manually without scripts, just to get the hang of it. Then we’ll start writing scripts for it!</p>
-<div id="load-the-module" class="section level2">
+<div id="load-the-module" class="section level2" number="4.1">
 <h2><span class="header-section-number">4.1</span> Load the module</h2>
 <p>In this exercise, we’ll pretend that we are running analyses. This will give you a peek at what running programs in linux is like, and get you ready for the real stuff during the week!</p>
 <p>The first thing you usually do is to load the modules for the programs you want to run. During this exercise we’ll only run my dummy scripts that don’t actually do any analysis, so they don’t have a module of their own. What we can do instead is to manually do what module loading usually does: to modify the <strong><code>$PATH variable</code></strong>.</p>
@@ -346,7 +347,7 @@ $ echo $PATH
 <p>Enough with variables now. Let’s try the scripts out!</p>
 </div>
 </div>
-<div id="running-the-programs" class="section level1">
+<div id="running-the-programs" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> Running the programs</h1>
 <p>Let’s pretend that we want to run an exome analysis. You will learn how to do this for real later this week. This kind of analysis usually has the following steps:</p>
 <ol style="list-style-type: decimal">
@@ -409,7 +410,7 @@ Options:
 <p>Most pipelines work in a way where the output of the current program is the input of the next program in the pipeline.
 In this pipeline, raw data gets filtered, the filtered data gets aligned, and the aligned data gets searched for SNPs. The intermediate steps are usually not interesting after you have reached the end of the pipeline. Then, only the raw data and the final result is important.</p>
 </div>
-<div id="scripting-a-dummy-pipeline" class="section level1">
+<div id="scripting-a-dummy-pipeline" class="section level1" number="6">
 <h1><span class="header-section-number">6</span> Scripting a dummy pipeline</h1>
 <p>To run the pipeline in a script, just do exactly as you just did, but write the exact same commands to a file instead of directly to the terminal. When you run the script, the computer will run the script one line at a time, until it reaches the end of the file. Just like you did manually in the previous step.</p>
 <p>The simplest way to work with scripts is to have 2 terminals open. One will have <code>nano</code> started where you write your script file, and the other will be on the command line where you can test your commands to make sure they work before you put them in the script. When you are sure a command works, you copy/paste it to the terminal with the script file in it.</p>
@@ -424,7 +425,7 @@ nano exome_analysis_script.sh</code></pre>
 <p>If you got everything right, you should see the whole pipeline being executed without you having to start each program manually. If something goes wrong, look at the output and try to figure out which step in the pipeline that get the error, and solve it.</p>
 <p>A tip is to read the error list from the top-down. An error early in the pipeline will most likely cause a multitude of error further down the pipeline, so your best bet is to start from the top. Solve the problem, try the script again, until it works. The real beauty of scripts is that they can be re-run really easily. Maybe you have to change a variable or option in one of the early steps of the pipeline, just do it and re-run the whole thing.</p>
 </div>
-<div id="submitting-a-dummy-pipeline" class="section level1">
+<div id="submitting-a-dummy-pipeline" class="section level1" number="7">
 <h1><span class="header-section-number">7</span> Submitting a dummy pipeline</h1>
 <p>The whole point with computer centres like UPPMAX is that you can run multiple programs at the same time to speed things up. To do this efficiently you will have to submit jobs to the queue system. As you saw in yesterday’s exercise, it is ordinary shell scripts that you submit to the queue system, with a couple of extra options in the beginning. So to be able to submit our script to the queue system, the only thing we have to do is to add the queue system options in the beginning of the script.</p>
 <p>The options needed by the queue are, as we learned yesterday:</p>
@@ -447,7 +448,7 @@ nano exome_analysis_script.sh</code></pre>
 <p>To submit this script to the queue:</p>
 <pre class="bash"><code>$ sbatch exome_analysis_script.sh</code></pre>
 </div>
-<div id="rnaseq-analysis" class="section level1">
+<div id="rnaseq-analysis" class="section level1" number="8">
 <h1><span class="header-section-number">8</span> RNAseq Analysis</h1>
 <p>The next step is to do a complete RNAseq analysis. The steps involved start off just like the exome analysis, but has a few extra steps. The goal of this part is to successfully run the pipeline using the queue system. To do this, you must construct the commands for each step, combine them in a script, include the <code>SLURM</code> options, and submit it. Much like what we did in the previous step, but with some complications.</p>
 <p>Typical RNAseq analysis consists of multiple samples / time points:</p>

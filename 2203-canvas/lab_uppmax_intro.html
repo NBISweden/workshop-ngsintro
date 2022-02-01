@@ -13,7 +13,8 @@
 
 <title>Introduction to UPPMAX</title>
 
-<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.5.1/jquery-3.5.1.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -255,7 +256,7 @@ div.tocify {
 <div class="boxy boxy-yellow boxy-exclamation">
 <p>In code blocks, the dollar sign (<code>$</code>) is not to be printed. The dollar sign is usually an indicator that the text following it should be typed in a terminal window.</p>
 </div>
-<div id="connect-to-uppmax" class="section level1">
+<div id="connect-to-uppmax" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Connect to UPPMAX</h1>
 <p>The first step of this lab is to open a ssh connection to UPPMAX. You will need an SSH program to do this:</p>
 <p><i class="fab fa-linux"></i> Linux: Use <strong>Terminal</strong> (Included by default).<br />
@@ -285,7 +286,7 @@ Last login: Fri May 18 15:03:59 2018 from micro046.icm.uu.se
 
 dahlo@rackham4 ~ $</code></pre>
 </div>
-<div id="logon-to-a-node" class="section level1">
+<div id="logon-to-a-node" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Logon to a node</h1>
 <p>Usually you would do most of the work in this lab directly on one of the login nodes at UPPMAX, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.</p>
 <p>Check which node you got when you booked resources this morning (replace <strong>username</strong> with your UPPMAX username)</p>
@@ -302,7 +303,7 @@ Note the numbers in the Time column. They show for how long the job has been run
 <pre class="bash"><code>$ salloc -A snicXXXX-XX-XXX -t 03:30:00 -p core -n 1 --no-shell --reservation=snicXXXX-XX-XXX_mon &amp;</code></pre>
 <p><i class="fas fa-lightbulb"></i> There is a UPPMAX specific tool called <code>jobinfo</code> that supplies the same kind of information as <code>squeue</code> that you can use as well (<code>$ jobinfo -u username</code>).</p>
 </div>
-<div id="copy-files-for-lab" class="section level1">
+<div id="copy-files-for-lab" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Copy files for lab</h1>
 <p>Now, you will need some files. To avoid all the course participants editing the same file all at once, undoing each other’s edits, each participant will get their own copy of the needed files. The files are located in the folder <strong>/sw/courses/ngsintro/linux/uppmax_tutorial</strong></p>
 <p>Next, copy the lab files from this folder. <code>-r</code> means recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, NOT sub-folders and files in sub-folders.</p>
@@ -319,7 +320,7 @@ drwxrwxr-x 4 dahlo dahlo 2,0K May 18 15:34 ..
 -rw-rw-r-- 1 dahlo dahlo  232 May 18 16:21 job_template
 $</code></pre>
 </div>
-<div id="run-programs" class="section level1">
+<div id="run-programs" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> Run programs</h1>
 <p>Among the files that were copied is <strong>data.bam</strong>. BAM is a popular format to store aligned sequence data, but since it is a, so called, binary format it doesn’t look that good if you are human. Try it using less:</p>
 <pre class="bash"><code>$ less data.bam</code></pre>
@@ -405,7 +406,7 @@ Commands:
 <pre class="bash"><code>$ nano data.sam</code></pre>
 <p>Try deleting the whole last line in the file, save it, and exit nano.</p>
 </div>
-<div id="modules" class="section level1">
+<div id="modules" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> Modules</h1>
 <p>To view which module you have loaded at the moment, type</p>
 <pre class="bash"><code>$ module list
@@ -421,7 +422,7 @@ Currently Loaded Modules:
 </code></pre>
 <p>Look in the list from <code>$ module list</code> to see the name of the module you want to unload. When the old module is unloaded, load <code>samtools/0.1.19</code> (or try with the latest samtools module!).</p>
 </div>
-<div id="submitting-a-job" class="section level1">
+<div id="submitting-a-job" class="section level1" number="6">
 <h1><span class="header-section-number">6</span> Submitting a job</h1>
 <p>Not all jobs are as small as converting this tiny BAM file to a SAM file. Usually the BAM files are several gigabytes, and can take hours to convert to SAM files. You will not have reserved nodes waiting for you to do something either, so running programs is done by submitting a job to the queue system. What you submit to the queue system is a script file that will be executed as soon as it reaches the front of the queue. The scripting language used in these scripts is <strong>bash</strong>, which is the same language as you usually use in a terminal i.e. everything so far in the lecture and lab has been in the bash language (<code>cd</code>, <code>ls</code>, <code>cp</code>, <code>mv</code>, etc.).</p>
 <p>Have a look at <strong>job_template</strong> in your <strong>uppmax_tutorial</strong> folder.</p>
@@ -446,7 +447,7 @@ echo Hello world!</code></pre>
 <p><i class="fas fa-clipboard-list"></i> Submit your job using <code>sbatch</code>:</p>
 <pre class="bash"><code>$ sbatch job_template</code></pre>
 </div>
-<div id="job-queue" class="section level1">
+<div id="job-queue" class="section level1" number="7">
 <h1><span class="header-section-number">7</span> Job queue</h1>
 <p>If you want to know how your jobs are doing in the queue, you can check their status with <code>$ squeue -u username</code> or <code>$ jobinfo -u username</code>.</p>
 <p>Rewrite the previous sbatch file so that you book 3 days of time, and to use a node instead of a core. This will cause your job to stand in the queue for a bit longer, so that we can have a look at it while it is queuing. Submit it to the queue and run <strong><code>jobinfo</code></strong>.</p>
@@ -479,7 +480,7 @@ $
 <p>You see the job id number in the output from <code>jobinfo</code> or <code>squeue</code>.</p>
 <pre class="bash"><code>$ scancel 3134401</code></pre>
 </div>
-<div id="interactive-jobs" class="section level1">
+<div id="interactive-jobs" class="section level1" number="8">
 <h1><span class="header-section-number">8</span> Interactive jobs</h1>
 <p>Sometimes it is more convenient to work interactively on a node instead of submitting your work as a job. Since you will not have the reservations we have during the course, you will have to book a node using the <strong><code>interactive</code></strong> command. Syntax:</p>
 <pre class="bash"><code>$ interactive -A &lt;project id&gt; -t &lt;time&gt; -p &lt;node or core&gt;</code></pre>
@@ -488,15 +489,15 @@ $
 <pre class="bash"><code>$ interactive -A snicXXXX-XX-XXX -t 02:30:00 -p core</code></pre>
 <p>Congratulations, you are now ready to be let loose on the cluster!</p>
 </div>
-<div id="extra" class="section level1">
+<div id="extra" class="section level1" number="9">
 <h1><span class="header-section-number">9</span> Extra</h1>
 <p>Extra material if you finish too fast.</p>
-<div id="the-devel-queue" class="section level2">
+<div id="the-devel-queue" class="section level2" number="9.1">
 <h2><span class="header-section-number">9.1</span> The devel queue</h2>
 <p>If it is a really big job, it might be in the queue for a day or two before it starts, so it is important to know that the first thing it does is not crashing because you made a typo on line 7. One way to test this is to open a new connection to UPPMAX, and line by line try your code. Copy-paste (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>c</kbd> and <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>v</kbd> in the terminal window) to make sure it’s really the code in the script you are trying.</p>
 <p>If your script is longer than a couple of lines, this approach can be tiring. There are 12 nodes at UPPMAX that are dedicated to do quick test runs, which have a separate queue called <strong>devel</strong>. They are available for use more or less all the time since not very many are using them. To avoid people abusing the free nodes for their analysis, there is a <strong>1 hour time limit</strong> for jobs on them. To submit jobs to this short testing queue, change <code>-p</code> to devel instead of node or core, and make sure <code>-t</code> is set to <strong>maximum 01:00:00</strong>. Try submitting the samtools sbatch file we used earlier to the devel queue and run it again.</p>
 </div>
-<div id="info-about-finished-jobs" class="section level2">
+<div id="info-about-finished-jobs" class="section level2" number="9.2">
 <h2><span class="header-section-number">9.2</span> Info about finished jobs</h2>
 <p>If you want information about jobs you have run in the past, you can use the tool <strong><code>finishedjobinfo</code></strong>. It will print information about the jobs you have run lately.</p>
 <p>Fun things to look for in this information is <strong>jobstate</strong> which will tell you if the program reported any error while running. If so, jobstate will be <strong>FAILED</strong> and you could suspect that something didn’t go according to the plan, and you should check the output from that job run (the <strong>slurm-.out</strong> file) and see if you can solve the error.</p>
@@ -506,13 +507,15 @@ $
 <li><strong>runtime</strong>: tells you how long time the program ran before it finished/failed</li>
 </ul>
 </div>
-<div id="time-and-space" class="section level2">
+<div id="time-and-space" class="section level2" number="9.3">
 <h2><span class="header-section-number">9.3</span> Time and space</h2>
 <p>Remember the commands <strong><code>uquota</code></strong> (show how much of your storage space you are using) and <strong><code>projinfo</code></strong> (shows you how much of your allocated time you have used) from the lecture? Try running them and see how you are doing.</p>
 <div class="boxy boxy-clipboard-list boxy-orange">
 <p><strong>Optional</strong></p>
-<h2 id="pipelines"><span class="header-section-number">9.3</span> Pipelines</h2>
+<div id="pipelines" class="section level2" number="9.4">
+<h2><span class="header-section-number">9.4</span> Pipelines</h2>
 <p>This optional material on uppmax pipelines will teach you the basics in creating pipelines. Continue with this if you finish the current lab ahead of time. Navigate to the exercise <strong>Uppmax Pipelines</strong> on the <strong>Content</strong> page.</p>
+</div>
 </div>
 <hr />
 </div>

@@ -13,7 +13,8 @@
 
 <title>Quality control with FastQC</title>
 
-<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.5.1/jquery-3.5.1.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -252,12 +253,12 @@ div.tocify {
 
 <!-- rmd lab header -->
 <p><br></p>
-<div id="fastqc" class="section level1">
+<div id="fastqc" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> FastQC</h1>
 <p>FastQC performes a series of quality control analyses, called modules. The output is a HTML report with one section for each module, and a summary evaluation of the results in the top. Entirely normal results are marked with a green tick, slightly abnormal results raise warnings (orange exclamation mark), and very unusual results raise failures (red cross).</p>
 <p>It is important to stress that although the analyses appear to give a pass/fail result, these evaluations must be taken in the context of what you expect from your library. A ‘normal’ sample as far as FastQC is concerned is random and diverse. Some experiments may be expected to produce libraries which are biased in particular ways. You should treat the summary evaluations therefore as pointers to where you should concentrate your attention and understand why your library may not look random and diverse.</p>
 </div>
-<div id="data" class="section level1">
+<div id="data" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Data</h1>
 <p>We will run FastQC on three low-coverage whole genome sequencing (WGS) samples from the public 1000 Genomes project. To speed up the analysis we will only use data from a small genomic region. These are the exact same samples as will be used in the variant-calling workflow lab on Wednesday.</p>
 <table>
@@ -283,20 +284,20 @@ div.tocify {
 </tbody>
 </table>
 </div>
-<div id="run-fastqc" class="section level1">
+<div id="run-fastqc" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Run FastQC</h1>
-<div id="connect-to-uppmax" class="section level2">
+<div id="connect-to-uppmax" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> Connect to Uppmax</h2>
 <p>Please connect to the Rackham cluster on UPPMAX using ssh:</p>
 <pre class="bash"><code>$ ssh -Y username@rackham.uppmax.uu.se</code></pre>
 </div>
-<div id="create-a-workspace" class="section level2">
+<div id="create-a-workspace" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> Create a workspace</h2>
 <p>You should work in your folder under the course’s nobackup folder, just like you have done during the previous labs. Start by creating a workspace for this exercise in your folder, and then move into it.</p>
 <pre class="bash"><code>mkdir /proj/snicXXXX-XX-XXX/nobackup/username/qc
 cd /proj/snicXXXX-XX-XXX/nobackup/username/qc</code></pre>
 </div>
-<div id="symbolic-links-to-data" class="section level2">
+<div id="symbolic-links-to-data" class="section level2" number="3.3">
 <h2><span class="header-section-number">3.3</span> Symbolic links to data</h2>
 <p>The raw data files are located in</p>
 <pre class="bash"><code>/sw/courses/ngsintro/reseq/data/fastq</code></pre>
@@ -308,7 +309,7 @@ ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00100_2.fq
 ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00101_1.fq
 ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00101_2.fq</code></pre>
 </div>
-<div id="book-a-node" class="section level2">
+<div id="book-a-node" class="section level2" number="3.4">
 <h2><span class="header-section-number">3.4</span> Book a node</h2>
 <p>To be able to run analyses in the terminal you should book a compute node (or in this case just one core of a node). Make sure you only do this once each day because we have reserved one core per student for the course. If you haven’t already reserved a core today please use this command:</p>
 <pre class="bash"><code>salloc -A snicXXXX-XX-XXX -t 04:00:00 -p core -n 1 --no-shell --reservation=snicXXXX-XX-XXX_tue &amp;</code></pre>
@@ -317,7 +318,7 @@ ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00101_2.fq</code></pre>
 <p>The node name is found under nodelist header, you should only see one. Connect to that node:</p>
 <pre class="bash"><code>ssh -Y &lt;nodename&gt;</code></pre>
 </div>
-<div id="accessing-fastqc" class="section level2">
+<div id="accessing-fastqc" class="section level2" number="3.5">
 <h2><span class="header-section-number">3.5</span> Accessing FastQC</h2>
 <p>FastQC is installed in the module system on UPPMAX. Modules must be loaded <em>every time</em> you login to Rackham, or when you connect to a new compute node.<br />
 First load the bioinfo-tools module:</p>
@@ -325,7 +326,7 @@ First load the bioinfo-tools module:</p>
 <p>This makes it possible to load FastQC:</p>
 <pre class="bash"><code>module load FastQC/0.11.8</code></pre>
 </div>
-<div id="run-fastqc-1" class="section level2">
+<div id="run-fastqc-1" class="section level2" number="3.6">
 <h2><span class="header-section-number">3.6</span> Run FastQC</h2>
 <p>Run FastQC on all fastq files:</p>
 <pre class="bash"><code>fastqc -q *.fq</code></pre>
@@ -333,7 +334,7 @@ First load the bioinfo-tools module:</p>
 <pre class="bash"><code>ls -lrt.  </code></pre>
 </div>
 </div>
-<div id="check-the-results" class="section level1">
+<div id="check-the-results" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> Check the results</h1>
 <p>The output from FastQC is a HTML report that should be opened in a web browser. When you have X-forwarding enabled you can open it on Rackham with this command:</p>
 <pre class="bash"><code>firefox --no-remote filename.html</code></pre>
@@ -364,7 +365,7 @@ First load the bioinfo-tools module:</p>
 </tr>
 </tbody>
 </table>
-<div id="per-base-sequence-quality" class="section level2">
+<div id="per-base-sequence-quality" class="section level2" number="4.1">
 <h2><span class="header-section-number">4.1</span> Per Base Sequence Quality</h2>
 <p>This module shows the distribution of the quality scores at each position in the reads. The quality scores are represented by a Box and Whisker plot with the following elements:</p>
 <ul>
@@ -374,7 +375,7 @@ First load the bioinfo-tools module:</p>
 <li>The blue line represents the mean quality</li>
 </ul>
 <p>The background of the graph divides the y axis into very good quality calls (green), calls of reasonable quality (orange), and calls of poor quality (red).</p>
-<div id="questions" class="section level3">
+<div id="questions" class="section level3" number="4.1.1">
 <h3><span class="header-section-number">4.1.1</span> Questions</h3>
 <ol style="list-style-type: decimal">
 <li>Which positions in the reads have a median phred-score above 28 (very good quality calls) in each sample?<br />
@@ -384,10 +385,10 @@ First load the bioinfo-tools module:</p>
 </ol>
 </div>
 </div>
-<div id="sequence-length-distribution" class="section level2">
+<div id="sequence-length-distribution" class="section level2" number="4.2">
 <h2><span class="header-section-number">4.2</span> Sequence Length Distribution</h2>
 <p>This module shows the length distribution of the reads in the file.</p>
-<div id="questions-1" class="section level3">
+<div id="questions-1" class="section level3" number="4.2.1">
 <h3><span class="header-section-number">4.2.1</span> Questions</h3>
 <ol start="4" style="list-style-type: decimal">
 <li>How long are the reads?</li>
@@ -397,11 +398,11 @@ First load the bioinfo-tools module:</p>
 </div>
 </div>
 </div>
-<div id="answers" class="section level1">
+<div id="answers" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> Answers</h1>
 <p>When you have finished the exercise, please have a look at this document with <a href="lab_qc_answers.pdf" target="_blank">answers to questions</a>, and compare them with your answers.</p>
 </div>
-<div id="documentation" class="section level1">
+<div id="documentation" class="section level1" number="6">
 <h1><span class="header-section-number">6</span> Documentation</h1>
 <ul>
 <li><a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc" target="_blank">FastQC</a></li>
