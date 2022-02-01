@@ -50,7 +50,7 @@ jobs:
           # Generate PDFs
           cd ${PATH_EXPORT}
           echo "Generating PDFs ..."
-          docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/rmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }} Rscript -e "l <- list.files('.',pattern='slide.+html');if(length(l)!=0) {for(i in 1:length(l)) pagedown::chrome_print(l[i])};"
+          docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/rmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }} Rscript -e "l <- list.files('.',pattern='slide.+html');if(length(l)!=0) {for(i in 1:length(l)) pagedown::chrome_print(l[i],extra_args='--no-sandbox')};"
           cd ..
 
           # Render canvas version of website by changing _site.yml
@@ -92,7 +92,7 @@ jobs:
               rm -rf temp
           done
           echo "Generating PDFs for HTML slides ..."
-          docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/rmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }} Rscript -e "l <- list.files('.',pattern='slide.+html');if(length(l)!=0) {for(i in 1:length(l)) pagedown::chrome_print(l[i])};"
+          docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/rmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }} Rscript -e "l <- list.files('.',pattern='slide.+html');if(length(l)!=0) {for(i in 1:length(l)) pagedown::chrome_print(l[i],extra_args='--no-sandbox')};"
           cd ..
 
           # List folder contents
