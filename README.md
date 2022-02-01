@@ -28,18 +28,26 @@ If you are not added as a collaborator, first fork this repo to your account, th
 
 You can preview changes and build the whole website locally without a local installation of R or dependency packages by using the pre-built Docker image.
 
+:exclamation: **Note:** Large image size: 4.6GB.
+
 Clone the repo if not already done. Make sure you are standing in the repo directory.
 
 To build the complete site,
 
 ```
-docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/rmd royfrancis/workshop-ngsintro:1.0.0
+docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/rmd ghcr.io/nbisweden/workshop-base:latest
 ```
 
 To build a single file (for example `index.Rmd`),
 
 ```
-docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/rmd royfrancis/workshop-ngsintro:1.0.0 Rscript -e 'rmarkdown::render("index.Rmd")'
+docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/rmd ghcr.io/nbisweden/workshop-base:latest Rscript -e 'rmarkdown::render("index.Rmd")'
+```
+
+If **editing and testing RNA-Seq part**, use this larger image with more R packages. :exclamation: **Note:** Large image size: 7.1GB.
+
+```
+docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/rmd ghcr.io/nbisweden/workshop-ngsintro:latest
 ```
 
 :exclamation: Output files are for local preview only. Do not push any rendered .html files or intermediates.
