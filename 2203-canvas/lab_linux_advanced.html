@@ -13,7 +13,8 @@
 
 <title>Advanced Linux</title>
 
-<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.5.1/jquery-3.5.1.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -256,7 +257,7 @@ div.tocify {
 <div class="boxy boxy-yellow boxy-exclamation">
 <p>In code blocks, the dollar sign (<code>$</code>) is not to be printed. The dollar sign is usually an indicator that the text following it should be typed in a terminal window.</p>
 </div>
-<div id="connect-to-uppmax" class="section level1">
+<div id="connect-to-uppmax" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Connect to UPPMAX</h1>
 <p>The first step of this lab is to open a ssh connection to UPPMAX. You will need an SSH program to do this:</p>
 <p><i class="fab fa-linux"></i> Linux: Use <strong>Terminal</strong> (Included by default).<br />
@@ -286,7 +287,7 @@ Last login: Fri May 18 15:03:59 2018 from micro046.icm.uu.se
 
 dahlo@rackham4 ~ $</code></pre>
 </div>
-<div id="logon-to-a-node" class="section level1">
+<div id="logon-to-a-node" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Logon to a node</h1>
 <p>Usually you would do most of the work in this lab directly on one of the login nodes at UPPMAX, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.</p>
 <p>Check which node you got when you booked resources this morning (replace <strong>username</strong> with your UPPMAX username)</p>
@@ -303,7 +304,7 @@ Note the numbers in the Time column. They show for how long the job has been run
 <pre class="bash"><code>$ salloc -A snicXXXX-XX-XXX -t 03:30:00 -p core -n 1 --no-shell --reservation=snicXXXX-XX-XXX_tue &amp;</code></pre>
 <p><i class="fas fa-lightbulb"></i> There is a UPPMAX specific tool called <code>jobinfo</code> that supplies the same kind of information as <code>squeue</code> that you can use as well (<code>$ jobinfo -u username</code>).</p>
 </div>
-<div id="first-things-first" class="section level1">
+<div id="first-things-first" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> First things first</h1>
 <p>Let’s make sure nano has <strong>syntax highlighting</strong> enabled. What that will do is to paint the boring code in pretty colors, making it much easier to read it. See the difference for yourself by first looking at this file before you enable it:</p>
 <pre class="bash"><code>$ nano /sw/uppmax/bin/projplot</code></pre>
@@ -313,7 +314,7 @@ Note the numbers in the Time column. They show for how long the job has been run
 <pre class="bash"><code>$ nano /sw/uppmax/bin/projplot</code></pre>
 <p>Then close nano and continue with the lab.</p>
 </div>
-<div id="copy-files-for-lab" class="section level1">
+<div id="copy-files-for-lab" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> Copy files for lab</h1>
 <p>Now, you will need some files. To avoid all the course participants editing the same file all at once, undoing each other’s edits, each participant will get their own copy of the needed files. The files are located in the folder <code>/sw/courses/ngsintro/linux/linux_advanced/</code>.</p>
 <p>If you for some reason have problems copying the files, or if you are not on UPPMAX when running this lab, you can download these files <a href="data/linux_advanced/linux_advanced.tar.gz" target="_blank">here</a>. You can unpack the file using the command <code>tar -xzvf linux_advanced.tar.gz</code> once you have downloaded it. After unpacking, continue the lab from step 4.</p>
@@ -326,7 +327,7 @@ $ cp -r /sw/courses/ngsintro/linux/linux_advanced /proj/snicXXXX-XX-XXX/nobackup
 <pre class="bash"><code>$ ll</code></pre>
 <p>If you see files, the copying was successful.</p>
 </div>
-<div id="using-variables" class="section level1">
+<div id="using-variables" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> Using variables</h1>
 <p>Variables are like small notes you write stuff on. If you want to save the value of something to be able to use it later, variables is the way to go. Let’s try assigning values to some variables and see how we use them.</p>
 <pre class="bash"><code>$ a=5</code></pre>
@@ -344,10 +345,10 @@ $ echo Most international flights leave from terminal $a at Arlanda airport</cod
 $ echo $a squared is $(($a*$a))</code></pre>
 <p><i class="fas fa-clipboard-list"></i> Write a echo command that will print out the volume of a <a href="https://www.mathsisfun.com/cuboid.html" target="_blank">rectangular cuboid</a>, with the side lengths specified by variables named <code>x</code>, <code>y</code>, and <code>z</code>. To see that it works correctly, the volume of a rectangular cuboid with sides 5,5,5 is 125, and for 4,5,10 is 200. <em>Give it a couple of tries on your own first. If you get completely stuck you can see a suggested solution below.</em></p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022012808048204" aria-expanded="false" aria-controls="acc2022012808048204">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022020120237009" aria-expanded="false" aria-controls="acc2022020120237009">
 </button>
 </p>
-<div id="acc2022012808048204" class="collapse">
+<div id="acc2022020120237009" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ x=4
 $ y=5
@@ -356,7 +357,7 @@ $ echo The volume of the rectangular cuboid with the sides $x,$y,$z is $(($x*$y*
 </div>
 </div>
 </div>
-<div id="exercises" class="section level1">
+<div id="exercises" class="section level1" number="6">
 <h1><span class="header-section-number">6</span> Exercises</h1>
 <p>First off, let’s open another terminal to UPPMAX so that you have 2 of them open. Scripting is a lot easier if you have one terminal on the command line ready to run commands and test things, and another one with a text editor where you write the actual code. That way you will never have to close down the text editor when you want to run the script you are writing on, and then open it up again when you want to continue editing the code.</p>
 <p>So open a new terminal window, connect it to UPPMAX and then connect it to the node you have booked. Make sure both terminals are in the <code>/proj/snicXXXX-XX-XXX/nobackup/username/linux_advanced</code> directory, and start editing a new file with gedit or nano where you write your script. Name the file whatever you want, but in the examples I will refer to it as <code>loop_01.sh</code>. Write your loops to this file (or create a new file for each new example) and test run it in the other terminal.</p>
@@ -377,17 +378,17 @@ done</code></pre>
 do  
     echo $whatevernameyouwant  
 done  </code></pre>
-<div id="exercise-1" class="section level2">
+<div id="exercise-1" class="section level2" number="6.1">
 <h2><span class="header-section-number">6.1</span> Exercise 1</h2>
 <p><i class="fas fa-clipboard-list"></i> Let’s say it’s New Year’s Eve and you want to impress your friends with a computerized countdown of the last 10 seconds of the year (don’t we all?).</p>
 <div class="boxy boxy-lightbulb">
 <p>Start off with getting a loop to count down from 10 to 0 first. Notice how fast the computer counts? That won’t do if it’s seconds we want to be counting down. Try looking the man page for the <code>sleep</code> command (<code>man sleep</code>) and figure out how to use it. The point of using <code>sleep</code> is to tell the computer to wait for 1 second after printing the number, instead of rushing to the next iteration in the loop directly. Try to implement this on your own.</p>
 </div>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022012808044231" aria-expanded="false" aria-controls="acc2022012808044231">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022020120238904" aria-expanded="false" aria-controls="acc2022020120238904">
 </button>
 </p>
-<div id="acc2022012808044231" class="collapse">
+<div id="acc2022020120238904" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># declare the values the loop will loop over
 for secondsToGo in {10..0};
@@ -405,7 +406,7 @@ echo Happy New Year everyone!!</code></pre>
 </div>
 </div>
 </div>
-<div id="exercise-2" class="section level2">
+<div id="exercise-2" class="section level2" number="6.2">
 <h2><span class="header-section-number">6.2</span> Exercise 2</h2>
 <p>Let’s try to do something similar to the example in the lecture slides, to run the same commands on multiple files. In the Introduction to UPPMAX, we learned how to use samtools to convert BAM files to SAM files so that humans can read them.
 In real life you will never do this, instead you will most likely always do it the other way around. SAM files take up ~4x more space on the hard drive compared to the same file in BAM format, so as soon as you see a SAM file you should convert it to a BAM file instead to conserve hard drive space. If you have many SAM files that needs converting you don’t want to sit there and type all the commands by hand like a pleb.</p>
@@ -418,10 +419,10 @@ In real life you will never do this, instead you will most likely always do it t
 </div>
 <p>Basic, without bonus points:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022012808041405" aria-expanded="false" aria-controls="acc2022012808041405">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022020120236762" aria-expanded="false" aria-controls="acc2022020120236762">
 </button>
 </p>
-<div id="acc2022012808041405" class="collapse">
+<div id="acc2022020120236762" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># load the modules needed for samtools
 module load bioinfo-tools samtools/1.3
@@ -439,10 +440,10 @@ done</code></pre>
 </div>
 <p>Advanced, with bonus points:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022012808041826" aria-expanded="false" aria-controls="acc2022012808041826">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022020120239442" aria-expanded="false" aria-controls="acc2022020120239442">
 </button>
 </p>
-<div id="acc2022012808041826" class="collapse">
+<div id="acc2022020120239442" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># load the modules needed for samtools
 module load bioinfo-tools samtools/1.3
@@ -466,7 +467,7 @@ done</code></pre>
 </div>
 </div>
 </div>
-<div id="exercise-3" class="section level2">
+<div id="exercise-3" class="section level2" number="6.3">
 <h2><span class="header-section-number">6.3</span> Exercise 3</h2>
 <p>Let’s add a small thing to the exercise we just did. If there already exists a BAM file with the same name as the SAM file it’s not necessary to convert it again. Let’s use an <code>if</code> statement to check if the file already exists before we do the conversion.</p>
 <p>The following <code>if</code> statement will check if a given filename exists, and prints a message depending on if it exists or not.</p>
@@ -488,10 +489,10 @@ fi</code></pre>
 <p><i class="fas fa-clipboard-list"></i> Now, modify the previous exercise to only do the conversion if a file with the intended name of the BAM file doesn’t already exists. <em>i.e</em>; if you have a.sam and want to create a BAM file named a.bam, first check if a.bam already exists and only do the conversion if it does not exist.</p>
 <p>Basic:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022012808041489" aria-expanded="false" aria-controls="acc2022012808041489">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022020120237006" aria-expanded="false" aria-controls="acc2022020120237006">
 </button>
 </p>
-<div id="acc2022012808041489" class="collapse">
+<div id="acc2022020120237006" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># load the modules needed for samtools
 module load bioinfo-tools samtools/1.3
@@ -513,10 +514,10 @@ done</code></pre>
 </div>
 <p>Advanced:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022012808049584" aria-expanded="false" aria-controls="acc2022012808049584">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022020120235797" aria-expanded="false" aria-controls="acc2022020120235797">
 </button>
 </p>
-<div id="acc2022012808049584" class="collapse">
+<div id="acc2022020120235797" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># load the modules needed for samtools
 module load bioinfo-tools samtools/1.3
@@ -552,7 +553,7 @@ done</code></pre>
 </div>
 </div>
 </div>
-<div id="bonus-exercise-1" class="section level2">
+<div id="bonus-exercise-1" class="section level2" number="6.4">
 <h2><span class="header-section-number">6.4</span> Bonus exercise 1</h2>
 <p>Maths and programming are usually a very good combination, so many of the examples of programming you’ll see involve some kind of maths. Now we will write a loop that will calculate the factorial of a number. As <a href="https://en.wikipedia.org/wiki/Factorial" target="_blank">wikipedia will tell you</a>, “the factorial of a non-negative integer n, denoted by n!, is the product of all positive integers less than or equal to n”, i.e. multiply all the integers, starting from 1, leading up to and including a number with each other.</p>
 <p>The factorial of 5, written 5!, would be <code>1*2*3*4*5=120</code>. Doing this by hand would start taking its time even after a couple of steps, but since we know how to loop that should not be a problem anymore.</p>
@@ -562,10 +563,10 @@ done</code></pre>
 <p>To get around this we can use a different way of generating sequences (there are <strong>always</strong> alternatives). There is a program called <code>seq</code> that does pretty much the same thing as the sequence expression, and since it is a program it will be executed <strong>after</strong> the variables have been handled. It’s as easy to use as the sequence expressions; instead of writing <code>{1..10}</code> just write <code>$( seq 1 10 )</code>.</p>
 </div>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022012808042377" aria-expanded="false" aria-controls="acc2022012808042377">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022020120239712" aria-expanded="false" aria-controls="acc2022020120239712">
 </button>
 </p>
-<div id="acc2022012808042377" class="collapse">
+<div id="acc2022020120239712" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># set the number you want to calculate the factorial of
 n=10
@@ -593,7 +594,7 @@ echo The factorial of $n is $factorial</code></pre>
 </div>
 </div>
 </div>
-<div id="bonus-exercise-2" class="section level2">
+<div id="bonus-exercise-2" class="section level2" number="6.5">
 <h2><span class="header-section-number">6.5</span> Bonus exercise 2</h2>
 <p>Now, let’s combine everything you’ve learned so far in this course.</p>
 <p><i class="fas fa-clipboard-list"></i> Write a script that runs the pipeline from the Bioinformatics filetypes lab for each fastq file in a specified directory, using the same reference genome as in the file type exercise. Navigate to the <strong>Linux 2: File types in Bioinformatics</strong> lab on the <strong>Content</strong> page.</p>
@@ -603,10 +604,10 @@ echo The factorial of $n is $factorial</code></pre>
 <p>There is a bunch of fastq files in the directory <code>/proj/snicXXXX-XX-XXX/nobackup/username/linux_advanced/fastq/</code> that is to be used for this exercise.</p>
 <p>Basic solution:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022012808046637" aria-expanded="false" aria-controls="acc2022012808046637">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022020120232008" aria-expanded="false" aria-controls="acc2022020120232008">
 </button>
 </p>
-<div id="acc2022012808046637" class="collapse">
+<div id="acc2022020120232008" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># make the dummy pipeline available
 export PATH=$PATH:/sw/courses/ngsintro/linux/uppmax_pipeline_exercise/dummy_scripts
@@ -638,10 +639,10 @@ done</code></pre>
 </div>
 <p>Advanced solution:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022012808043293" aria-expanded="false" aria-controls="acc2022012808043293">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022020120234133" aria-expanded="false" aria-controls="acc2022020120234133">
 </button>
 </p>
-<div id="acc2022012808043293" class="collapse">
+<div id="acc2022020120234133" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># make the dummy pipeline available in this script
 export PATH=$PATH:/sw/courses/ngsintro/linux/uppmax_pipeline_exercise/dummy_scripts

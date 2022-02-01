@@ -13,7 +13,8 @@
 
 <title>Variant Calling Workflow</title>
 
-<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.5.1/jquery-3.5.1.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -421,13 +422,13 @@ offline-uppmax$ module load GATK/4.1.4.1</code></pre>
 <p>Again, check what file(s) were created using <code>ls -lrt</code>.</p>
 </div>
 </div>
-<div id="variant-calling-in-one-sample" class="section level1">
+<div id="variant-calling-in-one-sample" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Variant calling in one sample</h1>
 <p>Now let’s start the main part of the workshop, which will guide you through a basic variant calling workflow in one sample. The workflow consists of aligning the reads with <a href="http://bio-bwa.sourceforge.net" target="_blank">BWA</a> and detecting variants with <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037225632-HaplotypeCaller" target="_blank">HaplotypeCaller</a> as illustrated below.</p>
 <p><img src="data/ngs-workflow/1_onesamplevc.png" /></p>
-<div id="aligning-reads" class="section level2">
+<div id="aligning-reads" class="section level2" number="1.1">
 <h2><span class="header-section-number">1.1</span> Aligning reads</h2>
-<div id="bwamem" class="section level3">
+<div id="bwamem" class="section level3" number="1.1.1">
 <h3><span class="header-section-number">1.1.1</span> BWA mem</h3>
 <p>In the <em>Cluster workspace</em> you should now use <code>BWA mem</code> to align the reads to the reference genome.</p>
 <p>At the same time, you should add something called <em>read groups</em> to the reads in the fastq files. Read groups allow us to trace various technical features, such as which flow cell was used to generate the reads, and this is needed in order to perform variant calling with HaplotypeCaller. You are not expected to learn all the details of read groups here, but if you are interested in more information please read this article at <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360035890671-Read-groups" target="_blank">GATK-forum</a>. The samples in this workshop come from the 1000 Genomes project, and we don’t know how these reads were generated. Let’s assume that each fastq file was generated from one library preparation (called <em>libraryx</em>), derived from one biological sample (called <em>HG00097</em>), that was run on one lane of a flow cell (called <em>lanex_flowcellx</em>) in the Illumina machine, and create a read group with id <em>readgroupx</em> that contains this information.</p>
@@ -441,7 +442,7 @@ offline-uppmax$ module load GATK/4.1.4.1</code></pre>
 <pre class="bash"><code>offline-uppmax$ samtools index HG00097.bam</code></pre>
 <p>Please check what output file was generated this time.</p>
 </div>
-<div id="check-bam-with-samtools" class="section level3">
+<div id="check-bam-with-samtools" class="section level3" number="1.1.2">
 <h3><span class="header-section-number">1.1.2</span> Check bam with samtools</h3>
 <p>The bam file is binary so we cannot read it, but we can view it with <code>samtools view</code>. The header section of the bam file can be viewed separately with the <code>-H</code> flag:</p>
 <pre class="bash"><code>offline-uppmax$ samtools view -H HG00097.bam </code></pre>
@@ -449,7 +450,7 @@ offline-uppmax$ module load GATK/4.1.4.1</code></pre>
 <pre class="bash"><code>offline-uppmax$ samtools view HG00097.bam | head -n 5 </code></pre>
 <p>For help with interpreting the bam file, please look at the sam/bam format definition at <a href="https://samtools.github.io/hts-specs/SAMv1.pdf" target="_blank">Sequence Alignment/Map Format Specification</a>.</p>
 </div>
-<div id="questions" class="section level3">
+<div id="questions" class="section level3" number="1.1.3">
 <h3><span class="header-section-number">1.1.3</span> Questions</h3>
 <ol style="list-style-type: decimal">
 <li>What does “SO:coordinate” in the “<span class="citation">@HD</span>” tag on the first line of the bam file mean?<br />
@@ -460,7 +461,7 @@ offline-uppmax$ module load GATK/4.1.4.1</code></pre>
 <li>What is the leftmost mapping position of the first read in the bamfile?</li>
 </ol>
 </div>
-<div id="check-bam-in-igv" class="section level3">
+<div id="check-bam-in-igv" class="section level3" number="1.1.4">
 <h3><span class="header-section-number">1.1.4</span> Check bam in IGV</h3>
 <p><strong>Install IGV</strong></p>
 <p>Integrated Genomics Viewer (IGV) provides an interactive visualisation of the reads in a bam file. Here we will show you how to run IGV on your laptop. If you have not used IGV on your laptop before, then go to the IGV <a href="https://software.broadinstitute.org/software/igv/download" target="_blank">download page</a>, and follow the instructions to download it. It will prompt you to fill in some information and agree to license. Launch the viewer through web start. The 1.2 Gb version should be sufficient for our data.</p>
@@ -477,7 +478,7 @@ offline-uppmax$ module load GATK/4.1.4.1</code></pre>
 <li>In the <code>File</code> menu, select <code>Load from File</code> and select your BAMs (not the .bai or the .tdf), which should appear in the tracks window. You will have to zoom in before you can see any reads. You can either select a region by click and drag, or by typing a region or a gene name in the text box at the top. Remember that we have data for the region chr2:136545000-136617000.</li>
 </ul>
 </div>
-<div id="questions-1" class="section level3">
+<div id="questions-1" class="section level3" number="1.1.5">
 <h3><span class="header-section-number">1.1.5</span> Questions</h3>
 <ol start="5" style="list-style-type: decimal">
 <li>What is the read length?<br />
@@ -487,15 +488,15 @@ offline-uppmax$ module load GATK/4.1.4.1</code></pre>
 </ol>
 </div>
 </div>
-<div id="variant-calling" class="section level2">
+<div id="variant-calling" class="section level2" number="1.2">
 <h2><span class="header-section-number">1.2</span> Variant Calling</h2>
-<div id="haplotypecaller" class="section level3">
+<div id="haplotypecaller" class="section level3" number="1.2.1">
 <h3><span class="header-section-number">1.2.1</span> HaplotypeCaller</h3>
 <p>Now we will detect short variants in the bam file using GATK’s <code>HaplotypeCaller</code>. Go to your <em>Cluster workspace</em> and run:</p>
 <pre class="bash"><code>offline-uppmax$ gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -I HG00097.bam -O HG00097.vcf </code></pre>
 <p>Check what new files were generated with <code>ls -lrt</code>.</p>
 </div>
-<div id="explore-the-vcf-file" class="section level3">
+<div id="explore-the-vcf-file" class="section level3" number="1.2.2">
 <h3><span class="header-section-number">1.2.2</span> Explore the vcf file</h3>
 <p>Now you have your first vcf file containing the raw variants in the region chr2:136545000-136617000 in sample HG00097. Please look at the vcf file with <code>less</code> and try to understand its structure.</p>
 <p>VCF files contains meta-information lines starting with <em>##</em>, a header line starting with <em>#CHROM</em>, and then data lines each containing information about one variant position in the genome. The header line defines the columns of the data lines, and to view the header line you can type this command:</p>
@@ -508,7 +509,7 @@ offline-uppmax$ module load GATK/4.1.4.1</code></pre>
 <pre class="bash"><code>offline-uppmax$ grep &#39;136545844&#39; HG00097.vcf</code></pre>
 <p>For more detailed information about vcf files please have a look at <a href="https://samtools.github.io/hts-specs/VCFv4.2.pdf" target="_blank">The Variant Call Format specification</a>.</p>
 </div>
-<div id="questions-2" class="section level3">
+<div id="questions-2" class="section level3" number="1.2.3">
 <h3><span class="header-section-number">1.2.3</span> Questions</h3>
 <ol start="8" style="list-style-type: decimal">
 <li>What column of the VCF file contains genotype information for the sample HG00097?</li>
@@ -519,7 +520,7 @@ offline-uppmax$ module load GATK/4.1.4.1</code></pre>
 <li>How many genetic variants was detected in the sample? The linux command <code>grep -v "#" HG00097.vcf | wc -l</code> extracts all lines in HG00097.vcf that <em>don’t</em> start with “#”, and counts these lines.</li>
 </ol>
 </div>
-<div id="vcfinigv" class="section level3">
+<div id="vcfinigv" class="section level3" number="1.2.4">
 <h3><span class="header-section-number">1.2.4</span> Check vcf in IGV</h3>
 <p>Download the vcf file and its index to the <em>local workspace</em> on your laptop, just like you did with the bam file and its index earlier. Open a new terminal window on your laptop and navigate to your local workspace, <strong>but do not log in to NSC</strong>. Download the files that you just generated with:</p>
 <pre class="bash"><code>scp &lt;nsc_username&gt;@tetralith.nsc.uu.se:/proj/snicXXXX-XX-XXX/users/&lt;nsc_username&gt;/ngsworkflow/HG00097.vcf* .</code></pre>
@@ -528,7 +529,7 @@ Note that the * in the end of the file name means that you will download all fil
 Check that the files were properly downloaded to your <em>local workspace</em> using <code>ls -lrt</code>.</p>
 <p>In <code>IGV</code>, in the <code>File</code> menu, select <code>Load from File</code> and select your vcf file (not the .idx file) and the bam file (not the .bai file) that you downloaded earlier. The vcf and bam files should appear in the tracks window. You will now see all the variants called in HG00097. You can view all variants in the <em>LCT</em> gene by typing the gene name in the search box, and you can look specifically at the variant at position chr2:136545844 by typing that position in the search box.</p>
 </div>
-<div id="questions-3" class="section level3">
+<div id="questions-3" class="section level3" number="1.2.5">
 <h3><span class="header-section-number">1.2.5</span> Questions</h3>
 <ol start="14" style="list-style-type: decimal">
 <li>Hover the mouse over the upper row of the vcf track. What is the reference and alternative alleles of the variant at position chr2:136545844?</li>
@@ -538,7 +539,7 @@ Check that the files were properly downloaded to your <em>local workspace</em> u
 </div>
 </div>
 </div>
-<div id="jointvc" class="section level1">
+<div id="jointvc" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Variant calling in cohort</h1>
 <p>If you have time, you can now try joint variant calling in all three samples. Each sample has to be processed with <code>BWA mem</code> as above, and then with <code>HaplotypeCaller</code> with the flag <code>-ERC</code> to generate one g.vcf file per sample. The individual g.vcf files should subsequently be combined with GATK’s <code>CombineGVCFs</code>, and translated into vcf format with GATK’s <code>GenotypeGVCFs</code>. The workflow below shows how the three samples should be processed and combined.</p>
 <p><img src="data/ngs-workflow/2_jointvc.png" /></p>
@@ -546,15 +547,15 @@ Check that the files were properly downloaded to your <em>local workspace</em> u
 <div class="boxy boxy-orange boxy-clipboard-list">
 <p><strong>Optional</strong>: If you are interested in programming and have time, you can also try to write a simple SBATCH script and run all steps automatically. Please check out the <a href="#sbatchscript">SBATCH script</a> section below if you would like to try this.</p>
 </div>
-<div id="bwa-mem" class="section level2">
+<div id="bwa-mem" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> BWA mem</h2>
 <p>Run <code>BWA mem</code> for all three samples in the data set. <code>BWA mem</code> should be run exactly <a href="#bwamem">as above</a> but with the new sample names. Please note that you also need to adjust the SM field in the read group so that it matches the new sample name, otherwise the <a href="#jointgenotyping">joint genotyping step</a> will not work properly.</p>
 <p>If you run out of time, please click below to get paths to precomputed bam files.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022012808092912" aria-expanded="false" aria-controls="acc2022012808092912">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022020120290448" aria-expanded="false" aria-controls="acc2022020120290448">
 </button>
 </p>
-<div id="acc2022012808092912" class="collapse">
+<div id="acc2022020120290448" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -567,17 +568,17 @@ sh
 </div>
 </div>
 </div>
-<div id="generategvcf" class="section level2">
+<div id="generategvcf" class="section level2" number="2.2">
 <h2><span class="header-section-number">2.2</span> Generate g.vcf files</h2>
 <p><code>HaplotypeCaller</code> should also be run for all three samples, but this time the output for each sample needs to be in g.vcf format. This is accomplished with a small change in the <code>HaploteypCaller</code> command:</p>
 <pre class="bash"><code>offline-uppmax$ gatk --java-options -Xmx7g HaplotypeCaller -R human_g1k_v37_chr2.fasta -ERC GVCF -I &lt;sample.bam&gt; -O &lt;sample&gt;.g.vcf </code></pre>
 <p>Please replace <sample> with the real sample names.</p>
 <p>If you run out of time, please click below to get paths to the precomputed g.vcf files.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022012808098429" aria-expanded="false" aria-controls="acc2022012808098429">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022020120291978" aria-expanded="false" aria-controls="acc2022020120291978">
 </button>
 </p>
-<div id="acc2022012808098429" class="collapse">
+<div id="acc2022020120291978" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -590,7 +591,7 @@ sh
 </div>
 </div>
 </div>
-<div id="jointgenotyping" class="section level2">
+<div id="jointgenotyping" class="section level2" number="2.3">
 <h2><span class="header-section-number">2.3</span> Joint genotyping</h2>
 <p>Once you have the g.vcf files for all samples you should perform joint genotype calling. To do this you first need to combine all individual .g.vcf files to one file using <code>CombineGVCFs</code>:</p>
 <pre class="bash"><code>offline-uppmax$ gatk --java-options -Xmx7g CombineGVCFs -R human_g1k_v37_chr2.fasta -V &lt;sample1&gt;.g.vcf -V &lt;sample2&gt;.g.vcf -V &lt;sample3&gt;.g.vcf -O cohort.g.vcf</code></pre>
@@ -599,10 +600,10 @@ sh
 <pre class="bash"><code>offline-uppmax$ gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g.vcf -O cohort.vcf</code></pre>
 <p>If you run out of time, please click below to get paths to the precomputed cohort.g.vcf and cohort.vcf files.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022012808094874" aria-expanded="false" aria-controls="acc2022012808094874">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022020120292842" aria-expanded="false" aria-controls="acc2022020120292842">
 </button>
 </p>
-<div id="acc2022012808094874" class="collapse">
+<div id="acc2022020120292842" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -613,7 +614,7 @@ sh
 </div>
 </div>
 </div>
-<div id="jointvariantcallingquestions" class="section level3">
+<div id="jointvariantcallingquestions" class="section level3" number="2.3.1">
 <h3><span class="header-section-number">2.3.1</span> Questions</h3>
 <ol start="17" style="list-style-type: decimal">
 <li>How many data lines do the cohort.g.vcf file have? You can use the Linux command <code>grep -v "#" cohort.g.vcf</code> to extract all lines in “cohort.g.vcf” that don’t start with “#”, then <code>|</code>, and then <code>wc -l</code> to count those lines.<br />
@@ -627,7 +628,7 @@ sh
 </ol>
 </div>
 </div>
-<div id="sbatchscript" class="section level2">
+<div id="sbatchscript" class="section level2" number="2.4">
 <h2><span class="header-section-number">2.4</span> SBATCH script</h2>
 <div class="boxy boxy-orange boxy-clipboard-list">
 <p><strong>Optional</strong>: This section is only for those of you who want to try to run all steps automatically in bash scripts.
@@ -653,10 +654,10 @@ done
 <pre class="bash"><code>./joint_genotyping.sh</code></pre>
 <p>If you would like more help with creating the bash script, please look at our example solution:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022012808091088" aria-expanded="false" aria-controls="acc2022012808091088">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022020120299725" aria-expanded="false" aria-controls="acc2022020120299725">
 </button>
 </p>
-<div id="acc2022012808091088" class="collapse">
+<div id="acc2022020120299725" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -684,10 +685,10 @@ gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g
 <p>Please answer the <a href="#jointvariantcallingquestions">questions</a> above.</p>
 </div>
 </div>
-<div id="check-combined-vcf-file-in-igv" class="section level2">
+<div id="check-combined-vcf-file-in-igv" class="section level2" number="2.5">
 <h2><span class="header-section-number">2.5</span> Check combined vcf file in IGV</h2>
 <p>Download the file cohort.vcf and its index, as well as HG00100.bam and HG00101.bam and their indexes to your <em>local workspace</em> as described <span id="downloaddata">above</span>. Then open cohort.vcf, HG00097.bam, HG00100.bam and HG00101.bam in IGV as described <span id="vcfinigv">above</span>. This time lets look at the variant rs4988235, located at position chr2:136608646 in the HG19 reference genome, that has been shown to lead to lactose persistence.</p>
-<div id="questions-4" class="section level3">
+<div id="questions-4" class="section level3" number="2.5.1">
 <h3><span class="header-section-number">2.5.1</span> Questions</h3>
 <ol start="22" style="list-style-type: decimal">
 <li>What is the reference and alternative alleles at chr2:136608646?</li>
@@ -702,15 +703,15 @@ If you are interested in how this variant affects lactose tolerance please read 
 </div>
 </div>
 </div>
-<div id="gatks-best-practices" class="section level1">
+<div id="gatks-best-practices" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> GATK’s best practices</h1>
 <p>The third part of this workshop will take you through additional refinement steps that are recommended in <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-" target="_blank">GATKs best practices for germline short variant discovery</a>, illustrated in the flowchart below. You can either run the steps command by command in your reserved node, or using a similar script as described above.</p>
 <p><img src="data/ngs-workflow/3_best_practise.png" style="width:80.0%" /></p>
-<div id="bwa-mem-1" class="section level2">
+<div id="bwa-mem-1" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> BWA mem</h2>
 <p>Run <code>BWA mem</code> for all three samples in the data set. <code>BWA mem</code> should be run exactly <a href="#bwamem">as above</a> but with the new sample names. Please note that you also need to adjust the SM field in the read group so that it matches the new sample name.</p>
 </div>
-<div id="mark-duplicates" class="section level2">
+<div id="mark-duplicates" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> Mark Duplicates</h2>
 <p>Sometimes the same DNA fragment is sequenced multiple times, which leads to multiple reads from the same fragment in the fastq file. This can occur due to PCR amplification in the library preparation, or if one read cluster is incorrectly detected as multiple clusters by the sequencing instrument.
 If a duplicated read contains a genetic variant, the ratio of the two alleles might be obscured, which can lead to incorrect genotyping. It is therefore recommended (in most cases) to mark duplicate reads so that they are counted as one during genotyping.</p>
@@ -721,10 +722,10 @@ If a duplicated read contains a genetic variant, the ratio of the two alleles mi
       -M marked_dup_metrics.txt</code></pre>
 <p>If you would like more help you can sneak peek at our example solution for HG00097 below.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022012808098098" aria-expanded="false" aria-controls="acc2022012808098098">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022020120295305" aria-expanded="false" aria-controls="acc2022020120295305">
 </button>
 </p>
-<div id="acc2022012808098098" class="collapse">
+<div id="acc2022020120295305" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -735,7 +736,7 @@ sh
 </div>
 </div>
 </div>
-<div id="recalibrate-base-quality-scores" class="section level2">
+<div id="recalibrate-base-quality-scores" class="section level2" number="3.3">
 <h2><span class="header-section-number">3.3</span> Recalibrate Base Quality Scores</h2>
 <p>Another source of error is systematic biases in the assignment of base quality scores by the sequencing instrument. This can be corrected by GATK’s <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360035890531-Base-Quality-Score-Recalibration-BQSR-" target="_blank">Base Quality Score Recalibration</a>.
 In short, you first use <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037593511-BaseRecalibrator" target="_blank">BaseRecalibrator</a> to build a recalibration model, and then <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037225212-ApplyBQSR" target="_blank">ApplyBQSR</a> to recalibrate the base qualities in your bam file.<br />
@@ -743,10 +744,10 @@ In short, you first use <a href="https://gatk.broadinstitute.org/hc/en-us/articl
 <pre class="bash"><code>/sw/courses/ngsintro/reseq/data/ref/1000G_phase1.snps.high_confidence.b37.chr2.vcf</code></pre>
 <p>Please use GATK’s documentation to recalibrate the base quality scores in your data. If you would like more help you can sneak peek at our example solution for HG00097 below.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022012808098426" aria-expanded="false" aria-controls="acc2022012808098426">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022020120294291" aria-expanded="false" aria-controls="acc2022020120294291">
 </button>
 </p>
-<div id="acc2022012808098426" class="collapse">
+<div id="acc2022020120294291" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -758,15 +759,15 @@ offline-uppmax$ gatk --java-options -Xmx7g ApplyBQSR -R human_g1k_v37_chr2.fasta
 </div>
 </div>
 </div>
-<div id="generate-g.vcf-files" class="section level2">
+<div id="generate-g.vcf-files" class="section level2" number="3.4">
 <h2><span class="header-section-number">3.4</span> Generate g.vcf files</h2>
 <p><code>HaplotypeCaller</code> should also be run for all three samples, and the output should be in g.vcf exactly as described <a href="#generategvcf">above</a>. This time use recalibrated bam files as input.</p>
 </div>
-<div id="joint-genotyping" class="section level2">
+<div id="joint-genotyping" class="section level2" number="3.5">
 <h2><span class="header-section-number">3.5</span> Joint genotyping</h2>
 <p>Once you have the g.vcf files for all samples you should perform joint genotype calling. This should be done with the commands <code>CombineGVCFs</code> and <code>GenotypeGVCFs</code> exactly as described <a href="#jointgenotyping">above</a>, but you should use the g.vcf files generated from the recalibrated bam files as input.</p>
 </div>
-<div id="variant-filtering" class="section level2">
+<div id="variant-filtering" class="section level2" number="3.6">
 <h2><span class="header-section-number">3.6</span> Variant Filtering</h2>
 <p>HaplotypeCaller is designed to be very sensitive, which is good because it minimises the chance of missing real variants. However, it means that the number of false positives can be quite large, so we need to filter the raw callset. GATK offers two ways to filter variants:</p>
 <ol style="list-style-type: decimal">
@@ -776,10 +777,10 @@ offline-uppmax$ gatk --java-options -Xmx7g ApplyBQSR -R human_g1k_v37_chr2.fasta
 <p>Since we have very little data we will use hard filters. The parameters are slightly different for SNVs and INDELs, so you need to first select all SNVs using <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037225432-SelectVariants" target="_blank">SelectVariants</a> and filter them using <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037226192-VariantFiltration" target="_blank">VariantFiltration</a> with the parameters suggested for SNVs. Then select all INDELs and filter them with the parameters suggested for INDELs. Finally merge the SNVs and INDELs to get all variants in one file using <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037226612-MergeVcfs-Picard-" target="_blank">MergeVCFs</a>. If you would like more help you can sneak peek at our example solution for HG00097 below.</p>
 <p>Filter SNVs:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022012808091738" aria-expanded="false" aria-controls="acc2022012808091738">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022020120298475" aria-expanded="false" aria-controls="acc2022020120298475">
 </button>
 </p>
-<div id="acc2022012808091738" class="collapse">
+<div id="acc2022020120298475" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -803,10 +804,10 @@ offline-uppmax$ gatk --java-options -Xmx7g VariantFiltration
 </div>
 <p>Filter INDELs:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022012808091899" aria-expanded="false" aria-controls="acc2022012808091899">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022020120292356" aria-expanded="false" aria-controls="acc2022020120292356">
 </button>
 </p>
-<div id="acc2022012808091899" class="collapse">
+<div id="acc2022020120292356" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -829,10 +830,10 @@ offline-uppmax$ gatk --java-options -Xmx7g VariantFiltration
 </div>
 <p>Merge filtered SNVs and INDELs:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022012808093734" aria-expanded="false" aria-controls="acc2022012808093734">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022020120298293" aria-expanded="false" aria-controls="acc2022020120298293">
 </button>
 </p>
-<div id="acc2022012808093734" class="collapse">
+<div id="acc2022020120298293" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -844,14 +845,14 @@ sh
 </div>
 <p>Open your filtered vcf with <code>less</code> and page through it. It still has all the variant lines, but the FILTER column that was blank before is now filled in, with PASS or a list of the filters it failed. Note also that the filters that were run are described in the header section.</p>
 </div>
-<div id="precomputed-files" class="section level2">
+<div id="precomputed-files" class="section level2" number="3.7">
 <h2><span class="header-section-number">3.7</span> Precomputed files</h2>
 <p>If you run out of time, please click below to get the path to precomputed bam and vcf files for the GATK’s best practices section.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022012808093214" aria-expanded="false" aria-controls="acc2022012808093214">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022020120291514" aria-expanded="false" aria-controls="acc2022020120291514">
 </button>
 </p>
-<div id="acc2022012808093214" class="collapse">
+<div id="acc2022020120291514" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -863,14 +864,14 @@ Path to intermediary and final vcf files: /sw/courses/ngsintro/reseq/data/best_p
 </div>
 </div>
 </div>
-<div id="bpscript" class="section level2">
+<div id="bpscript" class="section level2" number="3.8">
 <h2><span class="header-section-number">3.8</span> SBATCH script</h2>
 <p>We recommend you to incorporate the new steps into an SBATCH script similar to the one you created above for <a href="#sbatchscript">joint variant calling</a>. Please try to complete the script for GATK’s best practices workflow. If you run out of time you can sneak peek at our example solution below.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022012808092199" aria-expanded="false" aria-controls="acc2022012808092199">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022020120294811" aria-expanded="false" aria-controls="acc2022020120294811">
 </button>
 </p>
-<div id="acc2022012808092199" class="collapse">
+<div id="acc2022020120294811" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -932,7 +933,7 @@ gatk --java-options -Xmx7g MergeVcfs -I cohort.snvs.filtered.vcf -I cohort.indel
 </div>
 </div>
 </div>
-<div id="questions-5" class="section level2">
+<div id="questions-5" class="section level2" number="3.9">
 <h2><span class="header-section-number">3.9</span> Questions</h2>
 <ol start="28" style="list-style-type: decimal">
 <li>How many variants are present in the cohort.filtered.vcf file?<br />

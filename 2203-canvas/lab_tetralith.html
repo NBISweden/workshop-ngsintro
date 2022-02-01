@@ -13,7 +13,8 @@
 
 <title>Alternative cluster instructions</title>
 
-<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.5.1/jquery-3.5.1.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -252,7 +253,7 @@ div.tocify {
 
 <!-- rmd lab header -->
 <p><br></p>
-<div id="the-nsc-cluster" class="section level1">
+<div id="the-nsc-cluster" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> The NSC cluster</h1>
 <p>Please connect to the Tetralith cluster at NSC using <code>ssh</code> (NOTE: use your NSC username and password, not your UPPMAX username and password):</p>
 <pre class="bash"><code>$ ssh -Y nsc_username@tetralith.nsc.liu.se</code></pre>
@@ -260,7 +261,7 @@ div.tocify {
 <p>Note that your terminal prompt changed to something like <code>nsc_username@tetralith1 $</code> which means that you have entered Tetralith.</p>
 </div>
 </div>
-<div id="interactive-session" class="section level1">
+<div id="interactive-session" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Interactive session</h1>
 <p>On Tetralith you enter the <em>login node</em>, which is not intended for compute intensive tasks. You should therefore book a compute node, or in this case three cores:</p>
 <pre class="bash"><code>tetralith1$ interactive -A snicXXXX-XX-XXX -t 04:00:00 -n 3</code></pre>
@@ -269,7 +270,7 @@ div.tocify {
 <p>Note that your terminal prompt changed to something like <code>&lt;nsc_username&gt;@n424 $</code> (or another node name), which means that you are now running on one of the compute nodes.</p>
 </div>
 </div>
-<div id="uppmax-singularity-container" class="section level1">
+<div id="uppmax-singularity-container" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> UPPMAX singularity container</h1>
 <p>We will use a singularity container (a virtual computer) that mimics the UPPMAX computing environment. Once you have started the singularity container your environment will look exactly as on UPPMAX, and the software used in this workshop will be available through the module system inside the container.
 Use this command to start the singularity container:</p>
@@ -285,7 +286,7 @@ To close the singularity container later on just type <code>exit</code>in the te
 <p><strong>Note:</strong> Since this is not actually running on uppmax, none of the queue system commands (<code>squeue</code>, <code>sbatch</code>, <code>jobinfo</code> etc) will work.</p>
 </div>
 </div>
-<div id="cluster-workspace" class="section level1">
+<div id="cluster-workspace" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> Cluster workspace</h1>
 <p>While running the UPPMAX singularity container, create a workspace for this exercise. This will be the “cluster workspace” in which you should perform the analyses, as if you would have worked on UPPMAX.</p>
 <p>The name of the workspace depends on what lab you are working on. For example, if you are working on the introduction to Linux lab then call the workspace “linux_tutorial”. Once the workspace is created you should go into it.</p>
