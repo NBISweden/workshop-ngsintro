@@ -1,4 +1,4 @@
-name: build-from-image
+name: build
 on:
   push:
     branches-ignore:
