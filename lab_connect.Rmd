@@ -26,9 +26,9 @@ The reason we will teach you two ways is that some parts of this course will req
 
 Let's look at the text-based SSH approach first. This type of connection work just fine even on slow internet connections since it only transmitts small amounts of text when you work with it. You will need an SSH program to do this, which fortunately is included in most major operating systems:
 
-<i class="fab fa-linux"></i> Linux: Use Terminal (Included by default).
-<i class="fab fa-apple"></i> OSX: Use Terminal (Included by default).
-<i class="fab fa-windows"></i> Windows: Use Powershell or Command prompt, both should be installed by default.
+<i class="fab fa-linux"></i> Linux: Use Terminal (Included by default).<br>
+<i class="fab fa-apple"></i> OSX: Use Terminal (Included by default).<br>
+<i class="fab fa-windows"></i> Windows: Use Powershell or Command prompt, both should be installed by default.<br>
 
 Fire up the available SSH program and enter the following:
 
@@ -45,7 +45,7 @@ Now your screen should look something like this:
 
 ```bash
 dahlo@dahlo-xps ~ $ ssh dahlo@rackham.uppmax.uu.se
-Last login: Fri May 18 15:03:59 2018 from micro046.icm.uu.se
+Last login: Fri May 18 15:03:59 2018 from mi04.icm.uu.se
  _   _ ____  ____  __  __    _    __  __
 | | | |  _ \|  _ \|  \/  |  / \   \ \/ /   | System:    rackham4
 | | | | |_) | |_) | |\/| | / _ \   \  /    | User:      dahlo
@@ -54,10 +54,10 @@ Last login: Fri May 18 15:03:59 2018 from micro046.icm.uu.se
 
 ###############################################################################
 
-    ¦   User Guides: http://www.uppmax.uu.se/support/user-guides
-        ¦   FAQ: http://www.uppmax.uu.se/support/faq
+       User Guides: http://www.uppmax.uu.se/support/user-guides
+       FAQ: http://www.uppmax.uu.se/support/faq
 
-    ¦   Write to support@uppmax.uu.se, if you have questions or comments.
+       Write to support@uppmax.uu.se, if you have questions or comments.
 
 
 dahlo@rackham4 ~ $
