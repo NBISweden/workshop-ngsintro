@@ -26,9 +26,18 @@ The reason we will teach you two ways is that some parts of this course will req
 
 Let's look at the text-based SSH approach first. This type of connection work just fine even on slow internet connections since it only transmitts small amounts of text when you work with it. You will need an SSH program to do this, which fortunately is included in most major operating systems:
 
-<i class="fab fa-linux"></i> Linux: Use Terminal (Included by default).<br>
-<i class="fab fa-apple"></i> OSX: Use Terminal (Included by default).<br>
-<i class="fab fa-windows"></i> Windows: Use Powershell or Command prompt, both should be installed by default.<br>
+<table>
+  <tr>
+    <td><i class="fab fa-linux"></i> Linux:</td><td>Use Terminal (Included by default).</td>
+  </tr>
+  <tr>
+    <td><i class="fab fa-apple"></i> OSX:</td><td>Use Terminal (Included by default).</td>
+  </tr>
+  <tr>
+    <td><i class="fab fa-windows"></i> Windows:</td><td>Use Powershell or Command prompt, both should be installed by default.</td>
+  </tr>
+</table> 
+ 
 
 Fire up the available SSH program and enter the following:
 
