@@ -76,8 +76,11 @@ We have a ThinLinc server running at one of the login nodes which allows users t
    1. Enter your UPPMAX username.
    1. Enter your UPPMAX password, followed by your current two-factor authentication code. 
       Eg. if your password is `hunter2` and your current two-factor authentication code is `123456` you will enter `hunter2123456` as your password.
+      ![Thinlinc login page](data/common/thinlinc_00.png)
    1. It will ask you which profile you want to use, so first press the `Forward` button. Then you can choose which desktop environment you want to use. `Xfce` is pretty straight-forward and easy to use, but feel free to try either of them. You get to choose every time you login so it's not a permanent choice.
+      ![Thinlinc login page](data/common/thinlinc_01.png)
    1. Once your desktop has been loaded, start a terminal either by clicking the black terminal icon at the bottom of the screen, or by pressing the `Applications` button in the top right corner and select `Terminal Emulator`.
+      ![Thinlinc login page](data/common/thinlinc_02.png)
 
 
 # After connection to UPPMAX
