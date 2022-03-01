@@ -265,7 +265,7 @@ div.tocify {
 <p><strong>General guide</strong></p>
 <div class="boxy boxy-lightbulb">
 <ul>
-<li>You will work on the computing cluster Rackham at Uppmax</li>
+<li>You will work on the computing cluster Rackham at UPPMAX</li>
 <li>If you change the node you are working on you will need to reload the tool modules.</li>
 <li>Please type commands in the terminal instead of copying and pasting them which often result in formatting errors.</li>
 <li>Use tab completion.</li>
@@ -312,8 +312,12 @@ div.tocify {
 </div>
 <div id="Genomicregion" class="section level2 unnumbered">
 <h2>Genomic region</h2>
-<p>The <em>LCT</em> gene on chromosome 2 encodes the enzyme lactase, which is responsible for the metabolism of lactose in mammals. Most mammals can not digest lactose as adults, but some humans can. Genetic variants upstream of the <em>LCT</em> gene lead to lactase persistence, which means that lactase is expressed also in adulthood and the carrier can continue to digest lactose. The variant rs4988235, located at position chr2:136608646 in the HG19 reference genome, has been shown to lead to lactose persistence. The alternative allele (A on the forward strand and T on the reverse strand) creates a new transcription factor binding site that enables continued expression of the gene after weaning.</p>
-<p>In this workshop we will detect genetic variants in the region chr2:136545000-136617000 in the three samples listed above, which will allow us to check if they carry the allele for lactase persistence.</p>
+<p>The <em>LCT</em> gene on chromosome 2 encodes the enzyme lactase, which is responsible for the metabolism of lactose in mammals.
+Most mammals can not digest lactose as adults, but some humans can.
+Genetic variants upstream of the <em>LCT</em> gene causes lactase persistence, which means that lactase is expressed also in adulthood and the carrier can continue to digest lactose.
+The variant rs4988235, located at position chr2:136608646 in the GRCh37 reference genome, has been shown to lead to lactose persistence.
+The alternative allele (A on the forward strand and T on the reverse strand) creates a new transcription factor binding site that enables continued expression of the gene after weaning.</p>
+<p>In this workshop we will detect genetic variants in the region chr2:136545000-136617000 in the three samples listed above, and check if they carry the allele for lactase persistence.</p>
 <p>For those interested in the details of the genetic bases for lactose tolerance, please read the first three pages of <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf" target="_blank">Lactose intolerance: diagnosis, genetic, and clinical factors</a> by Mattar et al. The variant rs4988235 is here referred to as LCT-13910C&gt;T.</p>
 </div>
 <div id="Data" class="section level2 unnumbered">
@@ -330,14 +334,14 @@ div.tocify {
 <h1>Preparations</h1>
 <div id="preparelaptop" class="section level2 unnumbered">
 <h2>Local workspace</h2>
-<p>This lab will be done completely on Uppmax and we assume that you have logged in to Uppmax using <code>ThinLink</code>.
+<p>This lab will be done completely on UPPMAX and we assume that you have logged in to UPPMAX using <code>ThinLink</code>.
 However, if you prefer to log in via normal <code>ssh</code> you can instead copy some of the resulting files to your laptop, install <code>IGV</code>, and run all the <code>IGV</code> steps on your laptop.
 If so, please start by creating a local workspace on your laptop, for example a folder called <em>ngsworkflow</em> on your desktop. You need to have write permission in this folder.
 If you work via <code>ThinLink</code> you don’t have to crete a local workspace.</p>
 </div>
 <div id="uppmax" class="section level2 unnumbered">
 <h2>UPPMAX</h2>
-<p>Please connect to the Rackham cluster on UPPMAX using <code>thinlink</code> and open a terminal window as described in the “Connecting to Uppmax” lab.</p>
+<p>Please connect to the Rackham cluster on UPPMAX using <code>thinlink</code> and open a terminal window as described in the “Connecting to UPPMAX” lab.</p>
 <div id="logon-to-a-node" class="section level3 unnumbered">
 <h3>Logon to a node</h3>
 <p>This lab should be done on a compute node (not the login node). First check if you already have an active job allocation using this command:</p>
@@ -460,9 +464,9 @@ The code for adding this read group is<br/>
 </div>
 <div id="check-bam-in-igv" class="section level3" number="1.1.3">
 <h3><span class="header-section-number">1.1.3</span> Check bam in IGV</h3>
-<p>To use IGV on Uppmax we recommend that you are connected via ThinLink. Please see instructions on how to use ThinLink in the course page in Canvas.
+<p>To use IGV on UPPMAX we recommend that you are connected via ThinLink. Please see instructions on how to use ThinLink in the course page in Canvas.
 Alternatively you can install IGV on your local computer, download the files using scp, and look at them locally. This procedure is also described in the course page in Canvas.
-The instructions below assume that you have logged in to Uppmax via ThinLink.
+The instructions below assume that you have logged in to UPPMAX via ThinLink.
 First use pwd to check if you are standing in the correct directory:</p>
 <pre class="bash"><code>pwd</code></pre>
 <p>Should return</p>
@@ -545,7 +549,7 @@ To view the meta-information lines describing the <em>INFO</em> column use:</p>
 </div>
 <div id="vcfinigv" class="section level3" number="1.2.3">
 <h3><span class="header-section-number">1.2.3</span> Check vcf in IGV</h3>
-<p>We assume that you have logged in to Uppmax via ThinLink.<br />
+<p>We assume that you have logged in to UPPMAX via ThinLink.<br />
 If you have closed IGV please open it again as described above.<br />
 Load the file HG00097.vcf into tracks window of IGV as you did with the HG00097.bam file earlier (load the bam file as well if it is not already loaded). You will now see all the variants called in HG00097.<br />
 You can view variants in the <em>LCT</em> gene by typing the gene name in the search box, and you can look specifically at the variant at position chr2:136545844 by typing that position in the search box.<br />
@@ -584,10 +588,10 @@ You also need to index each output bam file:</p>
 <p>Please check what output file was generated this time.
 If you run out of time you can click below to get paths to precomputed bam files.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112004051" aria-expanded="false" aria-controls="acc2022030112004051">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112125897" aria-expanded="false" aria-controls="acc2022030112125897">
 </button>
 </p>
-<div id="acc2022030112004051" class="collapse">
+<div id="acc2022030112125897" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -616,10 +620,10 @@ First use pwd to check if you are standing in the correct directory:</p>
 <p>Please replace <code>sample</code> with the real sample names.</p>
 <p>If you run out of time you can click below to get paths to the precomputed g.vcf files.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112001653" aria-expanded="false" aria-controls="acc2022030112001653">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112129374" aria-expanded="false" aria-controls="acc2022030112129374">
 </button>
 </p>
-<div id="acc2022030112001653" class="collapse">
+<div id="acc2022030112129374" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -654,10 +658,10 @@ Then run GATK’s <code>GenoteypeGVC</code> to generate a vcf file:</p>
 -O cohort.vcf</code></pre>
 If you run out of time you can click below to get paths to the precomputed cohort.g.vcf and cohort.vcf files.
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112005117" aria-expanded="false" aria-controls="acc2022030112005117">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112122526" aria-expanded="false" aria-controls="acc2022030112122526">
 </button>
 </p>
-<div id="acc2022030112005117" class="collapse">
+<div id="acc2022030112122526" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -681,7 +685,7 @@ sh
 </div>
 <div id="check-combined-vcf-file-in-igv" class="section level2" number="2.4">
 <h2><span class="header-section-number">2.4</span> Check combined vcf file in IGV</h2>
-<p>Again we assume that you have logged in to Uppmax via ThinLink.<br />
+<p>Again we assume that you have logged in to UPPMAX via ThinLink.<br />
 If you have closed IGV please open it again as described above.<br />
 Load the files cohort.vcf, HG00097.bam, HG00100.bam and HG00101.bam into IGV as described earlier.<br />
 This time lets look closer at the variant rs4988235, located at position chr2:136608646 in the HG19 reference genome. This is the variant that has been shown to lead to lactase persistence.<br />
@@ -800,10 +804,10 @@ gatk --java-options -Xmx7g VariantFiltration \
 <h4>Precomputed files</h4>
 If you run out of time, please click below to get the path to precomputed bam and vcf files for the GATK’s best practices section.
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112000433" aria-expanded="false" aria-controls="acc2022030112000433">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112129888" aria-expanded="false" aria-controls="acc2022030112129888">
 </button>
 </p>
-<div id="acc2022030112000433" class="collapse">
+<div id="acc2022030112129888" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -870,10 +874,10 @@ done
 <pre class="bash"><code>./joint_genotyping.sbatch</code></pre>
 <p>If you would like more help with creating the sbatch script, please look at our example solution:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112001808" aria-expanded="false" aria-controls="acc2022030112001808">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112127947" aria-expanded="false" aria-controls="acc2022030112127947">
 </button>
 </p>
-<div id="acc2022030112001808" class="collapse">
+<div id="acc2022030112127947" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -925,10 +929,10 @@ gatk --java-options -Xmx7g GenotypeGVCFs
 <h2>GATK best practices</h2>
 <p>Now please try to incorporate the additional steps from <a href="#gatk_bp">GATK’s best practices</a> into the workflow. If you run out of time you can sneak peek at our example solution below.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112005037" aria-expanded="false" aria-controls="acc2022030112005037">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112123234" aria-expanded="false" aria-controls="acc2022030112123234">
 </button>
 </p>
-<div id="acc2022030112005037" class="collapse">
+<div id="acc2022030112123234" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
