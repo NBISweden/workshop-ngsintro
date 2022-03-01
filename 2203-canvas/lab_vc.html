@@ -423,7 +423,9 @@ First check if you are standing in the correct directory:</p>
 <div id="bwamem" class="section level3" number="1.1.1">
 <h3><span class="header-section-number">1.1.1</span> BWA mem</h3>
 <p>You should use <code>BWA mem</code> to align the reads to the reference genome.</p>
-In the call to <code>BWA mem</code> you need to add something called a <em>read group</em>, which contains information about how the reads were generated. This is required by HaplotypeCaller. Since we don’t know exactly how the reads in the 1000 Genomes Project were generated we will assume that each pair of fastq files was generated from one library preparation (<em>libraryx</em>), derived from one biological sample (<em>HG00097</em>), that was run on one lane (<em>lanex</em>) of a flowcell (<em>flowcellx</em>) on the Illumina machine, and define a toy read group with this information.
+In the call to <code>BWA mem</code> you need to add something called a <em>read group</em>, which contains information about how the reads were generated.
+This is required by HaplotypeCaller. Since we don’t know exactly how the reads in the 1000 Genomes Project were generated we will
+assume that each pair of fastq files was generated from one library preparation (<em>libraryx</em>), derived from one biological sample (<em>HG00097</em>), and run on one lane (<em>lanex</em>) of a flowcell (<em>flowcellx</em>) on the Illumina machine, and define a toy read group with this information.
 The code for adding this read group is<br/>
 <strong>-R “<span class="citation">@RG</span>\tID:HG00097\tPU:lanex_flowcellx\tSM:HG00097\tLB:libraryx\tPL:illumina”</strong>.
 <div class="boxy boxy-yellow boxy-exclamation">
@@ -435,10 +437,11 @@ The code for adding this read group is<br/>
 <p>Should return</p>
 <pre class="bash"><code>/proj/snicXXXX-XX-XXX/nobackup/username/ngsworkflow</code></pre>
 <p>Then use this command to align the reads, add the read group, sort the reads and write them to a bam file:</p>
-<pre class="bash"><code>bwa mem -R &quot;@RG\tID:readgroup_HG00097\tPU:lanex_flowcellx\tSM:HG00097\tLB:libraryx\tPL:illumina&quot; \
+<pre class="bash"><code>bwa mem \
+-R &quot;@RG\tID:readgroup_HG00097\tPU:lanex_flowcellx\tSM:HG00097\tLB:libraryx\tPL:illumina&quot; \
 -t 1 human_g1k_v37_chr2.fasta HG00097_1.fq HG00097_2.fq | samtools sort &gt; HG00097.bam</code></pre>
 <p>Please check that the expected output file was generated and that it has content using <code>ls -lrt</code>.</p>
-<p>Next you need to index the bam file so that programs can randomly access the sorted data without reading the whole file. This command creates an index file with the same name as the input bam file, except with a .bai extension:</p>
+<p>Next you need to index the generated bam file so that programs can randomly access the sorted data without reading the whole file. This command creates an index file with the same name as the input bam file, except with a .bai extension:</p>
 <pre class="bash"><code>samtools index HG00097.bam</code></pre>
 <p>Please check what output file was generated this time.</p>
 </div>
@@ -459,20 +462,20 @@ The code for adding this read group is<br/>
 <ol start="2" style="list-style-type: decimal">
 <li>What is the leftmost mapping position of the first read in the bamfile?</li>
 </ol>
-<p>For help with interpreting the bam file, please have a look at the <a href="https://samtools.github.io/hts-specs/SAMv1.pdf" target="_blank">Sequence Alignment/Map Format Specification</a>.</p>
+<p>Please have a look at the <a href="https://samtools.github.io/hts-specs/SAMv1.pdf" target="_blank">Sequence Alignment/Map Format Specification</a> for more information about bam files.</p>
 </div>
 </div>
 <div id="check-bam-in-igv" class="section level3" number="1.1.3">
 <h3><span class="header-section-number">1.1.3</span> Check bam in IGV</h3>
-<p>To use IGV on UPPMAX we recommend that you are connected via ThinLink. Please see instructions on how to use ThinLink in the course page in Canvas.
-Alternatively you can install IGV on your local computer, download the files using scp, and look at them locally. This procedure is also described in the course page in Canvas.
-The instructions below assume that you have logged in to UPPMAX via ThinLink.
+<p>To use IGV on UPPMAX we recommend that you are connected via ThinLink.
+Alternatively you can install IGV on your local computer, download the files using scp, and look at them locally.
+The instructions below assume that you have logged in to UPPMAX via ThinLink.<br />
 First use pwd to check if you are standing in the correct directory:</p>
 <pre class="bash"><code>pwd</code></pre>
 <p>Should return</p>
 <pre class="bash"><code>/proj/snicXXXX-XX-XXX/nobackup/username/ngsworkflow</code></pre>
 <p>To start IGV please type this in the terminal:</p>
-<pre><code>module load IGV/2.8.13
+<pre class="bash"><code>module load IGV/2.8.13
 igv.sh &amp;</code></pre>
 <p>In IGV:<br />
 In the upper left dropdown menu choose <code>Human hg19</code> (which is the same as GRCh37).<br />
@@ -483,7 +486,7 @@ IGV can be closed by selecting exit in the <code>File</code> menu or by clicking
 <h4>Questions</h4>
 <ol start="3" style="list-style-type: decimal">
 <li>What is the read length?</li>
-<li>How can you estimate the coverage at a specific position in IGV?</li>
+<li>Approximately how many reads cover an arbitrary position in the genomic region we are looking at?</li>
 <li>Which RefSeq Genes are located within the region chr2:136545000-136617000?</li>
 </ol>
 </div>
@@ -536,7 +539,7 @@ To view the meta-information lines describing the <em>INFO</em> column use:</p>
 <li>What genotype does the sample HG00097 have at position 2:136545844?</li>
 <li>What are the allelic depths for the reference and alternative alles in sample HG00097 at position 2:136545844?</li>
 </ol>
-<p>The following command can be used to count the data lines (i.e. number of variants) in the vcf file:</p>
+<p>The following command can be used to count the data lines (i.e. number of lines that don’t start with “#”) in the vcf file:</p>
 <pre class="bash"><code>grep -v &quot;#&quot; HG00097.vcf | wc -l</code></pre>
 </div>
 <div id="question-4" class="section level4 unnumbered">
@@ -588,10 +591,10 @@ You also need to index each output bam file:</p>
 <p>Please check what output file was generated this time.
 If you run out of time you can click below to get paths to precomputed bam files.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112125897" aria-expanded="false" aria-controls="acc2022030112125897">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030113361948" aria-expanded="false" aria-controls="acc2022030113361948">
 </button>
 </p>
-<div id="acc2022030112125897" class="collapse">
+<div id="acc2022030113361948" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -620,10 +623,10 @@ First use pwd to check if you are standing in the correct directory:</p>
 <p>Please replace <code>sample</code> with the real sample names.</p>
 <p>If you run out of time you can click below to get paths to the precomputed g.vcf files.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112129374" aria-expanded="false" aria-controls="acc2022030112129374">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030113360605" aria-expanded="false" aria-controls="acc2022030113360605">
 </button>
 </p>
-<div id="acc2022030112129374" class="collapse">
+<div id="acc2022030113360605" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -658,10 +661,10 @@ Then run GATK’s <code>GenoteypeGVC</code> to generate a vcf file:</p>
 -O cohort.vcf</code></pre>
 If you run out of time you can click below to get paths to the precomputed cohort.g.vcf and cohort.vcf files.
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112122526" aria-expanded="false" aria-controls="acc2022030112122526">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030113366103" aria-expanded="false" aria-controls="acc2022030113366103">
 </button>
 </p>
-<div id="acc2022030112122526" class="collapse">
+<div id="acc2022030113366103" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -804,10 +807,10 @@ gatk --java-options -Xmx7g VariantFiltration \
 <h4>Precomputed files</h4>
 If you run out of time, please click below to get the path to precomputed bam and vcf files for the GATK’s best practices section.
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112129888" aria-expanded="false" aria-controls="acc2022030112129888">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030113364479" aria-expanded="false" aria-controls="acc2022030113364479">
 </button>
 </p>
-<div id="acc2022030112129888" class="collapse">
+<div id="acc2022030113364479" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -858,7 +861,7 @@ module load GATK/4.1.4.1
 ## loop through the samples:
 for sample in HG00097 HG00100 HG00101;
 do
-  echo &quot;Now analyzing: &quot;$sample
+  echo &quot;Now analyzing: &quot;${sample}
   #Fill in the code for running bwa-mem for each sample here
   #Fill in the code for samtools index for each sample here
   #Fill in the code for HaplotypeCaller for each sample here
@@ -874,10 +877,10 @@ done
 <pre class="bash"><code>./joint_genotyping.sbatch</code></pre>
 <p>If you would like more help with creating the sbatch script, please look at our example solution:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112127947" aria-expanded="false" aria-controls="acc2022030112127947">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030113369139" aria-expanded="false" aria-controls="acc2022030113369139">
 </button>
 </p>
-<div id="acc2022030112127947" class="collapse">
+<div id="acc2022030113369139" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -897,9 +900,9 @@ module load GATK/4.1.4.1
 
 for sample in HG00097 HG00100 HG00101;
 do
-  echo &quot;Now analyzing: &quot;$sample
+  echo &quot;Now analyzing: &quot;${sample}
   bwa mem -R &quot;@RG   ID:${sample}    PU:flowcellx_lanex  SM:${sample}    LB:libraryx PL:illumina&quot; 
-  -t 1 human_g1k_v37_chr2.fasta &quot;${sample}_1.fq&quot; &quot;${sample}_2.fq&quot; | samtools sort &gt; &quot;${sample.bam&quot;
+  -t 1 human_g1k_v37_chr2.fasta &quot;${sample}_1.fq&quot; &quot;${sample}_2.fq&quot; | samtools sort &gt; &quot;${sample}.bam&quot;
 
   samtools index &quot;${sample}.bam&quot;
 
@@ -929,10 +932,10 @@ gatk --java-options -Xmx7g GenotypeGVCFs
 <h2>GATK best practices</h2>
 <p>Now please try to incorporate the additional steps from <a href="#gatk_bp">GATK’s best practices</a> into the workflow. If you run out of time you can sneak peek at our example solution below.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112123234" aria-expanded="false" aria-controls="acc2022030112123234">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030113369650" aria-expanded="false" aria-controls="acc2022030113369650">
 </button>
 </p>
-<div id="acc2022030112123234" class="collapse">
+<div id="acc2022030113369650" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
