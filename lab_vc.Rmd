@@ -231,7 +231,9 @@ Now let's start the main part of the workshop, which is variant calling in one s
 
 You should use `BWA mem` to align the reads to the reference genome.  
 
-In the call to `BWA mem` you need to add something called a *read group*, which contains information about how the reads were generated. This is required by HaplotypeCaller. Since we don't know exactly how the reads in the 1000 Genomes Project were generated we will assume that each pair of fastq files was generated from one library preparation (*libraryx*), derived from one biological sample (*HG00097*), that was run on one lane (*lanex*) of a flowcell (*flowcellx*) on the Illumina machine, and define a toy read group with this information.
+In the call to `BWA mem` you need to add something called a *read group*, which contains information about how the reads were generated.
+This is required by HaplotypeCaller. Since we don't know exactly how the reads in the 1000 Genomes Project were generated we will
+assume that each pair of fastq files was generated from one library preparation (*libraryx*), derived from one biological sample (*HG00097*), and run on one lane (*lanex*) of a flowcell (*flowcellx*) on the Illumina machine, and define a toy read group with this information.
 The code for adding this read group is<br/>
 **-R "@RG\\tID:HG00097\\tPU:lanex_flowcellx\\tSM:HG00097\\tLB:libraryx\\tPL:illumina"**.
 <div class="boxy boxy-yellow boxy-exclamation">
@@ -251,13 +253,14 @@ cat(paste0('/proj/',upid,'/nobackup/username/ngsworkflow'))
 Then use this command to align the reads, add the read group, sort the reads and write them to a bam file:
 
 ```bash
-bwa mem -R "@RG\tID:readgroup_HG00097\tPU:lanex_flowcellx\tSM:HG00097\tLB:libraryx\tPL:illumina" \
+bwa mem \
+-R "@RG\tID:readgroup_HG00097\tPU:lanex_flowcellx\tSM:HG00097\tLB:libraryx\tPL:illumina" \
 -t 1 human_g1k_v37_chr2.fasta HG00097_1.fq HG00097_2.fq | samtools sort > HG00097.bam
 ```
 
 Please check that the expected output file was generated and that it has content using `ls -lrt`.
 
-Next you need to index the bam file so that programs can randomly access the sorted data without reading the whole file. This command creates an index file with the same name as the input bam file, except with a .bai extension:
+Next you need to index the generated bam file so that programs can randomly access the sorted data without reading the whole file. This command creates an index file with the same name as the input bam file, except with a .bai extension:
 
 ```bash
 samtools index HG00097.bam
@@ -281,12 +284,12 @@ samtools view HG00097.bam | head -n 5
 #### Question {-}
 2. What is the leftmost mapping position of the first read in the bamfile?
 
-For help with interpreting the bam file, please have a look at the [Sequence Alignment/Map Format Specification](https://samtools.github.io/hts-specs/SAMv1.pdf).
+Please have a look at the [Sequence Alignment/Map Format Specification](https://samtools.github.io/hts-specs/SAMv1.pdf) for more information about bam files.
 
 ### Check bam in IGV
-To use IGV on UPPMAX we recommend that you are connected via ThinLink. Please see instructions on how to use ThinLink in the course page in Canvas.
-Alternatively you can install IGV on your local computer, download the files using scp, and look at them locally. This procedure is also described in the course page in Canvas.
-The instructions below assume that you have logged in to UPPMAX via ThinLink.
+To use IGV on UPPMAX we recommend that you are connected via ThinLink.
+Alternatively you can install IGV on your local computer, download the files using scp, and look at them locally.
+The instructions below assume that you have logged in to UPPMAX via ThinLink.\
 First use pwd to check if you are standing in the correct directory:
 ```bash
 pwd
@@ -296,7 +299,7 @@ Should return
 cat(paste0('/proj/',upid,'/nobackup/username/ngsworkflow'))
 ```
 To start IGV please type this in the terminal:
-```
+```bash
 module load IGV/2.8.13
 igv.sh &
 ```
@@ -308,7 +311,7 @@ IGV can be closed by selecting exit in the `File` menu or by clicking `x` in the
 
 #### Questions {-}
 3. What is the read length?
-4. How can you estimate the coverage at a specific position in IGV?
+4. Approximately how many reads cover an arbitrary position in the genomic region we are looking at?
 5. Which RefSeq Genes are located within the region chr2:136545000-136617000?
 
 ## Variant Calling
@@ -366,7 +369,7 @@ grep '136545844' HG00097.vcf
 9. What genotype does the sample HG00097 have at position 2:136545844?
 10. What are the allelic depths for the reference and alternative alles in sample HG00097 at position 2:136545844?
 
-The following command can be used to count the data lines (i.e. number of variants) in the vcf file:
+The following command can be used to count the data lines (i.e. number of lines that don't start with "#") in the vcf file:
 ```bash
 grep -v "#" HG00097.vcf | wc -l
 ```
@@ -687,7 +690,7 @@ module load GATK/4.1.4.1
 ## loop through the samples:
 for sample in HG00097 HG00100 HG00101;
 do
-  echo "Now analyzing: "$sample
+  echo "Now analyzing: "${sample}
   #Fill in the code for running bwa-mem for each sample here
   #Fill in the code for samtools index for each sample here
   #Fill in the code for HaplotypeCaller for each sample here
@@ -731,9 +734,9 @@ module load GATK/4.1.4.1
 
 for sample in HG00097 HG00100 HG00101;
 do
-  echo "Now analyzing: "$sample
+  echo "Now analyzing: "${sample}
   bwa mem -R "@RG\tID:${sample}\tPU:flowcellx_lanex\tSM:${sample}\tLB:libraryx\tPL:illumina" \
-  -t 1 human_g1k_v37_chr2.fasta "${sample}_1.fq" "${sample}_2.fq" | samtools sort > "${sample.bam"
+  -t 1 human_g1k_v37_chr2.fasta "${sample}_1.fq" "${sample}_2.fq" | samtools sort > "${sample}.bam"
 
   samtools index "${sample}.bam"
 
