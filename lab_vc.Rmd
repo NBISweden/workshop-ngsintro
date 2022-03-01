@@ -44,7 +44,7 @@ Whole genome sequencing (WGS) is a comprehensive method for analyzing entire gen
 
 <div class="boxy boxy-lightbulb">
 
-* You will work on the computing cluster Rackham at Uppmax
+* You will work on the computing cluster Rackham at UPPMAX
 * If you change the node you are working on you will need to reload the tool modules.
 * Please type commands in the terminal instead of copying and pasting them which often result in formatting errors.
 * Use tab completion.
@@ -69,9 +69,13 @@ HG00101       | British in England and Scotland    | Low coverage WGS
 
 ## Genomic region {#Genomicregion -}  
 
-The *LCT* gene on chromosome 2 encodes the enzyme lactase, which is responsible for the metabolism of lactose in mammals. Most mammals can not digest lactose as adults, but some humans can. Genetic variants upstream of the *LCT* gene lead to lactase persistence, which means that lactase is expressed also in adulthood and the carrier can continue to digest lactose. The variant rs4988235, located at position chr2:136608646 in the HG19 reference genome, has been shown to lead to lactose persistence. The alternative allele (A on the forward strand and T on the reverse strand) creates a new transcription factor binding site that enables continued expression of the gene after weaning.
+The *LCT* gene on chromosome 2 encodes the enzyme lactase, which is responsible for the metabolism of lactose in mammals.
+Most mammals can not digest lactose as adults, but some humans can.
+Genetic variants upstream of the *LCT* gene causes lactase persistence, which means that lactase is expressed also in adulthood and the carrier can continue to digest lactose.
+The variant rs4988235, located at position chr2:136608646 in the GRCh37 reference genome, has been shown to lead to lactose persistence.
+The alternative allele (A on the forward strand and T on the reverse strand) creates a new transcription factor binding site that enables continued expression of the gene after weaning.
 
-In this workshop we will detect genetic variants in the region chr2:136545000-136617000 in the three samples listed above, which will allow us to check if they carry the allele for lactase persistence.
+In this workshop we will detect genetic variants in the region chr2:136545000-136617000 in the three samples listed above, and check if they carry the allele for lactase persistence.
 
 For those interested in the details of the genetic bases for lactose tolerance, please read the first three pages of [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf) by Mattar et al. The variant rs4988235 is here referred to as LCT-13910C>T.  
 
@@ -98,14 +102,14 @@ cat(paste0(refdir))
 # Preparations {-}
 ## Local workspace  {#preparelaptop -}
 
-This lab will be done completely on Uppmax and we assume that you have logged in to Uppmax using `ThinLink`.
+This lab will be done completely on UPPMAX and we assume that you have logged in to UPPMAX using `ThinLink`.
 However, if you prefer to log in via normal `ssh` you can instead copy some of the resulting files to your laptop, install `IGV`, and run all the `IGV` steps on your laptop.
 If so, please start by creating a local workspace on your laptop, for example a folder called *ngsworkflow* on your desktop. You need to have write permission in this folder.
 If you work via `ThinLink` you don't have to crete a local workspace.
 
 ## UPPMAX {-}
 
-Please connect to the Rackham cluster on UPPMAX using `thinlink` and open a terminal window as described in the "Connecting to Uppmax" lab.
+Please connect to the Rackham cluster on UPPMAX using `thinlink` and open a terminal window as described in the "Connecting to UPPMAX" lab.
 
 ### Logon to a node {-}
 This lab should be done on a compute node (not the login node). First check if you already have an active job allocation using this command:
@@ -280,9 +284,9 @@ samtools view HG00097.bam | head -n 5
 For help with interpreting the bam file, please have a look at the [Sequence Alignment/Map Format Specification](https://samtools.github.io/hts-specs/SAMv1.pdf).
 
 ### Check bam in IGV
-To use IGV on Uppmax we recommend that you are connected via ThinLink. Please see instructions on how to use ThinLink in the course page in Canvas.
+To use IGV on UPPMAX we recommend that you are connected via ThinLink. Please see instructions on how to use ThinLink in the course page in Canvas.
 Alternatively you can install IGV on your local computer, download the files using scp, and look at them locally. This procedure is also described in the course page in Canvas.
-The instructions below assume that you have logged in to Uppmax via ThinLink.
+The instructions below assume that you have logged in to UPPMAX via ThinLink.
 First use pwd to check if you are standing in the correct directory:
 ```bash
 pwd
@@ -373,7 +377,7 @@ For more detailed information about vcf files please have a look at [The Variant
 
 ### Check vcf in IGV {#vcfinigv}
 
-We assume that you have logged in to Uppmax via ThinLink.\
+We assume that you have logged in to UPPMAX via ThinLink.\
 If you have closed IGV please open it again as described above.\
 Load the file HG00097.vcf into tracks window of IGV as you did with the HG00097.bam file earlier (load the bam file as well if it is not already loaded). You will now see all the variants called in HG00097.\
 You can view variants in the *LCT* gene by typing the gene name in the search box, and you can look specifically at the variant at position chr2:136545844 by typing that position in the search box.\
@@ -500,7 +504,7 @@ cat(paste0(vcfdir,'/cohort.vcf\n'))
 
 ## Check combined vcf file in IGV
 
-Again we assume that you have logged in to Uppmax via ThinLink.\
+Again we assume that you have logged in to UPPMAX via ThinLink.\
 If you have closed IGV please open it again as described above.\
 Load the files cohort.vcf, HG00097.bam, HG00100.bam and HG00101.bam into IGV as described earlier.\
 This time lets look closer at the variant rs4988235, located at position chr2:136608646 in the HG19 reference genome. This is the variant that has been shown to lead to lactase persistence.\
