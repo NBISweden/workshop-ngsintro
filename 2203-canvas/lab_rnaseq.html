@@ -439,10 +439,10 @@ rnaseq/
   +-- funannot/
   +-- plots</code></pre>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022022814307314" aria-expanded="false" aria-controls="acc2022022814307314">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112569934" aria-expanded="false" aria-controls="acc2022030112569934">
 </button>
 </p>
-<div id="acc2022022814307314" class="collapse">
+<div id="acc2022030112569934" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -650,10 +650,10 @@ sh
 <p><i class="fas fa-lightbulb"></i> The <code>grep</code> command is set to use regular expression with the <code>-E</code> argument. And it’s looking for lines starting with <code>#</code> or <code>19</code>. <code>#</code> fetches the header and comments while <code>19</code> denotes all rows with annotations for chromosome 19.</p>
 <p>Check what you have in your directory.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022022814301498" aria-expanded="false" aria-controls="acc2022022814301498">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112562755" aria-expanded="false" aria-controls="acc2022030112562755">
 </button>
 </p>
-<div id="acc2022022814301498" class="collapse">
+<div id="acc2022030112562755" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -676,10 +676,10 @@ output
 <h3><span class="header-section-number">3.3.1</span> Build index</h3>
 <p>Move into the <code>reference</code> directory if not already there. Load module HISAT2. Remember to load <code>bioinfo-tools</code> if you haven’t done so already.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022022814305764" aria-expanded="false" aria-controls="acc2022022814305764">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112564554" aria-expanded="false" aria-controls="acc2022030112564554">
 </button>
 </p>
-<div id="acc2022022814305764" class="collapse">
+<div id="acc2022030112564554" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -717,10 +717,10 @@ sh
 </div>
 <p>Once the indexing is complete, move into the <code>mouse_chr19_hisat2</code> directory and make sure you have all the files.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022022814300286" aria-expanded="false" aria-controls="acc2022022814300286">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112568487" aria-expanded="false" aria-controls="acc2022030112568487">
 </button>
 </p>
-<div id="acc2022022814300286" class="collapse">
+<div id="acc2022030112568487" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -787,10 +787,10 @@ sh
 </ul>
 <p><i class="fas fa-clipboard-list"></i> Now create a new bash script file named <code>hisat2_align.sh</code> in your <code>scripts</code> directory and add the script below to it.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022022814300690" aria-expanded="false" aria-controls="acc2022022814300690">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112578910" aria-expanded="false" aria-controls="acc2022030112578910">
 </button>
 </p>
-<div id="acc2022022814300690" class="collapse">
+<div id="acc2022030112578910" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -829,10 +829,10 @@ sh
 <p><strong>Optional</strong></p>
 <p>Try to create a new bash loop script (<code>hisat2_align_batch.sh</code>) to iterate over all fastq files in the directory and run the mapping using the <code>hisat2_align.sh</code> script. Note that there is a bit of a tricky issue here. You need to use two fastq files (<code>_1</code> and <code>_2</code>) per run rather than one file. There are many ways to do this and here is one.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022022814302844" aria-expanded="false" aria-controls="acc2022022814302844">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112577102" aria-expanded="false" aria-controls="acc2022030112577102">
 </button>
 </p>
-<div id="acc2022022814302844" class="collapse">
+<div id="acc2022030112577102" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -891,10 +891,10 @@ SRR3222409.13741570 163 19  3085066 60  15M2I84M    =   3085166 201 ATAGTACCTGGC
 <p><i class="fas fa-comments"></i> Can you identify what some of these columns are? SAM format description is available <a href="https://www.metagenomics.wiki/tools/samtools/bam-sam-file-format" target="_blank">here</a>. SAM output specifically from HISAT is described <a href="http://www.ccb.jhu.edu/software/hisat/manual.shtml" target="_blank">here</a>, especially the tags.</p>
 <p><i class="fas fa-clipboard-list"></i> The summary file gives a summary of the mapping run. This file is used by MultiQC later to collect mapping statistics. Inspect one of the mapping log files to identify the number of uniquely mapped reads and multi-mapped reads.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022022814304946" aria-expanded="false" aria-controls="acc2022022814304946">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112574963" aria-expanded="false" aria-controls="acc2022030112574963">
 </button>
 </p>
-<div id="acc2022022814304946" class="collapse">
+<div id="acc2022030112574963" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -927,10 +927,10 @@ output
 <p>Next, we need to index these BAM files. Indexing creates <code>.bam.bai</code> files which are required by many downstream programs to quickly and efficiently locate reads anywhere in the BAM file.</p>
 <p><i class="fas fa-clipboard-list"></i> Index all BAM files. Write a for-loop to index all BAM files using the command <code>samtools index file.bam</code>.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022022814301430" aria-expanded="false" aria-controls="acc2022022814301430">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112579561" aria-expanded="false" aria-controls="acc2022030112579561">
 </button>
 </p>
-<div id="acc2022022814301430" class="collapse">
+<div id="acc2022030112579561" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -1004,10 +1004,10 @@ qualimap rnaseq -pe \
 <p>The line <code>prefix=$( basename "$1" .bam)</code> is used to remove directory path and <code>.bam</code> from the input filename and create a prefix which will be used to label output. The export <code>unset DISPLAY</code> forces a ‘headless mode’ on the JAVA application, which would otherwise throw an error about X11 display. If that doesn’t work, one can also try <code>export DISPLAY=:0</code> or <code>export DISPLAY=""</code>. The last part <code>&gt;&amp; "${prefix}-qualimap.log"</code> saves the <strong>standard-out</strong> as a log file.</p>
 <p><i class="fas fa-clipboard-list"></i> Create a new bash loop script named <code>qualimap_batch.sh</code> with a bash loop to run the qualimap script over all BAM files. The loop should look like below.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022022814307388" aria-expanded="false" aria-controls="acc2022022814307388">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112572940" aria-expanded="false" aria-controls="acc2022030112572940">
 </button>
 </p>
-<div id="acc2022022814307388" class="collapse">
+<div id="acc2022030112572940" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -1023,10 +1023,10 @@ done</code></pre>
 </div>
 <p>Run the loop script <code>qualimap_batch.sh</code> in the directory <code>4_qualimap</code>.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022022814306666" aria-expanded="false" aria-controls="acc2022022814306666">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112576115" aria-expanded="false" aria-controls="acc2022030112576115">
 </button>
 </p>
-<div id="acc2022022814306666" class="collapse">
+<div id="acc2022030112576115" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -1088,10 +1088,10 @@ sh
 <p>We could run featureCounts on each BAM file, produce a text output for each sample and combine the output. But the easier way is to provide a list of all BAM files and featureCounts will combine counts for all samples into one text file.</p>
 <p>Below is the script that we will use:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022022814302989" aria-expanded="false" aria-controls="acc2022022814302989">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112572225" aria-expanded="false" aria-controls="acc2022030112572225">
 </button>
 </p>
-<div id="acc2022022814302989" class="collapse">
+<div id="acc2022030112572225" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -1121,10 +1121,10 @@ featureCounts \
 <p>You should be standing here to run this:</p>
 <pre><code>/proj/snicXXXX-XX-XXX/nobackup/username/rnaseq/5_dge</code></pre>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022022814303364" aria-expanded="false" aria-controls="acc2022022814303364">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112572976" aria-expanded="false" aria-controls="acc2022030112572976">
 </button>
 </p>
-<div id="acc2022022814303364" class="collapse">
+<div id="acc2022030112572976" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -1154,10 +1154,10 @@ output
 <p>For downstream steps, we will NOT use this <code>counts.txt</code> file. Instead we will use <strong>counts_full.txt</strong> from the back-up folder. This contains counts across all chromosomes. This is located here: <code>/sw/courses/ngsintro/rnaseq/main/5_dge/</code>. Copy this file to your <code>5_dge</code> directory.</p>
 <p><i class="fas fa-exclamation-circle"></i> Remember to replace username.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022022814308072" aria-expanded="false" aria-controls="acc2022022814308072">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030112570705" aria-expanded="false" aria-controls="acc2022030112570705">
 </button>
 </p>
-<div id="acc2022022814308072" class="collapse">
+<div id="acc2022030112570705" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
