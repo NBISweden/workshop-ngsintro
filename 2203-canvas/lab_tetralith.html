@@ -264,7 +264,7 @@ div.tocify {
 <div id="interactive-session" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Interactive session</h1>
 <p>On Tetralith you enter the <em>login node</em>, which is not intended for compute intensive tasks. You should therefore book a compute node, or in this case three cores:</p>
-<pre class="bash"><code>tetralith1$ interactive -A snicXXXX-XX-XXX -t 04:00:00 -n 3</code></pre>
+<pre class="bash"><code>tetralith1$ interactive -A snic2022-22-186 -t 04:00:00 -n 3</code></pre>
 <p>Please adjust the requested time depending on what lab you will be working on. After a minute or so you should have gotten your interactive job.</p>
 <div class="boxy boxy-lightbulb">
 <p>Note that your terminal prompt changed to something like <code>&lt;nsc_username&gt;@n424 $</code> (or another node name), which means that you are now running on one of the compute nodes.</p>
@@ -274,7 +274,7 @@ div.tocify {
 <h1><span class="header-section-number">3</span> UPPMAX singularity container</h1>
 <p>We will use a singularity container (a virtual computer) that mimics the UPPMAX computing environment. Once you have started the singularity container your environment will look exactly as on UPPMAX, and the software used in this workshop will be available through the module system inside the container.
 Use this command to start the singularity container:</p>
-<pre class="bash"><code>n424$ singularity shell -B /proj/snicXXXX-XX-XXX/users:/proj/snicXXXX-XX-XXX/nobackup /proj/snicXXXX-XX-XXX/ngsintro.sif</code></pre>
+<pre class="bash"><code>n424$ singularity shell -B /proj/snic2022-22-186/users:/proj/snic2022-22-123/nobackup /proj/snic2022-22-186/ngsintro.sif</code></pre>
 <div class="boxy boxy-lightbulb">
 <p>Your terminal prompt changed to something like <code>&lt;nsc_username&gt;@offline-uppmax$</code>. This means that you have moved into a “virtual computer” that mimics the UPPMAX environment.</p>
 </div>
@@ -290,10 +290,10 @@ To close the singularity container later on just type <code>exit</code>in the te
 <h1><span class="header-section-number">4</span> Cluster workspace</h1>
 <p>While running the UPPMAX singularity container, create a workspace for this exercise. This will be the “cluster workspace” in which you should perform the analyses, as if you would have worked on UPPMAX.</p>
 <p>The name of the workspace depends on what lab you are working on. For example, if you are working on the introduction to Linux lab then call the workspace “linux_tutorial”. Once the workspace is created you should go into it.</p>
-<pre class="bash"><code>offline-uppmax$ mkdir /proj/snicXXXX-XX-XXX/nobackup/&lt;nsc_username&gt;/linux_tutorial
-offline-uppmax$ cd /proj/snicXXXX-XX-XXX/nobackup/&lt;nsc_username&gt;/linux_tutorial</code></pre>
-<p>All files and folders that you create in /proj/snicXXXX-XX-XXX/nobackup/nsc_username/ while running the UPPMAX singularity container can be reached also from outside of the container, in this folder on Tetralith:</p>
-<pre class="bash"><code>tetralith$ /proj/snicXXXX-XX-XXX/users/&lt;nsc_username&gt;/</code></pre>
+<pre class="bash"><code>offline-uppmax$ mkdir /proj/snic2022-22-123/nobackup/&lt;nsc_username&gt;/linux_tutorial
+offline-uppmax$ cd /proj/snic2022-22-123/nobackup/&lt;nsc_username&gt;/linux_tutorial</code></pre>
+<p>All files and folders that you create in /proj/snic2022-22-123/nobackup/nsc_username/ while running the UPPMAX singularity container can be reached also from outside of the container, in this folder on Tetralith:</p>
+<pre class="bash"><code>tetralith$ /proj/snic2022-22-186/users/&lt;nsc_username&gt;/</code></pre>
 <p>When you have the UPPMAX singularity image up and running you can follow regular lab instructions, except that you should not connect to UPPMAX or book a node, and you should work in the cluster workspace defined here.</p>
 </div>
 

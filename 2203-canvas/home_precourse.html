@@ -180,7 +180,7 @@ pre code {
 <p>Remote computing clusters (UPPMAX and NSC) will be use for data analyses. A SUPR/SNIC account is needed to use these resources.</p>
 <p>If you do not already have one, create an account at <a href="https://supr.snic.se/" target="_blank">https://supr.snic.se/</a>.</p>
 <p><img src="data/common/supr-login.png" class="fancyimage" style="width:70%;"></p>
-<p>Log in to <a href="https://supr.snic.se/" target="_blank">SUPR/SNIC</a> and request membership to the project IDs <strong>snicXXXX-XX-XXX</strong>, <strong>snicXXXX-XX-XXX</strong> and <strong>snicXXXX-XX-XXX</strong>.</p>
+<p>Log in to <a href="https://supr.snic.se/" target="_blank">SUPR/SNIC</a> and request membership to the project IDs <strong>snic2022-22-123</strong> and <strong>snic2022-22-186</strong>.</p>
 <p><img src="data/common/supr-request.png" class="fancyimage" style="width:70%;"></p>
 <p>Once you are accepted to a project, you should see that project listed under your active projects.</p>
 <p><img src="data/common/supr-projects.png" class="fancyimage" style="width:70%;"></p>
@@ -191,52 +191,41 @@ pre code {
 <p><strong>Note:</strong> You will get one username &amp; password for the account on UPPMAX, and one username and password for the account on NSC. Please keep track of both, we will tell you when to use which account during the workshop.</p>
 </div>
 </div>
-<div id="install-tools-for-ssh-sftp-access" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Install tools for SSH &amp; SFTP access</h1>
-<div id="ssh" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> SSH</h2>
-<p><a href="http://mobaxterm.mobatek.net" target="_blank"><img src="data/common/mobaxterm.png" /></a></p>
-<p>You need a program to connect to a remote cluster (UPPMAX and NSC). Linux and Mac users already have terminal on their systems. If you are on a Windows system, we recommend <a href="http://mobaxterm.mobatek.net" target="_blank">MobaXterm</a>. It is recommended that you INSTALL the program and not use the portable version. MobaXterm also has an integrated SFTP file browser.</p>
-</div>
-<div id="xquartz" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> XQuartz</h2>
-<p><a href="https://www.xquartz.org/" target="_blank"><img src="data/common/xquartz.png" /></a></p>
-<p>Mac users will need to download and install <a href="https://www.xquartz.org/" target="_blank">XQuartz</a> for X11 forwarding. <em>ie</em>; to forward remotely opened windows to local machine.</p>
-</div>
-<div id="sftp-browser" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> SFTP Browser</h2>
+<div id="install-tools" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Install tools</h1>
+<div id="sftp-browser" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> SFTP Browser</h2>
 <p><a href="https://filezilla-project.org/" target="_blank"><img src="data/common/filezilla.png" /></a></p>
 <p>When you need to transfer data between the remote cluster and your computer, you can use the tools SCP or SFTP through the terminal. Windows users can use the SFTP browser available with MobaXterm. If you prefer a GUI to upload and download files from the remote cluster, we recommend installing <a href="https://filezilla-project.org/" target="_blank">FileZilla</a>.</p>
 </div>
-<div id="test-the-connection-to-uppmax" class="section level2" number="2.4">
-<h2><span class="header-section-number">2.4</span> Test the connection to UPPMAX</h2>
+<div id="thinlinc" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> ThinLinc</h2>
+<p><a href="(https://www.cendio.com/thinlinc/download)"><img src="data/common/thinlinc.png" /></a></p>
+<p>ThinLinc allows graphical connection to UPPMAX. Download and install from <a href="https://www.cendio.com/thinlinc/download" target="_blank">https://www.cendio.com/thinlinc/download</a>. It can be used directly from the browser for most part, but if there are issues, the installed application may be helpful.</p>
+</div>
+<div id="zoom" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Zoom</h2>
+<p><a href="https://zoom.us/" target="_blank"><img src="data/common/zoom.png" /></a></p>
+<p>Zoom is used for video-conferencing, lectures and group exercises. Please install/update to the latest version of <a href="https://zoom.us/" target="_blank">Zoom</a>.</p>
+</div>
+</div>
+<div id="connect-to-uppmax" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Connect to UPPMAX</h1>
+<p>See “Connecting to UPPMAX” instructions on the <strong>Content</strong> page.</p>
+<div class="boxy boxy-grey boxy-lightbulb">
+<p>If you want to get a primer on using the terminal, you can get started with the following <strong>Tutorial One</strong> at this link <em><a href="http://www.ee.surrey.ac.uk/Teaching/Unix/" target="_blank">Unix tutorial for beginners</a></em>. You can use <a href="https://scilifelab.github.io/courses/ngsintro/common/emu/" target="_blank">https://scilifelab.github.io/courses/ngsintro/common/emu/</a> <a href="https://bellard.org/jslinux/vm.html?url=https://bellard.org/jslinux/buildroot-x86.cfg" target="_blank">(or this mirror)</a> to try the commands in the tutorial, so that you don’t mess up any real world system. If you any questions regarding this tutorial contact: <em>martin.dahlo [at] scilifelab.uu.se</em>.</p>
+</div>
+</div>
+<div id="create-a-user-folder" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Create a user folder</h1>
 <div class="boxy boxy-yellow boxy-exclamation">
 <p><strong>Note:</strong> Where <code>username</code> is mentioned, change to your user name.</p>
 </div>
-<div class="boxy boxy-grey boxy-lightbulb">
-<p>For this step, you will have to use the terminal a bit. You can get started by following <strong>Tutorial One</strong> at this link <em><a href="http://www.ee.surrey.ac.uk/Teaching/Unix/" target="_blank">Unix tutorial for beginners</a></em>. You can use <a href="https://scilifelab.github.io/courses/ngsintro/common/emu/" target="_blank">https://scilifelab.github.io/courses/ngsintro/common/emu/</a> <a href="https://bellard.org/jslinux/vm.html?url=https://bellard.org/jslinux/buildroot-x86.cfg" target="_blank">(or this mirror)</a> to try the commands in the tutorial, so that you don’t mess up any real world system. If you any questions regarding this tutorial contact: <em>martin.dahlo [at] scilifelab.uu.se</em>.</p>
-</div>
-<p><strong>Connect to UPPMAX:</strong> Open the terminal (Windows users can use MobaXterm) and type <code>ssh -Y username@rackham.uppmax.uu.se</code>, then enter your password. The password will not be visible as you type.</p>
-<p><strong>Create a user folder: </strong> Run the following below.</p>
-<pre class="bash"><code>mkdir /proj/snicXXXX-XX-XXX/nobackup/username</code></pre>
+<p>Once you have logged in to UPPMAX, run the following below.</p>
+<pre class="bash"><code>mkdir /proj/snic2022-22-123/nobackup/username</code></pre>
 <p>This creates a directory with your user name. You will work inside this directory for the workshop. If you cannot write to the folder, the most likely reason is that you have not requested access to the workshop project via SUPR. This is described in step 1 above.</p>
 <div class="boxy boxy-yellow boxy-exclamation">
 <p><strong>Note:</strong> It may take an hour or so from request approval, before you can actually write to the folder. We will check before the workshop that all students have logged in and done this, so do not forget!</p>
-</div>
-</div>
-</div>
-<div id="install-other-tools" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Install other tools</h1>
-<div id="zoom" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Zoom</h2>
-<p><a href="https://zoom.us/" target="_blank"><img src="data/common/zoom.png" /></a></p>
-<p>Please install the latest version of <a href="https://zoom.us/" target="_blank">Zoom</a>.</p>
-</div>
-<div id="igv" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> IGV</h2>
-<p>Please install IGV on your local system before the start of the workshop.</p>
-<p><a href="https://www.broadinstitute.org/igv/" target="_blank"><img src="data/common/IGVlogo.png" /></a></p>
-<p><strong>Download IGV</strong> (Integrated Genome Browser) from the <a href="https://www.broadinstitute.org/igv/" target="_blank">Broad Institute</a> on your own computer and have the mouse genome (mm10) as well as the human genome (hg19) available.</p>
 </div>
 </div>
 

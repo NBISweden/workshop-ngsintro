@@ -349,9 +349,9 @@ If you work via <code>ThinLink</code> you don’t have to crete a local workspac
 <p>Where <code>username</code> should be replaced with your username.<br/>
 If no jobs are listed you should allocate a job for this lab. If you already have an active job allocation please proceed to <strong>Connect to the node</strong> below.<br/>
 Use this code to allocate a job on day 1 of variant-calling:</p>
-<pre class="bash"><code>salloc -A snicXXXX-XX-XXX -t 04:00:00 -p core -n 1 --no-shell --reservation=snicXXXX-XX-XXX_wed</code></pre>
+<pre class="bash"><code>salloc -A snic2022-22-123 -t 04:00:00 -p core -n 1 --no-shell --reservation=snicXXXX-XX-XXX_wed</code></pre>
 <p>Use this code to allocate a job on day 2 of variant-calling:</p>
-<pre class="bash"><code>salloc -A snicXXXX-XX-XXX -t 04:00:00 -p core -n 1 --no-shell --reservation=snicXXXX-XX-XXX_thu</code></pre>
+<pre class="bash"><code>salloc -A snic2022-22-123 -t 04:00:00 -p core -n 1 --no-shell --reservation=snicXXXX-XX-XXX_thu</code></pre>
 <p>Once your job allocation has been granted (should not take long) please check the allocation again using:</p>
 <pre class="bash"><code>squeue -u username</code></pre>
 <p>You should now see that you have an active job allocation. The node name for your job is listed under the nodelist header.<br/>
@@ -362,13 +362,13 @@ Use this code to allocate a job on day 1 of variant-calling:</p>
 <h3>Workspace on UPPMAX</h3>
 <p>You should work in your folder under the course’s nobackup folder, just like you have done during the previous labs.
 Start by going there using this command:</p>
-<pre class="bash"><code>cd /proj/snicXXXX-XX-XXX/nobackup/username</code></pre>
+<pre class="bash"><code>cd /proj/snic2022-22-123/nobackup/username</code></pre>
 <p>Where <code>username</code> should be replaced with your real username.
 Create a folder for this exercise and move into it:</p>
 <pre class="bash"><code>mkdir ngsworkflow
 cd ngsworkflow</code></pre>
 <p>Make sure you are located in</p>
-<pre class="bash"><code>/proj/snicXXXX-XX-XXX/nobackup/username/ngsworkflow</code></pre>
+<pre class="bash"><code>/proj/snic2022-22-123/nobackup/username/ngsworkflow</code></pre>
 <p>for the rest of this lab.</p>
 </div>
 <div id="symbolic-links-to-data" class="section level3 unnumbered">
@@ -404,7 +404,7 @@ When loading the module GATK/4.1.4.1 you will get a warning message about the fa
 First check if you are standing in the correct directory:</p>
 <pre class="bash"><code>pwd</code></pre>
 <p>Should return</p>
-<pre class="bash"><code>/proj/snicXXXX-XX-XXX/nobackup/username/ngsworkflow</code></pre>
+<pre class="bash"><code>/proj/snic2022-22-123/nobackup/username/ngsworkflow</code></pre>
 <p>Generate BWA index files:</p>
 <pre class="bash"><code>bwa index -a bwtsw human_g1k_v37_chr2.fasta</code></pre>
 <p>Check that several new files have been created using <code>ls -l</code>. Then Generate a samtools index:</p>
@@ -435,7 +435,7 @@ The code for adding this read group is<br/>
 <p>First use pwd to check if you are standing in the correct directory:</p>
 <pre class="bash"><code>pwd</code></pre>
 <p>Should return</p>
-<pre class="bash"><code>/proj/snicXXXX-XX-XXX/nobackup/username/ngsworkflow</code></pre>
+<pre class="bash"><code>/proj/snic2022-22-123/nobackup/username/ngsworkflow</code></pre>
 <p>Then use this command to align the reads, add the read group, sort the reads and write them to a bam file:</p>
 <pre class="bash"><code>bwa mem \
 -R &quot;@RG\tID:readgroup_HG00097\tPU:lanex_flowcellx\tSM:HG00097\tLB:libraryx\tPL:illumina&quot; \
@@ -473,7 +473,7 @@ The instructions below assume that you have logged in to UPPMAX via ThinLink.<br
 First use pwd to check if you are standing in the correct directory:</p>
 <pre class="bash"><code>pwd</code></pre>
 <p>Should return</p>
-<pre class="bash"><code>/proj/snicXXXX-XX-XXX/nobackup/username/ngsworkflow</code></pre>
+<pre class="bash"><code>/proj/snic2022-22-123/nobackup/username/ngsworkflow</code></pre>
 <p>To start IGV please type this in the terminal:</p>
 <pre class="bash"><code>module load IGV/2.8.13
 igv.sh &amp;</code></pre>
@@ -499,7 +499,7 @@ IGV can be closed by selecting exit in the <code>File</code> menu or by clicking
 <p>Now we will detect short variants in the bam file using GATK’s <code>HaplotypeCaller</code>. First use pwd to check if you are standing in the correct directory:</p>
 <pre class="bash"><code>pwd</code></pre>
 <p>Should return</p>
-<pre class="bash"><code>/proj/snicXXXX-XX-XXX/nobackup/username/ngsworkflow</code></pre>
+<pre class="bash"><code>/proj/snic2022-22-123/nobackup/username/ngsworkflow</code></pre>
 <p>Then run:</p>
 <pre class="bash"><code>gatk --java-options -Xmx7g HaplotypeCaller \
 -R human_g1k_v37_chr2.fasta \
@@ -580,7 +580,7 @@ You also need to adjust the read group information so that it matches each new s
 First use pwd to check if you are standing in the correct directory:</p>
 <pre class="bash"><code>pwd</code></pre>
 <p>Should return</p>
-<pre class="bash"><code>/proj/snicXXXX-XX-XXX/nobackup/username/ngsworkflow</code></pre>
+<pre class="bash"><code>/proj/snic2022-22-123/nobackup/username/ngsworkflow</code></pre>
 <p>Then use this command for every sample to align the reads, add the read group, sort the reads and write them to a bam file:</p>
 <pre class="bash"><code>bwa mem -R &quot;@RG\tID:readgroup_&lt;sample&gt;\tPU:lanex_flowcellx\tSM:&lt;sample&gt;\tLB:libraryx\tPL:illumina&quot; \
 -t 1 human_g1k_v37_chr2.fasta sample_1.fq sample_2.fq | samtools sort &gt; sample.bam</code></pre>
@@ -591,10 +591,10 @@ You also need to index each output bam file:</p>
 <p>Please check what output file was generated this time.
 If you run out of time you can click below to get paths to precomputed bam files.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030113361948" aria-expanded="false" aria-controls="acc2022030113361948">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031014486974" aria-expanded="false" aria-controls="acc2022031014486974">
 </button>
 </p>
-<div id="acc2022030113361948" class="collapse">
+<div id="acc2022031014486974" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -613,7 +613,7 @@ sh
 First use pwd to check if you are standing in the correct directory:</p>
 <pre class="bash"><code>pwd</code></pre>
 <p>Should return</p>
-<pre class="bash"><code>/proj/snicXXXX-XX-XXX/nobackup/username/ngsworkflow</code></pre>
+<pre class="bash"><code>/proj/snic2022-22-123/nobackup/username/ngsworkflow</code></pre>
 <p>Then:</p>
 <pre class="bash"><code>gatk --java-options -Xmx7g HaplotypeCaller \
 -R human_g1k_v37_chr2.fasta \
@@ -623,10 +623,10 @@ First use pwd to check if you are standing in the correct directory:</p>
 <p>Please replace <code>sample</code> with the real sample names.</p>
 <p>If you run out of time you can click below to get paths to the precomputed g.vcf files.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030113360605" aria-expanded="false" aria-controls="acc2022030113360605">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031014484686" aria-expanded="false" aria-controls="acc2022031014484686">
 </button>
 </p>
-<div id="acc2022030113360605" class="collapse">
+<div id="acc2022031014484686" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -645,7 +645,7 @@ sh
 First use pwd to check if you are standing in the correct directory:</p>
 <pre class="bash"><code>pwd</code></pre>
 <p>Should return</p>
-<pre class="bash"><code>/proj/snicXXXX-XX-XXX/nobackup/username/ngsworkflow</code></pre>
+<pre class="bash"><code>/proj/snic2022-22-123/nobackup/username/ngsworkflow</code></pre>
 <p>Then:</p>
 <pre class="bash"><code>gatk --java-options -Xmx7g CombineGVCFs \
 -R human_g1k_v37_chr2.fasta \
@@ -661,10 +661,10 @@ Then run GATK’s <code>GenoteypeGVC</code> to generate a vcf file:</p>
 -O cohort.vcf</code></pre>
 If you run out of time you can click below to get paths to the precomputed cohort.g.vcf and cohort.vcf files.
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030113366103" aria-expanded="false" aria-controls="acc2022030113366103">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031014484757" aria-expanded="false" aria-controls="acc2022031014484757">
 </button>
 </p>
-<div id="acc2022030113366103" class="collapse">
+<div id="acc2022031014484757" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -807,10 +807,10 @@ gatk --java-options -Xmx7g VariantFiltration \
 <h4>Precomputed files</h4>
 If you run out of time, please click below to get the path to precomputed bam and vcf files for the GATK’s best practices section.
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030113364479" aria-expanded="false" aria-controls="acc2022030113364479">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031014487254" aria-expanded="false" aria-controls="acc2022031014487254">
 </button>
 </p>
-<div id="acc2022030113364479" class="collapse">
+<div id="acc2022031014487254" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -877,17 +877,17 @@ done
 <pre class="bash"><code>./joint_genotyping.sbatch</code></pre>
 <p>If you would like more help with creating the sbatch script, please look at our example solution:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030113369139" aria-expanded="false" aria-controls="acc2022030113369139">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031014486212" aria-expanded="false" aria-controls="acc2022031014486212">
 </button>
 </p>
-<div id="acc2022030113369139" class="collapse">
+<div id="acc2022031014486212" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
 sh
 </div>
 <pre class="sh"><code>#!/bin/bash
-#SBATCH -A snicXXXX-XX-XXX
+#SBATCH -A snic2022-22-123
 #SBATCH -p core
 #SBATCH -n 1
 #SBATCH -t 1:00:00
@@ -932,17 +932,17 @@ gatk --java-options -Xmx7g GenotypeGVCFs
 <h2>GATK best practices</h2>
 <p>Now please try to incorporate the additional steps from <a href="#gatk_bp">GATK’s best practices</a> into the workflow. If you run out of time you can sneak peek at our example solution below.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030113369650" aria-expanded="false" aria-controls="acc2022030113369650">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031014488143" aria-expanded="false" aria-controls="acc2022031014488143">
 </button>
 </p>
-<div id="acc2022030113369650" class="collapse">
+<div id="acc2022031014488143" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
 sh
 </div>
 <pre class="sh"><code>#!/bin/bash
-#SBATCH -A snicXXXX-XX-XXX
+#SBATCH -A snic2022-22-123
 #SBATCH -p core
 #SBATCH -n 1
 #SBATCH -t 1:00:00

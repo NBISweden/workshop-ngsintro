@@ -348,7 +348,7 @@ in the 3 samples listed above to illustrate variant calling in NGS data. We will
 <div id="interactive-session" class="section level3 unnumbered">
 <h3>Interactive session</h3>
 <p>On Tetralith you enter the <em>login node</em>, which is not intended for compute intensive tasks. You should therefore book a compute node, or in this case three cores:</p>
-<pre class="bash"><code>tetralith1$ interactive -A snicXXXX-XX-XXX -t 04:00:00 -n 3</code></pre>
+<pre class="bash"><code>tetralith1$ interactive -A snic2022-22-186 -t 04:00:00 -n 3</code></pre>
 <div class="boxy boxy-lightbulb">
 <p>Your terminal prompt changed to something like <code>&lt;nsc_username&gt;@n424 $</code> (or another node name), which means that you are now running on one of the compute nodes.</p>
 </div>
@@ -357,7 +357,7 @@ in the 3 samples listed above to illustrate variant calling in NGS data. We will
 <h3>UPPMAX singularity container</h3>
 <p>We will use a singularity container (a virtual computer) that mimics the UPPMAX computing environment. Once you have started the singularity container your environment will look exactly as on UPPMAX, and the software used in this workshop will be available through the module system.</p>
 <p>Use this command to start the singularity container:</p>
-<pre class="bash"><code>n424$ singularity shell -B /proj/snicXXXX-XX-XXX/users:/proj/snicXXXX-XX-XXX/nobackup /proj/snicXXXX-XX-XXX/ngsintro.sif</code></pre>
+<pre class="bash"><code>n424$ singularity shell -B /proj/snic2022-22-186/users:/proj/snic2022-22-123/nobackup /proj/snic2022-22-186/ngsintro.sif</code></pre>
 <div class="boxy boxy-lightbulb">
 <p>Note that your terminal prompt changed to something like <code>&lt;nsc_username&gt;@offline-uppmax$</code>. This means that you have moved into a “virtual computer” that mimics the UPPMAX environment.</p>
 </div>
@@ -368,11 +368,11 @@ in the 3 samples listed above to illustrate variant calling in NGS data. We will
 <div id="cluster-workspace" class="section level3 unnumbered">
 <h3>Cluster workspace</h3>
 <p>While running the UPPMAX singularity container, create a workspace folder for this exercise and move into it:</p>
-<pre class="bash"><code>offline-uppmax$ mkdir /proj/snicXXXX-XX-XXX/nobackup/&lt;nsc_username&gt;/ngsworkflow
-offline-uppmax$ cd /proj/snicXXXX-XX-XXX/nobackup/&lt;nsc_username&gt;/ngsworkflow</code></pre>
+<pre class="bash"><code>offline-uppmax$ mkdir /proj/snic2022-22-123/nobackup/&lt;nsc_username&gt;/ngsworkflow
+offline-uppmax$ cd /proj/snic2022-22-123/nobackup/&lt;nsc_username&gt;/ngsworkflow</code></pre>
 <p>The folder you just created will be referred to as your <em>cluster workspace</em> throughout this workshop.</p>
 <p>The <em>cluster workspace</em> can be reached also from outside of the UPPMAX singularity container, in this folder on Tetralith:</p>
-<pre class="bash"><code>tetralith$ /proj/snicXXXX-XX-XXX/users/&lt;nsc_username&gt;/ngsworkflow</code></pre>
+<pre class="bash"><code>tetralith$ /proj/snic2022-22-186/users/&lt;nsc_username&gt;/ngsworkflow</code></pre>
 <p>This is the path you must use when downloading files to your <em>local workspace</em> later on.</p>
 <hr />
 <div class="boxy boxy-yellow boxy-exclamation">
@@ -467,7 +467,7 @@ offline-uppmax$ module load GATK/4.1.4.1</code></pre>
 <p>Integrated Genomics Viewer (IGV) provides an interactive visualisation of the reads in a bam file. Here we will show you how to run IGV on your laptop. If you have not used IGV on your laptop before, then go to the IGV <a href="https://software.broadinstitute.org/software/igv/download" target="_blank">download page</a>, and follow the instructions to download it. It will prompt you to fill in some information and agree to license. Launch the viewer through web start. The 1.2 Gb version should be sufficient for our data.</p>
 <p><strong>Download the bam file</strong></p>
 <p>Open a new terminal window on your laptop and navigate to your <a href="#preparelaptop">local workspace</a>, <strong>but do not log in to NSC</strong>. Download the .bam and .bam.bai files you just generated with this command:</p>
-<pre class="bash"><code>scp &lt;nsc_username&gt;@tetralith.nsc.uu.se:/proj/snicXXXX-XX-XXX/users/&lt;nsc_username&gt;/ngsworkflow/HG00097.bam* .</code></pre>
+<pre class="bash"><code>scp &lt;nsc_username&gt;@tetralith.nsc.uu.se:/proj/snic2022-22-186/users/&lt;nsc_username&gt;/ngsworkflow/HG00097.bam* .</code></pre>
 <p>Check that the files are now present in your <em>local workspace</em> using <code>ls -lrt</code>.</p>
 <p><strong>Look at the bam file in IGV</strong></p>
 <ul>
@@ -523,7 +523,7 @@ offline-uppmax$ module load GATK/4.1.4.1</code></pre>
 <div id="vcfinigv" class="section level3" number="1.2.4">
 <h3><span class="header-section-number">1.2.4</span> Check vcf in IGV</h3>
 <p>Download the vcf file and its index to the <em>local workspace</em> on your laptop, just like you did with the bam file and its index earlier. Open a new terminal window on your laptop and navigate to your local workspace, <strong>but do not log in to NSC</strong>. Download the files that you just generated with:</p>
-<pre class="bash"><code>scp &lt;nsc_username&gt;@tetralith.nsc.uu.se:/proj/snicXXXX-XX-XXX/users/&lt;nsc_username&gt;/ngsworkflow/HG00097.vcf* .</code></pre>
+<pre class="bash"><code>scp &lt;nsc_username&gt;@tetralith.nsc.uu.se:/proj/snic2022-22-186/users/&lt;nsc_username&gt;/ngsworkflow/HG00097.vcf* .</code></pre>
 <p>Please replace <code>&lt;nsc_nsc_username&gt;</code> with your NSC user name.<br />
 Note that the * in the end of the file name means that you will download all files that start with <em>HG00097.vcf</em>, so you will also download the vcf index.<br />
 Check that the files were properly downloaded to your <em>local workspace</em> using <code>ls -lrt</code>.</p>
@@ -552,10 +552,10 @@ Check that the files were properly downloaded to your <em>local workspace</em> u
 <p>Run <code>BWA mem</code> for all three samples in the data set. <code>BWA mem</code> should be run exactly <a href="#bwamem">as above</a> but with the new sample names. Please note that you also need to adjust the SM field in the read group so that it matches the new sample name, otherwise the <a href="#jointgenotyping">joint genotyping step</a> will not work properly.</p>
 <p>If you run out of time, please click below to get paths to precomputed bam files.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030113359619" aria-expanded="false" aria-controls="acc2022030113359619">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031014473481" aria-expanded="false" aria-controls="acc2022031014473481">
 </button>
 </p>
-<div id="acc2022030113359619" class="collapse">
+<div id="acc2022031014473481" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -575,10 +575,10 @@ sh
 <p>Please replace <sample> with the real sample names.</p>
 <p>If you run out of time, please click below to get paths to the precomputed g.vcf files.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030113350043" aria-expanded="false" aria-controls="acc2022030113350043">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031014477738" aria-expanded="false" aria-controls="acc2022031014477738">
 </button>
 </p>
-<div id="acc2022030113350043" class="collapse">
+<div id="acc2022031014477738" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -600,10 +600,10 @@ sh
 <pre class="bash"><code>offline-uppmax$ gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g.vcf -O cohort.vcf</code></pre>
 <p>If you run out of time, please click below to get paths to the precomputed cohort.g.vcf and cohort.vcf files.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030113357369" aria-expanded="false" aria-controls="acc2022030113357369">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031014478845" aria-expanded="false" aria-controls="acc2022031014478845">
 </button>
 </p>
-<div id="acc2022030113357369" class="collapse">
+<div id="acc2022031014478845" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -654,10 +654,10 @@ done
 <pre class="bash"><code>./joint_genotyping.sh</code></pre>
 <p>If you would like more help with creating the bash script, please look at our example solution:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030113350475" aria-expanded="false" aria-controls="acc2022030113350475">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031014479854" aria-expanded="false" aria-controls="acc2022031014479854">
 </button>
 </p>
-<div id="acc2022030113350475" class="collapse">
+<div id="acc2022031014479854" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -722,10 +722,10 @@ If a duplicated read contains a genetic variant, the ratio of the two alleles mi
       -M marked_dup_metrics.txt</code></pre>
 <p>If you would like more help you can sneak peek at our example solution for HG00097 below.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030113358200" aria-expanded="false" aria-controls="acc2022030113358200">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031014474113" aria-expanded="false" aria-controls="acc2022031014474113">
 </button>
 </p>
-<div id="acc2022030113358200" class="collapse">
+<div id="acc2022031014474113" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -744,10 +744,10 @@ In short, you first use <a href="https://gatk.broadinstitute.org/hc/en-us/articl
 <pre class="bash"><code>/sw/courses/ngsintro/reseq/data/ref/1000G_phase1.snps.high_confidence.b37.chr2.vcf</code></pre>
 <p>Please use GATK’s documentation to recalibrate the base quality scores in your data. If you would like more help you can sneak peek at our example solution for HG00097 below.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030113351697" aria-expanded="false" aria-controls="acc2022030113351697">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031014471827" aria-expanded="false" aria-controls="acc2022031014471827">
 </button>
 </p>
-<div id="acc2022030113351697" class="collapse">
+<div id="acc2022031014471827" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -777,10 +777,10 @@ offline-uppmax$ gatk --java-options -Xmx7g ApplyBQSR -R human_g1k_v37_chr2.fasta
 <p>Since we have very little data we will use hard filters. The parameters are slightly different for SNVs and INDELs, so you need to first select all SNVs using <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037225432-SelectVariants" target="_blank">SelectVariants</a> and filter them using <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037226192-VariantFiltration" target="_blank">VariantFiltration</a> with the parameters suggested for SNVs. Then select all INDELs and filter them with the parameters suggested for INDELs. Finally merge the SNVs and INDELs to get all variants in one file using <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037226612-MergeVcfs-Picard-" target="_blank">MergeVCFs</a>. If you would like more help you can sneak peek at our example solution for HG00097 below.</p>
 <p>Filter SNVs:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030113352691" aria-expanded="false" aria-controls="acc2022030113352691">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031014478175" aria-expanded="false" aria-controls="acc2022031014478175">
 </button>
 </p>
-<div id="acc2022030113352691" class="collapse">
+<div id="acc2022031014478175" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -804,10 +804,10 @@ offline-uppmax$ gatk --java-options -Xmx7g VariantFiltration
 </div>
 <p>Filter INDELs:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030113355568" aria-expanded="false" aria-controls="acc2022030113355568">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031014472072" aria-expanded="false" aria-controls="acc2022031014472072">
 </button>
 </p>
-<div id="acc2022030113355568" class="collapse">
+<div id="acc2022031014472072" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -830,10 +830,10 @@ offline-uppmax$ gatk --java-options -Xmx7g VariantFiltration
 </div>
 <p>Merge filtered SNVs and INDELs:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030113358896" aria-expanded="false" aria-controls="acc2022030113358896">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031014479610" aria-expanded="false" aria-controls="acc2022031014479610">
 </button>
 </p>
-<div id="acc2022030113358896" class="collapse">
+<div id="acc2022031014479610" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -849,10 +849,10 @@ sh
 <h2><span class="header-section-number">3.7</span> Precomputed files</h2>
 <p>If you run out of time, please click below to get the path to precomputed bam and vcf files for the GATK’s best practices section.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030113358853" aria-expanded="false" aria-controls="acc2022030113358853">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031014477750" aria-expanded="false" aria-controls="acc2022031014477750">
 </button>
 </p>
-<div id="acc2022030113358853" class="collapse">
+<div id="acc2022031014477750" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -868,10 +868,10 @@ Path to intermediary and final vcf files: /sw/courses/ngsintro/reseq/data/best_p
 <h2><span class="header-section-number">3.8</span> SBATCH script</h2>
 <p>We recommend you to incorporate the new steps into an SBATCH script similar to the one you created above for <a href="#sbatchscript">joint variant calling</a>. Please try to complete the script for GATK’s best practices workflow. If you run out of time you can sneak peek at our example solution below.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022030113359055" aria-expanded="false" aria-controls="acc2022030113359055">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031014477035" aria-expanded="false" aria-controls="acc2022031014477035">
 </button>
 </p>
-<div id="acc2022030113359055" class="collapse">
+<div id="acc2022031014477035" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
