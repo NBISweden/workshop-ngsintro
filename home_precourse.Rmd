@@ -26,7 +26,7 @@ If you do not already have one, create an account at [https://supr.snic.se/](htt
 
 <img src="data/common/supr-login.png" class="fancyimage" style="width:70%;">
 
-Log in to [SUPR/SNIC](https://supr.snic.se/) and request membership to the project IDs **`r paste0(upid)`**, **`r paste0(upstore)`** and **`r paste0(nscid)`**.
+Log in to [SUPR/SNIC](https://supr.snic.se/) and request membership to the project IDs **`r paste0(upid)`** and **`r paste0(nscid)`**.
 
 <img src="data/common/supr-request.png" class="fancyimage" style="width:70%;">
 
@@ -44,20 +44,7 @@ Checking your request and approving your account requires some manual work, so y
 **Note:** You will get one username & password for the account on UPPMAX, and one username and password for the account on NSC. Please keep track of both, we will tell you when to use which account during the workshop.
 </div>
 
-# Install tools for SSH & SFTP access
-
-## SSH
-
-[![](data/common/mobaxterm.png)](http://mobaxterm.mobatek.net)
-
-You need a program to connect to a remote cluster (UPPMAX and NSC). Linux and Mac users already have terminal on their systems. If you are on a Windows system, we recommend [MobaXterm](http://mobaxterm.mobatek.net). It is recommended that you INSTALL the program and not use the portable version. MobaXterm also has an integrated SFTP file browser.
-
-## XQuartz
-
-[![](data/common/xquartz.png)](https://www.xquartz.org/)
-
-Mac users will need to download and install [XQuartz](https://www.xquartz.org/) for X11 forwarding. *ie*; to forward remotely opened windows to local machine.
-
+# Install tools
 
 ## SFTP Browser
 
@@ -65,20 +52,33 @@ Mac users will need to download and install [XQuartz](https://www.xquartz.org/) 
 
 When you need to transfer data between the remote cluster and your computer, you can use the tools SCP or SFTP through the terminal. Windows users can use the SFTP browser available with MobaXterm. If you prefer a GUI to upload and download files from the remote cluster, we recommend installing [FileZilla](https://filezilla-project.org/).
 
+## ThinLinc
 
-## Test the connection to UPPMAX
+[![](data/common/thinlinc.png)]((https://www.cendio.com/thinlinc/download))
+
+ThinLinc allows graphical connection to UPPMAX. Download and install from [https://www.cendio.com/thinlinc/download](https://www.cendio.com/thinlinc/download). It can be used directly from the browser for most part, but if there are issues, the installed application may be helpful.
+
+## Zoom
+
+[![](data/common/zoom.png)](https://zoom.us/)  
+
+Zoom is used for video-conferencing, lectures and group exercises. Please install/update to the latest version of [Zoom](https://zoom.us/).
+
+# Connect to UPPMAX
+
+See "Connecting to UPPMAX" instructions on the **Content** page.
+
+<div class="boxy boxy-grey boxy-lightbulb">
+If you want to get a primer on using the terminal, you can get started with the following **Tutorial One** at this link *[Unix tutorial for beginners](http://www.ee.surrey.ac.uk/Teaching/Unix/)*. You can use [https://scilifelab.github.io/courses/ngsintro/common/emu/](https://scilifelab.github.io/courses/ngsintro/common/emu/) [(or this mirror)](https://bellard.org/jslinux/vm.html?url=https://bellard.org/jslinux/buildroot-x86.cfg) to try the commands in the tutorial, so that you don't mess up any real world system. If you any questions regarding this tutorial contact: *martin.dahlo [at] scilifelab.uu.se*.
+</div>
+
+# Create a user folder
 
 <div class="boxy boxy-yellow boxy-exclamation">
 **Note:** Where `username` is mentioned, change to your user name.
 </div>
 
-<div class="boxy boxy-grey boxy-lightbulb">
-For this step, you will have to use the terminal a bit. You can get started by following **Tutorial One** at this link *[Unix tutorial for beginners](http://www.ee.surrey.ac.uk/Teaching/Unix/)*. You can use [https://scilifelab.github.io/courses/ngsintro/common/emu/](https://scilifelab.github.io/courses/ngsintro/common/emu/) [(or this mirror)](https://bellard.org/jslinux/vm.html?url=https://bellard.org/jslinux/buildroot-x86.cfg) to try the commands in the tutorial, so that you don't mess up any real world system. If you any questions regarding this tutorial contact: *martin.dahlo [at] scilifelab.uu.se*.
-</div>
-
-**Connect to UPPMAX:** Open the terminal (Windows users can use MobaXterm) and type `ssh -Y username@rackham.uppmax.uu.se`, then enter your password. The password will not be visible as you type.
-
-**Create a user folder: ** Run the following below.
+Once you have logged in to UPPMAX, run the following below.
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0("mkdir /proj/",upid,"/nobackup/username"))
@@ -89,19 +89,3 @@ This creates a directory with your user name. You will work inside this director
 <div class="boxy boxy-yellow boxy-exclamation">
 **Note:** It may take an hour or so from request approval, before you can actually write to the folder. We will check before the workshop that all students have logged in and done this, so do not forget!
 </div>
-
-# Install other tools
-
-## Zoom
-
-[![](data/common/zoom.png)](https://zoom.us/)  
-
-Please install the latest version of [Zoom](https://zoom.us/).
-
-## IGV
-
-Please install IGV on your local system before the start of the workshop.
-
-[![](data/common/IGVlogo.png)](https://www.broadinstitute.org/igv/)  
-
-**Download IGV** (Integrated Genome Browser) from the [Broad Institute](https://www.broadinstitute.org/igv/) on your own computer and have the mouse genome (mm10) as well as the human genome (hg19) available.

@@ -29,7 +29,10 @@ Let's look at the text-based SSH approach first. This type of connection work ju
 <i class="fab fa-linux"></i> Linux: Use Terminal (Included by default).<br>
 <i class="fab fa-apple"></i> OSX: Use Terminal (Included by default).<br>
 <i class="fab fa-windows"></i> Windows: Use Powershell or Command prompt, both should be installed by default.<br>
- 
+
+<div class="boxy boxy-yellow boxy-exclamation">
+**Note:** Where `username` is mentioned, change to your user name.
+</div>
 
 Fire up the available SSH program and enter the following:
 
@@ -74,7 +77,7 @@ We have a ThinLinc server running at one of the login nodes which allows users t
 
    1. Go to the login page, https://rackham-gui.uppmax.uu.se/
    1. Enter your UPPMAX username.
-   1. Enter your UPPMAX password, followed by your current two-factor authentication code. 
+   1. Enter your UPPMAX password, followed by your current two-factor authentication code.
       Eg. if your password is `hunter2` and your current two-factor authentication code is `123456` you will enter `hunter2123456` as your password.
       <br><center><a href="data/common/thinlinc_00.png"><img src="data/common/thinlinc_00.png" alt="Thinlinc login page" width="200"></a></center>
    1. It will ask you which profile you want to use, so first press the `Forward` button. Then you can choose which desktop environment you want to use. `Xfce` is pretty straight-forward and easy to use, but feel free to try either of them. You get to choose every time you login so it's not a permanent choice.
@@ -85,31 +88,4 @@ We have a ThinLinc server running at one of the login nodes which allows users t
 
 # After connection to UPPMAX
 
-From this point forward there is no difference between the two different ways of connection to UPPMAX. Both ways result in you having a terminal running on UPPMAX and from UPPMAX point of view they are the same. 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+From this point forward there is no difference between the two different ways of connection to UPPMAX. Both ways result in you having a terminal running on UPPMAX and from UPPMAX point of view they are the same.
