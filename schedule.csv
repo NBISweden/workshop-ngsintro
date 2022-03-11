@@ -1,13 +1,13 @@
 date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_youtube;link_room
 28/03/2022;Online;09:00;09:30;Welcome and general introduction;Martin Dahlö;;;;;
 ;;09:30;10:30;Intro to Linux;Martin Dahlö;;slide_linux_intro.pdf;;https://youtu.be/bPsereCdJT8;
-;;10:30;12:00;Intro to Linux;Martin Dahlö;JH,JS,NG;;lab_linux_intro.html;;
+;;10:30;12:00;Intro to Linux;Martin Dahlö;JS,JN,NG;;lab_linux_intro.html;;
 ;;12:00;13:00;Lunch;;;;;;
 ;;13:00;14:00;Intro to Uppmax;Martin Dahlö;;slide_uppmax_intro.pdf;;https://youtu.be/-lFlJbp2LE0;
-;;14:00;17:00;Intro to Uppmax;Martin Dahlö;AS,IH,LS,SR;;lab_uppmax_intro.html;;
+;;14:00;17:00;Intro to Uppmax;Martin Dahlö;JS,JN,NG;;lab_uppmax_intro.html;;
 29/03/2022;Online;09:00;09:30;File types in Bioinformatics;Martin Dahlö;;slide_linux_filetypes.pdf;;https://youtu.be/Xue8f-eh_bo;
 ;;09:30;11:00;File types in Bioinformatics;Martin Dahlö;EP,NG;;lab_linux_filetypes.html;;
-;;11:00;12:00;Quality control;Malin Larsson;EP,NG;slide_qc.pdf;lab_qc.html;https://youtu.be/NBlizZEZGYI;
+;;11:00;12:00;Quality control;Malin Larsson;EP,JT;slide_qc.pdf;lab_qc.html;https://youtu.be/NBlizZEZGYI;
 ;;12:00;13:00;Lunch;;;;;;
 ;;13:00;13:15;Quality control wrap-up;Malin Larsson;;;;;
 ;;13:15;14:15;NGS tech & challenges;Olga Vinnere Petterson;;slide_qol_termexp.pdf;;https://youtu.be/LizbJLhv_OA;
@@ -18,11 +18,11 @@ date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_y
 ;;10:30;12:00;Advanced Bash;Martin Dahlö;JN,MH,NG;slide_ngs_pipelines.pdf;;https://youtu.be/29z9JxrS5hg;
 ;;12:00;13:00;Lunch;;;;;;
 ;;13:00;13:45;Variant-calling workflow;Malin Larsson;;slide_vc.pdf;;https://youtu.be/OO8CHGzi6pQ;
-;;14:00;17:00;Variant-calling workflow;Malin Larsson;DE,MM,JA;;lab_vc.html;;
-31/03/2022;Online;09:00;12:00;Variant-calling workflow;Malin Larsson;DE,MM,JA;;lab_vc.html;https://youtu.be/b7VV6e5q6ss;
+;;14:00;17:00;Variant-calling workflow;Malin Larsson;DE,JA,MM;;lab_vc.html;;
+31/03/2022;Online;09:00;12:00;Variant-calling workflow;Malin Larsson;DE,JA,MM;;lab_vc.html;https://youtu.be/b7VV6e5q6ss;
 ;;12:00;13:00;Lunch;;;;;;
 ;;13:00;17:00;RNA-Seq workflow;Dag Ahren;EP,JT,PA;slide_rnaseq.html;lab_rnaseq.html;https://youtu.be/uKebwpW0R28;
 01/04/2022;Online;09:00;12:00;RNA-Seq workflow;Dag Ahren;EP,JT,PA;;;;
 ;;12:00;13:00;Lunch;;;;;;
 ;;13:00;13:15;Presenting NBIS;Dag Ahrén;;slide_nbis.pdf;;;
-;;13:15;15:00;Open session;Dag Ahrén;JL,LM,MD,ML,RF;;lab_open_session.html;;
+;;13:15;15:00;Open session;Dag Ahrén;ASM, JL,LM,MD,ML,RF,VVH;;lab_open_session.html;;

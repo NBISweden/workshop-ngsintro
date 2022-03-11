@@ -15,15 +15,16 @@ uppmax_res_5: snicXXXX-XX-XXX_fri
 location: online
 assistants:
  - "AA: Adam Ameur"
- - "AS: Anders Sjölander"
+ - "ASM: Agata Smialowska"
+ - "ASJ: Anders Sjölander"
  - "DA: Dag Ahren"
  - "DE: Diana Ekman"
  - "EP: Estelle Proux"
  - "JA: Juliana Assis"
- - "JT: Jeanette Tångrot"
  - "JL: Julie Lorent"
  - "JN: Johan Nylander"
  - "JS: John Sundh"
+ - "JT: Jeanette Tångrot"
  - "LM: Lokesh Manoharan"
  - "MD: Martin Dalhö"
  - "MH: Mun-Gwan Hong"
@@ -31,10 +32,11 @@ assistants:
  - "MM: Markus Mayrhofer"
  - "NG: Niharika Gauraha"
  - "NR: Nima Rafati"
- - "OP: Olga Petterson"
+ - "OVP: Olga Vinnere Pettersson"
  - "PA: Prasoon Agarwal"
  - "RF: Roy Francis"
  - "SR: Susanne Reinsbach"
+ - "VVH: Vincent van Hoef"
 
 favicon: assets/favicon.png
 exclude: ["docs","README.md","schedule.csv","LICENSE","LICENSE.md","scripts","tmprepo"]
