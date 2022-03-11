@@ -288,8 +288,7 @@ div.tocify {
 <h1><span class="header-section-number">3</span> Run FastQC</h1>
 <div id="connect-to-uppmax" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> Connect to Uppmax</h2>
-<p>Please connect to the Rackham cluster on UPPMAX using ssh:</p>
-<pre class="bash"><code>$ ssh -Y username@rackham.uppmax.uu.se</code></pre>
+<p>During this lab it is best to connect to UPPMAX via a remote desktop (ThinLinc). Instructions for this is available in Canvas under Content/Additional content/Connecting to Uppmax. Please follow the instructions in section 1.2 Remote desktop connection.</p>
 </div>
 <div id="create-a-workspace" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> Create a workspace</h2>
@@ -336,9 +335,9 @@ First load the bioinfo-tools module:</p>
 </div>
 <div id="check-the-results" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> Check the results</h1>
-<p>The output from FastQC is a HTML report that should be opened in a web browser. When you have X-forwarding enabled you can open it on Rackham with this command:</p>
-<pre class="bash"><code>firefox --no-remote filename.html</code></pre>
-<p>It can be slow to look at graphical files via SSH. We have therefore made the output files that you just created available through the links below, so that you can look at them via your local web-browser:</p>
+<p>The output from FastQC is a HTML report that should be opened in a web browser. When you have connected to Uppmax via ThinLinc you can open it on Rackham with this command:</p>
+<pre class="bash"><code>firefox --no-remote filename.html &amp;</code></pre>
+<p>We have made the output files that you just created available through the links below, so that you can look at them via your local web-browser:</p>
 <table>
 <thead>
 <tr class="header">
