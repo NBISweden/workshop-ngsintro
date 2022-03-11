@@ -100,16 +100,16 @@ cat(paste0(refdir))
 ```
 
 # Preparations {-}
-## Local workspace  {#preparelaptop -}
 
-This lab will be done completely on UPPMAX and we assume that you have logged in to UPPMAX using `ThinLink`.
-However, if you prefer to log in via normal `ssh` you can instead copy some of the resulting files to your laptop, install `IGV`, and run all the `IGV` steps on your laptop.
-If so, please start by creating a local workspace on your laptop, for example a folder called *ngsworkflow* on your desktop. You need to have write permission in this folder.
-If you work via `ThinLink` you don't have to crete a local workspace.
+## Laptop {#preparelaptop -}
+This lab will be done completely on UPPMAX and the instructions assume that you connect via ThinLinc.
+However, if you prefer to connect to UPPMAX via ssh you can instead copy some of the resulting files to your laptop and work on them there. , install IGV, and run all the IGV steps on your laptop.
+If so, please create a local workspace on your laptop, for example a folder called *ngsworkflow* on your desktop. You need to have write permission in this folder.
+If you connect to UPPMAX via ThinLinc you don't have to crete a local workspace.
 
 ## UPPMAX {-}
-
-Please connect to the Rackham cluster on UPPMAX using `thinlink` and open a terminal window as described in the "Connecting to UPPMAX" lab.
+### Connect to UPPMAX {-}
+During this lab it is best to connect to UPPMAX with ThinLinc, which gives you a graphical remote desktop. Instructions for this is available in Canvas under Content/Additional content/Connecting to Uppmax. Please follow the instructions in section 1.2 Remote desktop connection.
 
 ### Logon to a node {-}
 This lab should be done on a compute node (not the login node). First check if you already have an active job allocation using this command:
@@ -177,7 +177,7 @@ cat(paste0('ln -s ',fastqdir,'/HG00101_2.fq\n'))
 ### Accessing programs {#Accessingprograms -}
 
 Load the modules that are needed during this workshop. Remember that these modules must be loaded every time you login to Rackham, or when you connect to a new compute node.  
-First load the `bioinfo-tools` module:  
+First load the bioinfo-tools module:
 
 ```bash
 module load bioinfo-tools
@@ -242,7 +242,7 @@ When running BWA for another sample later on you have to replace *HG00097* in th
 
 You also need to specify how many threads the program should use (should be the same as the number of cores you have access to and is defined by the code `-t 1` below) and what reference genome file to use. The output from `BWA` should be parsed to `samtools sort`, which sorts the sam file according to chromosome position and then converts the sam file to the binary bam format. Finally, use a file redirect `>` so that the output ends up in a file and not on your screen.
 
-First use pwd to check if you are standing in the correct directory:
+First make sure that you are standing in the workspace you created on UPPMAX for this lab:
 ```bash
 pwd
 ```
@@ -287,9 +287,9 @@ samtools view HG00097.bam | head -n 5
 Please have a look at the [Sequence Alignment/Map Format Specification](https://samtools.github.io/hts-specs/SAMv1.pdf) for more information about bam files.
 
 ### Check bam in IGV
-To use IGV on UPPMAX we recommend that you are connected via ThinLink.
+To use IGV on UPPMAX we recommend that you are connected via ThinLinc.
 Alternatively you can install IGV on your local computer, download the files using scp, and look at them locally.
-The instructions below assume that you have logged in to UPPMAX via ThinLink.\
+The instructions below assume that you have logged in to UPPMAX via ThinLinc.\
 First use pwd to check if you are standing in the correct directory:
 ```bash
 pwd
@@ -380,7 +380,7 @@ For more detailed information about vcf files please have a look at [The Variant
 
 ### Check vcf in IGV {#vcfinigv}
 
-We assume that you have logged in to UPPMAX via ThinLink.\
+We assume that you have logged in to UPPMAX via ThinLinc.\
 If you have closed IGV please open it again as described above.\
 Load the file HG00097.vcf into tracks window of IGV as you did with the HG00097.bam file earlier (load the bam file as well if it is not already loaded). You will now see all the variants called in HG00097.\
 You can view variants in the *LCT* gene by typing the gene name in the search box, and you can look specifically at the variant at position chr2:136545844 by typing that position in the search box.\
@@ -507,7 +507,7 @@ cat(paste0(vcfdir,'/cohort.vcf\n'))
 
 ## Check combined vcf file in IGV
 
-Again we assume that you have logged in to UPPMAX via ThinLink.\
+Again we assume that you have logged in to UPPMAX via ThinLinc.\
 If you have closed IGV please open it again as described above.\
 Load the files cohort.vcf, HG00097.bam, HG00100.bam and HG00101.bam into IGV as described earlier.\
 This time lets look closer at the variant rs4988235, located at position chr2:136608646 in the HG19 reference genome. This is the variant that has been shown to lead to lactase persistence.\
