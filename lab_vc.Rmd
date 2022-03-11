@@ -109,7 +109,7 @@ If you connect to UPPMAX via ThinLinc you don't have to crete a local workspace.
 
 ## UPPMAX {-}
 ### Connect to UPPMAX {-}
-During this lab it is best to connect to UPPMAX with ThinLinc, which gives you a graphical remote desktop. Instructions for this is available in Canvas under Content/Additional content/Connecting to Uppmax. Please follow the instructions in section 1.2 Remote desktop connection.
+During this lab it is best to connect to UPPMAX with ThinLinc, which gives you a graphical remote desktop. Instructions for this is available in Canvas under **Contents** > **Additional content** > **Connecting to UPPMAX**. Please follow the instructions in section 1.2 Remote desktop connection.
 
 ### Logon to a node {-}
 This lab should be done on a compute node (not the login node). First check if you already have an active job allocation using this command:

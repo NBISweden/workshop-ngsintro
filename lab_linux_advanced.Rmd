@@ -442,7 +442,7 @@ echo The factorial of $n is $factorial'))
 
 Now, let's combine everything you've learned so far in this course.
 
-<i class="fas fa-clipboard-list"></i> Write a script that runs the pipeline from the Bioinformatics filetypes lab for each fastq file in a specified directory, using the same reference genome as in the file type exercise. Navigate to the **Linux 2: File types in Bioinformatics** lab on the **Content** page.
+<i class="fas fa-clipboard-list"></i> Write a script that runs the pipeline from the Bioinformatics filetypes lab for each fastq file in a specified directory, using the same reference genome as in the file type exercise. Navigate to the **Linux 2: File types in Bioinformatics** lab on the **Contents** page.
 
 If that sounds too easy, make the script submit a slurm job for each sample that will run the pipeline for that sample on a calculation node (1 core, 5 minutes each). And if that is too easy, add that the pipeline will use the local hard drive on the calculation node for all files used in the analysis.
 

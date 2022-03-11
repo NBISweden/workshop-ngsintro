@@ -51,8 +51,8 @@ navbar:
       href: index.html
     - text: Schedule
       href: home_schedule.html
-    - text: Content
-      href: home_content.html
+    - text: Contents
+      href: home_contents.html
     - text: Precourse
       href: home_precourse.html
     - text: Syllabus
