@@ -333,15 +333,18 @@ The alternative allele (A on the forward strand and T on the reverse strand) cre
 <div id="preparations" class="section level1 unnumbered">
 <h1>Preparations</h1>
 <div id="preparelaptop" class="section level2 unnumbered">
-<h2>Local workspace</h2>
-<p>This lab will be done completely on UPPMAX and we assume that you have logged in to UPPMAX using <code>ThinLink</code>.
-However, if you prefer to log in via normal <code>ssh</code> you can instead copy some of the resulting files to your laptop, install <code>IGV</code>, and run all the <code>IGV</code> steps on your laptop.
-If so, please start by creating a local workspace on your laptop, for example a folder called <em>ngsworkflow</em> on your desktop. You need to have write permission in this folder.
-If you work via <code>ThinLink</code> you don’t have to crete a local workspace.</p>
+<h2>Laptop</h2>
+<p>This lab will be done completely on UPPMAX and the instructions assume that you connect via ThinLinc.
+However, if you prefer to connect to UPPMAX via ssh you can instead copy some of the resulting files to your laptop and work on them there. , install IGV, and run all the IGV steps on your laptop.
+If so, please create a local workspace on your laptop, for example a folder called <em>ngsworkflow</em> on your desktop. You need to have write permission in this folder.
+If you connect to UPPMAX via ThinLinc you don’t have to crete a local workspace.</p>
 </div>
 <div id="uppmax" class="section level2 unnumbered">
 <h2>UPPMAX</h2>
-<p>Please connect to the Rackham cluster on UPPMAX using <code>thinlink</code> and open a terminal window as described in the “Connecting to UPPMAX” lab.</p>
+<div id="connect-to-uppmax" class="section level3 unnumbered">
+<h3>Connect to UPPMAX</h3>
+<p>During this lab it is best to connect to UPPMAX with ThinLinc, which gives you a graphical remote desktop. Instructions for this is available in Canvas under Content/Additional content/Connecting to Uppmax. Please follow the instructions in section 1.2 Remote desktop connection.</p>
+</div>
 <div id="logon-to-a-node" class="section level3 unnumbered">
 <h3>Logon to a node</h3>
 <p>This lab should be done on a compute node (not the login node). First check if you already have an active job allocation using this command:</p>
@@ -387,7 +390,7 @@ ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00101_2.fq</code></pre>
 <div id="Accessingprograms" class="section level3 unnumbered">
 <h3>Accessing programs</h3>
 <p>Load the modules that are needed during this workshop. Remember that these modules must be loaded every time you login to Rackham, or when you connect to a new compute node.<br />
-First load the <code>bioinfo-tools</code> module:</p>
+First load the bioinfo-tools module:</p>
 <pre class="bash"><code>module load bioinfo-tools</code></pre>
 <p>This makes it possible to load the individual programs:</p>
 <pre class="bash"><code>module load FastQC/0.11.8
@@ -432,7 +435,7 @@ The code for adding this read group is<br/>
 <p>When running BWA for another sample later on you have to replace <em>HG00097</em> in the read group with the new sample name. To learn more about read groups please read <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360035890671-Read-groups" target="_blank">this article</a> at GATK forum.</p>
 </div>
 <p>You also need to specify how many threads the program should use (should be the same as the number of cores you have access to and is defined by the code <code>-t 1</code> below) and what reference genome file to use. The output from <code>BWA</code> should be parsed to <code>samtools sort</code>, which sorts the sam file according to chromosome position and then converts the sam file to the binary bam format. Finally, use a file redirect <code>&gt;</code> so that the output ends up in a file and not on your screen.</p>
-<p>First use pwd to check if you are standing in the correct directory:</p>
+<p>First make sure that you are standing in the workspace you created on UPPMAX for this lab:</p>
 <pre class="bash"><code>pwd</code></pre>
 <p>Should return</p>
 <pre class="bash"><code>/proj/snic2022-22-123/nobackup/username/ngsworkflow</code></pre>
@@ -467,9 +470,9 @@ The code for adding this read group is<br/>
 </div>
 <div id="check-bam-in-igv" class="section level3" number="1.1.3">
 <h3><span class="header-section-number">1.1.3</span> Check bam in IGV</h3>
-<p>To use IGV on UPPMAX we recommend that you are connected via ThinLink.
+<p>To use IGV on UPPMAX we recommend that you are connected via ThinLinc.
 Alternatively you can install IGV on your local computer, download the files using scp, and look at them locally.
-The instructions below assume that you have logged in to UPPMAX via ThinLink.<br />
+The instructions below assume that you have logged in to UPPMAX via ThinLinc.<br />
 First use pwd to check if you are standing in the correct directory:</p>
 <pre class="bash"><code>pwd</code></pre>
 <p>Should return</p>
@@ -552,7 +555,7 @@ To view the meta-information lines describing the <em>INFO</em> column use:</p>
 </div>
 <div id="vcfinigv" class="section level3" number="1.2.3">
 <h3><span class="header-section-number">1.2.3</span> Check vcf in IGV</h3>
-<p>We assume that you have logged in to UPPMAX via ThinLink.<br />
+<p>We assume that you have logged in to UPPMAX via ThinLinc.<br />
 If you have closed IGV please open it again as described above.<br />
 Load the file HG00097.vcf into tracks window of IGV as you did with the HG00097.bam file earlier (load the bam file as well if it is not already loaded). You will now see all the variants called in HG00097.<br />
 You can view variants in the <em>LCT</em> gene by typing the gene name in the search box, and you can look specifically at the variant at position chr2:136545844 by typing that position in the search box.<br />
@@ -591,10 +594,10 @@ You also need to index each output bam file:</p>
 <p>Please check what output file was generated this time.
 If you run out of time you can click below to get paths to precomputed bam files.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031015007278" aria-expanded="false" aria-controls="acc2022031015007278">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031109291888" aria-expanded="false" aria-controls="acc2022031109291888">
 </button>
 </p>
-<div id="acc2022031015007278" class="collapse">
+<div id="acc2022031109291888" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -623,10 +626,10 @@ First use pwd to check if you are standing in the correct directory:</p>
 <p>Please replace <code>sample</code> with the real sample names.</p>
 <p>If you run out of time you can click below to get paths to the precomputed g.vcf files.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031015000231" aria-expanded="false" aria-controls="acc2022031015000231">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031109297368" aria-expanded="false" aria-controls="acc2022031109297368">
 </button>
 </p>
-<div id="acc2022031015000231" class="collapse">
+<div id="acc2022031109297368" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -661,10 +664,10 @@ Then run GATK’s <code>GenoteypeGVC</code> to generate a vcf file:</p>
 -O cohort.vcf</code></pre>
 If you run out of time you can click below to get paths to the precomputed cohort.g.vcf and cohort.vcf files.
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031015009298" aria-expanded="false" aria-controls="acc2022031015009298">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031109293678" aria-expanded="false" aria-controls="acc2022031109293678">
 </button>
 </p>
-<div id="acc2022031015009298" class="collapse">
+<div id="acc2022031109293678" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -688,7 +691,7 @@ sh
 </div>
 <div id="check-combined-vcf-file-in-igv" class="section level2" number="2.4">
 <h2><span class="header-section-number">2.4</span> Check combined vcf file in IGV</h2>
-<p>Again we assume that you have logged in to UPPMAX via ThinLink.<br />
+<p>Again we assume that you have logged in to UPPMAX via ThinLinc.<br />
 If you have closed IGV please open it again as described above.<br />
 Load the files cohort.vcf, HG00097.bam, HG00100.bam and HG00101.bam into IGV as described earlier.<br />
 This time lets look closer at the variant rs4988235, located at position chr2:136608646 in the HG19 reference genome. This is the variant that has been shown to lead to lactase persistence.<br />
@@ -807,10 +810,10 @@ gatk --java-options -Xmx7g VariantFiltration \
 <h4>Precomputed files</h4>
 If you run out of time, please click below to get the path to precomputed bam and vcf files for the GATK’s best practices section.
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031015000902" aria-expanded="false" aria-controls="acc2022031015000902">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031109293678" aria-expanded="false" aria-controls="acc2022031109293678">
 </button>
 </p>
-<div id="acc2022031015000902" class="collapse">
+<div id="acc2022031109293678" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -877,10 +880,10 @@ done
 <pre class="bash"><code>./joint_genotyping.sbatch</code></pre>
 <p>If you would like more help with creating the sbatch script, please look at our example solution:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031015009079" aria-expanded="false" aria-controls="acc2022031015009079">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031109293224" aria-expanded="false" aria-controls="acc2022031109293224">
 </button>
 </p>
-<div id="acc2022031015009079" class="collapse">
+<div id="acc2022031109293224" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -932,10 +935,10 @@ gatk --java-options -Xmx7g GenotypeGVCFs
 <h2>GATK best practices</h2>
 <p>Now please try to incorporate the additional steps from <a href="#gatk_bp">GATK’s best practices</a> into the workflow. If you run out of time you can sneak peek at our example solution below.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031015009957" aria-expanded="false" aria-controls="acc2022031015009957">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031109293149" aria-expanded="false" aria-controls="acc2022031109293149">
 </button>
 </p>
-<div id="acc2022031015009957" class="collapse">
+<div id="acc2022031109293149" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
