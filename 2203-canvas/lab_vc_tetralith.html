@@ -552,10 +552,10 @@ Check that the files were properly downloaded to your <em>local workspace</em> u
 <p>Run <code>BWA mem</code> for all three samples in the data set. <code>BWA mem</code> should be run exactly <a href="#bwamem">as above</a> but with the new sample names. Please note that you also need to adjust the SM field in the read group so that it matches the new sample name, otherwise the <a href="#jointgenotyping">joint genotyping step</a> will not work properly.</p>
 <p>If you run out of time, please click below to get paths to precomputed bam files.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031813284839" aria-expanded="false" aria-controls="acc2022031813284839">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032214239725" aria-expanded="false" aria-controls="acc2022032214239725">
 </button>
 </p>
-<div id="acc2022031813284839" class="collapse">
+<div id="acc2022032214239725" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -575,10 +575,10 @@ sh
 <p>Please replace <sample> with the real sample names.</p>
 <p>If you run out of time, please click below to get paths to the precomputed g.vcf files.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031813285277" aria-expanded="false" aria-controls="acc2022031813285277">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032214234761" aria-expanded="false" aria-controls="acc2022032214234761">
 </button>
 </p>
-<div id="acc2022031813285277" class="collapse">
+<div id="acc2022032214234761" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -600,10 +600,10 @@ sh
 <pre class="bash"><code>offline-uppmax$ gatk --java-options -Xmx7g GenotypeGVCFs -R human_g1k_v37_chr2.fasta -V cohort.g.vcf -O cohort.vcf</code></pre>
 <p>If you run out of time, please click below to get paths to the precomputed cohort.g.vcf and cohort.vcf files.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031813287618" aria-expanded="false" aria-controls="acc2022031813287618">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032214234734" aria-expanded="false" aria-controls="acc2022032214234734">
 </button>
 </p>
-<div id="acc2022031813287618" class="collapse">
+<div id="acc2022032214234734" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -654,10 +654,10 @@ done
 <pre class="bash"><code>./joint_genotyping.sh</code></pre>
 <p>If you would like more help with creating the bash script, please look at our example solution:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031813289842" aria-expanded="false" aria-controls="acc2022031813289842">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032214235181" aria-expanded="false" aria-controls="acc2022032214235181">
 </button>
 </p>
-<div id="acc2022031813289842" class="collapse">
+<div id="acc2022032214235181" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -722,10 +722,10 @@ If a duplicated read contains a genetic variant, the ratio of the two alleles mi
       -M marked_dup_metrics.txt</code></pre>
 <p>If you would like more help you can sneak peek at our example solution for HG00097 below.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031813286360" aria-expanded="false" aria-controls="acc2022031813286360">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032214232927" aria-expanded="false" aria-controls="acc2022032214232927">
 </button>
 </p>
-<div id="acc2022031813286360" class="collapse">
+<div id="acc2022032214232927" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -744,10 +744,10 @@ In short, you first use <a href="https://gatk.broadinstitute.org/hc/en-us/articl
 <pre class="bash"><code>/sw/courses/ngsintro/reseq/data/ref/1000G_phase1.snps.high_confidence.b37.chr2.vcf</code></pre>
 <p>Please use GATK’s documentation to recalibrate the base quality scores in your data. If you would like more help you can sneak peek at our example solution for HG00097 below.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031813283591" aria-expanded="false" aria-controls="acc2022031813283591">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032214235645" aria-expanded="false" aria-controls="acc2022032214235645">
 </button>
 </p>
-<div id="acc2022031813283591" class="collapse">
+<div id="acc2022032214235645" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -777,10 +777,10 @@ offline-uppmax$ gatk --java-options -Xmx7g ApplyBQSR -R human_g1k_v37_chr2.fasta
 <p>Since we have very little data we will use hard filters. The parameters are slightly different for SNVs and INDELs, so you need to first select all SNVs using <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037225432-SelectVariants" target="_blank">SelectVariants</a> and filter them using <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037226192-VariantFiltration" target="_blank">VariantFiltration</a> with the parameters suggested for SNVs. Then select all INDELs and filter them with the parameters suggested for INDELs. Finally merge the SNVs and INDELs to get all variants in one file using <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037226612-MergeVcfs-Picard-" target="_blank">MergeVCFs</a>. If you would like more help you can sneak peek at our example solution for HG00097 below.</p>
 <p>Filter SNVs:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031813280242" aria-expanded="false" aria-controls="acc2022031813280242">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032214235424" aria-expanded="false" aria-controls="acc2022032214235424">
 </button>
 </p>
-<div id="acc2022031813280242" class="collapse">
+<div id="acc2022032214235424" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -804,10 +804,10 @@ offline-uppmax$ gatk --java-options -Xmx7g VariantFiltration
 </div>
 <p>Filter INDELs:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031813280655" aria-expanded="false" aria-controls="acc2022031813280655">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032214238761" aria-expanded="false" aria-controls="acc2022032214238761">
 </button>
 </p>
-<div id="acc2022031813280655" class="collapse">
+<div id="acc2022032214238761" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -830,10 +830,10 @@ offline-uppmax$ gatk --java-options -Xmx7g VariantFiltration
 </div>
 <p>Merge filtered SNVs and INDELs:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031813285429" aria-expanded="false" aria-controls="acc2022031813285429">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032214237963" aria-expanded="false" aria-controls="acc2022032214237963">
 </button>
 </p>
-<div id="acc2022031813285429" class="collapse">
+<div id="acc2022032214237963" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -849,10 +849,10 @@ sh
 <h2><span class="header-section-number">3.7</span> Precomputed files</h2>
 <p>If you run out of time, please click below to get the path to precomputed bam and vcf files for the GATK’s best practices section.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031813287600" aria-expanded="false" aria-controls="acc2022031813287600">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032214236122" aria-expanded="false" aria-controls="acc2022032214236122">
 </button>
 </p>
-<div id="acc2022031813287600" class="collapse">
+<div id="acc2022032214236122" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -868,10 +868,10 @@ Path to intermediary and final vcf files: /sw/courses/ngsintro/reseq/data/best_p
 <h2><span class="header-section-number">3.8</span> SBATCH script</h2>
 <p>We recommend you to incorporate the new steps into an SBATCH script similar to the one you created above for <a href="#sbatchscript">joint variant calling</a>. Please try to complete the script for GATK’s best practices workflow. If you run out of time you can sneak peek at our example solution below.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022031813289453" aria-expanded="false" aria-controls="acc2022031813289453">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032214239093" aria-expanded="false" aria-controls="acc2022032214239093">
 </button>
 </p>
-<div id="acc2022031813289453" class="collapse">
+<div id="acc2022032214239093" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
