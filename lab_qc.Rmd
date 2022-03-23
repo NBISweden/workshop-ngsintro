@@ -98,7 +98,7 @@ fastqc -q *.fq
 ```
 The output is .html documents that shows quality scores along the reads, and other information. Please check what new files were generated with the command:
 ```bash
-ls -lrt.  
+ls -lrt
 ```
 
 # Check the results

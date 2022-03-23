@@ -82,7 +82,7 @@ We have a ThinLinc server running at one of the login nodes which allows users t
       <br><center><a href="data/common/thinlinc_00.png"><img src="data/common/thinlinc_00.png" alt="Thinlinc login page" width="200"></a></center>
    1. It will ask you which profile you want to use, so first press the `Forward` button. Then you can choose which desktop environment you want to use. `Xfce` is pretty straight-forward and easy to use, but feel free to try either of them. You get to choose every time you login so it's not a permanent choice.
       <br><center><a href="data/common/thinlinc_01.png"><img src="data/common/thinlinc_01.png" alt="Thinlinc login page" width="200"></a></center>
-   1. Once your desktop has been loaded, start a terminal either by clicking the black terminal icon at the bottom of the screen, or by pressing the `Applications` button in the top right corner and select `Terminal Emulator`.
+   1. Once your desktop has been loaded, start a terminal either by clicking the black terminal icon at the bottom of the screen, or by pressing the `Applications` button in the top left corner and select `Terminal Emulator`.
       <br><center><a href="data/common/thinlinc_02.png"><img src="data/common/thinlinc_02.png" alt="Thinlinc login page" width="200"></a></center>
 
 
