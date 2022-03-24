@@ -58,9 +58,8 @@ After a few seconds, a window with a simple desktop session in it will appear. F
 Start an interactive session with three compute cores for todays lab:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('tetralith1$ interactive -A ',nscid,' -t 04:00:00 -n 3'))
+cat(paste0('interactive -A ',nscid,' -t 04:00:00 -n 3'))
 ```
-Note: `tetralith1$` is only supposed to illustrate that you are now logged in to the cluster Tetralith and should not be included in the command. The actual commands in these instructions starts after the `$`.
 Please adjust the requested time depending on what lab you will be working on. After a minute or so you should have gotten your interactive job.
 
 <div class="boxy boxy-lightbulb">
@@ -73,7 +72,7 @@ We will use a singularity container (a virtual computer) that mimics the UPPMAX 
 Use this command to start the singularity container:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('n424$ singularity shell -B /proj/',nscid,'/users:/proj/',upid,'/nobackup /proj/',nscid,'/ngsintro.sif'))
+cat(paste0('singularity shell -B /proj/',nscid,'/users:/proj/',upid,'/nobackup -B /proj/',nscid,' /proj/',nscid,'/ngsintro.sif'))
 ```
 
 <div class="boxy boxy-lightbulb">
@@ -83,7 +82,7 @@ Your terminal prompt changed to something like `<nsc_username>@offline-uppmax$`.
 In the singularity container type this to make the module system behave properly:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('offline-uppmax$ source /uppmax_init'))
+cat(paste0('source /uppmax_init'))
 ```
 
 Everything from this point and onwards should be identical to running the exercise on UPPMAX.
@@ -100,21 +99,26 @@ While running the UPPMAX singularity container, create a workspace for this exer
 The name of the workspace depends on what lab you are working on. For example, if you are working on the introduction to Linux lab then call the workspace "linux_tutorial". Once the workspace is created you should go into it.
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('offline-uppmax$ mkdir /proj/',upid,'/nobackup/<nsc_username>/linux_tutorial\n'))
-cat(paste0('offline-uppmax$ cd /proj/',upid,'/nobackup/<nsc_username>/linux_tutorial'))
+cat(paste0('mkdir /proj/',upid,'/nobackup/<nsc_username>/linux_tutorial\n'))
+cat(paste0('cd /proj/',upid,'/nobackup/<nsc_username>/linux_tutorial'))
 ```
-When you have the UPPMAX singularity container up and running you can follow regular lab instructions, except that you should not connect to UPPMAX or book a node, and you should work in the cluster workspace defined here.
+When you have the UPPMAX singularity container up and running you can follow regular lab instructions, except that you should not connect to UPPMAX or book a node, and you should work in the cluster workspace defined here. Also, IGV is started with a special command,see below.
 
+# IGV
+To start IGV at NSC type this in the command lie:
+```bash
+/proj/snic2022-22-186/igv/igv.sh
+```
+You can use the same command both when running the UPPMAX singularity container and from a normal terminal window at NSC.
+
+# Exit the UPPMAX singularity container
 When you are done with the lab just type exit to close the singularity container:
-
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('offline-uppmax$ exit'))
 ```
-
 All files and folders that you create in `r paste0('/proj/',upid,'/nobackup/nsc_username/')` while running the singularity container can be reached also from outside of the container, in this folder on Tetralith:
-
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('tetralith$ /proj/',nscid,'/users/<nsc_username>/\n'))
+cat(paste0('/proj/',nscid,'/users/<nsc_username>/\n'))
 ```
 
 
