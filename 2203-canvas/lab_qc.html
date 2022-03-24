@@ -290,14 +290,23 @@ div.tocify {
 <h2><span class="header-section-number">3.1</span> Connect to Uppmax</h2>
 <p>During this lab it is best to connect to UPPMAX via a remote desktop (ThinLinc). Instructions for this is available in Canvas under <strong>Contents</strong> &gt; <strong>Additional content</strong> &gt; <strong>Connecting to UPPMAX</strong>. Please follow the instructions in section 1.2 Remote desktop connection.</p>
 </div>
-<div id="create-a-workspace" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> Create a workspace</h2>
+<div id="book-a-node" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Book a node</h2>
+<p>To be able to run analyses in the terminal you should book a compute node (or in this case just one core of a node). Make sure you only do this once each day because we have reserved one core per student for the course. If you haven’t already reserved a core today please use this command:</p>
+<pre class="bash"><code>salloc -A snic2022-22-123 -t 04:00:00 -p core -n 1 --no-shell --reservation=snic2022-22-123_29 &amp;</code></pre>
+<p>Once your job allocation has been granted (should not take long) you can connect to the node using ssh. To find out the name of your node, use:</p>
+<pre class="bash"><code>squeue -u username</code></pre>
+<p>The node name is found under nodelist header, you should only see one. Connect to that node:</p>
+<pre class="bash"><code>ssh -Y &lt;nodename&gt;</code></pre>
+</div>
+<div id="create-a-workspace" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Create a workspace</h2>
 <p>You should work in your folder under the course’s nobackup folder, just like you have done during the previous labs. Start by creating a workspace for this exercise in your folder, and then move into it.</p>
 <pre class="bash"><code>mkdir /proj/snic2022-22-123/nobackup/username/qc
 cd /proj/snic2022-22-123/nobackup/username/qc</code></pre>
 </div>
-<div id="symbolic-links-to-data" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> Symbolic links to data</h2>
+<div id="symbolic-links-to-data" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Symbolic links to data</h2>
 <p>The raw data files are located in</p>
 <pre class="bash"><code>/sw/courses/ngsintro/reseq/data/fastq</code></pre>
 <p>Instead of copying the files to your workspace you should create symbolic links (soft-links) to them. Soft-linking files and folders allows you to work with them as if they were in your current directory, but without multiplying them. Create symbolic links to the fastq files in your workspace:</p>
@@ -307,15 +316,6 @@ ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00100_1.fq
 ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00100_2.fq
 ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00101_1.fq
 ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00101_2.fq</code></pre>
-</div>
-<div id="book-a-node" class="section level2" number="3.4">
-<h2><span class="header-section-number">3.4</span> Book a node</h2>
-<p>To be able to run analyses in the terminal you should book a compute node (or in this case just one core of a node). Make sure you only do this once each day because we have reserved one core per student for the course. If you haven’t already reserved a core today please use this command:</p>
-<pre class="bash"><code>salloc -A snic2022-22-123 -t 04:00:00 -p core -n 1 --no-shell --reservation=snic2022-22-123_29 &amp;</code></pre>
-<p>Once your job allocation has been granted (should not take long) you can connect to the node using ssh. To find out the name of your node, use:</p>
-<pre class="bash"><code>squeue -u username</code></pre>
-<p>The node name is found under nodelist header, you should only see one. Connect to that node:</p>
-<pre class="bash"><code>ssh -Y &lt;nodename&gt;</code></pre>
 </div>
 <div id="accessing-fastqc" class="section level2" number="3.5">
 <h2><span class="header-section-number">3.5</span> Accessing FastQC</h2>
