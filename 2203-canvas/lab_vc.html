@@ -594,10 +594,10 @@ You also need to index each output bam file:</p>
 <p>Please check what output file was generated this time.
 If you run out of time you can click below to get paths to precomputed bam files.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032412128294" aria-expanded="false" aria-controls="acc2022032412128294">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032413589992" aria-expanded="false" aria-controls="acc2022032413589992">
 </button>
 </p>
-<div id="acc2022032412128294" class="collapse">
+<div id="acc2022032413589992" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -626,10 +626,10 @@ First use pwd to check if you are standing in the correct directory:</p>
 <p>Please replace <code>sample</code> with the real sample names.</p>
 <p>If you run out of time you can click below to get paths to the precomputed g.vcf files.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032412129589" aria-expanded="false" aria-controls="acc2022032412129589">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032413587206" aria-expanded="false" aria-controls="acc2022032413587206">
 </button>
 </p>
-<div id="acc2022032412129589" class="collapse">
+<div id="acc2022032413587206" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -664,10 +664,10 @@ Then run GATK’s <code>GenoteypeGVC</code> to generate a vcf file:</p>
 -O cohort.vcf</code></pre>
 If you run out of time you can click below to get paths to the precomputed cohort.g.vcf and cohort.vcf files.
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032412126884" aria-expanded="false" aria-controls="acc2022032412126884">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032413582343" aria-expanded="false" aria-controls="acc2022032413582343">
 </button>
 </p>
-<div id="acc2022032412126884" class="collapse">
+<div id="acc2022032413582343" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -810,10 +810,10 @@ gatk --java-options -Xmx7g VariantFiltration \
 <h4>Precomputed files</h4>
 If you run out of time, please click below to get the path to precomputed bam and vcf files for the GATK’s best practices section.
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032412122849" aria-expanded="false" aria-controls="acc2022032412122849">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032413585214" aria-expanded="false" aria-controls="acc2022032413585214">
 </button>
 </p>
-<div id="acc2022032412122849" class="collapse">
+<div id="acc2022032413585214" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -850,7 +850,7 @@ To learn more about SLURM and SBATCH scripts please look the <a href="https://ww
 <h2>Variant calling in cohort</h2>
 <p>Below is a skeleton script that can be used as a template for running <a href="#jointvc">variant calling in a cohort</a>. Please modify it to run all the steps in part two of this workshop.</p>
 <pre class="bash"><code>#!/bin/bash
-#SBATCH -A g2019031
+#SBATCH -A sens2022-22-123
 #SBATCH -p core
 #SBATCH -n 1
 #SBATCH -t 1:00:00
@@ -880,10 +880,10 @@ done
 <pre class="bash"><code>./joint_genotyping.sbatch</code></pre>
 <p>If you would like more help with creating the sbatch script, please look at our example solution:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032412122032" aria-expanded="false" aria-controls="acc2022032412122032">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032413582432" aria-expanded="false" aria-controls="acc2022032413582432">
 </button>
 </p>
-<div id="acc2022032412122032" class="collapse">
+<div id="acc2022032413582432" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -904,28 +904,29 @@ module load GATK/4.1.4.1
 for sample in HG00097 HG00100 HG00101;
 do
   echo &quot;Now analyzing: &quot;${sample}
-  bwa mem -R &quot;@RG   ID:${sample}    PU:flowcellx_lanex  SM:${sample}    LB:libraryx PL:illumina&quot; 
+  bwa mem -R \
+  &quot;@RG\tID:${sample}\tPU:flowcellx_lanex\tSM:${sample}\tLB:libraryx\tPL:illumina&quot; \
   -t 1 human_g1k_v37_chr2.fasta &quot;${sample}_1.fq&quot; &quot;${sample}_2.fq&quot; | samtools sort &gt; &quot;${sample}.bam&quot;
 
   samtools index &quot;${sample}.bam&quot;
 
-  gatk --java-options -Xmx7g HaplotypeCaller 
-  -R human_g1k_v37_chr2.fasta 
-  -ERC GVCF -I &quot;${sample}.bam&quot; 
+  gatk --java-options -Xmx7g HaplotypeCaller \
+  -R human_g1k_v37_chr2.fasta \
+  -ERC GVCF -I &quot;${sample}.bam&quot; \
   -O &quot;${sample}.g.vcf&quot;
 
 done
 
-gatk --java-options -Xmx7g CombineGVCFs 
--R human_g1k_v37_chr2.fasta 
--V HG00097.g.vcf 
--V HG00100.g.vcf 
--V HG00101.g.vcf 
+gatk --java-options -Xmx7g CombineGVCFs \
+-R human_g1k_v37_chr2.fasta \
+-V HG00097.g.vcf \
+-V HG00100.g.vcf \
+-V HG00101.g.vcf \
 -O cohort.g.vcf
 
-gatk --java-options -Xmx7g GenotypeGVCFs 
--R human_g1k_v37_chr2.fasta 
--V cohort.g.vcf 
+gatk --java-options -Xmx7g GenotypeGVCFs \
+-R human_g1k_v37_chr2.fasta \
+-V cohort.g.vcf \
 -O cohort.vcf</code></pre>
 </div>
 </div>
@@ -935,10 +936,10 @@ gatk --java-options -Xmx7g GenotypeGVCFs
 <h2>GATK best practices</h2>
 <p>Now please try to incorporate the additional steps from <a href="#gatk_bp">GATK’s best practices</a> into the workflow. If you run out of time you can sneak peek at our example solution below.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032412120311" aria-expanded="false" aria-controls="acc2022032412120311">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032413589555" aria-expanded="false" aria-controls="acc2022032413589555">
 </button>
 </p>
-<div id="acc2022032412120311" class="collapse">
+<div id="acc2022032413589555" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -972,8 +973,8 @@ ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00101_2.fq
 # index reference genome
 bwa index -a bwtsw human_g1k_v37_chr2.fasta
 samtools faidx human_g1k_v37_chr2.fasta
-gatk --java-options -Xmx7g CreateSequenceDictionary 
--R human_g1k_v37_chr2.fasta 
+gatk --java-options -Xmx7g CreateSequenceDictionary \
+-R human_g1k_v37_chr2.fasta \
 -O human_g1k_v37_chr2.dict
 
 ## loop through the samples:
@@ -981,84 +982,85 @@ for sample in HG00097 HG00100 HG00101;
 do
   echo &quot;Now analyzing: ${sample}&quot;
   # map the reads
-  bwa mem -R &quot;@RG   ID:${sample}    PU:flowcellx_lanex  SM:${sample}    LB:libraryx PL:illumina&quot; 
-  -t 1 human_g1k_v37_chr2.fasta 
+  bwa mem \
+  -R &quot;@RG   ID:${sample}    PU:flowcellx_lanex  SM:${sample}    LB:libraryx PL:illumina&quot; \
+  -t 1 human_g1k_v37_chr2.fasta \
   &quot;${sample}_1.fq&quot; &quot;${sample}_2.fq&quot; | samtools sort &gt; &quot;${sample}.bam&quot;
 
   samtools index $sample&quot;.bam&quot;
   # mark duplicates
-  gatk --java-options -Xmx7g MarkDuplicates 
-  -I &quot;${sample}.bam&quot; 
-  -O &quot;${sample}.md.bam&quot; 
+  gatk --java-options -Xmx7g MarkDuplicates \
+  -I &quot;${sample}.bam&quot; \
+  -O &quot;${sample}.md.bam&quot; \
   -M &quot;${sample}_mdmetrics.txt&quot;
 
   # base quality score recalibration
-  gatk --java-options -Xmx7g BaseRecalibrator 
-  -R human_g1k_v37_chr2.fasta 
-  -I &quot;${sample}.md.bam&quot; 
-  --known-sites &quot;${ref}/1000G_phase1.snps.high_confidence.b37.chr2.vcf&quot; 
+  gatk --java-options -Xmx7g BaseRecalibrator \
+  -R human_g1k_v37_chr2.fasta \
+  -I &quot;${sample}.md.bam&quot; \
+  --known-sites &quot;${ref}/1000G_phase1.snps.high_confidence.b37.chr2.vcf&quot; \
   -O &quot;${sample}.recal.table&quot;
 
-  gatk --java-options -Xmx7g ApplyBQSR 
-  -R human_g1k_v37_chr2.fasta 
-  -I &quot;${sample}.md.bam&quot; 
-  --bqsr-recal-file &quot;${sample}.recal.table&quot; 
+  gatk --java-options -Xmx7g ApplyBQSR \
+  -R human_g1k_v37_chr2.fasta \
+  -I &quot;${sample}.md.bam&quot; \
+  --bqsr-recal-file &quot;${sample}.recal.table&quot; \
   -O &quot;${sample}.recal.bam&quot;
 
   # haplotypeCaller in -ERC mode
-  gatk --java-options -Xmx7g HaplotypeCaller 
-  -R human_g1k_v37_chr2.fasta 
-  -ERC GVCF 
-  -I &quot;${sample}.bam&quot; 
+  gatk --java-options -Xmx7g HaplotypeCaller \
+  -R human_g1k_v37_chr2.fasta \
+  -ERC GVCF \
+  -I &quot;${sample}.bam&quot; \
   -O &quot;${sample}.g.vcf&quot;
 done
 
 # joint genotyping
-gatk --java-options -Xmx7g CombineGVCFs 
--R human_g1k_v37_chr2.fasta 
--V HG00097.g.vcf 
--V HG00100.g.vcf 
--V HG00101.g.vcf 
+gatk --java-options -Xmx7g CombineGVCFs \
+-R human_g1k_v37_chr2.fasta \
+-V HG00097.g.vcf \
+-V HG00100.g.vcf \
+-V HG00101.g.vcf \
 -O cohort.g.vcf
 
-gatk --java-options -Xmx7g GenotypeGVCFs 
--R human_g1k_v37_chr2.fasta 
--V cohort.g.vcf 
+gatk --java-options -Xmx7g GenotypeGVCFs \
+-R human_g1k_v37_chr2.fasta \
+-V cohort.g.vcf \
 -O cohort.vcf
 
 # variant filtration SNPs
-gatk --java-options -Xmx7g SelectVariants 
--R human_g1k_v37_chr2.fasta 
--V cohort.vcf 
---select-type-to-include SNP 
+gatk --java-options -Xmx7g SelectVariants \
+-R human_g1k_v37_chr2.fasta \
+-V cohort.vcf \
+--select-type-to-include SNP \
 -O cohort.snvs.vcf
 
-gatk --java-options -Xmx7g VariantFiltration 
--R human_g1k_v37_chr2.fasta 
--V cohort.snvs.vcf 
---filter-name QDfilter --filter-expression &quot;QD &lt; 2.0&quot; 
---filter-name MQfilter --filter-expression &quot;MQ &lt; 40.0&quot; 
---filter-name FSfilter --filter-expression &quot;FS &gt; 60.0&quot; 
+gatk --java-options -Xmx7g VariantFiltration \
+-R human_g1k_v37_chr2.fasta \
+-V cohort.snvs.vcf \
+--filter-name QDfilter --filter-expression &quot;QD &lt; 2.0&quot; \
+--filter-name MQfilter --filter-expression &quot;MQ &lt; 40.0&quot; \
+--filter-name FSfilter --filter-expression &quot;FS &gt; 60.0&quot; \
 -O cohort.snvs.filtered.vcf
 
 # variant filtration indels
-gatk --java-options -Xmx7g SelectVariants 
--R human_g1k_v37_chr2.fasta 
--V cohort.vcf 
---select-type-to-include INDEL 
+gatk --java-options -Xmx7g SelectVariants \
+-R human_g1k_v37_chr2.fasta \
+-V cohort.vcf \
+--select-type-to-include INDEL \
 -O cohort.indels.vcf
 
-gatk --java-options -Xmx7g VariantFiltration 
--R human_g1k_v37_chr2.fasta 
--V cohort.indels.vcf 
---filter-name QDfilter --filter-expression &quot;QD &lt; 2.0&quot; 
---filter-name FSfilter --filter-expression &quot;FS &gt; 200.0&quot; 
+gatk --java-options -Xmx7g VariantFiltration \
+-R human_g1k_v37_chr2.fasta \
+-V cohort.indels.vcf \
+--filter-name QDfilter --filter-expression &quot;QD &lt; 2.0&quot; \
+--filter-name FSfilter --filter-expression &quot;FS &gt; 200.0&quot; \
 -O cohort.indels.filtered.vcf
 
 # merge filtered SNPs and indels
-gatk --java-options -Xmx7g MergeVcfs 
--I cohort.snvs.filtered.vcf 
--I cohort.indels.filtered.vcf 
+gatk --java-options -Xmx7g MergeVcfs \
+-I cohort.snvs.filtered.vcf \
+-I cohort.indels.filtered.vcf \
 -O cohort.filtered.vcf</code></pre>
 </div>
 </div>
