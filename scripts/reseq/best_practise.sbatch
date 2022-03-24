@@ -12,6 +12,8 @@ module load samtools/1.10
 module load GATK/4.1.4.1
 
 path_base="/sw/courses/ngsintro/reseq/data"
+# define path to reference genome
+ref="/sw/courses/ngsintro/reseq/data/ref"
 
 ln -s ${path_base}/ref/human_g1k_v37_chr2.fasta
 ln -s ${path_base}/fastq/HG00097_1.fq
