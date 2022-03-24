@@ -330,7 +330,7 @@ cat(paste0("scp -r username@rackham.uppmax.uu.se:",path_project_rnaseq,"/2_fastq
 **Mapping reads using HISAT2**  
 
 After verifying that the quality of the raw sequencing reads is acceptable, we will map the reads to the reference genome. There are many mappers/aligners available, so it may be good to choose one that is adequate for your type of data. Here, we will use a software called [HISAT2](http://www.ccb.jhu.edu/software/hisat/index.shtml) (Hierarchical Indexing for Spliced Alignment of Transcripts) as it is a good general purpose splice-aware aligner. It is fast and does not require a lot of RAM. Before we begin mapping, we need to obtain genome reference sequence (`.fasta` file) and build an aligner index. Due to time constraints, we will build an index only on chromosome 19.
-´
+
 ### Get reference
 
 It is best if the reference genome (`.fasta`) and annotation (`.gtf`) files come from the same source to avoid potential naming conventions problems. It is also good to check in the manual of the aligner you use for hints on what type of files are needed to do the mapping. We will not be using the annotation (`.gtf`) during mapping, but we will use it during quantification.
@@ -846,7 +846,7 @@ cat(paste0("scp username@rackham.uppmax.uu.se:",path_project_rnaseq,"/6_multiqc/
 
 **Differential gene expression using DESeq2**
 
-The easiest way to perform differential expression is to use one of the statistical packages, within R environment, that were specifically designed for analyses of read counts arising from RNA-seq, SAGE and similar technologies. Here, we will one of such packages called **DESeq2**. Learning R is beyond the scope of this course so we prepared basic ready to run R scripts to find DE genes between conditions **KO** and **Wt**.
+The easiest way to perform differential expression is to use one of the statistical packages, within R environment, that were specifically designed for analyses of read counts arising from RNA-seq, SAGE and similar technologies. Here, we will use one such package called **DESeq2**. Learning R is beyond the scope of this course so we prepared basic ready to run R scripts to find DE genes between conditions **KO** and **Wt**.
 
 Move to the `5_dge` directory and load R modules for use.  
 
@@ -1019,7 +1019,7 @@ ls -l
 -rw-rw-r-- 1 user gXXXXXXX 2.0K Sep 20  2016 gene.R
 -rw-rw-r-- 1 user gXXXXXXX  842 Sep 22  2016 heatmap.R
 -rw-rw-r-- 1 user gXXXXXXX  282 Sep 22  2016 ma.R
--rw-rw-r-- 1 user gXXXXXXX  340 Sep 22  2016 mds.R
+-rw-rw-r-- 1 user gXXXXXXX  340 Sep 22  2016 pca.R
 -rw-rw-r-- 1 user gXXXXXXX  669 Sep 22  2016 volcano.R
 ```
 
