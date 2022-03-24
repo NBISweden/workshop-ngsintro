@@ -1,5 +1,5 @@
 ---
-title:  "Downloading and uploading files from/to UPPMAX"
+title:  "Downloading and uploading files"
 ---
 
 ```{r,child="assets/header-lab.Rmd"}
@@ -8,7 +8,6 @@ title:  "Downloading and uploading files from/to UPPMAX"
 ```{r,eval=TRUE,include=FALSE}
 library(yaml)
 upid <- yaml::read_yaml("_site.yml")$uppmax_project
-upres <- yaml::read_yaml("_site.yml")$uppmax_res_1
 ```
 
 <div class="boxy boxy-yellow boxy-exclamation">
@@ -38,4 +37,4 @@ Type this in your local workspace to upload the file to UPPMAX:
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('scp script.sh username@rackham.uppmax.uu.se:/proj/',upid,'/nobackup/username/somefolder/.'))
 ```
-Again, `username` and `somefolder` should be replaced with your real username and a real folder name. 
+Again, `username` and `somefolder` should be replaced with your real username and a real folder name.
