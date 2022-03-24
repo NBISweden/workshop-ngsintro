@@ -724,7 +724,7 @@ cat(paste0('#!/bin/bash
 #SBATCH -A ',upid,'
 #SBATCH -p core
 #SBATCH -n 1
-#SBATCH -t 1:00:00
+#SBATCH -t 2:00:00
 #SBATCH -J jointGenotyping
 
 module load bioinfo-tools
@@ -770,7 +770,7 @@ cat(paste0('#!/bin/bash
 #SBATCH -A ',upid,'
 #SBATCH -p core
 #SBATCH -n 1
-#SBATCH -t 1:00:00
+#SBATCH -t 2:00:00
 #SBATCH -J BestPractise
 
 ## load modules

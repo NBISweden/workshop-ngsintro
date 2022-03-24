@@ -2,7 +2,7 @@
 #SBATCH -A snic2021-22-750
 #SBATCH -p core
 #SBATCH -n 1
-#SBATCH -t 1:00:00
+#SBATCH -t 2:00:00
 #SBATCH -J jointGenotyping
 
 ## load modules
@@ -29,7 +29,7 @@ gatk --java-options -Xmx7g CreateSequenceDictionary -R human_g1k_v37_chr2.fasta 
 for sample in HG00097 HG00100 HG00101;
 do
   echo "\n\nNow analyzing: "$sample"\n\n"
-  bwa mem -R "@RG\\tID:readgroupx\\tPU:flowcellx_lanex\\tSM:"$sample"\\tLB:libraryx\\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta $sample"_1.fq" $sample"_2.fq" | samtools sort > $sample".bam"
+  bwa mem -R "@RG\tID:readgroupx\tPU:flowcellx_lanex\tSM:"$sample"\tLB:libraryx\tPL:illumina" -t 1 human_g1k_v37_chr2.fasta $sample"_1.fq" $sample"_2.fq" | samtools sort > $sample".bam"
 
   samtools index $sample".bam"
 
