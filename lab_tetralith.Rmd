@@ -105,7 +105,7 @@ cat(paste0('cd /proj/',upid,'/nobackup/<nsc_username>/linux_tutorial'))
 When you have the UPPMAX singularity container up and running you can follow regular lab instructions, except that you should not connect to UPPMAX or book a node, and you should work in the cluster workspace defined here. Also, IGV is started with a special command,see below.
 
 # IGV
-To start IGV at NSC type this in the command lie:
+To start IGV at NSC type this in the command:
 ```bash
 /proj/snic2022-22-186/igv/igv.sh
 ```
