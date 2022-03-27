@@ -258,33 +258,7 @@ div.tocify {
 </div>
 <div id="connect-to-uppmax" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Connect to UPPMAX</h1>
-<p>The first step of this lab is to open a ssh connection to UPPMAX. You will need an SSH program to do this:</p>
-<p><i class="fab fa-linux"></i> Linux: Use <strong>Terminal</strong> (Included by default).<br />
-<i class="fab fa-apple"></i> OSX: Use <strong>Terminal</strong> (Included by default).<br />
-<i class="fab fa-windows"></i> Windows: use <a href="https://mobaxterm.mobatek.net/" target="_blank">MobaXterm</a>. Download and install it if you haven’t already done so.</p>
-<p>Fire up the available SSH program and enter the following:</p>
-<pre class="bash"><code>$ ssh -Y username@rackham.uppmax.uu.se</code></pre>
-<p>Replace <strong>username</strong> with your UPPMAX username. <code>-Y</code> means that X-forwarding is activated on the connection, which means graphical data can be transmitted if a program requests it, i.e. programs can use a graphical user interface (GUI) if they want to.</p>
-<p>Enter your password when prompted. As you type, nothing will show on screen.
-No stars, no dots. It is supposed to be that way. Just type the password and press enter, it will be fine.</p>
-<p>Now your screen should look something like this:</p>
-<pre class="bash"><code>dahlo@dahlo-xps ~ $ ssh -Y dahlo@rackham.uppmax.uu.se
-Last login: Fri May 18 15:03:59 2018 from micro046.icm.uu.se
- _   _ ____  ____  __  __    _    __  __
-| | | |  _ \|  _ \|  \/  |  / \   \ \/ /   | System:    rackham4
-| | | | |_) | |_) | |\/| | / _ \   \  /    | User:      dahlo
-| |_| |  __/|  __/| |  | |/ ___ \  /  \    |
- \___/|_|   |_|   |_|  |_/_/   \_\/_/\_\   |
-
-###############################################################################
-
-        User Guides: http://www.uppmax.uu.se/support/user-guides
-        FAQ: http://www.uppmax.uu.se/support/faq
-
-        Write to support@uppmax.uu.se, if you have questions or comments.
-
-
-dahlo@rackham4 ~ $</code></pre>
+<p>The first step of this lab is to open a ssh connection to UPPMAX. Please go to the Contents page and click “Connecting to UPPMAX” under the “Additional content” topic. Once connected to UPPMAX, return here and continue reading the instructions below.</p>
 </div>
 <div id="logon-to-a-node" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Logon to a node</h1>
@@ -365,10 +339,10 @@ dahlo@rackham2 work $ echo $PATH
 <p><i class="fas fa-clipboard-list"></i> Run reference_indexer.</p>
 <pre class="bash"><code>Syntax: reference_indexer -r &lt;name of the fasta file you want to index&gt;</code></pre>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032514108104" aria-expanded="false" aria-controls="acc2022032514108104">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032720125693" aria-expanded="false" aria-controls="acc2022032720125693">
 </button>
 </p>
-<div id="acc2022032514108104" class="collapse">
+<div id="acc2022032720125693" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ reference_indexer -r 0_ref/ad2.fa</code></pre>
 </div>
@@ -395,10 +369,10 @@ Using this information the program can quickly jump to the start location of eac
 <p><i class="fas fa-clipboard-list"></i> Align reads using <strong>align_reads</strong>, naming the output file <strong>ad2.sam</strong>, placed in the <strong>1_alignment</strong> folder.</p>
 <pre class="bash"><code>Syntax: align_reads -r &lt;reference genome&gt; -i &lt;fastq file with reads&gt; -o &lt;name of the output file&gt;</code></pre>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032514102753" aria-expanded="false" aria-controls="acc2022032514102753">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032720127584" aria-expanded="false" aria-controls="acc2022032720127584">
 </button>
 </p>
-<div id="acc2022032514102753" class="collapse">
+<div id="acc2022032720127584" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ align_reads -r 0_ref/ad2.fa -i 0_seq/ad2.fq -o 1_alignment/ad2.sam</code></pre>
 </div>
@@ -418,10 +392,10 @@ Using this information the program can quickly jump to the start location of eac
 <p><i class="fas fa-clipboard-list"></i> The next step is to convert the SAM file to a BAM file. This is more or less just compressing the file, like creating a zip file. To do that we will use the dummy program <strong>sambam_tools</strong>, telling it we want to convert a file to BAM (<strong>-f bam</strong>), which file we want to convert (<strong>-i</strong>), where it should save the resulting BAM file (<strong>-o</strong>). Save the BAM file in the <strong>2_bam</strong> folder and name it <strong>ad2.bam</strong>.</p>
 <pre class="bash"><code>Syntax: sambam_tool -f bam -i &lt;sam file&gt; -o &lt;bam&gt;</code></pre>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032514106561" aria-expanded="false" aria-controls="acc2022032514106561">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032720126702" aria-expanded="false" aria-controls="acc2022032720126702">
 </button>
 </p>
-<div id="acc2022032514106561" class="collapse">
+<div id="acc2022032720126702" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ sambam_tool -f bam -i 1_alignment/ad2.sam -o 2_bam/ad2.bam</code></pre>
 </div>
@@ -445,10 +419,10 @@ Using this information the program can quickly jump to the start location of eac
 <p><i class="fas fa-clipboard-list"></i> To sort the BAM file we’ll use the <strong>sambam_tool</strong> again, but specifying a different function, <strong>-f sort</strong> instead. Tell it to store the sorted BAM file in the <strong>3_sorted</strong> folder and name the file <strong>ad2.sorted.bam</strong></p>
 <pre class="bash"><code>Syntax: sambam_tool -f sort -i &lt;unsorted bam file&gt; -o &lt;sorted bam file&gt;</code></pre>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032514105094" aria-expanded="false" aria-controls="acc2022032514105094">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032720122865" aria-expanded="false" aria-controls="acc2022032720122865">
 </button>
 </p>
-<div id="acc2022032514105094" class="collapse">
+<div id="acc2022032720122865" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ sambam_tool -f sort -i 2_bam/ad2.bam -o 3_sorted/ad2.sorted.bam</code></pre>
 </div>
@@ -457,10 +431,10 @@ Using this information the program can quickly jump to the start location of eac
 <p><i class="fas fa-clipboard-list"></i> Now when we have a sorted BAM file, we can index it. Use the command</p>
 <pre class="bash"><code>Syntax: sambam_tool -f index -i &lt;sorted bam file&gt;</code></pre>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032514103310" aria-expanded="false" aria-controls="acc2022032514103310">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032720124970" aria-expanded="false" aria-controls="acc2022032720124970">
 </button>
 </p>
-<div id="acc2022032514103310" class="collapse">
+<div id="acc2022032720124970" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ sambam_tool -f index -i 3_sorted/ad2.sorted.bam</code></pre>
 </div>
@@ -507,10 +481,10 @@ Using this information the program can quickly jump to the start location of eac
 <p><i class="fas fa-clipboard-list"></i> Tell samtools that you want CRAM output (<strong><code>-C</code></strong>) and specify which reference genome it should use to do the CRAM conversion (<strong><code>-T</code></strong>)</p>
 <pre class="bash"><code>Syntax: samtools view -C -T &lt;reference genome&gt; -o &lt;name of cram file&gt; &lt;bam file to convert&gt;</code></pre>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032514102855" aria-expanded="false" aria-controls="acc2022032514102855">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032720121900" aria-expanded="false" aria-controls="acc2022032720121900">
 </button>
 </p>
-<div id="acc2022032514102855" class="collapse">
+<div id="acc2022032720121900" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ samtools view -C -T 0_ref/ad2.fa -o 4_cram/ad2.cram 3_sorted/ad2.sorted.bam</code></pre>
 </div>

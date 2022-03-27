@@ -258,33 +258,7 @@ div.tocify {
 </div>
 <div id="connect-to-uppmax" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Connect to UPPMAX</h1>
-<p>The first step of this lab is to open a ssh connection to UPPMAX. You will need an SSH program to do this:</p>
-<p><i class="fab fa-linux"></i> Linux: Use <strong>Terminal</strong> (Included by default).<br />
-<i class="fab fa-apple"></i> OSX: Use <strong>Terminal</strong> (Included by default).<br />
-<i class="fab fa-windows"></i> Windows: use <a href="https://mobaxterm.mobatek.net/" target="_blank">MobaXterm</a>. Download and install it if you haven’t already done so.</p>
-<p>Fire up the available SSH program and enter the following:</p>
-<pre class="bash"><code>$ ssh -Y username@rackham.uppmax.uu.se</code></pre>
-<p>Replace <strong>username</strong> with your UPPMAX username. <code>-Y</code> means that X-forwarding is activated on the connection, which means graphical data can be transmitted if a program requests it, i.e. programs can use a graphical user interface (GUI) if they want to.</p>
-<p>Enter your password when prompted. As you type, nothing will show on screen.
-No stars, no dots. It is supposed to be that way. Just type the password and press enter, it will be fine.</p>
-<p>Now your screen should look something like this:</p>
-<pre class="bash"><code>dahlo@dahlo-xps ~ $ ssh -Y dahlo@rackham.uppmax.uu.se
-Last login: Fri May 18 15:03:59 2018 from micro046.icm.uu.se
- _   _ ____  ____  __  __    _    __  __
-| | | |  _ \|  _ \|  \/  |  / \   \ \/ /   | System:    rackham4
-| | | | |_) | |_) | |\/| | / _ \   \  /    | User:      dahlo
-| |_| |  __/|  __/| |  | |/ ___ \  /  \    |
- \___/|_|   |_|   |_|  |_/_/   \_\/_/\_\   |
-
-###############################################################################
-
-        User Guides: http://www.uppmax.uu.se/support/user-guides
-        FAQ: http://www.uppmax.uu.se/support/faq
-
-        Write to support@uppmax.uu.se, if you have questions or comments.
-
-
-dahlo@rackham4 ~ $</code></pre>
+<p>The first step of this lab is to open a ssh connection to UPPMAX. Please go to the Contents page and click “Connecting to UPPMAX” under the “Additional content” topic. Unfortunately we can’t just make a link to it from this page due to technical limitations in the web framework we have to use for the course :( Once connected to UPPMAX, return here and continue reading the instructions below.</p>
 </div>
 <div id="logon-to-a-node" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Logon to a node</h1>
@@ -556,10 +530,10 @@ total 0
 <p>The wildcard works with most, if not all, Linux commands. We can try using wildcards with <strong><code>ls</code></strong>. Look in the folder <code>many_files</code>. Yes, there are hundreds of .docx files in there. But, there are a couple of <strong>.txt</strong> files in there as well. Find out how many .docx and .txt files exist.</p>
 <p><i class="fas fa-clipboard-list"></i> Try to figure out the solution on your own. Then check the answer below.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032514116656" aria-expanded="false" aria-controls="acc2022032514116656">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032720134662" aria-expanded="false" aria-controls="acc2022032720134662">
 </button>
 </p>
-<div id="acc2022032514116656" class="collapse">
+<div id="acc2022032720134662" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ ll many_files/*.docx
 $ ll many_files/*.txt</code></pre>

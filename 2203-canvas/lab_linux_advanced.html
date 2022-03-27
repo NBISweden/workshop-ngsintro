@@ -259,33 +259,7 @@ div.tocify {
 </div>
 <div id="connect-to-uppmax" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Connect to UPPMAX</h1>
-<p>The first step of this lab is to open a ssh connection to UPPMAX. You will need an SSH program to do this:</p>
-<p><i class="fab fa-linux"></i> Linux: Use <strong>Terminal</strong> (Included by default).<br />
-<i class="fab fa-apple"></i> OSX: Use <strong>Terminal</strong> (Included by default).<br />
-<i class="fab fa-windows"></i> Windows: use <a href="https://mobaxterm.mobatek.net/" target="_blank">MobaXterm</a>. Download and install it if you haven’t already done so.</p>
-<p>Fire up the available SSH program and enter the following:</p>
-<pre class="bash"><code>$ ssh -Y username@rackham.uppmax.uu.se</code></pre>
-<p>Replace <strong>username</strong> with your UPPMAX username. <code>-Y</code> means that X-forwarding is activated on the connection, which means graphical data can be transmitted if a program requests it, i.e. programs can use a graphical user interface (GUI) if they want to.</p>
-<p>Enter your password when prompted. As you type, nothing will show on screen.
-No stars, no dots. It is supposed to be that way. Just type the password and press enter, it will be fine.</p>
-<p>Now your screen should look something like this:</p>
-<pre class="bash"><code>dahlo@dahlo-xps ~ $ ssh -Y dahlo@rackham.uppmax.uu.se
-Last login: Fri May 18 15:03:59 2018 from micro046.icm.uu.se
- _   _ ____  ____  __  __    _    __  __
-| | | |  _ \|  _ \|  \/  |  / \   \ \/ /   | System:    rackham4
-| | | | |_) | |_) | |\/| | / _ \   \  /    | User:      dahlo
-| |_| |  __/|  __/| |  | |/ ___ \  /  \    |
- \___/|_|   |_|   |_|  |_/_/   \_\/_/\_\   |
-
-###############################################################################
-
-        User Guides: http://www.uppmax.uu.se/support/user-guides
-        FAQ: http://www.uppmax.uu.se/support/faq
-
-        Write to support@uppmax.uu.se, if you have questions or comments.
-
-
-dahlo@rackham4 ~ $</code></pre>
+<p>The first step of this lab is to open a ssh connection to UPPMAX. Please go to the Contents page and click “Connecting to UPPMAX” under the “Additional content” topic. Once connected to UPPMAX, return here and continue reading the instructions below.</p>
 </div>
 <div id="logon-to-a-node" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Logon to a node</h1>
@@ -345,10 +319,10 @@ $ echo Most international flights leave from terminal $a at Arlanda airport</cod
 $ echo $a squared is $(($a*$a))</code></pre>
 <p><i class="fas fa-clipboard-list"></i> Write a echo command that will print out the volume of a <a href="https://www.mathsisfun.com/cuboid.html" target="_blank">rectangular cuboid</a>, with the side lengths specified by variables named <code>x</code>, <code>y</code>, and <code>z</code>. To see that it works correctly, the volume of a rectangular cuboid with sides 5,5,5 is 125, and for 4,5,10 is 200. <em>Give it a couple of tries on your own first. If you get completely stuck you can see a suggested solution below.</em></p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032514106751" aria-expanded="false" aria-controls="acc2022032514106751">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032720116723" aria-expanded="false" aria-controls="acc2022032720116723">
 </button>
 </p>
-<div id="acc2022032514106751" class="collapse">
+<div id="acc2022032720116723" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ x=4
 $ y=5
@@ -385,10 +359,10 @@ done  </code></pre>
 <p>Start off with getting a loop to count down from 10 to 0 first. Notice how fast the computer counts? That won’t do if it’s seconds we want to be counting down. Try looking the man page for the <code>sleep</code> command (<code>man sleep</code>) and figure out how to use it. The point of using <code>sleep</code> is to tell the computer to wait for 1 second after printing the number, instead of rushing to the next iteration in the loop directly. Try to implement this on your own.</p>
 </div>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032514100247" aria-expanded="false" aria-controls="acc2022032514100247">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032720116959" aria-expanded="false" aria-controls="acc2022032720116959">
 </button>
 </p>
-<div id="acc2022032514100247" class="collapse">
+<div id="acc2022032720116959" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># declare the values the loop will loop over
 for secondsToGo in {10..0};
@@ -419,10 +393,10 @@ In real life you will never do this, instead you will most likely always do it t
 </div>
 <p>Basic, without bonus points:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032514107482" aria-expanded="false" aria-controls="acc2022032514107482">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032720115056" aria-expanded="false" aria-controls="acc2022032720115056">
 </button>
 </p>
-<div id="acc2022032514107482" class="collapse">
+<div id="acc2022032720115056" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># load the modules needed for samtools
 module load bioinfo-tools samtools/1.3
@@ -440,10 +414,10 @@ done</code></pre>
 </div>
 <p>Advanced, with bonus points:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032514107331" aria-expanded="false" aria-controls="acc2022032514107331">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032720119418" aria-expanded="false" aria-controls="acc2022032720119418">
 </button>
 </p>
-<div id="acc2022032514107331" class="collapse">
+<div id="acc2022032720119418" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># load the modules needed for samtools
 module load bioinfo-tools samtools/1.3
@@ -489,10 +463,10 @@ fi</code></pre>
 <p><i class="fas fa-clipboard-list"></i> Now, modify the previous exercise to only do the conversion if a file with the intended name of the BAM file doesn’t already exists. <em>i.e</em>; if you have a.sam and want to create a BAM file named a.bam, first check if a.bam already exists and only do the conversion if it does not exist.</p>
 <p>Basic:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032514102919" aria-expanded="false" aria-controls="acc2022032514102919">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032720114595" aria-expanded="false" aria-controls="acc2022032720114595">
 </button>
 </p>
-<div id="acc2022032514102919" class="collapse">
+<div id="acc2022032720114595" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># load the modules needed for samtools
 module load bioinfo-tools samtools/1.3
@@ -514,10 +488,10 @@ done</code></pre>
 </div>
 <p>Advanced:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032514106788" aria-expanded="false" aria-controls="acc2022032514106788">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032720113888" aria-expanded="false" aria-controls="acc2022032720113888">
 </button>
 </p>
-<div id="acc2022032514106788" class="collapse">
+<div id="acc2022032720113888" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># load the modules needed for samtools
 module load bioinfo-tools samtools/1.3
@@ -563,10 +537,10 @@ done</code></pre>
 <p>To get around this we can use a different way of generating sequences (there are <strong>always</strong> alternatives). There is a program called <code>seq</code> that does pretty much the same thing as the sequence expression, and since it is a program it will be executed <strong>after</strong> the variables have been handled. It’s as easy to use as the sequence expressions; instead of writing <code>{1..10}</code> just write <code>$( seq 1 10 )</code>.</p>
 </div>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032514105492" aria-expanded="false" aria-controls="acc2022032514105492">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032720118401" aria-expanded="false" aria-controls="acc2022032720118401">
 </button>
 </p>
-<div id="acc2022032514105492" class="collapse">
+<div id="acc2022032720118401" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># set the number you want to calculate the factorial of
 n=10
@@ -604,10 +578,10 @@ echo The factorial of $n is $factorial</code></pre>
 <p>There is a bunch of fastq files in the directory <code>/proj/snic2022-22-123/nobackup/username/linux_advanced/fastq/</code> that is to be used for this exercise.</p>
 <p>Basic solution:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032514101856" aria-expanded="false" aria-controls="acc2022032514101856">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032720118175" aria-expanded="false" aria-controls="acc2022032720118175">
 </button>
 </p>
-<div id="acc2022032514101856" class="collapse">
+<div id="acc2022032720118175" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># make the dummy pipeline available
 export PATH=$PATH:/sw/courses/ngsintro/linux/uppmax_pipeline_exercise/dummy_scripts
@@ -639,10 +613,10 @@ done</code></pre>
 </div>
 <p>Advanced solution:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032514109943" aria-expanded="false" aria-controls="acc2022032514109943">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032720118012" aria-expanded="false" aria-controls="acc2022032720118012">
 </button>
 </p>
-<div id="acc2022032514109943" class="collapse">
+<div id="acc2022032720118012" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># make the dummy pipeline available in this script
 export PATH=$PATH:/sw/courses/ngsintro/linux/uppmax_pipeline_exercise/dummy_scripts
