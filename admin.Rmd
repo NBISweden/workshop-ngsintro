@@ -131,4 +131,20 @@ ReservationName=snic2021-22-644_fri StartTime=2021-11-26T08:30:00 EndTime=2021-1
    Users=(null) Accounts=snic2021-22-644 Licenses=(null) State=INACTIVE BurstBuffer=(null) Watts=n/a
 ```
 
+## List project members
+
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0("projmembers ",upid))
+```
+
+Sample output
+
+```
+snic2022-22-123 abusiddi   Abu Bakar Siddique
+snic2022-22-123 afifac     Afifa Enam Chowdhury
+snic2022-22-123 asve0014   Ashish Verma
+snic2022-22-123 berka      Berkay Paylar
+snic2022-22-123 btleren    Betül Eren Keskin
+```
+
 ***
