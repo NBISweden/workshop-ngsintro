@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Variant Calling Workflow</title>
+
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.5.1/jquery-3.5.1.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link id="font-awesome-1-attachment" rel="attachment" href="site_libs/font-awesome-5.1.0/fonts/fontawesome-webfont.ttf"/>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="assets/lab.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+#TOC {
+  display: none !important;
+}
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"><img src="assets/logo.svg" id="logo" style="height:20px;margin:0;"/></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="home_schedule.html">Schedule</a>
+</li>
+<li>
+  <a href="home_contents.html">Contents</a>
+</li>
+<li>
+  <a href="home_precourse.html">Precourse</a>
+</li>
+<li>
+  <a href="home_syllabus.html">Syllabus</a>
+</li>
+<li>
+  <a href="home_info.html">Info</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Variant Calling Workflow</h1>
+<h3 class="subtitle">From reads to short variants</h3>
+
+</div>
+
+
+<!-- rmd lab header -->
+<p><br></p>
+<div id="introduction" class="section level1 unnumbered">
+<h1>Introduction</h1>
+<p>Whole genome sequencing (WGS) is a comprehensive method for analyzing entire genomes. This workshop will take you through the process of calling germline short variants (SNVs and INDELs) in WGS data from three human samples.</p>
+<ol style="list-style-type: decimal">
+<li>The first part of the workshop will guide you through a basic variant calling workflow in one sample. The goals are that you should get familiar with the bam and vcf file formats, and be able to interpret vcf files in Integrative Genomics Viewer (IGV).</li>
+<li>If you have time, the next part of the workshop will show you how to perform joint variant calling in three samples. The goals here are that you should be able to interpret multi-sample vcf files and explain the differences between the g.vcf and vcf file formats.</li>
+<li>If you have time, the last part of the workshop will take you through the GATK best practices for germline short variant detection in three samples. The goal here is that you should learn how to use GATK’s documentation so that you can analyze your own samples in the future.</li>
+</ol>
+<p><strong>General guide</strong></p>
+<div class="boxy boxy-lightbulb">
+<ul>
+<li>You will work on the computing cluster Rackham at UPPMAX</li>
+<li>If you change the node you are working on you will need to reload the tool modules.</li>
+<li>Please type commands in the terminal instead of copying and pasting them which often result in formatting errors.</li>
+<li>Use tab completion.</li>
+<li>In paths, please replace <code>username</code> with your actual UPPMAX username.</li>
+<li>In commands, please replace <code>parameter</code> with the correct parameter, for example your input file name, output file name, directory name, etc.</li>
+<li>A line starting with <code>#</code> is a comment</li>
+<li>Running a command without parameters will often return a help message on how to run the command.</li>
+<li>After a command is completed, please check that the desired output file was generated and that it has a reasonable size (use <code>ls -l</code>).</li>
+<li>Google errors, someone in the world has run into EXACTLY the same problem you had and asked about it on a forum somewhere.</li>
+</ul>
+</div>
+</div>
+<div id="data-description" class="section level1 unnumbered">
+<h1>Data description</h1>
+<div id="samples" class="section level2 unnumbered">
+<h2>Samples</h2>
+<p>The 1000 Genomes Project ran between 2008 and 2015, creating the largest public catalogue of human variation and genotype data. In this workshop we will use low coverage whole genome sequence data from three individuals, generated in the first phase of the 1000 Genomes Project.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Sample</th>
+<th>Population</th>
+<th>Sequencing technology</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>HG00097</td>
+<td>British in England and Scotland</td>
+<td>Low coverage WGS</td>
+</tr>
+<tr class="even">
+<td>HG00100</td>
+<td>British in England and Scotland</td>
+<td>Low coverage WGS</td>
+</tr>
+<tr class="odd">
+<td>HG00101</td>
+<td>British in England and Scotland</td>
+<td>Low coverage WGS</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="Genomicregion" class="section level2 unnumbered">
+<h2>Genomic region</h2>
+<p>The <em>LCT</em> gene on chromosome 2 encodes the enzyme lactase, which is responsible for the metabolism of lactose in mammals.
+Most mammals can not digest lactose as adults, but some humans can.
+Genetic variants upstream of the <em>LCT</em> gene causes lactase persistence, which means that lactase is expressed also in adulthood and the carrier can continue to digest lactose.
+The variant rs4988235, located at position chr2:136608646 in the GRCh37 reference genome, has been shown to lead to lactose persistence.
+The alternative allele (A on the forward strand and T on the reverse strand) creates a new transcription factor binding site that enables continued expression of the gene after weaning.</p>
+<p>In this workshop we will detect genetic variants in the region chr2:136545000-136617000 in the three samples listed above, and check if they carry the allele for lactase persistence.</p>
+<p>For those interested in the details of the genetic bases for lactose tolerance, please read the first three pages of <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf">Lactose intolerance: diagnosis, genetic, and clinical factors</a> by Mattar et al. The variant rs4988235 is here referred to as LCT-13910C&gt;T.</p>
+</div>
+<div id="Data" class="section level2 unnumbered">
+<h2>Data folder on UPPMAX</h2>
+<p>All input data for this exercise is located in this folder on Rackham:</p>
+<pre class="bash"><code>/sw/courses/ngsintro/reseq/data</code></pre>
+<p>The fastq files are located in this folder:</p>
+<pre class="bash"><code>/sw/courses/ngsintro/reseq/data/fastq</code></pre>
+<p>Reference files, such as the reference genome in fasta format, are located in this folder:</p>
+<pre class="bash"><code>/sw/courses/ngsintro/reseq/data/ref</code></pre>
+</div>
+</div>
+<div id="preparations" class="section level1 unnumbered">
+<h1>Preparations</h1>
+<div id="preparelaptop" class="section level2 unnumbered">
+<h2>Laptop</h2>
+<p>This lab will be done completely on UPPMAX and the instructions assume that you connect via ThinLinc.
+However, if you prefer to connect to UPPMAX via ssh you can instead copy some of the resulting files to your laptop and work on them there. , install IGV, and run all the IGV steps on your laptop.
+If so, please create a local workspace on your laptop, for example a folder called <em>ngsworkflow</em> on your desktop. You need to have write permission in this folder.
+If you connect to UPPMAX via ThinLinc you don’t have to crete a local workspace.</p>
+</div>
+<div id="uppmax" class="section level2 unnumbered">
+<h2>UPPMAX</h2>
+<div id="connect-to-uppmax" class="section level3 unnumbered">
+<h3>Connect to UPPMAX</h3>
+<p>During this lab it is best to connect to UPPMAX with ThinLinc, which gives you a graphical remote desktop. Instructions for this is available in Canvas under <strong>Contents</strong> &gt; <strong>Additional content</strong> &gt; <strong>Connecting to UPPMAX</strong>. Please follow the instructions in section 1.2 Remote desktop connection.</p>
+</div>
+<div id="logon-to-a-node" class="section level3 unnumbered">
+<h3>Logon to a node</h3>
+<p>This lab should be done on a compute node (not the login node). First check if you already have an active job allocation using this command:</p>
+<pre class="bash"><code>squeue -u username</code></pre>
+<p>Where <code>username</code> should be replaced with your username.<br/>
+If no jobs are listed you should allocate a job for this lab. If you already have an active job allocation please proceed to <strong>Connect to the node</strong> below.<br/>
+Use this code to allocate a job on day 1 of variant-calling:</p>
+<pre class="bash"><code>salloc -A snic2022-22-123 -t 04:00:00 -p core -n 1 --no-shell --reservation=snic2022-22-123_30</code></pre>
+<p>Use this code to allocate a job on day 2 of variant-calling:</p>
+<pre class="bash"><code>salloc -A snic2022-22-123 -t 04:00:00 -p core -n 1 --no-shell --reservation=snic2022-22-123_31</code></pre>
+<p>Once your job allocation has been granted (should not take long) please check the allocation again using:</p>
+<pre class="bash"><code>squeue -u username</code></pre>
+<p>You should now see that you have an active job allocation. The node name for your job is listed under the nodelist header.<br/>
+<strong>Connect to the node:</strong></p>
+<pre class="bash"><code>ssh -Y nodename</code></pre>
+</div>
+<div id="workspace-on-uppmax" class="section level3 unnumbered">
+<h3>Workspace on UPPMAX</h3>
+<p>You should work in your folder under the course’s nobackup folder, just like you have done during the previous labs.
+Start by going there using this command:</p>
+<pre class="bash"><code>cd /proj/snic2022-22-123/nobackup/username</code></pre>
+<p>Where <code>username</code> should be replaced with your real username.
+Create a folder for this exercise and move into it:</p>
+<pre class="bash"><code>mkdir ngsworkflow
+cd ngsworkflow</code></pre>
+<p>Make sure you are located in</p>
+<pre class="bash"><code>/proj/snic2022-22-123/nobackup/username/ngsworkflow</code></pre>
+<p>for the rest of this lab.</p>
+</div>
+<div id="symbolic-links-to-data" class="section level3 unnumbered">
+<h3>Symbolic links to data</h3>
+<p>The raw data files are located in the <a href="#Data">Data</a> folder described above.<br />
+Create a symbolic link to the reference genome (in this case chromosome 2 in GRCh37) in your workspace:</p>
+<pre class="bash"><code>ln -s /sw/courses/ngsintro/reseq/data/ref/human_g1k_v37_chr2.fasta</code></pre>
+<p>Do the same with the fastq files:</p>
+<pre class="bash"><code>ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00097_1.fq
+ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00097_2.fq
+ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00100_1.fq
+ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00100_2.fq
+ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00101_1.fq
+ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00101_2.fq</code></pre>
+</div>
+<div id="Accessingprograms" class="section level3 unnumbered">
+<h3>Accessing programs</h3>
+<p>Load the modules that are needed during this workshop. Remember that these modules must be loaded every time you login to Rackham, or when you connect to a new compute node.<br />
+First load the bioinfo-tools module:</p>
+<pre class="bash"><code>module load bioinfo-tools</code></pre>
+<p>This makes it possible to load the individual programs:</p>
+<pre class="bash"><code>module load FastQC/0.11.8
+module load bwa/0.7.17
+module load samtools/1.10
+module load GATK/4.1.4.1</code></pre>
+<p>Although you don’t have to specify which versions of the tools to use, it is recommended to do so for reproducibility if you want to rerun the exact same analyses later.
+When loading the module GATK/4.1.4.1 you will get a warning message about the fact that GATK commands have been updated since the previous version of GATK. This is fine and you don’t have to do anything about it.</p>
+</div>
+</div>
+<div id="index-the-genome" class="section level2 unnumbered">
+<h2>Index the genome</h2>
+<p>Tools that compare short reads with a large reference genome needs indexes of the reference genome to work efficiently. You therefore need to create index files for each tool.<br/>
+First check if you are standing in the correct directory:</p>
+<pre class="bash"><code>pwd</code></pre>
+<p>Should return</p>
+<pre class="bash"><code>/proj/snic2022-22-123/nobackup/username/ngsworkflow</code></pre>
+<p>Generate BWA index files:</p>
+<pre class="bash"><code>bwa index -a bwtsw human_g1k_v37_chr2.fasta</code></pre>
+<p>Check that several new files have been created using <code>ls -l</code>. Then Generate a samtools index:</p>
+<pre class="bash"><code>samtools faidx human_g1k_v37_chr2.fasta</code></pre>
+<p>Check to see what file(s) were created using <code>ls -lrt</code>. Then Generate a GATK sequence dictionary:</p>
+<pre class="bash"><code>gatk --java-options -Xmx7g CreateSequenceDictionary -R human_g1k_v37_chr2.fasta -O human_g1k_v37_chr2.dict</code></pre>
+<p>Again, check what file(s) were created using <code>ls -lrt</code>.</p>
+</div>
+</div>
+<div id="variant-calling-in-one-sample" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Variant calling in one sample</h1>
+<p>Now let’s start the main part of the workshop, which is variant calling in one sample. The workflow consists of aligning the reads with <a href="http://bio-bwa.sourceforge.net">BWA</a> and detecting variants with <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037225632-HaplotypeCaller">HaplotypeCaller</a> as illustrated below.</p>
+<p><img src="data/ngs-workflow/1_onesamplevc.png" /></p>
+<div id="aligning-reads" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Aligning reads</h2>
+<div id="bwamem" class="section level3" number="1.1.1">
+<h3><span class="header-section-number">1.1.1</span> BWA mem</h3>
+<p>You should use <code>BWA mem</code> to align the reads to the reference genome.</p>
+In the call to <code>BWA mem</code> you need to add something called a <em>read group</em>, which contains information about how the reads were generated.
+This is required by HaplotypeCaller. Since we don’t know exactly how the reads in the 1000 Genomes Project were generated we will
+assume that each pair of fastq files was generated from one library preparation (<em>libraryx</em>), derived from one biological sample (<em>HG00097</em>), and run on one lane (<em>lanex</em>) of a flowcell (<em>flowcellx</em>) on the Illumina machine, and define a toy read group with this information.
+The code for adding this read group is<br/>
+<strong>-R “<span class="citation">@RG</span>\tID:HG00097\tPU:lanex_flowcellx\tSM:HG00097\tLB:libraryx\tPL:illumina”</strong>.
+<div class="boxy boxy-yellow boxy-exclamation">
+<p>When running BWA for another sample later on you have to replace <em>HG00097</em> in the read group with the new sample name. To learn more about read groups please read <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360035890671-Read-groups">this article</a> at GATK forum.</p>
+</div>
+<p>You also need to specify how many threads the program should use (should be the same as the number of cores you have access to and is defined by the code <code>-t 1</code> below) and what reference genome file to use. The output from <code>BWA</code> should be parsed to <code>samtools sort</code>, which sorts the sam file according to chromosome position and then converts the sam file to the binary bam format. Finally, use a file redirect <code>&gt;</code> so that the output ends up in a file and not on your screen.</p>
+<p>First make sure that you are standing in the workspace you created on UPPMAX for this lab:</p>
+<pre class="bash"><code>pwd</code></pre>
+<p>Should return</p>
+<pre class="bash"><code>/proj/snic2022-22-123/nobackup/username/ngsworkflow</code></pre>
+<p>Then use this command to align the reads, add the read group, sort the reads and write them to a bam file:</p>
+<pre class="bash"><code>bwa mem \
+-R &quot;@RG\tID:readgroup_HG00097\tPU:lanex_flowcellx\tSM:HG00097\tLB:libraryx\tPL:illumina&quot; \
+-t 1 human_g1k_v37_chr2.fasta HG00097_1.fq HG00097_2.fq | samtools sort &gt; HG00097.bam</code></pre>
+<p>Please check that the expected output file was generated and that it has content using <code>ls -lrt</code>.</p>
+<p>Next you need to index the generated bam file so that programs can randomly access the sorted data without reading the whole file. This command creates an index file with the same name as the input bam file, except with a .bai extension:</p>
+<pre class="bash"><code>samtools index HG00097.bam</code></pre>
+<p>Please check what output file was generated this time.</p>
+</div>
+<div id="check-bam-with-samtools" class="section level3" number="1.1.2">
+<h3><span class="header-section-number">1.1.2</span> Check bam with samtools</h3>
+<p>The bam file is binary so we cannot read it directly, but we can view it with the program <code>samtools view</code>. The header section of the bam file can be viewed separately with the <code>-H</code> flag:</p>
+<pre class="bash"><code>samtools view -H HG00097.bam</code></pre>
+<div id="question" class="section level4 unnumbered">
+<h4>Question</h4>
+<ol style="list-style-type: decimal">
+<li>The <span class="citation">@SQ</span> tag of the bam header contains information about reference sequence. What do you think SN:2 and LN:243199373 in this tag means?</li>
+</ol>
+<p>The aligned reads can be viewed with <code>samtools view</code> without the <code>-H</code>. This will display the entire bam file which is quite large, so if you just want to look at the first 5 lines (for example) you can combine <code>samtools view</code> with <code>head</code>:</p>
+<pre class="bash"><code>samtools view HG00097.bam | head -n 5</code></pre>
+</div>
+<div id="question-1" class="section level4 unnumbered">
+<h4>Question</h4>
+<ol start="2" style="list-style-type: decimal">
+<li>What is the leftmost mapping position of the first read in the bamfile?</li>
+</ol>
+<p>Please have a look at the <a href="https://samtools.github.io/hts-specs/SAMv1.pdf">Sequence Alignment/Map Format Specification</a> for more information about bam files.</p>
+</div>
+</div>
+<div id="check-bam-in-igv" class="section level3" number="1.1.3">
+<h3><span class="header-section-number">1.1.3</span> Check bam in IGV</h3>
+<p>To use IGV on UPPMAX we recommend that you are connected via ThinLinc.
+Alternatively you can install IGV on your local computer, download the files using scp, and look at them locally.
+The instructions below assume that you have logged in to UPPMAX via ThinLinc.<br />
+First use pwd to check if you are standing in the correct directory:</p>
+<pre class="bash"><code>pwd</code></pre>
+<p>Should return</p>
+<pre class="bash"><code>/proj/snic2022-22-123/nobackup/username/ngsworkflow</code></pre>
+<p>To start IGV please type this in the terminal:</p>
+<pre class="bash"><code>module load IGV/2.8.13
+igv.sh &amp;</code></pre>
+<p>In IGV:<br />
+In the upper left dropdown menu choose <code>Human hg19</code> (which is the same as GRCh37).<br />
+In the <code>File</code> menu, select <code>Load from File</code> and select <code>HG00097.bam</code>, which should then appear in the tracks window.<br />
+Zoom in to see the reads. You can either select a region by click and drag, or by typing a region or a gene name in the text box at the top. Remember that we have data for the region chr2:136545000-136617000.<br />
+IGV can be closed by selecting exit in the <code>File</code> menu or by clicking <code>x</code> in the upper right corner of the IGV window, but you can keep it open for the rest of the lab.</p>
+<div id="questions" class="section level4 unnumbered">
+<h4>Questions</h4>
+<ol start="3" style="list-style-type: decimal">
+<li>What is the read length?</li>
+<li>Approximately how many reads cover an arbitrary position in the genomic region we are looking at?</li>
+<li>Which RefSeq Genes are located within the region chr2:136545000-136617000?</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="variant-calling" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Variant Calling</h2>
+<div id="haplotypecaller" class="section level3" number="1.2.1">
+<h3><span class="header-section-number">1.2.1</span> HaplotypeCaller</h3>
+<p>Now we will detect short variants in the bam file using GATK’s <code>HaplotypeCaller</code>. First use pwd to check if you are standing in the correct directory:</p>
+<pre class="bash"><code>pwd</code></pre>
+<p>Should return</p>
+<pre class="bash"><code>/proj/snic2022-22-123/nobackup/username/ngsworkflow</code></pre>
+<p>Then run:</p>
+<pre class="bash"><code>gatk --java-options -Xmx7g HaplotypeCaller \
+-R human_g1k_v37_chr2.fasta \
+-I HG00097.bam \
+-O HG00097.vcf</code></pre>
+<p>Check what new files were generated with <code>ls -lrt</code>.</p>
+</div>
+<div id="explore-the-vcf-file" class="section level3" number="1.2.2">
+<h3><span class="header-section-number">1.2.2</span> Explore the vcf file</h3>
+<p>Now you have your first vcf file containing the raw variants in the region chr2:136545000-136617000 in sample HG00097. Please look at the vcf file with <code>less</code> and try to understand its structure.</p>
+<p>Vcf files contains meta-information lines starting with <em>##</em>, a header line starting with <em>#CHROM</em>, and then data lines each containing information about one variant position in the genome. The header line defines the columns of the data lines, and to view the header line you can type this command:</p>
+<pre class="bash"><code>grep &#39;#CHROM&#39; HG00097.vcf</code></pre>
+<div id="question-2" class="section level4 unnumbered">
+<h4>Question</h4>
+<ol start="6" style="list-style-type: decimal">
+<li>What column of the VCF file contains genotype information for the sample HG00097?</li>
+</ol>
+<p>The meta-information lines starting with <em>##INFO</em> defines how the data in the <em>INFO</em> column is encoded,
+and the meta-information lines starting with <em>##FORMAT</em> defines how the data in the <em>FORMAT</em> column is encoded.<br />
+To view the meta-information lines describing the <em>INFO</em> column use:</p>
+<pre class="bash"><code>grep &#39;##INFO&#39; HG00097.vcf</code></pre>
+<p>To view the meta-information lines describing the <em>FORMAT</em> column use:</p>
+<pre class="bash"><code>grep &#39;##FORMAT&#39; HG00097.vcf</code></pre>
+</div>
+<div id="question-3" class="section level4 unnumbered">
+<h4>Question</h4>
+<ol start="7" style="list-style-type: decimal">
+<li>What does <em>GT</em> in the <em>FORMAT</em> column of the data lines mean?</li>
+<li>What does <em>AD</em> in the <em>FORMAT</em> column of the data lines mean?</li>
+</ol>
+<p>To look at the details of one specific genetic variant at position 2:136545844 use:</p>
+<pre class="bash"><code>grep &#39;136545844&#39; HG00097.vcf</code></pre>
+</div>
+<div id="questions-1" class="section level4 unnumbered">
+<h4>Questions</h4>
+<ol start="9" style="list-style-type: decimal">
+<li>What genotype does the sample HG00097 have at position 2:136545844?</li>
+<li>What are the allelic depths for the reference and alternative alles in sample HG00097 at position 2:136545844?</li>
+</ol>
+<p>The following command can be used to count the data lines (i.e. number of lines that don’t start with “#”) in the vcf file:</p>
+<pre class="bash"><code>grep -v &quot;#&quot; HG00097.vcf | wc -l</code></pre>
+</div>
+<div id="question-4" class="section level4 unnumbered">
+<h4>Question</h4>
+<ol start="11" style="list-style-type: decimal">
+<li>How many genetic variants was detected in HG00097?</li>
+</ol>
+<p>For more detailed information about vcf files please have a look at <a href="https://samtools.github.io/hts-specs/VCFv4.2.pdf">The Variant Call Format specification</a>.</p>
+</div>
+</div>
+<div id="vcfinigv" class="section level3" number="1.2.3">
+<h3><span class="header-section-number">1.2.3</span> Check vcf in IGV</h3>
+<p>We assume that you have logged in to UPPMAX via ThinLinc.<br />
+If you have closed IGV please open it again as described above.<br />
+Load the file HG00097.vcf into tracks window of IGV as you did with the HG00097.bam file earlier (load the bam file as well if it is not already loaded). You will now see all the variants called in HG00097.<br />
+You can view variants in the <em>LCT</em> gene by typing the gene name in the search box, and you can look specifically at the variant at position chr2:136545844 by typing that position in the search box.<br />
+Please use IGV to answer the questions below.</p>
+<div id="questions-2" class="section level4 unnumbered">
+<h4>Questions</h4>
+<ol start="12" style="list-style-type: decimal">
+<li>Hover the mouse over the upper row of the vcf track. What is the reference and alternative alleles of the variant at position chr2:136545844?</li>
+<li>Hover the mouse over the lower row of the vcf track and look under “Genotype Information”. What genotype does HG00097 have at position chr2:136545844? Is this the same as you found by looking directly in the vcf file in question 10?</li>
+<li>Look in the bam track and count the number of reads that have “G” and “C”, respectively, at position chr2:136545844. How is this information captured under “Genotype Attributes”? (Again, hoover the mouse over the lower row of the vcf track.)</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div id="jointvc" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Variant calling in cohort</h1>
+<p>If you have time, you can now try joint variant calling in all three samples. Each sample has to be processed with <code>BWA mem</code> as above, and then with <code>HaplotypeCaller</code> with the flag <code>-ERC</code> to generate one g.vcf file per sample. The individual g.vcf files should subsequently be combined with GATK’s <code>CombineGVCFs</code>, and translated into vcf format with GATK’s <code>GenotypeGVCFs</code>. The workflow below shows how the three samples should be processed and combined.</p>
+<p><img src="data/ngs-workflow/2_jointvc.png" /></p>
+<p>If you don’t have time to complete all steps we have made precomputed intermediary file available. Please see links under each analysis step.</p>
+<div id="bwa_joint" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> BWA mem</h2>
+<p>Run <code>BWA mem</code> for all three samples in the data set. <code>BWA mem</code> should be run exactly as above, but with the new sample names.
+You also need to adjust the read group information so that it matches each new sample name. <br/>
+First use pwd to check if you are standing in the correct directory:</p>
+<pre class="bash"><code>pwd</code></pre>
+<p>Should return</p>
+<pre class="bash"><code>/proj/snic2022-22-123/nobackup/username/ngsworkflow</code></pre>
+<p>Then use this command for every sample to align the reads, add the read group, sort the reads and write them to a bam file:</p>
+<pre class="bash"><code>bwa mem -R &quot;@RG\tID:readgroup_&lt;sample&gt;\tPU:lanex_flowcellx\tSM:&lt;sample&gt;\tLB:libraryx\tPL:illumina&quot; \
+-t 1 human_g1k_v37_chr2.fasta sample_1.fq sample_2.fq | samtools sort &gt; sample.bam</code></pre>
+<p>Where <code>sample</code> should be replaced with the real samples name, i.e. HG00097, HG00100 and HG00101.
+Please check that the expected output files were generated and have content using <code>ls -lrt</code>.
+You also need to index each output bam file:</p>
+<pre class="bash"><code>samtools index &lt;sample&gt;.bam</code></pre>
+<p>Please check what output file was generated this time.
+If you run out of time you can click below to get paths to precomputed bam files.</p>
+<p>
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032808361731" aria-expanded="false" aria-controls="acc2022032808361731">
+</button>
+</p>
+<div id="acc2022032808361731" class="collapse">
+<div class="card card-body">
+<div class="chunk-title-parent">
+<div class="chunk-title small">
+sh
+</div>
+<pre class="sh"><code>/sw/courses/ngsintro/reseq/data/bam/HG00097.bam
+/sw/courses/ngsintro/reseq/data/bam/HG00100.bam
+/sw/courses/ngsintro/reseq/data/bam/HG00101.bam</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div id="generategvcf" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Generate g.vcf files</h2>
+<p><code>HaplotypeCaller</code> should also be run for all three samples, but this time the output for each sample needs to be in g.vcf format. This is accomplished with a small change in the <code>HaploteypCaller</code> command.<br/>
+First use pwd to check if you are standing in the correct directory:</p>
+<pre class="bash"><code>pwd</code></pre>
+<p>Should return</p>
+<pre class="bash"><code>/proj/snic2022-22-123/nobackup/username/ngsworkflow</code></pre>
+<p>Then:</p>
+<pre class="bash"><code>gatk --java-options -Xmx7g HaplotypeCaller \
+-R human_g1k_v37_chr2.fasta \
+-ERC GVCF \
+-I sample.bam \
+-O sample.g.vcf</code></pre>
+<p>Please replace <code>sample</code> with the real sample names.</p>
+<p>If you run out of time you can click below to get paths to the precomputed g.vcf files.</p>
+<p>
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032808361355" aria-expanded="false" aria-controls="acc2022032808361355">
+</button>
+</p>
+<div id="acc2022032808361355" class="collapse">
+<div class="card card-body">
+<div class="chunk-title-parent">
+<div class="chunk-title small">
+sh
+</div>
+<pre class="sh"><code>/sw/courses/ngsintro/reseq/data/vcf/HG00097.g.vcf
+/sw/courses/ngsintro/reseq/data/vcf/HG00100.g.vcf
+/sw/courses/ngsintro/reseq/data/vcf/HG00101.g.vcf</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div id="jointgenotyping" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Joint genotyping</h2>
+<p>Once you have the g.vcf files for all samples you should perform joint genotype calling. To do this you first need to combine all individual .g.vcf files to one file using <code>CombineGVCFs</code>.<br/>
+First use pwd to check if you are standing in the correct directory:</p>
+<pre class="bash"><code>pwd</code></pre>
+<p>Should return</p>
+<pre class="bash"><code>/proj/snic2022-22-123/nobackup/username/ngsworkflow</code></pre>
+<p>Then:</p>
+<pre class="bash"><code>gatk --java-options -Xmx7g CombineGVCFs \
+-R human_g1k_v37_chr2.fasta \
+-V sample1.g.vcf \
+-V sample2.g.vcf \
+-V sample3.g.vcf \
+-O cohort.g.vcf</code></pre>
+<p>Please replace <code>sample1</code>, <code>sample2</code>, <code>sample3</code> with the real sample names.
+Then run GATK’s <code>GenoteypeGVC</code> to generate a vcf file:</p>
+<pre class="bash"><code>gatk --java-options -Xmx7g GenotypeGVCFs \
+-R human_g1k_v37_chr2.fasta \
+-V cohort.g.vcf \
+-O cohort.vcf</code></pre>
+If you run out of time you can click below to get paths to the precomputed cohort.g.vcf and cohort.vcf files.
+<p>
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032808360018" aria-expanded="false" aria-controls="acc2022032808360018">
+</button>
+</p>
+<div id="acc2022032808360018" class="collapse">
+<div class="card card-body">
+<div class="chunk-title-parent">
+<div class="chunk-title small">
+sh
+</div>
+<pre class="sh"><code>/sw/courses/ngsintro/reseq/data/vcf/cohort.g.vcf
+/sw/courses/ngsintro/reseq/data/vcf/cohort.vcf</code></pre>
+</div>
+</div>
+</div>
+<div id="questions-3" class="section level4 unnumbered">
+<h4>Questions</h4>
+<ol start="15" style="list-style-type: decimal">
+<li>How many data lines do the cohort.g.vcf file have? You can use the Linux command <code>grep -v "#" cohort.g.vcf</code> to extract all lines in “cohort.g.vcf” that don’t start with “#”, then <code>|</code>, and then <code>wc -l</code> to count those lines.</li>
+<li>How many data lines do the cohort.vcf file have?</li>
+<li>Explain the difference in number of data lines.</li>
+<li>Look at the header line of the cohort.vcf file. What columns does it have?</li>
+<li>What is encoded in the last three columns of the data lines?</li>
+</ol>
+</div>
+</div>
+<div id="check-combined-vcf-file-in-igv" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Check combined vcf file in IGV</h2>
+<p>Again we assume that you have logged in to UPPMAX via ThinLinc.<br />
+If you have closed IGV please open it again as described above.<br />
+Load the files cohort.vcf, HG00097.bam, HG00100.bam and HG00101.bam into IGV as described earlier.<br />
+This time lets look closer at the variant rs4988235, located at position chr2:136608646 in the HG19 reference genome. This is the variant that has been shown to lead to lactase persistence.<br />
+Please use IGV to answer the questions below.</p>
+<div id="questions-4" class="section level4 unnumbered">
+<h4>Questions</h4>
+<ol start="20" style="list-style-type: decimal">
+<li>What is the reference and alternative alleles at chr2:136608646?</li>
+<li>What genotype do the three samples have at chr2:136608646? Note how genotypes are color coded in IGV.</li>
+<li>Should any of the individuals avoid drinking milk?</li>
+<li>Now compare the data shown in IGV with the data in the VCF file. Extract the row for the chr2:136608646 variant in the cohort.vcf file, for example using <code>grep '136608646' cohort.vcf</code>. What columns of the vcf file contain the information shown in the upper part of the vcf track in IGV?</li>
+<li>What columns of the vcf file contain the information shown in the lower part of the vcf track?</li>
+<li>Zoom out so that you can see the <em>MCM6</em> and <em>LCT</em> genes. Is the variant at chr2:136608646 locate within the LCT gene?</li>
+</ol>
+<p>If you are interested in how this variant affects lactose tolerance please read the article by Mattar et al presented <a href="#Genomicregion">above</a>, or in <a href="https://www.omim.org/entry/601806#0001">OMIM</a>.</p>
+</div>
+</div>
+</div>
+<div id="gatk_bp" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> GATK’s best practices</h1>
+<p>The third part of this workshop will take you through additional refinement steps that are recommended in <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-">GATKs best practices for germline short variant discovery</a>, illustrated in the flowchart below.
+The additional steps in the best practice workflow was not covered in the variant-calling lecture on Wednesday afternoon. There will be a short lecture about this on Thursday morning at 9 am. However, if you reach this step earlier you can have a look at this <a href="https://youtu.be/b7VV6e5q6ss">prerecorded video of the same lecture</a>.</p>
+<p><img src="data/ngs-workflow/3_best_practise.png" style="width:80.0%" /></p>
+<div id="bwa-mem" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> BWA mem</h2>
+<p>The first step in GATK’s best pracice variant calling workflow is to run BWA mem for each sample exactly as you did in <a href="#bwa_joint">Variant calling in cohort</a>. You have already done this step, so please use the bam files that you generated in step 2.1 for the steps below.</p>
+</div>
+<div id="mark-duplicates" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Mark Duplicates</h2>
+<p>Sometimes the same DNA fragment is sequenced multiple times, which leads to multiple reads from the same fragment in the fastq file. This can occur due to PCR amplification in the library preparation, or if one read cluster is incorrectly detected as multiple clusters by the sequencing instrument.
+If a duplicated read contains a genetic variant, the ratio of the two alleles might be obscured, which can lead to incorrect genotyping. It is therefore recommended (in most cases) to mark duplicate reads so that they are counted as one during genotyping.</p>
+<p>Please read about Picard’s <code>MarkDuplicates</code> <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037225972-MarkDuplicates-Picard-">here</a>. Picard’s MarkDuplicates has recently been incorporated into the GATK suite, but the usage example in GATKs documentation describes how to call it via the stand alone Picard program. To learn how to use it as part of the GATK module, please call MarkDuplicates without input parameters like this:</p>
+<pre class="bash"><code>gatk --java-options -Xmx7g MarkDuplicates</code></pre>
+<p>Please run MarkDuplicates on all three bam files generated in step 2.1. Here is the code for running MarkDuplicates on the sample HG00097:</p>
+<pre class="bash"><code>gatk --java-options -Xmx7g MarkDuplicates \
+    -I HG00097.bam \
+    -O HG00097.md.bam \
+    -M HG00097_mdmetrics.txt</code></pre>
+</div>
+<div id="recalibrate-base-quality-scores" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Recalibrate Base Quality Scores</h2>
+<p>Another source of error is systematic biases in the assignment of base quality scores by the sequencing instrument. This can be corrected by GATK’s <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360035890531-Base-Quality-Score-Recalibration-BQSR-">Base Quality Score Recalibration</a>.
+In short, you first use <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037593511-BaseRecalibrator">BaseRecalibrator</a> to build a recalibration model, and then <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037225212-ApplyBQSR">ApplyBQSR</a> to recalibrate the base qualities in your bam file.<br />
+<code>BaseRecalibrator</code> requires a file with known SNPs as input. This file is available in the data folder on UPPMAX:</p>
+<pre class="bash"><code>/sw/courses/ngsintro/reseq/data/ref/1000G_phase1.snps.high_confidence.b37.chr2.vcf</code></pre>
+Please recalibrate the base quality scores in all the bam files generated in the previous step. Below is our example solution for sample HG00097.
+First run BaseRecalibrator:
+<div class="chunk-title-parent">
+<div class="chunk-title small">
+sh
+</div>
+<pre class="sh"><code>gatk --java-options -Xmx7g BaseRecalibrator 
+    -R human_g1k_v37_chr2.fasta 
+    -I HG00097.md.bam 
+    --known-sites /sw/courses/ngsintro/reseq/data/ref/1000G_phase1.snps.high_confidence.b37.chr2.vcf 
+    -O HG00097.recal.table</code></pre>
+</div>
+<p>Then run ApplyBQSR:</p>
+<pre class="bash"><code>gatk --java-options -Xmx7g ApplyBQSR \
+    -R human_g1k_v37_chr2.fasta \
+    -I HG00097.md.bam \
+    --bqsr-recal-file HG00097.recal.table \
+    -O   HG00097.recal.bam</code></pre>
+</div>
+<div id="generate-g.vcf-files" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Generate g.vcf files</h2>
+<p><code>HaplotypeCaller</code> should also be run for all three samples, and the output should be in g.vcf exactly as described <a href="#generategvcf">above</a>. This time use recalibrated bam files as input.</p>
+</div>
+<div id="joint-genotyping" class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> Joint genotyping</h2>
+<p>Once you have the g.vcf files for all samples you should perform joint genotype calling. This should be done with the commands <code>CombineGVCFs</code> and <code>GenotypeGVCFs</code> exactly as described <a href="#jointgenotyping">above</a>, but you should use the g.vcf files generated from the recalibrated bam files as input.</p>
+</div>
+<div id="variant-filtering" class="section level2" number="3.6">
+<h2><span class="header-section-number">3.6</span> Variant Filtering</h2>
+<p>HaplotypeCaller is designed to be very sensitive, which is good because it minimizes the chance of missing real variants. However, it means that the number of false positives can be quite large, so we need to filter the raw callset. GATK offers two ways to filter variants:</p>
+<ol style="list-style-type: decimal">
+<li>The variant quality score recalibration (VQSR) method uses machine learning to identify variants that are likely to be real. This is the best method if you have a lot of data, for example one whole genome sequence sample or several whole exome samples.<br />
+</li>
+<li>If you have less data you can use hard filters as described <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360035531112?id=2806#2">here</a>.</li>
+</ol>
+<p>Since we have very little data we will use hard filters. The parameters are slightly different for SNVs and INDELs, so you need to first select all SNVs using <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037225432-SelectVariants">SelectVariants</a> and filter them using <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037226192-VariantFiltration">VariantFiltration</a> with the parameters suggested for SNVs. Then select all INDELs and filter them with the parameters suggested for INDELs. Finally merge the SNVs and INDELs to get all variants in one file using <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037226612-MergeVcfs-Picard-">MergeVCFs</a>.</p>
+<p>Example solution for filtering SNVs:</p>
+<pre class="bash"><code>gatk --java-options -Xmx7g SelectVariants \
+  -R human_g1k_v37_chr2.fasta \
+  -V cohort.vcf \
+  --select-type-to-include SNP \
+  -O cohort.snvs.vcf
+
+gatk --java-options -Xmx7g VariantFiltration \
+  -R human_g1k_v37_chr2.fasta \
+  -V cohort.snvs.vcf \
+  -O cohort.snvs.filtered.vcf \
+  --filter-name QDfilter --filter-expression &quot;QD &lt; 2.0&quot;  \
+  --filter-name MQfilter --filter-expression &quot;MQ &lt; 40.0&quot;  \
+  --filter-name FSfilter --filter-expression &quot;FS &gt; 60.0&quot;</code></pre>
+<p>Example solution for filtering INDELs:</p>
+<pre class="bash"><code>gatk --java-options -Xmx7g SelectVariants \
+  -R human_g1k_v37_chr2.fasta \
+  -V cohort.vcf \
+  --select-type-to-include INDEL \
+  -O cohort.indels.vcf
+
+gatk --java-options -Xmx7g VariantFiltration \
+  -R human_g1k_v37_chr2.fasta \
+  -V cohort.indels.vcf \
+  -O cohort.indels.filtered.vcf \
+  --filter-name QDfilter --filter-expression &quot;QD &lt; 2.0&quot; \
+  --filter-name FSfilter --filter-expression &quot;FS &gt; 200.0&quot;</code></pre>
+<p>Example solution for merging filtered SNVs and INDELs:</p>
+<pre class="bash"><code>gatk --java-options -Xmx7g MergeVcfs \
+    -I cohort.snvs.filtered.vcf \
+    -I cohort.indels.filtered.vcf \
+    -O cohort.filtered.vcf</code></pre>
+<p>Open your filtered vcf with <code>less</code> and page through it. It still has all the variant lines, but the FILTER column that was blank before is now filled in, with PASS or a list of the filters it failed. Note also that the filters that were run are described in the header section.</p>
+<div id="precomputed-files" class="section level4 unnumbered">
+<h4>Precomputed files</h4>
+If you run out of time, please click below to get the path to precomputed bam and vcf files for the GATK’s best practices section.
+<p>
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032808366024" aria-expanded="false" aria-controls="acc2022032808366024">
+</button>
+</p>
+<div id="acc2022032808366024" class="collapse">
+<div class="card card-body">
+<div class="chunk-title-parent">
+<div class="chunk-title small">
+sh
+</div>
+<pre class="sh"><code>Path to intermediary and final bam files: /sw/courses/ngsintro/reseq/data/best_practise_bam
+Path to intermediary and final vcf files: /sw/courses/ngsintro/reseq/data/best_practise_vcf</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div id="questions-5" class="section level4 unnumbered">
+<h4>Questions</h4>
+<ol start="26" style="list-style-type: decimal">
+<li>Check how many variants in total that are present in the cohort.filtered.vcf file and how many that have passed the filters. Is the difference big?</li>
+<li>Look at the variants that did not pass the filters using <code>grep -v 'PASS' cohort.filtered.vcf</code>. Try to understand why these variants didn’t pass the filter.</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="clean-up" class="section level1 unnumbered">
+<h1>Clean up</h1>
+<p>When the analysis is done and you are sure that you have the desired output, it is a good practice to remove intermediary files that are no longer needed. This will save disk space, and will be a crucial part of the routines when you work with your own data. Please think about which files you need to keep if you would like to go back and look at this lab later on. Remove the other files.</p>
+</div>
+<div id="answers" class="section level1 unnumbered">
+<h1>Answers</h1>
+<p>When you have finished the exercise, please have a look at this document with <a href="lab_vc_answers.pdf">answers to all questions</a>, and compare them with your answers.</p>
+</div>
+<div id="sbatch-scripts" class="section level1 unnumbered">
+<h1>SBATCH scripts</h1>
+<p>This section is supplementary material intended only for those of you who want to learn how to run all steps automatically in bash scripts. Please make sure that you have understood how all the individual steps work before you start with this.
+To learn more about SLURM and SBATCH scripts please look the <a href="https://www.uppmax.uu.se/support/user-guides/slurm-user-guide/">SLURM user guide</a> on UPPMAX website.</p>
+<div id="variant-calling-in-cohort" class="section level2 unnumbered">
+<h2>Variant calling in cohort</h2>
+<p>Below is a skeleton script that can be used as a template for running <a href="#jointvc">variant calling in a cohort</a>. Please modify it to run all the steps in part two of this workshop.</p>
+<pre class="bash"><code>#!/bin/bash
+#SBATCH -A sens2022-22-123
+#SBATCH -p core
+#SBATCH -n 1
+#SBATCH -t 1:00:00
+#SBATCH -J jointGenotyping
+
+module load bioinfo-tools
+module load bwa/0.7.17
+module load samtools/1.10
+module load GATK/4.1.4.1
+
+## loop through the samples:
+for sample in HG00097 HG00100 HG00101;
+do
+  echo &quot;Now analyzing: &quot;${sample}
+  #Fill in the code for running bwa-mem for each sample here
+  #Fill in the code for samtools index for each sample here
+  #Fill in the code for HaplotypeCaller for each sample here
+done
+#Fill in the code for CombineGVCFs for all samples here
+#Fill in the code for GenotypeGVCFs here
+</code></pre>
+<p>Please save the sbatch script in your UPPMAX folder and call it “joint_genotyping.sbatch” or similar. Make the script executable by this command:</p>
+<pre class="bash"><code>chmod u+x joint_genotyping.sbatch</code></pre>
+<p>To run the sbatch script in the SLURM queue, use this command:</p>
+<pre class="bash"><code>sbatch joint_genotyping.sbatch</code></pre>
+<p>If you have an active node reservation you can run the script as a normal bash script:</p>
+<pre class="bash"><code>./joint_genotyping.sbatch</code></pre>
+<p>If you would like more help with creating the sbatch script, please look at our example solution:</p>
+<p>
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032808361328" aria-expanded="false" aria-controls="acc2022032808361328">
+</button>
+</p>
+<div id="acc2022032808361328" class="collapse">
+<div class="card card-body">
+<div class="chunk-title-parent">
+<div class="chunk-title small">
+sh
+</div>
+<pre class="sh"><code>#!/bin/bash
+#SBATCH -A snic2022-22-123
+#SBATCH -p core
+#SBATCH -n 1
+#SBATCH -t 2:00:00
+#SBATCH -J jointGenotyping
+
+module load bioinfo-tools
+module load bwa/0.7.17
+module load samtools/1.10
+module load GATK/4.1.4.1
+
+for sample in HG00097 HG00100 HG00101;
+do
+  echo &quot;Now analyzing: &quot;${sample}
+  bwa mem -R \
+  &quot;@RG\tID:${sample}\tPU:flowcellx_lanex\tSM:${sample}\tLB:libraryx\tPL:illumina&quot; \
+  -t 1 human_g1k_v37_chr2.fasta &quot;${sample}_1.fq&quot; &quot;${sample}_2.fq&quot; | samtools sort &gt; &quot;${sample}.bam&quot;
+
+  samtools index &quot;${sample}.bam&quot;
+
+  gatk --java-options -Xmx7g HaplotypeCaller \
+  -R human_g1k_v37_chr2.fasta \
+  -ERC GVCF -I &quot;${sample}.bam&quot; \
+  -O &quot;${sample}.g.vcf&quot;
+
+done
+
+gatk --java-options -Xmx7g CombineGVCFs \
+-R human_g1k_v37_chr2.fasta \
+-V HG00097.g.vcf \
+-V HG00100.g.vcf \
+-V HG00101.g.vcf \
+-O cohort.g.vcf
+
+gatk --java-options -Xmx7g GenotypeGVCFs \
+-R human_g1k_v37_chr2.fasta \
+-V cohort.g.vcf \
+-O cohort.vcf</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div id="gatk-best-practices" class="section level2 unnumbered">
+<h2>GATK best practices</h2>
+<p>Now please try to incorporate the additional steps from <a href="#gatk_bp">GATK’s best practices</a> into the workflow. If you run out of time you can sneak peek at our example solution below.</p>
+<p>
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032808365076" aria-expanded="false" aria-controls="acc2022032808365076">
+</button>
+</p>
+<div id="acc2022032808365076" class="collapse">
+<div class="card card-body">
+<div class="chunk-title-parent">
+<div class="chunk-title small">
+sh
+</div>
+<pre class="sh"><code>#!/bin/bash
+#SBATCH -A snic2022-22-123
+#SBATCH -p core
+#SBATCH -n 1
+#SBATCH -t 2:00:00
+#SBATCH -J BestPractise
+
+## load modules
+module load bioinfo-tools
+module load bwa/0.7.17
+module load samtools/1.10
+module load GATK/4.1.4.1
+
+# define path to reference genome
+ref=&quot;/sw/courses/ngsintro/reseq/data/ref&quot;
+
+# make symbolic links
+ln -s /sw/courses/ngsintro/reseq/data/ref/human_g1k_v37_chr2.fasta
+ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00097_1.fq
+ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00097_2.fq
+ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00100_1.fq
+ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00100_2.fq
+ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00101_1.fq
+ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00101_2.fq
+
+# index reference genome
+bwa index -a bwtsw human_g1k_v37_chr2.fasta
+samtools faidx human_g1k_v37_chr2.fasta
+gatk --java-options -Xmx7g CreateSequenceDictionary \
+-R human_g1k_v37_chr2.fasta \
+-O human_g1k_v37_chr2.dict
+
+## loop through the samples:
+for sample in HG00097 HG00100 HG00101;
+do
+  echo &quot;Now analyzing: ${sample}&quot;
+  # map the reads
+  bwa mem \
+  -R &quot;@RG   ID:${sample}    PU:flowcellx_lanex  SM:${sample}    LB:libraryx PL:illumina&quot; \
+  -t 1 human_g1k_v37_chr2.fasta \
+  &quot;${sample}_1.fq&quot; &quot;${sample}_2.fq&quot; | samtools sort &gt; &quot;${sample}.bam&quot;
+
+  samtools index $sample&quot;.bam&quot;
+  # mark duplicates
+  gatk --java-options -Xmx7g MarkDuplicates \
+  -I &quot;${sample}.bam&quot; \
+  -O &quot;${sample}.md.bam&quot; \
+  -M &quot;${sample}_mdmetrics.txt&quot;
+
+  # base quality score recalibration
+  gatk --java-options -Xmx7g BaseRecalibrator \
+  -R human_g1k_v37_chr2.fasta \
+  -I &quot;${sample}.md.bam&quot; \
+  --known-sites &quot;${ref}/1000G_phase1.snps.high_confidence.b37.chr2.vcf&quot; \
+  -O &quot;${sample}.recal.table&quot;
+
+  gatk --java-options -Xmx7g ApplyBQSR \
+  -R human_g1k_v37_chr2.fasta \
+  -I &quot;${sample}.md.bam&quot; \
+  --bqsr-recal-file &quot;${sample}.recal.table&quot; \
+  -O &quot;${sample}.recal.bam&quot;
+
+  # haplotypeCaller in -ERC mode
+  gatk --java-options -Xmx7g HaplotypeCaller \
+  -R human_g1k_v37_chr2.fasta \
+  -ERC GVCF \
+  -I &quot;${sample}.bam&quot; \
+  -O &quot;${sample}.g.vcf&quot;
+done
+
+# joint genotyping
+gatk --java-options -Xmx7g CombineGVCFs \
+-R human_g1k_v37_chr2.fasta \
+-V HG00097.g.vcf \
+-V HG00100.g.vcf \
+-V HG00101.g.vcf \
+-O cohort.g.vcf
+
+gatk --java-options -Xmx7g GenotypeGVCFs \
+-R human_g1k_v37_chr2.fasta \
+-V cohort.g.vcf \
+-O cohort.vcf
+
+# variant filtration SNPs
+gatk --java-options -Xmx7g SelectVariants \
+-R human_g1k_v37_chr2.fasta \
+-V cohort.vcf \
+--select-type-to-include SNP \
+-O cohort.snvs.vcf
+
+gatk --java-options -Xmx7g VariantFiltration \
+-R human_g1k_v37_chr2.fasta \
+-V cohort.snvs.vcf \
+--filter-name QDfilter --filter-expression &quot;QD &lt; 2.0&quot; \
+--filter-name MQfilter --filter-expression &quot;MQ &lt; 40.0&quot; \
+--filter-name FSfilter --filter-expression &quot;FS &gt; 60.0&quot; \
+-O cohort.snvs.filtered.vcf
+
+# variant filtration indels
+gatk --java-options -Xmx7g SelectVariants \
+-R human_g1k_v37_chr2.fasta \
+-V cohort.vcf \
+--select-type-to-include INDEL \
+-O cohort.indels.vcf
+
+gatk --java-options -Xmx7g VariantFiltration \
+-R human_g1k_v37_chr2.fasta \
+-V cohort.indels.vcf \
+--filter-name QDfilter --filter-expression &quot;QD &lt; 2.0&quot; \
+--filter-name FSfilter --filter-expression &quot;FS &gt; 200.0&quot; \
+-O cohort.indels.filtered.vcf
+
+# merge filtered SNPs and indels
+gatk --java-options -Xmx7g MergeVcfs \
+-I cohort.snvs.filtered.vcf \
+-I cohort.indels.filtered.vcf \
+-O cohort.filtered.vcf</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="additional-information" class="section level1 unnumbered">
+<h1>Additional information</h1>
+<ul>
+<li>Here is a technical documentation of <a href="https://www.illumina.com/documents/products/technotes/technote_understanding_quality_scores.pdf">Illumina Quality Scores</a></li>
+<li>Tools used or referenced
+<ul>
+<li><a href="http://bio-bwa.sourceforge.net/bwa.shtml">BWA</a></li>
+<li><a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC</a></li>
+<li><a href="http://multiqc.info/">MultiQC</a></li>
+<li><a href="https://broadinstitute.github.io/picard/command-line-overview.html">Picard</a></li>
+<li><a href="https://software.broadinstitute.org/gatk/">GATK</a></li>
+<li><a href="http://www.htslib.org/">samtools</a></li>
+</ul></li>
+</ul>
+<!--# Alternative cluster
+The teachers may inform you that we will use the high performance computing center NSC instead of UPPMAX during this workshop. If so, please follow this link to [run the workshop on NSC](lab_vc_tetralith.html).-->
+<p><strong>Thanks for today!</strong></p>
+</div>
+
+
+<footer class="footer">
+<div class="container footer-container">
+<div class="row">
+
+<div class="footer-left col-sm-6">
+<p class="small">
+<b>2021</b> • <a href="https://nbis.se/">NBIS</a> • <a href="https://www.scilifelab.se/">SciLifeLab</a>
+</p>
+</div>
+
+<div class="footer-right col-sm-6">
+<p>
+<span>
+  <span class="footericon" style="padding-right:4px; padding-left:4px">
+    <a href="https://nbis.se/">
+      <svg style="height:0.8em;top:.04em;position:relative;fill:#bdbdbd;" viewBox="0 0 496 512"><path d="M248 8C111.03 8 0 119.03 0 256s111.03 248 248 248 248-111.03 248-248S384.97 8 248 8zm82.29 357.6c-3.9 3.88-7.99 7.95-11.31 11.28-2.99 3-5.1 6.7-6.17 10.71-1.51 5.66-2.73 11.38-4.77 16.87l-17.39 46.85c-13.76 3-28 4.69-42.65 4.69v-27.38c1.69-12.62-7.64-36.26-22.63-51.25-6-6-9.37-14.14-9.37-22.63v-32.01c0-11.64-6.27-22.34-16.46-27.97-14.37-7.95-34.81-19.06-48.81-26.11-11.48-5.78-22.1-13.14-31.65-21.75l-.8-.72a114.792 114.792 0 0 1-18.06-20.74c-9.38-13.77-24.66-36.42-34.59-51.14 20.47-45.5 57.36-82.04 103.2-101.89l24.01 12.01C203.48 89.74 216 82.01 216 70.11v-11.3c7.99-1.29 16.12-2.11 24.39-2.42l28.3 28.3c6.25 6.25 6.25 16.38 0 22.63L264 112l-10.34 10.34c-3.12 3.12-3.12 8.19 0 11.31l4.69 4.69c3.12 3.12 3.12 8.19 0 11.31l-8 8a8.008 8.008 0 0 1-5.66 2.34h-8.99c-2.08 0-4.08.81-5.58 2.27l-9.92 9.65a8.008 8.008 0 0 0-1.58 9.31l15.59 31.19c2.66 5.32-1.21 11.58-7.15 11.58h-5.64c-1.93 0-3.79-.7-5.24-1.96l-9.28-8.06a16.017 16.017 0 0 0-15.55-3.1l-31.17 10.39a11.95 11.95 0 0 0-8.17 11.34c0 4.53 2.56 8.66 6.61 10.69l11.08 5.54c9.41 4.71 19.79 7.16 30.31 7.16s22.59 27.29 32 32h66.75c8.49 0 16.62 3.37 22.63 9.37l13.69 13.69a30.503 30.503 0 0 1 8.93 21.57 46.536 46.536 0 0 1-13.72 32.98zM417 274.25c-5.79-1.45-10.84-5-14.15-9.97l-17.98-26.97a23.97 23.97 0 0 1 0-26.62l19.59-29.38c2.32-3.47 5.5-6.29 9.24-8.15l12.98-6.49C440.2 193.59 448 223.87 448 256c0 8.67-.74 17.16-1.82 25.54L417 274.25z"></path>
+      </svg>
+    </a>
+    </span>
+    <span class="footericon" style="padding-right:4px; padding-left:4px">
+      <a href="https://twitter.com/NBISwe"><svg style="height:0.8em;top:.04em;position:relative;fill:#bdbdbd;" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
+    </svg>
+    </a>
+    </span>
+    <span class="footericon" style="padding-left:4px">
+      <a href="https://www.linkedin.com/company/nbisweden/">
+        <svg style="height:0.8em;top:.04em;position:relative;fill:#bdbdbd;" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"></path>
+        </svg>
+    </a>
+    </span>
+  </span>
+</p>
+</div>
+
+</div>
+</div>
+</footer>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
