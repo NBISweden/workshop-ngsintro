@@ -8,7 +8,7 @@ title: "&nbsp;"
 
 <div class="col-sm-8" style="text-align:left;vertical-align:middle;">
 <p class="small" style="color:#bdbdbd;">
-<b>2021</b> • [NBIS](https://nbis.se/) • [NGI](https://ngisweden.scilifelab.se/) • [SciLifeLab](https://www.scilifelab.se/)
+<b>2022</b> • [NBIS](https://nbis.se/) • [NGI](https://ngisweden.scilifelab.se/) • [SciLifeLab](https://www.scilifelab.se/)
 </p>
 </div>
 

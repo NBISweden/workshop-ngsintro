@@ -17,44 +17,7 @@ In code blocks, the dollar sign (`$`) is not to be printed. The dollar sign is u
 
 # Connect to UPPMAX
 
-The first step of this lab is to open a ssh connection to UPPMAX. You will need an SSH program to do this:
-
-<i class="fab fa-linux"></i> Linux: Use **Terminal** (Included by default).   
-<i class="fab fa-apple"></i> OSX: Use **Terminal** (Included by default).  
-<i class="fab fa-windows"></i> Windows: use [MobaXterm](https://mobaxterm.mobatek.net/). Download and install it if you haven't already done so.  
-
-Fire up the available SSH program and enter the following:
-
-```bash
-$ ssh -Y username@rackham.uppmax.uu.se
-```
-
-Replace **username** with your UPPMAX username. `-Y` means that X-forwarding is activated on the connection, which means graphical data can be transmitted if a program requests it, i.e. programs can use a graphical user interface (GUI) if they want to.
-
-Enter your password when prompted. As you type, nothing will show on screen.
-No stars, no dots. It is supposed to be that way. Just type the password and press enter, it will be fine.
-
-Now your screen should look something like this:
-
-```bash
-dahlo@dahlo-xps ~ $ ssh -Y dahlo@rackham.uppmax.uu.se
-Last login: Fri May 18 15:03:59 2018 from micro046.icm.uu.se
- _   _ ____  ____  __  __    _    __  __
-| | | |  _ \|  _ \|  \/  |  / \   \ \/ /   | System:    rackham4
-| | | | |_) | |_) | |\/| | / _ \   \  /    | User:      dahlo
-| |_| |  __/|  __/| |  | |/ ___ \  /  \    |
- \___/|_|   |_|   |_|  |_/_/   \_\/_/\_\   |
-
-###############################################################################
-
-        User Guides: http://www.uppmax.uu.se/support/user-guides
-        FAQ: http://www.uppmax.uu.se/support/faq
-
-        Write to support@uppmax.uu.se, if you have questions or comments.
-
-
-dahlo@rackham4 ~ $
-```
+The first step of this lab is to open a ssh connection to UPPMAX. Please go to the Contents page and click "Connecting to UPPMAX" under the "Additional content" topic. Unfortunately we can't just make a link to it from this page due to technical limitations in the web framework we have to use for the course :( Once connected to UPPMAX, return here and continue reading the instructions below.
 
 # Logon to a node
 
