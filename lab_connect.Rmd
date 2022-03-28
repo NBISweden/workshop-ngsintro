@@ -73,7 +73,10 @@ Now you are connected to UPPMAX and can start working on the labs.
 
 ## Remote desktop connection
 
-We have a ThinLinc server running at one of the login nodes which allows users to run a remote desktop. To be able to login you will have to set up two-factor authentication first. Follow the [instructions at the UPPMAX homepage](https://www.uppmax.uu.se/support/user-guides/setting-up-two-factor-authentication/), and once you are done you can continue below.
+We have a ThinLinc server running at one of the login nodes which allows users to run a remote desktop. It can be reached from a web browser (Chrome and Firefox are the recommended web browsers) or from the ThinLink App. For more details please look here: https://uppmax.uu.se/support-sv/user-guides/thinlinc-graphical-connection-guide/
+
+### Web browser
+To be able to login via a web browser you will have to set up two-factor authentication first. Follow the [instructions at the UPPMAX homepage](https://www.uppmax.uu.se/support/user-guides/setting-up-two-factor-authentication/), and once you are done you can continue below.
 
    1. Go to the login page, https://rackham-gui.uppmax.uu.se/
    1. Enter your UPPMAX username.
@@ -81,6 +84,23 @@ We have a ThinLinc server running at one of the login nodes which allows users t
       Eg. if your password is `hunter2` and your current two-factor authentication code is `123456` you will enter `hunter2123456` as your password.
       <br><center><a href="data/common/thinlinc_00.png"><img src="data/common/thinlinc_00.png" alt="Thinlinc login page" width="200"></a></center>
    1. It will ask you which profile you want to use, so first press the `Forward` button. Then you can choose which desktop environment you want to use. `Xfce` is pretty straight-forward and easy to use, but feel free to try either of them. You get to choose every time you login so it's not a permanent choice.
+      <br><center><a href="data/common/thinlinc_01.png"><img src="data/common/thinlinc_01.png" alt="Thinlinc login page" width="200"></a></center>
+   1. Once your desktop has been loaded, start a terminal either by clicking the black terminal icon at the bottom of the screen, or by pressing the `Applications` button in the top left corner and select `Terminal Emulator`.
+      <br><center><a href="data/common/thinlinc_02.png"><img src="data/common/thinlinc_02.png" alt="Thinlinc login page" width="200"></a></center>
+
+### ThinLink App
+
+   1. If you haven't already done so, download the ThinLinc client matching your local computer (i.e Windows, Linux, MacOS X or Solaris) from [https://www.cendio.com/thinlinc/download](https://www.cendio.com/thinlinc/download) and install it.
+   1. Launch the ThinLinc client. You should see a form where you can enter your username and password, and possibly a server name. If you only see this simple form:
+      <br><center><a href="data/common/thinlinc_03.png"><img src="data/common/thinlinc_03.png" alt="Thinlinc login page" width="200"></a></center>
+      you can click Advanced to be able to set the server name.
+   1. Change the "Server" setting to "rackham-gui.uppmax.uu.se".
+   1. Change the "Name" setting to your UPPMAX username.
+   1. Set the "Password" setting to your UPPMAX password.
+   1. You do not need to change any other settings.
+   1. Press the "Connect" button.
+   1. If you connect for the first time you will see the "The server's host key is not cached ..." dialog. Verify that the fingerprint shown on your screen is: **94:c6:66:db:16:b2:95:7d:d1:53:5d:75:f6:3c:e8:cf**
+   1. You will first come to the `ThinLinc profile chooser`. Press the `Forward` button to continue. Then you can choose which desktop environment you want to use. `Xfce` is pretty straight-forward and easy to use, but feel free to try either of them. You get to choose every time you login so it's not a permanent choice.
       <br><center><a href="data/common/thinlinc_01.png"><img src="data/common/thinlinc_01.png" alt="Thinlinc login page" width="200"></a></center>
    1. Once your desktop has been loaded, start a terminal either by clicking the black terminal icon at the bottom of the screen, or by pressing the `Applications` button in the top left corner and select `Terminal Emulator`.
       <br><center><a href="data/common/thinlinc_02.png"><img src="data/common/thinlinc_02.png" alt="Thinlinc login page" width="200"></a></center>
