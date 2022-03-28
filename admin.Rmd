@@ -52,6 +52,23 @@ Total number of cores used on a project
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0("squeue -A ",upid," -o %C | awk '{total += $0} END{print total}'"))
 ```
+
+## Space usage
+
+Amount of storage space used per project
+
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0("uquota | grep ",upid))
+```
+
+Sample output
+
+```
+Your project     Your File Area         Unit       Usage  Quota Limit  Over Quota
+---------------  ---------------------  --------  ------  -----------  ----------
+snic2022-22-123  /proj/snic2022-22-123  GBytes       4.6          128
+```
+
 ## Reservation use
 
 List users by reservation ID
@@ -63,6 +80,7 @@ cat(paste0("squeue -R ",upres3," | sort -k 4\n"))
 cat(paste0("squeue -R ",upres4," | sort -k 4\n"))
 cat(paste0("squeue -R ",upres5," | sort -k 4\n"))
 ```
+
 Sample output
 
 ```
@@ -83,6 +101,7 @@ List last activity in a directory for all users
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0("bash /sw/courses/utils/list_modification_times.sh /proj/",upid,"/nobackup/"))
 ```
+
 Sample output
 
 ```
