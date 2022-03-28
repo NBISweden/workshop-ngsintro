@@ -279,8 +279,17 @@ div.tocify {
 <p>Total number of cores used on a project</p>
 <pre class="bash"><code>squeue -A snic2022-22-123 -o %C | awk &#39;{total += $0} END{print total}&#39;</code></pre>
 </div>
-<div id="reservation-use" class="section level2" number="1.3">
-<h2><span class="header-section-number">1.3</span> Reservation use</h2>
+<div id="space-usage" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> Space usage</h2>
+<p>Amount of storage space used per project</p>
+<pre class="bash"><code>uquota | grep snic2022-22-123</code></pre>
+<p>Sample output</p>
+<pre><code>Your project     Your File Area         Unit       Usage  Quota Limit  Over Quota
+---------------  ---------------------  --------  ------  -----------  ----------
+snic2022-22-123  /proj/snic2022-22-123  GBytes       4.6          128</code></pre>
+</div>
+<div id="reservation-use" class="section level2" number="1.4">
+<h2><span class="header-section-number">1.4</span> Reservation use</h2>
 <p>List users by reservation ID</p>
 <pre class="bash"><code>squeue -R snic2022-22-123_28 | sort -k 4
 squeue -R snic2022-22-123_29 | sort -k 4
@@ -297,8 +306,8 @@ squeue -R snic2022-22-123_1 | sort -k 4</code></pre>
 23185119      core   (null)    wingf  R    3:11:56      1 r479
 </code></pre>
 </div>
-<div id="user-activity" class="section level2" number="1.4">
-<h2><span class="header-section-number">1.4</span> User activity</h2>
+<div id="user-activity" class="section level2" number="1.5">
+<h2><span class="header-section-number">1.5</span> User activity</h2>
 <p>List last activity in a directory for all users</p>
 <pre class="bash"><code>bash /sw/courses/utils/list_modification_times.sh /proj/snic2022-22-123/nobackup/</code></pre>
 <p>Sample output</p>
@@ -310,8 +319,8 @@ anapin          2021-11-22 14:56:14     (/proj/snic2021-22-644/nobackup/anapin/u
 analopez        2021-11-22 14:56:16     (/proj/snic2021-22-644/nobackup/analopez/uppmax_tutorial/jobData.sam)
 private         Not available     ()</code></pre>
 </div>
-<div id="list-reservations-for-a-project" class="section level2" number="1.5">
-<h2><span class="header-section-number">1.5</span> List reservations for a project</h2>
+<div id="list-reservations-for-a-project" class="section level2" number="1.6">
+<h2><span class="header-section-number">1.6</span> List reservations for a project</h2>
 <pre class="bash"><code>scontrol show res | grep snic2022-22-123</code></pre>
 <p>Sample output</p>
 <pre><code>ReservationName=snic2021-22-644_wed StartTime=2021-11-24T12:00:00 EndTime=2021-11-24T18:00:00 Duration=06:00:00
@@ -320,6 +329,16 @@ ReservationName=snic2021-22-644_thu StartTime=2021-11-25T08:30:00 EndTime=2021-1
    Users=(null) Accounts=snic2021-22-644 Licenses=(null) State=INACTIVE BurstBuffer=(null) Watts=n/a
 ReservationName=snic2021-22-644_fri StartTime=2021-11-26T08:30:00 EndTime=2021-11-26T13:30:00 Duration=05:00:00
    Users=(null) Accounts=snic2021-22-644 Licenses=(null) State=INACTIVE BurstBuffer=(null) Watts=n/a</code></pre>
+</div>
+<div id="list-project-members" class="section level2" number="1.7">
+<h2><span class="header-section-number">1.7</span> List project members</h2>
+<pre class="bash"><code>projmembers snic2022-22-123</code></pre>
+<p>Sample output</p>
+<pre><code>snic2022-22-123 abusiddi   Abu Bakar Siddique
+snic2022-22-123 afifac     Afifa Enam Chowdhury
+snic2022-22-123 asve0014   Ashish Verma
+snic2022-22-123 berka      Berkay Paylar
+snic2022-22-123 btleren    Betül Eren Keskin</code></pre>
 <hr />
 </div>
 </div>
