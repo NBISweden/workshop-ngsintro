@@ -78,7 +78,7 @@ We have a ThinLinc server running at one of the login nodes which allows users t
 ### Web browser
 To be able to login via a web browser you will have to set up two-factor authentication first. Follow the [instructions at the UPPMAX homepage](https://www.uppmax.uu.se/support/user-guides/setting-up-two-factor-authentication/), and once you are done you can continue below.
 
-   1. Go to the login page, https://rackham-gui.uppmax.uu.se/
+   1. Go to the login page, <a href="https://rackham-gui.uppmax.uu.se/" target="_blank" rel="noopener noreferrer">https://rackham-gui.uppmax.uu.se/</a>
    1. Enter your UPPMAX username.
    1. Enter your UPPMAX password, followed by your current two-factor authentication code.
       Eg. if your password is `hunter2` and your current two-factor authentication code is `123456` you will enter `hunter2123456` as your password.
