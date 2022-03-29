@@ -31,7 +31,7 @@ cat(paste0('scp username@rackham.uppmax.uu.se:/proj/',upid,'/nobackup/username/s
 ```
 Note that the last `.` means that the file will keep the original name.
 
-# Uppload a file to UPPMAX
+# Upload a file to UPPMAX
 Now lets imagine that you have developed a script on your laptop and want to upload it to UPPMAX. The script is stored in your local workspace and is called "script.sh".\
 Type this in your local workspace to upload the file to UPPMAX:
 ```{r,echo=FALSE,comment="",class.output="bash"}
