@@ -156,6 +156,8 @@ First off, let's open another terminal to UPPMAX so that you have 2 of them open
 
 So open a new terminal window, connect it to UPPMAX and then connect it to the node you have booked. Make sure both terminals are in the ``r paste0("/proj/",upid,"/nobackup/username/linux_advanced")`` directory, and start editing a new file with gedit or nano where you write your script. Name the file whatever you want, but in the examples I will refer to it as `loop_01.sh`. Write your loops to this file (or create a new file for each new example) and test run it in the other terminal.
 
+**NOTE:** If you get error messages like `(gedit:27463): dconf-WARNING **: 10:59:00.575: failed to commit changes to dconf: Failed to execute child process “dbus-launch” (No such file or directory)`, and if you can't change any preferences, you can try starting gedit through the graphical menu in ThinLic instead. If you are using the Xfce desktop environment you should have a start-menu-like button at the top-left of the screen named `Applications`, or if you right-click somewhere on the desktop you should find it in the context menu that pops up. In the `Applications` menu, look in the category `Accessories` and you should find a program called `Text editor` which will start gedit *(hopefully without the errors).
+
 The most simple loops are the ones that loop over a predefined list. You saw examples of this in the lecture slides, for example:
 
 ```bash
