@@ -95,6 +95,13 @@ The main exercise covers Differential Gene Expression (DGE) workflow from raw re
 
 ## Using Uppmax
 
+<div class="boxy boxy-lightbulb boxy-yellow">
+**Use ThinLinc**
+
+It is recommended to use ThinLinc as this tutorial involves opening GUI windows through the terminal. If you are using MobaXterm on Windows or xQuartz on Mac, this may not apply.
+
+</div>
+
 Connect to UPPMAX. <i class="fas fa-exclamation-circle"></i> Remember to replace username.
 
 ```{sh,chunk.title=TRUE,eval=FALSE}
@@ -317,7 +324,7 @@ cat(paste0("scp -r username@rackham.uppmax.uu.se:",path_project_rnaseq,"/2_fastq
 <div class="boxy boxy-lightbulb boxy-yellow">
 **Downloading using a GUI**
 
-<i class="fas fa-lightbulb"></i> You can optionally use an SFTP browser like [Filezilla](https://filezilla-project.org/) or [Cyberduck](https://cyberduck.io/) for a GUI interface. Those using MobaXterm, it has an embedded SFTP file browser to drag and drop.
+You can optionally use an SFTP browser like [Filezilla](https://filezilla-project.org/) or [Cyberduck](https://cyberduck.io/) for a GUI interface. Those using MobaXterm, it has an embedded SFTP file browser to drag and drop.
 
 </div>
 
