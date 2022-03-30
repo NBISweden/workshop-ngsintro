@@ -349,10 +349,10 @@ $ chmod a+w directoryname</code></pre>
 <pre class="bash"><code>-rw-rw--wx</code></pre>
 <p>Notice also that we here gave everyone writing permission to the file, that means that ANYONE can write to the file. Not very safe.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032910319068" aria-expanded="false" aria-controls="acc2022032910319068">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022033009090132" aria-expanded="false" aria-controls="acc2022033009090132">
 </button>
 </p>
-<div id="acc2022032910319068" class="collapse">
+<div id="acc2022033009090132" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ chmod ug+rw filename  
 $ chmod o+wx filename</code></pre>
@@ -481,20 +481,20 @@ Number of characters = 58105794</p>
 <p>To see only the line count you can add <code>-l</code> after <code>wc</code> and to count only characters <strong>-m</strong>.</p>
 <p><i class="fas fa-clipboard-list"></i> Output only the amount of lines that have <strong>chr1</strong> in them from sample_1.sam.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032910312126" aria-expanded="false" aria-controls="acc2022032910312126">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022033009096673" aria-expanded="false" aria-controls="acc2022033009096673">
 </button>
 </p>
-<div id="acc2022032910312126" class="collapse">
+<div id="acc2022033009096673" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ grep &quot;chr1&quot; sample_1.sam | wc -l</code></pre>
 </div>
 </div>
 <p><i class="fas fa-clipboard-list"></i> Count the lines containing <code>CATCATCAT</code> in the outbam.bam file.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032910318460" aria-expanded="false" aria-controls="acc2022032910318460">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022033009094695" aria-expanded="false" aria-controls="acc2022033009094695">
 </button>
 </p>
-<div id="acc2022032910318460" class="collapse">
+<div id="acc2022033009094695" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ samtools view outbam.bam | grep &quot;CATCATCAT&quot; | wc -l</code></pre>
 </div>
@@ -506,10 +506,10 @@ Number of characters = 58105794</p>
 <p>Lets look at <code>grep</code> and use some regular expressions <a href="http://www.cheatography.com/davechild/cheat-sheets/regular-expressions/" class="uri">http://www.cheatography.com/davechild/cheat-sheets/regular-expressions/</a></p>
 <p><i class="fas fa-clipboard-list"></i> From file <strong>sample_1.sam</strong> find all lines that start with <code>@</code> and put them in a file called <strong>at.txt</strong>.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032910311206" aria-expanded="false" aria-controls="acc2022032910311206">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022033009099327" aria-expanded="false" aria-controls="acc2022033009099327">
 </button>
 </p>
-<div id="acc2022032910311206" class="collapse">
+<div id="acc2022033009099327" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ grep &quot;^@&quot; sample_1.sam &gt; at.txt</code></pre>
 </div>
@@ -517,10 +517,10 @@ Number of characters = 58105794</p>
 <p><i class="fas fa-clipboard-list"></i> Find all the lines that end with at least 3 numbers from <strong>at.txt</strong>.
 <i class="fas fa-lightbulb"></i> <strong>Sometimes</strong>, you have to escape {} with \{\})</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032910317504" aria-expanded="false" aria-controls="acc2022032910317504">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022033009090380" aria-expanded="false" aria-controls="acc2022033009090380">
 </button>
 </p>
-<div id="acc2022032910317504" class="collapse">
+<div id="acc2022033009090380" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ grep &quot;[0-9]\{3\}$&quot; sample_1.sam</code></pre>
 </div>
@@ -532,10 +532,10 @@ Number of characters = 58105794</p>
 <p><i class="fas fa-clipboard-list"></i> You have realized that all the chromosomes have been misnamed as <strong>chr3</strong> when they should be <strong>chr4</strong>. Use <code>sed</code> to replace <strong>chr3</strong> with <strong>chr4</strong> in <strong>sample_1.sam</strong> and output it to <strong>sample_2.sam</strong>.</p>
 <p><i class="fas fa-lightbulb"></i> The solution to this replaces the first instance on each line of chr3. What if we have multiple instances? What if we had wanted to replace <strong>chr1</strong>? This would effect chr10-19 as well! There are many things to consider :).</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032910310226" aria-expanded="false" aria-controls="acc2022032910310226">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022033009094446" aria-expanded="false" aria-controls="acc2022033009094446">
 </button>
 </p>
-<div id="acc2022032910310226" class="collapse">
+<div id="acc2022033009094446" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ sed &quot;s/chr1/chr2/&quot; sample_1.sam &gt; sample_2.sam</code></pre>
 </div>
@@ -559,10 +559,10 @@ $ rm file1</code></pre>
 $ echo ${i/name}stuff
 filestuff</code></pre>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022032910318840" aria-expanded="false" aria-controls="acc2022032910318840">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022033009099403" aria-expanded="false" aria-controls="acc2022033009099403">
 </button>
 </p>
-<div id="acc2022032910318840" class="collapse">
+<div id="acc2022033009099403" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ for f in *.sam
 do
