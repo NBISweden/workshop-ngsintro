@@ -566,6 +566,7 @@ In short, you first use [BaseRecalibrator](https://gatk.broadinstitute.org/hc/en
 cat(paste0(refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf'))
 ```
 
+
 Please recalibrate the base quality scores in all the bam files generated in the previous step. Below is our example solution for sample HG00097.
 First run BaseRecalibrator:
 ```{r,chunk.title=TRUE,echo=FALSE,comment="",class.output="sh"}
