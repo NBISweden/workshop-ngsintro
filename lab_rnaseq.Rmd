@@ -102,7 +102,7 @@ It is recommended to use ThinLinc as this tutorial involves opening GUI windows 
 
 </div>
 
-Connect to UPPMAX. <i class="fas fa-exclamation-circle"></i> Remember to replace username.
+If you are not on ThinLinc, connect to UPPMAX first. <i class="fas fa-exclamation-circle"></i> Remember to replace username.
 
 ```{sh,chunk.title=TRUE,eval=FALSE}
 ssh -Y username@rackham.uppmax.uu.se
