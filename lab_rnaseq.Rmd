@@ -1226,7 +1226,7 @@ For more detailed information on the splice reads you can instead of just lookin
 
 <i class="fas fa-clipboard-list"></i> Do you think the reads are from a stranded or unstranded library?
 
-<i class="fas fa-clipboard-list"></i> One can visualise all genes in a given pathway using the gene list option under **Regions** in the menu. If you need hints for how to proceed, see [Gene List tutorial](http://software.broadinstitute.org/software/igv/gene_list_view) at Broad. But, we only have data from one chromosome, so this is not that useful now.
+<i class="fas fa-clipboard-list"></i> One can visualise all genes in a given pathway using the gene list option under **Regions** in the menu. If you need hints for how to proceed, see [Gene List tutorial](https://software.broadinstitute.org/software/igv/multilocus_view#GeneLists) at Broad. But, we only have data from one chromosome, so this is not that useful now.
 
 # sbatch
 
