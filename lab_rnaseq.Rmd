@@ -1075,7 +1075,7 @@ knitr::include_graphics("data/rnaseq/ma.png")
 
 ### Volcano plot
 
-A related type of figure will instead plot fold change (on log2 scale) on the x-axis and -log10 p-value on the y-axis. Scaling like this means that genes with lowest p-value will be found at the top of the plot. In this example we will highlight (in red) the genes that are significant (p-val 0.05 after correction for multiple testing).
+A related type of figure will instead plot fold change (on log2 scale) on the x-axis and -log10 p-value on the y-axis. Scaling like this means that genes with lowest p-value will be found at the top of the plot. In this example we will highlight (in blue) the genes that are significant (p-val 0.05 after correction for multiple testing).
 
 Run the script named `volcano.R` in the `plots` directory.
 
