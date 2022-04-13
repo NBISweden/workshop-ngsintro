@@ -15,11 +15,9 @@ output:
 }
 ```
 
-<!--
-<div class="boxy boxy-yellow boxy-exclamation" style="margin-bottom:2em;">
+div class="boxy boxy-yellow boxy-exclamation" style="margin-bottom:2em;">
 The contents and schedule are being revised. They will be finalised before the workshop.
 </div>
--->
 
 <div class="container">
 <div class="landing">
