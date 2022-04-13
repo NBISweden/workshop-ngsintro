@@ -17,7 +17,6 @@ library(leaflet)
 
 # set location in _site.yml
 loc <- yaml::read_yaml("_site.yml")$location
-loc = "online" # remove this if leaflet works
 
 if(loc=="lund") {
   dfr <- data.frame(venue_lat=55.713394,
