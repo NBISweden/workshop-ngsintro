@@ -16,12 +16,12 @@ upres5 <- yaml::read_yaml("_site.yml")$uppmax_res_5
 ```
 
 <div class="boxy boxy-lightbulb">
-Useful utility commands/scripts for course managers.
+Useful utility commands/scripts and troubleshooting for course managers.
 </div>
 
-# UPPMAX
+# Status
 
-Useful commands for monitoring user activity on UPPMAX.
+Useful commands for monitoring status and user activity on UPPMAX.
 
 ## List jobs
 
@@ -146,5 +146,67 @@ snic2022-22-123 asve0014   Ashish Verma
 snic2022-22-123 berka      Berkay Paylar
 snic2022-22-123 btleren    Betül Eren Keskin
 ```
+
+## User identity
+
+Fetch user information from username
+
+```
+finger username
+```
+
+# Troubleshooting
+
+## X-forwarding
+
+### Setup
+
+**Mac users**
+
+- Install Xquartz and restart computer
+- Open the Xquartz terminal and connect to Uppmax 
+- In my recent macos (10.xxx) , x-forwarding only works if I explicitly run the Xquartz terminal
+
+`ssh -Y username@rackham.uppmax.uu.se`
+
+Also use this when logging in to the compute node!
+
+`ssh -Y username@node`
+
+**Windows users**
+
+In MobaXTerm, go to settings and make sure that X-forwarding is checked.
+
+### Testing X-forwarding
+
+Type `xeyes` in the terminal.
+
+### Open .html documents on Rackham
+
+First ensure X-forwarding works, then run firefox `--no-remote filename.html`
+
+## Data transfer
+
+### SCP fails with *
+
+Sometimes students have problems to download files with SCP when there is a `*` in the end of the line. For example; `scp user@rackham.uppmax.uu.se:/proj/bla/HG00097.bam* .`. It needs to be changed to `scp user@rackham.uppmax.uu.se:/proj/bla/HG00097.bam\* .`.
+
+## Thinlinc
+### Minimize the ThinLinc window
+
+On a  Mac, press <kbd>Fn+F8</kbd>, then select: Minimize window. 
+
+### Gedit opening issues
+
+When opening it from the terminal (`gedit &`), it was not able to connect to a display to show the graphics. The `DISPLAY` variable was empty. This was when using ThinLinc, so it should have worked. The issue was solved by opening gedit from the menu. Gedit could be labelled Text Editor. 
+
+## Set persistent home directory in MobaXTerm
+
+This is to specify where the **home directory** in MobaXTerm is located in the computer’s file system. In **Settings > Configuration**, set the persistent home directory to a suitable folder. Restart MobaXTerm. 
+
+
+## Typing $ on a Swedish keyboard
+
+Press <kbd>AltGr+4</kbd>.
 
 ***
