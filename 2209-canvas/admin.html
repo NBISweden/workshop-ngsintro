@@ -254,11 +254,11 @@ div.tocify {
 <!-- rmd lab header -->
 <p><br></p>
 <div class="boxy boxy-lightbulb">
-<p>Useful utility commands/scripts for course managers.</p>
+<p>Useful utility commands/scripts and troubleshooting for course managers.</p>
 </div>
-<div id="uppmax" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> UPPMAX</h1>
-<p>Useful commands for monitoring user activity on UPPMAX.</p>
+<div id="status" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Status</h1>
+<p>Useful commands for monitoring status and user activity on UPPMAX.</p>
 <div id="list-jobs" class="section level2" number="1.1">
 <h2><span class="header-section-number">1.1</span> List jobs</h2>
 <p>List all jobs running an a project</p>
@@ -339,6 +339,65 @@ snic2022-22-123 afifac     Afifa Enam Chowdhury
 snic2022-22-123 asve0014   Ashish Verma
 snic2022-22-123 berka      Berkay Paylar
 snic2022-22-123 btleren    Betül Eren Keskin</code></pre>
+</div>
+<div id="user-identity" class="section level2" number="1.8">
+<h2><span class="header-section-number">1.8</span> User identity</h2>
+<p>Fetch user information from username</p>
+<pre><code>finger username</code></pre>
+</div>
+</div>
+<div id="troubleshooting" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Troubleshooting</h1>
+<div id="x-forwarding" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> X-forwarding</h2>
+<div id="setup" class="section level3" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Setup</h3>
+<p><strong>Mac users</strong></p>
+<ul>
+<li>Install Xquartz and restart computer</li>
+<li>Open the Xquartz terminal and connect to Uppmax</li>
+<li>In my recent macos (10.xxx) , x-forwarding only works if I explicitly run the Xquartz terminal</li>
+</ul>
+<p><code>ssh -Y username@rackham.uppmax.uu.se</code></p>
+<p>Also use this when logging in to the compute node!</p>
+<p><code>ssh -Y username@node</code></p>
+<p><strong>Windows users</strong></p>
+<p>In MobaXTerm, go to settings and make sure that X-forwarding is checked.</p>
+</div>
+<div id="testing-x-forwarding" class="section level3" number="2.1.2">
+<h3><span class="header-section-number">2.1.2</span> Testing X-forwarding</h3>
+<p>Type <code>xeyes</code> in the terminal.</p>
+</div>
+<div id="open-.html-documents-on-rackham" class="section level3" number="2.1.3">
+<h3><span class="header-section-number">2.1.3</span> Open .html documents on Rackham</h3>
+<p>First ensure X-forwarding works, then run firefox <code>--no-remote filename.html</code></p>
+</div>
+</div>
+<div id="data-transfer" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Data transfer</h2>
+<div id="scp-fails-with" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> SCP fails with *</h3>
+<p>Sometimes students have problems to download files with SCP when there is a <code>*</code> in the end of the line. For example; <code>scp user@rackham.uppmax.uu.se:/proj/bla/HG00097.bam* .</code>. It needs to be changed to <code>scp user@rackham.uppmax.uu.se:/proj/bla/HG00097.bam\* .</code>.</p>
+</div>
+</div>
+<div id="thinlinc" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Thinlinc</h2>
+<div id="minimize-the-thinlinc-window" class="section level3" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Minimize the ThinLinc window</h3>
+<p>On a Mac, press <kbd>Fn+F8</kbd>, then select: Minimize window.</p>
+</div>
+<div id="gedit-opening-issues" class="section level3" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Gedit opening issues</h3>
+<p>When opening it from the terminal (<code>gedit &amp;</code>), it was not able to connect to a display to show the graphics. The <code>DISPLAY</code> variable was empty. This was when using ThinLinc, so it should have worked. The issue was solved by opening gedit from the menu. Gedit could be labelled Text Editor.</p>
+</div>
+</div>
+<div id="set-persistent-home-directory-in-mobaxterm" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Set persistent home directory in MobaXTerm</h2>
+<p>This is to specify where the <strong>home directory</strong> in MobaXTerm is located in the computer’s file system. In <strong>Settings &gt; Configuration</strong>, set the persistent home directory to a suitable folder. Restart MobaXTerm.</p>
+</div>
+<div id="typing-on-a-swedish-keyboard" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> Typing $ on a Swedish keyboard</h2>
+<p>Press <kbd>AltGr+4</kbd>.</p>
 <hr />
 </div>
 </div>
