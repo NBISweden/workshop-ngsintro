@@ -126,10 +126,9 @@ jobs:
 
           # create index file
           printf "<div class='wrapper-logo'><img class='logo' src='assets/logo.svg'></div>" > index.md
-          printf "All current and previous workshop materials are listed below.\n" >> index.md
+          printf "The current and all previous instances of this workshop are listed below.\n" >> index.md
           printf "<hr>\n" >> index.md
           printf "<div class='workshop-list'>\n" >> index.md
-          printf "<ul>\n" >> index.md
           dirs=$(ls -d [0-9]*[0-9]/ | sed 's/\///' | tac)
           for i in ${dirs[@]}
           do
@@ -140,13 +139,12 @@ jobs:
           	printf -v thedate '2000-01-01 +%s years +%s months -1 day' "${i:0:2}" "${i:2}"
           	dt=$(date -d "$thedate" +'%Y %b')
           	echo $dt
-            printf "<li><h3><a href='https://${GITHUB_REPOSITORY_OWNER}.github.io/${REPO}/${i}/'>$dt</a></h3></li>" >> index.md
+            printf "<h3><a href='https://${GITHUB_REPOSITORY_OWNER}.github.io/${REPO}/${i}/'>$dt</a></h3>" >> index.md
           done
-          printf "</ul>\n" >> index.md
           printf "</div>\n" >> index.md
-          # printf "***\n" >> index.md
+          # printf "<hr>\n" >> index.md
           # printf "$(date +'%Y') • NBIS\n" >> index.md
-          
+
           echo "Folder contents at $(pwd):"
           ls -lh
 
