@@ -143,8 +143,7 @@ jobs:
           done
           printf "</div>\n" >> index.md
           printf "***\n" >> index.md
-          cur_year=$(date + "%Y")
-          printf "${cur_year} • NBIS\n" >> index.md
+          printf "$(date +'%Y') • NBIS\n" >> index.md
           printf '<script src="http://code.jquery.com/jquery-1.4.2.min.js"></script><script> var x = document.getElementsByClassName("site-footer-credits"); setTimeout(() => { x[0].remove(); }, 10); </script>\n' >> index.md
 
           echo "Folder contents at $(pwd):"
