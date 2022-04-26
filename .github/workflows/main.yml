@@ -1,3 +1,5 @@
+# this action is ignored
+
 name: build
 on:
   push:
@@ -168,6 +170,7 @@ jobs:
           repo=$(basename ${GITHUB_REPOSITORY})
           echo "Repo: $repo"
 
+          # create index file
           printf "<div class='wrapper-logo'><img class='logo' src='assets/logo.svg'></div>" > index.md
           printf "All current and previous workshop materials are listed below.\n" >> index.md
           printf "***\n" >> index.md
@@ -188,6 +191,7 @@ jobs:
           printf "***\n" >> index.md
           cur_year=$(date + "%Y")
           printf "${cur_year} • NBIS\n" >> index.md
+          printf '<script src="http://code.jquery.com/jquery-1.4.2.min.js"></script><script> var x = document.getElementsByClassName("site-footer-credits"); setTimeout(() => { x[0].remove(); }, 10); </script>\n' >> index.md
 
 
           echo "Folder contents at $(pwd):"
