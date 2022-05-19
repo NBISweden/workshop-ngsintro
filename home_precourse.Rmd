@@ -58,11 +58,17 @@ When you need to transfer data between the remote cluster and your computer, you
 
 ThinLinc allows graphical connection to UPPMAX. Download and install from [https://www.cendio.com/thinlinc/download](https://www.cendio.com/thinlinc/download). It can be used directly from the browser for most part, but if there are issues, the installed application may be helpful.
 
-## Zoom
+## XQuartz
 
-[![](data/common/zoom.png)](https://zoom.us/)  
+[![](data/common/xquartz.png)](https://www.xquartz.org/)
 
-Zoom is used for video-conferencing, lectures and group exercises. Please install/update to the latest version of [Zoom](https://zoom.us/).
+Mac users will need to download and install [XQuartz](https://www.xquartz.org/) for X11 forwarding. *ie*; to forward remotely opened windows to local machine.
+
+## MobaXterm(Optional)
+
+[![](data/common/mobaxterm.png)](http://mobaxterm.mobatek.net)
+
+If you are on a Windows system, and you want to open graphical applications from the terminal, we recommend [MobaXterm](http://mobaxterm.mobatek.net). It is recommended that you INSTALL the program and not use the portable version. MobaXterm also has an integrated SFTP file browser.
 
 # Connect to UPPMAX
 
