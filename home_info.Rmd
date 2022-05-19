@@ -19,33 +19,37 @@ library(leaflet)
 loc <- yaml::read_yaml("_site.yml")$location
 
 if(loc=="lund") {
-  dfr <- data.frame(venue_lat=55.713394,
-                    venue_lon=13.206628,
-                    venue_address="<b>Department of Biology</b>,Building D, Room Retina D227, Sölvegatan 35,Lund Sweden",
+  dfr <- data.frame(lat=55.713394,
+                    lon=13.206628,
+                    label="Venue",
+                    address="<b>Department of Biology</b>,Building D, Room Retina D227, Sölvegatan 35,Lund Sweden",
                     description="For Lund city buses, regional buses and regional trains, [click here](https://www.skanetrafiken.se/). You can buy a ticket at the central station in Lund or at the regional bus (card only). You can also use the app [Skånetrafiken](https://www.skanetrafiken.se/biljetter/app2/)",
                     stringsAsFactors=F)
 }
 
 if(loc=="umea") {
-  dfr <- data.frame(venue_lat=63.820019,
-                    venue_lon=20.307814,
-                    venue_address="<b>Department of Science and Mathematics Education</b>,Naturvetarhuset A,Umeå University,Universums gränd,90736 Umeå,Sweden",
+  dfr <- data.frame(lat=63.820019,
+                    lon=20.307814,
+                    label="Venue",
+                    address="<b>Department of Science and Mathematics Education</b>,Naturvetarhuset A,Umeå University,Universums gränd,90736 Umeå,Sweden",
                     description="[Umeå city buses](http://tabussen.nu/):<br>Pay your bus ticket on the bus (credit card only), or in advance in the ticket machines at Vasaplan or Umeå Airport, or at any Reseinfo centre. It is cheaper to buy the ticket in advance. You can also use the app [Ultra vill mer](https://www.tabussen.nu/ultra/biljetter/appen-ultra-vill-mer/). The bus stop in the city centre is *Vasaplan* and the stop near the course venue is *Universum*. Bus options are 2,5,8 or 9 and takes about 6-7 min.<br><br>[Airport bus](https://www.tabussen.nu/flygbussen/english/):<br>The airport bus (Bus 80) goes from the airport to *Vasaplan* (the city centre), and then passes NUS and Umeå Campus on the way back. The trip takes about 8 min from the airport to *Vasaplan*, and about 15 min the other way. It stops at *Universum* (Umeå Campus) approx. 5 min after leaving *Vasaplan*.",
                     stringsAsFactors=F)
 }
 
 if(loc=="uppsala") {
-  dfr <- data.frame(venue_lat=c(59.841949,59.84866869134986,59.85654412678692,59.85659425672011,59.858191861161885),
-                    venue_lon=c(17.637073,17.635251558260354,17.640590387880337,17.630563108921162,17.644074126326363),
-                    venue_address=c("<b>Venue</b>,Entrance C11, Biomedicinskt centrum, Uppsala University / ScilifeLab, Husargatan 3, 75237 Uppsala, Sweden","<b>Hotel von Kraemer</b>,von Kraemers allé 26, 752 37 Uppsala, 900m (11min walk)","</b>Grand Hotell Hörnan</b>,Bangårdsgatan 1, 753 20 Uppsala, 1.9Km (23min walk)","<b>Akademihotellet</b>,Övre Slottsgatan 5, 753 10 Uppsala, 1.7Km (21min walk)","<b>Best Western Hotel Svava</b>, Bangårdsgatan 24, 753 20 Uppsala, 2.2Km (26min walk)"),
-                    description=c("The workshop venue and few nearby hotels are marked on the map.<br>Use the [UL website](https://www.ul.se) or the [UL app](https://www.ul.se/en/tickets/how-to-buy-a-ticket/the-UL-app/) for bus and train services around Uppsala. For buses from the Centralstation (Train/Bus), take Bus 4 (towards Gottsunda Centrum) or 8 (towards Sunnersta) and get off at the stop *Uppsala Science Park*. Bus tickets can be purchased in the app or directly from the driver using a credit card.","","","",""),
+  dfr <- data.frame(lat=c(59.841949,59.84866869134986,59.85654412678692,59.85659425672011,59.858191861161885),
+                    lon=c(17.637073,17.635251558260354,17.640590387880337,17.630563108921162,17.644074126326363),
+                    label=c("Venue","Hotel von Kraemer","Grand Hotell Hörnan","Akademihotellet","Best Western Hotel Svava"),
+                    address=c("<b>Venue</b>,Entrance C11, Biomedicinskt centrum, Uppsala University / ScilifeLab, Husargatan 3, 75237 Uppsala, Sweden","<b>Hotel von Kraemer</b>,von Kraemers allé 26, 75237 Uppsala, 900 m (11 min walk)","</b>Grand Hotell Hörnan</b>,Bangårdsgatan 1, 75320 Uppsala, 1.9 Km (23 min walk)","<b>Akademihotellet</b>,Övre Slottsgatan 5, 75310 Uppsala, 1.7 Km (21 min walk)","<b>Best Western Hotel Svava</b>, Bangårdsgatan 24, 75320 Uppsala, 2.2 Km (26 min walk)"),
+                    description=c("The workshop venue and few nearby hotels are marked on the map.<br><br>Use the [UL website](https://www.ul.se) or the [UL app](https://www.ul.se/en/tickets/how-to-buy-a-ticket/the-UL-app/) for bus and train services around Uppsala. For buses from the Centralstation (Train/Bus), take Bus 4 (towards Gottsunda Centrum) or 8 (towards Sunnersta) and get off at the stop *Uppsala Science Park*. Bus tickets can be purchased in the app or directly from the driver using a credit card.","","","",""),
                     stringsAsFactors=F)
 }
 
 if(loc=="linkoping") {
-  dfr <- data.frame(venue_lat=58.402748,
-                    venue_lon=15.578822,
-                    venue_address="<b>Linköping University</b>,Campus Valla, C-house, Entrance 12, 581 83 Linköping, Sweden",
+  dfr <- data.frame(lat=58.402748,
+                    lon=15.578822,
+                    label="Venue",
+                    address="<b>Linköping University</b>,Campus Valla, C-house, Entrance 12, 581 83 Linköping, Sweden",
                     description="Use the [Östgötatrafiken website](https://www.ostgotatrafiken.se) or the [Östgötatrafiken app](https://www.ostgotatrafiken.se/kundservice/hur-kan-vi-hjalpa-dig/nya-appen/) for bus services around Linköping. The easiest way to by tickets is through the app, but you can by a travel card in advance which you can load with tickets as described [here](https://www.ostgotatrafiken.se/biljetter/kopa-biljett/utan-app/). From Linköping Resecentrum, take bus 12 (towards Lambohov) or bus 543 (towards Slaka) and get off at the stop *Mäster Mattias väg*.",
                     stringsAsFactors=F)
 }
@@ -53,11 +57,11 @@ if(loc=="linkoping") {
 
 ```{r,eval=TRUE,echo=FALSE,chunk.title=NULL}
 if(loc!="online") {
-  address <- paste(unlist(strsplit(dfr$venue_address,split=",")),collapse="<br>")
+  dfr$address <- sapply(dfr$address,function(x) paste(unlist(strsplit(x,split=",")),collapse="<br>"))
   leaflet(height=450,width="auto") %>%
     addTiles(urlTemplate='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png') %>%
-    addMarkers(lat=dfr$venue_lat,lng=dfr$venue_lon,popup=address) %>%
-    setView(lat=dfr$venue_lat,lng=dfr$venue_lon,zoom=15)
+    addMarkers(lat=dfr$lat,lng=dfr$lon,label=dfr$label,popup=dfr$address) %>%
+    setView(lat=dfr$lat[1],lng=dfr$lon[1],zoom=15)
 }
 ```
 
@@ -69,7 +73,7 @@ if(loc=="online") {
 
 ```{r,eval=TRUE,echo=FALSE,results="asis",chunk.title=NULL}
 if(loc!="online") {
-  cat("## Travel info")
+  cat("## Accomodation & travel")
   cat("\n",dfr$description)
 }
 ```
