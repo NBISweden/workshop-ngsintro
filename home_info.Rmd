@@ -35,10 +35,10 @@ if(loc=="umea") {
 }
 
 if(loc=="uppsala") {
-  dfr <- data.frame(venue_lat=59.841949,
-                    venue_lon=17.637073,
-                    venue_address="<b>SciLifeLab</b>,Entrance C11,Biomedicinskt centrum,Uppsala University,Husargatan 3,75237 Uppsala,Sweden",
-                    description="Use the [UL website](www.ul.se) or the [UL app](https://www.ul.se/en/tickets/how-to-buy-a-ticket/the-UL-app/) for bus and train services around Uppsala. For buses from the Centralstation (Train/Bus), take Bus 4 (towards Gottsunda Centrum) or 8 (towards Sunnersta) and get off at the stop *Uppsala Science Park*. Bus tickets can be purchased in the app or directly from the driver using a credit card.",
+  dfr <- data.frame(venue_lat=c(59.841949,59.84866869134986,59.85654412678692,59.85659425672011,59.858191861161885),
+                    venue_lon=c(17.637073,17.635251558260354,17.640590387880337,17.630563108921162,17.644074126326363),
+                    venue_address=c("<b>Venue</b>,Entrance C11, Biomedicinskt centrum, Uppsala University / ScilifeLab, Husargatan 3, 75237 Uppsala, Sweden","<b>Hotel von Kraemer</b>,von Kraemers allé 26, 752 37 Uppsala, 900m (11min walk)","</b>Grand Hotell Hörnan</b>,Bangårdsgatan 1, 753 20 Uppsala, 1.9Km (23min walk)","<b>Akademihotellet</b>,Övre Slottsgatan 5, 753 10 Uppsala, 1.7Km (21min walk)","<b>Best Western Hotel Svava</b>, Bangårdsgatan 24, 753 20 Uppsala, 2.2Km (26min walk)"),
+                    description=c("The workshop venue and few nearby hotels are marked on the map.<br>Use the [UL website](https://www.ul.se) or the [UL app](https://www.ul.se/en/tickets/how-to-buy-a-ticket/the-UL-app/) for bus and train services around Uppsala. For buses from the Centralstation (Train/Bus), take Bus 4 (towards Gottsunda Centrum) or 8 (towards Sunnersta) and get off at the stop *Uppsala Science Park*. Bus tickets can be purchased in the app or directly from the driver using a credit card.","","","",""),
                     stringsAsFactors=F)
 }
 
