@@ -51,6 +51,11 @@ s <- s %>%
 if(all(is.na(s$assistant)) | all(s$assistant=="")) s$assistant <- NULL
 ```
 
+<!-- change notice. comment this out when finalised -->
+<div class="boxy boxy-yellow boxy-exclamation">
+**Note:** The schedule and materials are not final and are subject to change.
+</div>
+
 <div class="table-schedule">
 
 ```{r,eval=TRUE,echo=FALSE,chunk.title=NULL}
