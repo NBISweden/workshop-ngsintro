@@ -13,12 +13,11 @@ output:
 
 ```{r,eval=TRUE,include=FALSE}
 library(yaml)
-library(readxl)
 library(leaflet)
 
 # set location in _site.yml
 loc <- yaml::read_yaml("_site.yml")$location
-dfr <- readxl::read_xlsx("info.xlsx")
+dfr <- read.delim("info.csv",sep=";")
 dfr <- dfr[dfr$location==loc,]
 ```
 
