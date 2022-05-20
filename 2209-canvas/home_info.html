@@ -43,6 +43,9 @@
 <script src="site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
 <link href="site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
 <script src="site_libs/leaflet-binding-2.0.4.1/leaflet.js"></script>
+<link href="site_libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.css" rel="stylesheet" />
+<script src="site_libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.min.js"></script>
+<link href="site_libs/fontawesome-4.7.0/font-awesome.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -184,12 +187,29 @@ pre code {
 <p><br></p>
 <div id="location" class="section level2">
 <h2>Location</h2>
-<div id="htmlwidget-a4786f53a52dcc11f4d5" style="width:auto;height:450px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a4786f53a52dcc11f4d5">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false}]},{"method":"addMarkers","args":[[59.841949,59.8486686913499,59.8565441267869,59.8565942567201,59.8581918611619],[17.637073,17.6352515582604,17.6405903878803,17.6305631089212,17.6440741263264],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["<b>Venue<\/b><br>Entrance C11<br> Biomedicinskt centrum<br> Uppsala University / ScilifeLab<br> Husargatan 3<br> 75237 Uppsala<br> Sweden","<b>Hotel von Kraemer<\/b><br>von Kraemers allé 26<br> 75237 Uppsala<br> 900 m (11 min walk)","<\/b>Grand Hotell Hörnan<\/b><br>Bangårdsgatan 1<br> 75320 Uppsala<br> 1.9 Km (23 min walk)","<b>Akademihotellet<\/b><br>Övre Slottsgatan 5<br> 75310 Uppsala<br> 1.7 Km (21 min walk)","<b>Best Western Hotel Svava<\/b><br> Bangårdsgatan 24<br> 75320 Uppsala<br> 2.2 Km (26 min walk)"],null,null,null,["Venue","Hotel von Kraemer","Grand Hotell Hörnan","Akademihotellet","Best Western Hotel Svava"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[59.841949,59.8581918611619],"lng":[17.6305631089212,17.6440741263264]},"setView":[[59.841949,17.637073],15,[]]},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-2fae517b2b4486698521" style="width:auto;height:450px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2fae517b2b4486698521">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false}]},{"method":"addAwesomeMarkers","args":[[59.841949,59.8486686913499,59.8565441267869,59.8565942567201,59.8581918611619,59.8583009864852,59.8570917134625,59.8585552363299],[17.637073,17.6352515582604,17.6405903878803,17.6305631089212,17.6440741263264,17.644077842084,17.635753423926,17.6455849248469],{"icon":["briefcase","bed","bed","bed","bed","bed","bed","bus"],"markerColor":["red","blue","blue","blue","blue","blue","blue","green"],"iconColor":"#FFFFFF","spin":false,"squareMarker":false,"iconRotate":0,"font":"monospace","prefix":"fa"},null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["Entrance C11<br> Biomedicinskt centrum<br> Uppsala University / ScilifeLab<br> Husargatan 3<br> 75237 Uppsala<br> Sweden","von Kraemers allé 26<br> 75237 Uppsala<br> 900 m (11 min walk)","Bangårdsgatan 1<br> 75320 Uppsala<br> 1.9 Km (23 min walk)","Övre Slottsgatan 5<br> 75310 Uppsala<br> 1.7 Km (21 min walk)","Bangårdsgatan 24<br> 75320 Uppsala<br> 2.2 Km (26 min walk)","Bangårdsgatan 13<br> 753 30 Uppsala<br> 2.1 Km (25 min walk)","Trädgårdsgatan 5A<br> 753 09 Uppsala<br> 1.8 Km (21 min walk)","Central Station<br> 753 21 Uppsala"],null,null,null,["Venue","Hotel von Kraemer","Grand Hotell Hörnan","Akademihotellet","Best Western Hotel Svava","Hotell Centralstation","CityStay Hotell","Central station"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[59.841949,59.8585552363299],"lng":[17.6305631089212,17.6455849248469]},"setView":[[59.841949,17.637073],15,[]]},"evals":[],"jsHooks":[]}</script>
 </div>
-<div id="accomodation-travel" class="section level2">
-<h2>Accomodation &amp; travel</h2>
-<p>The workshop venue and few nearby hotels are marked on the map.<br><br>Use the <a href="https://www.ul.se" target="_blank">UL website</a> or the <a href="https://www.ul.se/en/tickets/how-to-buy-a-ticket/the-UL-app/" target="_blank">UL app</a> for bus and train services around Uppsala. For buses from the Centralstation (Train/Bus), take Bus 4 (towards Gottsunda Centrum) or 8 (towards Sunnersta) and get off at the stop <em>Uppsala Science Park</em>. Bus tickets can be purchased in the app or directly from the driver using a credit card.</p>
+<div id="practical-information" class="section level2">
+<h2>Practical information</h2>
+<p>The workshop venue is at the following address:</p>
+<pre><code>Entrance C11,
+Biomedicinskt centrum,
+Uppsala University / ScilifeLab,
+Husargatan 3,
+75237 Uppsala,
+Sweden</code></pre>
+<p>Few selected hotels are listed below ranked by distance from the venue.</p>
+<ul>
+<li><a href="https://hotelvonkraemer.se/" target="_blank">Hotel von Kraemer</a> (900 m, 11 min walk)</li>
+<li><a href="https://akademihotellet.se/en/" target="_blank">Akademihotellet</a> (1.7 Km, 21 min walk)</li>
+<li><a href="https://citystayuppsala.se/" target="_blank">CityStay Hotell</a> (1.8 Km, 21 min walk)</li>
+<li><a href="https://www.grandhotellhornan.com/" target="_blank">Grand Hotel Hörnan</a> (1.9 Km, 23 min walk)</li>
+<li><a href="http://hotellcentralstation.se/" target="_blank">Hotell Centralstation</a> (2.1 Km, 25 min walk)</li>
+<li><a href="https://www.hotelsvava.se/" target="_blank">Best Western Svava</a> (2.2 Km, 26 min walk)</li>
+</ul>
+<p>The venue and hotels are also marked on the map.</p>
+<p>Use the <a href="https://www.ul.se" target="_blank">UL website</a> or the <a href="https://www.ul.se/en/tickets/how-to-buy-a-ticket/the-UL-app/" target="_blank">UL app</a> for bus and train services around Uppsala. For buses from the Centralstation (Train/Bus), take Bus 4 (towards Gottsunda Centrum) or 8 (towards Sunnersta) and get off at the stop <em>Uppsala Science Park</em>. Bus tickets can be purchased in the app or directly from the driver using a credit card.</p>
 </div>
 <div id="contact" class="section level2">
 <h2>Contact</h2>
