@@ -293,7 +293,15 @@ $ ls -lh
 total 0
  -rw-r--r-- 1 S_D staff 0B Sep 21 13:54 filename</code></pre>
 <p>(<code>-lh</code> means long and human readable, displaying more information about the files or directories in a human understandable format)</p>
-<p>The first segment, <code>-rw-r--r--</code>, describes the ownerships and permissions of our newly created file. The very first character, in this case <code>-</code>, shows the files type. It can be any of these:</p>
+<p>This shows us a cryptic line for each file/folder, where the columns are as following:</p>
+<pre><code>-rw-rw-r--   : permissions
+1            : number of linked hard-links
+S_D          : owner of the file
+staff        : to which group this file belongs to
+0            : file size
+Sep 21 13:54 : modification/creation date and time
+filename     : file/directory name</code></pre>
+<p>The first segment, <code>-rw-r--r--</code>, describes the ownerships and permissions of our newly created file. The very first character, in this case <code>-</code>, shows the file’s type. It can be any of these:</p>
 <p><strong><code>d</code></strong> = directory
 <strong><code>-</code></strong> = regular file
 <strong><code>l</code></strong> = symbolic link
@@ -304,12 +312,10 @@ total 0
 <p>As expected the file we have just created is a regular file. Ignore the types other than directory, regular and symbolic link as they are outside the scope of this course.</p>
 <p>The next nine characters, in our case <code>rw-r--r--</code>, can be divided into three groups consisting of three characters in order from left to right. In our case <code>rw-</code>, <code>r--</code> and <code>r--</code>. The first group designates the <strong>users</strong> permissions, the second the <strong>groups</strong> permissions and the third the <strong>others</strong> permissions. As you may have guessed the within group permissions are ordered, the first always designates read permissions, the second write and the third executability.</p>
 <p>This translates our files permissions to say this <code>-rw-r--r--</code>:</p>
-<blockquote>
-<p>It is a regular file.
-The user has read &amp; write permission, but not execute.
-The group has read permission but not write and execute.
-Everyone else (other), have read permission but not write and execute.</p>
-</blockquote>
+<pre><code>- It is a regular file.
+- The user has read &amp; write permission, but not execute.
+- The group has read permission but not write and execute.
+- Everyone else (other), have read permission but not write and execute.</code></pre>
 <p>As another example, lets create a directory.</p>
 <pre class="bash"><code>$ mkdir directoryname
 $ ls -lh
@@ -349,10 +355,10 @@ $ chmod a+w directoryname</code></pre>
 <pre class="bash"><code>-rw-rw--wx</code></pre>
 <p>Notice also that we here gave everyone writing permission to the file, that means that ANYONE can write to the file. Not very safe.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022052010526143" aria-expanded="false" aria-controls="acc2022052010526143">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022082509594179" aria-expanded="false" aria-controls="acc2022082509594179">
 </button>
 </p>
-<div id="acc2022052010526143" class="collapse">
+<div id="acc2022082509594179" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ chmod ug+rw filename  
 $ chmod o+wx filename</code></pre>
@@ -372,7 +378,7 @@ $ chmod o+wx filename</code></pre>
 $ touch stuff/linkfile</code></pre>
 <p>Lets put some information into the file, just put some text, anything, like “slartibartfast” or something.</p>
 <pre class="bash"><code>$ nano stuff/linkfile</code></pre>
-<p>Now let’s create a link to this file in our original folder. <strong><code>ln</code></strong> stands for link and <strong><code>-s</code></strong> makes it symbolic. The other options are not in the scope of this course.</p>
+<p>Now let’s create a link to this file in our original folder. <strong><code>ln</code></strong> stands for link and <strong><code>-s</code></strong> makes it symbolic. The other options are not in the scope of this course, but feel free to read about them on your own, <a href="https://stackoverflow.com/a/29786294" class="uri">https://stackoverflow.com/a/29786294</a></p>
 <pre class="bash"><code>$ ln -s stuff/linkfile
 $ ls -l
 
@@ -389,7 +395,7 @@ drwxr-xr-x  3 S_D  staff   102B Sep 21 15:36 stuff</code></pre>
 <h2><span class="header-section-number">4.2</span> Directories</h2>
 <p>Now let’s create a link to a directory. Lets clean our workspace.</p>
 <pre class="bash"><code>$ rm -r *</code></pre>
-<p>And create a directory three, arbitrarily, two directories away.</p>
+<p>And create a directory three, arbitrarily, two directories away. The <code>-p</code> option to mkdir will make it create all 3 directories as needed. Without it, it would crash saying it can’t create <code>three</code> because the directory <code>two</code> does not exist.</p>
 <pre class="bash"><code>$ mkdir -p one/two/three</code></pre>
 <p>Now let’s enter the directory and create some files there.</p>
 <pre class="bash"><code>$ cd one/two/three
@@ -481,20 +487,20 @@ Number of characters = 58105794</p>
 <p>To see only the line count you can add <code>-l</code> after <code>wc</code> and to count only characters <strong>-m</strong>.</p>
 <p><i class="fas fa-clipboard-list"></i> Output only the amount of lines that have <strong>chr1</strong> in them from sample_1.sam.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022052010520757" aria-expanded="false" aria-controls="acc2022052010520757">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022082509599733" aria-expanded="false" aria-controls="acc2022082509599733">
 </button>
 </p>
-<div id="acc2022052010520757" class="collapse">
+<div id="acc2022082509599733" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ grep &quot;chr1&quot; sample_1.sam | wc -l</code></pre>
 </div>
 </div>
 <p><i class="fas fa-clipboard-list"></i> Count the lines containing <code>CATCATCAT</code> in the outbam.bam file.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022052010523806" aria-expanded="false" aria-controls="acc2022052010523806">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022082509592364" aria-expanded="false" aria-controls="acc2022082509592364">
 </button>
 </p>
-<div id="acc2022052010523806" class="collapse">
+<div id="acc2022082509592364" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ samtools view outbam.bam | grep &quot;CATCATCAT&quot; | wc -l</code></pre>
 </div>
@@ -506,10 +512,10 @@ Number of characters = 58105794</p>
 <p>Lets look at <code>grep</code> and use some regular expressions <a href="http://www.cheatography.com/davechild/cheat-sheets/regular-expressions/" class="uri">http://www.cheatography.com/davechild/cheat-sheets/regular-expressions/</a></p>
 <p><i class="fas fa-clipboard-list"></i> From file <strong>sample_1.sam</strong> find all lines that start with <code>@</code> and put them in a file called <strong>at.txt</strong>.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022052010524960" aria-expanded="false" aria-controls="acc2022052010524960">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022082509592747" aria-expanded="false" aria-controls="acc2022082509592747">
 </button>
 </p>
-<div id="acc2022052010524960" class="collapse">
+<div id="acc2022082509592747" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ grep &quot;^@&quot; sample_1.sam &gt; at.txt</code></pre>
 </div>
@@ -517,10 +523,10 @@ Number of characters = 58105794</p>
 <p><i class="fas fa-clipboard-list"></i> Find all the lines that end with at least 3 numbers from <strong>at.txt</strong>.
 <i class="fas fa-lightbulb"></i> <strong>Sometimes</strong>, you have to escape {} with \{\})</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022052010526454" aria-expanded="false" aria-controls="acc2022052010526454">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022082509596519" aria-expanded="false" aria-controls="acc2022082509596519">
 </button>
 </p>
-<div id="acc2022052010526454" class="collapse">
+<div id="acc2022082509596519" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ grep &quot;[0-9]\{3\}$&quot; sample_1.sam</code></pre>
 </div>
@@ -532,10 +538,10 @@ Number of characters = 58105794</p>
 <p><i class="fas fa-clipboard-list"></i> You have realized that all the chromosomes have been misnamed as <strong>chr3</strong> when they should be <strong>chr4</strong>. Use <code>sed</code> to replace <strong>chr3</strong> with <strong>chr4</strong> in <strong>sample_1.sam</strong> and output it to <strong>sample_2.sam</strong>.</p>
 <p><i class="fas fa-lightbulb"></i> The solution to this replaces the first instance on each line of chr3. What if we have multiple instances? What if we had wanted to replace <strong>chr1</strong>? This would effect chr10-19 as well! There are many things to consider :).</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022052010525234" aria-expanded="false" aria-controls="acc2022052010525234">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022082509596794" aria-expanded="false" aria-controls="acc2022082509596794">
 </button>
 </p>
-<div id="acc2022052010525234" class="collapse">
+<div id="acc2022082509596794" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ sed &quot;s/chr1/chr2/&quot; sample_1.sam &gt; sample_2.sam</code></pre>
 </div>
@@ -559,10 +565,10 @@ $ rm file1</code></pre>
 $ echo ${i/name}stuff
 filestuff</code></pre>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022052010527703" aria-expanded="false" aria-controls="acc2022052010527703">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022082509593375" aria-expanded="false" aria-controls="acc2022082509593375">
 </button>
 </p>
-<div id="acc2022052010527703" class="collapse">
+<div id="acc2022082509593375" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ for f in *.sam
 do
