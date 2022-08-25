@@ -27,7 +27,7 @@ Usually you would do most of the work in this lab directly on one of the login n
 cat(paste0("$ salloc -A ",upid," -t 07:00:00 -p core -n 1 --no-shell --reservation=",upres," &"))
 ```
 
-check which node you got (replace **username** with your UPPMAX username)
+check which node you got (replace `username` with your UPPMAX username)
 
 ```bash
 $ squeue -u username
@@ -55,15 +55,15 @@ $ ssh -Y r292
 
 It is good to know how to move around in the file system. I'm sure you all have experienced this using a graphical user interface (**GUI**) before, Windows Explorer in Windows and Finder in OSX. Using the command line can be confusing at first, but the more your do it, the easier it gets.
 
-When you connect to UPPMAX, you will start out in your home folder. The absolute path to your home folder is usually **/home/\<username\>**
+When you connect to UPPMAX, you will start out in your home folder. The absolute path to your home folder is usually `/home/username`
 
-Start with looking at what you have in your home folder. The command for this ls, and it stand for **L**i**S**t (list).
+Start with looking at what you have in your home folder. The command for this `ls`, and it stand for **L**i**S**t (list).
 
 ```bash
 $ ls -l
 ```
 
-This is how my home folder looks like, and your's should look somewhat similar:
+This is how my home folder looks like, and yours should look somewhat similar:
 
 ```bash
 [12:56:32] dahlo@rackham1 ~ $ ls -l
@@ -98,7 +98,7 @@ We can easily see that this is a relative path, since it does not start with a *
 
 The absolute path to the course's nobackup folder would be **`r paste0("/proj/",upid,"/nobackup")`**
 
-It is the exact same thing as if you are using a GUI. If you are standing on your desktop, you can double click a folder which is located on your desktop. But if you are standing in another folder, you can't double click on the same folder, because it is just not located in that folder. You have to move to your desktop first, and then double click it.
+It is the exact same thing as if you are using a GUI. If you are standing on your desktop, you can double click a folder which is located on your desktop. But if you are standing in another folder, you can't double click on that same folder, because it is just not located there. You have to move to your desktop first, and then double click it.
 
 If you look around in the nobackup folder, you probably only have a folder called **private**. This is how every nobackup folder looks before you start putting files there.
 
@@ -106,7 +106,7 @@ Typing `ls -l` all the time is.. more annoying than one would think, so someone 
 
 Now we have practised moving around and looking at what we have in folders. The next step will show you how to do the same thing, but without the moving around part.
 
-If we want to look at what we have in our home folder, while standing in the course's project folder, we type `$ ll /home/username/` and remember to substitute **\<username\>** with your own user name.
+If we want to look at what we have in our home folder, while standing in the course's project folder, we type `ll /home/username/` and remember to substitute **\<username\>** with your own user name.
 
 ```bash
 $ ll /home/username
@@ -184,7 +184,7 @@ cat(paste0("$ cd /proj/",upid,"/nobackup/username/linux_tutorial\n"))
 cat("ll")
 ```
 
-**tar.gz** is a file ending give to compressed files, something you will encounter quite often. Compression decreases the size of the files which is good when downloading, and it can take thousands of files and compress them all into a single compressed file. This is both convenient for the person downloading and speeds up the transfer more than you would think.
+**tar.gz** is a file ending given to compressed files, something you will encounter quite often. Compression decreases the size of the files which is good when downloading, and it can take thousands of files and compress them all into a single compressed file. This is both convenient for the person downloading and speeds up the transfer more than you would think.
 
 To unpack the **files.tar.gz** file use the following line while standing in the newly copied **linux_tutorial** folder.
 
@@ -262,7 +262,7 @@ total 0
 [user@milou2 linux_tutorial]$
 ```
 
-Another use for the `move` command is to rename things. When you think of it, renaming is just a special case of moving. You move the file to a location and give the file a new name in the process. The location you move the file **to** can of very well be the same folder the file already is in. To give this a try, we will rename the folder `a_strange_name` to a better name.
+Another use for the `move` command is to rename things. When you think of it, renaming is just a special case of moving. You move the file to a location and give the file a new name in the process. The location you move the file **to** can very well be the same folder the file already is in. To give this a try, we will rename the folder `a_strange_name` to a better name.
 
 ```bash
 $ mv a_strange_name a_better_name
@@ -386,11 +386,11 @@ $ rm -r this_has_a_file
 
 # Open files
 
-So what happens if you give your files bad names like **file1** or **results**? You take a break in a project and return to it 4 months later, and all those short names you gave your files doesn't tell you at all what the files actually contain.
+So what happens if you give your files bad names like `file1` or `results`? You take a break in a project and return to it 4 months later, and all those short names you gave your files doesn't tell you at all what the files actually contain.
 
 Of course, this never happens because you **ALWAYS** name your files so that you definitely know what they contain. But let's say it did happen. Then the only way out is to look at the contents of the files and try to figure out if it is the file you are looking for.
 
-<i class="fas fa-clipboard-list"></i> Now, we are looking for that really good script we wrote a couple of months ago in that other project. Look in the project's folder, **old_project** and find the script.
+<i class="fas fa-clipboard-list"></i> Now, we are looking for that really good script we wrote a couple of months ago in that other project. Look in the project's folder, `old_project` and find the script.
 
 ```bash
 [user@milou2 linux_tutorial]$ ll old_project/
@@ -401,21 +401,21 @@ total 96
 [user@milou2 linux_tutorial]$
 ```
 
-Not so easy with those names.. We will have to use less to look at the files and figure out which is which. We use `less` to view the file.
+Not so easy with those names.. We will have to use `less` to look at the files and figure out which is which.
 
 ```bash
 $ less <filename>
 ```
 
-<i class="fas fa-lightbulb"></i> Press <kbd>q</kbd> to close it down, use arrows to scroll up/down.
+<i class="fas fa-lightbulb"></i> Press `q` to close it down, use arrows keys to scroll up/down.
 
-Have a look at **the_best**, that must be our script, right?
+Have a look at `the_best`, that must be our script, right?
 
 ```bash
 $ less old_project/the_best
 ```
 
-I guess not. Carrot cakes might be the bomb, but they won't solve bioinformatic problems. Have a look at the file **a** instead.
+I guess not. Carrot cakes might be the bomb, but they won't solve bioinformatic problems. Have a look at the file `a` instead.
 
 That's more like it!
 
@@ -432,7 +432,7 @@ $ nano <filename>
 $ nano /sw/courses/ngsintro/linux/linux_additional-files/large_file
 ```
 
-<i class="fas fa-lightbulb"></i> Press <kbd>Ctrl+X</kbd> to close it down, use arrows to scroll up/down).
+<i class="fas fa-lightbulb"></i> Press `Ctrl`+`X` to close it down, use arrows to scroll up/down).
 
 Is the file loaded yet? Now take that waiting time and multiply it with 100-1000. Now open the file with less. Notice the difference?
 

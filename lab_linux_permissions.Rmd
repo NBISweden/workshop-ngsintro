@@ -70,7 +70,20 @@ total 0
 
 (`-lh` means long and human readable, displaying more information about the files or directories in a human understandable format)
 
-The first segment, `-rw-r--r--`, describes the ownerships and permissions of our newly created file. The very first character, in this case `-`, shows the files type. It can be any of these:
+This shows us a cryptic line for each file/folder, where the columns are as following:
+
+```
+-rw-rw-r--   : permissions
+1            : number of linked hard-links
+S_D          : owner of the file
+staff        : to which group this file belongs to
+0            : file size
+Sep 21 13:54 : modification/creation date and time
+filename     : file/directory name
+```
+
+
+The first segment, `-rw-r--r--`, describes the ownerships and permissions of our newly created file. The very first character, in this case `-`, shows the file's type. It can be any of these:
 
 **`d`** = directory
 **`-`** = regular file
@@ -86,10 +99,12 @@ The next nine characters, in our case `rw-r--r--`, can be divided into three gro
 
 This translates our files permissions to say this `-rw-r--r--`:
 
-> It is a regular file.
-> The user has read & write permission, but not execute.
-> The group has read permission but not write and execute.
-> Everyone else (other), have read permission but not write and execute.
+```
+- It is a regular file.
+- The user has read & write permission, but not execute.
+- The group has read permission but not write and execute.
+- Everyone else (other), have read permission but not write and execute.
+```
 
 As another example, lets create a directory.
 
@@ -181,7 +196,7 @@ Lets put some information into the file, just put some text, anything, like "sla
 ```bash
 $ nano stuff/linkfile
 ```
-Now let's create a link to this file in our original folder. **`ln`** stands for link and **`-s`** makes it symbolic. The other options are not in the scope of this course.
+Now let's create a link to this file in our original folder. **`ln`** stands for link and **`-s`** makes it symbolic. The other options are not in the scope of this course, but feel free to read about them on your own, https://stackoverflow.com/a/29786294
 
 ```bash
 $ ln -s stuff/linkfile
@@ -211,7 +226,7 @@ Now let's create a link to a directory. Lets clean our workspace.
 $ rm -r *
 ```
 
-And create a directory three, arbitrarily, two directories away.
+And create a directory three, arbitrarily, two directories away. The `-p` option to mkdir will make it create all 3 directories as needed. Without it, it would crash saying it can't create `three` because the directory `two` does not exist. 
 
 ```bash
 $ mkdir -p one/two/three
