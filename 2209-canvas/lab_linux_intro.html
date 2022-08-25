@@ -264,7 +264,7 @@ div.tocify {
 <h1><span class="header-section-number">2</span> Logon to a node</h1>
 <p>Usually you would do most of the work in this lab directly on one of the login nodes at UPPMAX, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.</p>
 <pre class="bash"><code>$ salloc -A snicxxxx-xx-xx -t 07:00:00 -p core -n 1 --no-shell --reservation=snicxxxx-xx-xxx_xx &amp;</code></pre>
-<p>check which node you got (replace <strong>username</strong> with your UPPMAX username)</p>
+<p>check which node you got (replace <code>username</code> with your UPPMAX username)</p>
 <pre class="bash"><code>$ squeue -u username</code></pre>
 <p>should look something like this</p>
 <pre class="bash"><code>dahlo@rackham2 work $ squeue -u dahlo
@@ -279,10 +279,10 @@ Note the numbers in the Time column. They show for how long the job has been run
 <div id="navigation" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Navigation</h1>
 <p>It is good to know how to move around in the file system. I’m sure you all have experienced this using a graphical user interface (<strong>GUI</strong>) before, Windows Explorer in Windows and Finder in OSX. Using the command line can be confusing at first, but the more your do it, the easier it gets.</p>
-<p>When you connect to UPPMAX, you will start out in your home folder. The absolute path to your home folder is usually <strong>/home/&lt;username&gt;</strong></p>
-<p>Start with looking at what you have in your home folder. The command for this ls, and it stand for <strong>L</strong>i<strong>S</strong>t (list).</p>
+<p>When you connect to UPPMAX, you will start out in your home folder. The absolute path to your home folder is usually <code>/home/username</code></p>
+<p>Start with looking at what you have in your home folder. The command for this <code>ls</code>, and it stand for <strong>L</strong>i<strong>S</strong>t (list).</p>
 <pre class="bash"><code>$ ls -l</code></pre>
-<p>This is how my home folder looks like, and your’s should look somewhat similar:</p>
+<p>This is how my home folder looks like, and yours should look somewhat similar:</p>
 <pre class="bash"><code>[12:56:32] dahlo@rackham1 ~ $ ls -l
 total 4384
 drwxr-xr-x  3 dahlo b2014068    2048 Apr 27  2017 archive
@@ -303,11 +303,11 @@ drwxrwxr-x  5 dahlo dahlo    2201600 May 14 14:02 work
 <pre class="bash"><code>$ cd nobackup</code></pre>
 <p>We can easily see that this is a relative path, since it does not start with a <strong><code>/</code></strong>. That means that this command will only work when you are standing in your project folder. If you are standing somewhere else and say that you want to enter a folder named nobackup, the computer will tell you that there is no folder named nobackup where you are located at the moment.</p>
 <p>The absolute path to the course’s nobackup folder would be <strong>/proj/snicxxxx-xx-xx/nobackup</strong></p>
-<p>It is the exact same thing as if you are using a GUI. If you are standing on your desktop, you can double click a folder which is located on your desktop. But if you are standing in another folder, you can’t double click on the same folder, because it is just not located in that folder. You have to move to your desktop first, and then double click it.</p>
+<p>It is the exact same thing as if you are using a GUI. If you are standing on your desktop, you can double click a folder which is located on your desktop. But if you are standing in another folder, you can’t double click on that same folder, because it is just not located there. You have to move to your desktop first, and then double click it.</p>
 <p>If you look around in the nobackup folder, you probably only have a folder called <strong>private</strong>. This is how every nobackup folder looks before you start putting files there.</p>
 <p>Typing <code>ls -l</code> all the time is.. more annoying than one would think, so someone came up with the good idea to add a shortcut here. If you type <code>ll</code>, it is the same as typing <code>ls -l</code>. Use it from now on.</p>
 <p>Now we have practised moving around and looking at what we have in folders. The next step will show you how to do the same thing, but without the moving around part.</p>
-<p>If we want to look at what we have in our home folder, while standing in the course’s project folder, we type <code>$ ll /home/username/</code> and remember to substitute <strong>&lt;username&gt;</strong> with your own user name.</p>
+<p>If we want to look at what we have in our home folder, while standing in the course’s project folder, we type <code>ll /home/username/</code> and remember to substitute <strong>&lt;username&gt;</strong> with your own user name.</p>
 <pre class="bash"><code>$ ll /home/username</code></pre>
 <p>Since most programmers are lazy (efficient), there is a shortcut to your home folder so that you don’t have to write it all the time. If you write <strong><code>~/</code></strong> it means the same as if you would write <strong>/home/&lt;username&gt;/</strong></p>
 <p>Try using it with <code>ls</code>:</p>
@@ -342,7 +342,7 @@ $ mkdir /proj/snicxxxx-xx-xx/nobackup/username/linux_tutorial</code></pre>
 <p><i class="fas fa-lightbulb"></i> Remember to tab-complete to avoid typos and too much writing.</p>
 <pre class="bash"><code>$ cd /proj/snicxxxx-xx-xx/nobackup/username/linux_tutorial
 ll</code></pre>
-<p><strong>tar.gz</strong> is a file ending give to compressed files, something you will encounter quite often. Compression decreases the size of the files which is good when downloading, and it can take thousands of files and compress them all into a single compressed file. This is both convenient for the person downloading and speeds up the transfer more than you would think.</p>
+<p><strong>tar.gz</strong> is a file ending given to compressed files, something you will encounter quite often. Compression decreases the size of the files which is good when downloading, and it can take thousands of files and compress them all into a single compressed file. This is both convenient for the person downloading and speeds up the transfer more than you would think.</p>
 <p>To unpack the <strong>files.tar.gz</strong> file use the following line while standing in the newly copied <strong>linux_tutorial</strong> folder.</p>
 <pre class="bash"><code>$ tar -xzvf files.tar.gz</code></pre>
 <p>The command will always be the same for all tar.gz files you want to unpack. <code>-xzvf</code> means e<b>X</b>tract from a <strong>Z</strong>ipped file, <strong>V</strong>erbose (prints the name of the file being unpacked), from the specified <strong>F</strong>ile (<code>f</code> must always be the last of the letters).</p>
@@ -391,7 +391,7 @@ total 0
 -rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 last_years_data
 -rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 temp_file-1
 [user@milou2 linux_tutorial]$</code></pre>
-<p>Another use for the <code>move</code> command is to rename things. When you think of it, renaming is just a special case of moving. You move the file to a location and give the file a new name in the process. The location you move the file <strong>to</strong> can of very well be the same folder the file already is in. To give this a try, we will rename the folder <code>a_strange_name</code> to a better name.</p>
+<p>Another use for the <code>move</code> command is to rename things. When you think of it, renaming is just a special case of moving. You move the file to a location and give the file a new name in the process. The location you move the file <strong>to</strong> can very well be the same folder the file already is in. To give this a try, we will rename the folder <code>a_strange_name</code> to a better name.</p>
 <pre class="bash"><code>$ mv a_strange_name a_better_name</code></pre>
 <p>Look around to see that the name change worked.</p>
 <pre class="bash"><code>[user@milou2 linux_tutorial]$ mv a_strange_name a_better_name
@@ -466,21 +466,21 @@ $ rmdir this_has_a_file</code></pre>
 </div>
 <div id="open-files" class="section level1" number="8">
 <h1><span class="header-section-number">8</span> Open files</h1>
-<p>So what happens if you give your files bad names like <strong>file1</strong> or <strong>results</strong>? You take a break in a project and return to it 4 months later, and all those short names you gave your files doesn’t tell you at all what the files actually contain.</p>
+<p>So what happens if you give your files bad names like <code>file1</code> or <code>results</code>? You take a break in a project and return to it 4 months later, and all those short names you gave your files doesn’t tell you at all what the files actually contain.</p>
 <p>Of course, this never happens because you <strong>ALWAYS</strong> name your files so that you definitely know what they contain. But let’s say it did happen. Then the only way out is to look at the contents of the files and try to figure out if it is the file you are looking for.</p>
-<p><i class="fas fa-clipboard-list"></i> Now, we are looking for that really good script we wrote a couple of months ago in that other project. Look in the project’s folder, <strong>old_project</strong> and find the script.</p>
+<p><i class="fas fa-clipboard-list"></i> Now, we are looking for that really good script we wrote a couple of months ago in that other project. Look in the project’s folder, <code>old_project</code> and find the script.</p>
 <pre class="bash"><code>[user@milou2 linux_tutorial]$ ll old_project/
 total 96
 -rwxrwxr-x 1 user g20XXXXX 39904 Sep 19  2012 a
 -rwxrwxr-x 1 user g20XXXXX     0 Sep 19  2012 stuff_1
 -rwxrwxr-x 1 user g20XXXXX  1008 Sep 19  2012 the_best
 [user@milou2 linux_tutorial]$</code></pre>
-<p>Not so easy with those names.. We will have to use less to look at the files and figure out which is which. We use <code>less</code> to view the file.</p>
+<p>Not so easy with those names.. We will have to use <code>less</code> to look at the files and figure out which is which.</p>
 <pre class="bash"><code>$ less &lt;filename&gt;</code></pre>
-<p><i class="fas fa-lightbulb"></i> Press <kbd>q</kbd> to close it down, use arrows to scroll up/down.</p>
-<p>Have a look at <strong>the_best</strong>, that must be our script, right?</p>
+<p><i class="fas fa-lightbulb"></i> Press <code>q</code> to close it down, use arrows keys to scroll up/down.</p>
+<p>Have a look at <code>the_best</code>, that must be our script, right?</p>
 <pre class="bash"><code>$ less old_project/the_best</code></pre>
-<p>I guess not. Carrot cakes might be the bomb, but they won’t solve bioinformatic problems. Have a look at the file <strong>a</strong> instead.</p>
+<p>I guess not. Carrot cakes might be the bomb, but they won’t solve bioinformatic problems. Have a look at the file <code>a</code> instead.</p>
 <p>That’s more like it!</p>
 <p>Now imagine that you had hundreds of files with weird names, and you really needed to find it. <em>Lesson learned:</em> name your files so that you know what they are! And don’t be afraid to create folders to organise files.</p>
 <p>Another thing to think about when opening files in Linux is which program should you open the file in? The programs we covered during the lectures are <strong>nano</strong> and <strong>less</strong>. The main difference between these programs in that <strong>less can’t edit files</strong>, only view them. Another difference is that <strong>less doesn’t load the whole file</strong> into the RAM memory when opening it.</p>
@@ -488,7 +488,7 @@ total 96
 <p>First, open the file with <code>nano</code>.</p>
 <pre class="bash"><code>$ nano &lt;filename&gt;
 $ nano /sw/courses/ngsintro/linux/linux_additional-files/large_file</code></pre>
-<p><i class="fas fa-lightbulb"></i> Press <kbd>Ctrl+X</kbd> to close it down, use arrows to scroll up/down).</p>
+<p><i class="fas fa-lightbulb"></i> Press <code>Ctrl</code>+<code>X</code> to close it down, use arrows to scroll up/down).</p>
 <p>Is the file loaded yet? Now take that waiting time and multiply it with 100-1000. Now open the file with less. Notice the difference?</p>
 <p><strong><code>head</code></strong> and <strong><code>tail</code></strong> works the same was as less in this regard. They don’t load the whole file into RAM, they just take what they need.</p>
 <p>To view the first rows of the large file, use <code>head</code>.</p>
@@ -530,10 +530,10 @@ total 0
 <p>The wildcard works with most, if not all, Linux commands. We can try using wildcards with <strong><code>ls</code></strong>. Look in the folder <code>many_files</code>. Yes, there are hundreds of .docx files in there. But, there are a couple of <strong>.txt</strong> files in there as well. Find out how many .docx and .txt files exist.</p>
 <p><i class="fas fa-clipboard-list"></i> Try to figure out the solution on your own. Then check the answer below.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022052010528575" aria-expanded="false" aria-controls="acc2022052010528575">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022082509592541" aria-expanded="false" aria-controls="acc2022082509592541">
 </button>
 </p>
-<div id="acc2022052010528575" class="collapse">
+<div id="acc2022082509592541" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ ll many_files/*.docx
 $ ll many_files/*.txt</code></pre>
