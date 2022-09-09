@@ -1,5 +1,5 @@
 ---
-title: "ContentS"
+title: "Contents"
 output:
   bookdown::html_document2:
     toc: false
