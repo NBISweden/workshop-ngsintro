@@ -263,7 +263,7 @@ div.tocify {
 <div id="logon-to-a-node" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Logon to a node</h1>
 <p>Usually you would do most of the work in this lab directly on one of the login nodes at UPPMAX, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.</p>
-<pre class="bash"><code>$ salloc -A snicxxxx-xx-xx -t 07:00:00 -p core -n 1 --no-shell --reservation=snicxxxx-xx-xxx_xx &amp;</code></pre>
+<pre class="bash"><code>$ salloc -A snic2022_22_769 -t 07:00:00 -p core -n 1 --no-shell --reservation=snicxxxx-xx-xxx_xx &amp;</code></pre>
 <p>check which node you got (replace <strong>username</strong> with your UPPMAX username)</p>
 <pre class="bash"><code>$ squeue -u username</code></pre>
 <p>should look something like this</p>
@@ -282,10 +282,10 @@ Note the numbers in the Time column. They show for how long the job has been run
 <p>Next, copy the lab files from this folder. <code>-r</code> means recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, NOT sub-folders and files in sub-folders.</p>
 <p><i class="fas fa-lightbulb"></i> Remember to use tab-complete to avoid typos and too much writing.</p>
 <pre class="bash"><code>$ cp -r &lt;source&gt; &lt;destination&gt;
-$ cp -r /sw/courses/ngsintro/linux/filetypes /proj/snicxxxx-xx-xx/nobackup/username/</code></pre>
-<p>Have a look in <strong>/proj/snicxxxx-xx-xx/nobackup/username/</strong>.</p>
+$ cp -r /sw/courses/ngsintro/linux/filetypes /proj/snic2022_22_769/nobackup/username/</code></pre>
+<p>Have a look in <strong>/proj/snic2022_22_769/nobackup/username/</strong>.</p>
 <pre class="bash"><code>$ cp -r &lt;source&gt; &lt;destination&gt;
-cd /proj/snicxxxx-xx-xx/nobackup/username/filetypes
+cd /proj/snic2022_22_769/nobackup/username/filetypes
 $ tree</code></pre>
 <p>This will print a file tree, which gives you a nice overview of the folders where you are standing in. As you can see, you have a couple of files and a couple of empty folders. In the <strong>0_ref</strong> folder you have a reference genome in fasta format and annotations for the genome in GTF format. In <strong>0_seq</strong> you have a fastq file containing the reads we will align.</p>
 </div>
@@ -339,10 +339,10 @@ dahlo@rackham2 work $ echo $PATH
 <p><i class="fas fa-clipboard-list"></i> Run reference_indexer.</p>
 <pre class="bash"><code>Syntax: reference_indexer -r &lt;name of the fasta file you want to index&gt;</code></pre>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022082509585236" aria-expanded="false" aria-controls="acc2022082509585236">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022090910324099" aria-expanded="false" aria-controls="acc2022090910324099">
 </button>
 </p>
-<div id="acc2022082509585236" class="collapse">
+<div id="acc2022090910324099" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ reference_indexer -r 0_ref/ad2.fa</code></pre>
 </div>
@@ -369,10 +369,10 @@ Using this information the program can quickly jump to the start location of eac
 <p><i class="fas fa-clipboard-list"></i> Align reads using <strong>align_reads</strong>, naming the output file <strong>ad2.sam</strong>, placed in the <strong>1_alignment</strong> folder.</p>
 <pre class="bash"><code>Syntax: align_reads -r &lt;reference genome&gt; -i &lt;fastq file with reads&gt; -o &lt;name of the output file&gt;</code></pre>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022082509581480" aria-expanded="false" aria-controls="acc2022082509581480">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022090910327966" aria-expanded="false" aria-controls="acc2022090910327966">
 </button>
 </p>
-<div id="acc2022082509581480" class="collapse">
+<div id="acc2022090910327966" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ align_reads -r 0_ref/ad2.fa -i 0_seq/ad2.fq -o 1_alignment/ad2.sam</code></pre>
 </div>
@@ -392,10 +392,10 @@ Using this information the program can quickly jump to the start location of eac
 <p><i class="fas fa-clipboard-list"></i> The next step is to convert the SAM file to a BAM file. This is more or less just compressing the file, like creating a zip file. To do that we will use the dummy program <strong>sambam_tools</strong>, telling it we want to convert a file to BAM (<strong>-f bam</strong>), which file we want to convert (<strong>-i</strong>), where it should save the resulting BAM file (<strong>-o</strong>). Save the BAM file in the <strong>2_bam</strong> folder and name it <strong>ad2.bam</strong>.</p>
 <pre class="bash"><code>Syntax: sambam_tool -f bam -i &lt;sam file&gt; -o &lt;bam&gt;</code></pre>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022082509586285" aria-expanded="false" aria-controls="acc2022082509586285">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022090910327773" aria-expanded="false" aria-controls="acc2022090910327773">
 </button>
 </p>
-<div id="acc2022082509586285" class="collapse">
+<div id="acc2022090910327773" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ sambam_tool -f bam -i 1_alignment/ad2.sam -o 2_bam/ad2.bam</code></pre>
 </div>
@@ -419,10 +419,10 @@ Using this information the program can quickly jump to the start location of eac
 <p><i class="fas fa-clipboard-list"></i> To sort the BAM file we’ll use the <strong>sambam_tool</strong> again, but specifying a different function, <strong>-f sort</strong> instead. Tell it to store the sorted BAM file in the <strong>3_sorted</strong> folder and name the file <strong>ad2.sorted.bam</strong></p>
 <pre class="bash"><code>Syntax: sambam_tool -f sort -i &lt;unsorted bam file&gt; -o &lt;sorted bam file&gt;</code></pre>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022082509587758" aria-expanded="false" aria-controls="acc2022082509587758">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022090910328541" aria-expanded="false" aria-controls="acc2022090910328541">
 </button>
 </p>
-<div id="acc2022082509587758" class="collapse">
+<div id="acc2022090910328541" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ sambam_tool -f sort -i 2_bam/ad2.bam -o 3_sorted/ad2.sorted.bam</code></pre>
 </div>
@@ -431,10 +431,10 @@ Using this information the program can quickly jump to the start location of eac
 <p><i class="fas fa-clipboard-list"></i> Now when we have a sorted BAM file, we can index it. Use the command</p>
 <pre class="bash"><code>Syntax: sambam_tool -f index -i &lt;sorted bam file&gt;</code></pre>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022082509585445" aria-expanded="false" aria-controls="acc2022082509585445">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022090910322507" aria-expanded="false" aria-controls="acc2022090910322507">
 </button>
 </p>
-<div id="acc2022082509585445" class="collapse">
+<div id="acc2022090910322507" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ sambam_tool -f index -i 3_sorted/ad2.sorted.bam</code></pre>
 </div>
@@ -465,7 +465,7 @@ Using this information the program can quickly jump to the start location of eac
 <p>If you notice that IGV over Xforwarding is excruciatingly slow, you can try to use the web based ThinLinc client instead. Unfortunately this requires you to have set up a two factor authentification (2FA) with UPPMAX, so it’s something you can try on your own. <a href="https://www.uppmax.uu.se/support/user-guides/setting-up-two-factor-authentication/" target="_blank">Instructions for setting up the 2FA at UPPMAX</a>. When you are all set up, go to the address <a href="https://rackham-gui.uppmax.uu.se" target="_blank">https://rackham-gui.uppmax.uu.se</a> and login with your normal UPPMAX username and password together with your 2FA (described at the login screen). This will get you a remote desktop on one of the login nodes, and you can open a terminal and run IGV there instead. Once IGV is started, either using Xforwarding or the remote desktop in your web browser, we are ready to go.</p>
 </div>
 <p>There are 3 files we have to load in IGV.</p>
-<p>The first is the reference genome. Press the menu button located at <strong>“Genomes - Load Genome from File…”</strong> and find your reference genome in <strong>0_ref/ad2.fa</strong>. If you are having trouble finding your files, note that IGV always starts in your home directory. Use the dropdown menu at the top to navigate to <strong>/proj/snicxxxx-xx-xx/nobackup/…</strong>.</p>
+<p>The first is the reference genome. Press the menu button located at <strong>“Genomes - Load Genome from File…”</strong> and find your reference genome in <strong>0_ref/ad2.fa</strong>. If you are having trouble finding your files, note that IGV always starts in your home directory. Use the dropdown menu at the top to navigate to <strong>/proj/snic2022_22_769/nobackup/…</strong>.</p>
 <p>The second file you have to load is the reads. Press the menu button <strong>“File - Load from File…”</strong> and select your <strong>3_sorted/ad2.sorted.bam</strong>.</p>
 <p>The last file you have to load is the annotation data. Press <strong>“File - Load from File…”</strong> again and select you annotation file in <strong>0_ref/ad2.gtf</strong>.</p>
 <p>This will show you the reference genome, how all the reads are aligned to it, and all the annotation data. Try zooming in on an area and have a look at the reads and annotations. The figures you see in the picture are all derived from the data in the files you have given it.</p>
@@ -481,10 +481,10 @@ Using this information the program can quickly jump to the start location of eac
 <p><i class="fas fa-clipboard-list"></i> Tell samtools that you want CRAM output (<strong><code>-C</code></strong>) and specify which reference genome it should use to do the CRAM conversion (<strong><code>-T</code></strong>)</p>
 <pre class="bash"><code>Syntax: samtools view -C -T &lt;reference genome&gt; -o &lt;name of cram file&gt; &lt;bam file to convert&gt;</code></pre>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022082509584300" aria-expanded="false" aria-controls="acc2022082509584300">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022090910325559" aria-expanded="false" aria-controls="acc2022090910325559">
 </button>
 </p>
-<div id="acc2022082509584300" class="collapse">
+<div id="acc2022090910325559" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ samtools view -C -T 0_ref/ad2.fa -o 4_cram/ad2.cram 3_sorted/ad2.sorted.bam</code></pre>
 </div>
