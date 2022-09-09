@@ -38,7 +38,7 @@ s <- s %>%
                      "<span style='color:white;border-radius:4px;padding-right:4px;padding-left:4px;background:",color_primary,";margin-left:9px;margin-right:7px;'>",day,"</span>",
                      "<span style='color:",color_primary,";'><i class='fas fa-map-marker-alt' style='margin-left:5px;margin-right:5px;'></i></span>",room,"</p>")) %>%
   # style topic
-  dplyr::mutate(topic=ifelse(tolower(topic)=="coffee break" | tolower(topic)=="lunch",paste0("<span style='color:white;font-weight:bold;border-radius:4px;padding:4px;background:#BDBDBD;'>",topic,"</span>"),paste0("<span style='margin-right:5px;'>",topic,"</span>"))) %>%
+  dplyr::mutate(topic=ifelse(tolower(topic)=="coffee break" | tolower(topic)=="lunch" | tolower(topic)=="dinner",paste0("<span style='color:white;font-weight:bold;border-radius:4px;padding:4px;background:#BDBDBD;'>",topic,"</span>"),paste0("<span style='margin-right:5px;'>",topic,"</span>"))) %>%
   # add links to topic
   dplyr::mutate(topic=ifelse(is.na(link_slide),topic,paste0("<span>",topic,"<a href='",link_slide,"'><i class='fas fa-file-powerpoint' style='margin-left:4px;margin-right:4px;'></i></a></span>"))) %>%
   mutate(topic=ifelse(is.na(link_lab),topic,paste0("<span>",topic,"<a href='",link_lab,"'><i class='fas fa-file-alt' style='margin-left:4px;margin-right:4px;'></i></a></span>"))) %>%
