@@ -283,9 +283,9 @@ Directory: Whether the directory can be entered using <code>cd</code>.</p>
 <div id="interpreting-permissions" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Interpreting permissions</h1>
 <p>Start your terminal, log onto UPPMAX (check with <code>squeue</code> which core you had and ssh onto it, if for some reason your core is unavailable:</p>
-<pre class="bash"><code>$ salloc -A snic2022_22_769 -t 04:30:00 -p core --no-shell --reservation=snicxxxx-xx-xxx_xx</code></pre>
+<pre class="bash"><code>$ salloc -A snic2022-22-769 -t 04:30:00 -p core --no-shell --reservation=snicxxxx-xx-xxx_xx</code></pre>
 <p>make an empty directory we can work in and make a file.</p>
-<pre class="bash"><code>$ cd /proj/snic2022_22_769/nobackup/username
+<pre class="bash"><code>$ cd /proj/snic2022-22-769/nobackup/username
 $ mkdir advlinux
 $ cd advlinux
 $ touch  filename
@@ -355,10 +355,10 @@ $ chmod a+w directoryname</code></pre>
 <pre class="bash"><code>-rw-rw--wx</code></pre>
 <p>Notice also that we here gave everyone writing permission to the file, that means that ANYONE can write to the file. Not very safe.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022090910333491" aria-expanded="false" aria-controls="acc2022090910333491">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022091209419245" aria-expanded="false" aria-controls="acc2022091209419245">
 </button>
 </p>
-<div id="acc2022090910333491" class="collapse">
+<div id="acc2022091209419245" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ chmod ug+rw filename  
 $ chmod o+wx filename</code></pre>
@@ -370,7 +370,7 @@ $ chmod o+wx filename</code></pre>
 <div id="files" class="section level2" number="4.1">
 <h2><span class="header-section-number">4.1</span> Files</h2>
 <p>Much like a windows user has a shortcut on his desktop to <em>WorldOfWarcraft.exe</em>, being able to create links to files or directories is good to know in Linux. An important thing to remember about symbolic links is that they are not updated, so if you or someone else moves or removes the original file/directory the link will stop working.</p>
-<p>Make sure you are standing in the directory <strong>/proj/snic2022_22_769/nobackup/username/advlinux</strong>. Then remove our old file and directory.</p>
+<p>Make sure you are standing in the directory <strong>/proj/snic2022-22-769/nobackup/username/advlinux</strong>. Then remove our old file and directory.</p>
 <p><i class="fas fa-exclamation-circle"></i> <strong>IMPORTANT</strong>: Using <code>rm -r *</code> removes all folder and subfolders from where you are standing. Be extremely careful when using this. Always double check current working directory or path.</p>
 <pre class="bash"><code>$ rm -r *</code></pre>
 <p>Now that the directory is empty, let’s make a new folder and a new file in that folder.</p>
@@ -487,20 +487,20 @@ Number of characters = 58105794</p>
 <p>To see only the line count you can add <code>-l</code> after <code>wc</code> and to count only characters <strong>-m</strong>.</p>
 <p><i class="fas fa-clipboard-list"></i> Output only the amount of lines that have <strong>chr1</strong> in them from sample_1.sam.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022090910333507" aria-expanded="false" aria-controls="acc2022090910333507">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022091209412824" aria-expanded="false" aria-controls="acc2022091209412824">
 </button>
 </p>
-<div id="acc2022090910333507" class="collapse">
+<div id="acc2022091209412824" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ grep &quot;chr1&quot; sample_1.sam | wc -l</code></pre>
 </div>
 </div>
 <p><i class="fas fa-clipboard-list"></i> Count the lines containing <code>CATCATCAT</code> in the outbam.bam file.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022090910331798" aria-expanded="false" aria-controls="acc2022090910331798">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022091209412918" aria-expanded="false" aria-controls="acc2022091209412918">
 </button>
 </p>
-<div id="acc2022090910331798" class="collapse">
+<div id="acc2022091209412918" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ samtools view outbam.bam | grep &quot;CATCATCAT&quot; | wc -l</code></pre>
 </div>
@@ -512,10 +512,10 @@ Number of characters = 58105794</p>
 <p>Lets look at <code>grep</code> and use some regular expressions <a href="http://www.cheatography.com/davechild/cheat-sheets/regular-expressions/" class="uri">http://www.cheatography.com/davechild/cheat-sheets/regular-expressions/</a></p>
 <p><i class="fas fa-clipboard-list"></i> From file <strong>sample_1.sam</strong> find all lines that start with <code>@</code> and put them in a file called <strong>at.txt</strong>.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022090910330137" aria-expanded="false" aria-controls="acc2022090910330137">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022091209413645" aria-expanded="false" aria-controls="acc2022091209413645">
 </button>
 </p>
-<div id="acc2022090910330137" class="collapse">
+<div id="acc2022091209413645" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ grep &quot;^@&quot; sample_1.sam &gt; at.txt</code></pre>
 </div>
@@ -523,10 +523,10 @@ Number of characters = 58105794</p>
 <p><i class="fas fa-clipboard-list"></i> Find all the lines that end with at least 3 numbers from <strong>at.txt</strong>.
 <i class="fas fa-lightbulb"></i> <strong>Sometimes</strong>, you have to escape {} with \{\})</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022090910334522" aria-expanded="false" aria-controls="acc2022090910334522">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022091209412173" aria-expanded="false" aria-controls="acc2022091209412173">
 </button>
 </p>
-<div id="acc2022090910334522" class="collapse">
+<div id="acc2022091209412173" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ grep &quot;[0-9]\{3\}$&quot; sample_1.sam</code></pre>
 </div>
@@ -538,10 +538,10 @@ Number of characters = 58105794</p>
 <p><i class="fas fa-clipboard-list"></i> You have realized that all the chromosomes have been misnamed as <strong>chr3</strong> when they should be <strong>chr4</strong>. Use <code>sed</code> to replace <strong>chr3</strong> with <strong>chr4</strong> in <strong>sample_1.sam</strong> and output it to <strong>sample_2.sam</strong>.</p>
 <p><i class="fas fa-lightbulb"></i> The solution to this replaces the first instance on each line of chr3. What if we have multiple instances? What if we had wanted to replace <strong>chr1</strong>? This would effect chr10-19 as well! There are many things to consider :).</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022090910336823" aria-expanded="false" aria-controls="acc2022090910336823">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022091209410545" aria-expanded="false" aria-controls="acc2022091209410545">
 </button>
 </p>
-<div id="acc2022090910336823" class="collapse">
+<div id="acc2022091209410545" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ sed &quot;s/chr1/chr2/&quot; sample_1.sam &gt; sample_2.sam</code></pre>
 </div>
@@ -565,10 +565,10 @@ $ rm file1</code></pre>
 $ echo ${i/name}stuff
 filestuff</code></pre>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022090910330539" aria-expanded="false" aria-controls="acc2022090910330539">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022091209418545" aria-expanded="false" aria-controls="acc2022091209418545">
 </button>
 </p>
-<div id="acc2022090910330539" class="collapse">
+<div id="acc2022091209418545" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ for f in *.sam
 do
