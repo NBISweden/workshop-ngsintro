@@ -56,6 +56,8 @@ This page contains links to different lectures (slides) and practical exercises 
 **Useful resources**
 
 * [Connecting to Uppmax](lab_connect.html)
+* [Uploading & downloading files from Uppmax](lab_download_files.html)
+* [Connecting to NSC: The backup cluster](lab_tetralith.html)
 * [Linux cheatsheet](data/linux/linux_cheat_sheet.pdf)
 * [Bash cheat sheet 1](data/linux/bash_cheat_sheet_1.pdf)
 * [Bash cheat sheet 2](data/linux/bash_cheat_sheet_2.pdf)
