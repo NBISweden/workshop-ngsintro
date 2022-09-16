@@ -1,42 +1,30 @@
 date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_youtube;link_room
 26/09/2022;E10:1309;09:00;09:30;Welcome and general introduction;Martin Dahlö;;;;;https://link.mazemap.com/p1SGmiaF
-;;09:30;10:15;Intro to Linux;Martin Dahlö;KL, BV;slide_linux_intro.pdf;;https://youtu.be/bPsereCdJT8;
-;;10:15;10:30;Coffee Break;;;;;;
+;;09:30;10:30;Intro to Linux;Martin Dahlö;;slide_linux_intro.pdf;;https://youtu.be/bPsereCdJT8;
 ;;10:30;11:45;Intro to Linux;Martin Dahlö;KL, BV;;lab_linux_intro.html;;
 ;;11:45;13:00;Lunch;;;;;;
-;;13:00;15:00;Intro to Uppmax;Martin Dahlö;BV;slide_uppmax_intro.pdf;;https://youtu.be/-lFlJbp2LE0;
-;;15:00;15:30;Coffee Break;;;;;;
-;;15:30;17:00;Intro to Uppmax;Martin Dahlö;BV;;lab_uppmax_intro.html;;
+;;13:00;14:00;Intro to Uppmax;Martin Dahlö;;slide_uppmax_intro.pdf;;https://youtu.be/-lFlJbp2LE0;
+;;14:00;17:00;Intro to Uppmax;Martin Dahlö;BV;;lab_uppmax_intro.html;;
 27/09/2022;E10:1309;09:00;09:30;File types in Bioinformatics;Martin Dahlö;;slide_linux_filetypes.pdf;;https://youtu.be/Xue8f-eh_bo;https://link.mazemap.com/p1SGmiaF
-;;09:30;10:15;File types in Bioinformatics;Martin Dahlö;BV;;lab_linux_filetypes.html;;
-;;10:15;10:30;Coffee Break;;;;;;
-;;10:30;11:00;File types in Bioinformatics;;;;;;
-;;11:00;11:45;Quality control;Markus Mayrhofer;;slide_qc.pdf;lab_qc.html;https://youtu.be/NBlizZEZGYI;
+;;09:30;11:00;File types in Bioinformatics;Martin Dahlö;BV;;lab_linux_filetypes.html;;
+;;11:00;11:45;Better terminal experience;Martin Dahlö;KL, BV;slide_qol_termexp.pdf;;https://youtu.be/LizbJLhv_OA;
 ;;11:45;13:00;Lunch;;;;;;
-;;13:00;13:15;Quality control wrap-up;Markus Mayrhofer;;;;;
-;;13:15;13:45;Better terminal experience;Martin Dahlö;KL, BV;slide_qol_termexp.pdf;;https://youtu.be/LizbJLhv_OA;
-;;13:45;15:00;Advanced Bash;Martin Dahlö;KL, BV;slide_linux_advanced.pdf;;https://youtu.be/rGVjdp7L1IM;
-;;15:00;15:30;Coffee Break;;;;;;
-;;15:30;17:00;Advanced Bash;Martin Dahlö;KL, BV;;lab_linux_advanced.html;;
+;;13:00;14:00;Quality control;Markus Mayrhofer;MD, BV;slide_qc.pdf;lab_qc.html;https://youtu.be/NBlizZEZGYI;
+;;14:00;15:00;Advanced Bash;Martin Dahlö;;slide_linux_advanced.pdf;;https://youtu.be/rGVjdp7L1IM;
+;;15:00;17:00;Advanced Bash;Martin Dahlö;KL, BV;;lab_linux_advanced.html;;
 28/09/2022;E10:1309;09:00;10:15;NGS tech & challenges;Olga Vinnere Petterson;;slide_sequencing.pdf;;https://youtu.be/IckQGJ60NnM;https://link.mazemap.com/p1SGmiaF
-;;10:15;10:30;Coffee Break;;;;;;
-;;10:30;11:00;NGS tech & challenges;Olga Vinnere Petterson;;;;https://youtu.be/iFcq_FEAtkI;
+;;10:15;11:00;NGS tech & challenges;Olga Vinnere Petterson;;;;https://youtu.be/iFcq_FEAtkI;
 ;;11:00;11:45;NGS Pipelines;Adam Ameur;;slide_ngs_pipelines.pdf;;https://youtu.be/29z9JxrS5hg;
 ;;11:45;13:00;Lunch;;;;;;
-;;13:00;15:00;Variant-calling workflow;Markus Mayrhofer;DE;slide_vc.pdf;;https://youtu.be/OO8CHGzi6pQ;
-;;15:00;15:30;Coffee Break;;;;;;
-;;15:30;17:00;Variant-calling workflow;Markus Mayrhofer;DE;;lab_vc.html;;
-;;18:30;22:00;Dinner;;;;;;
-29/09/2022;E10:1309;09:00;10:15;Variant-calling workflow;Markus Mayrhofer;DE;;;https://youtu.be/b7VV6e5q6ss;https://link.mazemap.com/p1SGmiaF
-;;10:15;10:30;Coffee Break;;;;;;
-;;10:30;11:45;Variant-calling workflow;Markus Mayrhofer;DE;;;;
+;;13:00;14:00;Variant-calling workflow;Markus Mayrhofer;;slide_vc.pdf;;https://youtu.be/OO8CHGzi6pQ;
+;;14:00;17:00;Variant-calling workflow;Markus Mayrhofer;DE, AJ;;lab_vc.html;;
+;;18:00;21:00;Dinner;;;;;;https://meza.nu/
+29/09/2022;E10:1309;09:00;09:30;Variant-calling workflow;Markus Mayrhofer;;;;https://youtu.be/b7VV6e5q6ss;https://link.mazemap.com/p1SGmiaF
+;;09:30;11:45;Variant-calling workflow;Markus Mayrhofer;DE, AJ;;;;
 ;;11:45;13:00;Lunch;;;;;;
-;;13:00;15:00;RNA-Seq workflow;;;;;;
-;;15:00;15:30;Coffee Break;;;;;;
-;;15:30;17:00;RNA-Seq workflow;Dag Ahren;RF, VVH;slide_rnaseq.html;lab_rnaseq.html;https://youtu.be/uKebwpW0R28;
-30/09/2022;E10:1309;09:00;10:15;RNA-Seq workflow;Dag Ahren;RF, VVH, NR;;;;https://link.mazemap.com/p1SGmiaF
-;;10:15;10:30;Coffee Break;;;;;;
-;;10:30;11:45;RNA-Seq workflow;;;;;;
+;;13:00;14:00;RNA-Seq workflow;Dag Ahren;;slide_rnaseq.html;;https://youtu.be/uKebwpW0R28;https://link.mazemap.com/p1SGmiaF
+;;14:00;17:00;RNA-Seq workflow;Dag Ahren;RF, VVH;;lab_rnaseq.html;;
+30/09/2022;E10:1309;09:00;11:45;RNA-Seq workflow;Dag Ahren;RF, VVH, NR;;;;
 ;;11:45;13:00;Lunch;;;;;;
 ;;13:00;13:15;Presenting NBIS;Dag Ahrén;;slide_nbis.pdf;;;
 ;;13:15;15:00;Open session;Dag Ahrén;;;lab_open_session.html;;
