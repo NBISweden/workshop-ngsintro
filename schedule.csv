@@ -18,7 +18,7 @@ date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_y
 ;;11:45;13:00;Lunch;;;;;;
 ;;13:00;14:00;Variant-calling workflow;Markus Mayrhofer;;slide_vc.pdf;;https://youtu.be/OO8CHGzi6pQ;
 ;;14:00;17:00;Variant-calling workflow;Markus Mayrhofer;DE, AJ;;lab_vc.html;;
-;;18:00;21:00;Dinner;;;;;;https://kohphangan.se/
+;;18:00;21:00;" <a href=""https://kohphangan.se/"" target=""_blank"">Dinner</a> ";;;;;;
 29/09/2022;E10:1309;09:00;09:30;Variant-calling workflow;Markus Mayrhofer;;;;https://youtu.be/b7VV6e5q6ss;https://link.mazemap.com/p1SGmiaF
 ;;09:30;11:45;Variant-calling workflow;Markus Mayrhofer;DE, AJ;;;;
 ;;11:45;13:00;Lunch;;;;;;

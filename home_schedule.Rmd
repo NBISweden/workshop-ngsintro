@@ -52,8 +52,8 @@ if(all(is.na(s$assistant)) | all(s$assistant=="")) s$assistant <- NULL
 ```
 
 <!-- change notice. comment this out when finalised -->
-<div class="boxy boxy-yellow boxy-exclamation">
-**Note:** The schedule and materials are not final and are subject to change.
+<div class="boxy boxy-lightbulb">
+Coffee breaks are planned for 10:15 and 15:00 every day.
 </div>
 
 <div class="table-schedule">
