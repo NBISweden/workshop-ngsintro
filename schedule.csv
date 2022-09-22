@@ -22,9 +22,9 @@ date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_y
 29/09/2022;E10:1309;09:00;09:30;Variant-calling workflow;Markus Mayrhofer;;;;https://youtu.be/b7VV6e5q6ss;https://link.mazemap.com/p1SGmiaF
 ;;09:30;11:45;Variant-calling workflow;Markus Mayrhofer;DE, AJ;;;;
 ;;11:45;13:00;Lunch;;;;;;
-;;13:00;14:00;RNA-Seq workflow;Dag Ahren;;slide_rnaseq.html;;https://youtu.be/uKebwpW0R28;https://link.mazemap.com/p1SGmiaF
+;;13:00;14:00;RNA-Seq workflow;Dag Ahren/Roy Francis;;slide_rnaseq.html;;https://youtu.be/uKebwpW0R28;https://link.mazemap.com/p1SGmiaF
 ;;14:00;17:00;RNA-Seq workflow;Dag Ahren;RF, VVH;;lab_rnaseq.html;;
 30/09/2022;E10:1309;09:00;11:45;RNA-Seq workflow;Dag Ahren;RF, VVH, NR;;;;
 ;;11:45;13:00;Lunch;;;;;;
 ;;13:00;13:15;Presenting NBIS;Dag Ahrén;;slide_nbis.pdf;;;
-;;13:15;15:00;Open session;Dag Ahrén;;;lab_open_session.html;;
+;;13:15;15:00;Open session;Dag Ahrén;RF, VVH, OVP, AA;;lab_open_session.html;;
