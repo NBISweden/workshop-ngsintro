@@ -4,9 +4,9 @@ date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_y
 ;;10:30;11:45;Intro to Linux;Martin Dahlö;KL, BV;;lab_linux_intro.html;;
 ;;11:45;13:00;Lunch;;;;;;
 ;;13:00;14:00;Intro to Uppmax;Martin Dahlö;;slide_uppmax_intro.pdf;;https://youtu.be/-lFlJbp2LE0;
-;;14:00;17:00;Intro to Uppmax;Martin Dahlö;BV;;lab_uppmax_intro.html;;
+;;14:00;17:00;Intro to Uppmax;Martin Dahlö;BV, JN;;lab_uppmax_intro.html;;
 27/09/2022;E10:1309;09:00;09:30;File types in Bioinformatics;Martin Dahlö;;slide_linux_filetypes.pdf;;https://youtu.be/Xue8f-eh_bo;https://link.mazemap.com/p1SGmiaF
-;;09:30;11:00;File types in Bioinformatics;Martin Dahlö;BV;;lab_linux_filetypes.html;;
+;;09:30;11:00;File types in Bioinformatics;Martin Dahlö;BV, JN;;lab_linux_filetypes.html;;
 ;;11:00;11:45;Better terminal experience;Martin Dahlö;KL, BV;slide_qol_termexp.pdf;;https://youtu.be/LizbJLhv_OA;
 ;;11:45;13:00;Lunch;;;;;;
 ;;13:00;14:00;Quality control;Markus Mayrhofer;MD, BV;slide_qc.pdf;lab_qc.html;https://youtu.be/NBlizZEZGYI;
