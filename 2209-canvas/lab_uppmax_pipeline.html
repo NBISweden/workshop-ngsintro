@@ -274,7 +274,7 @@ dahlo@rackham2 work $</code></pre>
 Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested (7 hours in this case) the session will shut down, and you will lose all unsaved data. Connect to this node from within UPPMAX.</p>
 <pre class="bash"><code>$ ssh -Y r292</code></pre>
 <p>If the list is empty you can run the allocation command again and it should be in the list:</p>
-<pre class="bash"><code>$ salloc -A snic2022-22-769 -t 03:30:00 -p core -n 1 --no-shell --reservation=snicxxxx-xx-xxx_xx &amp;</code></pre>
+<pre class="bash"><code>$ salloc -A snic2022-22-769 -t 03:30:00 -p core -n 1 --no-shell --reservation=snic2022-22-769_1 &amp;</code></pre>
 <p><i class="fas fa-lightbulb"></i> There is a UPPMAX specific tool called <code>jobinfo</code> that supplies the same kind of information as <code>squeue</code> that you can use as well (<code>$ jobinfo -u username</code>).</p>
 </div>
 <div id="copy-files-for-lab" class="section level1" number="3">
