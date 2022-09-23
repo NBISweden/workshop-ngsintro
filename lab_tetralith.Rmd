@@ -107,7 +107,7 @@ When you have the UPPMAX singularity container up and running you can follow reg
 # IGV
 To start IGV at NSC type this in the command:
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('/proj/',nscid,'igv/igv.sh'))
+cat(paste0('/proj/',nscid,'/igv/igv.sh'))
 ```
 You can use the same command both when running the UPPMAX singularity container and from a normal terminal window at NSC.
 
