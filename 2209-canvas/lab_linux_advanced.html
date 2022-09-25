@@ -319,10 +319,10 @@ $ echo Most international flights leave from terminal $a at Arlanda airport</cod
 $ echo $a squared is $(($a*$a))</code></pre>
 <p><i class="fas fa-clipboard-list"></i> Write a echo command that will print out the volume of a <a href="https://www.mathsisfun.com/cuboid.html" target="_blank">rectangular cuboid</a>, with the side lengths specified by variables named <code>x</code>, <code>y</code>, and <code>z</code>. To see that it works correctly, the volume of a rectangular cuboid with sides 5,5,5 is 125, and for 4,5,10 is 200. <em>Give it a couple of tries on your own first. If you get completely stuck you can see a suggested solution below.</em></p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022092308342871" aria-expanded="false" aria-controls="acc2022092308342871">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022092521598081" aria-expanded="false" aria-controls="acc2022092521598081">
 </button>
 </p>
-<div id="acc2022092308342871" class="collapse">
+<div id="acc2022092521598081" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ x=4
 $ y=5
@@ -360,10 +360,10 @@ done  </code></pre>
 <p>Start off with getting a loop to count down from 10 to 0 first. Notice how fast the computer counts? That won’t do if it’s seconds we want to be counting down. Try looking the man page for the <code>sleep</code> command (<code>man sleep</code>) and figure out how to use it. The point of using <code>sleep</code> is to tell the computer to wait for 1 second after printing the number, instead of rushing to the next iteration in the loop directly. Try to implement this on your own.</p>
 </div>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022092308346237" aria-expanded="false" aria-controls="acc2022092308346237">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022092521596854" aria-expanded="false" aria-controls="acc2022092521596854">
 </button>
 </p>
-<div id="acc2022092308346237" class="collapse">
+<div id="acc2022092521596854" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># declare the values the loop will loop over
 for secondsToGo in {10..0};
@@ -394,10 +394,10 @@ In real life you will never do this, instead you will most likely always do it t
 </div>
 <p>Basic, without bonus points:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022092308348432" aria-expanded="false" aria-controls="acc2022092308348432">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022092521593882" aria-expanded="false" aria-controls="acc2022092521593882">
 </button>
 </p>
-<div id="acc2022092308348432" class="collapse">
+<div id="acc2022092521593882" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># load the modules needed for samtools
 module load bioinfo-tools samtools/1.3
@@ -415,10 +415,10 @@ done</code></pre>
 </div>
 <p>Advanced, with bonus points:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022092308342716" aria-expanded="false" aria-controls="acc2022092308342716">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022092521599838" aria-expanded="false" aria-controls="acc2022092521599838">
 </button>
 </p>
-<div id="acc2022092308342716" class="collapse">
+<div id="acc2022092521599838" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># load the modules needed for samtools
 module load bioinfo-tools samtools/1.3
@@ -454,20 +454,20 @@ then
 else
    echo &quot;File $FILE does not exist.&quot;
 fi</code></pre>
-<p>What we want to do is to check if the file <strong>doesn’t</strong> exists. The way to do that is to invert the answer of the check if the file does exist. To do that in bash, and many other languages, is to use the exclamation mark, which in these kinds of logical situations means <strong>NOT</strong> or <strong>the opposite of</strong>.</p>
+<p>What we want to do is to check if the file <strong>doesn’t</strong> exists. The way to do that is to invert the answer of the check if the file does exist. To do that in bash, and many other languages, is to use the exclamation mark, <code>!</code>, which in these kinds of logical situations means <strong>NOT</strong> or <strong>the opposite of</strong>.</p>
 <pre class="bash"><code>FILE=$1
 
 if [ ! -f $FILE ];
 then
     echo &quot;File $FILE does not exist.&quot;
 fi</code></pre>
-<p><i class="fas fa-clipboard-list"></i> Now, modify the previous exercise to only do the conversion if a file with the intended name of the BAM file doesn’t already exists. <em>i.e</em>; if you have a.sam and want to create a BAM file named a.bam, first check if a.bam already exists and only do the conversion if it does not exist.</p>
+<p><i class="fas fa-clipboard-list"></i> Now, modify the previous exercise to only do the conversion if a file with the intended name of the BAM file doesn’t already exists. <em>i.e</em>; if you have <code>a.sam</code> and want to create a BAM file named <code>a.bam</code>, first check if <code>a.bam</code> already exists and only do the conversion if it does not exist.</p>
 <p>Basic:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022092308345820" aria-expanded="false" aria-controls="acc2022092308345820">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022092521596093" aria-expanded="false" aria-controls="acc2022092521596093">
 </button>
 </p>
-<div id="acc2022092308345820" class="collapse">
+<div id="acc2022092521596093" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># load the modules needed for samtools
 module load bioinfo-tools samtools/1.3
@@ -489,10 +489,10 @@ done</code></pre>
 </div>
 <p>Advanced:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022092308343072" aria-expanded="false" aria-controls="acc2022092308343072">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022092521004922" aria-expanded="false" aria-controls="acc2022092521004922">
 </button>
 </p>
-<div id="acc2022092308343072" class="collapse">
+<div id="acc2022092521004922" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># load the modules needed for samtools
 module load bioinfo-tools samtools/1.3
@@ -536,12 +536,19 @@ done</code></pre>
 <div class="boxy boxy-lightbulb">
 <p>A problem that you will encounter is that the sequence expression, <code>{1..10}</code>, from the previous exercise doesn’t handle variables. This is because of the way bash is built. The sequence expressions are handled before handling the variables so when bash tries to generate the sequence, the variable names have not yet been replaced with the values they contain. This leads to bash trying to create a sequence from 1 to <code>$n</code>, which of course doesn’t mean anything.</p>
 <p>To get around this we can use a different way of generating sequences (there are <strong>always</strong> alternatives). There is a program called <code>seq</code> that does pretty much the same thing as the sequence expression, and since it is a program it will be executed <strong>after</strong> the variables have been handled. It’s as easy to use as the sequence expressions; instead of writing <code>{1..10}</code> just write <code>$( seq 1 10 )</code>.</p>
+<p>The <code>$()</code> tells bash to run something in a subshell, which pretty much means it will run the command within the paratheses and then take whatever that command printed to the screen and replace the parantheses e
+xpression:</p>
+<pre class="bash"><code>echo $(seq 1 5)
+
+# becomes
+
+echo 1 2 3 4 5</code></pre>
 </div>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022092308344691" aria-expanded="false" aria-controls="acc2022092308344691">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022092521000533" aria-expanded="false" aria-controls="acc2022092521000533">
 </button>
 </p>
-<div id="acc2022092308344691" class="collapse">
+<div id="acc2022092521000533" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># set the number you want to calculate the factorial of
 n=10
@@ -579,10 +586,10 @@ echo The factorial of $n is $factorial</code></pre>
 <p>There is a bunch of fastq files in the directory <code>/proj/snic2022-22-769/nobackup/username/linux_advanced/fastq/</code> that is to be used for this exercise.</p>
 <p>Basic solution:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022092308340409" aria-expanded="false" aria-controls="acc2022092308340409">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022092521003200" aria-expanded="false" aria-controls="acc2022092521003200">
 </button>
 </p>
-<div id="acc2022092308340409" class="collapse">
+<div id="acc2022092521003200" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># make the dummy pipeline available
 export PATH=$PATH:/sw/courses/ngsintro/linux/uppmax_pipeline_exercise/dummy_scripts
@@ -614,10 +621,10 @@ done</code></pre>
 </div>
 <p>Advanced solution:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022092308343937" aria-expanded="false" aria-controls="acc2022092308343937">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022092521007589" aria-expanded="false" aria-controls="acc2022092521007589">
 </button>
 </p>
-<div id="acc2022092308343937" class="collapse">
+<div id="acc2022092521007589" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># make the dummy pipeline available in this script
 export PATH=$PATH:/sw/courses/ngsintro/linux/uppmax_pipeline_exercise/dummy_scripts
