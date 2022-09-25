@@ -293,7 +293,7 @@ else
 fi
 ```
 
-What we want to do is to check if the file **doesn't** exists. The way to do that is to invert the answer of the check if the file does exist. To do that in bash, and many other languages, is to use the exclamation mark, which in these kinds of logical situations means **NOT** or **the opposite of**.
+What we want to do is to check if the file **doesn't** exists. The way to do that is to invert the answer of the check if the file does exist. To do that in bash, and many other languages, is to use the exclamation mark, `!`, which in these kinds of logical situations means **NOT** or **the opposite of**.
 
 ```bash
 FILE=$1
@@ -304,7 +304,7 @@ then
 fi
 ```
 
-<i class="fas fa-clipboard-list"></i> Now, modify the previous exercise to only do the conversion if a file with the intended name of the BAM file doesn't already exists. *i.e*; if you have a.sam and want to create a BAM file named a.bam, first check if a.bam already exists and only do the conversion if it does not exist.
+<i class="fas fa-clipboard-list"></i> Now, modify the previous exercise to only do the conversion if a file with the intended name of the BAM file doesn't already exists. *i.e*; if you have `a.sam` and want to create a BAM file named `a.bam`, first check if `a.bam` already exists and only do the conversion if it does not exist.
 
 Basic:
 
@@ -375,6 +375,17 @@ The factorial of 5, written 5!, would be `1*2*3*4*5=120`. Doing this by hand wou
 A problem that you will encounter is that the sequence expression, `{1..10}`, from the previous exercise doesn't handle variables. This is because of the way bash is built. The sequence expressions are handled before handling the variables so when bash tries to generate the sequence, the variable names have not yet been replaced with the values they contain. This leads to bash trying to create a sequence from 1 to `$n`, which of course doesn't mean anything.
 
 To get around this we can use a different way of generating sequences (there are **always** alternatives). There is a program called `seq` that does pretty much the same thing as the sequence expression, and since it is a program it will be executed **after** the variables have been handled. It's as easy to use as the sequence expressions; instead of writing `{1..10}` just write `$( seq 1 10 )`.
+
+The `$()` tells bash to run something in a subshell, which pretty much means it will run the command within the paratheses and then take whatever that command printed to the screen and replace the parantheses e
+xpression:
+
+```bash
+echo $(seq 1 5)
+
+# becomes
+
+echo 1 2 3 4 5
+```
 </div>
 
 ```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}

@@ -168,7 +168,7 @@ Notice also that we here gave everyone writing permission to the file, that mean
 
 ```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}
 cat(paste0('$ chmod ug+rw filename  
-$ chmod o+wx filename'))
+$ chmod o=wx filename'))
 ```
 
 # Symbolic links
@@ -351,10 +351,10 @@ The `|` is the pipe symbol (on mac keyboard alt+7), signifying that whatever out
 
 In a hypothetical situation you have a folder with hundreds of files and you know the file you are looking for is very large but you can't remember its name.
 
-Let's do a `ls -lh` and pipe the output to be sorted by file size. `-n` means we are sorting numerically and not alphabetically, `-k 5` says *look at the fifth column of output*, which happens to be the file size of `ls` command.
+Let's do a `ls -l` in the `/etc` directory and pipe the output to be sorted by file size. `-n` means we are sorting numerically and not alphabetically, `-k 5` says *look at the fifth column of output*, which happens to be the file size of `ls` command.
 
 ```bash
-$ ls -lh | sort -k 5 -n
+$ ls -l /etc | sort -k 5 -n
 ```
 
 An example use would be to align a file and directly send the now aligned file to be converted into a different format that may be required for another part of the analysis.
