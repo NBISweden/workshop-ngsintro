@@ -44,6 +44,7 @@ This page contains links to different lectures (slides) and practical exercises 
 
 * [RNA-Seq analyses (Slides)](slide_rnaseq.html)
 * [RNA-Seq workflow (Lab)](lab_rnaseq.html)
+* [Simon's report](data/rnaseq/simon-report/validating_knockout.html)
 
 **Other**
 
