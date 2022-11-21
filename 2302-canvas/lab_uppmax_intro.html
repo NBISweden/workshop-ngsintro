@@ -275,7 +275,7 @@ dahlo@rackham2 work $</code></pre>
 Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested (7 hours in this case) the session will shut down, and you will lose all unsaved data. Connect to this node from within UPPMAX.</p>
 <pre class="bash"><code>$ ssh -Y r292</code></pre>
 <p>If the list is empty you can run the allocation command again and it should be in the list:</p>
-<pre class="bash"><code>$ salloc -A snicxxxx-xx-xxx -t 03:30:00 -p core -n 1 --no-shell --reservation=snicxxxx-xx-xxx_1 &amp;</code></pre>
+<pre class="bash"><code>$ salloc -A snic2022-22-1124 -t 03:30:00 -p core -n 1 --no-shell --reservation=snic2022-22-1124_1 &amp;</code></pre>
 <p><i class="fas fa-lightbulb"></i> There is a UPPMAX specific tool called <code>jobinfo</code> that supplies the same kind of information as <code>squeue</code> that you can use as well (<code>$ jobinfo -u username</code>).</p>
 </div>
 <div id="copy-files-for-lab" class="section level1" number="3">
@@ -284,9 +284,9 @@ Note the numbers in the Time column. They show for how long the job has been run
 <p>Next, copy the lab files from this folder. <code>-r</code> means recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, NOT sub-folders and files in sub-folders.</p>
 <p><i class="fas fa-lightbulb"></i> Remember to use tab-complete to avoid typos and too much writing.</p>
 <pre class="bash"><code>$ cp -r &lt;source&gt; &lt;destination&gt;
-$ cp -r /sw/courses/ngsintro/linux/uppmax_tutorial /proj/snicxxxx-xx-xxx/nobackup/username</code></pre>
-<p>Have a look in <strong>/proj/snicxxxx-xx-xxx/nobackup/&lt;username&gt;/uppmax_tutorial</strong>.</p>
-<pre class="bash"><code>$ cd /proj/snicxxxx-xx-xxx/nobackup/username/uppmax_tutorial</code></pre>
+$ cp -r /sw/courses/ngsintro/linux/uppmax_tutorial /proj/snic2022-22-1124/nobackup/username</code></pre>
+<p>Have a look in <strong>/proj/snic2022-22-1124/nobackup/&lt;username&gt;/uppmax_tutorial</strong>.</p>
+<pre class="bash"><code>$ cd /proj/snic2022-22-1124/nobackup/username/uppmax_tutorial</code></pre>
 <pre class="bash"><code>$ ll
 total 128K
 drwxrwxr-x 2 dahlo dahlo 2,0K May 18 16:21 .
@@ -461,7 +461,7 @@ $
 <pre class="bash"><code>$ interactive -A &lt;project id&gt; -t &lt;time&gt; -p &lt;node or core&gt;</code></pre>
 <p>This will create a booking for you which has a higher priority than the jobs submitted with <code>sbatch</code>. That means that they will start faster, but only if the booking is shorter than 12 hours. If the booking is longer than 12 hours, it will get the standard priority. When the job starts you will be transferred to the node you got automatically. No need to look which node you got using sbatch and then <a href="ssh:ing" class="uri">ssh:ing</a> to it.</p>
 <p>Try closing down your current session on the reserved node you connected to in the beginning of the lab by typing <code>exit</code>. Then make a new booking using interactive,</p>
-<pre class="bash"><code>$ interactive -A snicxxxx-xx-xxx -t 02:30:00 -p core</code></pre>
+<pre class="bash"><code>$ interactive -A snic2022-22-1124 -t 02:30:00 -p core</code></pre>
 <p>Congratulations, you are now ready to be let loose on the cluster!</p>
 </div>
 <div id="extra" class="section level1" number="9">

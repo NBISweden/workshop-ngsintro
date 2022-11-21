@@ -405,14 +405,14 @@ sh
 <div class="chunk-title small">
 sh
 </div>
-<pre class="sh"><code>salloc -A snicxxxx-xx-xxx -t 03:00:00 -p core -n 1 --no-shell --reservation=snicxxxx-xx-xxx_4</code></pre>
+<pre class="sh"><code>salloc -A snic2022-22-1124 -t 03:00:00 -p core -n 1 --no-shell --reservation=snic2022-22-1124_4</code></pre>
 </div>
 <p>Book resources for RNA-Seq day 2.</p>
 <div class="chunk-title-parent">
 <div class="chunk-title small">
 sh
 </div>
-<pre class="sh"><code>salloc -A snicxxxx-xx-xxx -t 04:00:00 -p core -n 1 --no-shell --reservation=snicxxxx-xx-xxx_5</code></pre>
+<pre class="sh"><code>salloc -A snic2022-22-1124 -t 04:00:00 -p core -n 1 --no-shell --reservation=snic2022-22-1124_5</code></pre>
 </div>
 <p>Check allocation. <i class="fas fa-exclamation-circle"></i> Remember to replace <strong>username</strong>.</p>
 <pre class="sh"><code>squeue -u username</code></pre>
@@ -420,7 +420,7 @@ sh
 <pre class="sh"><code>ssh -Y nodename</code></pre>
 <div id="set-up-directory" class="section level3" number="3.1.1">
 <h3><span class="header-section-number">3.1.1</span> Set-up directory</h3>
-<p>Setting up the directory structure is an important step as it helps to keep our raw data, intermediate data and results in an organised manner. All work must be carried out at this location <code>/proj/snicxxxx-xx-xxx/nobackup/username/</code> where <strong>username</strong> is your user name.</p>
+<p>Setting up the directory structure is an important step as it helps to keep our raw data, intermediate data and results in an organised manner. All work must be carried out at this location <code>/proj/snic2022-22-1124/nobackup/username/</code> where <strong>username</strong> is your user name.</p>
 <p>Create a directory named <code>rnaseq</code>. All RNA-Seq related activities must be carried out in this sub-directory named <code>rnaseq</code>.</p>
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -443,10 +443,10 @@ rnaseq/
   +-- funannot/
   +-- plots</code></pre>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022111813147594" aria-expanded="false" aria-controls="acc2022111813147594">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022112109081801" aria-expanded="false" aria-controls="acc2022112109081801">
 </button>
 </p>
-<div id="acc2022111813147594" class="collapse">
+<div id="acc2022112109081801" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -474,7 +474,7 @@ sh
 <pre class="sh"><code>cd 1_raw
 pwd</code></pre>
 </div>
-<pre><code>/proj/snicxxxx-xx-xxx/nobackup/username/rnaseq/1_raw</code></pre>
+<pre><code>/proj/snic2022-22-1124/nobackup/username/rnaseq/1_raw</code></pre>
 <p>Run below to create softlinks. Note that the command ends in a space followed by a period.</p>
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -520,7 +520,7 @@ sh
 <pre class="sh"><code>cd ../2_fastqc
 pwd</code></pre>
 </div>
-<pre><code>/proj/snicxxxx-xx-xxx/nobackup/username/rnaseq/2_fastqc</code></pre>
+<pre><code>/proj/snic2022-22-1124/nobackup/username/rnaseq/2_fastqc</code></pre>
 <p>Load Uppmax modules <code>bioinfo-tools</code> and FastQC <code>FastQC/0.11.9</code>.</p>
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -545,7 +545,7 @@ sh
 <pre class="sh"><code>cd ../scripts
 pwd</code></pre>
 </div>
-<pre><code>/proj/snicxxxx-xx-xxx/nobackup/username/rnaseq/scripts</code></pre>
+<pre><code>/proj/snic2022-22-1124/nobackup/username/rnaseq/scripts</code></pre>
 <p>The command below creates a new file in the current directory.</p>
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -587,7 +587,7 @@ sh
 <pre class="sh"><code>cd ../2_fastqc
 pwd</code></pre>
 </div>
-<pre><code>/proj/snicxxxx-xx-xxx/nobackup/username/rnaseq/2_fastqc</code></pre>
+<pre><code>/proj/snic2022-22-1124/nobackup/username/rnaseq/2_fastqc</code></pre>
 <div class="chunk-title-parent">
 <div class="chunk-title small">
 sh
@@ -601,14 +601,14 @@ sh
 <div class="chunk-title small">
 sh
 </div>
-<pre class="sh"><code>scp username@rackham.uppmax.uu.se:/proj/snicxxxx-xx-xxx/nobackup/username/rnaseq/2_fastqc/SRR3222409-19_1_fastqc.html .</code></pre>
+<pre class="sh"><code>scp username@rackham.uppmax.uu.se:/proj/snic2022-22-1124/nobackup/username/rnaseq/2_fastqc/SRR3222409-19_1_fastqc.html .</code></pre>
 </div>
 <p>or download the whole directory.</p>
 <div class="chunk-title-parent">
 <div class="chunk-title small">
 sh
 </div>
-<pre class="sh"><code>scp -r username@rackham.uppmax.uu.se:/proj/snicxxxx-xx-xxx/nobackup/username/rnaseq/2_fastqc .</code></pre>
+<pre class="sh"><code>scp -r username@rackham.uppmax.uu.se:/proj/snic2022-22-1124/nobackup/username/rnaseq/2_fastqc .</code></pre>
 </div>
 <div class="boxy boxy-lightbulb boxy-yellow">
 <p><strong>Downloading using a GUI</strong></p>
@@ -627,7 +627,7 @@ sh
 <p><i class="fas fa-comments"></i> What is the idea behind building an aligner index? What files are needed to build one? Where do we take them from? Could one use an index that was generated for another project? Check out the <a href="http://www.ccb.jhu.edu/software/hisat/manual.shtml" target="_blank">HISAT2 manual</a> indexer section for answers. Browse through <a href="https://www.ensembl.org/index.html" target="_blank">Ensembl</a> and try to find the files needed. Note that we are working with Mouse (<em>Mus musculus</em>).</p>
 <p><i class="fas fa-clipboard-list"></i> Move into the <code>reference</code> directory and download the Chr 19 genome (<code>.fasta</code>) file and the genome-wide annotation file (<code>.gtf</code>) from Ensembl.</p>
 <p>You should be standing here to run this:</p>
-<pre><code>/proj/snicxxxx-xx-xxx/nobackup/username/rnaseq/reference</code></pre>
+<pre><code>/proj/snic2022-22-1124/nobackup/username/rnaseq/reference</code></pre>
 <p>You are most likely to use the <a href="https://www.ensembl.org/index.html" target="_blank">latest version</a> of ensembl release genome and annotations when starting a new analysis. For this exercise, we will choose ensembl version 99.</p>
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -654,10 +654,10 @@ sh
 <p><i class="fas fa-lightbulb"></i> The <code>grep</code> command is set to use regular expression with the <code>-E</code> argument. And it’s looking for lines starting with <code>#</code> or <code>19</code>. <code>#</code> fetches the header and comments while <code>19</code> denotes all rows with annotations for chromosome 19.</p>
 <p>Check what you have in your directory.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022111813159691" aria-expanded="false" aria-controls="acc2022111813159691">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022112109085791" aria-expanded="false" aria-controls="acc2022112109085791">
 </button>
 </p>
-<div id="acc2022111813159691" class="collapse">
+<div id="acc2022112109085791" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -681,10 +681,10 @@ output
 <h3><span class="header-section-number">3.3.2</span> Build index</h3>
 <p>Move into the <code>reference</code> directory if not already there. Load module HISAT2. Remember to load <code>bioinfo-tools</code> if you haven’t done so already.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022111813154961" aria-expanded="false" aria-controls="acc2022111813154961">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022112109087723" aria-expanded="false" aria-controls="acc2022112109087723">
 </button>
 </p>
-<div id="acc2022111813154961" class="collapse">
+<div id="acc2022112109087723" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -722,10 +722,10 @@ sh
 </div>
 <p>Once the indexing is complete, move into the <code>mouse_chr19_hisat2</code> directory and make sure you have all the files.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022111813153031" aria-expanded="false" aria-controls="acc2022111813153031">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022112109086458" aria-expanded="false" aria-controls="acc2022112109086458">
 </button>
 </p>
-<div id="acc2022111813153031" class="collapse">
+<div id="acc2022112109086458" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -754,7 +754,7 @@ output
 <h3><span class="header-section-number">3.3.3</span> Map reads</h3>
 <p>Now that we have the index ready, we are ready to map reads. Move to the directory <code>3_mapping</code>. Use <code>pwd</code> to check if you are standing in the correct directory.</p>
 <p>You should be standing here to run this:</p>
-<pre><code>/proj/snicxxxx-xx-xxx/nobackup/username/rnaseq/3_mapping</code></pre>
+<pre><code>/proj/snic2022-22-1124/nobackup/username/rnaseq/3_mapping</code></pre>
 <p>We will create softlinks to the fastq files from here to make things easier.</p>
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -792,10 +792,10 @@ sh
 </ul>
 <p><i class="fas fa-clipboard-list"></i> Now create a new bash script file named <code>hisat2_align.sh</code> in your <code>scripts</code> directory and add the script below to it.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022111813151915" aria-expanded="false" aria-controls="acc2022111813151915">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022112109086491" aria-expanded="false" aria-controls="acc2022112109086491">
 </button>
 </p>
-<div id="acc2022111813151915" class="collapse">
+<div id="acc2022112109086491" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -834,10 +834,10 @@ sh
 <p><strong>Optional</strong></p>
 <p>Try to create a new bash loop script (<code>hisat2_align_batch.sh</code>) to iterate over all fastq files in the directory and run the mapping using the <code>hisat2_align.sh</code> script. Note that there is a bit of a tricky issue here. You need to use two fastq files (<code>_1</code> and <code>_2</code>) per run rather than one file. There are many ways to do this and here is one.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022111813159617" aria-expanded="false" aria-controls="acc2022111813159617">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022112109084995" aria-expanded="false" aria-controls="acc2022112109084995">
 </button>
 </p>
-<div id="acc2022111813159617" class="collapse">
+<div id="acc2022112109084995" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -896,10 +896,10 @@ SRR3222409.13741570 163 19  3085066 60  15M2I84M    =   3085166 201 ATAGTACCTGGC
 <p><i class="fas fa-comments"></i> Can you identify what some of these columns are? SAM format description is available <a href="https://www.metagenomics.wiki/tools/samtools/bam-sam-file-format" target="_blank">here</a>. SAM output specifically from HISAT is described <a href="http://www.ccb.jhu.edu/software/hisat/manual.shtml" target="_blank">here</a>, especially the tags.</p>
 <p><i class="fas fa-clipboard-list"></i> The summary file gives a summary of the mapping run. This file is used by MultiQC later to collect mapping statistics. Inspect one of the mapping log files to identify the number of uniquely mapped reads and multi-mapped reads.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022111813159476" aria-expanded="false" aria-controls="acc2022111813159476">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022112109087693" aria-expanded="false" aria-controls="acc2022112109087693">
 </button>
 </p>
-<div id="acc2022111813159476" class="collapse">
+<div id="acc2022112109087693" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -932,10 +932,10 @@ output
 <p>Next, we need to index these BAM files. Indexing creates <code>.bam.bai</code> files which are required by many downstream programs to quickly and efficiently locate reads anywhere in the BAM file.</p>
 <p><i class="fas fa-clipboard-list"></i> Index all BAM files. Write a for-loop to index all BAM files using the command <code>samtools index file.bam</code>.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022111813157098" aria-expanded="false" aria-controls="acc2022111813157098">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022112109088337" aria-expanded="false" aria-controls="acc2022112109088337">
 </button>
 </p>
-<div id="acc2022111813157098" class="collapse">
+<div id="acc2022112109088337" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -970,7 +970,7 @@ output
 <div class="chunk-title small">
 sh
 </div>
-<pre class="sh"><code>cp -r /sw/courses/ngsintro/rnaseq/main/3_mapping/* /proj/snicxxxx-xx-xxx/nobackup/username/rnaseq/3_mapping/</code></pre>
+<pre class="sh"><code>cp -r /sw/courses/ngsintro/rnaseq/main/3_mapping/* /proj/snic2022-22-1124/nobackup/username/rnaseq/3_mapping/</code></pre>
 </div>
 <p><br></p>
 </div>
@@ -1009,10 +1009,10 @@ qualimap rnaseq -pe \
 <p>The line <code>prefix=$( basename "$1" .bam)</code> is used to remove directory path and <code>.bam</code> from the input filename and create a prefix which will be used to label output. The export <code>unset DISPLAY</code> forces a ‘headless mode’ on the JAVA application, which would otherwise throw an error about X11 display. If that doesn’t work, one can also try <code>export DISPLAY=:0</code> or <code>export DISPLAY=""</code>. The last part <code>&gt;&amp; "${prefix}-qualimap.log"</code> saves the <strong>standard-out</strong> as a log file.</p>
 <p><i class="fas fa-clipboard-list"></i> Create a new bash loop script named <code>qualimap_batch.sh</code> with a bash loop to run the qualimap script over all BAM files. The loop should look like below.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022111813153684" aria-expanded="false" aria-controls="acc2022111813153684">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022112109087340" aria-expanded="false" aria-controls="acc2022112109087340">
 </button>
 </p>
-<div id="acc2022111813153684" class="collapse">
+<div id="acc2022112109087340" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -1028,10 +1028,10 @@ done</code></pre>
 </div>
 <p>Run the loop script <code>qualimap_batch.sh</code> in the directory <code>4_qualimap</code>.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022111813156313" aria-expanded="false" aria-controls="acc2022111813156313">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022112109081835" aria-expanded="false" aria-controls="acc2022112109081835">
 </button>
 </p>
-<div id="acc2022111813156313" class="collapse">
+<div id="acc2022112109081835" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -1072,7 +1072,7 @@ drwxrwsr-x 2 user gXXXXXXX 4.0K Jan 22 22:53 raw_data_qualimapReport
 <div class="chunk-title small">
 sh
 </div>
-<pre class="sh"><code>scp -r username@rackham.uppmax.uu.se:/proj/snicxxxx-xx-xxx/nobackup/username/rnaseq/4_qualimap .</code></pre>
+<pre class="sh"><code>scp -r username@rackham.uppmax.uu.se:/proj/snic2022-22-1124/nobackup/username/rnaseq/4_qualimap .</code></pre>
 </div>
 <p><i class="fas fa-comments"></i> Check the QualiMap report for one sample and discuss if the sample is of good quality. You only need to do this for one file now. We will do a comparison with all samples when using the MultiQC tool.</p>
 <p><i class="fas fa-exclamation-circle"></i> If you are running out of time or were unable to run QualiMap, you can also copy pre-run QualiMap output from this location: <code>/sw/courses/ngsintro/rnaseq/main/4_qualimap/</code>.</p>
@@ -1080,7 +1080,7 @@ sh
 <div class="chunk-title small">
 sh
 </div>
-<pre class="sh"><code>cp -r /sw/courses/ngsintro/rnaseq/main/4_qualimap/* /proj/snicxxxx-xx-xxx/nobackup/username/rnaseq/4_qualimap/</code></pre>
+<pre class="sh"><code>cp -r /sw/courses/ngsintro/rnaseq/main/4_qualimap/* /proj/snic2022-22-1124/nobackup/username/rnaseq/4_qualimap/</code></pre>
 </div>
 <p><br></p>
 </div>
@@ -1093,10 +1093,10 @@ sh
 <p>We could run featureCounts on each BAM file, produce a text output for each sample and combine the output. But the easier way is to provide a list of all BAM files and featureCounts will combine counts for all samples into one text file.</p>
 <p>Below is the script that we will use:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022111813157401" aria-expanded="false" aria-controls="acc2022111813157401">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022112109080377" aria-expanded="false" aria-controls="acc2022112109080377">
 </button>
 </p>
-<div id="acc2022111813157401" class="collapse">
+<div id="acc2022112109080377" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -1124,12 +1124,12 @@ featureCounts \
 <p>In the above script, we indicate the path of the annotation file (<code>-a "../reference/Mus_musculus.GRCm38.99.gtf"</code>), specify the output file name (<code>-o "counts.txt"</code>), specify that that annotation file is in GTF format (<code>-F "GTF"</code>), specify that reads are to be counted over exonic features (<code>-t "exon"</code>) and summarised to the gene level (<code>-g "gene_id"</code>). We also specify that the reads are paired-end (<code>-p</code>), the library is unstranded (<code>-s 0</code>) and the number of threads to use (<code>-T 1</code>).</p>
 <p>Run the featurecounts bash script in the directory <code>5_dge</code>. Use <code>pwd</code> to check if you are standing in the correct directory.</p>
 <p>You should be standing here to run this:</p>
-<pre><code>/proj/snicxxxx-xx-xxx/nobackup/username/rnaseq/5_dge</code></pre>
+<pre><code>/proj/snic2022-22-1124/nobackup/username/rnaseq/5_dge</code></pre>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022111813151906" aria-expanded="false" aria-controls="acc2022111813151906">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022112109086106" aria-expanded="false" aria-controls="acc2022112109086106">
 </button>
 </p>
-<div id="acc2022111813151906" class="collapse">
+<div id="acc2022112109086106" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -1159,16 +1159,16 @@ output
 <p>For downstream steps, we will NOT use this <code>counts.txt</code> file. Instead we will use <strong>counts_full.txt</strong> from the back-up folder. This contains counts across all chromosomes. This is located here: <code>/sw/courses/ngsintro/rnaseq/main/5_dge/</code>. Copy this file to your <code>5_dge</code> directory.</p>
 <p><i class="fas fa-exclamation-circle"></i> Remember to replace username.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022111813153271" aria-expanded="false" aria-controls="acc2022111813153271">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022112109083380" aria-expanded="false" aria-controls="acc2022112109083380">
 </button>
 </p>
-<div id="acc2022111813153271" class="collapse">
+<div id="acc2022112109083380" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
 sh
 </div>
-<pre class="sh"><code>cp /sw/courses/ngsintro/rnaseq/main/5_dge/counts_full.txt /proj/snicxxxx-xx-xxx/nobackup/username/rnaseq/5_dge/</code></pre>
+<pre class="sh"><code>cp /sw/courses/ngsintro/rnaseq/main/5_dge/counts_full.txt /proj/snic2022-22-1124/nobackup/username/rnaseq/5_dge/</code></pre>
 </div>
 </div>
 </div>
@@ -1180,7 +1180,7 @@ sh
 <p><strong>Combined QC report using MultiQC</strong></p>
 <p>We will use the tool <strong>MultiQC</strong> to crawl through the output, log files etc from FastQC, HISAT2, QualiMap and featureCounts to create a combined QC report.</p>
 <p>Move to the <code>6_multiqc</code> directory. You should be standing here to run this:</p>
-<pre><code>/proj/snicxxxx-xx-xxx/nobackup/username/rnaseq/6_multiqc</code></pre>
+<pre><code>/proj/snic2022-22-1124/nobackup/username/rnaseq/6_multiqc</code></pre>
 <p>And run this in the terminal.</p>
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -1228,7 +1228,7 @@ output
 <div class="chunk-title small">
 sh
 </div>
-<pre class="sh"><code>scp username@rackham.uppmax.uu.se:/proj/snicxxxx-xx-xxx/nobackup/username/rnaseq/6_multiqc/multiqc_report.html .</code></pre>
+<pre class="sh"><code>scp username@rackham.uppmax.uu.se:/proj/snic2022-22-1124/nobackup/username/rnaseq/6_multiqc/multiqc_report.html .</code></pre>
 </div>
 <p><br></p>
 </div>
@@ -1319,14 +1319,14 @@ sh
 <div class="chunk-title small">
 sh
 </div>
-<pre class="sh"><code>cp /sw/courses/ngsintro/rnaseq/bonus/funannot/annotate_de_results.R /proj/snicxxxx-xx-xxx/nobackup/username/rnaseq/funannot/</code></pre>
+<pre class="sh"><code>cp /sw/courses/ngsintro/rnaseq/bonus/funannot/annotate_de_results.R /proj/snic2022-22-1124/nobackup/username/rnaseq/funannot/</code></pre>
 </div>
 <p>We need some annotation information, so we will copy this file <code>/sw/courses/ngsintro/rnaseq/main/reference/mm-biomart99-genes.txt.gz</code> to your <code>rnaseq/reference</code> directory.</p>
 <div class="chunk-title-parent">
 <div class="chunk-title small">
 sh
 </div>
-<pre class="sh"><code>cp /sw/courses/ngsintro/rnaseq/main/reference/mm-biomart99-genes.txt.gz /proj/snicxxxx-xx-xxx/nobackup/username/rnaseq/reference/</code></pre>
+<pre class="sh"><code>cp /sw/courses/ngsintro/rnaseq/main/reference/mm-biomart99-genes.txt.gz /proj/snic2022-22-1124/nobackup/username/rnaseq/reference/</code></pre>
 </div>
 <p>Then uncompress the file. <code>gunzip ../reference/mm-biomart99-genes.txt.gz</code></p>
 <p>Load R module and R packages</p>
@@ -1401,7 +1401,7 @@ sh
 <div class="chunk-title small">
 sh
 </div>
-<pre class="sh"><code>cp /sw/courses/ngsintro/rnaseq/bonus/plots/*.R /proj/snicxxxx-xx-xxx/nobackup/username/rnaseq/plots/</code></pre>
+<pre class="sh"><code>cp /sw/courses/ngsintro/rnaseq/bonus/plots/*.R /proj/snic2022-22-1124/nobackup/username/rnaseq/plots/</code></pre>
 </div>
 <p>You should have the following files:</p>
 <div class="chunk-title-parent">
@@ -1499,10 +1499,10 @@ sh
 <div class="chunk-title small">
 sh
 </div>
-<pre class="sh"><code>scp username@rackham.uppmax.uu.se:/proj/snicxxxx-xx-xxx/nobackup/rnaseq/username/3_mapping/SRR3222409-19.bam ./
-scp username@rackham.uppmax.uu.se:/proj/snicxxxx-xx-xxx/nobackup/rnaseq/username/3_mapping/SRR3222409-19.bam.bai ./
-scp username@rackham.uppmax.uu.se:/proj/snicxxxx-xx-xxx/nobackup/rnaseq/username/3_mapping/SRR3222412-19.bam ./
-scp username@rackham.uppmax.uu.se:/proj/snicxxxx-xx-xxx/nobackup/rnaseq/username/3_mapping/SRR3222412-19.bam.bai ./</code></pre>
+<pre class="sh"><code>scp username@rackham.uppmax.uu.se:/proj/snic2022-22-1124/nobackup/rnaseq/username/3_mapping/SRR3222409-19.bam ./
+scp username@rackham.uppmax.uu.se:/proj/snic2022-22-1124/nobackup/rnaseq/username/3_mapping/SRR3222409-19.bam.bai ./
+scp username@rackham.uppmax.uu.se:/proj/snic2022-22-1124/nobackup/rnaseq/username/3_mapping/SRR3222412-19.bam ./
+scp username@rackham.uppmax.uu.se:/proj/snic2022-22-1124/nobackup/rnaseq/username/3_mapping/SRR3222412-19.bam.bai ./</code></pre>
 </div>
 <p>Alternatively, you can use an SFTP browser like <a href="https://filezilla-project.org/" target="_blank">Filezilla</a> or <a href="https://cyberduck.io/" target="_blank">Cyberduck</a> for a GUI interface. Windows users can also use the MobaXterm SFTP file browser to drag and drop.</p>
 </div>
@@ -1614,7 +1614,7 @@ hisat2 \
 sh
 </div>
 <pre class="sh"><code>#!/bin/bash
-#SBATCH -A snicxxxx-xx-xxx
+#SBATCH -A snic2022-22-1124
 #SBATCH -p core
 #SBATCH -n 8
 #SBATCH -t 3:00:00
