@@ -274,7 +274,7 @@ dahlo@rackham2 work $</code></pre>
 Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested (7 hours in this case) the session will shut down, and you will lose all unsaved data. Connect to this node from within UPPMAX.</p>
 <pre class="bash"><code>$ ssh -Y r292</code></pre>
 <p>If the list is empty you can run the allocation command again and it should be in the list:</p>
-<pre class="bash"><code>$ salloc -A snicxxxx-xx-xxx -t 03:30:00 -p core -n 1 --no-shell --reservation=snicxxxx-xx-xxx_1 &amp;</code></pre>
+<pre class="bash"><code>$ salloc -A snic2022-22-1124 -t 03:30:00 -p core -n 1 --no-shell --reservation=snic2022-22-1124_1 &amp;</code></pre>
 <p><i class="fas fa-lightbulb"></i> There is a UPPMAX specific tool called <code>jobinfo</code> that supplies the same kind of information as <code>squeue</code> that you can use as well (<code>$ jobinfo -u username</code>).</p>
 </div>
 <div id="copy-files-for-lab" class="section level1" number="3">
@@ -283,9 +283,9 @@ Note the numbers in the Time column. They show for how long the job has been run
 <p>Next, copy the lab files from this folder. <code>-r</code> means recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, NOT sub-folders and files in sub-folders.</p>
 <p><i class="fas fa-lightbulb"></i> Remember to use tab-complete to avoid typos and too much writing.</p>
 <pre class="bash"><code>$ cp -r &lt;source&gt; &lt;destination&gt;
-$ cp -r /sw/courses/ngsintro/linux/uppmax_pipeline_exercise/data/* /proj/snicxxxx-xx-xxx/nobackup/username/uppmax_pipeline_exercise</code></pre>
-<p>Have a look in <strong>/proj/snicxxxx-xx-xxx/nobackup/&lt;username&gt;/uppmax_pipeline_exercise</strong>.</p>
-<pre class="bash"><code>$ cd /proj/snicxxxx-xx-xxx/nobackup/username/uppmax_pipeline_exercise
+$ cp -r /sw/courses/ngsintro/linux/uppmax_pipeline_exercise/data/* /proj/snic2022-22-1124/nobackup/username/uppmax_pipeline_exercise</code></pre>
+<p>Have a look in <strong>/proj/snic2022-22-1124/nobackup/&lt;username&gt;/uppmax_pipeline_exercise</strong>.</p>
+<pre class="bash"><code>$ cd /proj/snic2022-22-1124/nobackup/username/uppmax_pipeline_exercise
 ll</code></pre>
 <p>If you see files, the copying was successful.</p>
 </div>
@@ -370,7 +370,7 @@ Options:
 <p>Further down, in the <code>Options:</code> section, each of the options are explained more in detail. You can also see that each option can be specified in two way, a short and a long format. The cutoff value can be specified either by the short <code>-c</code>, or the long <code>--cutoff</code>. It doesn’t matter which format you choose, it’s completely up to you, which ever you feel more comfortable with.</p>
 <p>Right, so now you know how to figure out how to run programs (just type the program name, followed by a <code>-h</code> or <code>--help</code>). Try doing a complete exome sequencing analysis, following the steps below.</p>
 <p>First, go to the exome directory in the lab directory that you copied to your folder in step 2 in this lab:</p>
-<pre class="bash"><code>$ cd /proj/snicxxxx-xx-xxx/nobackup/username/uppmax_pipeline_exercise/exomeSeq</code></pre>
+<pre class="bash"><code>$ cd /proj/snic2022-22-1124/nobackup/username/uppmax_pipeline_exercise/exomeSeq</code></pre>
 <p>In there, you will find a folder called <code>raw_data</code>, containing a fastq file: <code>my_reads.rawdata.fastq</code>. This file contains the raw data that you will analyse.</p>
 <ul>
 <li>Filter the raw data using the program <code>filter_reads</code>, to get rid of low quality reads.</li>
@@ -389,7 +389,7 @@ In this pipeline, raw data gets filtered, the filtered data gets aligned, and th
 <p>To run the pipeline in a script, just do exactly as you just did, but write the exact same commands to a file instead of directly to the terminal. When you run the script, the computer will run the script one line at a time, until it reaches the end of the file. Just like you did manually in the previous step.</p>
 <p>The simplest way to work with scripts is to have 2 terminals open. One will have <code>nano</code> started where you write your script file, and the other will be on the command line where you can test your commands to make sure they work before you put them in the script. When you are sure a command works, you copy/paste it to the terminal with the script file in it.</p>
 <p>Start writing you script with <code>nano</code>:</p>
-<pre class="bash"><code>$ cd /proj/snicxxxx-xx-xxx/nobackup/username/uppmax_pipeline_exercise/exomeSeq
+<pre class="bash"><code>$ cd /proj/snic2022-22-1124/nobackup/username/uppmax_pipeline_exercise/exomeSeq
 nano exome_analysis_script.sh</code></pre>
 <p>The <code>.sh</code> ending is commonly used for <strong>sh</strong>ell scripts which is what we are creating. The default shell at UPPMAX is as we know called bash, so whenever we write <code>sh</code> the computer will use bash. If the default shell at UPPMAX would change for some reason, maybe to <strong>zsh</strong> or any other type of shell, <code>sh</code> would point the the new shell instead.</p>
 <p><img src="data/uppmax-pipeline/dualTerminals.png" /></p>
@@ -414,7 +414,7 @@ nano exome_analysis_script.sh</code></pre>
 <p>The <code>-l</code> after bash is a flag that tells bash that the script should be treated as a login shell, so everything behaves as when you are logged in. Without it commands like <code>module</code> and some other would not work. If it’s not a login shell, it’s running as a script, and then it does not need to bother making the interface human friendly so it will skip things to make it start faster and consume less resources.</p>
 <p>The next couple of rows will contain all the options you want to give SLURM:</p>
 <pre class="bash"><code>#!/bin/bash -l
-#SBATCH -A snicxxxx-xx-xxx
+#SBATCH -A snic2022-22-1124
 #SBATCH -t 00:05:00
 #SBATCH -p core</code></pre>
 <p>SLURM options always start with <strong><code>#SBATCH</code></strong> followed by a flag (<code>-A</code> for account, <code>-t</code> for time, <code>-p</code> for partition) and the value for that flag. Your script should now look something like this (ignore the old project id and path to the scripts):</p>

@@ -275,7 +275,7 @@ dahlo@rackham2 work $</code></pre>
 Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested (7 hours in this case) the session will shut down, and you will lose all unsaved data. Connect to this node from within UPPMAX.</p>
 <pre class="bash"><code>$ ssh -Y r292</code></pre>
 <p>If the list is empty you can run the allocation command again and it should be in the list:</p>
-<pre class="bash"><code>$ salloc -A snicxxxx-xx-xxx -t 03:30:00 -p core -n 1 --no-shell --reservation=snicxxxx-xx-xxx_2 &amp;</code></pre>
+<pre class="bash"><code>$ salloc -A snic2022-22-1124 -t 03:30:00 -p core -n 1 --no-shell --reservation=snic2022-22-1124_2 &amp;</code></pre>
 <p><i class="fas fa-lightbulb"></i> There is a UPPMAX specific tool called <code>jobinfo</code> that supplies the same kind of information as <code>squeue</code> that you can use as well (<code>$ jobinfo -u username</code>).</p>
 </div>
 <div id="first-things-first" class="section level1" number="3">
@@ -295,9 +295,9 @@ Note the numbers in the Time column. They show for how long the job has been run
 <p>Next, copy the lab files from this folder. <code>-r</code> means recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, NOT sub-folders and files in sub-folders.</p>
 <p><i class="fas fa-lightbulb"></i> Remember to use tab-complete to avoid typos and too much writing.</p>
 <pre class="bash"><code>$ cp -r &lt;source&gt; &lt;destination&gt;
-$ cp -r /sw/courses/ngsintro/linux/linux_advanced /proj/snicxxxx-xx-xxx/nobackup/username</code></pre>
-<p>Have a look in <code>/proj/snicxxxx-xx-xxx/nobackup/username/linux_advanced</code>.</p>
-<pre class="bash"><code>$ cd /proj/snicxxxx-xx-xxx/nobackup/username/linux_advanced</code></pre>
+$ cp -r /sw/courses/ngsintro/linux/linux_advanced /proj/snic2022-22-1124/nobackup/username</code></pre>
+<p>Have a look in <code>/proj/snic2022-22-1124/nobackup/username/linux_advanced</code>.</p>
+<pre class="bash"><code>$ cd /proj/snic2022-22-1124/nobackup/username/linux_advanced</code></pre>
 <pre class="bash"><code>$ ll</code></pre>
 <p>If you see files, the copying was successful.</p>
 </div>
@@ -319,10 +319,10 @@ $ echo Most international flights leave from terminal $a at Arlanda airport</cod
 $ echo $a squared is $(($a*$a))</code></pre>
 <p><i class="fas fa-clipboard-list"></i> Write a echo command that will print out the volume of a <a href="https://www.mathsisfun.com/cuboid.html" target="_blank">rectangular cuboid</a>, with the side lengths specified by variables named <code>x</code>, <code>y</code>, and <code>z</code>. To see that it works correctly, the volume of a rectangular cuboid with sides 5,5,5 is 125, and for 4,5,10 is 200. <em>Give it a couple of tries on your own first. If you get completely stuck you can see a suggested solution below.</em></p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022111813127249" aria-expanded="false" aria-controls="acc2022111813127249">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022112109053170" aria-expanded="false" aria-controls="acc2022112109053170">
 </button>
 </p>
-<div id="acc2022111813127249" class="collapse">
+<div id="acc2022112109053170" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ x=4
 $ y=5
@@ -334,7 +334,7 @@ $ echo The volume of the rectangular cuboid with the sides $x,$y,$z is $(($x*$y*
 <div id="exercises" class="section level1" number="6">
 <h1><span class="header-section-number">6</span> Exercises</h1>
 <p>First off, let’s open another terminal to UPPMAX so that you have 2 of them open. Scripting is a lot easier if you have one terminal on the command line ready to run commands and test things, and another one with a text editor where you write the actual code. That way you will never have to close down the text editor when you want to run the script you are writing on, and then open it up again when you want to continue editing the code.</p>
-<p>So open a new terminal window, connect it to UPPMAX and then connect it to the node you have booked. Make sure both terminals are in the <code>/proj/snicxxxx-xx-xxx/nobackup/username/linux_advanced</code> directory, and start editing a new file with gedit or nano where you write your script. Name the file whatever you want, but in the examples I will refer to it as <code>loop_01.sh</code>. Write your loops to this file (or create a new file for each new example) and test run it in the other terminal.</p>
+<p>So open a new terminal window, connect it to UPPMAX and then connect it to the node you have booked. Make sure both terminals are in the <code>/proj/snic2022-22-1124/nobackup/username/linux_advanced</code> directory, and start editing a new file with gedit or nano where you write your script. Name the file whatever you want, but in the examples I will refer to it as <code>loop_01.sh</code>. Write your loops to this file (or create a new file for each new example) and test run it in the other terminal.</p>
 <p><strong>NOTE:</strong> If you get error messages like <code>(gedit:27463): dconf-WARNING **: 10:59:00.575: failed to commit changes to dconf: Failed to execute child process “dbus-launch” (No such file or directory)</code>, and if you can’t change any preferences, you can try starting gedit through the graphical menu in ThinLic instead. If you are using the Xfce desktop environment you should have a start-menu-like button at the top-left of the screen named <code>Applications</code>, or if you right-click somewhere on the desktop you should find it in the context menu that pops up. In the <code>Applications</code> menu, look in the category <code>Accessories</code> and you should find a program called <code>Text editor</code> which will start gedit *(hopefully without the errors).</p>
 <p>The most simple loops are the ones that loop over a predefined list. You saw examples of this in the lecture slides, for example:</p>
 <pre class="bash"><code>for i in &quot;Print these words&quot; one by one;
@@ -360,10 +360,10 @@ done  </code></pre>
 <p>Start off with getting a loop to count down from 10 to 0 first. Notice how fast the computer counts? That won’t do if it’s seconds we want to be counting down. Try looking the man page for the <code>sleep</code> command (<code>man sleep</code>) and figure out how to use it. The point of using <code>sleep</code> is to tell the computer to wait for 1 second after printing the number, instead of rushing to the next iteration in the loop directly. Try to implement this on your own.</p>
 </div>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022111813129038" aria-expanded="false" aria-controls="acc2022111813129038">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022112109055950" aria-expanded="false" aria-controls="acc2022112109055950">
 </button>
 </p>
-<div id="acc2022111813129038" class="collapse">
+<div id="acc2022112109055950" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># declare the values the loop will loop over
 for secondsToGo in {10..0};
@@ -385,7 +385,7 @@ echo Happy New Year everyone!!</code></pre>
 <h2><span class="header-section-number">6.2</span> Exercise 2</h2>
 <p>Let’s try to do something similar to the example in the lecture slides, to run the same commands on multiple files. In the Introduction to UPPMAX, we learned how to use samtools to convert BAM files to SAM files so that humans can read them.
 In real life you will never do this, instead you will most likely always do it the other way around. SAM files take up ~4x more space on the hard drive compared to the same file in BAM format, so as soon as you see a SAM file you should convert it to a BAM file instead to conserve hard drive space. If you have many SAM files that needs converting you don’t want to sit there and type all the commands by hand like a pleb.</p>
-<p><i class="fas fa-clipboard-list"></i> Write a script that converts all the SAM files in a specified directory to BAM files. Incidentally, you can find 50 SAM files in need of conversion in the folder called <code>sam</code> in the folder you copied to your folder earlier in this lab (<code>/proj/snicxxxx-xx-xxx/nobackup/username/linux_advanced/sam</code>). Bonus points if you make the program take the specified directory as an argument, and another bonus point if you get the program to name the resulting BAM file to the same name as the SAM file but with a .bam ending instead.</p>
+<p><i class="fas fa-clipboard-list"></i> Write a script that converts all the SAM files in a specified directory to BAM files. Incidentally, you can find 50 SAM files in need of conversion in the folder called <code>sam</code> in the folder you copied to your folder earlier in this lab (<code>/proj/snic2022-22-1124/nobackup/username/linux_advanced/sam</code>). Bonus points if you make the program take the specified directory as an argument, and another bonus point if you get the program to name the resulting BAM file to the same name as the SAM file but with a .bam ending instead.</p>
 <div class="boxy boxy-lightbulb">
 <p>Remember that you have to load the samtools module to be able to run it. The way you get samtools to convert a SAM file to a BAM file is by typing the following command:</p>
 <pre class="bash"><code>samtools view -bS sample_1.sam &gt; sample_1.bam</code></pre>
@@ -394,10 +394,10 @@ In real life you will never do this, instead you will most likely always do it t
 </div>
 <p>Basic, without bonus points:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022111813123864" aria-expanded="false" aria-controls="acc2022111813123864">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022112109051806" aria-expanded="false" aria-controls="acc2022112109051806">
 </button>
 </p>
-<div id="acc2022111813123864" class="collapse">
+<div id="acc2022112109051806" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># load the modules needed for samtools
 module load bioinfo-tools samtools/1.3
@@ -415,10 +415,10 @@ done</code></pre>
 </div>
 <p>Advanced, with bonus points:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022111813121195" aria-expanded="false" aria-controls="acc2022111813121195">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022112109050637" aria-expanded="false" aria-controls="acc2022112109050637">
 </button>
 </p>
-<div id="acc2022111813121195" class="collapse">
+<div id="acc2022112109050637" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># load the modules needed for samtools
 module load bioinfo-tools samtools/1.3
@@ -464,10 +464,10 @@ fi</code></pre>
 <p><i class="fas fa-clipboard-list"></i> Now, modify the previous exercise to only do the conversion if a file with the intended name of the BAM file doesn’t already exists. <em>i.e</em>; if you have <code>a.sam</code> and want to create a BAM file named <code>a.bam</code>, first check if <code>a.bam</code> already exists and only do the conversion if it does not exist.</p>
 <p>Basic:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022111813122237" aria-expanded="false" aria-controls="acc2022111813122237">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022112109053617" aria-expanded="false" aria-controls="acc2022112109053617">
 </button>
 </p>
-<div id="acc2022111813122237" class="collapse">
+<div id="acc2022112109053617" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># load the modules needed for samtools
 module load bioinfo-tools samtools/1.3
@@ -489,10 +489,10 @@ done</code></pre>
 </div>
 <p>Advanced:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022111813125981" aria-expanded="false" aria-controls="acc2022111813125981">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022112109057401" aria-expanded="false" aria-controls="acc2022112109057401">
 </button>
 </p>
-<div id="acc2022111813125981" class="collapse">
+<div id="acc2022112109057401" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># load the modules needed for samtools
 module load bioinfo-tools samtools/1.3
@@ -545,10 +545,10 @@ xpression:</p>
 echo 1 2 3 4 5</code></pre>
 </div>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022111813121831" aria-expanded="false" aria-controls="acc2022111813121831">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022112109056964" aria-expanded="false" aria-controls="acc2022112109056964">
 </button>
 </p>
-<div id="acc2022111813121831" class="collapse">
+<div id="acc2022112109056964" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># set the number you want to calculate the factorial of
 n=10
@@ -583,19 +583,19 @@ echo The factorial of $n is $factorial</code></pre>
 <p>If that sounds too easy, make the script submit a slurm job for each sample that will run the pipeline for that sample on a calculation node (1 core, 5 minutes each). And if that is too easy, add that the pipeline will use the local hard drive on the calculation node for all files used in the analysis.</p>
 <p>When the analysis is done, only fastq files and sorted and indexed BAM files should be in your folder.</p>
 <p><i class="fas fa-lightbulb"></i> Read more about the <code>$SNIC_TMP</code> variable in the <a href="http://www.uppmax.uu.se/support/user-guides/disk-storage-guide/" target="_blank">disk storage guide</a> on the UPPMAX homepage.</p>
-<p>There is a bunch of fastq files in the directory <code>/proj/snicxxxx-xx-xxx/nobackup/username/linux_advanced/fastq/</code> that is to be used for this exercise.</p>
+<p>There is a bunch of fastq files in the directory <code>/proj/snic2022-22-1124/nobackup/username/linux_advanced/fastq/</code> that is to be used for this exercise.</p>
 <p>Basic solution:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022111813128060" aria-expanded="false" aria-controls="acc2022111813128060">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022112109050280" aria-expanded="false" aria-controls="acc2022112109050280">
 </button>
 </p>
-<div id="acc2022111813128060" class="collapse">
+<div id="acc2022112109050280" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># make the dummy pipeline available
 export PATH=$PATH:/sw/courses/ngsintro/linux/uppmax_pipeline_exercise/dummy_scripts
 
 # index the reference genome
-reference_indexer -r /proj/snicxxxx-xx-xxx/nobackup/username/filetypes/0_ref/ad2.fa
+reference_indexer -r /proj/snic2022-22-1124/nobackup/username/filetypes/0_ref/ad2.fa
 
 # go to the input files
 cd $1
@@ -605,7 +605,7 @@ for file in *.fastq;
 do
 
     # align the reads
-    align_reads -r /proj/snicxxxx-xx-xxx/nobackup/username/filetypes/0_ref/ad2.fa -i $file -o $file.sam
+    align_reads -r /proj/snic2022-22-1124/nobackup/username/filetypes/0_ref/ad2.fa -i $file -o $file.sam
 
     # convert the sam file to a bam file
     sambam_tool -f bam -i $file.sam -o $file.bam
@@ -621,18 +621,18 @@ done</code></pre>
 </div>
 <p>Advanced solution:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022111813123149" aria-expanded="false" aria-controls="acc2022111813123149">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2022112109056446" aria-expanded="false" aria-controls="acc2022112109056446">
 </button>
 </p>
-<div id="acc2022111813123149" class="collapse">
+<div id="acc2022112109056446" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code># make the dummy pipeline available in this script
 export PATH=$PATH:/sw/courses/ngsintro/linux/uppmax_pipeline_exercise/dummy_scripts
 
 # index the reference genome once, only if needed
-if [ ! -f /proj/snicxxxx-xx-xxx/nobackup/username/filetypes/0_ref/ad2.fa.idx ];
+if [ ! -f /proj/snic2022-22-1124/nobackup/username/filetypes/0_ref/ad2.fa.idx ];
 then
-    reference_indexer -r /proj/snicxxxx-xx-xxx/nobackup/username/filetypes/0_ref/ad2.fa
+    reference_indexer -r /proj/snic2022-22-1124/nobackup/username/filetypes/0_ref/ad2.fa
 fi
 
 
@@ -661,7 +661,7 @@ do
     # print a temporary script file that will be submitted to slurm
     echo &quot;#!/bin/bash -l
 
-    #SBATCH -A snicxxxx-xx-xxx
+    #SBATCH -A snic2022-22-1124
     #SBATCH -p core
     #SBATCH -n 1
     #SBATCH -t 00:05:00
@@ -675,7 +675,7 @@ do
     # You have to escape the dollar sign in SNIC_TMP to keep bash from resolving
     # it to its value in the submitter script already.
     echo &quot;Copying data to node local hard drive&quot;
-    cp /proj/snicxxxx-xx-xxx/nobackup/username/filetypes/0_ref/ad2.fa* $file $SNIC_TMP/
+    cp /proj/snic2022-22-1124/nobackup/username/filetypes/0_ref/ad2.fa* $file $SNIC_TMP/
 
     # go the the nodes local hard drive
     echo &quot;Changing directory to node local hard drive&quot;

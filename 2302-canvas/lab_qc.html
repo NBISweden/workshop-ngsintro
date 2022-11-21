@@ -293,7 +293,7 @@ div.tocify {
 <div id="book-a-node" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> Book a node</h2>
 <p>To be able to run analyses in the terminal you should book a compute node (or in this case just one core of a node). Make sure you only do this once each day because we have reserved one core per student for the course. If you haven’t already reserved a core today please use this command:</p>
-<pre class="bash"><code>salloc -A snicxxxx-xx-xxx -t 04:00:00 -p core -n 1 --no-shell --reservation=snicxxxx-xx-xxx_2 &amp;</code></pre>
+<pre class="bash"><code>salloc -A snic2022-22-1124 -t 04:00:00 -p core -n 1 --no-shell --reservation=snic2022-22-1124_2 &amp;</code></pre>
 <p>Once your job allocation has been granted (should not take long) you can connect to the node using ssh. To find out the name of your node, use:</p>
 <pre class="bash"><code>squeue -u username</code></pre>
 <p>The node name is found under nodelist header, you should only see one. Connect to that node:</p>
@@ -302,8 +302,8 @@ div.tocify {
 <div id="create-a-workspace" class="section level2" number="3.3">
 <h2><span class="header-section-number">3.3</span> Create a workspace</h2>
 <p>You should work in your folder under the course’s nobackup folder, just like you have done during the previous labs. Start by creating a workspace for this exercise in your folder, and then move into it.</p>
-<pre class="bash"><code>mkdir /proj/snicxxxx-xx-xxx/nobackup/username/qc
-cd /proj/snicxxxx-xx-xxx/nobackup/username/qc</code></pre>
+<pre class="bash"><code>mkdir /proj/snic2022-22-1124/nobackup/username/qc
+cd /proj/snic2022-22-1124/nobackup/username/qc</code></pre>
 </div>
 <div id="symbolic-links-to-data" class="section level2" number="3.4">
 <h2><span class="header-section-number">3.4</span> Symbolic links to data</h2>
