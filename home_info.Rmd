@@ -1,5 +1,5 @@
 ---
-title: "Info"
+title: "Practical Info"
 output:
   bookdown::html_document2:
     toc: false
@@ -9,33 +9,108 @@ output:
 ```{r,child="assets/header-lab.Rmd"}
 ```
 
-## Location
-
 ```{r,eval=TRUE,include=FALSE}
 library(yaml)
 library(leaflet)
 
 # set location in _site.yml
-loc <- yaml::read_yaml("_site.yml")$location
+loc <- unlist(strsplit(yaml::read_yaml("_site.yml")$location,";|,"))
 dfr <- read.delim("info.csv",sep=";")
-dfr <- dfr[dfr$location==loc,]
 ```
 
-```{r,eval=TRUE,echo=FALSE,chunk.title=NULL}
-if(loc!="online") {
-  dfr$address <- gsub(",","<br>",dfr$address)
-  icons <- awesomeIcons(icon=dfr$marker_icon, markerColor=dfr$marker_colour, iconColor="#FFFFFF", library="fa")
+```{r,echo=FALSE,results="asis",eval=TRUE}
+cat("## Location {.tabset .tabset-fade}", "\n")
+p <- "uppsala"
+cat(paste0("\n### ",tools::toTitleCase(p),"\n"))
+dfr1 <- dfr[dfr$location %in% p,,drop=FALSE]
+dfr1$address <- gsub(",","<br>",dfr1$address)
+icons <- awesomeIcons(icon=dfr1$marker_icon, markerColor=dfr1$marker_colour, iconColor="#FFFFFF", library="fa")
+htmltools::tagList(leaflet(height=450, elementId=paste0("leaflet-",p),width="auto") %>%
+  addTiles(urlTemplate='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png') %>%
+  addAwesomeMarkers(lat=dfr1$lat, lng=dfr1$lon, label=dfr1$label, popup=dfr1$address, icon=icons) %>%
+  setView(lat=dfr1$lat[1], lng=dfr1$lon[1], zoom=13))
+cat(paste0("\n",dfr1$address[1],"\n"))
+cat(paste0("\n",dfr1$description[1],"\n"))
+
+p <- "umea"
+cat(paste0("\n### ",tools::toTitleCase(p),"\n"))
+dfr1 <- dfr[dfr$location %in% p,,drop=FALSE]
+dfr1$address <- gsub(",","<br>",dfr1$address)
+icons <- awesomeIcons(icon=dfr1$marker_icon, markerColor=dfr1$marker_colour, iconColor="#FFFFFF", library="fa")
+htmltools::tagList(leaflet(height=450, elementId=paste0("leaflet-",p),width="auto") %>%
+  addTiles(urlTemplate='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png') %>%
+  addAwesomeMarkers(lat=dfr1$lat, lng=dfr1$lon, label=dfr1$label, popup=dfr1$address, icon=icons) %>%
+  setView(lat=dfr1$lat[1], lng=dfr1$lon[1], zoom=14))
+cat(paste0("\n",dfr1$address[1],"\n"))
+cat(paste0("\n",dfr1$description[1],"\n"))
+
+p <- "lund"
+cat(paste0("\n### ",tools::toTitleCase(p),"\n"))
+dfr1 <- dfr[dfr$location %in% p,,drop=FALSE]
+dfr1$address <- gsub(",","<br>",dfr1$address)
+icons <- awesomeIcons(icon=dfr1$marker_icon, markerColor=dfr1$marker_colour, iconColor="#FFFFFF", library="fa")
+htmltools::tagList(leaflet(height=450, elementId=paste0("leaflet-",p),width="auto") %>%
+  addTiles(urlTemplate='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png') %>%
+  addAwesomeMarkers(lat=dfr1$lat, lng=dfr1$lon, label=dfr1$label, popup=dfr1$address, icon=icons) %>%
+  setView(lat=dfr1$lat[1], lng=dfr1$lon[1], zoom=14))
+cat(paste0("\n",dfr1$address[1],"\n"))
+cat(paste0("\n",dfr1$description[1],"\n"))
+```
+
+```{r,echo=FALSE,results="asis",eval=FALSE}
+# conditional doesn't seem to work with leaflet
+
+if(!"online" %in% loc) {
+  cat("## Location {.tabset .tabset-fade}", "\n")
   
-  leaflet(height=450,width="auto") %>%
-    addTiles(urlTemplate='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png') %>%
-    addAwesomeMarkers(lat=dfr$lat, lng=dfr$lon, label=dfr$label, popup=dfr$address, icon=icons) %>%
-    setView(lat=dfr$lat[1], lng=dfr$lon[1], zoom=15)
+  if("uppsala" %in% loc){
+    p <- "uppsala"
+    cat(paste0("\n### ",tools::toTitleCase(p),"\n"))
+    dfr1 <- dfr[dfr$location %in% p,,drop=FALSE]
+    dfr1$address <- gsub(",","<br>",dfr1$address)
+    icons <- awesomeIcons(icon=dfr1$marker_icon, markerColor=dfr1$marker_colour, iconColor="#FFFFFF", library="fa")
+    
+    htmltools::tagList(leaflet(height=450,width="auto",elementId=paste0("leaflet-",p)) %>%
+      addTiles(urlTemplate='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png') %>%
+      addAwesomeMarkers(lat=dfr1$lat, lng=dfr1$lon, label=dfr1$label, popup=dfr1$address, icon=icons) %>%
+      setView(lat=dfr1$lat[1], lng=dfr1$lon[1], zoom=13))
+  
+    cat(paste0("\n",dfr1$address[1],"\n"))
+    cat(paste0("\n",dfr1$description[1],"\n"))
+  }
+  
+    if("umea" %in% loc){
+    p <- "umea"
+    cat(paste0("\n### ",tools::toTitleCase(p),"\n"))
+    dfr1 <- dfr[dfr$location %in% p,,drop=FALSE]
+    dfr1$address <- gsub(",","<br>",dfr1$address)
+    icons <- awesomeIcons(icon=dfr1$marker_icon, markerColor=dfr1$marker_colour, iconColor="#FFFFFF", library="fa")
+  
+    htmltools::tagList(leaflet(height=450,width="auto",elementId=paste0("leaflet-",p)) %>%
+      addTiles(urlTemplate='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png') %>%
+      addAwesomeMarkers(lat=dfr1$lat, lng=dfr1$lon, label=dfr1$label, popup=dfr1$address, icon=icons) %>%
+      setView(lat=dfr1$lat[1], lng=dfr1$lon[1], zoom=14))
+  
+    cat(paste0("\n",dfr1$address[1],"\n"))
+    cat(paste0("\n",dfr1$description[1],"\n"))
+    }
+  
+    if("lund" %in% loc){
+    p <- "lund"
+    cat(paste0("\n### ",tools::toTitleCase(p),"\n"))
+    dfr1 <- dfr[dfr$location %in% p,,drop=FALSE]
+    dfr1$address <- gsub(",","<br>",dfr1$address)
+    icons <- awesomeIcons(icon=dfr1$marker_icon, markerColor=dfr1$marker_colour, iconColor="#FFFFFF", library="fa")
+  
+    htmltools::tagList(leaflet(height=450,width="auto",elementId=paste0("leaflet-",p)) %>%
+      addTiles(urlTemplate='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png') %>%
+      addAwesomeMarkers(lat=dfr1$lat, lng=dfr1$lon, label=dfr1$label, popup=dfr1$address, icon=icons) %>%
+      setView(lat=dfr1$lat[1], lng=dfr1$lon[1], zoom=14))
+  
+    cat(paste0("\n",dfr1$address[1],"\n"))
+    cat(paste0("\n",dfr1$description[1],"\n"))
+  }
 }
-```
-
-```{r,eval=TRUE,echo=FALSE,results="asis",chunk.title=NULL}
-cat("## Practical information")
-cat("\n",dfr$description[1])
 ```
 
 ## Contact

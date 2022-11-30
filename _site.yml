@@ -12,7 +12,8 @@ uppmax_res_3: snic2022-22-1124_3
 uppmax_res_4: snic2022-22-1124_4
 uppmax_res_5: snic2022-22-1124_5
 # location options are linkoping, lund, umea, uppsala or online. For rendering the info page.
-location: uppsala
+# one or more separated by commas or semicolon. online doesn't display any location info.
+location: uppsala,lund,umea
 assistants:
  - "AA: Adam Ameur"
  - "BV: Björn Viklund"
