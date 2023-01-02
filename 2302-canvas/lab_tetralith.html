@@ -274,7 +274,7 @@ div.tocify {
 <div id="interactive-session" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Interactive session</h1>
 <p>Start an interactive session with three compute cores for todays lab:</p>
-<pre class="bash"><code>interactive -A snicxxxx-xx-xxx -t 04:00:00 -n 3</code></pre>
+<pre class="bash"><code>interactive -A snic2022-22-1169 -t 04:00:00 -n 3</code></pre>
 <p>Please adjust the requested time depending on what lab you will be working on. After a minute or so you should have gotten your interactive job.</p>
 <div class="boxy boxy-lightbulb">
 <p>Note that your terminal prompt changed from <code>&lt;nsc_username&gt;@tetralith$</code> to something like <code>&lt;nsc_username&gt;@n424$</code> (or another node name), which means that you are now running on one of the compute nodes.</p>
@@ -284,7 +284,7 @@ div.tocify {
 <h1><span class="header-section-number">3</span> UPPMAX singularity container</h1>
 <p>We will use a singularity container (a virtual computer) that mimics the UPPMAX computing environment. Once you have started the singularity container your environment will look exactly as on UPPMAX, and the software used in this workshop will be available through the module system inside the container.
 Use this command to start the singularity container:</p>
-<pre class="bash"><code>singularity shell -B /proj/snicxxxx-xx-xxx/users:/proj/snic2022-22-1124/nobackup -B /proj/snicxxxx-xx-xxx /proj/snicxxxx-xx-xxx/ngsintro.sif</code></pre>
+<pre class="bash"><code>singularity shell -B /proj/snic2022-22-1169/users:/proj/snic2022-22-1124/nobackup -B /proj/snic2022-22-1169 /proj/snic2022-22-1169/ngsintro.sif</code></pre>
 <div class="boxy boxy-lightbulb">
 <p>Your terminal prompt changed to something like <code>&lt;nsc_username&gt;@offline-uppmax$</code>. This means that you have moved into a “virtual computer” that mimics the UPPMAX environment.</p>
 </div>
@@ -307,7 +307,7 @@ cd /proj/snic2022-22-1124/nobackup/&lt;nsc_username&gt;/linux_tutorial</code></p
 <div id="igv" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> IGV</h1>
 <p>To start IGV at NSC type this in the command:</p>
-<pre class="bash"><code>/proj/snicxxxx-xx-xxx/igv/igv.sh</code></pre>
+<pre class="bash"><code>/proj/snic2022-22-1169/igv/igv.sh</code></pre>
 <p>You can use the same command both when running the UPPMAX singularity container and from a normal terminal window at NSC.</p>
 </div>
 <div id="exit-the-uppmax-singularity-container" class="section level1" number="6">
@@ -315,7 +315,7 @@ cd /proj/snic2022-22-1124/nobackup/&lt;nsc_username&gt;/linux_tutorial</code></p
 <p>When you are done with the lab just type exit to close the singularity container:</p>
 <pre class="bash"><code>offline-uppmax$ exit</code></pre>
 <p>All files and folders that you create in /proj/snic2022-22-1124/nobackup/nsc_username/ while running the singularity container can be reached also from outside of the container, in this folder on Tetralith:</p>
-<pre class="bash"><code>/proj/snicxxxx-xx-xxx/users/&lt;nsc_username&gt;/</code></pre>
+<pre class="bash"><code>/proj/snic2022-22-1169/users/&lt;nsc_username&gt;/</code></pre>
 </div>
 
 
