@@ -4,7 +4,7 @@ output_dir: 2302
 # used site-wide wherever uppmax project ids are used
 uppmax_project: snic2022-22-1124
 uppmax_storage: snic2022-22-1124
-nsc_project: snicxxxx-xx-xxx
+nsc_project: snic2022-22-1169
 # uppmax reservation ids. used site-wide
 uppmax_res_1: snic2022-22-1124_1
 uppmax_res_2: snic2022-22-1124_2
