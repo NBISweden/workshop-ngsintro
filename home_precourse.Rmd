@@ -46,7 +46,7 @@ Checking your request and approving your account requires some manual work, so y
 
 # Install tools
 
-## SFTP Browser
+## Filezilla
 
 [![](data/common/filezilla.png)](https://filezilla-project.org/)
 
@@ -56,7 +56,7 @@ When you need to transfer data between the remote cluster and your computer, you
 
 [![](data/common/thinlinc.png)]((https://www.cendio.com/thinlinc/download))
 
-ThinLinc allows graphical connection to UPPMAX. Download and install from [https://www.cendio.com/thinlinc/download](https://www.cendio.com/thinlinc/download). It can be used directly from the browser for most part, but if there are issues, the installed application may be helpful.
+ThinLinc allows graphical connection to UPPMAX. Download and install from https://www.cendio.com/thinlinc/download. It can be used directly from the browser but it is recommended to download and install the client for better copy/paste operation.
 
 ## XQuartz
 
