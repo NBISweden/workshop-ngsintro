@@ -1317,6 +1317,230 @@ tail slurm-XXXX.out
 cat slurm-XXXX.out
 ```
 
+# Nextflow
+
+<div class="boxy boxy-yellow boxy-exclamation">
+You are not required to run anything practically in this section. This is just to read and understand.
+</div>
+
+Everything you have done today and more is easily done using structured pipelines. [Nextflow](https://www.nextflow.io/) is a popular framework for creating bioinformatic pipelines and [nf-core](https://nf-co.re/) is a collection of curated analyses pipelines. Here, we will discuss the steps for analysing our current dataset using the [nf-core rnaseq](https://nf-co.re/rnaseq) pipeline for bulk RNA-Seq. The nf-core website and pipeline specific pages are good sources of information on what the pipeline does and what parameters can be changed.
+
+![](https://raw.githubusercontent.com/nf-core/rnaseq/3.10.1/docs/images/nf-core-rnaseq_metro_map_grey.png)
+
+We need a **samplesheet.csv** to define our samples. In this case, the full size samples are used. For single-end reads, **fastq_2** column is left empty.
+
+```
+sample,fastq_1,fastq_2,strandedness
+ko_1,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222409_1.fq.gz,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222409_2.fq.gz,unstranded
+ko_2,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222410_1.fq.gz,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222410_2.fq.gz,unstranded
+ko_3,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222411_1.fq.gz,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222411_2.fq.gz,unstranded
+wt_1,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222412_1.fq.gz,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222412_2.fq.gz,unstranded
+wt_2,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222413_1.fq.gz,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222413_2.fq.gz,unstranded
+wt_3,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222414_1.fq.gz,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222414_2.fq.gz,unstranded
+```
+
+We need a **params.config** file to define parameters such as input, output, genome, annotation etc.
+
+```
+params.input = "samplesheet.csv"
+params.outdir = "results"
+params.aligner = "star_salmon"
+
+params.fasta = "/sw/data/igenomes/Mus_musculus/Ensembl/GRCm38/Sequence/WholeGenomeFasta/genome.fa"
+params.gtf = "/sw/data/igenomes/Mus_musculus/Ensembl/GRCm38/Annotation/Genes/genes.gtf"
+gene_bed = "/sw/data/igenomes/Mus_musculus/Ensembl/GRCm38/Annotation/Genes/genes.bed"
+star_index = "/sw/data/igenomes/Mus_musculus/Ensembl/GRCm38/Sequence/STARIndex/version2.7.x/"
+```
+
+And lastly we have a **nextflow.sh** which will be our bash script for launching the job.
+
+```{r,chunk.title=TRUE,echo=FALSE,comment="",class.output="sh"}
+cat(paste0('#!/bin/bash
+
+#SBATCH -A ',upid,'
+#SBATCH -p core
+#SBATCH -n 1
+#SBATCH -t 4:00:00
+#SBATCH -J nf-core
+
+module load bioinfo-tools
+module load Nextflow/21.10.6
+module load nf-core/2.1
+NXF_HOME=.
+
+nextflow run nf-core/rnaseq -r 3.7 -c params.config -profile uppmax --project ',upid,' -resume'
+))
+```
+
+Notice that we use `-profile uppmax` since this is run on Uppmax. The job is then submitted by simply running `sbatch nextflow.sh`.
+
+The slurm output from this job looks like this:
+
+```
+Note that NXF_HOME is set to $HOME/.nextflow
+Please change NXF_HOME to a place in your project directory (export NXF_HOME=yourprojectfolder)
+
+N E X T F L O W  ~  version 21.10.6
+Launching `nf-core/rnaseq` [happy_sammet] - revision: e0dfce9af5 [3.7]
+
+
+------------------------------------------------------
+                                        ,--./,-.
+        ___     __   __   __   ___     /,-._.--~'
+  |\ | |__  __ /  ` /  \ |__) |__         }  {
+  | \| |       \__, \__/ |  \ |___     \`-._,-`-,
+                                        `._,._,'
+  nf-core/rnaseq v3.7
+------------------------------------------------------
+Core Nextflow options
+  revision                  : 3.7
+  runName                   : happy_sammet
+  containerEngine           : singularity
+  launchDir                 : /crex/course_data/ngsintro/rnaseq/main_full/nextflow
+  workDir                   : /crex/course_data/ngsintro/rnaseq/main_full/nextflow/work
+  projectDir                : ./assets/nf-core/rnaseq
+  userName                  : royfranc
+  profile                   : uppmax
+  configFiles               : /crex/course_data/ngsintro/rnaseq/main_full/nextflow/assets/nf-core/rnaseq/nextflow.config, /crex/course_data/ngsintro/rnaseq/main_full/nextflow/params.config
+
+Input/output options
+  input                     : samplesheet.csv
+  outdir                    : results
+
+Reference genome options
+  fasta                     : /sw/data/igenomes/Mus_musculus/Ensembl/GRCm38/Sequence/WholeGenomeFasta/genome.fa
+  gtf                       : /sw/data/igenomes/Mus_musculus/Ensembl/GRCm38/Annotation/Genes/genes.gtf
+  save_reference            : true
+  igenomes_base             : /sw/data/igenomes/
+
+Institutional config options
+  config_profile_description: UPPMAX (Rackham) cluster profile provided by nf-core/configs.
+  config_profile_contact    : Phil Ewels (@ewels)
+  config_profile_url        : https://www.uppmax.uu.se/
+
+Max job request options
+  max_cpus                  : 20
+  max_memory                : 970 GB
+  max_time                  : 10d
+
+Generic options
+  tracedir                  : null/pipeline_info
+
+!! Only displaying parameters that differ from the pipeline defaults !!
+------------------------------------------------------
+If you use nf-core/rnaseq for your analysis please cite:
+
+* The pipeline
+  https://doi.org/10.5281/zenodo.1400710
+
+* The nf-core framework
+  https://doi.org/10.1038/s41587-020-0439-x
+
+* Software dependencies
+  https://github.com/nf-core/rnaseq/blob/master/CITATIONS.md
+------------------------------------------------------
+[-        ] process > NFCORE_RNASEQ:RNASEQ:PREPAR... -
+
+[-        ] process > NFCORE_RNASEQ:RNASEQ:PREPAR... -
+[-        ] process > NFCORE_RNASEQ:RNASEQ:PREPAR... -
+[-        ] process > NFCORE_RNASEQ:RNASEQ:PREPAR... -
+[-        ] process > NFCORE_RNASEQ:RNASEQ:PREPAR... -
+[-        ] process > NFCORE_RNASEQ:RNASEQ:PREPAR... -
+[-        ] process > NFCORE_RNASEQ:RNASEQ:INPUT_... -
+[-        ] process > NFCORE_RNASEQ:RNASEQ:CAT_FASTQ -
+[-        ] process > NFCORE_RNASEQ:RNASEQ:FASTQC... -
+[-        ] process > NFCORE_RNASEQ:RNASEQ:FASTQC... -
+[-        ] process > NFCORE_RNASEQ:RNASEQ:ALIGN_... -
+[-        ] process > NFCORE_RNASEQ:RNASEQ:ALIGN_... -
+
+...
+skipping many lines here
+...
+
+[3d/d294eb] process > NFCORE_RNASEQ:RNASEQ:CUSTOM... [100%] 1 of 1 ✔
+[de/a03037] process > NFCORE_RNASEQ:RNASEQ:MULTIQ... [100%] 1 of 1 ✔
+-[nf-core/rnaseq] 6/6 samples passed STAR 5% mapped threshold:
+    90.41%: ko_2
+    89.8%: ko_3
+    87.15%: ko_1
+    89.7%: wt_2
+    90.29%: wt_3
+    91.02%: wt_1
+    ..see pipeline reports for full list
+-
+-[nf-core/rnaseq] Pipeline completed successfully-
+Completed at: 13-Jan-2023 14:39:08
+Duration    : 1h 45m 30s
+CPU hours   : 90.4
+Succeeded   : 207
+```
+
+The output `results` directory looks like this:
+
+```
+results/
+├── fastqc
+├── genome
+│   ├── genes.bed
+│   ├── genome.fa.fai
+│   ├── genome.fa.sizes
+│   ├── genome_genes.gtf
+│   ├── genome.transcripts.fa
+│   ├── index
+│   └── rsem
+├── multiqc
+│   └── star_salmon
+├── pipeline_info
+│   ├── samplesheet.valid.csv
+│   └── software_versions.yml
+├── star_salmon
+│   ├── bigwig
+│   ├── deseq2_qc
+│   ├── dupradar
+│   ├── featurecounts
+│   ├── ko_1
+│   ├── ko_1.markdup.sorted.bam
+│   ├── ko_1.markdup.sorted.bam.bai
+│   ├── ko_2
+│   ├── ko_2.markdup.sorted.bam
+│   ├── ko_2.markdup.sorted.bam.bai
+│   ├── ko_3
+│   ├── ko_3.markdup.sorted.bam
+│   ├── ko_3.markdup.sorted.bam.bai
+│   ├── log
+│   ├── picard_metrics
+│   ├── preseq
+│   ├── qualimap
+│   ├── rseqc
+│   ├── salmon.merged.gene_counts_length_scaled.rds
+│   ├── salmon.merged.gene_counts_length_scaled.tsv
+│   ├── salmon.merged.gene_counts.rds
+│   ├── salmon.merged.gene_counts_scaled.rds
+│   ├── salmon.merged.gene_counts_scaled.tsv
+│   ├── salmon.merged.gene_counts.tsv
+│   ├── salmon.merged.gene_tpm.tsv
+│   ├── salmon.merged.transcript_counts.rds
+│   ├── salmon.merged.transcript_counts.tsv
+│   ├── salmon.merged.transcript_tpm.tsv
+│   ├── salmon_tx2gene.tsv
+│   ├── samtools_stats
+│   ├── stringtie
+│   ├── wt_1
+│   ├── wt_1.markdup.sorted.bam
+│   ├── wt_1.markdup.sorted.bam.bai
+│   ├── wt_2
+│   ├── wt_2.markdup.sorted.bam
+│   ├── wt_2.markdup.sorted.bam.bai
+│   ├── wt_3
+│   ├── wt_3.markdup.sorted.bam
+│   └── wt_3.markdup.sorted.bam.bai
+└── trimgalore
+```
+
+This pipeline takes you from raw reads to counts including read QC, mapping, mapping QC and quantification as well as a complete collated overview of all steps as a MultiQC report (`multiqc/star_salmon/multiqc_report.html`). The `star_salmon/salmon.merged.gene_counts.tsv` is the counts file that you would use for downstream differential gene expression using DESeq2.
+
+For standard analyses steps, it is recommended to use a pipeline as the tools are up-to-date and the analyses steps are reproducible using exactly the same versions of tools.
+
 # Simon's analysis
 
 We had [Simon Andrews](https://www.babraham.ac.uk/science-services/bioinformatics/simon-andrews) from the Babraham institute with us on one of the workshops and he did his own exploration into the dataset from this paper using his tool [SeqMonk](http://www.bioinformatics.babraham.ac.uk/projects/seqmonk/). It's an excellent read and highly recommended. His report is available on the **Contents** page.
