@@ -339,10 +339,10 @@ dahlo@rackham2 work $ echo $PATH
 <p><i class="fas fa-clipboard-list"></i> Run reference_indexer.</p>
 <pre class="bash"><code>Syntax: reference_indexer -r &lt;name of the fasta file you want to index&gt;</code></pre>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023012009595043" aria-expanded="false" aria-controls="acc2023012009595043">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023012011350301" aria-expanded="false" aria-controls="acc2023012011350301">
 </button>
 </p>
-<div id="acc2023012009595043" class="collapse">
+<div id="acc2023012011350301" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ reference_indexer -r 0_ref/ad2.fa</code></pre>
 </div>
@@ -369,10 +369,10 @@ Using this information the program can quickly jump to the start location of eac
 <p><i class="fas fa-clipboard-list"></i> Align reads using <strong>align_reads</strong>, naming the output file <strong>ad2.sam</strong>, placed in the <strong>1_alignment</strong> folder.</p>
 <pre class="bash"><code>Syntax: align_reads -r &lt;reference genome&gt; -i &lt;fastq file with reads&gt; -o &lt;name of the output file&gt;</code></pre>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023012009599758" aria-expanded="false" aria-controls="acc2023012009599758">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023012011350577" aria-expanded="false" aria-controls="acc2023012011350577">
 </button>
 </p>
-<div id="acc2023012009599758" class="collapse">
+<div id="acc2023012011350577" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ align_reads -r 0_ref/ad2.fa -i 0_seq/ad2.fq -o 1_alignment/ad2.sam</code></pre>
 </div>
@@ -392,10 +392,10 @@ Using this information the program can quickly jump to the start location of eac
 <p><i class="fas fa-clipboard-list"></i> The next step is to convert the SAM file to a BAM file. This is more or less just compressing the file, like creating a zip file. To do that we will use the dummy program <strong>sambam_tools</strong>, telling it we want to convert a file to BAM (<strong>-f bam</strong>), which file we want to convert (<strong>-i</strong>), where it should save the resulting BAM file (<strong>-o</strong>). Save the BAM file in the <strong>2_bam</strong> folder and name it <strong>ad2.bam</strong>.</p>
 <pre class="bash"><code>Syntax: sambam_tool -f bam -i &lt;sam file&gt; -o &lt;bam&gt;</code></pre>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023012009590744" aria-expanded="false" aria-controls="acc2023012009590744">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023012011354725" aria-expanded="false" aria-controls="acc2023012011354725">
 </button>
 </p>
-<div id="acc2023012009590744" class="collapse">
+<div id="acc2023012011354725" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ sambam_tool -f bam -i 1_alignment/ad2.sam -o 2_bam/ad2.bam</code></pre>
 </div>
@@ -419,10 +419,10 @@ Using this information the program can quickly jump to the start location of eac
 <p><i class="fas fa-clipboard-list"></i> To sort the BAM file we’ll use the <strong>sambam_tool</strong> again, but specifying a different function, <strong>-f sort</strong> instead. Tell it to store the sorted BAM file in the <strong>3_sorted</strong> folder and name the file <strong>ad2.sorted.bam</strong></p>
 <pre class="bash"><code>Syntax: sambam_tool -f sort -i &lt;unsorted bam file&gt; -o &lt;sorted bam file&gt;</code></pre>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023012009592936" aria-expanded="false" aria-controls="acc2023012009592936">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023012011359452" aria-expanded="false" aria-controls="acc2023012011359452">
 </button>
 </p>
-<div id="acc2023012009592936" class="collapse">
+<div id="acc2023012011359452" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ sambam_tool -f sort -i 2_bam/ad2.bam -o 3_sorted/ad2.sorted.bam</code></pre>
 </div>
@@ -431,10 +431,10 @@ Using this information the program can quickly jump to the start location of eac
 <p><i class="fas fa-clipboard-list"></i> Now when we have a sorted BAM file, we can index it. Use the command</p>
 <pre class="bash"><code>Syntax: sambam_tool -f index -i &lt;sorted bam file&gt;</code></pre>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023012009598990" aria-expanded="false" aria-controls="acc2023012009598990">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023012011359759" aria-expanded="false" aria-controls="acc2023012011359759">
 </button>
 </p>
-<div id="acc2023012009598990" class="collapse">
+<div id="acc2023012011359759" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ sambam_tool -f index -i 3_sorted/ad2.sorted.bam</code></pre>
 </div>
@@ -481,10 +481,10 @@ Using this information the program can quickly jump to the start location of eac
 <p><i class="fas fa-clipboard-list"></i> Tell samtools that you want CRAM output (<strong><code>-C</code></strong>) and specify which reference genome it should use to do the CRAM conversion (<strong><code>-T</code></strong>)</p>
 <pre class="bash"><code>Syntax: samtools view -C -T &lt;reference genome&gt; -o &lt;name of cram file&gt; &lt;bam file to convert&gt;</code></pre>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023012009596157" aria-expanded="false" aria-controls="acc2023012009596157">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023012011358355" aria-expanded="false" aria-controls="acc2023012011358355">
 </button>
 </p>
-<div id="acc2023012009596157" class="collapse">
+<div id="acc2023012011358355" class="collapse">
 <div class="card card-body">
 <pre class="bash"><code>$ samtools view -C -T 0_ref/ad2.fa -o 4_cram/ad2.cram 3_sorted/ad2.sorted.bam</code></pre>
 </div>
