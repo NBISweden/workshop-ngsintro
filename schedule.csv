@@ -4,7 +4,7 @@ date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_y
 ;;10:30;11:45;Intro to Linux;Martin Dahlö;SD,BV,JA,KB,NN;;lab_linux_intro.html;;
 ;;11:45;13:00;Lunch;;;;;;
 ;;13:00;14:00;Intro to Uppmax;Martin Dahlö;;slide_uppmax_intro.pdf;;https://youtu.be/-lFlJbp2LE0;
-;;14:00;17:00;Intro to Uppmax;Martin Dahlö;SD,BV,JA,NN;;lab_uppmax_intro.html;;
+;;14:00;17:00;Intro to Uppmax;Martin Dahlö;SD,BV,JA,NN,JB;;lab_uppmax_intro.html;;
 07/02/2023;;09:00;09:30;File types in Bioinformatics;Martin Dahlö;;slide_linux_filetypes.pdf;;https://youtu.be/Xue8f-eh_bo;
 ;;09:30;11:00;File types in Bioinformatics;Martin Dahlö;SD,BV,LV,PA,KB,NN;;lab_linux_filetypes.html;;
 ;;11:00;11:45;Better terminal experience;Martin Dahlö;BV,KL,LV,PA,KB,NN;slide_qol_termexp.pdf;;https://youtu.be/LizbJLhv_OA;
