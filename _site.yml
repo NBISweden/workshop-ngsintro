@@ -15,20 +15,27 @@ uppmax_res_5: snic2022-22-1124_5
 # one or more separated by commas or semicolon. online doesn't display any location info.
 location: uppsala,lund,umea
 assistants:
- - "AA: Adam Ameur"
+ - "AJ: Anna Johansson"
  - "BV: Björn Viklund"
  - "DA: Dag Ahren"
- - "DE: Diana Ekman"
- - "JN: Jon Ander Novella"
+ - "FB: Franziska Bonath"
+ - "JH: Jason Hill"
+ - "JA: Juliana Assis"
  - "KL: Katarina Lejonlid"
+ - "KB: Kristina Benevides"
+ - "LK: Linda Köhn"
+ - "LV: Louella Vasquez"
  - "MD: Martin Dahlö"
+ - "MG: Maxime Garcia"
  - "ML: Malin Larsson"
  - "MM: Markus Mayrhofer"
- - "NR: Nima Rafati"
+ - "NN: Nina Norgren"
  - "OVP: Olga Vinnere Pettersson"
+ - "PA: Prasoon Agarwal"
  - "RF: Roy Francis"
  - "VVH: Vincent van Hoef"
-
+ - "SD: Sebastian DiLorenzo"
+schedule_message: "Coffee breaks are planned for approximately 10:00 and 14:30 every day."
 favicon: assets/favicon.png
 exclude: ["docs","README.md","schedule.csv","LICENSE","LICENSE.md","scripts","tmprepo"]
 navbar:

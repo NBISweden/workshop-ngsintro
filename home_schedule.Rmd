@@ -15,6 +15,8 @@ library(dplyr)
 library(kableExtra)
 library(formattable)
 library(yaml)
+
+schedule_message <- yaml::read_yaml("_site.yml")$schedule_message
 ```
 
 ```{r,eval=TRUE,include=FALSE}
@@ -51,10 +53,11 @@ s <- s %>%
 if(all(is.na(s$assistant)) | all(s$assistant=="")) s$assistant <- NULL
 ```
 
-<!-- change notice. comment this out when finalised -->
-<div class="boxy boxy-lightbulb">
-Coffee breaks are planned for approximately 10:15 and 15:00 every day.
-</div>
+```{r,echo=FALSE,results='asis'}
+if(!is.null(schedule_message) & nchar(schedule_message)!=0){
+  cat(paste0('<div class="boxy boxy-lightbulb">\n',schedule_message,'\n</div>'))
+}
+```
 
 <div class="table-schedule">
 
@@ -68,7 +71,7 @@ s %>%
   dplyr::select(-date,-room) %>%
   setNames(cnames[1:ncol(.)]) %>%
   kable(format="html",escape=FALSE) %>%
-  kable_styling(bootstrap_options=c("hover","condensed"),position="center",full_width=TRUE) %>%
+  kable_styling(bootstrap_options=c("hover","condensed","responsive"),position="center",full_width=TRUE) %>%
   column_spec(1,width="7em") %>%
   column_spec(2,width="16em") %>%
   pack_rows(index=r,label_row_css="background:white;",escape=F,indent=FALSE)
