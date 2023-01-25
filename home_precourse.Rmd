@@ -46,12 +46,6 @@ Checking your request and approving your account requires some manual work, so y
 
 # Install tools
 
-## Filezilla
-
-[![](data/common/filezilla.png)](https://filezilla-project.org/)
-
-When you need to transfer data between the remote cluster and your computer, you can use the tools SCP or SFTP through the terminal. Windows users can use the SFTP browser available with MobaXterm. If you prefer a GUI to upload and download files from the remote cluster, we recommend installing [FileZilla](https://filezilla-project.org/).
-
 ## ThinLinc
 
 [![](data/common/thinlinc.png)]((https://www.cendio.com/thinlinc/download))
@@ -64,11 +58,17 @@ ThinLinc allows graphical connection to UPPMAX. Download and install from https:
 
 Mac users will need to download and install [XQuartz](https://www.xquartz.org/) for X11 forwarding. *ie*; to forward remotely opened windows to local machine.
 
-## MobaXterm(Optional)
+## MobaXterm (Optional)
 
 [![](data/common/mobaxterm.png)](http://mobaxterm.mobatek.net)
 
 If you are on a Windows system, and you want to open graphical applications from the terminal, we recommend [MobaXterm](http://mobaxterm.mobatek.net). It is recommended that you INSTALL the program and not use the portable version. MobaXterm also has an integrated SFTP file browser.
+
+## Filezilla (Optional)
+
+[![](data/common/filezilla.png)](https://filezilla-project.org/)
+
+When you need to transfer data between the remote cluster and your computer, you can use the tools SCP or SFTP through the terminal. Windows users can use the SFTP browser available with MobaXterm. If you prefer a GUI to upload and download files from the remote cluster, we recommend installing [FileZilla](https://filezilla-project.org/).
 
 # Connect to UPPMAX
 
