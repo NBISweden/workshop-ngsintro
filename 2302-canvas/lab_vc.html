@@ -352,9 +352,9 @@ If you connect to UPPMAX via ThinLinc you don’t have to crete a local workspac
 <p>Where <code>username</code> should be replaced with your username.<br/>
 If no jobs are listed you should allocate a job for this lab. If you already have an active job allocation please proceed to <strong>Connect to the node</strong> below.<br/>
 Use this code to allocate a job on day 1 of variant-calling:</p>
-<pre class="bash"><code>salloc -A snic2022-22-1124 -t 04:00:00 -p core -n 1 --no-shell --reservation=snic2022-22-1124_3</code></pre>
+<pre class="bash"><code>salloc -A snic2022-22-1124 -t 04:00:00 -p core -n 1 --no-shell</code></pre>
 <p>Use this code to allocate a job on day 2 of variant-calling:</p>
-<pre class="bash"><code>salloc -A snic2022-22-1124 -t 04:00:00 -p core -n 1 --no-shell --reservation=snic2022-22-1124_4</code></pre>
+<pre class="bash"><code>salloc -A snic2022-22-1124 -t 04:00:00 -p core -n 1 --no-shell</code></pre>
 <p>Once your job allocation has been granted (should not take long) please check the allocation again using:</p>
 <pre class="bash"><code>squeue -u username</code></pre>
 <p>You should now see that you have an active job allocation. The node name for your job is listed under the nodelist header.<br/>
@@ -594,10 +594,10 @@ You also need to index each output bam file:</p>
 <p>Please check what output file was generated this time.
 If you run out of time you can click below to get paths to precomputed bam files.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023012709538456" aria-expanded="false" aria-controls="acc2023012709538456">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023012713001549" aria-expanded="false" aria-controls="acc2023012713001549">
 </button>
 </p>
-<div id="acc2023012709538456" class="collapse">
+<div id="acc2023012713001549" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -626,10 +626,10 @@ First use pwd to check if you are standing in the correct directory:</p>
 <p>Please replace <code>sample</code> with the real sample names.</p>
 <p>If you run out of time you can click below to get paths to the precomputed g.vcf files.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023012709530660" aria-expanded="false" aria-controls="acc2023012709530660">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023012713004091" aria-expanded="false" aria-controls="acc2023012713004091">
 </button>
 </p>
-<div id="acc2023012709530660" class="collapse">
+<div id="acc2023012713004091" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -664,10 +664,10 @@ Then run GATK’s <code>GenoteypeGVC</code> to generate a vcf file:</p>
 -O cohort.vcf</code></pre>
 If you run out of time you can click below to get paths to the precomputed cohort.g.vcf and cohort.vcf files.
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023012709531528" aria-expanded="false" aria-controls="acc2023012709531528">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023012713004713" aria-expanded="false" aria-controls="acc2023012713004713">
 </button>
 </p>
-<div id="acc2023012709531528" class="collapse">
+<div id="acc2023012713004713" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -810,10 +810,10 @@ gatk --java-options -Xmx7g VariantFiltration \
 <h4>Precomputed files</h4>
 If you run out of time, please click below to get the path to precomputed bam and vcf files for the GATK’s best practices section.
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023012709534202" aria-expanded="false" aria-controls="acc2023012709534202">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023012713010273" aria-expanded="false" aria-controls="acc2023012713010273">
 </button>
 </p>
-<div id="acc2023012709534202" class="collapse">
+<div id="acc2023012713010273" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -880,10 +880,10 @@ done
 <pre class="bash"><code>./joint_genotyping.sbatch</code></pre>
 <p>If you would like more help with creating the sbatch script, please look at our example solution:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023012709534287" aria-expanded="false" aria-controls="acc2023012709534287">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023012713015360" aria-expanded="false" aria-controls="acc2023012713015360">
 </button>
 </p>
-<div id="acc2023012709534287" class="collapse">
+<div id="acc2023012713015360" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -936,10 +936,10 @@ gatk --java-options -Xmx7g GenotypeGVCFs \
 <h2>GATK best practices</h2>
 <p>Now please try to incorporate the additional steps from <a href="#gatk_bp">GATK’s best practices</a> into the workflow. If you run out of time you can sneak peek at our example solution below.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023012709536583" aria-expanded="false" aria-controls="acc2023012709536583">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023012713018136" aria-expanded="false" aria-controls="acc2023012713018136">
 </button>
 </p>
-<div id="acc2023012709536583" class="collapse">
+<div id="acc2023012713018136" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
