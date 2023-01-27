@@ -10,8 +10,6 @@ subtitle: ""
 library(yaml)
 upid <- yaml::read_yaml("_site.yml")$uppmax_project
 nscid <- yaml::read_yaml("_site.yml")$nsc_project
-upres3 <- yaml::read_yaml("_site.yml")$uppmax_res_3
-upres4 <- yaml::read_yaml("_site.yml")$uppmax_res_4
 ```
 
 ```{css,include=FALSE}

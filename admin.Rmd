@@ -205,7 +205,7 @@ When opening it from the terminal (`gedit &`), it was not able to connect to a d
 This is to specify where the **home directory** in MobaXTerm is located in the computer’s file system. In **Settings > Configuration**, set the persistent home directory to a suitable folder. Restart MobaXTerm. 
 
 
-## Typing $ on a Swedish keyboard
+## Typing `$` on a Swedish keyboard
 
 Press <kbd>AltGr+4</kbd>.
 

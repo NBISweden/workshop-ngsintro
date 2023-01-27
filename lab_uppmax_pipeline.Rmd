@@ -8,7 +8,6 @@ title:  'UPPMAX Pipeline'
 ```{r,eval=TRUE,include=FALSE}
 library(yaml)
 upid <- yaml::read_yaml("_site.yml")$uppmax_project
-upres <- yaml::read_yaml("_site.yml")$uppmax_res_1
 ```
 
 <div class="boxy boxy-yellow boxy-exclamation">
@@ -48,7 +47,7 @@ $ ssh -Y r292
 If the list is empty you can run the allocation command again and it should be in the list:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("$ salloc -A ",upid," -t 03:30:00 -p core -n 1 --no-shell --reservation=",upres," &"))
+cat(paste0("$ salloc -A ",upid," -t 03:30:00 -p core -n 1 --no-shell"))
 ```
 
 <i class="fas fa-lightbulb"></i> There is a UPPMAX specific tool called `jobinfo` that supplies the same kind of information as `squeue` that you can use as well (`$ jobinfo -u username`).

@@ -8,7 +8,6 @@ title:  "Connecting to UPPMAX"
 ```{r,eval=TRUE,include=FALSE}
 library(yaml)
 upid <- yaml::read_yaml("_site.yml")$uppmax_project
-upres <- yaml::read_yaml("_site.yml")$uppmax_res_1
 ```
 
 <div class="boxy boxy-yellow boxy-exclamation">

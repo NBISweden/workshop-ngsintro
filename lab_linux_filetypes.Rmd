@@ -8,7 +8,6 @@ title: 'Filetypes'
 ```{r,eval=TRUE,include=FALSE}
 library(yaml)
 upid <- yaml::read_yaml("_site.yml")$uppmax_project
-upres <- yaml::read_yaml("_site.yml")$uppmax_res_2
 ```
 
 <div class="boxy boxy-yellow boxy-exclamation">
@@ -24,7 +23,7 @@ The first step of this lab is to open a ssh connection to UPPMAX. Please go to t
 Usually you would do most of the work in this lab directly on one of the login nodes at UPPMAX, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("$ salloc -A ",upid," -t 07:00:00 -p core -n 1 --no-shell --reservation=",upres," &"))
+cat(paste0("$ salloc -A ",upid," -t 07:00:00 -p core -n 1 --no-shell &"))
 ```
 
 check which node you got (replace **username** with your UPPMAX username)

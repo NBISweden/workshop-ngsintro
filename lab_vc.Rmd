@@ -9,8 +9,6 @@ subtitle: From reads to short variants
 ```{r,eval=TRUE,include=FALSE}
 library(yaml)
 upid <- yaml::read_yaml("_site.yml")$uppmax_project
-upres3 <- yaml::read_yaml("_site.yml")$uppmax_res_3
-upres4 <- yaml::read_yaml("_site.yml")$uppmax_res_4
 ```
 
 ```{css,include=FALSE}
@@ -120,11 +118,11 @@ Where `username` should be replaced with your username.<br/>
 If no jobs are listed you should allocate a job for this lab. If you already have an active job allocation please proceed to **Connect to the node** below.<br/>
 Use this code to allocate a job on day 1 of variant-calling:
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('salloc -A ',upid,' -t 04:00:00 -p core -n 1 --no-shell --reservation=',upres3))
+cat(paste0('salloc -A ',upid,' -t 04:00:00 -p core -n 1 --no-shell'))
 ```
 Use this code to allocate a job on day 2 of variant-calling:
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('salloc -A ',upid,' -t 04:00:00 -p core -n 1 --no-shell --reservation=',upres4))
+cat(paste0('salloc -A ',upid,' -t 04:00:00 -p core -n 1 --no-shell'))
 ```
 Once your job allocation has been granted (should not take long) please check the allocation again using:
 ```bash

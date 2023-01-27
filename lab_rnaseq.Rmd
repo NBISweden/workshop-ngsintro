@@ -9,8 +9,6 @@ subtitle: "NGS workflow"
 ```{r,include=FALSE}
 library(yaml)
 upid <- yaml::read_yaml("_site.yml")$uppmax_project
-upres4 <- yaml::read_yaml("_site.yml")$uppmax_res_4
-upres5 <- yaml::read_yaml("_site.yml")$uppmax_res_5
 path_data <- "/sw/courses/ngsintro/rnaseq"
 path_project <- paste0("/proj/",upid,"/nobackup")
 path_project_rnaseq <- paste0(path_project,"/username/rnaseq")
@@ -112,16 +110,10 @@ Book a node.
 
 For the RNA-Seq part of the course, we will work on the Rackham cluster. A standard compute node on cluster Rackham has 128 GB of RAM and 20 cores. We will use 1 core per person for this session. Therefore, each core gives you 6.4 GB of RAM. The code below is valid to run at the start of the day. If you are running it in the middle of a day, you need to decrease the time (`-t`). Do not run this twice and also make sure you are not running computations on a login node.
 
-Book resources for RNA-Seq day 1.
+Book compute resources for RNA-Seq lab.
 
 ```{r,comment="",chunk.title=TRUE,class.output="sh",echo=FALSE}
-cat(paste0("salloc -A ",upid," -t 03:00:00 -p core -n 1 --no-shell --reservation=",upres4))
-```
-
-Book resources for RNA-Seq day 2.
-
-```{r,comment="",chunk.title=TRUE,class.output="sh",echo=FALSE}
-cat(paste0("salloc -A ",upid," -t 04:00:00 -p core -n 1 --no-shell --reservation=",upres5))
+cat(paste0("salloc -A ",upid," -t 03:00:00 -p core -n 1 --no-shell"))
 ```
 
 Check allocation. <i class="fas fa-exclamation-circle"></i> Remember to replace **username**.
