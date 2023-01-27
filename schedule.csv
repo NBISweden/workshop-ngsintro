@@ -13,14 +13,14 @@ date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_y
 ;;14:00;15:00;Advanced Bash;Martin Dahlö;;slide_linux_advanced.pdf;;https://youtu.be/rGVjdp7L1IM;
 ;;15:00;17:00;Advanced Bash;Martin Dahlö;BV,KL,LV,PA,KB,NN;;lab_linux_advanced.html;;
 08/02/2023;;09:00;10:15;NGS tech & challenges;Olga Vinnere Petterson;;slide_sequencing.pdf;;https://youtu.be/IckQGJ60NnM;
-;;10:15;11:00;NGS tech & challenges;Franziska Bonath / Maxime Garcia;;;;https://youtu.be/iFcq_FEAtkI;
+;;10:15;11:00;NGS tech & challenges;Olga Vinnere Petterson;;;;https://youtu.be/iFcq_FEAtkI;
 ;;11:00;11:45;NGS Pipelines;Franziska Bonath / Maxime Garcia;;slide_ngs_pipelines.pdf;;https://youtu.be/29z9JxrS5hg;
 ;;12:00;13:00;Lunch;;;;;;
 ;;13:00;14:00;Variant-calling workflow;Markus Mayrhofer;;slide_vc.pdf;;https://youtu.be/OO8CHGzi6pQ;
-;;14:00;17:00;Variant-calling workflow;Markus Mayrhofer;AJ,ML,LV,KB,NN;;lab_vc.html;;
+;;14:00;17:00;Variant-calling workflow;Markus Mayrhofer;AJ,ML,LV,PP,KB,NN;;lab_vc.html;;
 ;;18:00;21:00;Course Dinner;;;;;;
 09/02/2023;;09:00;09:30;Variant-calling workflow;Markus Mayrhofer;;;;https://youtu.be/b7VV6e5q6ss;
-;;09:30;11:45;Variant-calling workflow;Markus Mayrhofer;AJ,ML,LV,KB,NN,LK;;;;
+;;09:30;11:45;Variant-calling workflow;Markus Mayrhofer;AJ,ML,LV,PP,KB,NN,LK;;;;
 ;;11:45;13:00;Lunch;;;;;;
 ;;13:00;14:00;RNA-Seq workflow;Dag Ahren / Roy Francis;;slide_rnaseq.html;;https://youtu.be/uKebwpW0R28;
 ;;14:00;17:00;RNA-Seq workflow;Dag Ahren / Roy Francis;JH,ML,PA,KB,NN,LK;;lab_rnaseq.html;;
