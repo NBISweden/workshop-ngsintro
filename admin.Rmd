@@ -45,6 +45,30 @@ Sample output
   23185119      core   (null)    wingf  R    2:53:40      1 r479
 ```
 
+## Jobs per user
+
+Sorted list of jobs per user
+
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0("squeue -A ",upid," | tr -s ' ' | cut -d' ' -f5 | sort | uniq -c | sort -k1"))
+```
+
+Sample output
+
+```
+      1 tami
+      1 tommal
+      1 USER
+      1 valeriia
+      1 vioww
+      1 vishnupk
+      1 ylvafr
+      2 mehran96
+      2 miika
+      3 mariasve
+
+```
+
 ## Core usage
 
 Total number of cores used on a project
