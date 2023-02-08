@@ -45,6 +45,30 @@ Sample output
   23185119      core   (null)    wingf  R    2:53:40      1 r479
 ```
 
+## Jobs per user
+
+Sorted list of jobs per user
+
+```{r,echo=FALSE,comment="",class.output="bash"}
+cat(paste0("squeue -A ",upid," | tr -s ' ' | cut -d' ' -f5 | sort | uniq -c | sort -k1"))
+```
+
+Sample output
+
+```
+      1 tami
+      1 tommal
+      1 USER
+      1 valeriia
+      1 vioww
+      1 vishnupk
+      1 ylvafr
+      2 mehran96
+      2 miika
+      3 mariasve
+
+```
+
 ## Core usage
 
 Total number of cores used on a project
@@ -167,11 +191,11 @@ finger username
 - Open the Xquartz terminal and connect to Uppmax 
 - In my recent macos (10.xxx) , x-forwarding only works if I explicitly run the Xquartz terminal
 
-`ssh -Y username@rackham.uppmax.uu.se`
+`ssh -XY username@rackham.uppmax.uu.se`
 
 Also use this when logging in to the compute node!
 
-`ssh -Y username@node`
+`ssh -XY username@node`
 
 **Windows users**
 
@@ -183,7 +207,7 @@ Type `xeyes` in the terminal.
 
 ### Open .html documents on Rackham
 
-First ensure X-forwarding works, then run firefox `--no-remote filename.html`
+First ensure X-forwarding works, then run `firefox --no-remote filename.html`
 
 ## Data transfer
 
@@ -192,6 +216,11 @@ First ensure X-forwarding works, then run firefox `--no-remote filename.html`
 Sometimes students have problems to download files with SCP when there is a `*` in the end of the line. For example; `scp user@rackham.uppmax.uu.se:/proj/bla/HG00097.bam* .`. It needs to be changed to `scp user@rackham.uppmax.uu.se:/proj/bla/HG00097.bam\* .`.
 
 ## Thinlinc
+
+### Login
+
+When logging in through an installed client, **username/password** seems to work. When logging in through the browser, **username/password+2FA** may be required.
+
 ### Minimize the ThinLinc window
 
 On a  Mac, press <kbd>Fn+F8</kbd>, then select: Minimize window. 
