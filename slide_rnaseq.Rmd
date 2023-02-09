@@ -72,13 +72,12 @@ class: spaced
 ???
 
 - Central dogma of molecular biology. DNA -> RNA -> Protein.
-- We have gene models to explain organisation of the DNA into functional units.
-- Very tiny portion of the genome transcribes to RNA.
-- There are many types of RNA. Commonly protein coding RNA or mRNA. There are tRNA, sRNA, miRNA, siRNA, lincRNA etc.
+- We have gene models to describe the organisation of a genome into functional units.
+- Very tiny portion of the genome is transcribed into RNA.
+- There are many types of RNA. Commonly protein coding RNA, also called mRNA. There are tRNA, sRNA, miRNA, siRNA, lincRNA, piRNA, snRNA etc.
 - What is the most abundant RNA? rRNA.
-- Why are we interested in RNA? While DNA is constant in all cells, expressed RNA varies from cell to cell and from time to time.
-- When we say RNA sequencing, what we sequencing?. For most part we are converting RNA to DNA and sequencing the DNA just like regular DNA sequencing.
-- Gene model
+- While DNA is mostly considered constant in all cells for an organism, expressed RNA varies from cell to cell and from time to time.
+- When we say RNA sequencing, we are not sequencing RNA molecules directly. RNA is first converted to DNA through reverse transcription followed by regular DNA sequencing.
 
 ---
 name: applications
