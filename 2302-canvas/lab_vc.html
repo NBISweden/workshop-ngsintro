@@ -594,10 +594,10 @@ You also need to index each output bam file:</p>
 <p>Please check what output file was generated this time.
 If you run out of time you can click below to get paths to precomputed bam files.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023020815303632" aria-expanded="false" aria-controls="acc2023020815303632">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023020907372709" aria-expanded="false" aria-controls="acc2023020907372709">
 </button>
 </p>
-<div id="acc2023020815303632" class="collapse">
+<div id="acc2023020907372709" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -626,10 +626,10 @@ First use pwd to check if you are standing in the correct directory:</p>
 <p>Please replace <code>sample</code> with the real sample names.</p>
 <p>If you run out of time you can click below to get paths to the precomputed g.vcf files.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023020815304066" aria-expanded="false" aria-controls="acc2023020815304066">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023020907378444" aria-expanded="false" aria-controls="acc2023020907378444">
 </button>
 </p>
-<div id="acc2023020815304066" class="collapse">
+<div id="acc2023020907378444" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -664,10 +664,10 @@ Then run GATK’s <code>GenoteypeGVC</code> to generate a vcf file:</p>
 -O cohort.vcf</code></pre>
 If you run out of time you can click below to get paths to the precomputed cohort.g.vcf and cohort.vcf files.
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023020815305362" aria-expanded="false" aria-controls="acc2023020815305362">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023020907373056" aria-expanded="false" aria-controls="acc2023020907373056">
 </button>
 </p>
-<div id="acc2023020815305362" class="collapse">
+<div id="acc2023020907373056" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -770,7 +770,7 @@ sh
 <ol style="list-style-type: decimal">
 <li>The variant quality score recalibration (VQSR) method uses machine learning to identify variants that are likely to be real. This is the best method if you have a lot of data, for example one whole genome sequence sample or several whole exome samples.<br />
 </li>
-<li>If you have less data you can use hard filters as described <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360035531112?id=2806#2" target="_blank">here</a>.</li>
+<li>If you have less data you can use hard filters as described <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360035531112?id=2806#2" target="_blank">here</a>. A description of the hard filters can be found <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360035890471-Hard-filtering-germline-short-variants" target="_blank">here</a>.</li>
 </ol>
 <p>Since we have very little data we will use hard filters. The parameters are slightly different for SNVs and INDELs, so you need to first select all SNVs using <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037225432-SelectVariants" target="_blank">SelectVariants</a> and filter them using <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037226192-VariantFiltration" target="_blank">VariantFiltration</a> with the parameters suggested for SNVs. Then select all INDELs and filter them with the parameters suggested for INDELs. Finally merge the SNVs and INDELs to get all variants in one file using <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037226612-MergeVcfs-Picard-" target="_blank">MergeVCFs</a>.</p>
 <p>Example solution for filtering SNVs:</p>
@@ -810,10 +810,10 @@ gatk --java-options -Xmx7g VariantFiltration \
 <h4>Precomputed files</h4>
 If you run out of time, please click below to get the path to precomputed bam and vcf files for the GATK’s best practices section.
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023020815302825" aria-expanded="false" aria-controls="acc2023020815302825">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023020907376947" aria-expanded="false" aria-controls="acc2023020907376947">
 </button>
 </p>
-<div id="acc2023020815302825" class="collapse">
+<div id="acc2023020907376947" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -880,10 +880,10 @@ done
 <pre class="bash"><code>./joint_genotyping.sbatch</code></pre>
 <p>If you would like more help with creating the sbatch script, please look at our example solution:</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023020815308561" aria-expanded="false" aria-controls="acc2023020815308561">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023020907378967" aria-expanded="false" aria-controls="acc2023020907378967">
 </button>
 </p>
-<div id="acc2023020815308561" class="collapse">
+<div id="acc2023020907378967" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
@@ -936,10 +936,10 @@ gatk --java-options -Xmx7g GenotypeGVCFs \
 <h2>GATK best practices</h2>
 <p>Now please try to incorporate the additional steps from <a href="#gatk_bp">GATK’s best practices</a> into the workflow. If you run out of time you can sneak peek at our example solution below.</p>
 <p>
-<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023020815308873" aria-expanded="false" aria-controls="acc2023020815308873">
+<button class="btn btn-sm btn-primary btn-collapse btn-collapse-normal collapsed" type="button" data-toggle="collapse" data-target="#acc2023020907389002" aria-expanded="false" aria-controls="acc2023020907389002">
 </button>
 </p>
-<div id="acc2023020815308873" class="collapse">
+<div id="acc2023020907389002" class="collapse">
 <div class="card card-body">
 <div class="chunk-title-parent">
 <div class="chunk-title small">
