@@ -373,9 +373,9 @@ img, video, iframe {
 /* logo every slide top right */
 .remark-slide-content:before {
   content: url(logo.svg);
-  width: 60px;
   float: right;
-  margin-top: 19px;
+  margin-top: 10px;
+  transform: scale(0.6);
 }
 
 /* image size classes */
