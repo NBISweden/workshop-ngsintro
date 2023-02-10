@@ -26,5 +26,5 @@ date;room;start_time;end_time;topic;teacher;assistant;link_slide;link_lab;link_y
 ;;14:00;17:00;RNA-Seq workflow;Dag Ahren / Roy Francis;JH,ML,PA,KB,NN,LK;;lab_rnaseq.html;;
 10/02/2023;;09:00;11:45;RNA-Seq workflow;Dag Ahren / Roy Francis;JH,VVH,PA,NN,LK;;;;
 ;;11:45;13:00;Lunch;;;;;;
-;;13:00;14:00;Data management practices;Elin Kronander / Stephan Nylinder;;;;;
+;;13:00;14:00;Data management practices;Elin Kronander / Stephan Nylinder;;slide_data_management.pdf;;;
 ;;14:00;14:15;NBIS;Dag Ahrén / Björn Nystedt;;slide_nbis.pdf;;;
