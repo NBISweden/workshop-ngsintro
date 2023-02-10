@@ -1119,10 +1119,10 @@ Copy two BAM files (one from each experimental group, for example; SRR3222409-19
 <i class="fas fa-exclamation-circle"></i> Remember to replace **username**.
 
 ```{r,comment="",chunk.title=TRUE,class.output="sh",echo=FALSE}
-cat(paste0("scp username@rackham.uppmax.uu.se:",path_project,"/rnaseq/username/3_mapping/SRR3222409-19.bam ./\n"))
-cat(paste0("scp username@rackham.uppmax.uu.se:",path_project,"/rnaseq/username/3_mapping/SRR3222409-19.bam.bai ./\n"))
-cat(paste0("scp username@rackham.uppmax.uu.se:",path_project,"/rnaseq/username/3_mapping/SRR3222412-19.bam ./\n"))
-cat(paste0("scp username@rackham.uppmax.uu.se:",path_project,"/rnaseq/username/3_mapping/SRR3222412-19.bam.bai ./\n"))
+cat(paste0("scp username@rackham.uppmax.uu.se:",path_project,"/username/rnaseq/3_mapping/SRR3222409-19.bam ./\n"))
+cat(paste0("scp username@rackham.uppmax.uu.se:",path_project,"/username/rnaseq/3_mapping/SRR3222409-19.bam.bai ./\n"))
+cat(paste0("scp username@rackham.uppmax.uu.se:",path_project,"/username/rnaseq/3_mapping/SRR3222412-19.bam ./\n"))
+cat(paste0("scp username@rackham.uppmax.uu.se:",path_project,"/username/rnaseq/3_mapping/SRR3222412-19.bam.bai ./\n"))
 ```
 
 Alternatively, you can use an SFTP browser like [Filezilla](https://filezilla-project.org/) or [Cyberduck](https://cyberduck.io/) for a GUI interface. Windows users can also use the MobaXterm SFTP file browser to drag and drop.
