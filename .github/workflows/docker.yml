@@ -12,6 +12,12 @@ jobs:
   rmd-render-job:
     runs-on: ubuntu-18.04
     steps:
+      - name: Set time zone  
+        uses: szenius/set-timezone@v1.0
+        with:
+          timezoneLinux: "Europe/Stockholm"
+          timezoneMacos: "Europe/Stockholm"
+          timezoneWindows: "W. Europe Standard Time"
       - name: Checkout
         uses: actions/checkout@v2
       - name: Pull image
