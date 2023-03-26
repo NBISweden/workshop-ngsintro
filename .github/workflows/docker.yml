@@ -1,8 +1,8 @@
 name: build
 on:
   push:
-    branches-ignore:
-      - gh-pages
+    branches:
+      - master
 env:
   REGISTRY: ghcr.io
   ORG: nbisweden
