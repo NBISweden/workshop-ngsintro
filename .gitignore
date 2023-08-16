@@ -3,3 +3,5 @@
 libs/
 *_files/
 *.html
+.DS_Store
+
