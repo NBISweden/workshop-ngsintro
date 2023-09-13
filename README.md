@@ -20,7 +20,7 @@ git push origin
 
 If you are not added as a collaborator, first fork this repo to your account, then clone it locally, make changes, commit, push to your repo, then submit a pull request to this repo.
 
-:exclamation: When updating repo for a new course, change `output_dir: XXXX` in `_site.yml` as the first thing, so that old rendered files are not overwritten.
+:exclamation: When updating repo for a new course, change `output_dir: XXXX` in `_quarto.yml` as the first thing, so that old rendered files are not overwritten.
 
 :exclamation: Do not push any rendered .html files or intermediates.
 

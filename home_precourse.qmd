@@ -1,0 +1,95 @@
+---
+title: "Precourse"
+subtitle: "These are steps to be completed before the workshop"
+date: ""
+toc: false
+sidebar: false
+format: html
+---
+
+```{r}
+#| include: false
+library(yaml)
+library(here)
+upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
+upstore <- yaml::read_yaml(here("_quarto.yml"))$uppmax_storage
+```
+
+## Create UPPMAX account
+
+Remote computing cluster UPPMAX will be use for data analyses. A SUPR/NAISS account is needed to use these resources.
+
+If you do not already have one, create an account at [`https://supr.naiss.se`](https://supr.naiss.se).
+
+![](assets/images/supr-login.png){width="70%"}
+
+Log in to [SUPR/NAISS](https://supr.naiss.se/) and request membership to the project ID: `**`r paste0(upid)`**`.
+
+![](assets/images/supr-request.png){width="70%"}
+
+![](assets/images/supr-projects.png){width="70%"}
+
+Once you are accepted to a project, you should see that project listed under your active projects.
+
+Finally you need to request login accounts to NSC and UPPMAX. These are the accounts you use to log in to the actual computers, so they are not the same as your SUPR account. Login to SUPR and go to the Accounts page. Under the **Possible Resource Account Requests** heading click on **Request Account on Tetralith @ NSC** and **Request Account on Rackham @ UPPMAX** button and confirm it on the next page. If either of them are missing from this page, it could be because you already have a login account created (only 1 account per person allowed), or that you have not yet gotten your project memberships approved.
+
+![](assets/images/supr-tetralith.png){width="70%"}
+
+Checking your request and approving your account requires some manual work, so you might have to wait for some time (up to a working day) before the next step. When the account is ready to be created, you will receive an email to your registered email address (shown in your SUPR contact information) with information on how to proceed. You will get a URL that you use to choose the password (within seven days). When that has been done, the account ready for use within 15 minutes and you can then login using your chosen password.
+
+::: {.callout-note}
+You will get one username & password for the account on UPPMAX, and one username and password for the account on NSC. Please keep track of both, we will tell you when to use which account during the workshop.
+:::
+
+## Install tools
+
+### ThinLinc
+
+[![](assets/images/thinlinc.png){height="50px"}]((https://www.cendio.com/thinlinc/download))
+
+ThinLinc allows graphical connection to UPPMAX. Download and install from https://www.cendio.com/thinlinc/download. It can be used directly from the browser but it is recommended to download and install the client for better copy/paste operation.
+
+### XQuartz
+
+[![](assets/images/xquartz.png){height="60px"}](https://www.xquartz.org/)
+
+Mac users will need to download and install [XQuartz](https://www.xquartz.org/) for X11 forwarding. *ie*; to forward remotely opened windows to local machine.
+
+### MobaXterm (Optional)
+
+[![](assets/images/mobaxterm.png){height="60px"}](http://mobaxterm.mobatek.net)
+
+If you are on a Windows system, and you want to open graphical applications from the terminal, we recommend [MobaXterm](http://mobaxterm.mobatek.net). It is recommended that you INSTALL the program and not use the portable version. MobaXterm also has an integrated SFTP file browser.
+
+### Filezilla (Optional)
+
+[![](assets/images/filezilla.png){height="60px"}](https://filezilla-project.org/)
+
+When you need to transfer data between the remote cluster and your computer, you can use the tools SCP or SFTP through the terminal. Windows users can use the SFTP browser available with MobaXterm. If you prefer a GUI to upload and download files from the remote cluster, we recommend installing [FileZilla](https://filezilla-project.org/).
+
+## Connect to UPPMAX
+
+See "Connecting to UPPMAX" instructions on the **Contents** page.
+
+::: {.callout-tip}
+If you want to get a primer on using the terminal, you can get started with the following **Tutorial One** at this link *[Unix tutorial for beginners](http://www.ee.surrey.ac.uk/Teaching/Unix/)*. You can use [https://scilifelab.github.io/courses/ngsintro/common/emu/](https://scilifelab.github.io/courses/ngsintro/common/emu/) [(or this mirror)](https://bellard.org/jslinux/vm.html?url=https://bellard.org/jslinux/buildroot-x86.cfg) to try the commands in the tutorial, so that you don't mess up any real world system. If you have any questions regarding this tutorial contact: *martin.dahlo [at] scilifelab.uu.se*.
+:::
+
+## Create a user folder
+
+::: {.callout-note}
+Where `username` is mentioned, change to your user name.
+:::
+
+Once you have logged in to UPPMAX, run the following below.
+
+```{r,echo=FALSE}
+#| class-output: bash
+cat(paste0("mkdir /proj/",upid,"/nobackup/username"))
+```
+
+This creates a directory with your user name. You will work inside this directory for the workshop. If you cannot write to the folder, the most likely reason is that you have not requested access to the workshop project via SUPR. This is described in step 1 above.
+
+::: {.callout-note}
+It may take an hour or so from request approval, before you can actually write to the folder. We will check before the workshop that all students have logged in and done this, so do not forget!
+:::

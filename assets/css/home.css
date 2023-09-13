@@ -1,0 +1,31 @@
+.home-grid-parent {
+    display: grid;
+    margin: auto;
+    max-width: 1200px;
+    padding-left: 2em;
+    padding-right: 2em;
+    padding-top: 2em;
+    align-items: center;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 2em;
+    grid-template-areas: "text hero";
+    /*grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));*/
+}
+
+.home-grid-child-left {
+    grid-area: text;
+}
+
+.home-grid-child-right {
+    grid-area: hero;
+}
+
+@media only screen and (max-width: 576px) {
+    .home-grid-parent {
+        grid-template-columns: 1fr;
+        grid-column-gap: 0;
+        grid-template-areas:
+            "hero"
+            "text";
+    }
+}

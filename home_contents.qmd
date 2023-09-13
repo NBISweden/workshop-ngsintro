@@ -1,0 +1,58 @@
+---
+title: "Contents"
+description: "Course materials organised by topic. When following a live workshop, use [Schedule](home_schedule.html).<br>Slides: {{< fa file-powerpoint >}} / {{< fa file-pdf >}}, Labs: {{< fa file-lines >}}, Videos: {{< fa brands youtube >}}"
+date: ""
+toc: false
+number-sections: false
+sidebar: false
+format: html
+---
+
+### Introduction to Linux
+
+- Introduction to Linux [{{< fa brands youtube >}}](https://youtu.be/qYp8shSMJ-0) [{{< fa file-pdf >}}](topics/linux/slide_linux_intro.pdf) [{{< fa file-lines >}}](topics/linux/lab_linux_intro.html)
+
+### File types in Linux
+
+- File types in Bioinformatics [{{< fa brands youtube >}}](https://youtu.be/7MR1qUZQ94w) [{{< fa file-pdf >}}](topics/linux/slide_linux_filetypes.pdf) [{{< fa file-lines >}}](topics/linux/lab_linux_filetypes.html)  
+- Linux file permissions [{{< fa file-lines >}}](topics/linux/lab_linux_permissions.html)
+
+### Uppmax
+
+- Introduction to UPPMAX [{{< fa brands youtube >}}](https://youtu.be/cxEtfKN91q4) [{{< fa file-pdf >}}](topics/uppmax/intro/slide_uppmax_intro.pdf) [{{< fa file-lines >}}](topics/uppmax/intro/lab_uppmax_intro.html)  
+- UPPMAX Pipelines [{{< fa file-lines >}}](topics/uppmax/pipeline/lab_uppmax_pipeline.html)
+
+### Advanced Linux
+
+- Better terminal experience [{{< fa brands youtube >}}](https://youtu.be/RGbONVWOaDo) [{{< fa file-pdf >}}](topics/linux/slide_qol_termexp.pdf)
+- Advanced Linux [{{< fa brands youtube >}}](https://youtu.be/n3IpUHIodM8) [{{< fa file-pdf >}}](topics/linux/slide_linux_advanced.pdf) [{{< fa file-lines >}}](topics/linux/lab_linux_advanced.html)
+
+### Variant-calling workflow
+
+- Variant-calling [{{< fa brands youtube >}}](https://youtu.be/NxRECdxKP40) [{{< fa file-powerpoint >}}](topics/vc/slide_vc.pptx) [{{< fa file-lines >}}](topics/vc/lab_vc.html)
+<!-- [Variant-calling Lab answers](lab_vc_answers.pdf)-->
+
+### RNA-Seq workflow
+
+- RNA-Seq workflow [{{< fa brands youtube >}}](https://youtu.be/gC_nslHgSa8) [{{< fa brands html5 >}}](topics/rnaseq/slide_rnaseq.html) [{{< fa file-lines >}}](topics/rnaseq/lab_rnaseq.html)
+- Simon's report [{{< fa file-lines >}}](topics/rnaseq/simon-report/validating_knockout.html)
+
+### NGS technologies
+
+- NGS technologies and challenges [{{< fa brands youtube >}}](https://youtu.be/5sUzkrucL1E) [{{< fa file-pdf >}}](topics/other/slide_sequencing.pdf)
+- NGS Pipelines [{{< fa brands youtube >}}](https://youtu.be/6RBhfMvDkSI) [{{< fa file-pdf >}}](topics/other/slide_ngs_pipelines.pdf)
+- Data management [{{< fa brands youtube >}}](https://youtu.be/PfcrDlhY1zE)  [{{< fa file-powerpoint >}}](topics/other/slide_data_management.pdf)
+
+### Useful resources
+
+- Connecting to Uppmax [{{< fa file-lines >}}](topics/other/lab_connect.html)
+- Uploading & downloading files from Uppmax [{{< fa file-lines >}}](topics/other/lab_download_files.html)
+- Connecting to NSC: The backup cluster [{{< fa file-lines >}}](topics/other/lab_tetralith.html)
+- Linux cheatsheet [{{< fa file-pdf >}}](topics/linux/assets/linux_cheat_sheet.pdf)
+- Bash cheat sheet 1 [{{< fa file-pdf >}}](topics/linux/assets/bash_cheat_sheet_1.pdf)
+- Bash cheat sheet 2 [{{< fa file-pdf >}}](topics/linux/assets/bash_cheat_sheet_2.pdf)
+- Bash cheat sheet 3 [{{< fa file-pdf >}}](topics/linux/assets/bash_cheat_sheet_3.pdf)
+- Uppmax cheatsheet [{{< fa file-image >}}](topics/linux/assets/uppmax_cheat_sheet.png)
+- Mac keyboard [{{< fa file-lines >}}](topics/other/lab_mac_keyboard.html)
+
+***

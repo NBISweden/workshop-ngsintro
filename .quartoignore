@@ -1,0 +1,7 @@
+README.md
+.git
+.Rhistory
+preview*
+docs
+**/*_cache
+**/*_files

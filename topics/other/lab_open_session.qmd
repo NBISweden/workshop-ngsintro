@@ -1,0 +1,32 @@
+---
+title:  "Open session"
+date: ""
+format: html
+---
+
+```{r,eval=TRUE,include=FALSE}
+library(dplyr)
+library(kableExtra)
+library(formattable)
+library(yaml)
+```
+
+### Friday at 13:15
+
+<div class="table-schedule">
+
+```{r,eval=TRUE,echo=FALSE,chunk.title=NULL}
+s <- read.csv("open_session.csv",sep=";",stringsAsFactors=F,header=T,na.strings="",colClasses="character")
+# remove rows that are completely NA
+s <- s[!apply(s,1,function(x) all(is.na(x))),]
+cnames <- c("Room","Topic","Staff")
+
+s %>%
+  setNames(cnames[1:ncol(.)]) %>%
+  kable(format="html",escape=FALSE) %>%
+  kable_styling(bootstrap_options=c("hover","striped"),position="center",full_width=TRUE) %>%
+  column_spec(1,width="7em") %>%
+  column_spec(2,width="16em")
+```
+
+</div>

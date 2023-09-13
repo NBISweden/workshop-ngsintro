@@ -3,14 +3,15 @@ on:
   push:
     branches:
       - master
+      - quarto
 env:
   REGISTRY: ghcr.io
   ORG: nbisweden
-  IMAGE: workshop-base:latest
+  IMAGE: workshop-ngsintro:latest
 
 jobs:
   rmd-render-job:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-21.04
     steps:
       - name: Set time zone  
         uses: szenius/set-timezone@v1.0
@@ -19,7 +20,7 @@ jobs:
           timezoneMacos: "Europe/Stockholm"
           timezoneWindows: "W. Europe Standard Time"
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Pull image
         run: docker pull ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }}
       - name: Define variables
@@ -30,7 +31,7 @@ jobs:
           echo "REPO=$(basename ${GITHUB_REPOSITORY})" >> $GITHUB_ENV
       - name: Check docker and variables
         run: |
-          docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/rmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }} Rscript -e "print('R in docker works!')"
+          docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }} Rscript -e "print('R in docker works!')"
           echo "GITHUB_ACTOR: ${GITHUB_ACTOR}"
           echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}"
           echo "REPO: ${REPO}"
@@ -52,11 +53,11 @@ jobs:
 
           # Render website
           echo "Rendering Rmd files ..."
-          docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/rmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }}
+          docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }}
           # Generate PDFs
           cd ${PATH_EXPORT}
           echo "Generating PDFs ..."
-          docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/rmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }} Rscript -e "l <- list.files('.',pattern='slide.+html');if(length(l)!=0) {for(i in 1:length(l)) pagedown::chrome_print(l[i],extra_args=c('--no-sandbox','--disable-dev-shm-usage','--disable-gpu'))};"
+          docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }} Rscript -e "l <- list.files('.',pattern='slide.+html');if(length(l)!=0) {for(i in 1:length(l)) pagedown::chrome_print(l[i],extra_args=c('--no-sandbox','--disable-dev-shm-usage','--disable-gpu'))};"
           cd ..
 
           # Render canvas version of website by changing _site.yml

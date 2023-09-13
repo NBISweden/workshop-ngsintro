@@ -1,0 +1,12 @@
+---
+title: Variant Calling Answers
+subtitle: Answers for the variant-calling lab
+date: ""
+format:
+  html:
+    page-layout: full
+---
+
+<object data="lab_vc_answers.pdf" type="application/pdf" width="100%" height="500px">
+    <p>Unable to display PDF file. <a href="lab_vc_answers.pdf">Download</a> instead.</p>
+</object>

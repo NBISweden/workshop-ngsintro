@@ -1,0 +1,101 @@
+---
+title: "Practical Info"
+subtitle: "Venue, address, travel and contact information"
+date: ""
+toc: false
+number-sections: false
+sidebar: false
+format: html
+---
+
+```{r,eval=TRUE,include=FALSE}
+library(yaml)
+library(here)
+library(leaflet)
+
+# set location in _quarto.yml
+loc <- unlist(strsplit(yaml::read_yaml(here("_quarto.yml"))$location,";|,"))
+dfr <- read.delim("info.csv",sep=";")
+```
+
+## Location
+
+```{r,echo=FALSE,results="asis",eval=TRUE}
+cat("::: {.panel-tabset}", "\n")
+
+p <- "uppsala"
+cat(paste0("\n### ",tools::toTitleCase(p),"\n"))
+dfr1 <- dfr[dfr$location %in% p,,drop=FALSE]
+dfr1$address <- gsub(",","<br>",dfr1$address)
+icons <- awesomeIcons(icon=dfr1$marker_icon, markerColor=dfr1$marker_colour, iconColor="#FFFFFF", library="fa")
+htmltools::tagList(leaflet(height=450, elementId=paste0("leaflet-",p),width="auto") %>%
+  addTiles(urlTemplate='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png') %>%
+  addAwesomeMarkers(lat=dfr1$lat, lng=dfr1$lon, label=dfr1$label, popup=dfr1$address, icon=icons) %>%
+  setView(lat=dfr1$lat[1], lng=dfr1$lon[1], zoom=13))
+cat(paste0("\n",dfr1$address[1],"\n"))
+cat(paste0("\n",dfr1$description[1],"\n"))
+
+# p <- "umea"
+# cat(paste0("\n### ",tools::toTitleCase(p),"\n"))
+# dfr1 <- dfr[dfr$location %in% p,,drop=FALSE]
+# dfr1$address <- gsub(",","<br>",dfr1$address)
+# icons <- awesomeIcons(icon=dfr1$marker_icon, markerColor=dfr1$marker_colour, iconColor="#FFFFFF", library="fa")
+# htmltools::tagList(leaflet(height=450, elementId=paste0("leaflet-",p),width="auto") %>%
+#   addTiles(urlTemplate='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png') %>%
+#   addAwesomeMarkers(lat=dfr1$lat, lng=dfr1$lon, label=dfr1$label, popup=dfr1$address, icon=icons) %>%
+#   setView(lat=dfr1$lat[1], lng=dfr1$lon[1], zoom=14))
+# cat(paste0("\n",dfr1$address[1],"\n"))
+# cat(paste0("\n",dfr1$description[1],"\n"))
+
+# p <- "lund"
+# cat(paste0("\n### ",tools::toTitleCase(p),"\n"))
+# dfr1 <- dfr[dfr$location %in% p,,drop=FALSE]
+# dfr1$address <- gsub(",","<br>",dfr1$address)
+# icons <- awesomeIcons(icon=dfr1$marker_icon, markerColor=dfr1$marker_colour, iconColor="#FFFFFF", library="fa")
+# htmltools::tagList(leaflet(height=450, elementId=paste0("leaflet-",p),width="auto") %>%
+#   addTiles(urlTemplate='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png') %>%
+#   addAwesomeMarkers(lat=dfr1$lat, lng=dfr1$lon, label=dfr1$label, popup=dfr1$address, icon=icons) %>%
+#   setView(lat=dfr1$lat[1], lng=dfr1$lon[1], zoom=14))
+# cat(paste0("\n",dfr1$address[1],"\n"))
+# cat(paste0("\n",dfr1$description[1],"\n"))
+
+cat(":::", "\n")
+```
+
+```{r,echo=FALSE,eval=FALSE,results="asis"}
+if (!"online" %in% loc) {
+    cat("\n::: {.panel-tabset}\n")
+
+    for (i in seq_along(loc)) {
+        p <- loc[i]
+        cat(paste0("\n### ", tools::toTitleCase(p), "\n"))
+        dfr1 <- dfr[dfr$location %in% p, , drop = FALSE]
+        dfr1$address <- gsub(",", "<br>", dfr1$address)
+        icons <- awesomeIcons(icon = dfr1$marker_icon, markerColor = dfr1$marker_colour, iconColor = "#FFFFFF", library = "fa")
+
+        x <- htmltools::tagList(leaflet(height = 450, width = "auto", elementId=paste0("leaflet-",p)) %>%
+            addTiles(urlTemplate = "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png") %>%
+            addAwesomeMarkers(lat = dfr1$lat, lng = dfr1$lon, label = dfr1$label, popup = dfr1$address, icon = icons) %>%
+            setView(lat = dfr1$lat[1], lng = dfr1$lon[1], zoom = 13))
+        
+        cat(as.character(x))
+        cat("\n")
+        cat("\n", dfr1$address[1], "\n")
+        cat("\n", dfr1$description[1], "\n")
+    }
+
+    cat(":::\n")
+}else{
+  cat("This workshop is online only. The online meeting details will be be sent to participants by email.\n")
+}
+```
+
+## Contact
+
+This workshop is run by the **National Bioinformatics Infrastructure Sweden (NBIS)** in collaboration with **National Genomics Infrastructure (NGI)**. Both, NGI and NBIS are platforms at SciLifeLab.
+
+If you would like to get in touch with us regarding this workshop, please contact us at **edu.intro-ngs [at] nbis.se**.
+
+***
+
+![](assets/logos/nbis-scilifelab-ngi.svg){height="26px"}

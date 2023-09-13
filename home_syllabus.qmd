@@ -1,0 +1,71 @@
+---
+title: "Syllabus"
+subtitle: "This workshop is aimed towards biologists, researchers, computer scientists or data analysts with limited experience in analysing NGS data."
+date: ""
+toc: false
+number-sections: false
+sidebar: false
+format: html
+---
+
+::: {.panel-tabset}
+
+## Syllabus
+
+The syllabus for this workshop are as follows.
+
+- Working on the unix/linux command line
+  - Command line navigation and related commands: cd, mkdir, rm, rmdir
+  - Commonly used linux tools: cp, mv, tar, less, more, head, tail, nano, grep, top, man
+  - Wildcards
+  - Ownership and permissions
+  - Symbolic links
+  - Piping commands
+- Working on remote computing cluster
+  - Logging on to UPPMAX
+  - Booking resources
+  - Job templates, submission and queues
+  - Modules
+- Commonly used bioinformatic tools and pipelines
+- Working with integrated genome viewer
+- Variant-calling workflow
+  - Mapping reads to the reference genome
+  - Variant detection
+  - VCF file format
+- RNA-Seq workflow
+  - RNA-Seq experimental design and considerations
+  - QC, mapping and gene expression counts
+  - Differential gene expression analyses
+- Current advances in NGS technologies
+
+## Learning outcomes
+
+After this workshop you should be able to:
+
+- Describe the basic principles of next generation sequencing.
+- Use the Linux command line interface to manage simple file processing operations, and organise directory structures.
+- Connect to and work on a remote compute cluster.
+- Apply programs in Linux for analysis of NGS data.
+- Summarise the applications of current NGS technologies, including the weakness and strengths of the approaches and when it is appropriate to use which one of them.
+- Explain common NGS file formats.
+- Interpret quality control of NGS reads.
+- Explain the steps involved in variant calling using whole genome sequencing data.
+- Independently perform a basic variant calling workflow on example data.
+- Explain the steps involved in a differential gene expression workflow using RNA seq data.
+- Hands-on experience with handling of raw RNA sequencing data, QC and quantification of gene expression.
+- Conceptual understanding of differential gene expression analysis.
+
+## Entry requirements
+
+- This is a national course open to PhD students, postdocs, group leaders and core facility staff.
+
+- A background in genetics, cell biology, biomedicine, biochemistry, bioinformatics or comparable is desirable. To get the maximum benefit from the workshop we would like you to
+
+- Have a research project where you are currently using next generation sequencing or are planning to use next generation sequencing.
+It is beneficial if you are directly performing analyses or if you have a support role and will be able to participate in a wide range of projects and transfer your knowledge to others.
+
+- Selection criteria include correct entry requirements, motivation to attend the workshop as well as gender and geographical balance. Applicants affiliated to a Swedish institution are prioritized. International applicants are considered only if/when seats are available. Further prioritization: PhD scholars > Post-Docs, PIs, Healthcare staff > Master's students).
+
+- Please note that NBIS training events do not provide any formal university credits. The training content is estimated to correspond to a certain number of credits, however the estimated credits are just guidelines. If formal credits are crucial, the student needs to confer with the home department before submitting a course application in order to establish whether the course is valid for formal credits or not.
+
+:::
