@@ -1,0 +1,18 @@
+{
+  "hash": "26408d15a0366dde6dec124051198d54",
+  "result": {
+    "markdown": "---\ntitle:  \"Open session\"\ndate: \"\"\nformat: html\n---\n\n\n\n\n### Friday at 13:15\n\n<div class=\"table-schedule\">\n\n\n::: {.cell chunk.title='{}'}\n::: {.cell-output-display}\n`````{=html}\n<table class=\"table table-hover table-striped\" style=\"margin-left: auto; margin-right: auto;\">\n <thead>\n  <tr>\n   <th style=\"text-align:left;\"> Room </th>\n   <th style=\"text-align:left;\"> Topic </th>\n   <th style=\"text-align:left;\"> Staff </th>\n  </tr>\n </thead>\n<tbody>\n  <tr>\n   <td style=\"text-align:left;width: 7em; \"> Room 1 </td>\n   <td style=\"text-align:left;width: 16em; \"> Whole genome sequencing, variant calling </td>\n   <td style=\"text-align:left;\"> Malin Larsson, Diana Ekman </td>\n  </tr>\n  <tr>\n   <td style=\"text-align:left;width: 7em; \"> Room 2 </td>\n   <td style=\"text-align:left;width: 16em; \"> RNA-Seq, scRNA-Seq </td>\n   <td style=\"text-align:left;\"> Julie Lorent, Juliana Assis, Prasoon Agarwal, Roy Francis </td>\n  </tr>\n  <tr>\n   <td style=\"text-align:left;width: 7em; \"> Room 3 </td>\n   <td style=\"text-align:left;width: 16em; \"> Bash, Uppmax, Computing </td>\n   <td style=\"text-align:left;\"> Martin Dahlö </td>\n  </tr>\n  <tr>\n   <td style=\"text-align:left;width: 7em; \"> Room 4 </td>\n   <td style=\"text-align:left;width: 16em; \"> Epigenetics, Chip-Seq, RNA-Seq, scRNASeq, small RNA </td>\n   <td style=\"text-align:left;\"> Agata Smialowska, Vincent van Hoef </td>\n  </tr>\n  <tr>\n   <td style=\"text-align:left;width: 7em; \"> Room 5 </td>\n   <td style=\"text-align:left;width: 16em; \"> NGI, Assembly, Long read sequencing </td>\n   <td style=\"text-align:left;\"> Adam Ameur, Estelle Proux </td>\n  </tr>\n  <tr>\n   <td style=\"text-align:left;width: 7em; \"> Room 6 </td>\n   <td style=\"text-align:left;width: 16em; \"> Metagenomics, Prokaryots, RNA-Seq </td>\n   <td style=\"text-align:left;\"> Dag Ahrén, Lokesh Manoharan, John Sundh </td>\n  </tr>\n</tbody>\n</table>\n\n`````\n:::\n:::\n\n\n</div>\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-in-header": [
+        "<script src=\"../../site_libs/kePrint-0.0.1/kePrint.js\"></script>\n<link href=\"../../site_libs/lightable-0.0.1/lightable.css\" rel=\"stylesheet\" />\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "index.qmd": {
+    "index.html": "a25ad4d3"
+  },
+  "admin.qmd": {
+    "admin.html": "69eae9aa"
+  },
+  "home_contents.qmd": {
+    "home_contents.html": "6b398190"
+  },
+  "home_info.qmd": {
+    "home_info.html": "a552c5ca"
+  },
+  "home_precourse.qmd": {
+    "home_precourse.html": "d324b48c"
+  },
+  "home_schedule.qmd": {
+    "home_schedule.html": "2b2f1b6e"
+  },
+  "home_syllabus.qmd": {
+    "home_syllabus.html": "8b1c83ec"
+  },
+  "topics/linux/lab_linux_advanced.qmd": {
+    "lab_linux_advanced.html": "0abcb2f0"
+  },
+  "topics/linux/lab_linux_filetypes.qmd": {
+    "lab_linux_filetypes.html": "1f2a94e0"
+  },
+  "topics/linux/lab_linux_intro.qmd": {
+    "lab_linux_intro.html": "25d48845"
+  },
+  "topics/linux/lab_linux_permissions.qmd": {
+    "lab_linux_permissions.html": "38ab7f6e"
+  },
+  "topics/other/lab_connect.qmd": {
+    "lab_connect.html": "30101eb8"
+  },
+  "topics/other/lab_download_files.qmd": {
+    "lab_download_files.html": "25a42274"
+  },
+  "topics/other/lab_mac_keyboard.qmd": {
+    "lab_mac_keyboard.html": "091a8669"
+  },
+  "topics/other/lab_open_session.qmd": {
+    "lab_open_session.html": "76941487"
+  },
+  "topics/other/lab_qc.qmd": {
+    "lab_qc.html": "f6069f59"
+  },
+  "topics/other/lab_tetralith.qmd": {
+    "lab_tetralith.html": "f8884292"
+  },
+  "topics/rnaseq/lab_rnaseq.qmd": {
+    "lab_rnaseq.html": "78df6941"
+  },
+  "topics/rnaseq/slide_rnaseq.qmd": {
+    "slide_rnaseq.html": "86808ea8"
+  },
+  "topics/uppmax/intro/lab_uppmax_intro.qmd": {
+    "lab_uppmax_intro.html": "ae05ce6f"
+  },
+  "topics/uppmax/pipeline/lab_uppmax_pipeline.qmd": {
+    "lab_uppmax_pipeline.html": "b1640718"
+  },
+  "topics/vc/lab_vc.qmd": {
+    "lab_vc.html": "6d0b5f68"
+  },
+  "topics/vc/lab_vc_answers.qmd": {
+    "lab_vc_answers.html": "4617fd0b"
+  },
+  "topics/vc/lab_vc_tetralith.qmd": {
+    "lab_vc_tetralith.html": "ea99ec28"
+  }
+}

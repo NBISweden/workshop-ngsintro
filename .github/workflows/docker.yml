@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - quarto
 env:
   REGISTRY: ghcr.io
   ORG: nbisweden
