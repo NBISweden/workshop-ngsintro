@@ -26,8 +26,8 @@ jobs:
       - name: Define variables
         run: |
           echo "PATH_REPO=$(pwd)" >> $GITHUB_ENV
-          echo "PATH_EXPORT=$(grep -E '^output_dir' _site.yml | sed 's/^output_dir://' | xargs)" >> $GITHUB_ENV
-          echo "PATH_EXPORT_CANVAS=$(grep -E '^output_dir' _site.yml | sed 's/^output_dir://' | xargs)-canvas" >> $GITHUB_ENV
+          echo "PATH_EXPORT=$(grep -E 'output-dir' _quarto.yml | xargs | sed 's/output-dir://' | xargs)" >> $GITHUB_ENV
+          echo "PATH_EXPORT_CANVAS=$(grep -E 'output-dir' _quarto.yml | xargs | sed 's/output-dir://' | xargs)-canvas" >> $GITHUB_ENV
           echo "REPO=$(basename ${GITHUB_REPOSITORY})" >> $GITHUB_ENV
       - name: Check docker and variables
         run: |
