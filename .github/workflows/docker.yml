@@ -10,8 +10,8 @@ env:
   IMAGE: workshop-ngsintro:latest
 
 jobs:
-  rmd-render-job:
-    runs-on: ubuntu-21.04
+  quarto-render-job:
+    runs-on: ubuntu-22.04
     steps:
       - name: Set time zone  
         uses: szenius/set-timezone@v1.0
@@ -111,7 +111,7 @@ jobs:
           ls -lh ${PATH_REPO}/${PATH_EXPORT_CANVAS}
 
           # Clone gh-pages branch and remove old directories with same name
-          git clone --single-branch --branch gh-pages "https://${{ secrets.TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" tmprepo
+          git clone --depth 1 --single-branch --branch gh-pages "https://${{ secrets.TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" tmprepo
           cd tmprepo
           if [ -d ${PATH_EXPORT} ]; then
             echo "Directory ${PATH_EXPORT} already exists. Removing the directory."

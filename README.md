@@ -7,7 +7,7 @@ This repo contains the course material for NBIS workshop **Introduction to Bioin
 To add or update contents of this repo (for collaborators), first clone the repo.
 
 ```
-git clone https://github.com/nbisweden/workshop-ngsintro.git
+git clone --depth 1 --single-branch --branch master https://github.com/nbisweden/workshop-ngsintro.git
 ```
 
 Make changes/updates as needed. Add the changed files. Commit it. Then push the repo back.
@@ -28,7 +28,7 @@ If you are not added as a collaborator, first fork this repo to your account, th
 
 You can preview changes and build the whole website locally without a local installation of R or dependency packages by using the pre-built Docker image.
 
-:exclamation: **Note:** Large image size: 4.6GB.
+:exclamation: **Note:** Large image size: 5.4GB.
 
 Clone the repo if not already done. Make sure you are standing in the repo directory.
 
@@ -44,21 +44,13 @@ To build a single file (for example `index.Rmd`),
 docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/rmd ghcr.io/nbisweden/workshop-base:latest Rscript -e 'rmarkdown::render("index.Rmd")'
 ```
 
-If **editing and testing RNA-Seq part**, use this larger image with more R packages. :exclamation: **Note:** Large image size: 7.1GB.
-
-```
-docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/rmd ghcr.io/nbisweden/workshop-ngsintro:latest
-```
-
 :exclamation: Output files are for local preview only. Do not push any rendered .html files or intermediates.
 
 ## Repo organisation
 
-The source material is located on the *master* branch (default). The rendered material is located on the *gh-pages* branch. For most part, one only needs to update content in master. Changes pushed to the *master* branch is automatically rendered to the *gh-pages* branch.
+The source material is located on the *master* branch (default). The rendered material is located on the *gh-pages* branch. One only needs to update content in master. Changes pushed to the *master* branch is automatically rendered to the *gh-pages* branch.
 
 :exclamation: Every push rebuilds the whole website using a docker image. Build takes about 2 mins.
-
-For more details about repo organisation, updating and modifying this repo, check out the [template repo](https://github.com/royfrancis/workshop-template-rmd-ga).
 
 ## Test scripts
 
@@ -70,4 +62,4 @@ The contents of these scripts should use identical steps and tools as the studen
 
 ---
 
-**2021** • NBIS • SciLifeLab
+**2023** • NBIS • SciLifeLab
