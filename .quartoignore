@@ -5,3 +5,4 @@ preview*
 docs
 **/*_cache
 **/*_files
+_freeze
