@@ -1,10 +1,28 @@
+body {
+    background-image: url("../images/home.jpg");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: scroll;
+}
+
+.navbar {
+    background-color: transparent !important;
+}
+
+.nav-footer {
+    background-color: transparent !important;
+}
+
 .home-grid-parent {
     display: grid;
     margin: auto;
     max-width: 1200px;
     padding-left: 2em;
     padding-right: 2em;
-    padding-top: 2em;
     align-items: center;
     grid-template-columns: repeat(2, 1fr);
     grid-column-gap: 2em;

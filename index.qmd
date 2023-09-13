@@ -9,6 +9,7 @@ format:
     toc: false
     date: ""
     page-layout: full
+    title-block-banner: false
 ---
 
 <!-- div class="page-layout-custom" -->
