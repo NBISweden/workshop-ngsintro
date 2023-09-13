@@ -1,7 +1,7 @@
 ---
 pageTitle: "NBIS Workshop | Introduction to Bioinformatics using NGS data"
-title: Introduction To Bioinformatics Using NGS Data
-subtitle: NBIS Workshop
+title: ""
+subtitle: ""
 format:
   html:
     css: "assets/css/home.css"
@@ -16,6 +16,9 @@ format:
 <div class='home-grid-parent'>
 <div class='home-grid-child-left'>
 
+#### NBIS Workshop
+## Introduction To Bioinformatics<br>Using NGS Data
+
 ::: {.large}
 - Working on the Linux command line
 - Sequence data formats and QC
@@ -23,15 +26,14 @@ format:
 - RNA sequence analyses workflow
 :::
 
-</div>
-<div class='home-grid-child-right'>
-
-
-![](assets/images/landing.png)
-
 ::: small
 Updated: <?lua.date?> at <?lua.time?>.
 :::
+
+</div>
+<div class='home-grid-child-right'>
+
+![](assets/images/landing.png)
 
 </div>
 </div>

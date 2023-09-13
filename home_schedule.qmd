@@ -100,7 +100,7 @@ row.names(s) <- NULL
 s %>%
   dplyr::select(-date,-room) %>%
   setNames(cnames) %>%
-  addHtmlTableStyle(align = "l", col.rgroup = c("none","none")) %>% 
+  addHtmlTableStyle(align = "l") %>% 
   htmlTable(rnames=FALSE,rgroup=r$values,n.rgroup=r$lengths)
 ```
 

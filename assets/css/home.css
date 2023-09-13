@@ -47,3 +47,7 @@ body {
             "text";
     }
 }
+
+.home-grid-child-left h2 {
+    margin-top: 0.5em;
+}

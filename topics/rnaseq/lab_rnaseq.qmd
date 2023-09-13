@@ -21,7 +21,7 @@ path_project_rnaseq <- paste0(path_project,"/username/rnaseq")
 #library(stringr) # text processing
 #library(tidyr) # data wrangling
 library(dplyr) # data handling
-library(kableExtra)
+library(htmlTable)
 
 col_condition=c("#fb8072","#8dd3c7")
 col_rep <- c("#80b1d3","#fdb462","#bebada")
@@ -74,13 +74,8 @@ The material for RNA-seq was collected from 2 conditions (**Wt** and **KO**), ea
 ```{r,echo=FALSE}
 #| column: margin
 data.frame(Accession=c("SRR3222409","SRR3222410","SRR3222411","SRR3222412","SRR3222413","SRR3222414"),Condition=c(rep(c("KO","Wt"),each=3)),Replicate=rep(1:3,2)) %>%
-  mutate(Condition=cell_spec(Condition,"html",color="white",bold=T,
-    background=col_condition[factor(Condition)])) %>%
-  mutate(Replicate=cell_spec(Replicate,"html",color="white",bold=T,
-    background=col_rep[factor(Replicate)])) %>%
-  kable("html",escape=F,align="r") %>%
-  kable_styling(bootstrap_options=c("striped","hover"),
-                full_width=FALSE,position="left")
+  addHtmlTableStyle(align = "c") %>% 
+  htmlTable(rnames=FALSE)
 ```
 
 ::: {.callout-note}

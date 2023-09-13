@@ -6,8 +6,7 @@ format: html
 
 ```{r,eval=TRUE,include=FALSE}
 library(dplyr)
-library(kableExtra)
-library(formattable)
+library(htmlTable)
 library(yaml)
 ```
 
@@ -23,10 +22,8 @@ cnames <- c("Room","Topic","Staff")
 
 s %>%
   setNames(cnames[1:ncol(.)]) %>%
-  kable(format="html",escape=FALSE) %>%
-  kable_styling(bootstrap_options=c("hover","striped"),position="center",full_width=TRUE) %>%
-  column_spec(1,width="7em") %>%
-  column_spec(2,width="16em")
+  addHtmlTableStyle(align = "l") %>% 
+  htmlTable(rnames=FALSE)
 ```
 
 </div>
