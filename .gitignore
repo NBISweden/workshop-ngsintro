@@ -8,4 +8,4 @@ to-do.md
 /.luarc.json
 /.quarto/
 .DS_Store
-
+[0-9]*/
