@@ -2,11 +2,12 @@ name: build
 on:
   push:
     branches:
+      - master
       - main
 env:
   REGISTRY: ghcr.io
   ORG: nbisweden
-  IMAGE: workshop-ngsintro/workshop-ngsintro:2.2.0
+  IMAGE: workshop-ngsintro/workshop-ngsintro:latest
 
 jobs:
   quarto-render-job:
@@ -56,7 +57,7 @@ jobs:
           echo "Rendering qmd files ..."
           echo "PWD: ${PWD}"
           ls -l .
-          ls -l ../
+          tree -L 3 .
           docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }}
           # Generate PDFs
           # cd ${PATH_EXPORT}

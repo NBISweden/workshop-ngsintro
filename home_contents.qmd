@@ -1,6 +1,6 @@
 ---
 title: "Contents"
-description: "Course materials organised by topic. When following a live workshop, use [Schedule](home_schedule.html).<br>Slides: {{< fa file-powerpoint >}} / {{< fa file-pdf >}}, Labs: {{< fa file-lines >}}, Videos: {{< fa brands youtube >}}"
+description: "Course materials organised by topic. When following a live workshop, use **Schedule**.<br>Slides: {{< fa file-powerpoint >}} / {{< fa file-pdf >}}, Labs: {{< fa file-lines >}}, Videos: {{< fa brands youtube >}}"
 date: ""
 toc: false
 number-sections: false
