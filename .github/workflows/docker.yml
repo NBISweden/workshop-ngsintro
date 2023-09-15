@@ -72,10 +72,11 @@ jobs:
           # removes footer
 
           echo "Removing lab and slide links from schedule for canvas ..."
-          docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }} Rscript -e 'x <- read.csv("schedule.csv",sep=";",header=T,stringsAsFactors=F);x$link_youtube <- x$link_lab <- x$link_slide <- NA;write.table(x,"schedule.csv",sep=";",col.names=T,row.names=F,quote=FALSE,na="")'
+          docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }} Rscript -e 'x <- readxl::read_xlsx("schedule.xlsx",col_names=TRUE);x$link_youtube <- x$link_lab <- x$link_slide <- NA;writexl::write_xlsx(x,"schedule.xlsx")'
           echo "Fixing _quarto.yml for canvas ..."
-          docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }} Rscript -e 'y <- yaml::read_yaml("_quarto.yml"); y$project$`output-dir` <- paste0(y$project$`output-dir`,"-canvas"); y$website$navbar$right <- NULL; yaml::write_yaml(y,"_quarto.yml");'
-
+          # docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }} Rscript -e 'y <- yaml::read_yaml("_quarto.yml"); y$project$`output-dir` <- paste0(y$project$`output-dir`,"-canvas"); y$website$navbar$right <- NULL; yaml::write_yaml(y,"_quarto.yml");'
+          cp _quarto_canvas.yml _quarto.yml
+          
           ls -lh
           cat _quarto.yml
           echo "Rendering qmd files for canvas ..."

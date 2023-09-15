@@ -1,7 +1,7 @@
 project:
   type: website
   # output directory used on gh-pages branch. format: YYMM
-  output-dir: "2311"
+  output-dir: "2311-canvas"
   render: 
     - "!README.md"
     - "!LICENSE"
@@ -18,23 +18,10 @@ website:
   navbar:
     logo: "assets/logos/nbis-scilifelab.png"
     logo-alt: "nbis-scilifelab-logo."
-    right:
-      - text: "Home"
-        href: "index.html"
-      - text: "Schedule"
-        href: "home_schedule.html"
-      - text: "Contents"
-        href: "home_contents.html"
-      - text: "Precourse"
-        href: "home_precourse.html"
-      - text: "Syllabus"
-        href: "home_syllabus.html"
-      - text: "Info"
-        href: "home_info.html"
   page-footer:
     border: false
-    left: "2023 [NBIS](https://nbis.se) | [GPL-3 License](https://choosealicense.com/licenses/gpl-3.0/)"
-    right: "Published with [Quarto](https://quarto.org/) v<?quarto.version?>"
+    left: "2023 NBIS | GPL-3 License"
+    right: "Published with Quarto v<?quarto.version?>"
 
 format:
   html:
