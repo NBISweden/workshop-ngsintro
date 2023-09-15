@@ -3,11 +3,10 @@ on:
   push:
     branches:
       - master
-      - quarto
 env:
   REGISTRY: ghcr.io
   ORG: nbisweden
-  IMAGE: workshop-ngsintro/workshop-ngsintro:2.2.0
+  IMAGE: workshop-ngsintro/workshop-ngsintro:latest
 
 jobs:
   quarto-render-job:
