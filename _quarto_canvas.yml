@@ -15,6 +15,7 @@ project:
 website:
   image: "assets/logos/nbis.png"
   favicon: "assets/favicon.png"
+  search: false
   navbar:
     logo: "assets/logos/nbis-scilifelab.png"
     logo-alt: "nbis-scilifelab-logo."
