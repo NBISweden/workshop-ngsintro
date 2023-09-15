@@ -28,20 +28,20 @@ If you are not added as a collaborator, first fork this repo to your account, th
 
 You can preview changes and build the whole website locally without a local installation of R or dependency packages by using the pre-built Docker image.
 
-:exclamation: **Note:** Large image size: 5.4GB.
+:exclamation: **Note:** Large image size: 4.68GB.
 
 Clone the repo if not already done. Make sure you are standing in the repo directory.
 
 To build the complete site,
 
 ```
-docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/rmd ghcr.io/nbisweden/workshop-base:latest
+docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd royfrancis/workshop-ngsintro:latest
 ```
 
-To build a single file (for example `index.Rmd`),
+To build a single file (for example `index.qmd`),
 
 ```
-docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/rmd ghcr.io/nbisweden/workshop-base:latest Rscript -e 'rmarkdown::render("index.Rmd")'
+docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd royfrancis/workshop-ngsintro:latest quarto render index.qmd
 ```
 
 :exclamation: Output files are for local preview only. Do not push any rendered .html files or intermediates.
