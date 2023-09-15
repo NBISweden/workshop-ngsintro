@@ -2,7 +2,7 @@
 .Rhistory
 libs/
 *_files/
-*.html
+/*.html
 to-do.md
 *.code-workspace
 /.luarc.json
