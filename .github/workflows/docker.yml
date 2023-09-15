@@ -57,8 +57,8 @@ jobs:
           echo "Rendering qmd files ..."
           echo "PWD: ${PWD}"
           ls -l .
-          ls -l ../
-          docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }}
+          tree -L 3 .
+          docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }} quarto render .
           # Generate PDFs
           # cd ${PATH_EXPORT}
           # echo "Generating PDFs ..."
@@ -80,7 +80,7 @@ jobs:
           ls -lh
           cat _quarto.yml
           echo "Rendering qmd files for canvas ..."
-          docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }}
+          docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }} quarto render .
 
           cd ${PATH_EXPORT_CANVAS}
 
