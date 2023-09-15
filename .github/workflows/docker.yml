@@ -2,8 +2,7 @@ name: build
 on:
   push:
     branches:
-      - master
-      - quarto
+      - main
 env:
   REGISTRY: ghcr.io
   ORG: nbisweden
