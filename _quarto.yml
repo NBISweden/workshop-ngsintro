@@ -4,7 +4,6 @@ project:
   output-dir: "2311"
   render: 
     - "!README.md"
-    - "!schedule.csv"
     - "!LICENSE"
     - "!LICENSE.md"
     - "!scripts"
