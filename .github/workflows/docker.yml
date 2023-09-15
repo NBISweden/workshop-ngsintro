@@ -29,7 +29,6 @@ jobs:
         run: |
           echo "PATH_REPO=$(pwd)" >> $GITHUB_ENV
           echo "PATH_EXPORT=$(grep -E 'output-dir' _quarto.yml | xargs | sed 's/output-dir://' | xargs)" >> $GITHUB_ENV
-          echo "PATH_EXPORT_CANVAS=$(grep -E 'output-dir' _quarto.yml | xargs | sed 's/output-dir://' | xargs)-canvas" >> $GITHUB_ENV
           echo "REPO=$(basename ${GITHUB_REPOSITORY})" >> $GITHUB_ENV
       - name: Check docker and variables
         run: |
@@ -39,7 +38,6 @@ jobs:
           echo "REPO: ${REPO}"
           echo "env.PATH_REPO: ${{ env.PATH_REPO }}"
           echo "PATH_EXPORT: ${PATH_EXPORT}"
-          echo "PATH_EXPORT_CANVAS: ${PATH_EXPORT_CANVAS}"
           echo "GITHUB_REPOSITORY_OWNER: ${GITHUB_REPOSITORY_OWNER}"
           echo "---------------------------------------------------------------------------------------------"
           echo "Folder contents at $(pwd):"
@@ -58,59 +56,12 @@ jobs:
           echo "PWD: ${PWD}"
           ls -l .
           docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }}
-          # Generate PDFs
-          # cd ${PATH_EXPORT}
-          # echo "Generating PDFs ..."
-          # docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }} Rscript -e "l <- list.files('.',pattern='slide.+html');if(length(l)!=0) {for(i in 1:length(l)) pagedown::chrome_print(l[i],extra_args=c('--no-sandbox','--disable-dev-shm-usage','--disable-gpu'))};"
-          # cd ..
-
-          # Render canvas version of website by changing _quarto.yml
-          # suffixes output directory with -canvas
-          # adds current output directory to be ignored
-          # renames navbar block to remove menu
-          # removes footer
-
-          echo "Removing lab and slide links from schedule for canvas ..."
-          docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }} Rscript -e 'x <- readxl::read_xlsx("schedule.xlsx",col_names=TRUE);x$link_youtube <- x$link_lab <- x$link_slide <- NA;writexl::write_xlsx(x,"schedule.xlsx")'
-          # echo "Fixing _quarto.yml for canvas ..."
-          # docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }} Rscript -e 'y <- yaml::read_yaml("_quarto.yml"); y$project$`output-dir` <- paste0(y$project$`output-dir`,"-canvas"); y$website$navbar$right <- NULL; yaml::write_yaml(y,"_quarto.yml");'
-          cp _quarto_canvas.yml _quarto.yml
-          
-          ls -lh
-          cat _quarto.yml
-          echo "Rendering qmd files for canvas ..."
-          docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }}
-
-          cd ${PATH_EXPORT_CANVAS}
-
-          # fix links
-          # all links (except those starting with #) in all html files are set to open in new tab
-          # all links (those pointing within website and ends with html) in all html files are removed
-          # display links to be fixed
-          echo "Number of links to be corrected:"
-          grep -E '(<a href="[^#][^(https?)&^(www)?].+html.*">)([^(a>).]+)(<\/a>)' *.html | \
-              grep -E '(<a href="[^#][-a-zA-Z0-9@:%._\+~#=/?&]+")(>)' | wc -l
-          echo "List of links to be corrected:"
-          grep -E '(<a href="[^#][^(https?)&^(www)?].+html.*">)([^(a>).]+)(<\/a>)' *.html | \
-              grep -E '(<a href="[^#][-a-zA-Z0-9@:%._\+~#=/?&]+")(>)'
-          echo "Fixing bad links ..."
-          for i in *.html; do
-              sed -E 's/(<a href="[^#][^(https?)&^(www)?].+(html|pdf).*">)([^(a>).]+)(<\/a>)/[link removed]/g' $i | \
-              sed -E 's/(<a href="[^#][-a-zA-Z0-9@:%._\+~#=/?&]+")(>)/\1 target="_blank">/g' > temp
-              cat temp > $i
-              rm -rf temp
-          done
-          # echo "Generating PDFs for HTML slides ..."
-          # docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd ${{ env.REGISTRY }}/${{ env.ORG }}/${{ env.IMAGE }} Rscript -e "l <- list.files('.',pattern='slide.+html');if(length(l)!=0) {for(i in 1:length(l)) pagedown::chrome_print(l[i],extra_args=c('--no-sandbox','--disable-dev-shm-usage','--disable-gpu'))};"
-          cd ..
 
           # List folder contents
           echo "Folder contents at $(pwd):"
           ls -lh
           echo "Folder contents at ${PATH_REPO}/${PATH_EXPORT}:"
           ls -lh ${PATH_REPO}/${PATH_EXPORT}
-          echo "Folder contents at ${PATH_REPO}/${PATH_EXPORT_CANVAS}:"
-          ls -lh ${PATH_REPO}/${PATH_EXPORT_CANVAS}
 
           # Clone gh-pages branch and remove old directories with same name
           git clone --depth 1 --single-branch --branch gh-pages "https://${{ secrets.TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" tmprepo
@@ -120,15 +71,9 @@ jobs:
             git rm -r ${PATH_EXPORT}
             git commit -m "Old directory ${PATH_EXPORT} deleted."
           fi
-          if [ -d ${PATH_EXPORT}_canvas ]; then
-            echo "Directory ${PATH_EXPORT_CANVAS} already exists. Removing the directory."
-            git rm -r ${PATH_EXPORT}_canvas
-            git commit -m "Old directory ${PATH_EXPORT_CANVAS} deleted."
-          fi
 
           cd ${PATH_REPO}
           cp -r ${PATH_EXPORT} tmprepo/
-          cp -r ${PATH_EXPORT_CANVAS} tmprepo/
           cd tmprepo
           echo "Folder contents at $(pwd):"
           ls -lh
