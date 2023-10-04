@@ -73,9 +73,13 @@ s <- readxl::read_xlsx("schedule.xlsx") %>%
   dplyr::mutate(assistant=ifelse(is.na(assistant),"",assistant)) %>%
   dplyr::select(date,room,time,topic,teacher,assistant)
 
-if(all(is.na(s$assistant)) | all(s$assistant=="")) s$assistant <- NULL
-
-s$assistant <- fix_assis(s$assistant,asst)
+if(all(is.na(s$assistant)) | all(s$assistant=="")) {
+  s$assistant <- NULL
+  cnames <- c("Time","Topic","Teacher")
+}else{
+  s$assistant <- fix_assis(s$assistant,asst)
+  cnames <- c("Time","Topic","Teacher","Assistant")
+}
 ```
 
 ```{r}
@@ -94,13 +98,12 @@ if(!is.null(schedule_message) & nchar(schedule_message)!=0){
 
 # grouping vector
 r <- rle(s$date)
-cnames <- c("Time","Topic","Teacher","Assistant")
 row.names(s) <- NULL
 
 s %>%
   dplyr::select(-date,-room) %>%
   setNames(cnames) %>%
-  addHtmlTableStyle(align = "l") %>% 
+  addHtmlTableStyle(align = "clcl") %>% 
   htmlTable(rnames=FALSE,rgroup=r$values,n.rgroup=r$lengths)
 ```
 
