@@ -35,13 +35,13 @@ Clone the repo if not already done. Make sure you are standing in the repo direc
 To build the complete site,
 
 ```
-docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd royfrancis/workshop-ngsintro:latest
+docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-ngsintro/workshop-ngsintro
 ```
 
 To build a single file (for example `index.qmd`),
 
 ```
-docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd royfrancis/workshop-ngsintro:latest quarto render index.qmd
+docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-ngsintro/workshop-ngsintro quarto render index.qmd
 ```
 
 :exclamation: Output files are for local preview only. Do not push any rendered .html files or intermediates.
@@ -50,7 +50,7 @@ docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd royfrancis/w
 
 The source material is located on the *master* branch (default). The rendered material is located on the *gh-pages* branch. One only needs to update content in master. Changes pushed to the *master* branch is automatically rendered to the *gh-pages* branch.
 
-:exclamation: Every push rebuilds the whole website using a docker image. Build takes about 2 mins.
+:exclamation: Every push rebuilds the whole website using a docker image. Build takes about 4-5 mins.
 
 ## Test scripts
 
