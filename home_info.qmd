@@ -32,9 +32,11 @@ for (i in seq_along(loc)) {
       dfr1 <- dfr[dfr$location %in% p, , drop = FALSE]
       dfr1$address <- gsub(",", "<br>", dfr1$address)
       icons <- awesomeIcons(icon = dfr1$marker_icon, markerColor = dfr1$marker_colour, iconColor = "#FFFFFF", library = "fa")
-      if(p != "online") cat(knitr::knit_child(input = "assets/_child-info.qmd", envir = environment(), quiet = TRUE))
-      cat("\n")
-      cat("\n", dfr1$address[1], "\n")
+      if(p != "online") {
+        cat(knitr::knit_child(input = "assets/_child-info.qmd", envir = environment(), quiet = TRUE))
+        cat("\n")
+        cat("\n", dfr1$address[1], "\n")
+      }
       cat("\n", dfr1$description[1])
     }else{
       cat("No additional information is provided.")
