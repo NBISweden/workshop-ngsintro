@@ -31,26 +31,42 @@ Lets assume that you have a file "results.txt" in the following folder on UPPMAX
 cat(paste0('/proj/',upid,'/nobackup/username/somefolder/'))
 ```
 
-`username` and `somefolder` should be replaced with your real username and a real folder name.\
+::: {.callout-note}
+`username` and `somefolder` should be replaced with your real username and a real folder name.
+:::
+
 To download the file to your local workspace type:
 
 ```{r}
+#| output: asis
 #| echo: false
-#| class-output: bash
-cat(paste0('scp username@rackham.uppmax.uu.se:/proj/',upid,'/nobackup/username/somefolder/results.txt .'))
+out <- paste0("scp username@rackham.uppmax.uu.se:/proj/", upid, "/nobackup/username/somefolder/results.txt .")
+cat(
+  "```{.bash filename='Local Terminal'}",
+  out,
+  "```",
+  sep = "\n"
+)
 ```
 
 Note that the last `.` means that the file will keep the original name.
 
 ## Upload a file to UPPMAX
 
-Now lets imagine that you have developed a script on your laptop and want to upload it to UPPMAX. The script is stored in your local workspace and is called "script.sh".\
-Type this in your local workspace to upload the file to UPPMAX:
+Now lets imagine that you have developed a script on your laptop and want to upload it to UPPMAX. The script is stored in your local workspace and is called "script.sh". Type this in your local workspace to upload the file to UPPMAX:
+
+::: {.callout-note}
+`username` and `somefolder` should be replaced with your real username and a real folder name.
+:::
 
 ```{r}
+#| output: asis
 #| echo: false
-#| class-output: bash
-cat(paste0('scp script.sh username@rackham.uppmax.uu.se:/proj/',upid,'/nobackup/username/somefolder/.'))
+out <- paste0("scp script.sh username@rackham.uppmax.uu.se:/proj/", upid, "/nobackup/username/somefolder/.")
+cat(
+  "```{.bash filename='Local Terminal'}",
+  out,
+  "```",
+  sep = "\n"
+)
 ```
-
-Again, `username` and `somefolder` should be replaced with your real username and a real folder name.

@@ -15,7 +15,7 @@ library(yaml)
 <div class="table-schedule">
 
 ```{r,eval=TRUE,echo=FALSE,chunk.title=NULL}
-s <- read.csv("open_session.csv",sep=";",stringsAsFactors=F,header=T,na.strings="",colClasses="character")
+s <- readxl::read_xlsx("open_session.xlsx")
 # remove rows that are completely NA
 s <- s[!apply(s,1,function(x) all(is.na(x))),]
 cnames <- c("Room","Topic","Staff")

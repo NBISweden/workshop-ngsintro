@@ -41,6 +41,10 @@ format: html
 
 - NGS technologies and challenges [{{< fa brands youtube >}}](https://youtu.be/5sUzkrucL1E) [{{< fa file-pdf >}}](topics/other/slide_sequencing.pdf)
 - NGS Pipelines [{{< fa brands youtube >}}](https://youtu.be/6RBhfMvDkSI) [{{< fa file-pdf >}}](topics/other/slide_ngs_pipelines.pdf)
+
+### Other
+
+- QC of FastQ reads [{{< fa file-pdf >}}](topics/other/slide_qc.pdf) [{{< fa file-lines >}}](topics/other/lab_qc.html)
 - Data management [{{< fa brands youtube >}}](https://youtu.be/PfcrDlhY1zE)  [{{< fa file-powerpoint >}}](topics/other/slide_data_management.pdf)
 
 ### Useful resources
@@ -55,4 +59,3 @@ format: html
 - Uppmax cheatsheet [{{< fa file-image >}}](topics/linux/assets/uppmax_cheat_sheet.png)
 - Mac keyboard [{{< fa file-lines >}}](topics/other/lab_mac_keyboard.html)
 
-***

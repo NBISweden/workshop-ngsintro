@@ -6,13 +6,17 @@ format: html
 ---
 
 **Normal**  
-![](data/linux/mac_keyboard_normal.jpg)
+
+![](assets/mac_keyboard_normal.jpg)
 
 **Holding shift**  
-![](data/linux/mac_keyboard_shift.jpg)
+
+![](assets/mac_keyboard_shift.jpg)
 
 **Holding alt**  
-![](data/linux/mac_keyboard_alt.jpg)
+
+![](assets/mac_keyboard_alt.jpg)
 
 **Holding alt+shift**
-![](data/linux/mac_keyboard_shitfAlt.jpg)
+
+![](assets/mac_keyboard_shitfAlt.jpg)

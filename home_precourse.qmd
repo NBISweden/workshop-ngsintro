@@ -84,9 +84,16 @@ Where `username` is mentioned, change to your user name.
 
 Once you have logged in to UPPMAX, run the following command.
 
-```{r,echo=FALSE}
-#| class-output: bash
-cat(paste0("mkdir /proj/",upid,"/nobackup/username"))
+```{r}
+#| output: asis
+#| echo: false
+out <- paste0("mkdir /proj/", upid, "/nobackup/username")
+cat(
+  "```{.bash filename='Terminal'}",
+  out,
+  "```",
+  sep = "\n"
+)
 ```
 
 This creates a directory with your user name. You will work inside this directory for the workshop. If you cannot write to the folder, the most likely reason is that you have not requested access to the workshop project via SUPR. This is described in step 1 above.

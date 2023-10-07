@@ -1,6 +1,6 @@
 ---
 title:  "Connecting to UPPMAX"
-
+description: "Connecting to UPPMAX through SSH and GUI (Browser and ThinLinc)"
 date: ""
 format: html
 ---
@@ -37,10 +37,7 @@ Fire up the available SSH program and enter the following:
 $ ssh username@rackham.uppmax.uu.se
 ```
 
-Replace username with your UPPMAX username.
-
-Enter your password when prompted. As you type, nothing will show on the screen.
-No stars, no dots. It is supposed to be that way. Just type the password and press enter, it will be fine.
+Enter your password when prompted. As you type, nothing will show on the screen. No stars, no dots. It is supposed to be that way. Just type the password and press enter, it will be fine.
 
 Now your screen should look something like this:
 
@@ -64,7 +61,7 @@ Last login: Fri May 18 15:03:59 2018 from mi04.icm.uu.se
 dahlo@rackham4 ~ $
 ```
 
-Now you are connected to UPPMAX and can start working on the labs.
+Now you are connected to UPPMAX and can start working.
 
 ## Remote desktop
 
@@ -76,36 +73,43 @@ We have a ThinLinc server running at one of the login nodes which allows users t
 
 To be able to login via a web browser you will have to set up two-factor authentication first. Follow the <a href="https://www.uppmax.uu.se/support/user-guides/setting-up-two-factor-authentication/" target="_blank" rel="noopener noreferrer">instructions at the UPPMAX homepage</a>, and once you are done you can continue below.
 
-   1. Go to the login page, <a href="https://rackham-gui.uppmax.uu.se/" target="_blank" rel="noopener noreferrer">https://rackham-gui.uppmax.uu.se/</a>
-   2. Enter your UPPMAX username.
-   3. Enter your UPPMAX password, followed by your current two-factor authentication code.
-      Eg. if your password is `hunter2` and your current two-factor authentication code is `123456` you will enter `hunter2123456` as your password.
-      ![](assets/thinlinc_00.png){width="200px"}
-   4. It will ask you which profile you want to use, so first press the `Forward` button. Then you can choose which desktop environment you want to use. `Xfce` is pretty straight-forward and easy to use, but feel free to try either of them. You get to choose every time you login so it's not a permanent choice.
-      ![](assets/thinlinc_01.png){width="200px"}
-   5. Once your desktop has been loaded, start a terminal either by clicking the black terminal icon at the bottom of the screen, or by pressing the `Applications` button in the top left corner and select `Terminal Emulator`.
-      ![](assets/thinlinc_02.png){width="200px"}
+1. Go to the login page, <a href="https://rackham-gui.uppmax.uu.se/" target="_blank" rel="noopener noreferrer">https://rackham-gui.uppmax.uu.se/</a>
+2. Enter your UPPMAX username.
+3. Enter your UPPMAX password, followed by your current two-factor authentication code.
+   Eg. if your password is `hunter2` and your current two-factor authentication code is `123456` you will enter `hunter2123456` as your password.  
+
+   ![](assets/thinlinc_00.png){width="200px"}  
+
+4. It will ask you which profile you want to use, so first press the `Forward` button. Then you can choose which desktop environment you want to use. `Xfce` is pretty straight-forward and easy to use, but feel free to try either of them. You get to choose every time you login so it's not a permanent choice.  
+
+   ![](assets/thinlinc_01.png){width="200px"}  
+
+5. Once your desktop has been loaded, start a terminal either by clicking the black terminal icon at the bottom of the screen, or by pressing the `Applications` button in the top left corner and select `Terminal Emulator`.  
+
+   ![](assets/thinlinc_02.png){width="200px"}  
 
 ### ThinLink App
 
-   1. If you haven't already done so, download the ThinLinc client matching your local computer (i.e Windows, Linux, MacOS X or Solaris) from <a href="https://www.cendio.com/thinlinc/download" target="_blank" rel="noopener noreferrer">https://www.cendio.com/thinlinc/download and install it.
-   2. Launch the ThinLinc client. You should see a form where you can enter your username and password, and possibly a server name. If you only see this simple form:
-      ![](assets/thinlinc_03.png){width="200px"}
+1. If you haven't already done so, download the ThinLinc client matching your local computer (i.e Windows, Linux, MacOS X or Solaris) from <a href="https://www.cendio.com/thinlinc/download" target="_blank" rel="noopener noreferrer">https://www.cendio.com/thinlinc/download</a> and install it.
+2. Launch the ThinLinc client. You should see a form where you can enter your username and password, and possibly a server name. If you only see this simple form as shown below, you can click **Advanced** to be able to set the server name.  
 
-      you can click Advanced to be able to set the server name.
-   3. Change the **Server** setting to `rackham-gui.uppmax.uu.se`.
-   4. Change the **Name** setting to your UPPMAX username.
-   5. Set the **Password** setting to your UPPMAX password.
-   6. You do not need to change any other settings.
-   7. You will first come to the `ThinLinc profile chooser`. Press the `Forward` button to continue. Then you can choose which desktop environment you want to use. `Xfce` is pretty straight-forward and easy to use, but feel free to try either of them. You get to choose every time you login so it's not a permanent choice.
-   8. Press the "Connect" button.
-   9. If you connect for the first time you will see the "The server's host key is not cached ..." dialog.
-      ![](assets/thinlinc_01.png){width="200px"}
+   ![](assets/thinlinc_03.png){width="200px"}  
 
-   10. Once your desktop has been loaded, start a terminal either by clicking the black terminal icon at the bottom of the screen, or by pressing the `Applications` button in the top left corner and select `Terminal Emulator`.
-      ![](assets/thinlinc_02.png){width="200px"}
+3. Change the **Server** setting to `rackham-gui.uppmax.uu.se`.
+4. Change the **Name** setting to your UPPMAX username.
+5. Set the **Password** setting to your UPPMAX password.
+6. You do not need to change any other settings.
+7. You will first come to the `ThinLinc profile chooser`. Press the `Forward` button to continue. Then you can choose which desktop environment you want to use. `Xfce` is pretty straight-forward and easy to use, but feel free to try either of them. You get to choose every time you login so it's not a permanent choice.
+8. Press the **Connect** button.
+9. If you connect for the first time you will see the "The server's host key is not cached ..." dialog.  
 
-   11. **Two factor authentication:**  The ThinLinc client connects over SSH which means it **may** be required to present a two factor authentication code. If you need to use this when logging in with SSH you also need to use it when logging in with ThinLinc (it depends on where you connect from). The ThinLinc client does not know how to ask for the two factor code, so you will need to use the grace time feature. To do this, first you have to connect with regular SSH and present the required two factor code. Once you have logged in over SSH you can safely exit again. The login server will remember that you just logged in for a few minutes and will not ask for two factor authentication again, so make sure you do not wait too long to connect with the ThinLinc client.
+   ![](assets/thinlinc_01.png){width="200px"}  
+
+10. Once your desktop has been loaded, start a terminal either by clicking the black terminal icon at the bottom of the screen, or by pressing the `Applications` button in the top left corner and select `Terminal Emulator`.  
+
+   ![](assets/thinlinc_02.png){width="200px"}  
+
+11. **Two factor authentication:**  The ThinLinc client connects over SSH which means it **may** be required to present a two factor authentication code. If you need to use this when logging in with SSH you also need to use it when logging in with ThinLinc (it depends on where you connect from). The ThinLinc client does not know how to ask for the two factor code, so you will need to use the grace time feature. To do this, first you have to connect with regular SSH and present the required two factor code. Once you have logged in over SSH you can safely exit again. The login server will remember that you just logged in for a few minutes and will not ask for two factor authentication again, so make sure you do not wait too long to connect with the ThinLinc client.
 
 ## After connection to UPPMAX
 
