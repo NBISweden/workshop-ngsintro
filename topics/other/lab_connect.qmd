@@ -11,10 +11,6 @@ library(here)
 upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
 ```
 
-::: {.callout-note}
-In code blocks, the dollar sign (`$`) is not to be printed. The dollar sign is usually an indicator that the text following it should be typed in a terminal window.
-:::
-
 We will teach you two different ways to connect to UPPMAX. From UPPMAX point of view it doesn't matter which one you use, and you can change whenever you want to or even use both ways simultaiously. The first one is a text-based SSH connection, and the other one is a graphical remote desktop. The latter one is useful if you need to view images or documents in GUI programs without having to first download the image/document to your own computer first. Since it is using graphics, it will require you to have an internet connection that is good and stable.
 
 The reason we will teach you two ways is that some parts of this course will require you to view plots and images, and adding an additional download step would just unneccesarily complicate things.
@@ -109,7 +105,7 @@ To be able to login via a web browser you will have to set up two-factor authent
 
    ![](assets/thinlinc_02.png){width="200px"}  
 
-11. **Two factor authentication:**  The ThinLinc client connects over SSH which means it **may** be required to present a two factor authentication code. If you need to use this when logging in with SSH you also need to use it when logging in with ThinLinc (it depends on where you connect from). The ThinLinc client does not know how to ask for the two factor code, so you will need to use the grace time feature. To do this, first you have to connect with regular SSH and present the required two factor code. Once you have logged in over SSH you can safely exit again. The login server will remember that you just logged in for a few minutes and will not ask for two factor authentication again, so make sure you do not wait too long to connect with the ThinLinc client.
+11. **Two factor authentication:**  The ThinLinc client connects over SSH which means it **may** be required to present a two factor authentication code. If you need to use this when logging in with SSH you also need to use it when logging in with ThinLinc (it depends on where you connect from). The ThinLinc client does not know how to ask for the two factor code, so you will need to use the grace time feature. To do this, first you have to connect with regular SSH and present the required two factor code. Once you have logged in over SSH you can safely exit again. The login server will remember that you just logged in for a few minutes and will not ask for two factor authentication again, so make sure you do not wait too long to connect with the ThinLinc client.  
 
 ## After connection to UPPMAX
 

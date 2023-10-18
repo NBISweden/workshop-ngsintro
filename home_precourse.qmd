@@ -15,19 +15,21 @@ upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
 upstore <- yaml::read_yaml(here("_quarto.yml"))$uppmax_storage
 ```
 
-## Create UPPMAX account
+## UPPMAX
 
 Remote computing cluster UPPMAX will be use for data analyses. A SUPR/NAISS account is needed to use these resources.
 
-If you do not already have one, create an account at [SUPR/NAISS](https://supr.naiss.se). Then, Log in to [SUPR/NAISS](https://supr.naiss.se/) using the SWAMID preferably.
+If you do not already have one, create an account at [SUPR/NAISS](https://supr.naiss.se). Then, Log in to [SUPR/NAISS](https://supr.naiss.se/), preferably using the SWAMID.
 
 ![](assets/images/supr-login.jpg){width="70%"}
 
 Before proceeding with applying for project membership and user accounts, we have to accept the NAISS User Agreement. Do this by clicking the [Personal Information](https://supr.naiss.se/person/) link in the left sidebar menu. The scroll down a bit until you reach the section **User Agreements**. If you already have accepted it the State will be a green box with the text Accepted in it. If it is anything else, click it to start the accepting process.
 
-**NOTE**: This is where you might run into trouble if you don't have a SWAMID connected account. You will not be able to accept the user agreement online without it, so you will have to send in your acceptance in paper form together with a copy of your passport. This process can take a week or more, so please make sure you can accept the user agreement in good time.
+::: {.callout-tip}
+This is where you might run into trouble if you don't have a SWAMID connected account. You will not be able to accept the user agreement online without it, so you will have to send in your acceptance in paper form together with a copy of your passport. This process can take a week or more, so please make sure you can accept the user agreement in good time.
+:::
 
-After making sure you have an accepted user agreement, go to the [**Projects**](https://supr.naiss.se/project/) page and request membership to the project ID: **`r paste0(upid)`**.
+After making sure you have an accepted user agreement, go to the [**SUPR/NAISS Projects**](https://supr.naiss.se/project/) page and request membership to the project ID: [**`r paste0(upid)`**]{.highlight}
 
 ![](assets/images/supr-request.jpg){width="70%"}
 
@@ -74,7 +76,7 @@ When you need to transfer data between the remote cluster and your computer, you
 
 ## Connect to UPPMAX
 
-See "Connecting to UPPMAX" instructions on the **Contents** page.
+See [Connecting to UPPMAX](topics/other/lab_connect.qmd) instructions listed on the **Contents** page.
 
 ::: {.callout-tip}
 If you want to get a primer on using the terminal, you can get started with the following **Tutorial One** at this link *[Unix tutorial for beginners](http://www.ee.surrey.ac.uk/Teaching/Unix/)*. You can use [https://scilifelab.github.io/courses/ngsintro/common/emu/](https://scilifelab.github.io/courses/ngsintro/common/emu/) [(or this mirror)](https://bellard.org/jslinux/vm.html?url=https://bellard.org/jslinux/buildroot-x86.cfg) to try the commands in the tutorial, so that you don't mess up any real world system. If you have any questions regarding this tutorial contact: *martin.dahlo [at] scilifelab.uu.se*.
