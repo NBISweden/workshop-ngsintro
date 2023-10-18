@@ -1,0 +1,14 @@
+{
+  "hash": "b700580ef910ab5a7e48a520824a640f",
+  "result": {
+    "markdown": "---\ntitle: \"Uppmax IO\"\nsubtitle: \"Downloading and uploading files from Uppmax\"\ndate: \"\"\nformat: html\n---\n\n\n\n\n::: {.callout-note}\nIn code blocks, the dollar sign (`$`) is not to be printed. The dollar sign is usually an indicator that the text following it should be typed in a terminal window.\n:::\n\n## Local workspace\n\nStart by creating a folder on your laptop where the files that you will download should end up. You need to have write permission in this folder. This folder will be referred to as your *local workspace* throughout these instructions.\n\nOpen a terminal window on your laptop and move into your local workspace.\n\n## Download a file from UPPMAX\n\nLets assume that you have a file \"results.txt\" in the following folder on UPPMAX:\n\n\n::: {.cell}\n::: {.cell-output .cell-output-stdout}\n```{.bash}\n/proj/naiss2023-22-862/nobackup/username/somefolder/\n```\n:::\n:::\n\n\n::: {.callout-note}\n`username` and `somefolder` should be replaced with your real username and a real folder name.\n:::\n\nTo download the file to your local workspace type:\n\n\n```{.bash filename='Local Terminal'}\nscp username@rackham.uppmax.uu.se:/proj/naiss2023-22-862/nobackup/username/somefolder/results.txt .\n```\n\n\nNote that the last `.` means that the file will keep the original name.\n\n## Upload a file to UPPMAX\n\nNow lets imagine that you have developed a script on your laptop and want to upload it to UPPMAX. The script is stored in your local workspace and is called \"script.sh\". Type this in your local workspace to upload the file to UPPMAX:\n\n::: {.callout-note}\n`username` and `somefolder` should be replaced with your real username and a real folder name.\n:::\n\n\n```{.bash filename='Local Terminal'}\nscp script.sh username@rackham.uppmax.uu.se:/proj/naiss2023-22-862/nobackup/username/somefolder/.\n```\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
