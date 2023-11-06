@@ -1,6 +1,7 @@
 ---
-title: "Alternative cluster instructions"
-subtitle: ""
+title: "Working on Tetralith cluster"
+subtitle: "Alternative cluster instructions"
+description: "Guide to connecting and working on the backup cluster using Singularity image."
 author: "Malin Larsson"
 format: html
 ---
