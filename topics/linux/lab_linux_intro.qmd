@@ -132,7 +132,7 @@ Now you will need some files. To avoid all the course participants editing the s
 
 The files are located in the folder **/sw/courses/ngsintro/linux/linux_tutorial**
 
-or they can be downloaded if you are not on UPPMAX at the moment, [files.tar.gz](data/linux/files.tar.gz) (instruction on how to download further down)
+or they can be downloaded if you are not on UPPMAX at the moment, [files.tar.gz](https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/linux/assets/files.tar.gz) (instruction on how to download further down)
 
 For structures sake, first create a folder with your username in the **nobackup** folder, and a folder called **linux_tutorial** inside that folder, where you can put all your lab files.
 
