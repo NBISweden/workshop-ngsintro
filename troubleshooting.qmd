@@ -1,9 +1,7 @@
 ---
-title:  "Troubleshooting"
+title:  "Status & Troubleshooting"
 description: "Utility commands/scripts, troubleshooting, tips and suggestions."
 date: ""
-toc: false
-number-sections: false
 sidebar: false
 format: html
 ---
@@ -194,7 +192,8 @@ snic2022-22-123 btleren    Betül Eren Keskin
 
 Fetch user information from username
 
-```
+```{bash}
+#| eval: false
 finger username
 ```
 
@@ -228,9 +227,7 @@ Type `xeyes` in the terminal.
 
 First ensure X-forwarding works, then run `firefox --no-remote filename.html`
 
-### Data transfer
-
-#### SCP fails with *
+### SCP fails with *
 
 Sometimes students have problems to download files with SCP when there is a `*` in the end of the line. For example; `scp user@rackham.uppmax.uu.se:/proj/bla/HG00097.bam* .`. It needs to be changed to `scp user@rackham.uppmax.uu.se:/proj/bla/HG00097.bam\* .`.
 
@@ -242,7 +239,7 @@ When logging in through an installed client, **username/password** seems to work
 
 #### Minimize the ThinLinc window
 
-On a  Mac, press <kbd>Fn+F8</kbd>, then select: Minimize window. 
+On a  Mac, press <kbd>Fn + F8</kbd>, then select: Minimize window. 
 
 #### Gedit opening issues
 
@@ -252,16 +249,16 @@ When opening it from the terminal (`gedit &`), it was not able to connect to a d
 
 This is to specify where the **home directory** in MobaXTerm is located in the computer’s file system. In **Settings > Configuration**, set the persistent home directory to a suitable folder. Restart MobaXTerm. 
 
-
 ### Typing `$` on a Swedish keyboard
 
-Press <kbd>AltGr+4</kbd>.
+Press <kbd>AltGr + 4</kbd>.
 
-### Transparent or black background for XQuartz windows on M1 Mac
+### Black background for XQuartz windows on M1 Mac
 
 As documented [here](https://github.com/XQuartz/XQuartz/issues/31), run:
 
-```
+```{bash}
+#| eval: false
 defaults write org.xquartz.X11 enable_render_extension 0
 ```
 
