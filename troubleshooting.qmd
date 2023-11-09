@@ -1,5 +1,6 @@
 ---
-title:  "Admin resources"
+title:  "Troubleshooting"
+description: "Utility commands/scripts, troubleshooting, tips and suggestions."
 date: ""
 toc: false
 number-sections: false
@@ -21,15 +22,11 @@ upres5 <- y$uppmax_res_5
 rm(y)
 ```
 
-::: {.alert .alert-primary}
-Useful utility commands/scripts and troubleshooting for course managers.
-:::
-
-# Status
+## Status
 
 Useful commands for monitoring status and user activity on UPPMAX.
 
-## List jobs
+### List jobs
 
 List all jobs running an a project
 
@@ -53,7 +50,7 @@ Sample output
   23185119      core   (null)    wingf  R    2:53:40      1 r479
 ```
 
-## Jobs per user
+### Jobs per user
 
 Sorted list of jobs per user
 
@@ -79,7 +76,7 @@ Sample output
 
 ```
 
-## Core usage
+### Core usage
 
 Total number of cores used on a project
 
@@ -89,7 +86,7 @@ Total number of cores used on a project
 cat(paste0("squeue -A ",upid," -o %C | awk '{total += $0} END{print total}'"))
 ```
 
-## Space usage
+### Space usage
 
 Amount of storage space used per project
 
@@ -107,7 +104,7 @@ Your project     Your File Area         Unit       Usage  Quota Limit  Over Quot
 snic2022-22-123  /proj/snic2022-22-123  GBytes       4.6          128
 ```
 
-## Reservation use
+### Reservation use
 
 List users by reservation ID
 
@@ -134,7 +131,7 @@ Sample output
 
 ```
 
-## User activity
+### User activity
 
 List last activity in a directory for all users
 
@@ -156,7 +153,7 @@ analopez        2021-11-22 14:56:16     (/proj/snic2021-22-644/nobackup/analopez
 private         Not available     ()
 ```
 
-## List reservations for a project
+### List reservations for a project
 
 ```{r}
 #| echo: false
@@ -175,7 +172,7 @@ ReservationName=snic2021-22-644_fri StartTime=2021-11-26T08:30:00 EndTime=2021-1
    Users=(null) Accounts=snic2021-22-644 Licenses=(null) State=INACTIVE BurstBuffer=(null) Watts=n/a
 ```
 
-## List project members
+### List project members
 
 ```{r}
 #| echo: false
@@ -193,7 +190,7 @@ snic2022-22-123 berka      Berkay Paylar
 snic2022-22-123 btleren    Betül Eren Keskin
 ```
 
-## User identity
+### User identity
 
 Fetch user information from username
 
@@ -201,11 +198,11 @@ Fetch user information from username
 finger username
 ```
 
-# Troubleshooting
+## Troubleshooting
 
-## X-forwarding
+### X-forwarding
 
-### Setup
+#### Setup
 
 **Mac users**
 
@@ -223,7 +220,7 @@ Also use this when logging in to the compute node!
 
 In MobaXTerm, go to settings and make sure that X-forwarding is checked.
 
-### Testing X-forwarding
+#### Testing X-forwarding
 
 Type `xeyes` in the terminal.
 
@@ -231,33 +228,41 @@ Type `xeyes` in the terminal.
 
 First ensure X-forwarding works, then run `firefox --no-remote filename.html`
 
-## Data transfer
+### Data transfer
 
-### SCP fails with *
+#### SCP fails with *
 
 Sometimes students have problems to download files with SCP when there is a `*` in the end of the line. For example; `scp user@rackham.uppmax.uu.se:/proj/bla/HG00097.bam* .`. It needs to be changed to `scp user@rackham.uppmax.uu.se:/proj/bla/HG00097.bam\* .`.
 
-## Thinlinc
+### Thinlinc
 
-### Login
+#### Login
 
 When logging in through an installed client, **username/password** seems to work. When logging in through the browser, **username/password+2FA** may be required.
 
-### Minimize the ThinLinc window
+#### Minimize the ThinLinc window
 
 On a  Mac, press <kbd>Fn+F8</kbd>, then select: Minimize window. 
 
-### Gedit opening issues
+#### Gedit opening issues
 
 When opening it from the terminal (`gedit &`), it was not able to connect to a display to show the graphics. The `DISPLAY` variable was empty. This was when using ThinLinc, so it should have worked. The issue was solved by opening gedit from the menu. Gedit could be labelled Text Editor. 
 
-## Set persistent home directory in MobaXTerm
+### Set persistent home directory in MobaXTerm
 
 This is to specify where the **home directory** in MobaXTerm is located in the computer’s file system. In **Settings > Configuration**, set the persistent home directory to a suitable folder. Restart MobaXTerm. 
 
 
-## Typing `$` on a Swedish keyboard
+### Typing `$` on a Swedish keyboard
 
 Press <kbd>AltGr+4</kbd>.
+
+### Transparent or black background for XQuartz windows on M1 Mac
+
+As documented [here](https://github.com/XQuartz/XQuartz/issues/31), run:
+
+```
+defaults write org.xquartz.X11 enable_render_extension 0
+```
 
 ***
