@@ -45,7 +45,7 @@ HG00101       | Low coverage WGS
 
 ### Connect to Uppmax
 
-During this lab it is best to connect to UPPMAX via a remote desktop (ThinLinc). Instructions for this is available in Canvas under **Contents** > **Additional content** > **Connecting to UPPMAX**. Please follow the instructions in section 1.2 Remote desktop connection.
+During this lab it is best to connect to UPPMAX via a remote desktop (ThinLinc). Instructions for this is available in Canvas under **Workshop** > **Contents** > **Useful resources** > **Connecting to UPPMAX**. Please follow the instructions in section 1.2 Remote desktop connection.
 
 ### Book a node
 
