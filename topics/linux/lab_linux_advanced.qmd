@@ -17,7 +17,7 @@ In code blocks, the dollar sign (`$`) is not to be printed. The dollar sign is u
 
 ## Connect to UPPMAX
 
-The first step of this lab is to open a ssh connection to UPPMAX. Please refer to [**Connecting to UPPMAX**](topics/other/lab_connect.html) for instructions. Once connected to UPPMAX, return here and continue reading the instructions below.
+The first step of this lab is to open a ssh connection to UPPMAX. Please refer to [**Connecting to UPPMAX**](../other/lab_connect.html) for instructions. Once connected to UPPMAX, return here and continue reading the instructions below.
 
 ## Logon to a node
 

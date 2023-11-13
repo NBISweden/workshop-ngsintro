@@ -17,7 +17,7 @@ In code blocks, the dollar sign (`$`) is not to be printed. The dollar sign is u
 
 # Connect to UPPMAX
 
-The first step of this lab is to open a ssh connection to UPPMAX. Please refer to [**Connecting to UPPMAX**](topics/other/lab_connect.html) for instructions. Once connected to UPPMAX, return here and continue reading the instructions below.
+The first step of this lab is to open a ssh connection to UPPMAX. Please refer to [**Connecting to UPPMAX**](../../other/lab_connect.html) for instructions. Once connected to UPPMAX, return here and continue reading the instructions below.
 
 # Logon to a node
 
@@ -367,6 +367,6 @@ Remember the commands **`uquota`** (show how much of your storage space you are 
 
 ## Optional
 
-This optional material on uppmax pipelines will teach you the basics in creating pipelines. Continue with this if you finish the current lab ahead of time. Navigate to the exercise [Uppmax Pipelines lab](topics/uppmax/pipeline/lab_uppmax_pipeline.html).
+This optional material on uppmax pipelines will teach you the basics in creating pipelines. Continue with this if you finish the current lab ahead of time. Navigate to the exercise [Uppmax Pipelines lab](../pipeline/lab_uppmax_pipeline.html).
 
 :::
