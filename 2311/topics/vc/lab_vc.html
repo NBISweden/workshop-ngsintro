@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Malin Larsson">
+
+<title>Variant Calling</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../assets/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<style>
+
+      .quarto-title-block .quarto-title-banner {
+        background: #E9F2D1;
+      }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&amp;family=Nunito:ital,wght@0,400;0,600;1,400;1,600&amp;display=swap" rel="stylesheet">
+    
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../assets/logos/nbis-scilifelab.png" alt="nbis-scilifelab-logo." class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_schedule.html" rel="" target="">
+ <span class="menu-text">Schedule</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_contents.html" rel="" target="">
+ <span class="menu-text">Contents</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_precourse.html" rel="" target="">
+ <span class="menu-text">Precourse</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_syllabus.html" rel="" target="">
+ <span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_info.html" rel="" target="">
+ <span class="menu-text">Info</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Variant Calling</h1>
+            <p class="subtitle lead">From reads to short variants</p>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Malin Larsson </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">13-Nov-2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#data-description" id="toc-data-description" class="nav-link" data-scroll-target="#data-description">Data description</a>
+  <ul>
+  <li><a href="#samples" id="toc-samples" class="nav-link" data-scroll-target="#samples">Samples</a></li>
+  <li><a href="#Genomicregion" id="toc-Genomicregion" class="nav-link" data-scroll-target="#Genomicregion">Genomic region</a></li>
+  <li><a href="#Data" id="toc-Data" class="nav-link" data-scroll-target="#Data">Data folder on UPPMAX</a></li>
+  </ul></li>
+  <li><a href="#preparations" id="toc-preparations" class="nav-link" data-scroll-target="#preparations">Preparations</a>
+  <ul>
+  <li><a href="#preparelaptop" id="toc-preparelaptop" class="nav-link" data-scroll-target="#preparelaptop">Laptop</a></li>
+  <li><a href="#uppmax" id="toc-uppmax" class="nav-link" data-scroll-target="#uppmax">UPPMAX</a>
+  <ul class="collapse">
+  <li><a href="#connect-to-uppmax" id="toc-connect-to-uppmax" class="nav-link" data-scroll-target="#connect-to-uppmax">Connect to UPPMAX</a></li>
+  <li><a href="#logon-to-a-node" id="toc-logon-to-a-node" class="nav-link" data-scroll-target="#logon-to-a-node">Logon to a node</a></li>
+  <li><a href="#workspace-on-uppmax" id="toc-workspace-on-uppmax" class="nav-link" data-scroll-target="#workspace-on-uppmax">Workspace on UPPMAX</a></li>
+  <li><a href="#symbolic-links-to-data" id="toc-symbolic-links-to-data" class="nav-link" data-scroll-target="#symbolic-links-to-data">Symbolic links to data</a></li>
+  <li><a href="#Accessingprograms" id="toc-Accessingprograms" class="nav-link" data-scroll-target="#Accessingprograms">Accessing programs</a></li>
+  </ul></li>
+  <li><a href="#index-the-genome" id="toc-index-the-genome" class="nav-link" data-scroll-target="#index-the-genome">Index the genome</a></li>
+  </ul></li>
+  <li><a href="#variant-calling-in-one-sample" id="toc-variant-calling-in-one-sample" class="nav-link" data-scroll-target="#variant-calling-in-one-sample"><span class="header-section-number">1</span> Variant calling in one sample</a>
+  <ul>
+  <li><a href="#aligning-reads" id="toc-aligning-reads" class="nav-link" data-scroll-target="#aligning-reads"><span class="header-section-number">1.1</span> Aligning reads</a>
+  <ul class="collapse">
+  <li><a href="#bwamem" id="toc-bwamem" class="nav-link" data-scroll-target="#bwamem"><span class="header-section-number">1.1.1</span> BWA mem</a></li>
+  <li><a href="#check-bam-with-samtools" id="toc-check-bam-with-samtools" class="nav-link" data-scroll-target="#check-bam-with-samtools"><span class="header-section-number">1.1.2</span> Check bam with samtools</a>
+  <ul class="collapse">
+  <li><a href="#question" id="toc-question" class="nav-link" data-scroll-target="#question">Question</a></li>
+  <li><a href="#question-1" id="toc-question-1" class="nav-link" data-scroll-target="#question-1">Question</a></li>
+  </ul></li>
+  <li><a href="#check-bam-in-igv" id="toc-check-bam-in-igv" class="nav-link" data-scroll-target="#check-bam-in-igv"><span class="header-section-number">1.1.3</span> Check bam in IGV</a>
+  <ul class="collapse">
+  <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions">Questions</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#variant-calling" id="toc-variant-calling" class="nav-link" data-scroll-target="#variant-calling"><span class="header-section-number">1.2</span> Variant Calling</a>
+  <ul class="collapse">
+  <li><a href="#haplotypecaller" id="toc-haplotypecaller" class="nav-link" data-scroll-target="#haplotypecaller"><span class="header-section-number">1.2.1</span> HaplotypeCaller</a></li>
+  <li><a href="#explore-the-vcf-file" id="toc-explore-the-vcf-file" class="nav-link" data-scroll-target="#explore-the-vcf-file"><span class="header-section-number">1.2.2</span> Explore the vcf file</a>
+  <ul class="collapse">
+  <li><a href="#question-2" id="toc-question-2" class="nav-link" data-scroll-target="#question-2">Question</a></li>
+  <li><a href="#question-3" id="toc-question-3" class="nav-link" data-scroll-target="#question-3">Question</a></li>
+  <li><a href="#questions-1" id="toc-questions-1" class="nav-link" data-scroll-target="#questions-1">Questions</a></li>
+  <li><a href="#question-4" id="toc-question-4" class="nav-link" data-scroll-target="#question-4">Question</a></li>
+  </ul></li>
+  <li><a href="#vcfinigv" id="toc-vcfinigv" class="nav-link" data-scroll-target="#vcfinigv"><span class="header-section-number">1.2.3</span> Check vcf in IGV</a>
+  <ul class="collapse">
+  <li><a href="#questions-2" id="toc-questions-2" class="nav-link" data-scroll-target="#questions-2">Questions</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#jointvc" id="toc-jointvc" class="nav-link" data-scroll-target="#jointvc"><span class="header-section-number">2</span> Variant calling in cohort</a>
+  <ul>
+  <li><a href="#bwa_joint" id="toc-bwa_joint" class="nav-link" data-scroll-target="#bwa_joint"><span class="header-section-number">2.1</span> BWA mem</a></li>
+  <li><a href="#generategvcf" id="toc-generategvcf" class="nav-link" data-scroll-target="#generategvcf"><span class="header-section-number">2.2</span> Generate g.vcf files</a></li>
+  <li><a href="#jointgenotyping" id="toc-jointgenotyping" class="nav-link" data-scroll-target="#jointgenotyping"><span class="header-section-number">2.3</span> Joint genotyping</a>
+  <ul class="collapse">
+  <li><a href="#questions-3" id="toc-questions-3" class="nav-link" data-scroll-target="#questions-3">Questions</a></li>
+  </ul></li>
+  <li><a href="#check-combined-vcf-file-in-igv" id="toc-check-combined-vcf-file-in-igv" class="nav-link" data-scroll-target="#check-combined-vcf-file-in-igv"><span class="header-section-number">2.4</span> Check combined vcf file in IGV</a>
+  <ul class="collapse">
+  <li><a href="#questions-4" id="toc-questions-4" class="nav-link" data-scroll-target="#questions-4">Questions</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#gatk_bp" id="toc-gatk_bp" class="nav-link" data-scroll-target="#gatk_bp"><span class="header-section-number">3</span> GATK’s best practices</a>
+  <ul>
+  <li><a href="#bwa-mem" id="toc-bwa-mem" class="nav-link" data-scroll-target="#bwa-mem"><span class="header-section-number">3.1</span> BWA mem</a></li>
+  <li><a href="#mark-duplicates" id="toc-mark-duplicates" class="nav-link" data-scroll-target="#mark-duplicates"><span class="header-section-number">3.2</span> Mark Duplicates</a></li>
+  <li><a href="#recalibrate-base-quality-scores" id="toc-recalibrate-base-quality-scores" class="nav-link" data-scroll-target="#recalibrate-base-quality-scores"><span class="header-section-number">3.3</span> Recalibrate Base Quality Scores</a></li>
+  <li><a href="#generate-g.vcf-files" id="toc-generate-g.vcf-files" class="nav-link" data-scroll-target="#generate-g.vcf-files"><span class="header-section-number">3.4</span> Generate g.vcf files</a></li>
+  <li><a href="#joint-genotyping" id="toc-joint-genotyping" class="nav-link" data-scroll-target="#joint-genotyping"><span class="header-section-number">3.5</span> Joint genotyping</a></li>
+  <li><a href="#variant-filtering" id="toc-variant-filtering" class="nav-link" data-scroll-target="#variant-filtering"><span class="header-section-number">3.6</span> Variant Filtering</a>
+  <ul class="collapse">
+  <li><a href="#precomputed-files" id="toc-precomputed-files" class="nav-link" data-scroll-target="#precomputed-files">Precomputed files</a></li>
+  <li><a href="#questions-5" id="toc-questions-5" class="nav-link" data-scroll-target="#questions-5">Questions</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#clean-up" id="toc-clean-up" class="nav-link" data-scroll-target="#clean-up">Clean up</a></li>
+  <li><a href="#answers" id="toc-answers" class="nav-link" data-scroll-target="#answers">Answers</a></li>
+  <li><a href="#sbatch-scripts" id="toc-sbatch-scripts" class="nav-link" data-scroll-target="#sbatch-scripts">SBATCH scripts</a>
+  <ul>
+  <li><a href="#variant-calling-in-cohort" id="toc-variant-calling-in-cohort" class="nav-link" data-scroll-target="#variant-calling-in-cohort">Variant calling in cohort</a></li>
+  <li><a href="#gatk-best-practices" id="toc-gatk-best-practices" class="nav-link" data-scroll-target="#gatk-best-practices">GATK best practices</a></li>
+  </ul></li>
+  <li><a href="#additional-information" id="toc-additional-information" class="nav-link" data-scroll-target="#additional-information">Additional information</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="introduction" class="level1 unnumbered">
+<h1 class="unnumbered">Introduction</h1>
+<p>Whole genome sequencing (WGS) is a comprehensive method for analyzing entire genomes. This workshop will take you through the process of calling germline short variants (SNVs and INDELs) in WGS data from three human samples.</p>
+<ol type="1">
+<li>The first part of the workshop will guide you through a basic variant calling workflow in one sample. The goals are that you should get familiar with the bam and vcf file formats, and be able to interpret vcf files in Integrative Genomics Viewer (IGV).</li>
+<li>If you have time, the next part of the workshop will show you how to perform joint variant calling in three samples. The goals here are that you should be able to interpret multi-sample vcf files and explain the differences between the g.vcf and vcf file formats.</li>
+<li>If you have time, the last part of the workshop will take you through the GATK best practices for germline short variant detection in three samples. The goal here is that you should learn how to use GATK’s documentation so that you can analyze your own samples in the future.</li>
+</ol>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+General guide
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>You will work on the computing cluster Rackham at UPPMAX</li>
+<li>If you change the node you are working on you will need to reload the tool modules.</li>
+<li>Please type commands in the terminal instead of copying and pasting them which often result in formatting errors.</li>
+<li>Use tab completion.</li>
+<li>In paths, please replace <code>username</code> with your actual UPPMAX username.</li>
+<li>In commands, please replace <code>parameter</code> with the correct parameter, for example your input file name, output file name, directory name, etc.</li>
+<li>A line starting with <code>#</code> is a comment</li>
+<li>Running a command without parameters will often return a help message on how to run the command.</li>
+<li>After a command is completed, please check that the desired output file was generated and that it has a reasonable size (use <code>ls -l</code>).</li>
+<li>Google errors, someone in the world has run into EXACTLY the same problem you had and asked about it on a forum somewhere.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="data-description" class="level1 unnumbered">
+<h1 class="unnumbered">Data description</h1>
+<section id="samples" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="samples">Samples</h2>
+<p>The 1000 Genomes Project ran between 2008 and 2015, creating the largest public catalogue of human variation and genotype data. In this workshop we will use low coverage whole genome sequence data from three individuals, generated in the first phase of the 1000 Genomes Project.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Sample</th>
+<th>Population</th>
+<th>Sequencing technology</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>HG00097</td>
+<td>British in England and Scotland</td>
+<td>Low coverage WGS</td>
+</tr>
+<tr class="even">
+<td>HG00100</td>
+<td>British in England and Scotland</td>
+<td>Low coverage WGS</td>
+</tr>
+<tr class="odd">
+<td>HG00101</td>
+<td>British in England and Scotland</td>
+<td>Low coverage WGS</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="Genomicregion" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="Genomicregion">Genomic region</h2>
+<p>The <em>LCT</em> gene on chromosome 2 encodes the enzyme lactase, which is responsible for the metabolism of lactose in mammals. Most mammals can not digest lactose as adults, but some humans can. Genetic variants upstream of the <em>LCT</em> gene causes lactase persistence, which means that lactase is expressed also in adulthood and the carrier can continue to digest lactose. The variant rs4988235, located at position chr2:136608646 in the GRCh37 reference genome, has been shown to lead to lactose persistence. The alternative allele (A on the forward strand and T on the reverse strand) creates a new transcription factor binding site that enables continued expression of the gene after weaning.</p>
+<p>In this workshop we will detect genetic variants in the region chr2:136545000-136617000 in the three samples listed above, and check if they carry the allele for lactase persistence.</p>
+<p>For those interested in the details of the genetic bases for lactose tolerance, please read the first three pages of <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf">Lactose intolerance: diagnosis, genetic, and clinical factors</a> by Mattar et al.&nbsp;The variant rs4988235 is here referred to as LCT-13910C&gt;T.</p>
+</section>
+<section id="Data" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="Data">Data folder on UPPMAX</h2>
+<p>All input data for this exercise is located in this folder on Rackham:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/sw/courses/ngsintro/reseq/data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>The fastq files are located in this folder:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/sw/courses/ngsintro/reseq/data/fastq</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Reference files, such as the reference genome in fasta format, are located in this folder:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/sw/courses/ngsintro/reseq/data/ref</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="preparations" class="level1 unnumbered">
+<h1 class="unnumbered">Preparations</h1>
+<section id="preparelaptop" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="preparelaptop">Laptop</h2>
+<p>This lab will be done completely on UPPMAX and the instructions assume that you connect via ThinLinc. However, if you prefer to connect to UPPMAX via ssh you can instead copy some of the resulting files to your laptop and work on them there. , install IGV, and run all the IGV steps on your laptop. If so, please create a local workspace on your laptop, for example a folder called <em>ngsworkflow</em> on your desktop. You need to have write permission in this folder. If you connect to UPPMAX via ThinLinc you don’t have to crete a local workspace.</p>
+</section>
+<section id="uppmax" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="uppmax">UPPMAX</h2>
+<section id="connect-to-uppmax" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="connect-to-uppmax">Connect to UPPMAX</h3>
+<p>During this lab it is best to connect to UPPMAX with ThinLinc, which gives you a graphical remote desktop. Instructions for this is available at <a href="topics/other/lab_connect.html"><strong>Connecting to UPPMAX</strong></a>. Please follow the instructions in section 1.2 Remote desktop connection.</p>
+</section>
+<section id="logon-to-a-node" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="logon-to-a-node">Logon to a node</h3>
+<p>This lab should be done on a compute node (not the login node). First check if you already have an active job allocation using this command:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">-u</span> username</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Where <code>username</code> should be replaced with your username.<br> If no jobs are listed you should allocate a job for this lab. If you already have an active job allocation please proceed to <strong>Connect to the node</strong> below.<br></p>
+<p>Use this code to allocate a job on day 1 of variant-calling:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">salloc</span> <span class="at">-A</span> naiss2023-22-862 <span class="at">-t</span> 04:00:00 <span class="at">-p</span> core <span class="at">-n</span> 1 <span class="at">--no-shell</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Use this code to allocate a job on day 2 of variant-calling:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">salloc</span> <span class="at">-A</span> naiss2023-22-862 <span class="at">-t</span> 04:00:00 <span class="at">-p</span> core <span class="at">-n</span> 1 <span class="at">--no-shell</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Once your job allocation has been granted (should not take long) please check the allocation again using:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">-u</span> username</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You should now see that you have an active job allocation. The node name for your job is listed under the nodelist header.<br></p>
+<p><strong>Connect to the node:</strong></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-Y</span> nodename</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="workspace-on-uppmax" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="workspace-on-uppmax">Workspace on UPPMAX</h3>
+<p>You should work in your folder under the course’s nobackup folder, just like you have done during the previous labs.</p>
+<p>Start by going there using this command:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /proj/naiss2023-22-862/nobackup/username</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Where <code>username</code> should be replaced with your real username. Create a folder for this exercise and move into it:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> ngsworkflow</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ngsworkflow</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Make sure you are located in</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/proj/naiss2023-22-862/nobackup/username/ngsworkflow</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>for the rest of this lab.</p>
+</section>
+<section id="symbolic-links-to-data" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="symbolic-links-to-data">Symbolic links to data</h3>
+<p>The raw data files are located in the <a href="#Data">Data</a> folder described above.<br>
+Create a symbolic link to the reference genome (in this case chromosome 2 in GRCh37) in your workspace:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> /sw/courses/ngsintro/reseq/data/ref/human_g1k_v37_chr2.fasta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Do the same with the fastq files:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> /sw/courses/ngsintro/reseq/data/fastq/HG00097_1.fq</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> /sw/courses/ngsintro/reseq/data/fastq/HG00097_2.fq</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> /sw/courses/ngsintro/reseq/data/fastq/HG00100_1.fq</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> /sw/courses/ngsintro/reseq/data/fastq/HG00100_2.fq</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> /sw/courses/ngsintro/reseq/data/fastq/HG00101_1.fq</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> /sw/courses/ngsintro/reseq/data/fastq/HG00101_2.fq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="Accessingprograms" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="Accessingprograms">Accessing programs</h3>
+<p>Load the modules that are needed during this workshop. Remember that these modules must be loaded every time you login to Rackham, or when you connect to a new compute node.<br>
+First load the bioinfo-tools module:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load bioinfo-tools</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This makes it possible to load the individual programs:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load FastQC/0.11.8</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load bwa/0.7.17</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load samtools/1.10</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load GATK/4.1.4.1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Although you don’t have to specify which versions of the tools to use, it is recommended to do so for reproducibility if you want to rerun the exact same analyses later. When loading the module GATK/4.1.4.1 you will get a warning message about the fact that GATK commands have been updated since the previous version of GATK. This is fine and you don’t have to do anything about it.</p>
+</section>
+</section>
+<section id="index-the-genome" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="index-the-genome">Index the genome</h2>
+<p>Tools that compare short reads with a large reference genome needs indexes of the reference genome to work efficiently. You therefore need to create index files for each tool.<br></p>
+<p>First check if you are standing in the correct directory:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Should return</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/proj/naiss2023-22-862/nobackup/username/ngsworkflow</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Generate BWA index files:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bwa</span> index <span class="at">-a</span> bwtsw human_g1k_v37_chr2.fasta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Check that several new files have been created using <code>ls -l</code>. Then Generate a samtools index:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> faidx human_g1k_v37_chr2.fasta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Check to see what file(s) were created using <code>ls -lrt</code>. Then Generate a GATK sequence dictionary:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="at">-Xmx7g</span> CreateSequenceDictionary <span class="at">-R</span> human_g1k_v37_chr2.fasta <span class="at">-O</span> human_g1k_v37_chr2.dict</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Again, check what file(s) were created using <code>ls -lrt</code>.</p>
+</section>
+</section>
+<section id="variant-calling-in-one-sample" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Variant calling in one sample</h1>
+<p>Now let’s start the main part of the workshop, which is variant calling in one sample. The workflow consists of aligning the reads with <a href="http://bio-bwa.sourceforge.net">BWA</a> and detecting variants with <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037225632-HaplotypeCaller">HaplotypeCaller</a> as illustrated below.</p>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><a href="assets/1_onesamplevc.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="assets/1_onesamplevc.png" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<section id="aligning-reads" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="aligning-reads"><span class="header-section-number">1.1</span> Aligning reads</h2>
+<section id="bwamem" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="bwamem"><span class="header-section-number">1.1.1</span> BWA mem</h3>
+<p>You should use <code>BWA mem</code> to align the reads to the reference genome.</p>
+<p>In the call to <code>BWA mem</code> you need to add something called a <em>read group</em>, which contains information about how the reads were generated. This is required by HaplotypeCaller. Since we don’t know exactly how the reads in the 1000 Genomes Project were generated we will assume that each pair of fastq files was generated from one library preparation (<em>libraryx</em>), derived from one biological sample (<em>HG00097</em>), and run on one lane (<em>lanex</em>) of a flowcell (<em>flowcellx</em>) on the Illumina machine, and define a toy read group with this information. The code for adding this read group is<br></p>
+<p><strong>-R “<span class="citation" data-cites="RG">(<a href="#ref-RG" role="doc-biblioref"><strong>RG?</strong></a>)</span>\tID:HG00097\tPU:lanex_flowcellx\tSM:HG00097\tLB:libraryx\tPL:illumina”</strong>.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When running BWA for another sample later on you have to replace <em>HG00097</em> in the read group with the new sample name. To learn more about read groups please read <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360035890671-Read-groups">this article</a> at GATK forum.</p>
+</div>
+</div>
+<p>You also need to specify how many threads the program should use (should be the same as the number of cores you have access to and is defined by the code <code>-t 1</code> below) and what reference genome file to use. The output from <code>BWA</code> should be parsed to <code>samtools sort</code>, which sorts the sam file according to chromosome position and then converts the sam file to the binary bam format. Finally, use a file redirect <code>&gt;</code> so that the output ends up in a file and not on your screen.</p>
+<p>First make sure that you are standing in the workspace you created on UPPMAX for this lab:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Should return</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/proj/naiss2023-22-862/nobackup/username/ngsworkflow</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Then use this command to align the reads, add the read group, sort the reads and write them to a bam file:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bwa</span> mem <span class="dt">\</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>-R <span class="st">"@RG\tID:readgroup_HG00097\tPU:lanex_flowcellx\tSM:HG00097\tLB:libraryx\tPL:illumina"</span> <span class="dt">\</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>-t 1 human_g1k_v37_chr2.fasta HG00097_1.fq HG00097_2.fq <span class="kw">|</span> <span class="ex">samtools</span> sort <span class="op">&gt;</span> HG00097.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Please check that the expected output file was generated and that it has content using <code>ls -lrt</code>.</p>
+<p>Next you need to index the generated bam file so that programs can randomly access the sorted data without reading the whole file. This command creates an index file with the same name as the input bam file, except with a .bai extension:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> index HG00097.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Please check what output file was generated this time.</p>
+</section>
+<section id="check-bam-with-samtools" class="level3" data-number="1.1.2">
+<h3 data-number="1.1.2" class="anchored" data-anchor-id="check-bam-with-samtools"><span class="header-section-number">1.1.2</span> Check bam with samtools</h3>
+<p>The bam file is binary so we cannot read it directly, but we can view it with the program <code>samtools view</code>. The header section of the bam file can be viewed separately with the <code>-H</code> flag:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> view <span class="at">-H</span> HG00097.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="question" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="question">Question</h4>
+<ol type="1">
+<li>The <span class="citation" data-cites="SQ">(<a href="#ref-SQ" role="doc-biblioref"><strong>SQ?</strong></a>)</span> tag of the bam header contains information about reference sequence. What do you think SN:2 and LN:243199373 in this tag means?</li>
+</ol>
+<p>The aligned reads can be viewed with <code>samtools view</code> without the <code>-H</code>. This will display the entire bam file which is quite large, so if you just want to look at the first 5 lines (for example) you can combine <code>samtools view</code> with <code>head</code>:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> view HG00097.bam <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="question-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="question-1">Question</h4>
+<ol start="2" type="1">
+<li>What is the leftmost mapping position of the first read in the bamfile?</li>
+</ol>
+<p>Please have a look at the <a href="https://samtools.github.io/hts-specs/SAMv1.pdf">Sequence Alignment/Map Format Specification</a> for more information about bam files.</p>
+</section>
+</section>
+<section id="check-bam-in-igv" class="level3" data-number="1.1.3">
+<h3 data-number="1.1.3" class="anchored" data-anchor-id="check-bam-in-igv"><span class="header-section-number">1.1.3</span> Check bam in IGV</h3>
+<p>To use IGV on UPPMAX we recommend that you are connected via ThinLinc. Alternatively you can install IGV on your local computer, download the files using scp, and look at them locally. The instructions below assume that you have logged in to UPPMAX via ThinLinc.<br>
+First use pwd to check if you are standing in the correct directory:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Should return</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/proj/naiss2023-22-862/nobackup/username/ngsworkflow</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>To start IGV please type this in the terminal:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load IGV/2.8.13</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="ex">igv.sh</span> <span class="kw">&amp;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In IGV:<br>
+In the upper left dropdown menu choose <code>Human hg19</code> (which is the same as GRCh37).<br>
+In the <code>File</code> menu, select <code>Load from File</code> and select <code>HG00097.bam</code>, which should then appear in the tracks window.<br>
+Zoom in to see the reads. You can either select a region by click and drag, or by typing a region or a gene name in the text box at the top. Remember that we have data for the region chr2:136545000-136617000.<br>
+IGV can be closed by selecting exit in the <code>File</code> menu or by clicking <code>x</code> in the upper right corner of the IGV window, but you can keep it open for the rest of the lab.</p>
+<section id="questions" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="questions">Questions</h4>
+<ol start="3" type="1">
+<li>What is the read length?</li>
+<li>Approximately how many reads cover an arbitrary position in the genomic region we are looking at?</li>
+<li>Which RefSeq Genes are located within the region chr2:136545000-136617000?</li>
+</ol>
+</section>
+</section>
+</section>
+<section id="variant-calling" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="variant-calling"><span class="header-section-number">1.2</span> Variant Calling</h2>
+<section id="haplotypecaller" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="haplotypecaller"><span class="header-section-number">1.2.1</span> HaplotypeCaller</h3>
+<p>Now we will detect short variants in the bam file using GATK’s <code>HaplotypeCaller</code>. First use pwd to check if you are standing in the correct directory:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Should return</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/proj/naiss2023-22-862/nobackup/username/ngsworkflow</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Then run:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="at">-Xmx7g</span> HaplotypeCaller <span class="dt">\</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>-R human_g1k_v37_chr2.fasta <span class="dt">\</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>-I HG00097.bam <span class="dt">\</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>-O HG00097.vcf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Check what new files were generated with <code>ls -lrt</code>.</p>
+</section>
+<section id="explore-the-vcf-file" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="explore-the-vcf-file"><span class="header-section-number">1.2.2</span> Explore the vcf file</h3>
+<p>Now you have your first vcf file containing the raw variants in the region chr2:136545000-136617000 in sample HG00097. Please look at the vcf file with <code>less</code> and try to understand its structure.</p>
+<p>Vcf files contains meta-information lines starting with <em>##</em>, a header line starting with <em>#CHROM</em>, and then data lines each containing information about one variant position in the genome. The header line defines the columns of the data lines, and to view the header line you can type this command:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">'#CHROM'</span> HG00097.vcf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="question-2" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="question-2">Question</h4>
+<ol start="6" type="1">
+<li>What column of the VCF file contains genotype information for the sample HG00097?</li>
+</ol>
+<p>The meta-information lines starting with <em>##INFO</em> defines how the data in the <em>INFO</em> column is encoded, and the meta-information lines starting with <em>##FORMAT</em> defines how the data in the <em>FORMAT</em> column is encoded.<br>
+To view the meta-information lines describing the <em>INFO</em> column use:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">'##INFO'</span> HG00097.vcf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To view the meta-information lines describing the <em>FORMAT</em> column use:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">'##FORMAT'</span> HG00097.vcf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="question-3" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="question-3">Question</h4>
+<ol start="7" type="1">
+<li>What does <em>GT</em> in the <em>FORMAT</em> column of the data lines mean?</li>
+<li>What does <em>AD</em> in the <em>FORMAT</em> column of the data lines mean?</li>
+</ol>
+<p>To look at the details of one specific genetic variant at position 2:136545844 use:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">'136545844'</span> HG00097.vcf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="questions-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="questions-1">Questions</h4>
+<ol start="9" type="1">
+<li>What genotype does the sample HG00097 have at position 2:136545844?</li>
+<li>What are the allelic depths for the reference and alternative alles in sample HG00097 at position 2:136545844?</li>
+</ol>
+<p>The following command can be used to count the data lines (i.e.&nbsp;number of lines that don’t start with “#”) in the vcf file:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-v</span> <span class="st">"#"</span> HG00097.vcf <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="question-4" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="question-4">Question</h4>
+<ol start="11" type="1">
+<li>How many genetic variants was detected in HG00097?</li>
+</ol>
+<p>For more detailed information about vcf files please have a look at <a href="https://samtools.github.io/hts-specs/VCFv4.2.pdf">The Variant Call Format specification</a>.</p>
+</section>
+</section>
+<section id="vcfinigv" class="level3" data-number="1.2.3">
+<h3 data-number="1.2.3" class="anchored" data-anchor-id="vcfinigv"><span class="header-section-number">1.2.3</span> Check vcf in IGV</h3>
+<p>We assume that you have logged in to UPPMAX via ThinLinc.<br>
+If you have closed IGV please open it again as described above.<br>
+Load the file HG00097.vcf into tracks window of IGV as you did with the HG00097.bam file earlier (load the bam file as well if it is not already loaded). You will now see all the variants called in HG00097.<br>
+You can view variants in the <em>LCT</em> gene by typing the gene name in the search box, and you can look specifically at the variant at position chr2:136545844 by typing that position in the search box.<br>
+Please use IGV to answer the questions below.</p>
+<section id="questions-2" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="questions-2">Questions</h4>
+<ol start="12" type="1">
+<li>Hover the mouse over the upper row of the vcf track. What is the reference and alternative alleles of the variant at position chr2:136545844?</li>
+<li>Hover the mouse over the lower row of the vcf track and look under “Genotype Information”. What genotype does HG00097 have at position chr2:136545844? Is this the same as you found by looking directly in the vcf file in question 10?</li>
+<li>Look in the bam track and count the number of reads that have “G” and “C”, respectively, at position chr2:136545844. How is this information captured under “Genotype Attributes”? (Again, hoover the mouse over the lower row of the vcf track.)</li>
+</ol>
+</section>
+</section>
+</section>
+</section>
+<section id="jointvc" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Variant calling in cohort</h1>
+<p>If you have time, you can now try joint variant calling in all three samples. Each sample has to be processed with <code>BWA mem</code> as above, and then with <code>HaplotypeCaller</code> with the flag <code>-ERC</code> to generate one g.vcf file per sample. The individual g.vcf files should subsequently be combined with GATK’s <code>CombineGVCFs</code>, and translated into vcf format with GATK’s <code>GenotypeGVCFs</code>. The workflow below shows how the three samples should be processed and combined.</p>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><a href="assets/2_jointvc.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="assets/2_jointvc.png" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p>If you don’t have time to complete all steps we have made precomputed intermediary file available. Please see links under each analysis step.</p>
+<section id="bwa_joint" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="bwa_joint"><span class="header-section-number">2.1</span> BWA mem</h2>
+<p>Run <code>BWA mem</code> for all three samples in the data set. <code>BWA mem</code> should be run exactly as above, but with the new sample names. You also need to adjust the read group information so that it matches each new sample name. <br></p>
+<p>First use pwd to check if you are standing in the correct directory:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Should return</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb39"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/proj/naiss2023-22-862/nobackup/username/ngsworkflow</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Then use this command for every sample to align the reads, add the read group, sort the reads and write them to a bam file:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bwa</span> mem <span class="at">-R</span> <span class="st">"@RG\tID:readgroup_&lt;sample&gt;\tPU:lanex_flowcellx\tSM:&lt;sample&gt;\tLB:libraryx\tPL:illumina"</span> <span class="dt">\</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>-t 1 human_g1k_v37_chr2.fasta sample_1.fq sample_2.fq <span class="kw">|</span> <span class="ex">samtools</span> sort <span class="op">&gt;</span> sample.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Where <code>sample</code> should be replaced with the real samples name, i.e.&nbsp;HG00097, HG00100 and HG00101. Please check that the expected output files were generated and have content using <code>ls -lrt</code>. You also need to index each output bam file:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> index <span class="op">&lt;</span>sample<span class="op">&gt;</span>.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Please check what output file was generated this time. If you run out of time you can click below to get paths to precomputed bam files.</p>
+<div class="cell" data-accordion="true">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb42"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/sw/courses/ngsintro/reseq/data/bam/HG00097.bam</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/sw/courses/ngsintro/reseq/data/bam/HG00100.bam</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="ex">/sw/courses/ngsintro/reseq/data/bam/HG00101.bam</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="generategvcf" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="generategvcf"><span class="header-section-number">2.2</span> Generate g.vcf files</h2>
+<p><code>HaplotypeCaller</code> should also be run for all three samples, but this time the output for each sample needs to be in g.vcf format. This is accomplished with a small change in the <code>HaploteypCaller</code> command.<br> First use pwd to check if you are standing in the correct directory:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Should return</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb44"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/proj/naiss2023-22-862/nobackup/username/ngsworkflow</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Then:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="at">-Xmx7g</span> HaplotypeCaller <span class="dt">\</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>-R human_g1k_v37_chr2.fasta <span class="dt">\</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>-ERC GVCF <span class="dt">\</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>-I sample.bam <span class="dt">\</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>-O sample.g.vcf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Please replace <code>sample</code> with the real sample names.</p>
+<p>If you run out of time you can click below to get paths to the precomputed g.vcf files.</p>
+<div class="cell" data-accordion="true">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb46"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/sw/courses/ngsintro/reseq/data/vcf/HG00097.g.vcf</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/sw/courses/ngsintro/reseq/data/vcf/HG00100.g.vcf</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="ex">/sw/courses/ngsintro/reseq/data/vcf/HG00101.g.vcf</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="jointgenotyping" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="jointgenotyping"><span class="header-section-number">2.3</span> Joint genotyping</h2>
+<p>Once you have the g.vcf files for all samples you should perform joint genotype calling. To do this you first need to combine all individual .g.vcf files to one file using <code>CombineGVCFs</code>.<br></p>
+<p>First use pwd to check if you are standing in the correct directory:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Should return</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb48"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/proj/naiss2023-22-862/nobackup/username/ngsworkflow</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Then:</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="at">-Xmx7g</span> CombineGVCFs <span class="dt">\</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>-R human_g1k_v37_chr2.fasta <span class="dt">\</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>-V sample1.g.vcf <span class="dt">\</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>-V sample2.g.vcf <span class="dt">\</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>-V sample3.g.vcf <span class="dt">\</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>-O cohort.g.vcf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Please replace <code>sample1</code>, <code>sample2</code>, <code>sample3</code> with the real sample names. Then run GATK’s <code>GenoteypeGVC</code> to generate a vcf file:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="at">-Xmx7g</span> GenotypeGVCFs <span class="dt">\</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>-R human_g1k_v37_chr2.fasta <span class="dt">\</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>-V cohort.g.vcf <span class="dt">\</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>-O cohort.vcf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you run out of time you can click below to get paths to the precomputed cohort.g.vcf and cohort.vcf files.</p>
+<div class="cell" data-accordion="true">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb51"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/sw/courses/ngsintro/reseq/data/vcf/cohort.g.vcf</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/sw/courses/ngsintro/reseq/data/vcf/cohort.vcf</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<section id="questions-3" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="questions-3">Questions</h4>
+<ol start="15" type="1">
+<li>How many data lines do the cohort.g.vcf file have? You can use the Linux command <code>grep -v "#" cohort.g.vcf</code> to extract all lines in “cohort.g.vcf” that don’t start with “#”, then <code>|</code>, and then <code>wc -l</code> to count those lines.</li>
+<li>How many data lines do the cohort.vcf file have?</li>
+<li>Explain the difference in number of data lines.</li>
+<li>Look at the header line of the cohort.vcf file. What columns does it have?</li>
+<li>What is encoded in the last three columns of the data lines?</li>
+</ol>
+</section>
+</section>
+<section id="check-combined-vcf-file-in-igv" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="check-combined-vcf-file-in-igv"><span class="header-section-number">2.4</span> Check combined vcf file in IGV</h2>
+<p>Again we assume that you have logged in to UPPMAX via ThinLinc.<br>
+If you have closed IGV please open it again as described above.<br>
+Load the files cohort.vcf, HG00097.bam, HG00100.bam and HG00101.bam into IGV as described earlier.<br>
+This time lets look closer at the variant rs4988235, located at position chr2:136608646 in the HG19 reference genome. This is the variant that has been shown to lead to lactase persistence.<br>
+Please use IGV to answer the questions below.</p>
+<section id="questions-4" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="questions-4">Questions</h4>
+<ol start="20" type="1">
+<li>What is the reference and alternative alleles at chr2:136608646?</li>
+<li>What genotype do the three samples have at chr2:136608646? Note how genotypes are color coded in IGV.</li>
+<li>Should any of the individuals avoid drinking milk?</li>
+<li>Now compare the data shown in IGV with the data in the VCF file. Extract the row for the chr2:136608646 variant in the cohort.vcf file, for example using <code>grep '136608646' cohort.vcf</code>. What columns of the vcf file contain the information shown in the upper part of the vcf track in IGV?</li>
+<li>What columns of the vcf file contain the information shown in the lower part of the vcf track?</li>
+<li>Zoom out so that you can see the <em>MCM6</em> and <em>LCT</em> genes. Is the variant at chr2:136608646 locate within the LCT gene?</li>
+</ol>
+<p>If you are interested in how this variant affects lactose tolerance please read the article by Mattar et al presented <a href="#Genomicregion">above</a>, or in <a href="https://www.omim.org/entry/601806#0001">OMIM</a>.</p>
+</section>
+</section>
+</section>
+<section id="gatk_bp" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> GATK’s best practices</h1>
+<p>The third part of this workshop will take you through additional refinement steps that are recommended in <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-">GATKs best practices for germline short variant discovery</a>, illustrated in the flowchart below. The additional steps in the best practice workflow was not covered in the variant-calling lecture on Wednesday afternoon. There will be a short lecture about this on Thursday morning at 9 am. However, if you reach this step earlier you can have a look at this <a href="https://youtu.be/b7VV6e5q6ss">prerecorded video of the same lecture</a>.</p>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><a href="assets/3_best_practise.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="assets/3_best_practise.png" class="img-fluid figure-img" style="width:80.0%"></a></p>
+</figure>
+</div>
+<section id="bwa-mem" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="bwa-mem"><span class="header-section-number">3.1</span> BWA mem</h2>
+<p>The first step in GATK’s best pracice variant calling workflow is to run BWA mem for each sample exactly as you did in <a href="#bwa_joint">Variant calling in cohort</a>. You have already done this step, so please use the bam files that you generated in step 2.1 for the steps below.</p>
+</section>
+<section id="mark-duplicates" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="mark-duplicates"><span class="header-section-number">3.2</span> Mark Duplicates</h2>
+<p>Sometimes the same DNA fragment is sequenced multiple times, which leads to multiple reads from the same fragment in the fastq file. This can occur due to PCR amplification in the library preparation, or if one read cluster is incorrectly detected as multiple clusters by the sequencing instrument. If a duplicated read contains a genetic variant, the ratio of the two alleles might be obscured, which can lead to incorrect genotyping. It is therefore recommended (in most cases) to mark duplicate reads so that they are counted as one during genotyping.</p>
+<p>Please read about Picard’s <code>MarkDuplicates</code> <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037225972-MarkDuplicates-Picard-">here</a>. Picard’s MarkDuplicates has recently been incorporated into the GATK suite, but the usage example in GATKs documentation describes how to call it via the stand alone Picard program. To learn how to use it as part of the GATK module, please call MarkDuplicates without input parameters like this:</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="at">-Xmx7g</span> MarkDuplicates</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Please run MarkDuplicates on all three bam files generated in step 2.1. Here is the code for running MarkDuplicates on the sample HG00097:</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="at">-Xmx7g</span> MarkDuplicates <span class="dt">\</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">-I</span> HG00097.bam <span class="dt">\</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">-O</span> HG00097.md.bam <span class="dt">\</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">-M</span> HG00097_mdmetrics.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="recalibrate-base-quality-scores" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="recalibrate-base-quality-scores"><span class="header-section-number">3.3</span> Recalibrate Base Quality Scores</h2>
+<p>Another source of error is systematic biases in the assignment of base quality scores by the sequencing instrument. This can be corrected by GATK’s <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360035890531-Base-Quality-Score-Recalibration-BQSR-">Base Quality Score Recalibration</a>. In short, you first use <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037593511-BaseRecalibrator">BaseRecalibrator</a> to build a recalibration model, and then <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037225212-ApplyBQSR">ApplyBQSR</a> to recalibrate the base qualities in your bam file.<br>
+<code>BaseRecalibrator</code> requires a file with known SNPs as input. This file is available in the data folder on UPPMAX:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb54"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/sw/courses/ngsintro/reseq/data/ref/1000G_phase1.snps.high_confidence.b37.chr2.vcf</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Please recalibrate the base quality scores in all the bam files generated in the previous step. Below is our example solution for sample HG00097. First run BaseRecalibrator:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb55"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="at">-Xmx7g</span> BaseRecalibrator <span class="dt">\</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">-R</span> human_g1k_v37_chr2.fasta <span class="dt">\</span></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">-I</span> HG00097.md.bam <span class="dt">\</span></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--known-sites</span> /sw/courses/ngsintro/reseq/data/ref/1000G_phase1.snps.high_confidence.b37.chr2.vcf <span class="dt">\</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">-O</span> HG00097.recal.table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Then run ApplyBQSR:</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="at">-Xmx7g</span> ApplyBQSR <span class="dt">\</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">-R</span> human_g1k_v37_chr2.fasta <span class="dt">\</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">-I</span> HG00097.md.bam <span class="dt">\</span></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--bqsr-recal-file</span> HG00097.recal.table <span class="dt">\</span></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">-O</span>   HG00097.recal.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="generate-g.vcf-files" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="generate-g.vcf-files"><span class="header-section-number">3.4</span> Generate g.vcf files</h2>
+<p><code>HaplotypeCaller</code> should also be run for all three samples, and the output should be in g.vcf exactly as described <a href="#generategvcf">above</a>. This time use recalibrated bam files as input.</p>
+</section>
+<section id="joint-genotyping" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="joint-genotyping"><span class="header-section-number">3.5</span> Joint genotyping</h2>
+<p>Once you have the g.vcf files for all samples you should perform joint genotype calling. This should be done with the commands <code>CombineGVCFs</code> and <code>GenotypeGVCFs</code> exactly as described <a href="#jointgenotyping">above</a>, but you should use the g.vcf files generated from the recalibrated bam files as input.</p>
+</section>
+<section id="variant-filtering" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="variant-filtering"><span class="header-section-number">3.6</span> Variant Filtering</h2>
+<p>HaplotypeCaller is designed to be very sensitive, which is good because it minimizes the chance of missing real variants. However, it means that the number of false positives can be quite large, so we need to filter the raw callset. GATK offers two ways to filter variants:</p>
+<ol type="1">
+<li>The variant quality score recalibration (VQSR) method uses machine learning to identify variants that are likely to be real. This is the best method if you have a lot of data, for example one whole genome sequence sample or several whole exome samples.<br>
+</li>
+<li>If you have less data you can use hard filters as described <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360035531112?id=2806#2">here</a>.</li>
+</ol>
+<p>Since we have very little data we will use hard filters. The parameters are slightly different for SNVs and INDELs, so you need to first select all SNVs using <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037225432-SelectVariants">SelectVariants</a> and filter them using <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037226192-VariantFiltration">VariantFiltration</a> with the parameters suggested for SNVs. Then select all INDELs and filter them with the parameters suggested for INDELs. Finally merge the SNVs and INDELs to get all variants in one file using <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037226612-MergeVcfs-Picard-">MergeVCFs</a>.<br>
+An explanation of what the hard filters do can be found <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360035890471-Hard-filtering-germline-short-variants">here</a>.</p>
+<p>Example solution for filtering SNVs:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="at">-Xmx7g</span> SelectVariants <span class="dt">\</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-R</span> human_g1k_v37_chr2.fasta <span class="dt">\</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-V</span> cohort.vcf <span class="dt">\</span></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--select-type-to-include</span> SNP <span class="dt">\</span></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> cohort.snvs.vcf</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="at">-Xmx7g</span> VariantFiltration <span class="dt">\</span></span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">-R</span> human_g1k_v37_chr2.fasta <span class="dt">\</span></span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">-V</span> cohort.snvs.vcf <span class="dt">\</span></span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> cohort.snvs.filtered.vcf <span class="dt">\</span></span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> QDfilter <span class="at">--filter-expression</span> <span class="st">"QD &lt; 2.0"</span>  <span class="dt">\</span></span>
+<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> MQfilter <span class="at">--filter-expression</span> <span class="st">"MQ &lt; 40.0"</span>  <span class="dt">\</span></span>
+<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> FSfilter <span class="at">--filter-expression</span> <span class="st">"FS &gt; 60.0"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Example solution for filtering INDELs:</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="at">-Xmx7g</span> SelectVariants <span class="dt">\</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-R</span> human_g1k_v37_chr2.fasta <span class="dt">\</span></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-V</span> cohort.vcf <span class="dt">\</span></span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--select-type-to-include</span> INDEL <span class="dt">\</span></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> cohort.indels.vcf</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="at">-Xmx7g</span> VariantFiltration <span class="dt">\</span></span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">-R</span> human_g1k_v37_chr2.fasta <span class="dt">\</span></span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">-V</span> cohort.indels.vcf <span class="dt">\</span></span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> cohort.indels.filtered.vcf <span class="dt">\</span></span>
+<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> QDfilter <span class="at">--filter-expression</span> <span class="st">"QD &lt; 2.0"</span> <span class="dt">\</span></span>
+<span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> FSfilter <span class="at">--filter-expression</span> <span class="st">"FS &gt; 200.0"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Example solution for merging filtered SNVs and INDELs:</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="at">-Xmx7g</span> MergeVcfs <span class="dt">\</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">-I</span> cohort.snvs.filtered.vcf <span class="dt">\</span></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">-I</span> cohort.indels.filtered.vcf <span class="dt">\</span></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">-O</span> cohort.filtered.vcf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Open your filtered vcf with <code>less</code> and page through it. It still has all the variant lines, but the FILTER column that was blank before is now filled in, with PASS or a list of the filters it failed. Note also that the filters that were run are described in the header section.</p>
+<section id="precomputed-files" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="precomputed-files">Precomputed files</h4>
+<p>If you run out of time, please click below to get the path to precomputed bam and vcf files for the GATK’s best practices section.</p>
+<div class="cell" data-accordion="true">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb60"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Path</span> to intermediary and final bam files: /sw/courses/ngsintro/reseq/data/best_practise_bam</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Path</span> to intermediary and final vcf files: /sw/courses/ngsintro/reseq/data/best_practise_vcf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="questions-5" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="questions-5">Questions</h4>
+<ol start="26" type="1">
+<li>Check how many variants in total that are present in the cohort.filtered.vcf file and how many that have passed the filters. Is the difference big?</li>
+<li>Look at the variants that did not pass the filters using <code>grep -v 'PASS' cohort.filtered.vcf</code>. Try to understand why these variants didn’t pass the filter.</li>
+</ol>
+</section>
+</section>
+</section>
+<section id="clean-up" class="level1 unnumbered">
+<h1 class="unnumbered">Clean up</h1>
+<p>When the analysis is done and you are sure that you have the desired output, it is a good practice to remove intermediary files that are no longer needed. This will save disk space, and will be a crucial part of the routines when you work with your own data. Please think about which files you need to keep if you would like to go back and look at this lab later on. Remove the other files.</p>
+</section>
+<section id="answers" class="level1 unnumbered">
+<h1 class="unnumbered">Answers</h1>
+<p>When you have finished the exercise, please have a look at this document with <a href="lab_vc_answers.pdf">answers to all questions</a>, and compare them with your answers.</p>
+</section>
+<section id="sbatch-scripts" class="level1 unnumbered">
+<h1 class="unnumbered">SBATCH scripts</h1>
+<p>This section is supplementary material intended only for those of you who want to learn how to run all steps automatically in bash scripts. Please make sure that you have understood how all the individual steps work before you start with this. To learn more about SLURM and SBATCH scripts please look the <a href="https://www.uppmax.uu.se/support/user-guides/slurm-user-guide/">SLURM user guide</a> on UPPMAX website.</p>
+<section id="variant-calling-in-cohort" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="variant-calling-in-cohort">Variant calling in cohort</h2>
+<p>Below is a skeleton script that can be used as a template for running <a href="#jointvc">variant calling in a cohort</a>. Please modify it to run all the steps in part two of this workshop.</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -A sens2022-22-123</span></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -p core</span></span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -n 1</span></span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -t 1:00:00</span></span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -J jointGenotyping</span></span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load bioinfo-tools</span>
+<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load bwa/0.7.17</span>
+<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load samtools/1.10</span>
+<span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load GATK/4.1.4.1</span>
+<span id="cb61-12"><a href="#cb61-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-13"><a href="#cb61-13" aria-hidden="true" tabindex="-1"></a><span class="co">## loop through the samples:</span></span>
+<span id="cb61-14"><a href="#cb61-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> sample <span class="kw">in</span> HG00097 HG00100 HG00101<span class="kw">;</span></span>
+<span id="cb61-15"><a href="#cb61-15" aria-hidden="true" tabindex="-1"></a><span class="cf">do</span></span>
+<span id="cb61-16"><a href="#cb61-16" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Now analyzing: "</span><span class="va">${sample}</span></span>
+<span id="cb61-17"><a href="#cb61-17" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Fill in the code for running bwa-mem for each sample here</span></span>
+<span id="cb61-18"><a href="#cb61-18" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Fill in the code for samtools index for each sample here</span></span>
+<span id="cb61-19"><a href="#cb61-19" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Fill in the code for HaplotypeCaller for each sample here</span></span>
+<span id="cb61-20"><a href="#cb61-20" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span>
+<span id="cb61-21"><a href="#cb61-21" aria-hidden="true" tabindex="-1"></a><span class="co">#Fill in the code for CombineGVCFs for all samples here</span></span>
+<span id="cb61-22"><a href="#cb61-22" aria-hidden="true" tabindex="-1"></a><span class="co">#Fill in the code for GenotypeGVCFs here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Please save the sbatch script in your UPPMAX folder and call it “joint_genotyping.sbatch” or similar. Make the script executable by this command:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> u+x joint_genotyping.sbatch</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To run the sbatch script in the SLURM queue, use this command:</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> joint_genotyping.sbatch</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you have an active node reservation you can run the script as a normal bash script:</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./joint_genotyping.sbatch</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you would like more help with creating the sbatch script, please look at our example solution:</p>
+<div class="cell" data-accordion="true">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb65"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -A naiss2023-22-862</span></span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -p core</span></span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -n 1</span></span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -t 2:00:00</span></span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -J jointGenotyping</span></span>
+<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-8"><a href="#cb65-8" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load bioinfo-tools</span>
+<span id="cb65-9"><a href="#cb65-9" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load bwa/0.7.17</span>
+<span id="cb65-10"><a href="#cb65-10" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load samtools/1.10</span>
+<span id="cb65-11"><a href="#cb65-11" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load GATK/4.1.4.1</span>
+<span id="cb65-12"><a href="#cb65-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-13"><a href="#cb65-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> sample <span class="kw">in</span> HG00097 HG00100 HG00101<span class="kw">;</span></span>
+<span id="cb65-14"><a href="#cb65-14" aria-hidden="true" tabindex="-1"></a><span class="cf">do</span></span>
+<span id="cb65-15"><a href="#cb65-15" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Now analyzing: "</span><span class="va">${sample}</span></span>
+<span id="cb65-16"><a href="#cb65-16" aria-hidden="true" tabindex="-1"></a>  <span class="ex">bwa</span> mem <span class="at">-R</span> <span class="dt">\</span></span>
+<span id="cb65-17"><a href="#cb65-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"@RG\tID:</span><span class="va">${sample}</span><span class="st">\tPU:flowcellx_lanex\tSM:</span><span class="va">${sample}</span><span class="st">\tLB:libraryx\tPL:illumina"</span> <span class="dt">\</span></span>
+<span id="cb65-18"><a href="#cb65-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">-t</span> 1 human_g1k_v37_chr2.fasta <span class="st">"</span><span class="va">${sample}</span><span class="st">_1.fq"</span> <span class="st">"</span><span class="va">${sample}</span><span class="st">_2.fq"</span> <span class="kw">|</span> <span class="ex">samtools</span> sort <span class="op">&gt;</span> <span class="st">"</span><span class="va">${sample}</span><span class="st">.bam"</span></span>
+<span id="cb65-19"><a href="#cb65-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-20"><a href="#cb65-20" aria-hidden="true" tabindex="-1"></a>  <span class="ex">samtools</span> index <span class="st">"</span><span class="va">${sample}</span><span class="st">.bam"</span></span>
+<span id="cb65-21"><a href="#cb65-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-22"><a href="#cb65-22" aria-hidden="true" tabindex="-1"></a>  <span class="ex">gatk</span> <span class="at">--java-options</span> <span class="at">-Xmx7g</span> HaplotypeCaller <span class="dt">\</span></span>
+<span id="cb65-23"><a href="#cb65-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">-R</span> human_g1k_v37_chr2.fasta <span class="dt">\</span></span>
+<span id="cb65-24"><a href="#cb65-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">-ERC</span> GVCF <span class="at">-I</span> <span class="st">"</span><span class="va">${sample}</span><span class="st">.bam"</span> <span class="dt">\</span></span>
+<span id="cb65-25"><a href="#cb65-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> <span class="st">"</span><span class="va">${sample}</span><span class="st">.g.vcf"</span></span>
+<span id="cb65-26"><a href="#cb65-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-27"><a href="#cb65-27" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span>
+<span id="cb65-28"><a href="#cb65-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-29"><a href="#cb65-29" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="at">-Xmx7g</span> CombineGVCFs <span class="dt">\</span></span>
+<span id="cb65-30"><a href="#cb65-30" aria-hidden="true" tabindex="-1"></a>-R human_g1k_v37_chr2.fasta <span class="dt">\</span></span>
+<span id="cb65-31"><a href="#cb65-31" aria-hidden="true" tabindex="-1"></a>-V HG00097.g.vcf <span class="dt">\</span></span>
+<span id="cb65-32"><a href="#cb65-32" aria-hidden="true" tabindex="-1"></a>-V HG00100.g.vcf <span class="dt">\</span></span>
+<span id="cb65-33"><a href="#cb65-33" aria-hidden="true" tabindex="-1"></a>-V HG00101.g.vcf <span class="dt">\</span></span>
+<span id="cb65-34"><a href="#cb65-34" aria-hidden="true" tabindex="-1"></a>-O cohort.g.vcf</span>
+<span id="cb65-35"><a href="#cb65-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-36"><a href="#cb65-36" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="at">-Xmx7g</span> GenotypeGVCFs <span class="dt">\</span></span>
+<span id="cb65-37"><a href="#cb65-37" aria-hidden="true" tabindex="-1"></a>-R human_g1k_v37_chr2.fasta <span class="dt">\</span></span>
+<span id="cb65-38"><a href="#cb65-38" aria-hidden="true" tabindex="-1"></a>-V cohort.g.vcf <span class="dt">\</span></span>
+<span id="cb65-39"><a href="#cb65-39" aria-hidden="true" tabindex="-1"></a>-O cohort.vcf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="gatk-best-practices" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="gatk-best-practices">GATK best practices</h2>
+<p>Now please try to incorporate the additional steps from <a href="#gatk_bp">GATK’s best practices</a> into the workflow. If you run out of time you can sneak peek at our example solution below.</p>
+<div class="cell" data-accordion="true">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb66"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -A naiss2023-22-862</span></span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -p core</span></span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -n 1</span></span>
+<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -t 2:00:00</span></span>
+<span id="cb66-6"><a href="#cb66-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -J BestPractise</span></span>
+<span id="cb66-7"><a href="#cb66-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-8"><a href="#cb66-8" aria-hidden="true" tabindex="-1"></a><span class="co">## load modules</span></span>
+<span id="cb66-9"><a href="#cb66-9" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load bioinfo-tools</span>
+<span id="cb66-10"><a href="#cb66-10" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load bwa/0.7.17</span>
+<span id="cb66-11"><a href="#cb66-11" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load samtools/1.10</span>
+<span id="cb66-12"><a href="#cb66-12" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load GATK/4.1.4.1</span>
+<span id="cb66-13"><a href="#cb66-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-14"><a href="#cb66-14" aria-hidden="true" tabindex="-1"></a><span class="co"># define path to reference genome</span></span>
+<span id="cb66-15"><a href="#cb66-15" aria-hidden="true" tabindex="-1"></a><span class="va">ref</span><span class="op">=</span><span class="st">"/sw/courses/ngsintro/reseq/data/ref"</span></span>
+<span id="cb66-16"><a href="#cb66-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-17"><a href="#cb66-17" aria-hidden="true" tabindex="-1"></a><span class="co"># make symbolic links</span></span>
+<span id="cb66-18"><a href="#cb66-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> /sw/courses/ngsintro/reseq/data/ref/human_g1k_v37_chr2.fasta</span>
+<span id="cb66-19"><a href="#cb66-19" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> /sw/courses/ngsintro/reseq/data/fastq/HG00097_1.fq</span>
+<span id="cb66-20"><a href="#cb66-20" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> /sw/courses/ngsintro/reseq/data/fastq/HG00097_2.fq</span>
+<span id="cb66-21"><a href="#cb66-21" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> /sw/courses/ngsintro/reseq/data/fastq/HG00100_1.fq</span>
+<span id="cb66-22"><a href="#cb66-22" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> /sw/courses/ngsintro/reseq/data/fastq/HG00100_2.fq</span>
+<span id="cb66-23"><a href="#cb66-23" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> /sw/courses/ngsintro/reseq/data/fastq/HG00101_1.fq</span>
+<span id="cb66-24"><a href="#cb66-24" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> /sw/courses/ngsintro/reseq/data/fastq/HG00101_2.fq</span>
+<span id="cb66-25"><a href="#cb66-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-26"><a href="#cb66-26" aria-hidden="true" tabindex="-1"></a><span class="co"># index reference genome</span></span>
+<span id="cb66-27"><a href="#cb66-27" aria-hidden="true" tabindex="-1"></a><span class="ex">bwa</span> index <span class="at">-a</span> bwtsw human_g1k_v37_chr2.fasta</span>
+<span id="cb66-28"><a href="#cb66-28" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> faidx human_g1k_v37_chr2.fasta</span>
+<span id="cb66-29"><a href="#cb66-29" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="at">-Xmx7g</span> CreateSequenceDictionary <span class="dt">\</span></span>
+<span id="cb66-30"><a href="#cb66-30" aria-hidden="true" tabindex="-1"></a>-R human_g1k_v37_chr2.fasta <span class="dt">\</span></span>
+<span id="cb66-31"><a href="#cb66-31" aria-hidden="true" tabindex="-1"></a>-O human_g1k_v37_chr2.dict</span>
+<span id="cb66-32"><a href="#cb66-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-33"><a href="#cb66-33" aria-hidden="true" tabindex="-1"></a><span class="co">## loop through the samples:</span></span>
+<span id="cb66-34"><a href="#cb66-34" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> sample <span class="kw">in</span> HG00097 HG00100 HG00101<span class="kw">;</span></span>
+<span id="cb66-35"><a href="#cb66-35" aria-hidden="true" tabindex="-1"></a><span class="cf">do</span></span>
+<span id="cb66-36"><a href="#cb66-36" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Now analyzing: </span><span class="va">${sample}</span><span class="st">"</span></span>
+<span id="cb66-37"><a href="#cb66-37" aria-hidden="true" tabindex="-1"></a>  <span class="co"># map the reads</span></span>
+<span id="cb66-38"><a href="#cb66-38" aria-hidden="true" tabindex="-1"></a>  <span class="ex">bwa</span> mem <span class="dt">\</span></span>
+<span id="cb66-39"><a href="#cb66-39" aria-hidden="true" tabindex="-1"></a>  <span class="at">-R</span> <span class="st">"@RG   ID:</span><span class="va">${sample}</span><span class="st">    PU:flowcellx_lanex  SM:</span><span class="va">${sample}</span><span class="st">    LB:libraryx PL:illumina"</span> <span class="dt">\</span></span>
+<span id="cb66-40"><a href="#cb66-40" aria-hidden="true" tabindex="-1"></a>  <span class="at">-t</span> 1 human_g1k_v37_chr2.fasta <span class="dt">\</span></span>
+<span id="cb66-41"><a href="#cb66-41" aria-hidden="true" tabindex="-1"></a>  <span class="st">"</span><span class="va">${sample}</span><span class="st">_1.fq"</span> <span class="st">"</span><span class="va">${sample}</span><span class="st">_2.fq"</span> <span class="kw">|</span> <span class="ex">samtools</span> sort <span class="op">&gt;</span> <span class="st">"</span><span class="va">${sample}</span><span class="st">.bam"</span></span>
+<span id="cb66-42"><a href="#cb66-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-43"><a href="#cb66-43" aria-hidden="true" tabindex="-1"></a>  <span class="ex">samtools</span> index <span class="va">$sample</span><span class="st">".bam"</span></span>
+<span id="cb66-44"><a href="#cb66-44" aria-hidden="true" tabindex="-1"></a>  <span class="co"># mark duplicates</span></span>
+<span id="cb66-45"><a href="#cb66-45" aria-hidden="true" tabindex="-1"></a>  <span class="ex">gatk</span> <span class="at">--java-options</span> <span class="at">-Xmx7g</span> MarkDuplicates <span class="dt">\</span></span>
+<span id="cb66-46"><a href="#cb66-46" aria-hidden="true" tabindex="-1"></a>  <span class="at">-I</span> <span class="st">"</span><span class="va">${sample}</span><span class="st">.bam"</span> <span class="dt">\</span></span>
+<span id="cb66-47"><a href="#cb66-47" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> <span class="st">"</span><span class="va">${sample}</span><span class="st">.md.bam"</span> <span class="dt">\</span></span>
+<span id="cb66-48"><a href="#cb66-48" aria-hidden="true" tabindex="-1"></a>  <span class="at">-M</span> <span class="st">"</span><span class="va">${sample}</span><span class="st">_mdmetrics.txt"</span></span>
+<span id="cb66-49"><a href="#cb66-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-50"><a href="#cb66-50" aria-hidden="true" tabindex="-1"></a>  <span class="co"># base quality score recalibration</span></span>
+<span id="cb66-51"><a href="#cb66-51" aria-hidden="true" tabindex="-1"></a>  <span class="ex">gatk</span> <span class="at">--java-options</span> <span class="at">-Xmx7g</span> BaseRecalibrator <span class="dt">\</span></span>
+<span id="cb66-52"><a href="#cb66-52" aria-hidden="true" tabindex="-1"></a>  <span class="at">-R</span> human_g1k_v37_chr2.fasta <span class="dt">\</span></span>
+<span id="cb66-53"><a href="#cb66-53" aria-hidden="true" tabindex="-1"></a>  <span class="at">-I</span> <span class="st">"</span><span class="va">${sample}</span><span class="st">.md.bam"</span> <span class="dt">\</span></span>
+<span id="cb66-54"><a href="#cb66-54" aria-hidden="true" tabindex="-1"></a>  <span class="at">--known-sites</span> <span class="st">"</span><span class="va">${ref}</span><span class="st">/1000G_phase1.snps.high_confidence.b37.chr2.vcf"</span> <span class="dt">\</span></span>
+<span id="cb66-55"><a href="#cb66-55" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> <span class="st">"</span><span class="va">${sample}</span><span class="st">.recal.table"</span></span>
+<span id="cb66-56"><a href="#cb66-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-57"><a href="#cb66-57" aria-hidden="true" tabindex="-1"></a>  <span class="ex">gatk</span> <span class="at">--java-options</span> <span class="at">-Xmx7g</span> ApplyBQSR <span class="dt">\</span></span>
+<span id="cb66-58"><a href="#cb66-58" aria-hidden="true" tabindex="-1"></a>  <span class="at">-R</span> human_g1k_v37_chr2.fasta <span class="dt">\</span></span>
+<span id="cb66-59"><a href="#cb66-59" aria-hidden="true" tabindex="-1"></a>  <span class="at">-I</span> <span class="st">"</span><span class="va">${sample}</span><span class="st">.md.bam"</span> <span class="dt">\</span></span>
+<span id="cb66-60"><a href="#cb66-60" aria-hidden="true" tabindex="-1"></a>  <span class="at">--bqsr-recal-file</span> <span class="st">"</span><span class="va">${sample}</span><span class="st">.recal.table"</span> <span class="dt">\</span></span>
+<span id="cb66-61"><a href="#cb66-61" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> <span class="st">"</span><span class="va">${sample}</span><span class="st">.recal.bam"</span></span>
+<span id="cb66-62"><a href="#cb66-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-63"><a href="#cb66-63" aria-hidden="true" tabindex="-1"></a>  <span class="co"># haplotypeCaller in -ERC mode</span></span>
+<span id="cb66-64"><a href="#cb66-64" aria-hidden="true" tabindex="-1"></a>  <span class="ex">gatk</span> <span class="at">--java-options</span> <span class="at">-Xmx7g</span> HaplotypeCaller <span class="dt">\</span></span>
+<span id="cb66-65"><a href="#cb66-65" aria-hidden="true" tabindex="-1"></a>  <span class="at">-R</span> human_g1k_v37_chr2.fasta <span class="dt">\</span></span>
+<span id="cb66-66"><a href="#cb66-66" aria-hidden="true" tabindex="-1"></a>  <span class="at">-ERC</span> GVCF <span class="dt">\</span></span>
+<span id="cb66-67"><a href="#cb66-67" aria-hidden="true" tabindex="-1"></a>  <span class="at">-I</span> <span class="st">"</span><span class="va">${sample}</span><span class="st">.bam"</span> <span class="dt">\</span></span>
+<span id="cb66-68"><a href="#cb66-68" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> <span class="st">"</span><span class="va">${sample}</span><span class="st">.g.vcf"</span></span>
+<span id="cb66-69"><a href="#cb66-69" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span>
+<span id="cb66-70"><a href="#cb66-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-71"><a href="#cb66-71" aria-hidden="true" tabindex="-1"></a><span class="co"># joint genotyping</span></span>
+<span id="cb66-72"><a href="#cb66-72" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="at">-Xmx7g</span> CombineGVCFs <span class="dt">\</span></span>
+<span id="cb66-73"><a href="#cb66-73" aria-hidden="true" tabindex="-1"></a>-R human_g1k_v37_chr2.fasta <span class="dt">\</span></span>
+<span id="cb66-74"><a href="#cb66-74" aria-hidden="true" tabindex="-1"></a>-V HG00097.g.vcf <span class="dt">\</span></span>
+<span id="cb66-75"><a href="#cb66-75" aria-hidden="true" tabindex="-1"></a>-V HG00100.g.vcf <span class="dt">\</span></span>
+<span id="cb66-76"><a href="#cb66-76" aria-hidden="true" tabindex="-1"></a>-V HG00101.g.vcf <span class="dt">\</span></span>
+<span id="cb66-77"><a href="#cb66-77" aria-hidden="true" tabindex="-1"></a>-O cohort.g.vcf</span>
+<span id="cb66-78"><a href="#cb66-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-79"><a href="#cb66-79" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="at">-Xmx7g</span> GenotypeGVCFs <span class="dt">\</span></span>
+<span id="cb66-80"><a href="#cb66-80" aria-hidden="true" tabindex="-1"></a>-R human_g1k_v37_chr2.fasta <span class="dt">\</span></span>
+<span id="cb66-81"><a href="#cb66-81" aria-hidden="true" tabindex="-1"></a>-V cohort.g.vcf <span class="dt">\</span></span>
+<span id="cb66-82"><a href="#cb66-82" aria-hidden="true" tabindex="-1"></a>-O cohort.vcf</span>
+<span id="cb66-83"><a href="#cb66-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-84"><a href="#cb66-84" aria-hidden="true" tabindex="-1"></a><span class="co"># variant filtration SNPs</span></span>
+<span id="cb66-85"><a href="#cb66-85" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="at">-Xmx7g</span> SelectVariants <span class="dt">\</span></span>
+<span id="cb66-86"><a href="#cb66-86" aria-hidden="true" tabindex="-1"></a>-R human_g1k_v37_chr2.fasta <span class="dt">\</span></span>
+<span id="cb66-87"><a href="#cb66-87" aria-hidden="true" tabindex="-1"></a>-V cohort.vcf <span class="dt">\</span></span>
+<span id="cb66-88"><a href="#cb66-88" aria-hidden="true" tabindex="-1"></a>--select-type-to-include SNP <span class="dt">\</span></span>
+<span id="cb66-89"><a href="#cb66-89" aria-hidden="true" tabindex="-1"></a>-O cohort.snvs.vcf</span>
+<span id="cb66-90"><a href="#cb66-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-91"><a href="#cb66-91" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="at">-Xmx7g</span> VariantFiltration <span class="dt">\</span></span>
+<span id="cb66-92"><a href="#cb66-92" aria-hidden="true" tabindex="-1"></a>-R human_g1k_v37_chr2.fasta <span class="dt">\</span></span>
+<span id="cb66-93"><a href="#cb66-93" aria-hidden="true" tabindex="-1"></a>-V cohort.snvs.vcf <span class="dt">\</span></span>
+<span id="cb66-94"><a href="#cb66-94" aria-hidden="true" tabindex="-1"></a>--filter-name QDfilter <span class="at">--filter-expression</span> <span class="st">"QD &lt; 2.0"</span> <span class="dt">\</span></span>
+<span id="cb66-95"><a href="#cb66-95" aria-hidden="true" tabindex="-1"></a>--filter-name MQfilter <span class="at">--filter-expression</span> <span class="st">"MQ &lt; 40.0"</span> <span class="dt">\</span></span>
+<span id="cb66-96"><a href="#cb66-96" aria-hidden="true" tabindex="-1"></a>--filter-name FSfilter <span class="at">--filter-expression</span> <span class="st">"FS &gt; 60.0"</span> <span class="dt">\</span></span>
+<span id="cb66-97"><a href="#cb66-97" aria-hidden="true" tabindex="-1"></a>-O cohort.snvs.filtered.vcf</span>
+<span id="cb66-98"><a href="#cb66-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-99"><a href="#cb66-99" aria-hidden="true" tabindex="-1"></a><span class="co"># variant filtration indels</span></span>
+<span id="cb66-100"><a href="#cb66-100" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="at">-Xmx7g</span> SelectVariants <span class="dt">\</span></span>
+<span id="cb66-101"><a href="#cb66-101" aria-hidden="true" tabindex="-1"></a>-R human_g1k_v37_chr2.fasta <span class="dt">\</span></span>
+<span id="cb66-102"><a href="#cb66-102" aria-hidden="true" tabindex="-1"></a>-V cohort.vcf <span class="dt">\</span></span>
+<span id="cb66-103"><a href="#cb66-103" aria-hidden="true" tabindex="-1"></a>--select-type-to-include INDEL <span class="dt">\</span></span>
+<span id="cb66-104"><a href="#cb66-104" aria-hidden="true" tabindex="-1"></a>-O cohort.indels.vcf</span>
+<span id="cb66-105"><a href="#cb66-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-106"><a href="#cb66-106" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="at">-Xmx7g</span> VariantFiltration <span class="dt">\</span></span>
+<span id="cb66-107"><a href="#cb66-107" aria-hidden="true" tabindex="-1"></a>-R human_g1k_v37_chr2.fasta <span class="dt">\</span></span>
+<span id="cb66-108"><a href="#cb66-108" aria-hidden="true" tabindex="-1"></a>-V cohort.indels.vcf <span class="dt">\</span></span>
+<span id="cb66-109"><a href="#cb66-109" aria-hidden="true" tabindex="-1"></a>--filter-name QDfilter <span class="at">--filter-expression</span> <span class="st">"QD &lt; 2.0"</span> <span class="dt">\</span></span>
+<span id="cb66-110"><a href="#cb66-110" aria-hidden="true" tabindex="-1"></a>--filter-name FSfilter <span class="at">--filter-expression</span> <span class="st">"FS &gt; 200.0"</span> <span class="dt">\</span></span>
+<span id="cb66-111"><a href="#cb66-111" aria-hidden="true" tabindex="-1"></a>-O cohort.indels.filtered.vcf</span>
+<span id="cb66-112"><a href="#cb66-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-113"><a href="#cb66-113" aria-hidden="true" tabindex="-1"></a><span class="co"># merge filtered SNPs and indels</span></span>
+<span id="cb66-114"><a href="#cb66-114" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="at">-Xmx7g</span> MergeVcfs <span class="dt">\</span></span>
+<span id="cb66-115"><a href="#cb66-115" aria-hidden="true" tabindex="-1"></a>-I cohort.snvs.filtered.vcf <span class="dt">\</span></span>
+<span id="cb66-116"><a href="#cb66-116" aria-hidden="true" tabindex="-1"></a>-I cohort.indels.filtered.vcf <span class="dt">\</span></span>
+<span id="cb66-117"><a href="#cb66-117" aria-hidden="true" tabindex="-1"></a>-O cohort.filtered.vcf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="additional-information" class="level1 unnumbered">
+<h1 class="unnumbered">Additional information</h1>
+<ul>
+<li>Here is a technical documentation of <a href="https://www.illumina.com/documents/products/technotes/technote_understanding_quality_scores.pdf">Illumina Quality Scores</a></li>
+<li>Tools used or referenced
+<ul>
+<li><a href="http://bio-bwa.sourceforge.net/bwa.shtml">BWA</a></li>
+<li><a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC</a></li>
+<li><a href="http://multiqc.info/">MultiQC</a></li>
+<li><a href="https://broadinstitute.github.io/picard/command-line-overview.html">Picard</a></li>
+<li><a href="https://software.broadinstitute.org/gatk/">GATK</a></li>
+<li><a href="http://www.htslib.org/">samtools</a></li>
+</ul></li>
+</ul>
+<!--# Alternative cluster
+The teachers may inform you that we will use the high performance computing center NSC instead of UPPMAX during this workshop. If so, please follow this link to [run the workshop on NSC](lab_vc_tetralith.html).-->
+<p><strong>Thanks for today!</strong></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">2023 <a href="https://nbis.se">NBIS</a> | <a href="https://choosealicense.com/licenses/gpl-3.0/">GPL-3 License</a></div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">Published with <a href="https://quarto.org/">Quarto</a> v1.3.433</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","loop":true,"closeEffect":"zoom","descPosition":"bottom"});</script>
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
