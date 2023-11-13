@@ -24,13 +24,13 @@ The first step of this lab is to open a ssh connection to UPPMAX. Please refer t
 Usually you would do most of the work in this lab directly on one of the login nodes at UPPMAX, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("$ salloc -A ",upid," -t 07:00:00 -p core -n 1 --no-shell &"))
+cat(paste0("salloc -A ",upid," -t 07:00:00 -p core -n 1 --no-shell &"))
 ```
 
 check which node you got (replace `username` with your UPPMAX username)
 
 ```bash
-$ squeue -u username
+squeue -u username
 ```
 
 should look something like this
@@ -139,14 +139,14 @@ For structures sake, first create a folder with your username in the **nobackup*
 This can be done in 2 ways:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("$ mkdir /proj/",upid,"/nobackup/username\n"))
-cat(paste0("$ mkdir /proj/",upid,"/nobackup/username/linux_tutorial"))
+cat(paste0("mkdir /proj/",upid,"/nobackup/username\n"))
+cat(paste0("mkdir /proj/",upid,"/nobackup/username/linux_tutorial"))
 ```
 
 or
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("$ mkdir -p /proj/",upid,"/nobackup/username/linux_tutorial"))
+cat(paste0("mkdir -p /proj/",upid,"/nobackup/username/linux_tutorial"))
 ```
 
 The reason for this is that Linux will not like it if you try to create the folder **linux_tutorial** inside a folder (the one named like your username) that does not exist yet. Then, you have the choice to either first create the one named like your username (the first way), or to tell Linux to create it for you by giving it the **`-p`** option (the second way).
@@ -180,7 +180,7 @@ Go to the folder you just copied and see what is in it.
 {{< fa lightbulb >}} Remember to tab-complete to avoid typos and too much writing.
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("$ cd /proj/",upid,"/nobackup/username/linux_tutorial\n"))
+cat(paste0("cd /proj/",upid,"/nobackup/username/linux_tutorial\n"))
 cat("ll")
 ```
 

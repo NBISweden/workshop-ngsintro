@@ -24,7 +24,7 @@ The first step of this lab is to open a ssh connection to UPPMAX. Please refer t
 Usually you would do most of the work in this lab directly on one of the login nodes at UPPMAX, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("$ salloc -A ",upid," -t 07:00:00 -p core -n 1 --no-shell &"))
+cat(paste0("salloc -A ",upid," -t 07:00:00 -p core -n 1 --no-shell &"))
 ```
 
 check which node you got (replace **username** with your UPPMAX username)
@@ -60,15 +60,15 @@ Next, copy the lab files from this folder. `-r` means recursively, which means a
 {{< fa lightbulb >}} Remember to use tab-complete to avoid typos and too much writing.
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat("$ cp -r <source> <destination>\n")
-cat(paste0("$ cp -r /sw/courses/ngsintro/linux/filetypes /proj/",upid,"/nobackup/username/"))
+cat("cp -r <source> <destination>\n")
+cat(paste0("cp -r /sw/courses/ngsintro/linux/filetypes /proj/",upid,"/nobackup/username/"))
 ```
 
 Have a look in **`r paste0("/proj/",upid,"/nobackup/username/")`**.
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("$ cd /proj/",upid,"/nobackup/username/filetypes\n"))
-cat("$ tree")
+cat(paste0("cd /proj/",upid,"/nobackup/username/filetypes\n"))
+cat("tree")
 ```
 
 This will print a file tree, which gives you a nice overview of the folders where you are standing in. As you can see, you have a couple of files and a couple of empty folders. In the **0_ref** folder you have a reference genome in fasta format and annotations for the genome in GTF format. In **0_seq** you have a fastq file containing the reads we will align.
