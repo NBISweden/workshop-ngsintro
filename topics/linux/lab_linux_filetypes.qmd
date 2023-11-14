@@ -289,6 +289,16 @@ The **-S** will tell less to not wrap the lines, and instead show one line per l
 
 To view the file, we will use the program **IGV** (Integrated Genome Viewer). Before we can do this, we have to load the module for IGV.
 
+NOTE: Many Mac users are getting only black background when running IGV using XQuartz. There is a command you can run on your computer to fix this.
+
+```bash
+# open a terminal on your mac and run this command:
+defaults write org.xquartz.X11 enable_render_extension 0
+
+Now you have to quit and reinstall [XQuartz](https://www.xquartz.org/), then reconnect to uppmax and it should now look the way it should.
+
+```
+
 {{< fa lightbulb >}} If you are using a Mac you might have to install the program [XQuartz](https://www.xquartz.org/), if you have not already installed that program. By using `-Y` in your ssh command you enable graphical transfer over ssh, but you will also have to have a program able to receive the graphics in order to display it.
 
 ```bash
