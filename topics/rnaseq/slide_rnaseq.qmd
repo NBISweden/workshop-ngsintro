@@ -79,8 +79,8 @@ upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
 ::: {.column}
 - Biological replicates: 6 - 12 @schurch2016many
 - Sample size estimation @hart2013calculating
-- Power analysis [@zhao2018rnaseqsamplesize RNASeqPower web app](https://rshiny.nbis.se/shiny-server-apps/shiny-rnaseq-power/)
-- Balanced design to avoid batch effects [DeclareDesign](https://declaredesign.org/)
+- Power analysis [@zhao2018rnaseqsamplesize RNASeqPower web app](https://r8844d6ec.serve.scilifelab.se/)
+- Balanced design to avoid batch effects
 - RIN values have strong effect @gallego2014rna
 :::
 
@@ -105,8 +105,8 @@ upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
 ::: {.column}
 ![](assets/rnaseq_read_type.svg)  
 
-- polyA selection/Ribosomal RNA depletion
-- single-end/Paired-end
+- polyA selection / Ribosomal RNA depletion
+- Single-end / Paired-end
 
 :::
 ::::
@@ -121,12 +121,12 @@ upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
 - Depletion of rRNA is the solution if it's important to retain all RNA species
 - smallRNAs are purified through size selection
 - PCR amplification may be needed for low quantity input (See section PCR duplicates)
-- Preferably opt for stranded (directional) libraries @zhao2015comparison, @levin2010comprehensive
+- Almost always use stranded (directional) libraries @zhao2015comparison, @levin2010comprehensive
   - Accurately identify sense/antisense transcript
   - Resolve overlapping genes
 - Exome capture
 - Library normalisation to concentrate specific transcripts
-- Libraries should have high complexity/low duplication. @daley2013predicting
+- Libraries should have high complexity / low duplication. @daley2013predicting
 
 :::
 
@@ -137,16 +137,16 @@ upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
   - Greater than 50bp does not improve DGE
   - Longer reads better for isoforms
 - Pooling samples
-- Sequencing depth (Coverage/Reads per sample)
-- Single-end reads (Cheaper)
-- Paired-end reads
+- Sequencing depth (Coverage / Reads per sample)
+- Single-end reads (Cheaper?)
+- Almost always use paired-end reads
   - Increased mappable reads
   - Increased power in assemblies
   - Better for structural variation and isoforms
   - Decreased false-positives for DGE
 - More replicates are better than more depth @liu2014rna
 
-@corley2017differentially, [SciLifeLab](https://ngisweden.scilifelab.se/file/1540-1_Comparison_of_PE_and_SE_for_RNA-seq.pdf)
+@corley2017differentially
 
 ## Workflow • DGE
 
@@ -166,7 +166,7 @@ upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
 - Adapter content
 - Kmer content
 
-<img src="assets/qc.jpg" style="height:250px; position:fixed; right:0px; bottom: 0px; margin-right: 100px; margin-bottom: 310px;">
+<img src="assets/qc.jpg" style="height:300px; position:fixed; right:0px; bottom: 0px; margin-right: 100px; margin-bottom: 300px;">
 
 [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/), [MultiQC](http://multiqc.info/)
 
@@ -351,7 +351,7 @@ ST-E00274:188:H3JWNCCXY:4:1102:32431:49900      163     1       1       60      
 
 ![](assets/igv.png)
 
-[IGV](http://software.broadinstitute.org/software/igv/), [UCSC Genome Browser](https://genome.ucsc.edu/), [SeqMonk](https://www.bioinformatics.babraham.ac.uk/projects/seqmonk/)
+[IGV](http://software.broadinstitute.org/software/igv/), [UCSC Genome Browser](https://genome.ucsc.edu/), [SeqMonk](https://www.bioinformatics.babraham.ac.uk/projects/seqmonk/), [More](https://cmdcolin.github.io/awesome-genome-visualization/?latest=true)
 
 ## Visualisation • `tview`
 
@@ -454,13 +454,12 @@ Conserved genes in the mouse transcriptome. Saturation curves of discovery of ge
 ::: {.column}
 
 - Read counts = gene expression
+- Intersection on gene models
 - Reads can be quantified on any feature (gene, transcript, exon etc)
-- Intersection on [gene models](#intro)
-- Gene/Transcript level
 
 ![](assets/rnaseq_counts.svg)
 
-[featureCounts](http://bioinf.wehi.edu.au/featureCounts/), [HTSeq](https://github.com/simon-anders/htseq)
+[featureCounts](https://subread.sourceforge.net/), [HTSeq](https://github.com/simon-anders/htseq)
 
 :::
 ::: {.column}
