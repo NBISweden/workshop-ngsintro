@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Martin Dahlö">
+
+<title>Introduction To Linux</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../assets/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<style>
+
+      .quarto-title-block .quarto-title-banner {
+        background: #E9F2D1;
+      }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&amp;family=Nunito:ital,wght@0,400;0,600;1,400;1,600&amp;display=swap" rel="stylesheet">
+    
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../assets/logos/nbis-scilifelab.png" alt="nbis-scilifelab-logo." class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_schedule.html" rel="" target="">
+ <span class="menu-text">Schedule</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_contents.html" rel="" target="">
+ <span class="menu-text">Contents</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_precourse.html" rel="" target="">
+ <span class="menu-text">Precourse</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_syllabus.html" rel="" target="">
+ <span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_info.html" rel="" target="">
+ <span class="menu-text">Info</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Introduction To Linux</h1>
+            <p class="subtitle lead">Command-line interface to the unix file system</p>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Martin Dahlö </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">14-Nov-2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#connect-to-uppmax" id="toc-connect-to-uppmax" class="nav-link active" data-scroll-target="#connect-to-uppmax"><span class="header-section-number">1</span> Connect to UPPMAX</a></li>
+  <li><a href="#logon-to-a-node" id="toc-logon-to-a-node" class="nav-link" data-scroll-target="#logon-to-a-node"><span class="header-section-number">2</span> Logon to a node</a></li>
+  <li><a href="#navigation" id="toc-navigation" class="nav-link" data-scroll-target="#navigation"><span class="header-section-number">3</span> Navigation</a></li>
+  <li><a href="#copy-lab-files" id="toc-copy-lab-files" class="nav-link" data-scroll-target="#copy-lab-files"><span class="header-section-number">4</span> Copy lab files</a></li>
+  <li><a href="#unpack-files" id="toc-unpack-files" class="nav-link" data-scroll-target="#unpack-files"><span class="header-section-number">5</span> Unpack files</a></li>
+  <li><a href="#copying-and-moving-files" id="toc-copying-and-moving-files" class="nav-link" data-scroll-target="#copying-and-moving-files"><span class="header-section-number">6</span> Copying and moving files</a></li>
+  <li><a href="#deleting-files" id="toc-deleting-files" class="nav-link" data-scroll-target="#deleting-files"><span class="header-section-number">7</span> Deleting files</a></li>
+  <li><a href="#open-files" id="toc-open-files" class="nav-link" data-scroll-target="#open-files"><span class="header-section-number">8</span> Open files</a></li>
+  <li><a href="#wildcards" id="toc-wildcards" class="nav-link" data-scroll-target="#wildcards"><span class="header-section-number">9</span> Wildcards</a></li>
+  <li><a href="#utility-commands" id="toc-utility-commands" class="nav-link" data-scroll-target="#utility-commands"><span class="header-section-number">10</span> Utility commands</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In code blocks, the dollar sign (<code>$</code>) is not to be printed. The dollar sign is usually an indicator that the text following it should be typed in a terminal window.</p>
+</div>
+</div>
+<section id="connect-to-uppmax" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="connect-to-uppmax"><span class="header-section-number">1</span> Connect to UPPMAX</h2>
+<p>The first step of this lab is to open a ssh connection to UPPMAX. Please refer to <a href="../other/lab_connect.html"><strong>Connecting to UPPMAX</strong></a> for instructions. Once connected to UPPMAX, return here and continue reading the instructions below.</p>
+</section>
+<section id="logon-to-a-node" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="logon-to-a-node"><span class="header-section-number">2</span> Logon to a node</h2>
+<p>Usually you would do most of the work in this lab directly on one of the login nodes at UPPMAX, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">salloc</span> <span class="at">-A</span> naiss2023-22-862 <span class="at">-t</span> 07:00:00 <span class="at">-p</span> core <span class="at">-n</span> 1 <span class="at">--no-shell</span> <span class="kw">&amp;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>check which node you got (replace <code>username</code> with your UPPMAX username)</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">-u</span> username</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>should look something like this</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">dahlo@rackham2</span> work $ squeue <span class="at">-u</span> dahlo</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>             <span class="ex">JOBID</span> PARTITION     NAME     USER ST       TIME  NODES NODELIST<span class="er">(</span><span class="ex">REASON</span><span class="kw">)</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>           <span class="ex">3132376</span>      core       sh    dahlo  R       0:04      1 r292</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">dahlo@rackham2</span> work $</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>where <strong>r292</strong> is the name of the node I got (yours will probably be different). Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested (7 hours in this case) the session will shut down, and you will lose all unsaved data. Connect to this node from within UPPMAX.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ssh <span class="at">-Y</span> r292</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><i class="fa-solid fa-lightbulb" aria-label="lightbulb"></i> There is a UPPMAX specific tool called <code>jobinfo</code> that supplies the same kind of information as <code>squeue</code> that you can use as well (<code>$ jobinfo -u username</code>).</p>
+</section>
+<section id="navigation" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="navigation"><span class="header-section-number">3</span> Navigation</h2>
+<p>It is good to know how to move around in the file system. I’m sure you all have experienced this using a graphical user interface (<strong>GUI</strong>) before, Windows Explorer in Windows and Finder in OSX. Using the command line can be confusing at first, but the more your do it, the easier it gets.</p>
+<p>When you connect to UPPMAX, you will start out in your home folder. The absolute path to your home folder is usually <code>/home/username</code></p>
+<p>Start with looking at what you have in your home folder. The command for this <code>ls</code>, and it stand for <strong>L</strong>i<strong>S</strong>t (list).</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This is how my home folder looks like, and yours should look somewhat similar:</p>
+<pre><code>[12:56:32] dahlo@rackham1 ~ $ ls -l
+total 4384
+drwxr-xr-x  3 dahlo b2014068    2048 Apr 27  2017 archive
+-rw-rw-r--  1 dahlo dahlo      49042 Sep 23  2016 bad.png
+drwxr-xr-x  2 dahlo dahlo       2048 Mar 18  2016 data
+-rw-rw-r--  1 dahlo dahlo      60944 Sep 23  2016 good.png
+drwxr-xr-x  4 dahlo b2014209    2048 Oct 30  2014 igv
+drwxrwxr-x  5 dahlo dahlo       2048 Sep 20  2016 ngsintro
+drwx--S---  2 dahlo dahlo       2048 May  4  2010 private
+drwxr-xr-x 26 dahlo dahlo       4096 May 18 10:43 uppmaxScripts
+drwxrwxr-x  5 dahlo dahlo    2201600 May 14 14:02 work
+[12:57:36] dahlo@rackham1 ~ $</code></pre>
+<p>We can start off with moving to this workshop’s project folder. Each project has its own <strong>proj folder</strong> and <strong>nobackup folder</strong> that contains all the files that belong to the project. The <strong>proj</strong> folder is backed-up, so if a file is deleted by mistake it can be retrieved from the backups, and this is where only compressed raw data and scripts are usually stored. The <strong>nobackup</strong> folder is as the name implies not backed-up, and this is where all the other files belonging to the project is kept, like everything that is created by programs that you run. Backup is expensive, so we don’t want to waste it on temporary files generated by your analysis programs, which could be re-run. The nobackup folder is the folder you will keep most of your files in.</p>
+<p>As seen in the lecture, the command for moving around is <code>cd</code>. The command stands for <strong>C</strong>hange <strong>D</strong>irectory and does exactly that. It is the equivalent of double clicking a folder in a GUI.</p>
+<p>To enter the course project’s proj folder, simply type <strong><code>cd /proj/naiss2023-22-862</code></strong>.</p>
+<p>Have a look around and see which folders there are. This is the folder where all the non-replacable files belonging to a project would go, like the raw sequencing data that is delivered by the sequencing platforms. Since we’ll be creating a bunch of temporary files during these labs, we will have to do that in the nobackup folder.</p>
+<p>Go there using the <code>cd</code> command.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd nobackup</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We can easily see that this is a relative path, since it does not start with a <strong><code>/</code></strong>. That means that this command will only work when you are standing in your project folder. If you are standing somewhere else and say that you want to enter a folder named nobackup, the computer will tell you that there is no folder named nobackup where you are located at the moment.</p>
+<p>The absolute path to the course’s nobackup folder would be <strong>/proj/naiss2023-22-862/nobackup</strong></p>
+<p>It is the exact same thing as if you are using a GUI. If you are standing on your desktop, you can double click a folder which is located on your desktop. But if you are standing in another folder, you can’t double click on that same folder, because it is just not located there. You have to move to your desktop first, and then double click it.</p>
+<p>If you look around in the nobackup folder, you probably only have a folder called <strong>private</strong>. This is how every nobackup folder looks before you start putting files there.</p>
+<p>Typing <code>ls -l</code> all the time is.. more annoying than one would think, so someone came up with the good idea to add a shortcut here. If you type <code>ll</code>, it is the same as typing <code>ls -l</code>. Use it from now on.</p>
+<p>Now we have practised moving around and looking at what we have in folders. The next step will show you how to do the same thing, but without the moving around part.</p>
+<p>If we want to look at what we have in our home folder, while standing in the course’s project folder, we type <code>ll /home/username/</code> and remember to substitute <strong>&lt;username&gt;</strong> with your own user name.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ll /home/username</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Since most programmers are lazy (efficient), there is a shortcut to your home folder so that you don’t have to write it all the time. If you write <strong><code>~/</code></strong> it means the same as if you would write <strong>/home/&lt;username&gt;/</strong></p>
+<p>Try using it with <code>ls</code>:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ll /home/username</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>or</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ll ~/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="copy-lab-files" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="copy-lab-files"><span class="header-section-number">4</span> Copy lab files</h2>
+<p>Now you will need some files. To avoid all the course participants editing the same file all at once, undoing each other’s edits, each participant will get their own copy of the needed files.</p>
+<p>The files are located in the folder <strong>/sw/courses/ngsintro/linux/linux_tutorial</strong></p>
+<p>or they can be downloaded if you are not on UPPMAX at the moment, <a href="assets/files.tar.gz">files.tar.gz</a> (instruction on how to download further down)</p>
+<p>For structures sake, first create a folder with your username in the <strong>nobackup</strong> folder, and a folder called <strong>linux_tutorial</strong> inside that folder, where you can put all your lab files.</p>
+<p>This can be done in 2 ways:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> /proj/naiss2023-22-862/nobackup/username</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> /proj/naiss2023-22-862/nobackup/username/linux_tutorial</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>or</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> /proj/naiss2023-22-862/nobackup/username/linux_tutorial</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>The reason for this is that Linux will not like it if you try to create the folder <strong>linux_tutorial</strong> inside a folder (the one named like your username) that does not exist yet. Then, you have the choice to either first create the one named like your username (the first way), or to tell Linux to create it for you by giving it the <strong><code>-p</code></strong> option (the second way).</p>
+<p>Next, copy the lab files to this folder.</p>
+<pre><code>cp -r &lt;source-folder&gt; &lt;destination-folder&gt;</code></pre>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> /sw/courses/ngsintro/linux/linux_tutorial/<span class="pp">*</span> /proj/naiss2023-22-862/nobackup/username/linux_tutorial</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p><code>-r</code> denotes recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, NOT sub-folders and files in sub-folders.</p>
+<p><i class="fa-solid fa-lightbulb" aria-label="lightbulb"></i> Remember to tab-complete to avoid typos and too much writing.</p>
+<p>If you are unable to copy the files on UPPMAX, you can <a href="assets/files.tar.gz">download the files from this link</a> instead of copying them. This is done with the command <code>wget</code> (<em>web get</em>). It works kind of the same way as the <code>cp</code> command, but you give it a source URL instead of a source file, and you specify the destination by giving it a prefix, a path that will be appended in front on the file name when it’s downloaded.</p>
+<p><em>i.e</em>; if you want to download the file http://somewhere.com/my.file and you give it the prefix <code>~/analysis/</code>, the downloaded file will be saved as <code>~/analysis/my.file</code>.</p>
+<pre><code>Ex: wget -P &lt;destination prefix&gt; &lt;source URL&gt;</code></pre>
+</section>
+<section id="unpack-files" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="unpack-files"><span class="header-section-number">5</span> Unpack files</h2>
+<p>Go to the folder you just copied and see what is in it.</p>
+<p><i class="fa-solid fa-lightbulb" aria-label="lightbulb"></i> Remember to tab-complete to avoid typos and too much writing.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /proj/naiss2023-22-862/nobackup/username/linux_tutorial</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ll</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p><strong>tar.gz</strong> is a file ending given to compressed files, something you will encounter quite often. Compression decreases the size of the files which is good when downloading, and it can take thousands of files and compress them all into a single compressed file. This is both convenient for the person downloading and speeds up the transfer more than you would think.</p>
+<p>To unpack the <strong>files.tar.gz</strong> file use the following line while standing in the newly copied <strong>linux_tutorial</strong> folder.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> tar <span class="at">-xzvf</span> files.tar.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The command will always be the same for all tar.gz files you want to unpack. <code>-xzvf</code> means e<b>X</b>tract from a <strong>Z</strong>ipped file, <strong>V</strong>erbose (prints the name of the file being unpacked), from the specified <strong>F</strong>ile (<code>f</code> must always be the last of the letters).</p>
+<p>Look in the folder again and see what we just unpacked:</p>
+<pre><code>[user@milou2 linux_tutorial]$ ls -la
+total 512
+drwxrwsr-x 12 user g20XXXXX   2048 Sep 24 13:19 .
+drwxrwsr-x  6 user g20XXXXX   2048 Sep 24 13:19 ..
+drwxrwsr-x  2 user g20XXXXX   2048 Sep 19  2012 a_strange_name
+drwxrwsr-x  2 user g20XXXXX   2048 Sep 19  2012 backed_up_proj_folder
+drwxrwsr-x  2 user g20XXXXX   2048 Sep 19  2012 external_hdd
+-rwxrwxr-x  1 user g20XXXXX  17198 Sep 24 13:19 files.tar.gz
+drwxrwsr-x  2 user g20XXXXX   2048 Sep 19  2012 important_results
+drwxrwsr-x  2 user g20XXXXX 129024 Sep 19  2012 many_files
+drwxrwsr-x  2 user g20XXXXX   2048 Sep 19  2012 old_project
+-rwxrwxr-x  1 user g20XXXXX      0 Sep 24 13:19 other_file.old
+drwxrwsr-x  2 user g20XXXXX   2048 Sep 19  2012 part_1
+drwxrwsr-x  2 user g20XXXXX   2048 Sep 19  2012 part_2
+drwxrwsr-x  2 user g20XXXXX   2048 Jan 28  2012 this_has_a_file
+drwxrwsr-x  2 user g20XXXXX   2048 Jan 28  2012 this_is_empty
+-rwxrwxr-x  1 user g20XXXXX      0 Sep 19  2012 useless_file</code></pre>
+</section>
+<section id="copying-and-moving-files" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="copying-and-moving-files"><span class="header-section-number">6</span> Copying and moving files</h2>
+<p>Let’s move some files. Moving files might be one of the more common things you do, after <code>cd</code> and <code>ls</code>. You might want to organize your files in a better way, or move important result files to the project folder, who knows?</p>
+<p>We will start with moving our important result to a backed-up folder. When months of analysis is done, the last thing you want is to lose your files. Typically this would mean that you move the final results to your project folder.</p>
+<p>In this example, we want to move the result files only, located in the folder <code>important_results</code>, to our fake project folder, called <code>backed_up_proj_folder</code>.</p>
+<p>The syntax for the move command is:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> mv <span class="op">&lt;</span>source<span class="op">&gt;</span> <span class="op">&lt;</span>destination<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>First, take a look inside the <strong>important_results</strong> folder:</p>
+<pre><code>[user@milou2 linux_tutorial]$ ll important_results/
+total 0
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 dna_data_analysis_result_file_that_is_important-you_should_really_use_tab_completion_for_file_names.bam
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 temp_file-1
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 temp_file-2</code></pre>
+<p>You see that there are some unimportant temporary files that you have no interest in. Just to demonstrate the move command, I will show you how to move one of these temporary files to your backed-up project folder:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> mv important_results/temp_file-1 backed_up_proj_folder/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> Now do the same, but move the important DNA data file!</p>
+<p>Look in the backed-up project folder to make sure you moved the file correctly.</p>
+<pre><code>[user@milou2 linux_tutorial]$ ll backed_up_proj_folder/
+total 0
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 dna_data_analysis_result_file_that_is_important-you_should_really_use_tab_completion_for_file_names.bam
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 last_years_data
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 temp_file-1</code></pre>
+<p>Another use for the <code>move</code> command is to rename things. When you think of it, renaming is just a special case of moving. You move the file to a location and give the file a new name in the process. The location you move the file <strong>to</strong> can very well be the same folder the file already is in. To give this a try, we will rename the folder <code>a_strange_name</code> to a better name.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> mv a_strange_name a_better_name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Look around to see that the name change worked.</p>
+<pre><code>[user@milou2 linux_tutorial]$ mv a_strange_name a_better_name
+[user@milou2 linux_tutorial]$ ll
+total 448
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 a_better_name
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 24 13:40 backed_up_proj_folder
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 external_hdd
+-rwxrwxr-x 1 user g20XXXXX  17198 Sep 24 13:36 files.tar.gz
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 24 13:40 important_results
+drwxrwsr-x 2 user g20XXXXX 129024 Sep 19  2012 many_files
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 old_project
+-rwxrwxr-x 1 user g20XXXXX      0 Sep 24 13:36 other_file.old
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 part_1
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 part_2
+drwxrwsr-x 2 user g20XXXXX   2048 Jan 28  2012 this_has_a_file
+drwxrwsr-x 2 user g20XXXXX   2048 Jan 28  2012 this_is_empty
+-rwxrwxr-x 1 user g20XXXXX      0 Sep 19  2012 useless_file</code></pre>
+<p>Sometimes you don’t want to move things, you want to copy them. Moving a file will remove the original file, whereas copying the file will leave the original untouched. An example when you want to do this could be that you want to give a copy of a file to a friend. Imagine that you have a external hard drive that you want to place the file on. The file you want to give to your friend is data from last years project, which is located in your backed_up_project_folder, <code>backed_up_proj_folder/last_years_data</code></p>
+<p>As with the move command, the syntax is</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cp <span class="op">&lt;</span>source<span class="op">&gt;</span> <span class="op">&lt;</span>destination<span class="op">&gt;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cp backed_up_proj_folder/last_years_data external_hdd/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Take a look in the <strong>external_hdd</strong> to make sure the file got copied.</p>
+<pre><code>[user@milou2 linux_tutorial]$ cp backed_up_proj_folder/last_years_data external_hdd/
+[user@milou2 linux_tutorial]$ ll external_hdd/
+total 0
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 24 13:46 last_years_data</code></pre>
+</section>
+<section id="deleting-files" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="deleting-files"><span class="header-section-number">7</span> Deleting files</h2>
+<p>Sometimes you will delete files. Usually this is when you know that the file or files are useless to you, and they only take up space on your hard drive or UPPMAX account.</p>
+<p>To delete a file, we use the <strong>R</strong>e<b>M</b>ove command, <strong><code>rm</code></strong>. Syntax:</p>
+<pre><code>$ rm &lt;file to remove&gt;</code></pre>
+<p>If you want, you can also specify multiple files at once, as many as you want!</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> rm <span class="op">&lt;</span>file to remove<span class="op">&gt;</span> <span class="op">&lt;</span>file to remove<span class="op">&gt;</span> <span class="op">&lt;</span>file to remove<span class="op">&gt;</span> <span class="op">&lt;</span>file to remove<span class="op">&gt;</span> <span class="op">&lt;</span>file to remove<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="alert alert-danger">
+<p><strong><i class="fa-solid fa-skull-crossbones" aria-label="skull-crossbones"></i> Danger</strong></p>
+<p>There is no trash bin in Linux. If you delete a file, it is gone. So be careful when deleting stuff.</p>
+</div>
+<p>Try it out by deleting the useless file in the folder you are standing in. First, look around in the folder to see the file.</p>
+<pre><code>[user@milou2 linux_tutorial]$ ll
+total 448
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 a_better_name
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 24 13:40 backed_up_proj_folder
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 24 13:46 external_hdd
+-rwxrwxr-x 1 user g20XXXXX  17198 Sep 24 13:36 files.tar.gz
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 24 13:40 important_results
+drwxrwsr-x 2 user g20XXXXX 129024 Sep 19  2012 many_files
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 old_project
+-rwxrwxr-x 1 user g20XXXXX      0 Sep 24 13:36 other_file.old
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 part_1
+drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 part_2
+drwxrwsr-x 2 user g20XXXXX   2048 Jan 28  2012 this_has_a_file
+drwxrwsr-x 2 user g20XXXXX   2048 Jan 28  2012 this_is_empty
+-rwxrwxr-x 1 user g20XXXXX      0 Sep 19  2012 useless_file</code></pre>
+<p>Now remove it.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> rm useless_file</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Similarly, folders can be removed too. There is even a special command for removing folders, <code>rmdir</code>. They work similar to <code>rm</code>, except that they can’t remove files. There are two folders, <code>this_is_empty</code> and <code>this_has_a_file</code>, that we now will delete.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> rmdir this_is_empty</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> rmdir this_has_a_file</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you look inside <code>this_has_a_file</code>,</p>
+<pre><code>[user@milou2 linux_tutorial]$ ll this_has_a_file
+total 0
+-rwxrwxr-x 1 user g20XXXXX 0 Jan 28  2012 file</code></pre>
+<p>you see that there is a file in there! Only directories that are completely empty can be deleted using <code>rmdir</code>. To be able to delete <code>this_has_a_file</code>, either delete the file manually and then remove the folder</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> rm this_has_a_file/file</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> rmdir this_has_a_file</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>or delete the directory recursively, which will remove <code>this_has_a_file</code> and everything inside:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> rm <span class="at">-r</span> this_has_a_file</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="open-files" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="open-files"><span class="header-section-number">8</span> Open files</h2>
+<p>So what happens if you give your files bad names like <code>file1</code> or <code>results</code>? You take a break in a project and return to it 4 months later, and all those short names you gave your files doesn’t tell you at all what the files actually contain.</p>
+<p>Of course, this never happens because you <strong>ALWAYS</strong> name your files so that you definitely know what they contain. But let’s say it did happen. Then the only way out is to look at the contents of the files and try to figure out if it is the file you are looking for.</p>
+<p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> Now, we are looking for that really good script we wrote a couple of months ago in that other project. Look in the project’s folder, <code>old_project</code> and find the script.</p>
+<pre><code>[user@milou2 linux_tutorial]$ ll old_project/
+total 96
+-rwxrwxr-x 1 user g20XXXXX 39904 Sep 19  2012 a
+-rwxrwxr-x 1 user g20XXXXX     0 Sep 19  2012 stuff_1
+-rwxrwxr-x 1 user g20XXXXX  1008 Sep 19  2012 the_best</code></pre>
+<p>Not so easy with those names.. We will have to use <code>less</code> to look at the files and figure out which is which.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> less <span class="op">&lt;</span>filename<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><i class="fa-solid fa-lightbulb" aria-label="lightbulb"></i> Press <code>q</code> to close it down, use arrows keys to scroll up/down.</p>
+<p>Have a look at <code>the_best</code>, that must be our script, right?</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> less old_project/the_best</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>I guess not. Carrot cakes might be the bomb, but they won’t solve bioinformatic problems. Have a look at the file <code>a</code> instead.</p>
+<p>That’s more like it!</p>
+<p>Now imagine that you had hundreds of files with weird names, and you really needed to find it. <em>Lesson learned:</em> name your files so that you know what they are! And don’t be afraid to create folders to organise files.</p>
+<p>Another thing to think about when opening files in Linux is which program should you open the file in? The programs we covered during the lectures are <strong>nano</strong> and <strong>less</strong>. The main difference between these programs in that <strong>less can’t edit files</strong>, only view them. Another difference is that <strong>less doesn’t load the whole file</strong> into the RAM memory when opening it.</p>
+<p>So, why care about how the program works? I’ll show you why. This time we will be opening a larger file, located in the course’s project folder. It’s 65 megabytes, so it is a tiny file compared with bio-data. Normal sequencing files can easily be 100-1000 times larger than this.</p>
+<p>First, open the file with <code>nano</code>.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> nano <span class="op">&lt;</span>filename<span class="op">&gt;</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> nano /sw/courses/ngsintro/linux/linux_additional-files/large_file</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><i class="fa-solid fa-lightbulb" aria-label="lightbulb"></i> Press <code>Ctrl</code>+<code>X</code> to close it down, use arrows to scroll up/down).</p>
+<p>Is the file loaded yet? Now take that waiting time and multiply it with 100-1000. Now open the file with less. Notice the difference?</p>
+<p><strong><code>head</code></strong> and <strong><code>tail</code></strong> works the same was as less in this regard. They don’t load the whole file into RAM, they just take what they need.</p>
+<p>To view the first rows of the large file, use <code>head</code>.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> head <span class="op">&lt;</span>filename<span class="op">&gt;</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> head /sw/courses/ngsintro/linux/linux_additional-files/large_file</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Remember how to view an arbitrary number of first rows in a file?</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> head <span class="at">-n</span> <span class="op">&lt;</span>number of rows to view<span class="op">&gt;</span> <span class="op">&lt;</span>filename<span class="op">&gt;</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> head <span class="at">-n</span> 23 /sw/courses/ngsintro/linux/linux_additional-files/large_file</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The same syntax for viewing the last rows of a file with tail:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> tail <span class="op">&lt;</span>filename<span class="op">&gt;</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> tail /sw/courses/ngsintro/linux/linux_additional-files/large_file</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> tail <span class="at">-n</span> <span class="op">&lt;</span>number of rows to view<span class="op">&gt;</span> <span class="op">&lt;</span>filename<span class="op">&gt;</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> tail <span class="at">-n</span> 23 /sw/courses/ngsintro/linux/linux_additional-files/large_file</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="wildcards" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="wildcards"><span class="header-section-number">9</span> Wildcards</h2>
+<p>Sometimes (most of the time really) you have many files. So many that it would take you a day just to type all their names. This is where <strong>wildcards</strong> saves the day. The wildcard symbol in Linux is the star sign, <code>*</code> , and it means literally <strong>anything</strong>. Say that you want to move all the files which has names starting with <code>sample_1_</code> and the rest of the name doesn’t matter. You want all the files belonging to <code>sample_1</code>. Then you could use the wildcard to represent the rest of the name.</p>
+<p><i class="fa-solid fa-exclamation-circle" aria-label="exclamation-circle"></i> <strong>DO NOT</strong> run this command, it’s just an example.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> mv  sample_1_<span class="pp">*</span>  my_other_folder</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We can try it out on the example files I have prepared. There are two folders called <strong>part_1</strong> and <strong>part_2</strong>. We want to collect all the <strong>.txt</strong> files from both these folders in one of the folders. Look around in both the folders to see what they contain.</p>
+<pre><code>[user@milou2 linux_tutorial]$ ll part_1/
+total 0
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 file_1.txt
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 file_2.txt
+[user@milou2 linux_tutorial]$ ll part_2
+total 0
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 file_3.txt
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 file_4.txt
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 garbage.tmp
+-rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 incomplete_datasets.dat</code></pre>
+<p>We see that <strong>part_1</strong> only contains <code>.txt</code> files, and that <strong>part_2</strong> contains some other files as well. The best option seems to be to move all <code>.txt</code> files from <strong>part_2</strong> info <strong>part_1</strong>.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> mv part_2/<span class="pp">*</span>.txt part_1/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The wildcard works with most, if not all, Linux commands. We can try using wildcards with <strong><code>ls</code></strong>. Look in the folder <code>many_files</code>. Yes, there are hundreds of .docx files in there. But, there are a couple of <strong>.txt</strong> files in there as well. Find out how many .docx and .txt files exist.</p>
+<p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> Try to figure out the solution on your own. Then check the answer below.</p>
+<div class="cell" data-accordion="true">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb45"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ll many_files/<span class="pp">*</span>.docx</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ll many_files/<span class="pp">*</span>.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="utility-commands" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="utility-commands"><span class="header-section-number">10</span> Utility commands</h2>
+<p>Ok, the last 2 commands for now are <code>top</code> and <code>man</code>.</p>
+<p><code>top</code> can be useful when you want to look at which programs are being run on the computer, and how hard the computer is working. Type <code>top</code> and have a look.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> top</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><i class="fa-solid fa-lightbulb" aria-label="lightbulb"></i> Press <kbd>q</kbd> to exit.</p>
+<pre><code>Tasks: 376 total,   2 running, 290 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  2.7 us,  1.3 sy,  0.0 ni, 95.3 id,  0.1 wa,  0.0 hi,  0.6 si,  0.0 st
+KiB Mem : 32590776 total, 16233548 free,  8394804 used,  7962424 buff/cache
+KiB Swap: 99999744 total, 99999744 free,        0 used. 22658832 avail Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND                       
+ 3286 roy       20   0 4557248 522400 170808 R  12.3  1.6  62:49.20 gnome-shell                   
+ 3113 roy       20   0 1282356 385012 290540 S   8.0  1.2  42:00.49 Xorg                          
+22213 roy       20   0 5474576 544848 101592 S   5.6  1.7 102:55.33 zoom                          
+ 6186 roy       20   0  710140  60504  35836 S   3.0  0.2   0:00.62 terminator                    
+ 4248 roy       20   0 2737604 556212 140580 S   2.7  1.7  54:51.48 QtWebEngineProc               
+ 4632 roy       20   0 4866068 0.993g 281532 S   2.7  3.2  69:18.68 firefox                       
+ 6548 roy       20   0 3703060 509340 189452 S   2.7  1.6  15:26.80 Web Content                   
+ 9338 roy       20   0 4407324 846700 213324 S   2.7  2.6  15:53.71 Web Content                   
+ 4776 roy       20   0 3310524 318364 102700 S   2.0  1.0   8:53.07 WebExtensions                 
+ 6595 roy       20   0 4133152 992224 187540 S   1.3  3.0  18:51.05 Web Content                   
+  952 root     -51   0       0      0      0 S   1.0  0.0   2:40.89 irq/51-SYNA2393               
+ 7800 roy       20   0 1213744 238536 129392 S   1.0  0.7  11:15.74 atom                          
+    1 root      20   0  226080   9836   6692 S   0.7  0.0   2:07.87 systemd                       
+ 6690 roy       20   0 3492596 560304 166588 S   0.7  1.7   8:08.77 Web Content                   
+12895 roy       20   0 3320332 294820 172212 S   0.7  0.9   7:05.93 Web Content                   
+   10 root      20   0       0      0      0 I   0.3  0.0   2:43.21 rcu_sched                     
+ 1052 root      20   0 2505296  36228  22444 S   0.3  0.1   3:45.16 containerd                    
+ 2631 gdm       20   0 4044492 198480 142328 S   0.3  0.6   1:55.32 gnome-shell</code></pre>
+<p>Each row in top corresponds to one program running on the computer, and the column describe various information about the program. <strong>The right-most column</strong> shows you which program the row is about.</p>
+<p>There are mainly 2 things that are interesting when looking in top. The column <strong>%CPU</strong> describes how much cpu is used by each program. If you are doing calculations, which is what bioinformatics is mostly about, the cpu usage should be high. The numbers in the column is how many percent of a core the program is running. If you have a computer with 8 cores, like the UPPMAX computers, you can have 8 programs using 100% of a core each running at the same time without anything slowing down. As soon as you start a 9th program, it will have to share a core with another program and those 2 programs will run at half-speed since a core can only work that fast. In the example above, program <strong>gnome-shell</strong> is using 12.3% of a core.</p>
+<p>The column <strong>%MEM</strong> describes how much memory each program uses. The numbers mean how many percent of the total memory a program uses. In the example above, the program firefox is using 3.2% of the total memory.</p>
+<p>The area in the top describes the overall memory usage. <strong>Total</strong> tells you how much memory the computer has, <strong>used</strong> tells you how much of the memory is being used at the moment, and <strong>free</strong> tells you how much memory is free at the moment.</p>
+<p>Total = Used + Free</p>
+<p>A warning sign you can look for in top is when you are running an analysis which seems to take forever to complete, and you see that there is almost no cpu usage on the computer. That means that the computer is not doing any calculation, which could be bad. If you look at the memory usage at the same time, and see that it’s maxed out (used 100% of total), you can more or less abort the analysis.</p>
+<p>When the memory runs out, the computer more or less stops. Since it can’t fit everything into the RAM memory, it will start using the hard drive to store the things it can’t fit in the RAM. Since the hard drive is ~1000 times slower than the RAM, things will be going in slow-motion. The solution could be to either change the settings of the program you are running to decrease the memory usage (if the program has that functionality), or just get a computer with more memory.</p>
+<p>You might wonder how the heck am I supposed to be able to remember all these commands, options and flags? The simple answer is that you won’t. Not all of them at least. You might remember <code>ls</code>, but was it <code>-l</code> or <code>-a</code> you should use to see hidden files? You might wish that there was a manual for these things.</p>
+<p>Good news everyone, there is a manual! To get all the nitty-gritty details about <code>ls</code>, you use the <code>man</code> command.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> man <span class="op">&lt;</span>command you want to look at<span class="op">&gt;</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> man ls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>LS(1)                            User Commands                            LS(1)
+
+NAME
+       ls - list directory contents
+
+SYNOPSIS
+       ls [OPTION]... [FILE]...
+
+DESCRIPTION
+       List  information  about  the  FILEs (the current directory by default).
+       Sort entries alphabetically if none of -cftuvSUX nor  --sort  is  speci‐
+       fied.
+
+       Mandatory arguments to long options are mandatory for short options too.
+
+       -a, --all
+              do not ignore entries starting with .
+
+       -A, --almost-all
+              do not list implied . and ..
+
+       --author
+              with -l, print the author of each file
+
+       -b, --escape
+              print C-style escapes for nongraphic characters
+
+       --block-size=SIZE
+              scale  sizes by SIZE before printing them; e.g., '--block-size=M'
+ Manual page ls(1) line 1 (press h for help or q to quit)</code></pre>
+<p>This will open a less window (remember, <kbd>q</kbd> to close it down, arrows to scroll) with the manual page about <code>ls</code>. Here you will be able to read everything about <code>ls</code>. You’ll see which flag does what (<code>-a</code> is to show the hidden files, which in linux are files with a name starting with a dot <code>.</code>), which syntax the program has, etc. If you are unsure about how to use a command, look it up using <code>man</code>.</p>
+<p>The <code>man</code> pages can be a bit tricky to understand at first, but you get used to it with time. If it is still unclear, try searching for it on the internet. You are bound to find someone with the exact same question as you, that has already asked on a forum, and gotten a good answer. 5 years ago.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Optional
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you still have time left on the lab and you finished early, check out the <a href="lab_linux_permissions.html">Linux file permissions lab</a>.</p>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">2023 <a href="https://nbis.se">NBIS</a> | <a href="https://choosealicense.com/licenses/gpl-3.0/">GPL-3 License</a></div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">Published with <a href="https://quarto.org/">Quarto</a> v1.3.433</div>
+  </div>
+</footer>
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
