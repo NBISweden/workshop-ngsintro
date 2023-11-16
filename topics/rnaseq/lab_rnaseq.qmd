@@ -79,7 +79,7 @@ data.frame(Accession=c("SRR3222409","SRR3222410","SRR3222411","SRR3222412","SRR3
 ```
 
 ::: {.callout-note}
-For the purpose of this tutorial, to shorten the time needed to run various bioinformatics steps, we have picked reads for a single chromosome (Chr 19) and downsampled the reads. We randomly sampled, without replacement, 25% reads from each sample, using `fastq-sample` from the toolset [fastq-tools](https://homes.cs.washington.edu/~dcjones/fastq-tools/).
+For the purpose of this tutorial, to shorten the time needed to run various bioinformatics steps, we have picked reads for a single chromosome (Chr 19) and downsampled the reads. We randomly sampled, without replacement, 25% reads from each sample, using `fastq-sample` from the toolset [fastq-tools](https://github.com/dcjones/fastq-tools).
 :::
 
 ## Main exercise
@@ -861,7 +861,7 @@ cat(paste0("cp ",path_data,"/main/5_dge/dge.R .\n"))
 cat(paste0("cp ",path_data,"/main/5_dge/counts_full.txt .\n"))
 ```
 
-Now, run the R script from the schell in `5_dge` directory.
+Now, run the R script from the shell in `5_dge` directory.
 
 ```{sh,eval=FALSE}
 Rscript dge.R
