@@ -973,7 +973,20 @@ The results are saved as tables in the directory **funannot_results**. There are
 {{< fa clipboard-list >}} Take a quick look at some of these files.
 
 ```{sh,eval=FALSE,chunk.title=TRUE}
-head go_down.txt
+head go_up.txt
+```
+
+```
+category  over_represented_pvalue under_represented_pvalue  numDEInCat  numInCat  term  ontology
+GO:0030016  2.23312435908185e-45  1 78  176 myofibril CC
+GO:0061061  5.40265910772947e-45  1 135 543 muscle structure development  BP
+GO:0043292  1.59611882901076e-44  1 80  189 contractile fiber CC
+GO:0030017  3.08095203872545e-43  1 72  157 sarcomere CC
+GO:0044449  2.27198318958789e-41  1 73  170 contractile fiber part  CC
+GO:0031674  3.81511780088805e-32  1 53  117 I band  CC
+GO:0003012  7.14173605862631e-32  1 84  301 muscle system process BP
+GO:0007517  9.77789997472468e-32  1 88  329 muscle organ development  BP
+GO:0014706  1.99267634186987e-31  1 90  349 striated muscle tissue development  BP
 ```
 
 The columns of the results tables are:
