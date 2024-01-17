@@ -1,3 +1,5 @@
+// quarto revealjs logo extension
+
 function header() {
   
   // add the header structure as the firstChild of div.reveal-header
@@ -25,9 +27,6 @@ function header() {
   
   // dynamically changing the header
   function change_header(dheader, cheader, ctext) {
-    // dhead => dynamic header
-    // chead => constant header
-    // ctext => contstant header_text inner html
     if (dheader !== null) {
       cheader.innerHTML = dheader.innerHTML;  
     } else {

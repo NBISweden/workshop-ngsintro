@@ -1,40 +1,41 @@
 ---
-pageTitle: "NBIS Workshop | Introduction to Bioinformatics using NGS data"
+pagetitle: "NBIS Workshop | Introduction to Bioinformatics using NGS data"
 title: ""
 subtitle: ""
+toc: false
+date: ""
+sidebar: false
 format:
   html:
     css: "assets/css/home.css"
     number-sections: false
-    toc: false
-    date: ""
-    page-layout: full
     title-block-banner: false
+    page-layout: full
+execute:
+  freeze: false
 ---
 
-<!-- div class="page-layout-custom" -->
-<div class='home-grid-parent'>
-<div class='home-grid-child-left'>
+::: {.home-container}
+::: {.home-grid-parent}
+::: {.home-grid-child-left}
 
-#### NBIS Workshop
-## Introduction To Bioinformatics<br>Using NGS Data
+### NBIS Workshop
+## Introduction To Bioinformatics Using NGS Data
 
-::: {.large}
-- Working on the Linux command line
-- Sequence data formats and QC
-- DNA variant calling workflow
-- RNA sequence analyses workflow
-:::
+Working on the Linux command line  
+Sequence data formats and QC  
+DNA variant calling workflow  
+RNA sequence analyses workflow  
 
 ::: small
 Updated: <?lua.date?> at <?lua.time?>.
 :::
 
-</div>
-<div class='home-grid-child-right'>
+:::
+:::{.home-grid-child-right}
 
-![](assets/images/landing.png)
+![](assets/images/hero.png){.nolightbox}
 
-</div>
-</div>
-<!--/div-->
+:::
+:::
+:::

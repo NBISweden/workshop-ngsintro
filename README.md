@@ -63,4 +63,4 @@ The contents of these scripts should use identical steps and tools as the studen
 
 ---
 
-**2023** • NBIS • SciLifeLab
+**2024** • NBIS • SciLifeLab

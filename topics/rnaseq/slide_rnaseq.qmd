@@ -12,10 +12,10 @@ format: revealjs
 library(yaml)
 library(here)
 upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
-#library(dplyr)
-#library(pheatmap)
-#library(plotly)
-#library(DESeq2)
+# library(dplyr)
+# library(pheatmap)
+# library(plotly)
+# library(DESeq2)
 ```
 
 ## What is RNA?
@@ -603,17 +603,21 @@ mf <- readRDS("assets/metadata-filtered.Rds")
 ```{r,echo=FALSE,fig.height=4.9,fig.width=6.8,dev="svg",eval=FALSE}
 temp <- as.matrix(dist(t(cvst)))
 
-df_annot <- mf[,c("patient"),drop=FALSE]
-col_patient <- c("#A6CEE3","#1F78B4","#B2DF8A","#33A02C","#FB9A99",
-                 "#E31A1C","#FDBF6F","#FF7F00")
+df_annot <- mf[, c("patient"), drop = FALSE]
+col_patient <- c(
+    "#A6CEE3", "#1F78B4", "#B2DF8A", "#33A02C", "#FB9A99",
+    "#E31A1C", "#FDBF6F", "#FF7F00"
+)
 ann_col_patient <- col_patient
 names(ann_col_patient) <- levels(factor(df_annot$patient))
 
-p <- pheatmap::pheatmap(temp,border_color=NA,annotation_col=df_annot,
-         annotation_row=df_annot,annotation_legend=T,
-         annotation_colors=list(patient=ann_col_patient),
-         fontsize_row=7,fontsize_col=7)
-ggsave("assets/dge-clustering.png",p,height=5,width=7)
+p <- pheatmap::pheatmap(temp,
+    border_color = NA, annotation_col = df_annot,
+    annotation_row = df_annot, annotation_legend = T,
+    annotation_colors = list(patient = ann_col_patient),
+    fontsize_row = 7, fontsize_col = 7
+)
+ggsave("assets/dge-clustering.png", p, height = 5, width = 7)
 ```
 
 ![](assets/dge-clustering.png)
@@ -627,32 +631,38 @@ ggsave("assets/dge-clustering.png",p,height=5,width=7)
 
 ```{r,echo=FALSE,eval=FALSE}
 # MDS
-mat1 <- as.data.frame(cmdscale(dist(t(cvst),method="euclidean"),eig=F,k=3))
+mat1 <- as.data.frame(cmdscale(dist(t(cvst), method = "euclidean"), eig = F, k = 3))
 mat1$nid <- row.names(mat1)
-mat1 <- merge(mat1,mf,by="nid")
+mat1 <- merge(mat1, mf, by = "nid")
 ```
 
 ```{r,echo=FALSE,eval=FALSE}
 # static plot
-p <- ggplot(mat1,aes(V1,V2,group=patient,colour=patient))+
-  geom_point()+
-  stat_ellipse()+
-  scale_colour_manual(values=ann_col_patient)+
-  guides(colour=guide_legend(nrow=3))+
-  labs(x="MDS1",y="MDS2")+
-  theme_bw()+
-  theme(panel.border=element_blank(),
-        legend.position="top")
-ggsave("assets/dge-mds.png",p,height=5.5,width=5)
+p <- ggplot(mat1, aes(V1, V2, group = patient, colour = patient)) +
+    geom_point() +
+    stat_ellipse() +
+    scale_colour_manual(values = ann_col_patient) +
+    guides(colour = guide_legend(nrow = 3)) +
+    labs(x = "MDS1", y = "MDS2") +
+    theme_bw() +
+    theme(
+        panel.border = element_blank(),
+        legend.position = "top"
+    )
+ggsave("assets/dge-mds.png", p, height = 5.5, width = 5)
 ```
 
 ```{r,echo=FALSE,eval=FALSE}
 # interactive plot
-mat1$tt <- paste0("<b>ID: </b>",mat1$id,"\n",
-                   "<b>NGS ID: </b>",mat1$nid)
-p1 <- plot_ly(mat1,x=~V1,y=~V2,z=~V3,text=~tt,hoverinfo="text",
-        colors=col_patient,width=750,height=500)
-add_markers(p1,color=~patient)
+mat1$tt <- paste0(
+    "<b>ID: </b>", mat1$id, "\n",
+    "<b>NGS ID: </b>", mat1$nid
+)
+p1 <- plot_ly(mat1,
+    x = ~V1, y = ~V2, z = ~V3, text = ~tt, hoverinfo = "text",
+    colors = col_patient, width = 750, height = 500
+)
+add_markers(p1, color = ~patient)
 ```
 
 ![](assets/dge-mds.png)
@@ -693,32 +703,38 @@ add_markers(p1,color=~patient)
   - Wald test `nbinomWaldTest()`
 
 ```{r,echo=FALSE,fig.height=3.9,fig.width=3.9,eval=FALSE}
-cf <- read.delim("assets/counts-filtered.txt",header=T,stringsAsFactors=F)
+cf <- read.delim("assets/counts-filtered.txt", header = T, stringsAsFactors = F)
 mf <- readRDS("assets/metadata-filtered.Rds")
 
 # filtering
-bads <- c("P8304_123","P8304_124","P8304_125","P8304_126","P8304_127","P8304_128")
+bads <- c("P8304_123", "P8304_124", "P8304_125", "P8304_126", "P8304_127", "P8304_128")
 cf <- cf %>% dplyr::select(-one_of(bads))
-mf <- dplyr::filter(mf,!(nid %in% bads)) %>% droplevels()
-mf$type <- factor(c(rep(c("type1","type1","type2","type2"),each=4),
-             rep("type2",each=3),rep("control",each=4)))
+mf <- dplyr::filter(mf, !(nid %in% bads)) %>% droplevels()
+mf$type <- factor(c(
+    rep(c("type1", "type1", "type2", "type2"), each = 4),
+    rep("type2", each = 3), rep("control", each = 4)
+))
 ```
 
 ```{r,echo=FALSE,fig.height=2.9,fig.width=2.9,eval=FALSE}
-{plot(x=log10(rowMeans(as.matrix(cf))+1),y=log10(rowVars(as.matrix(cf))+1),xlab=bquote(~-log[10]~Mean),ylab=bquote(~-log[10]~Variance),pch=20,cex=0.4)
-abline(a=0,b=1,col="red")}
+{
+    plot(x = log10(rowMeans(as.matrix(cf)) + 1), y = log10(rowVars(as.matrix(cf)) + 1), xlab = bquote(~ -log[10] ~ Mean), ylab = bquote(~ -log[10] ~ Variance), pch = 20, cex = 0.4)
+    abline(a = 0, b = 1, col = "red")
+}
 ```
 
 ```{r,echo=FALSE,fig.height=2.5,fig.width=5,dev="svg",eval=FALSE}
-d <- DESeqDataSetFromMatrix(countData=cf,colData=mf,design=as.formula(~type))
-d <- DESeq2::estimateSizeFactors(d,type="ratio")
+d <- DESeqDataSetFromMatrix(countData = cf, colData = mf, design = as.formula(~type))
+d <- DESeq2::estimateSizeFactors(d, type = "ratio")
 d <- DESeq2::estimateDispersions(d)
 
-{par(mar=c(4,4,0.2,0.5))
-par(mfrow=c(1,2))
-plotDispEsts(d)
-plotDispEsts(d,xlim=c(600,700),ylim=c(0.05,1.2),cex=1)}
-par(mfrow=c(1,1))
+{
+    par(mar = c(4, 4, 0.2, 0.5))
+    par(mfrow = c(1, 2))
+    plotDispEsts(d)
+    plotDispEsts(d, xlim = c(600, 700), ylim = c(0.05, 1.2), cex = 1)
+}
+par(mfrow = c(1, 1))
 ```
 
 ![](assets/dge-dispersion.png){width="50%"}
@@ -734,7 +750,7 @@ par(mfrow=c(1,1))
 ```{r,echo=FALSE,eval=FALSE}
 d1 <- nbinomWaldTest(d)
 d1r1 <- results(d1)
-head(d1r1,n=1)
+head(d1r1, n = 1)
 ```
 
 ```
@@ -774,8 +790,10 @@ low counts [2]     : 0, 0%
 - MA plot `plotMA()`
 
 ```{r,echo=FALSE,fig.height=2.5,fig.width=3,dev="svg",eval=FALSE}
-{par(mar=c(4,4,0.2,0.2))
-plotMA(d1)}
+{
+    par(mar = c(4, 4, 0.2, 0.2))
+    plotMA(d1)
+}
 ```
 
 ![](assets/dge-ma.png)
@@ -783,19 +801,19 @@ plotMA(d1)}
 - Volcano plot
 
 ```{r,echo=FALSE,fig.height=2.5,fig.width=3,dev="svg",eval=FALSE}
-par(mar=c(4,4,0.2,0.2))
+par(mar = c(4, 4, 0.2, 0.2))
 topT <- as.data.frame(d1r1)
 
-#Adjusted P values (FDR Q values)
-with(topT, plot(log2FoldChange, -log10(padj), pch=20, cex=1.0, xlab=bquote(~Log[2]~fold~change), ylab=bquote(~-Log[10]~Q~value)))
+# Adjusted P values (FDR Q values)
+with(topT, plot(log2FoldChange, -log10(padj), pch = 20, cex = 1.0, xlab = bquote(~ Log[2] ~ fold ~ change), ylab = bquote(~ -Log[10] ~ Q ~ value)))
 
-with(subset(topT, padj<0.05 & abs(log2FoldChange)>2), points(log2FoldChange, -log10(padj), pch=20, col="red", cex=0.5))
+with(subset(topT, padj < 0.05 & abs(log2FoldChange) > 2), points(log2FoldChange, -log10(padj), pch = 20, col = "red", cex = 0.5))
 
-#Add lines for absolute FC>2 and P-value cut-off at FDR Q<0.05
-abline(v=0, col="black", lty=3, lwd=1.0)
-abline(v=-2, col="black", lty=3, lwd=1.0)
-abline(v=2, col="black", lty=3, lwd=1.0)
-abline(h=-log10(max(topT$pvalue[topT$padj<0.05], na.rm=TRUE)), col="black", lty=3, lwd=1.0)
+# Add lines for absolute FC>2 and P-value cut-off at FDR Q<0.05
+abline(v = 0, col = "black", lty = 3, lwd = 1.0)
+abline(v = -2, col = "black", lty = 3, lwd = 1.0)
+abline(v = 2, col = "black", lty = 3, lwd = 1.0)
+abline(h = -log10(max(topT$pvalue[topT$padj < 0.05], na.rm = TRUE)), col = "black", lty = 3, lwd = 1.0)
 ```
 
 ![](assets/dge-volcano.png)
@@ -806,8 +824,8 @@ abline(h=-log10(max(topT$pvalue[topT$padj<0.05], na.rm=TRUE)), col="black", lty=
 - Normalised counts `plotCounts()`
 
 ```{r,echo=FALSE,fig.height=3,fig.width=3,dev="svg",eval=FALSE}
-par(mar=c(4.5,4.5,1,0.2))
-plotCounts(d1,"ENSG00000000003",intgroup="type")
+par(mar = c(4.5, 4.5, 1, 0.2))
+plotCounts(d1, "ENSG00000000003", intgroup = "type")
 ```
 
 ![](assets/dge-counts.png)
@@ -857,7 +875,7 @@ plotCounts(d1,"ENSG00000000003",intgroup="type")
 
 <img src="assets/help.png" style="height:250px; position:fixed; right:0px; bottom:0px; margin-right: 35px; margin-bottom: 40px;">
 
-## {background-image="assets/end.png"}
+## {background-image="/assets/images/cover.jpg"}
 
 ::: {.bottom-align}
 ### Thank you. Questions?
