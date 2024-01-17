@@ -26,7 +26,7 @@ Usually you would do most of the work in this lab directly on one of the login n
 Check which node you got when you booked resources this morning (replace **username** with your UPPMAX username)
 
 ```bash
-$ squeue -u username
+squeue -u username
 ```
 
 should look something like this
@@ -42,14 +42,14 @@ where **r292** is the name of the node I got (yours will probably be different).
 Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested (7 hours in this case) the session will shut down, and you will lose all unsaved data. Connect to this node from within UPPMAX.
 
 ```bash
-$ ssh -Y r292
+ssh -Y r292
 ```
 
 If the list is empty you can run the allocation command again and it should be in the list:
 
 ```{r}
 #| class-output: bash
-cat(paste0("salloc -A ",upid," -t 03:30:00 -p core -n 1 --no-shell &"))
+cat(paste0("salloc -A ", upid, " -t 03:30:00 -p core -n 1 --no-shell &"))
 ```
 
 {{< fa lightbulb >}} There is a UPPMAX specific tool called `jobinfo` that supplies the same kind of information as `squeue` that you can use as well (`$ jobinfo -u username`).
@@ -59,19 +59,19 @@ cat(paste0("salloc -A ",upid," -t 03:30:00 -p core -n 1 --no-shell &"))
 Let's make sure nano has **syntax highlighting** enabled. What that will do is to paint the boring code in pretty colors, making it much easier to read it. See the difference for yourself by first looking at this file before you enable it:
 
 ```bash
-$ nano /sw/uppmax/bin/projplot
+nano /sw/uppmax/bin/projplot
 ```
 
 Close down nano when you have seen how boing it looks without colors by pressing `ctrl+x`. Now, let's enable syntax highlighting. To do this, we will simply tell nano to include the syntax highlighting instructions from a bunch of files that are already installed at uppmax. Run this command to do just that:
 
 ```bash
-$ find /usr/share/nano/ -iname "*.nanorc" -exec echo include {} \; >> ~/.nanorc
+find /usr/share/nano/ -iname "*.nanorc" -exec echo include {} \; >> ~/.nanorc
 ```
 
 This command will put one line per language instructions (~30 of them, located in `/usr/share/nano`), into the nano autostart file (`~/.nanorc`) and put the word 'include' infront of each file name. That will make nano include the instructions from each of those files whenever it starts. Now have a look at the same file as before and enjoy the colors:
 
 ```bash
-$ nano /sw/uppmax/bin/projplot
+nano /sw/uppmax/bin/projplot
 ```
 
 Then close nano and continue with the lab.
@@ -90,7 +90,7 @@ Next, copy the lab files from this folder. `-r` means recursively, which means a
 #| echo: false
 #| class-output: bash
 cat("cp -r <source> <destination>\n")
-cat(paste0("cp -r /sw/courses/ngsintro/linux/linux_advanced /proj/",upid,"/nobackup/username"))
+cat(paste0("cp -r /sw/courses/ngsintro/linux/linux_advanced /proj/", upid, "/nobackup/username"))
 ```
 
 Have a look in ``r paste0("/proj/",upid,"/nobackup/username/linux_advanced")``.
@@ -98,11 +98,11 @@ Have a look in ``r paste0("/proj/",upid,"/nobackup/username/linux_advanced")``.
 ```{r}
 #| echo: false
 #| class-output: bash
-cat(paste0("cd /proj/",upid,"/nobackup/username/linux_advanced"))
+cat(paste0("cd /proj/", upid, "/nobackup/username/linux_advanced"))
 ```
 
 ```bash
-$ ll
+ll
 ```
 
 If you see files, the copying was successful.
@@ -113,27 +113,27 @@ If you see files, the copying was successful.
 Variables are like small notes you write stuff on. If you want to save the value of something to be able to use it later, variables is the way to go. Let's try assigning values to some variables and see how we use them.
 
 ```bash
-$ a=5
+a=5
 ```
 
 Now the values 5 is stored in the variable named `a`. To use the variable we have to put a `$` sign in front of it so that bash knows we are referring to the variable `a` and not just typing the letter `a`. To see the result of using the variable, we can use the program `echo`, which prints whatever you give it to the terminal.
 
 ```bash
-$ echo print this text to the terminal
-$ echo "you can use quotes if you want to"
+echo print this text to the terminal
+echo "you can use quotes if you want to"
 ```
 
 As you see, all the words you give it are printed just the way they are. Try putting the variable somewhere in the text.
 
 ```bash
-$ echo Most international flights leave from terminal $a at Arlanda airport
+echo Most international flights leave from terminal $a at Arlanda airport
 ```
 
 Bash will see that you have a variable there and will replace the variable name with the value the variable have before sending the text to echo. If you change the value of `a` and run the exact command again you will see that it changes.
 
 ```bash
-$ a="five"
-$ echo Most international flights leave from terminal $a at Arlanda airport
+a="five"
+echo Most international flights leave from terminal $a at Arlanda airport
 ```
 
 So without changing anything in the echo statement, we can make it output different things, all depending on the value of the variable `a`. This is one of the main points of using variables, that you don't have to change the code or script but you can still make it behave differently depending on the values of the variables.
@@ -141,8 +141,8 @@ So without changing anything in the echo statement, we can make it output differ
 You can also do mathematics with variables, but we have to tell bash that we want to do calculations first. We do this by wrapping the calculations inside a dollar sign (telling bash it's a variable) and double parentheses, i.e. `$((5+5))`.
 
 ```bash
-$ a=4
-$ echo $a squared is $(($a*$a))
+a=4
+echo $a squared is $(($a*$a))
 ```
 
 {{< fa clipboard-list >}} Write a echo command that will print out the volume of a [rectangular cuboid](https://www.mathsisfun.com/cuboid.html), with the side lengths specified by variables named `x`, `y`, and `z`. To see that it works correctly, the volume of a rectangular cuboid with sides 5,5,5 is 125, and for 4,5,10 is 200. *Give it a couple of tries on your own first. If you get completely stuck you can see a suggested solution below.*
@@ -151,10 +151,10 @@ $ echo $a squared is $(($a*$a))
 #| echo: false
 #| code-fold: true
 #| class-output: bash
-cat(paste0('$ x=4
-$ y=5
-$ z=10
-$ echo The volume of the rectangular cuboid with the sides $x,$y,$z is $(($x*$y*$z)).'))
+cat(paste0("x=4
+y=5
+z=10
+echo The volume of the rectangular cuboid with the sides $x,$y,$z is $(($x*$y*$z))."))
 ```
 
 ## Exercises
@@ -177,7 +177,7 @@ done
 which will print the value of `$i` in each iteration of the loop. Write this loop in the file you are editing with `gedit`/`nano`, save the file, and then run it in the other terminal you have open.
 
 ```bash
-$ bash loop_01.sh
+bash loop_01.sh
 ```
 
 As you see, the words inside the quotation marks are treated as a single unit, unlike the words after. You can also iterate over numbers, so erase the previous loop you wrote and try this instead:
@@ -210,7 +210,7 @@ Start off with getting a loop to count down from 10 to 0 first. Notice how fast 
 #| echo: false
 #| code-fold: true
 #| class-output: bash
-cat(paste0('# declare the values the loop will loop over
+cat(paste0("# declare the values the loop will loop over
 for secondsToGo in {10..0};
 do
     # print out the current number
@@ -222,7 +222,7 @@ do
 done
 
 # Declare the start of a new year in a festive manner
-echo Happy New Year everyone!!'))
+echo Happy New Year everyone!!"))
 ```
 
 ### Exercise 2
@@ -250,7 +250,7 @@ Basic, without bonus points:
 #| echo: false
 #| code-fold: true
 #| class-output: bash
-cat(paste0('# load the modules needed for samtools
+cat(paste0("# load the modules needed for samtools
 module load bioinfo-tools samtools/1.3
 
 # move to the SAM files directory to start with
@@ -261,7 +261,7 @@ for file in *.sam;
 do
     # do the actual converting, just slapping on .bam at the end of the name
     samtools view -bS $file > $file.bam
-done'))
+done"))
 ```
 
 Advanced, with bonus points:
@@ -327,7 +327,7 @@ Basic:
 #| echo: false
 #| code-fold: true
 #| class-output: bash
-cat(paste0('# load the modules needed for samtools
+cat(paste0("# load the modules needed for samtools
 module load bioinfo-tools samtools/1.3
 
 # move to the SAM files directory to start with.
@@ -342,7 +342,7 @@ do
         # do the actual converting, just slapping on .bam at the end of the name
         samtools view -bS $file > $file.bam
     fi
-done'))
+done"))
 ```
 
 Advanced:
@@ -416,7 +416,7 @@ echo 1 2 3 4 5
 #| echo: false
 #| code-fold: true
 #| class-output: bash
-cat(paste0('# set the number you want to calculate the factorial of
+cat(paste0("# set the number you want to calculate the factorial of
 n=10
 
 # you have to initialize a variable before you can start using it.
@@ -438,7 +438,7 @@ do
 done
 
 # print the result
-echo The factorial of $n is $factorial'))
+echo The factorial of $n is $factorial"))
 ```
 
 ### Bonus exercise 2
@@ -461,11 +461,11 @@ Basic solution:
 #| echo: false
 #| code-fold: true
 #| class-output: bash
-cat(paste0('# make the dummy pipeline available
+cat(paste0("# make the dummy pipeline available
 export PATH=$PATH:/sw/courses/ngsintro/linux/uppmax_pipeline_exercise/dummy_scripts
 
 # index the reference genome
-reference_indexer -r /proj/',upid,'/nobackup/username/filetypes/0_ref/ad2.fa
+reference_indexer -r /proj/", upid, "/nobackup/username/filetypes/0_ref/ad2.fa
 
 # go to the input files
 cd $1
@@ -475,7 +475,7 @@ for file in *.fastq;
 do
 
     # align the reads
-    align_reads -r /proj/',upid,'/nobackup/username/filetypes/0_ref/ad2.fa -i $file -o $file.sam
+    align_reads -r /proj/", upid, "/nobackup/username/filetypes/0_ref/ad2.fa -i $file -o $file.sam
 
     # convert the sam file to a bam file
     sambam_tool -f bam -i $file.sam -o $file.bam
@@ -486,7 +486,7 @@ do
     # index the bam file
     sambam_tool -f index -i $file.sorted.bam
 
-done'))
+done"))
 ```
 
 Advanced solution:
@@ -495,13 +495,13 @@ Advanced solution:
 #| echo: false
 #| code-fold: true
 #| class-output: bash
-cat(paste0('# make the dummy pipeline available in this script
+cat(paste0("# make the dummy pipeline available in this script
 export PATH=$PATH:/sw/courses/ngsintro/linux/uppmax_pipeline_exercise/dummy_scripts
 
 # index the reference genome once, only if needed
-if [ ! -f /proj/',upid,'/nobackup/username/filetypes/0_ref/ad2.fa.idx ];
+if [ ! -f /proj/", upid, "/nobackup/username/filetypes/0_ref/ad2.fa.idx ];
 then
-    reference_indexer -r /proj/',upid,'/nobackup/username/filetypes/0_ref/ad2.fa
+    reference_indexer -r /proj/", upid, '/nobackup/username/filetypes/0_ref/ad2.fa
 fi
 
 
@@ -530,7 +530,7 @@ do
     # print a temporary script file that will be submitted to slurm
     echo "#!/bin/bash -l
 
-    #SBATCH -A ',upid,'
+    #SBATCH -A ', upid, '
     #SBATCH -p core
     #SBATCH -n 1
     #SBATCH -t 00:05:00
@@ -544,7 +544,7 @@ do
     # You have to escape the dollar sign in SNIC_TMP to keep bash from resolving
     # it to its value in the submitter script already.
     echo "Copying data to node local hard drive"
-    cp /proj/',upid,'/nobackup/username/filetypes/0_ref/ad2.fa* $file $SNIC_TMP/
+    cp /proj/', upid, '/nobackup/username/filetypes/0_ref/ad2.fa* $file $SNIC_TMP/
 
     # go the the nodes local hard drive
     echo "Changing directory to node local hard drive"

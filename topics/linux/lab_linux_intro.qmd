@@ -24,7 +24,7 @@ The first step of this lab is to open a ssh connection to UPPMAX. Please refer t
 Usually you would do most of the work in this lab directly on one of the login nodes at UPPMAX, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("salloc -A ",upid," -t 07:00:00 -p core -n 1 --no-shell &"))
+cat(paste0("salloc -A ", upid, " -t 07:00:00 -p core -n 1 --no-shell &"))
 ```
 
 check which node you got (replace `username` with your UPPMAX username)
@@ -46,7 +46,7 @@ where **r292** is the name of the node I got (yours will probably be different).
 Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested (7 hours in this case) the session will shut down, and you will lose all unsaved data. Connect to this node from within UPPMAX.
 
 ```bash
-$ ssh -Y r292
+ssh -Y r292
 ```
 
 {{< fa lightbulb >}} There is a UPPMAX specific tool called `jobinfo` that supplies the same kind of information as `squeue` that you can use as well (`$ jobinfo -u username`).
@@ -60,7 +60,7 @@ When you connect to UPPMAX, you will start out in your home folder. The absolute
 Start with looking at what you have in your home folder. The command for this `ls`, and it stand for **L**i**S**t (list).
 
 ```bash
-$ ls -l
+ls -l
 ```
 
 This is how my home folder looks like, and yours should look somewhat similar:
@@ -91,7 +91,7 @@ Have a look around and see which folders there are. This is the folder where all
 Go there using the `cd` command.
 
 ```bash
-$ cd nobackup
+cd nobackup
 ```
 
 We can easily see that this is a relative path, since it does not start with a **`/`**. That means that this command will only work when you are standing in your project folder. If you are standing somewhere else and say that you want to enter a folder named nobackup, the computer will tell you that there is no folder named nobackup where you are located at the moment.
@@ -109,7 +109,7 @@ Now we have practised moving around and looking at what we have in folders. The 
 If we want to look at what we have in our home folder, while standing in the course's project folder, we type `ll /home/username/` and remember to substitute **\<username\>** with your own user name.
 
 ```bash
-$ ll /home/username
+ll /home/username
 ```
 
 Since most programmers are lazy (efficient), there is a shortcut to your home folder so that you don't have to write it all the time. If you write **`~/`** it means the same as if you would write **/home/\<username\>/**
@@ -117,13 +117,13 @@ Since most programmers are lazy (efficient), there is a shortcut to your home fo
 Try using it with `ls`:
 
 ```bash
-$ ll /home/username
+ll /home/username
 ```
 
 or
 
 ```bash
-$ ll ~/
+ll ~/
 ```
 
 ## Copy lab files
@@ -139,14 +139,14 @@ For structures sake, first create a folder with your username in the **nobackup*
 This can be done in 2 ways:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("mkdir /proj/",upid,"/nobackup/username\n"))
-cat(paste0("mkdir /proj/",upid,"/nobackup/username/linux_tutorial"))
+cat(paste0("mkdir /proj/", upid, "/nobackup/username\n"))
+cat(paste0("mkdir /proj/", upid, "/nobackup/username/linux_tutorial"))
 ```
 
 or
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("mkdir -p /proj/",upid,"/nobackup/username/linux_tutorial"))
+cat(paste0("mkdir -p /proj/", upid, "/nobackup/username/linux_tutorial"))
 ```
 
 The reason for this is that Linux will not like it if you try to create the folder **linux_tutorial** inside a folder (the one named like your username) that does not exist yet. Then, you have the choice to either first create the one named like your username (the first way), or to tell Linux to create it for you by giving it the **`-p`** option (the second way).
@@ -158,7 +158,7 @@ cp -r <source-folder> <destination-folder>
 ```
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("cp -r /sw/courses/ngsintro/linux/linux_tutorial/* /proj/",upid,"/nobackup/username/linux_tutorial"))
+cat(paste0("cp -r /sw/courses/ngsintro/linux/linux_tutorial/* /proj/", upid, "/nobackup/username/linux_tutorial"))
 ```
 
 `-r` denotes recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, NOT sub-folders and files in sub-folders.
@@ -180,7 +180,7 @@ Go to the folder you just copied and see what is in it.
 {{< fa lightbulb >}} Remember to tab-complete to avoid typos and too much writing.
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("cd /proj/",upid,"/nobackup/username/linux_tutorial\n"))
+cat(paste0("cd /proj/", upid, "/nobackup/username/linux_tutorial\n"))
 cat("ll")
 ```
 
@@ -189,7 +189,7 @@ cat("ll")
 To unpack the **files.tar.gz** file use the following line while standing in the newly copied **linux_tutorial** folder.
 
 ```bash
-$ tar -xzvf files.tar.gz
+tar -xzvf files.tar.gz
 ```
 
 The command will always be the same for all tar.gz files you want to unpack. `-xzvf` means e<b>X</b>tract from a **Z**ipped file, **V**erbose (prints the name of the file being unpacked), from the specified **F**ile (`f` must always be the last of the letters).
@@ -228,7 +228,7 @@ In this example, we want to move the result files only, located in the folder `i
 The syntax for the move command is:
 
 ```bash
-$ mv <source> <destination>
+mv <source> <destination>
 ```
 
 First, take a look inside the **important_results** folder:
@@ -244,7 +244,7 @@ total 0
 You see that there are some unimportant temporary files that you have no interest in. Just to demonstrate the move command, I will show you how to move one of these temporary files to your backed-up project folder:
 
 ```bash
-$ mv important_results/temp_file-1 backed_up_proj_folder/
+mv important_results/temp_file-1 backed_up_proj_folder/
 ```
 
 {{< fa clipboard-list >}} Now do the same, but move the important DNA data file!
@@ -262,7 +262,7 @@ total 0
 Another use for the `move` command is to rename things. When you think of it, renaming is just a special case of moving. You move the file to a location and give the file a new name in the process. The location you move the file **to** can very well be the same folder the file already is in. To give this a try, we will rename the folder `a_strange_name` to a better name.
 
 ```bash
-$ mv a_strange_name a_better_name
+mv a_strange_name a_better_name
 ```
 
 Look around to see that the name change worked.
@@ -291,8 +291,8 @@ Sometimes you don't want to move things, you want to copy them. Moving a file wi
 As with the move command, the syntax is
 
 ```bash
-$ cp <source> <destination>
-$ cp backed_up_proj_folder/last_years_data external_hdd/
+cp <source> <destination>
+cp backed_up_proj_folder/last_years_data external_hdd/
 ```
 
 Take a look in the **external_hdd** to make sure the file got copied.
@@ -312,13 +312,13 @@ To delete a file, we use the **R**e<b>M</b>ove command, **`rm`**.
 Syntax:
 
 ```
-$ rm <file to remove>
+rm <file to remove>
 ```
 
 If you want, you can also specify multiple files at once, as many as you want!
 
 ```bash
-$ rm <file to remove> <file to remove> <file to remove> <file to remove> <file to remove>
+rm <file to remove> <file to remove> <file to remove> <file to remove> <file to remove>
 ```
 
 ::: {.alert .alert-danger}
@@ -350,14 +350,14 @@ drwxrwsr-x 2 user g20XXXXX   2048 Jan 28  2012 this_is_empty
 Now remove it.
 
 ```bash
-$ rm useless_file
+rm useless_file
 ```
 
 Similarly, folders can be removed too. There is even a special command for removing folders, `rmdir`. They work similar to `rm`, except that they can't remove files. There are two folders, `this_is_empty` and `this_has_a_file`, that we now will delete.
 
 ```bash
-$ rmdir this_is_empty
-$ rmdir this_has_a_file
+rmdir this_is_empty
+rmdir this_has_a_file
 ```
 
 If you look inside `this_has_a_file`,
@@ -371,14 +371,14 @@ total 0
 you see that there is a file in there! Only directories that are completely empty can be deleted using `rmdir`. To be able to delete `this_has_a_file`, either delete the file manually and then remove the folder
 
 ```bash
-$ rm this_has_a_file/file
-$ rmdir this_has_a_file
+rm this_has_a_file/file
+rmdir this_has_a_file
 ```
 
 or delete the directory recursively, which will remove `this_has_a_file` and everything inside:
 
 ```bash
-$ rm -r this_has_a_file
+rm -r this_has_a_file
 ```
 
 ## Open files
@@ -400,7 +400,7 @@ total 96
 Not so easy with those names.. We will have to use `less` to look at the files and figure out which is which.
 
 ```bash
-$ less <filename>
+less <filename>
 ```
 
 {{< fa lightbulb >}} Press `q` to close it down, use arrows keys to scroll up/down.
@@ -408,7 +408,7 @@ $ less <filename>
 Have a look at `the_best`, that must be our script, right?
 
 ```bash
-$ less old_project/the_best
+less old_project/the_best
 ```
 
 I guess not. Carrot cakes might be the bomb, but they won't solve bioinformatic problems. Have a look at the file `a` instead.
@@ -424,8 +424,8 @@ So, why care about how the program works? I'll show you why. This time we will b
 First, open the file with `nano`.
 
 ```bash
-$ nano <filename>
-$ nano /sw/courses/ngsintro/linux/linux_additional-files/large_file
+nano <filename>
+nano /sw/courses/ngsintro/linux/linux_additional-files/large_file
 ```
 
 {{< fa lightbulb >}} Press `Ctrl`+`X` to close it down, use arrows to scroll up/down).
@@ -437,24 +437,24 @@ Is the file loaded yet? Now take that waiting time and multiply it with 100-1000
 To view the first rows of the large file, use `head`.
 
 ```bash
-$ head <filename>
-$ head /sw/courses/ngsintro/linux/linux_additional-files/large_file
+head <filename>
+head /sw/courses/ngsintro/linux/linux_additional-files/large_file
 ```
 
 Remember how to view an arbitrary number of first rows in a file?
 
 ```bash
-$ head -n <number of rows to view> <filename>
-$ head -n 23 /sw/courses/ngsintro/linux/linux_additional-files/large_file
+head -n <number of rows to view> <filename>
+head -n 23 /sw/courses/ngsintro/linux/linux_additional-files/large_file
 ```
 
 The same syntax for viewing the last rows of a file with tail:
 
 ```bash
-$ tail <filename>
-$ tail /sw/courses/ngsintro/linux/linux_additional-files/large_file
-$ tail -n <number of rows to view> <filename>
-$ tail -n 23 /sw/courses/ngsintro/linux/linux_additional-files/large_file
+tail <filename>
+tail /sw/courses/ngsintro/linux/linux_additional-files/large_file
+tail -n <number of rows to view> <filename>
+tail -n 23 /sw/courses/ngsintro/linux/linux_additional-files/large_file
 ```
 
 ## Wildcards
@@ -464,7 +464,7 @@ Sometimes (most of the time really) you have many files. So many that it would t
 {{< fa exclamation-circle >}} **DO NOT** run this command, it's just an example.
 
 ```bash
-$ mv  sample_1_*  my_other_folder
+mv  sample_1_*  my_other_folder
 ```
 
 We can try it out on the example files I have prepared. There are two folders called **part_1** and **part_2**. We want to collect all the **.txt** files from both these folders in one of the folders. Look around in both the folders to see what they contain.
@@ -485,7 +485,7 @@ total 0
 We see that **part_1** only contains `.txt` files, and that **part_2** contains some other files as well. The best option seems to be to move all `.txt` files from **part_2** info **part_1**.
 
 ```bash
-$ mv part_2/*.txt part_1/
+mv part_2/*.txt part_1/
 ```
 
 The wildcard works with most, if not all, Linux commands. We can try using wildcards with **`ls`**. Look in the folder `many_files`. Yes, there are hundreds of .docx files in there. But, there are a couple of **.txt** files in there as well. Find out how many .docx and .txt files exist.
@@ -493,8 +493,8 @@ The wildcard works with most, if not all, Linux commands. We can try using wildc
 {{< fa clipboard-list >}} Try to figure out the solution on your own. Then check the answer below.
 
 ```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}
-cat(paste0('$ ll many_files/*.docx
-$ ll many_files/*.txt'))
+cat(paste0("ll many_files/*.docx
+ll many_files/*.txt"))
 ```
 
 ## Utility commands
@@ -504,7 +504,7 @@ Ok, the last 2 commands for now are `top` and `man`.
 `top` can be useful when you want to look at which programs are being run on the computer, and how hard the computer is working. Type `top` and have a look.
 
 ```bash
-$ top
+top
 ```
 
 {{< fa lightbulb >}} Press <kbd>q</kbd> to exit.
@@ -555,8 +555,8 @@ You might wonder how the heck am I supposed to be able to remember all these com
 Good news everyone, there is a manual! To get all the nitty-gritty details about `ls`, you use the `man` command.
 
 ```bash
-$ man <command you want to look at>
-$ man ls
+man <command you want to look at>
+man ls
 ```
 
 ```
