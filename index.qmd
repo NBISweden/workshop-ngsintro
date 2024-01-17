@@ -22,10 +22,14 @@ execute:
 ### NBIS Workshop
 ## Introduction To Bioinformatics Using NGS Data
 
+::: {.large}
+
 Working on the Linux command line  
 Sequence data formats and QC  
 DNA variant calling workflow  
 RNA sequence analyses workflow  
+
+:::
 
 ::: small
 Updated: <?lua.date?> at <?lua.time?>.
