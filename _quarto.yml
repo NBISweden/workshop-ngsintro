@@ -114,14 +114,8 @@ filters:
   - reveal-logo
 
 # used site-wide wherever uppmax project ids are used
-uppmax_project: naiss2023-22-862	
-nsc_project: naiss2023-22-862
-# uppmax reservation ids. used site-wide
-uppmax_res_1: naiss2023-22-862_1
-uppmax_res_2: naiss2023-22-862_2
-uppmax_res_3: naiss2023-22-862_3
-uppmax_res_4: naiss2023-22-862_4
-uppmax_res_5: naiss2023-22-862_5
+uppmax_project: naiss2024-22-212
+nsc_project: naiss2024-22-212
 
 # location options are linkoping, lund, umea, uppsala or online. For rendering the info page.
 # one or more separated by commas or semicolon. online doesn't display any location info.
