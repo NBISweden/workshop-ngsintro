@@ -80,10 +80,10 @@ format:
     fig-align: left
     chalkboard: true
     callout-icon: true
-    image: "assets/images/featured.jpg"
-    hero: "assets/images/slide-hero.png"
+    image: "/assets/images/featured.jpg"
+    hero: "/assets/images/slide-hero.png"
     title-slide-attributes:
-      data-background-image: "assets/images/cover.jpg"
+      data-background-image: "/assets/images/cover.jpg"
       data-background-size: "cover"
       data-background-opacity: "1"
     header-logo-left: /assets/logos/nbis.png
