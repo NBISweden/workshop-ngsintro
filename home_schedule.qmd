@@ -15,6 +15,7 @@ format:
 
 library(lubridate)
 library(dplyr)
+library(fontawesome)
 library(htmlTable)
 library(yaml)
 library(readxl)
@@ -25,10 +26,10 @@ color_primary <- yaml::read_yaml(here("_quarto.yml"))$colors$primary
 
 asst <- yaml::read_yaml("_quarto.yml")$assistant
 
-#' @description
+#' @description Add hover classes to assistants
 #' @param a vector of assistants
 #' @param ids named vector of assistant ids
-fix_assis <- function(a, asst) {
+create_tooltip <- function(a, asst) {
     asst <- lapply(strsplit(asst, ":"), trimws)
     ids <- sapply(asst, "[[", 1)
     names(ids) <- sapply(asst, "[[", 2)
@@ -70,34 +71,36 @@ s <- readxl::read_xlsx("schedule.xlsx") %>%
     as.data.frame() %>%
     dplyr::mutate(room = ifelse(is.na(link_room), room, paste0("<a href='", link_room, "'>", room, "</a>"))) %>%
     # create day label (with date, day, room)
-    dplyr::mutate(date = paste0("<p style='font-size:110%;padding-top:10px;padding-bottom:5px;margin-top:10px;'><span style='font-weight:bold;'><span class='marker'>{{< fa calendar >}}</span>", date, "</span>", "<span style='color:white;border-radius:4px;padding-right:4px;padding-left:4px;background:", color_primary, ";margin-left:9px;margin-right:7px;'>", day, "</span>", "<span class='marker'>{{< fa map-marker-alt >}}</span>", room, "</p>")) %>%
+    dplyr::mutate(date = paste0("<p style='font-size:110%;padding-top:10px;padding-bottom:5px;'><span style='font-weight:bold;'><span class='marker'>",fa("fas fa-calendar"),"</span>", date, "</span>", "<span style='color:white;border-radius:4px;padding-right:4px;padding-left:4px;background:", color_primary, ";margin-left:9px;margin-right:7px;'>", day, "</span>", "<span class='marker'>", fa("fas fa-location-dot"),"</span>", room, "</p>")) %>%
     # style topic
     dplyr::mutate(topic = ifelse(tolower(topic) == "break" | tolower(topic) == "lunch", paste0("<span class='topic'>", topic, "</span>"), topic)) %>%
     dplyr::mutate(topic = ifelse(tolower(topic) == "course dinner", paste0("<span class='topic-dinner'>", topic, "</span>"), topic)) %>%
     dplyr::mutate(topic = ifelse(!startsWith(topic, "<span"), paste0("<span style='margin-right:5px;'>", topic, "</span>"), topic)) %>%
     # add links to topic
-    dplyr::mutate(topic = ifelse(is.na(link_slide), topic, paste0("<span>", topic, "<a href='", link_slide, "'>{{< fa file-powerpoint >}}</a></span>&#160"))) %>%
-    dplyr::mutate(topic = ifelse(is.na(link_lab), topic, paste0("<span>", topic, "<a href='", link_lab, "'>{{< fa file-lines >}}</a></span>&#160"))) %>%
-    dplyr::mutate(topic = ifelse(is.na(link_youtube), topic, paste0("<span>", topic, "<a href='", link_youtube, "'>{{< fa brands youtube >}}</a></span>"))) %>%
+    dplyr::mutate(topic = ifelse(is.na(link_slide), topic, paste0("<span>", topic, "<a class='marker' href='", link_slide, "'>", fa("fas fa-file-powerpoint"), "</a></span>"))) %>%
+    dplyr::mutate(topic = ifelse(is.na(link_lab), topic, paste0("<span>", topic, "<a class='marker' href='", link_lab, "'>", fa("fas fa-file-lines"), "</a></span>"))) %>%
+    dplyr::mutate(topic = ifelse(is.na(link_youtube), topic, paste0("<span>", topic, "<a class='marker' href='", link_youtube, "'>", fa("fab fa-youtube"),"</a></span>"))) %>%
     dplyr::mutate(time = paste0(start_time, " - ", end_time)) %>%
-    dplyr::mutate(teacher = ifelse(is.na(teacher), "", teacher)) %>%
+    dplyr::mutate(instructor = ifelse(is.na(instructor), "", instructor)) %>%
     dplyr::mutate(assistant = ifelse(is.na(assistant), "", assistant)) %>%
-    dplyr::select(date, room, time, topic, teacher, assistant)
+    dplyr::select(date, room, time, topic, instructor, assistant)
 
 if (all(is.na(s$assistant)) | all(s$assistant == "")) {
     s$assistant <- NULL
-    cnames <- c("Time", "Topic", "Teacher")
+    cnames <- c("Time", "Topic", "Instructor")
 } else {
-    s$assistant <- fix_assis(s$assistant, asst)
-    cnames <- c("Time", "Topic", "Teacher", "Assistant")
+    s$assistant <- create_tooltip(s$assistant, asst)
+    cnames <- c("Time", "Topic", "Instructor", "Assistant")
 }
 ```
 
 ```{r}
 #| echo: false
 #| results: asis
-if (!is.null(schedule_message) & nchar(schedule_message) != 0) {
-    cat(paste0("::: {.callout-note}\n", schedule_message, "\n:::"))
+if (!is.null(schedule_message)) {
+  if (nchar(schedule_message) != 0) {
+    cat(paste0("::: {.callout-note}\n", schedule_message, "\n:::\n"))
+  }
 }
 ```
 
@@ -106,6 +109,7 @@ if (!is.null(schedule_message) & nchar(schedule_message) != 0) {
 ```{r}
 #| echo: false
 #| eval: true
+#| html-table-processing: none
 
 # grouping vector
 r <- rle(s$date)
@@ -114,12 +118,42 @@ row.names(s) <- NULL
 s %>%
     dplyr::select(-date, -room) %>%
     setNames(cnames) %>%
-    addHtmlTableStyle(align = "clll", align.header = "clll") %>%
+    addHtmlTableStyle(align = "clll", align.header = "clll", css.cell = "padding-right:1em;") %>%
     htmlTable(rnames = FALSE, rgroup = r$values, n.rgroup = r$lengths)
 ```
 
+```{r}
+#| echo: false
+#| eval: false
+
+library(gt)
+
+s %>%
+  select(-room) %>%
+  #group_by(date) %>%
+  gt(groupname_col = "date", process_md = TRUE) %>%
+  fmt_markdown() %>%
+  cols_align(align = "left")
+```
+
+```{r}
+#| echo: false
+#| eval: false
+
+library(kableExtra)
+
+r <- rle(s$date)
+packs <- r$lengths
+names(packs) <- r$values
+
+s %>%
+    kbl(format = "html", escape = FALSE) %>%
+    kable_styling(bootstrap_options = c("striped", "hover", "condensed", full_width = FALSE)) %>%
+    pack_rows(index = packs, escape = FALSE)
+```
+
 <!-- marker legend -->
-<p class="small" style="margin-top:20px;">
+<p class="small" style="margin-top:20px;text-align:center;">
 <span>
 <span style="margin-left:6px; margin-right:6px;">
 {{< fa calendar >}} Date

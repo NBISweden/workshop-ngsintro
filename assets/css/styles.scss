@@ -176,6 +176,19 @@ div.callout-important .callout-icon::before {
 
 /* table schedule */
 
+.table-schedule {
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+
+.table-schedule tr:hover {
+  background-color: whitesmoke;
+}
+
+.table-schedule table {
+  margin: 1em auto;
+}
+
 .table-schedule .topic {
   color: white;
   font-weight: bold;
@@ -194,8 +207,8 @@ div.callout-important .callout-icon::before {
 
 .table-schedule .marker {
   color: $primary;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-left: 2px;
+  margin-right: 3px;
 }
 
 .table-schedule td p {
