@@ -29,6 +29,7 @@ tar -xzvf files.tar.gz
 echo "6 Copying and moving files"
 mv important_results/temp_file-1 backed_up_proj_folder/
 mv important_results/dna_data_analysis_result_file_that_is_important-you_should_really_use_tab_completion_for_file_names.bam backed_up_proj_folder/
+rm -rf a_better_name
 mv a_strange_name a_better_name
 ls -l
 cp backed_up_proj_folder/last_years_data external_hdd/
