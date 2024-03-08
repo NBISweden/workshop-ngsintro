@@ -29,7 +29,7 @@ Before proceeding with applying for project membership and user accounts, we hav
 This is where you might run into trouble if you don't have a SWAMID connected account. You will not be able to accept the user agreement online without it, so you will have to send in your acceptance in paper form together with a copy of your passport. This process can take a week or more, so please make sure you can accept the user agreement in good time.
 :::
 
-After making sure you have an accepted user agreement, go to the [**SUPR/NAISS Projects**](https://supr.naiss.se/project/) page and request membership to the project ID: [**`r paste0(upid)`**]{.highlight}
+After making sure you have an accepted user agreement, go to the [**SUPR/NAISS Projects**](https://supr.naiss.se/project/) page and request membership to the project ID: [**`r paste0(upid)`**]{.badge}
 
 ![](assets/images/supr-request.jpg){width="70%"}
 

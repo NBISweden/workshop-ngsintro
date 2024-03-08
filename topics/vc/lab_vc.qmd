@@ -901,7 +901,7 @@ do
   echo "Now analyzing: ${sample}"
   # map the reads
   bwa mem \\
-  -R "@RG\tID:${sample}\tPU:flowcellx_lanex\tSM:${sample}\tLB:libraryx\tPL:illumina" \\
+  -R "@RG\\tID:${sample}\\tPU:flowcellx_lanex\\tSM:${sample}\\tLB:libraryx\\tPL:illumina" \\
   -t 1 human_g1k_v37_chr2.fasta \\
   "${sample}_1.fq" "${sample}_2.fq" | samtools sort > "${sample}.bam"
 

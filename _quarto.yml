@@ -1,7 +1,7 @@
 project:
   type: website
   # output directory used on gh-pages branch. format: YYMM
-  output-dir: "2311"
+  output-dir: "2403"
   render: 
     - "!README.md"
     - "!LICENSE"
@@ -13,11 +13,11 @@ project:
     - "*.qmd"
 
 website:
-  image: "assets/logos/nbis.png"
+  image: "assets/images/featured.jpg"
   favicon: "assets/favicon.png"
   navbar:
     logo: "assets/logos/nbis-scilifelab.png"
-    logo-alt: "nbis-scilifelab-logo."
+    logo-alt: "logo"
     right:
       - text: "Home"
         href: "index.html"
@@ -33,14 +33,15 @@ website:
         href: "home_info.html"
   page-footer:
     border: false
-    left: "2023 [NBIS](https://nbis.se) | [GPL-3 License](https://choosealicense.com/licenses/gpl-3.0/)"
-    right: "Published with [Quarto](https://quarto.org/) v<?quarto.version?>"
+    left: "{{< meta current_year >}} [NBIS](https://nbis.se) | [GPL-3 License](https://choosealicense.com/licenses/gpl-3.0/)"
+    right: "Published with [Quarto](https://quarto.org/) v{{< meta quarto_version >}}"
+  site-url: "https://nbisweden.github.io/workshop-ngsintro/"
 
 format:
   html:
-    quarto-required: ">=1.2.2"
-    include-in-header: "assets/fonts/head.html"
-    theme: "assets/css/custom.scss"
+    quarto-required: ">=1.4.0"
+    include-in-header: "assets/include_head.html"
+    theme: "assets/css/styles.scss"
     smooth-scroll: true
     toc: true
     toc-depth: 4
@@ -51,19 +52,19 @@ format:
     code-tools: false
     code-copy: true
     code-overflow: wrap
-    df-print: kable
+    df-print: paged
     standalone: false
     fig-align: left
-    title-block-banner: "#E9F2D1"
-    callout-icon: false
+    title-block-banner: "assets/images/banner.jpg"
+    callout-icon: true
     date:  last-modified
     date-format: "DD-MMM-YYYY"
-    lightbox: 
-      match: auto
+    image: "assets/images/featured.png"
   revealjs:
-    quarto-required: ">=1.2.269"
-    include-in-header: "assets/fonts/head.html"
-    theme: ["default","assets/css/custom.scss"]
+    quarto-required: ">=1.4.0"
+    include-in-header: "assets/include_head.html"
+    theme: ["default","assets/css/slides.scss"]
+    df-print: paged
     width: 1280
     height: 720
     transition: "fade"
@@ -71,20 +72,29 @@ format:
     smaller: false
     incremental: false
     scrollable: false
+    slide-level: 2
     slide-number: true
     progress: true
     date:  last-modified
     date-format: "DD-MMM-YYYY"
     fig-align: left
     chalkboard: true
-    callout-icon: false
+    callout-icon: true
+    image: "/assets/images/featured.jpg"
+    hero: "/assets/images/slide-hero.png"
     title-slide-attributes:
-      data-background-image: "assets/images/cover.png"
+      data-background-image: "/assets/images/cover.jpg"
       data-background-size: "cover"
       data-background-opacity: "1"
-    header-logo-left: ../../assets/logos/nbis.png
-    header-logo-right: ../../assets/logos/scilifelab.png
-
+    header-logo-left: /assets/logos/nbis.png
+    header-logo-left-height: 25px
+    header-logo-left-url: https://nbisweden.github.io/workshop-ngsintro/home_contents.html
+    header-logo-right: /assets/logos/scilifelab.png
+    header-logo-right-height: 25px
+    header-logo-right-url: https://nbisweden.github.io/workshop-ngsintro/home_contents.html
+    template-partials:
+      - "assets/title-slide.html"
+      
 bibliography: references.bib
 csl: apa.csl
 
@@ -101,18 +111,11 @@ execute:
 
 filters:
   - assets/custom.lua
-  - reveal-header
-  - lightbox
+  - reveal-logo
 
 # used site-wide wherever uppmax project ids are used
-uppmax_project: naiss2023-22-862	
-nsc_project: naiss2023-22-862
-# uppmax reservation ids. used site-wide
-uppmax_res_1: naiss2023-22-862_1
-uppmax_res_2: naiss2023-22-862_2
-uppmax_res_3: naiss2023-22-862_3
-uppmax_res_4: naiss2023-22-862_4
-uppmax_res_5: naiss2023-22-862_5
+uppmax_project: naiss2024-22-212
+nsc_project: naiss2024-22-212
 
 # location options are linkoping, lund, umea, uppsala or online. For rendering the info page.
 # one or more separated by commas or semicolon. online doesn't display any location info.
@@ -120,11 +123,15 @@ location: uppsala
 assistants:
  - "AJ: Anna Johansson"
  - "BV: Björn Viklund"
+ - "CK: Cormac Kinsella"
  - "DA: Dag Ahren"
+ - "EB: Emre Balsever"
  - "FB: Franziska Bonath"
+ - "FR: Fariba Roshanzamir"
  - "GD: Guilherme Dias"
  - "JH: Jason Hill"
  - "JB: Joakim Bygdell"
+ - "JT: Jeanette Tångrot"
  - "KL: Katarina Lejonlid"
  - "KB: Kristina Benevides"
  - "LK: Linda Köhn"
@@ -136,13 +143,16 @@ assistants:
  - "MM: Markus Mayrhofer"
  - "MP: Martin Pippel"
  - "MR: Miguel Redondo"
+ - "MV: Massimiliano Volpe"
  - "NN: Nina Norgren"
  - "OP: Olga Vinnere Pettersson"
  - "PA: Prasoon Agarwal"
  - "PP: Paul Pyl"
  - "RF: Roy Francis"
- - "VH: Vincent van Hoef"
  - "SD: Sebastian DiLorenzo"
+ - "VH: Vincent van Hoef"
+ - "VK: Varsith Konda"
+ - "YL: Yuan Li"
 schedule_message: "Coffee breaks are planned for approximately 10:00 and 14:30 every day."
 colors:
   primary: "#95b540"

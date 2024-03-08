@@ -36,22 +36,40 @@ Clone the repo if not already done. Make sure you are standing in the repo direc
 To build the complete site,
 
 ```
-docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-ngsintro/workshop-ngsintro
+docker run --platform linux/amd64 --rm -u 1000:1000 -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-ngsintro
 ```
 
 To build a single file (for example `index.qmd`),
 
 ```
-docker run --rm -u $(id -u ${USER}):$(id -g ${USER}) -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-ngsintro/workshop-ngsintro quarto render index.qmd
+docker run --platform linux/amd64 --rm -u 1000:1000 -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-ngsintro quarto render index.qmd
 ```
 
 :exclamation: Output files are for local preview only. Do not push any rendered .html files or intermediates.
 
 ## Repo organisation
 
-The source material is located on the *master* branch (default). The rendered material is located on the *gh-pages* branch. One only needs to update content in master. Changes pushed to the *master* branch is automatically rendered to the *gh-pages* branch.
+The source material is located on the *master* branch (default). The rendered material is located on the *gh-pages* branch. One only needs to update source materials in *master*. Changes pushed to the *master* branch is automatically rendered to the *gh-pages* branch using github actions.
 
-:exclamation: Every push rebuilds the whole website using a docker image. Build takes about 4-5 mins.
+:exclamation: Every push rebuilds the whole website using a pre-built docker image.
+
+This repo is loosely based on the quarto template [specky](https://github.com/royfrancis/specky).
+
+## Building docker container
+
+```bash
+# build container
+docker build --platform linux/amd64 -t ghcr.io/nbisweden/workshop-ngsintro:2.3.0 -t ghcr.io/nbisweden/workshop-ngsintro:latest .
+
+# push to ghcr
+# docker login ghcr.io
+docker push ghcr.io/nbisweden/workshop-ngsintro:2.3.0
+docker push ghcr.io/nbisweden/workshop-ngsintro:latest
+
+# run container in the root of the repo
+docker run --rm --platform linux/amd64 -u 1000:1000 -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-ngsintro:latest
+docker run --rm --platform linux/amd64 -u 1000:1000 -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-ngsintro:latest quarto render index.qmd
+```
 
 ## Test scripts
 
@@ -63,4 +81,4 @@ The contents of these scripts should use identical steps and tools as the studen
 
 ---
 
-**2023** • NBIS • SciLifeLab
+**2024** • NBIS • SciLifeLab

@@ -53,13 +53,13 @@ Directory: Whether the directory can be entered using `cd`.
 Make an empty directory we can work in and make a file.
 
 ```{r,echo=FALSE,class.output="bash",comment='',results='markup'}
-cat(paste0('$ cd /proj/',upid,'/nobackup/username
-$ mkdir advlinux
-$ cd advlinux
-$ touch  filename
-$ ls -lh
+cat(paste0("cd /proj/", upid, "/nobackup/username
+mkdir advlinux
+cd advlinux
+touch  filename
+ls -lh
 total 0
- -rw-r--r-- 1 S_D staff 0B Sep 21 13:54 filename'))
+ -rw-r--r-- 1 S_D staff 0B Sep 21 13:54 filename"))
 ```
 
 (`-lh` means long and human readable, displaying more information about the files or directories in a human understandable format)
@@ -103,8 +103,9 @@ This translates our files permissions to say this `-rw-r--r--`:
 As another example, lets create a directory.
 
 ```bash
-$ mkdir directoryname
-$ ls -lh
+mkdir directoryname
+ls -lh
+
 total 0
 drwxr-xr-x  2 S_D  staff    68B Sep 21 14:41 directoryname
 -rw-r--r--  1 S_D  staff     0B Sep 21 13:54 filename
@@ -123,12 +124,15 @@ The command to set file permission is `chmod` which means **CH**ange **MOD**e. O
 Lets revisit our example file and directory to test this.
 
 ```bash
-$ ls -lh
+ls -lh
+
 total 0
 drwxr-xr-x  2 S_D  staff    68B Sep 21 14:41 directoryname
 -rw-r--r--  1 S_D  staff     0B Sep 21 13:54 filename
-$ chmod a=x filename
-$ ls -lh
+
+chmod a=x filename
+ls -lh
+
 total 0
 drwxr-xr-x  2 S_D  staff    68B Sep 21 14:41 directoryname
 ---x--x--x  1 S_D  staff     0B Sep 21 13:54 filename
@@ -139,11 +143,11 @@ As you can see this affected all three, **`a`**, it wiped the previous permissio
 Try some others both on the file and directory to get the hang of it.
 
 ```bash
-$ chmod g+r filename
-$ chmod u-x filename
-$ chmod ug=rx filename
-$ chmod a=- filename
-$ chmod a+w directoryname
+chmod g+r filename
+chmod u-x filename
+chmod ug=rx filename
+chmod a=- filename
+chmod a+w directoryname
 ```
 
 {{< fa clipboard-list >}} In no more than two commands, change the file permissions from
@@ -161,8 +165,8 @@ to
 Notice also that we here gave everyone writing permission to the file, that means that ANYONE can write to the file. Not very safe.
 
 ```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}
-cat(paste0('$ chmod ug+rw filename  
-$ chmod o=wx filename'))
+cat(paste0("chmod ug+rw filename
+chmod o=wx filename"))
 ```
 
 ## Symbolic links
@@ -179,26 +183,26 @@ Make sure you are standing in the directory **`r paste0('/proj/',upid,'/nobackup
 :::
 
 ```bash
-$ rm -r *
+rm -r *
 ```
 
 Now that the directory is empty, let's make a new folder and a new file in that folder.
 
 ```bash
-$ mkdir stuff
-$ touch stuff/linkfile
+mkdir stuff
+touch stuff/linkfile
 ```
 
 Lets put some information into the file, just put some text, anything, like "slartibartfast" or something.
 
 ```bash
-$ nano stuff/linkfile
+nano stuff/linkfile
 ```
 Now let's create a link to this file in our original folder. **`ln`** stands for link and **`-s`** makes it symbolic. The other options are not in the scope of this course, but feel free to read about them on your own, https://stackoverflow.com/a/29786294
 
 ```bash
-$ ln -s stuff/linkfile
-$ ls -l
+ln -s stuff/linkfile
+ls -l
 
 total 8
 lrwxr-xr-x  1 S_D  staff    14B Sep 21 15:38 linkfile -> stuff/linkfile
@@ -221,21 +225,21 @@ If want you to change the information in the file using the link file, then you 
 Now let's create a link to a directory. Lets clean our workspace.
 
 ```bash
-$ rm -r *
+rm -r *
 ```
 
 And create a directory three, arbitrarily, two directories away. The `-p` option to mkdir will make it create all 3 directories as needed. Without it, it would crash saying it can't create `three` because the directory `two` does not exist. 
 
 ```bash
-$ mkdir -p one/two/three
+mkdir -p one/two/three
 ```
 
 Now let's enter the directory and create some files there.
 
 ```bash
-$ cd one/two/three
-$ touch a b c d e
-$ ls -lh
+cd one/two/three
+touch a b c d e
+ls -lh
 
 total 0
 -rw-r--r--  1 S_D  staff     0B Sep 21 16:11 a
@@ -248,9 +252,9 @@ total 0
 Return to our starting folder and create a symbolic link to folder three.
 
 ```bash
-$ cd ../../..
-$ ln -s one/two/three
-$ ls -lh
+cd ../../..
+ln -s one/two/three
+ls -lh
 
 total 8
 drwxr-xr-x  3 S_D  staff   102B Sep 21 16:11 one
@@ -274,13 +278,13 @@ Some files can be so large that opening it in a program would be very hard on yo
 Let's start, as always, by cleaning our directory.
 
 ```bash
-$ rm -r *
+rm -r *
 ```
 
 Then let's create a file with some text in it that we can work with. I have supplied some great text below.
 
 ```bash
-$ nano textfile
+nano textfile
 
 Cats sleep anywhere, any table, any chair.
 Top of piano, window-ledge, in the middle, on the edge.
@@ -298,21 +302,21 @@ grep "string" filename/filepattern
 Some examples for you to try and think about:
 
 ```bash
-$ grep "Cat" textfile
-$ grep "cat" textfile
+grep "Cat" textfile
+grep "cat" textfile
 ```
 
 As you can see the last one did not return any results. Add a `-i` for case insensitive search.
 
 ```bash
-$ grep -i "cat" textfile
+grep -i "cat" textfile
 ```
 
 Now let's copy the file and check both of them together by matching a pattern for the filenames.
 
 ```bash
-$ cp textfile textcopy
-$ grep "Cat" text*
+cp textfile textcopy
+grep "Cat" text*
 ```
 
 The `*` will ensure that any file starting with **text** and then anything following will be searched. This example would perhaps be more real if we had several text files with different texts and we were looking for a specific string in any of them.
@@ -320,13 +324,13 @@ The `*` will ensure that any file starting with **text** and then anything follo
 Copy the file sample_1.sam to your folder using the command below
 
 ```bash
-$ cp /sw/courses/ngsintro/linux/linux_additional-files/sample_1.sam .
+cp /sw/courses/ngsintro/linux/linux_additional-files/sample_1.sam .
 ```
 
 {{< fa clipboard-list >}} Use `grep` to search in the file for a specific string of nucleotides, for example:
 
 ```bash
-$ grep "TACCACCGAAATCTGTGCAGAGGAGAACGCAGCTCCGCCCTCGCGGTGCTCTCCGGGTCTGTGCTGAGGAG" sample_1.sam
+grep "TACCACCGAAATCTGTGCAGAGGAGAACGCAGCTCCGCCCTCGCGGTGCTCTCCGGGTCTGTGCTGAGGAG" sample_1.sam
 ```
 
 {{< fa clipboard-list >}} Try with shorter sequences. When do you start getting lots of hits? This file is only a fraction of a genome, you would have gotten many times more hits doing this to a complete many GB large sam file.
@@ -352,7 +356,7 @@ In a hypothetical situation you have a folder with hundreds of files and you kno
 Let's do a `ls -l` in the `/etc` directory and pipe the output to be sorted by file size. `-n` means we are sorting numerically and not alphabetically, `-k 5` says *look at the fifth column of output*, which happens to be the file size of `ls` command.
 
 ```bash
-$ ls -l /etc | sort -k 5 -n
+ls -l /etc | sort -k 5 -n
 ```
 
 An example use would be to align a file and directly send the now aligned file to be converted into a different format that may be required for another part of the analysis.
@@ -360,13 +364,13 @@ An example use would be to align a file and directly send the now aligned file t
 The next step requires us to use a bioinformatics software called **samtools**. To be able to use this program we first have to load the module for it. We will cover this in the UPPMAX lectures, so if you are a bit too fast for you own good, you will just have to type this command:
 
 ```bash
-$ module load bioinfo-tools samtools
+module load bioinfo-tools samtools
 ```
 
 Here is an example where we convert the samfile to a bamfile (**`-Sb`** literally means the input is **S**am and to output in **b**am) and pipe it to immediately get sorted, not even creating the unsorted bamfile intermediary. Notice that samtools is made to take the single `-` after samtools sort as the position of the piped data from samtools view.
 
 ```bash
-$ samtools view -bS sample_1.sam | samtools sort - -o outbam
+samtools view -bS sample_1.sam | samtools sort - -o outbam
 ```
 
 This should have generated a file called **outbam.bam** in your current folder. We will have some more examples of pipes in the next section.
@@ -378,7 +382,7 @@ This should have generated a file called **outbam.bam** in your current folder. 
 Let's return to our **sample_1.sam**.
 
 ```bash
-$ wc sample_1.sam
+wc sample_1.sam
 233288 3666760 58105794 sample_1.sam
 ```
 
@@ -391,7 +395,7 @@ Number of characters = 58105794
 To make this more meaningful, let's use the pipes and `grep` command seen previously to see how many lines and how many times the string of nucleotides `CATCATCAT` exist in this file.
 
 ```bash
-$ grep "CATCATCAT" sample_1.sam | wc
+grep "CATCATCAT" sample_1.sam | wc
 60  957 15074
 ```
 
@@ -400,13 +404,13 @@ To see only the line count you can add `-l` after `wc` and to count only charact
 {{< fa clipboard-list >}} Output only the amount of lines that have **chr1** in them from sample_1.sam.
 
 ```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}
-cat(paste0('$ grep "chr1" sample_1.sam | wc -l'))
+cat(paste0('grep "chr1" sample_1.sam | wc -l'))
 ```
 
 {{< fa clipboard-list >}} Count the lines containing `CATCATCAT` in the outbam.bam file.
 
 ```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}
-cat(paste0('$ samtools view outbam.bam | grep "CATCATCAT" | wc -l'))
+cat(paste0('samtools view outbam.bam | grep "CATCATCAT" | wc -l'))
 ```
 
 ## Bonus exercise 1
@@ -418,14 +422,14 @@ Lets look at `grep` and use some regular expressions http://www.cheatography.com
 {{< fa clipboard-list >}} From file **sample_1.sam** find all lines that start with `@` and put them in a file called **at.txt**.
 
 ```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}
-cat(paste0('$ grep "^@" sample_1.sam > at.txt'))
+cat(paste0('grep "^@" sample_1.sam > at.txt'))
 ```
 
 {{< fa clipboard-list >}} Find all the lines that end with at least 3 numbers from **at.txt**.
 {{< fa lightbulb >}} **Sometimes**, you have to escape {} with \\{\\})
 
 ```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}
-cat(paste0('$ grep "[0-9]\\{3\\}$" sample_1.sam'))
+cat(paste0('grep "[0-9]\\{3\\}$" sample_1.sam'))
 ```
 
 ## Bonus exercise 2
@@ -437,7 +441,7 @@ cat(paste0('$ grep "[0-9]\\{3\\}$" sample_1.sam'))
 {{< fa lightbulb >}} The solution to this replaces the first instance on each line of chr3. What if we have multiple instances? What if we had wanted to replace **chr1**? This would effect chr10-19 as well! There are many things to consider :).
 
 ```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}
-cat(paste0('$ sed "s/chr1/chr2/" sample_1.sam > sample_2.sam'))
+cat(paste0('sed "s/chr1/chr2/" sample_1.sam > sample_2.sam'))
 ```
 
 ## Bonus exercise 3
@@ -447,7 +451,7 @@ Bash loops are great for moving or renaming multiple files as well as many many 
 Create a couple of files as seen below
 
 ```bash
-$ touch one.bam two.sam three.bam four.sam five.bam six.sam
+touch one.bam two.sam three.bam four.sam five.bam six.sam
 ```
 
 {{< fa clipboard-list >}} All the files are actually in bam format. What a crazy mistake! Create a bash loop that changes all files ending in **.sam** to end with **.bam** instead.
@@ -455,33 +459,33 @@ $ touch one.bam two.sam three.bam four.sam five.bam six.sam
 {{< fa lightbulb >}} The bash loop syntax is this:
 
 ```bash
-$ for _variable_ in _pattern_; do _command with $variable_; done
+for _variable_ in _pattern_; do _command with $variable_; done
 ```
 
 {{< fa lightbulb >}} To rename file1 to file2 you write this:
 
 ```bash
-$ mv file1 file2
+mv file1 file2
 ```
 
 which effectively is the same thing as
 
 ```bash
-$ cp file1 file2
-$ rm file1
+cp file1 file2
+rm file1
 ```
 
 {{< fa lightbulb >}} Ponder how this can be used to your advantage:
 
 ```bash
-$ i=filename
-$ echo ${i/name}stuff
+i=filename
+echo ${i/name}stuff
 filestuff
 ```
 
 ```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}
-cat(paste0('$ for f in *.sam
+cat(paste0("for f in *.sam
 do
   mv $f ${f/.sam}.bam;
-done'))
+done"))
 ```

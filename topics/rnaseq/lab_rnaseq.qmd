@@ -79,7 +79,7 @@ data.frame(Accession=c("SRR3222409","SRR3222410","SRR3222411","SRR3222412","SRR3
 ```
 
 ::: {.callout-note}
-For the purpose of this tutorial, to shorten the time needed to run various bioinformatics steps, we have picked reads for a single chromosome (Chr 19) and downsampled the reads. We randomly sampled, without replacement, 25% reads from each sample, using `fastq-sample` from the toolset [fastq-tools](https://homes.cs.washington.edu/~dcjones/fastq-tools/).
+For the purpose of this tutorial, to shorten the time needed to run various bioinformatics steps, we have picked reads for a single chromosome (Chr 19) and downsampled the reads. We randomly sampled, without replacement, 25% reads from each sample, using `fastq-sample` from the toolset [fastq-tools](https://github.com/dcjones/fastq-tools).
 :::
 
 ## Main exercise
@@ -861,7 +861,7 @@ cat(paste0("cp ",path_data,"/main/5_dge/dge.R .\n"))
 cat(paste0("cp ",path_data,"/main/5_dge/counts_full.txt .\n"))
 ```
 
-Now, run the R script from the schell in `5_dge` directory.
+Now, run the R script from the shell in `5_dge` directory.
 
 ```{sh,eval=FALSE}
 Rscript dge.R
@@ -973,7 +973,20 @@ The results are saved as tables in the directory **funannot_results**. There are
 {{< fa clipboard-list >}} Take a quick look at some of these files.
 
 ```{sh,eval=FALSE,chunk.title=TRUE}
-head go_down.txt
+head go_up.txt
+```
+
+```
+category  over_represented_pvalue under_represented_pvalue  numDEInCat  numInCat  term  ontology
+GO:0030016  2.23312435908185e-45  1 78  176 myofibril CC
+GO:0061061  5.40265910772947e-45  1 135 543 muscle structure development  BP
+GO:0043292  1.59611882901076e-44  1 80  189 contractile fiber CC
+GO:0030017  3.08095203872545e-43  1 72  157 sarcomere CC
+GO:0044449  2.27198318958789e-41  1 73  170 contractile fiber part  CC
+GO:0031674  3.81511780088805e-32  1 53  117 I band  CC
+GO:0003012  7.14173605862631e-32  1 84  301 muscle system process BP
+GO:0007517  9.77789997472468e-32  1 88  329 muscle organ development  BP
+GO:0014706  1.99267634186987e-31  1 90  349 striated muscle tissue development  BP
 ```
 
 The columns of the results tables are:
@@ -1536,7 +1549,7 @@ For standard analyses steps, it is recommended to use a pipeline as the tools ar
 
 ## Simon's analysis
 
-We had [Simon Andrews](https://www.babraham.ac.uk/science-services/bioinformatics/simon-andrews) from the Babraham institute with us on one of the workshops and he did his own exploration into the dataset from this paper using his tool [SeqMonk](http://www.bioinformatics.babraham.ac.uk/projects/seqmonk/). It's an excellent read and highly recommended. His report is available on the **Contents** page.
+We had [Simon Andrews](https://www.babraham.ac.uk/science-services/bioinformatics/simon-andrews) from the Babraham institute with us on one of the workshops and he did his own exploration into the dataset from this paper using his tool [SeqMonk](http://www.bioinformatics.babraham.ac.uk/projects/seqmonk/). It's an excellent read and highly recommended. His report is available [here](simon-report/validating_knockout.html).
 
 ## Conclusion
 

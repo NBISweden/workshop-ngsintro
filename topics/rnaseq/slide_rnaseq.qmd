@@ -12,10 +12,10 @@ format: revealjs
 library(yaml)
 library(here)
 upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
-#library(dplyr)
-#library(pheatmap)
-#library(plotly)
-#library(DESeq2)
+# library(dplyr)
+# library(pheatmap)
+# library(plotly)
+# library(DESeq2)
 ```
 
 ## What is RNA?
@@ -79,8 +79,8 @@ upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
 ::: {.column}
 - Biological replicates: 6 - 12 @schurch2016many
 - Sample size estimation @hart2013calculating
-- Power analysis [@zhao2018rnaseqsamplesize RNASeqPower web app](https://rshiny.nbis.se/shiny-server-apps/shiny-rnaseq-power/)
-- Balanced design to avoid batch effects [DeclareDesign](https://declaredesign.org/)
+- Power analysis [@zhao2018rnaseqsamplesize RNASeqPower web app](https://r8844d6ec.serve.scilifelab.se/)
+- Balanced design to avoid batch effects
 - RIN values have strong effect @gallego2014rna
 :::
 
@@ -105,8 +105,8 @@ upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
 ::: {.column}
 ![](assets/rnaseq_read_type.svg)  
 
-- polyA selection/Ribosomal RNA depletion
-- single-end/Paired-end
+- polyA selection / Ribosomal RNA depletion
+- Single-end / Paired-end
 
 :::
 ::::
@@ -121,12 +121,12 @@ upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
 - Depletion of rRNA is the solution if it's important to retain all RNA species
 - smallRNAs are purified through size selection
 - PCR amplification may be needed for low quantity input (See section PCR duplicates)
-- Preferably opt for stranded (directional) libraries @zhao2015comparison, @levin2010comprehensive
+- Almost always use stranded (directional) libraries @zhao2015comparison, @levin2010comprehensive
   - Accurately identify sense/antisense transcript
   - Resolve overlapping genes
 - Exome capture
 - Library normalisation to concentrate specific transcripts
-- Libraries should have high complexity/low duplication. @daley2013predicting
+- Libraries should have high complexity / low duplication. @daley2013predicting
 
 :::
 
@@ -137,16 +137,16 @@ upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
   - Greater than 50bp does not improve DGE
   - Longer reads better for isoforms
 - Pooling samples
-- Sequencing depth (Coverage/Reads per sample)
-- Single-end reads (Cheaper)
-- Paired-end reads
+- Sequencing depth (Coverage / Reads per sample)
+- Single-end reads (Cheaper?)
+- Almost always use paired-end reads
   - Increased mappable reads
   - Increased power in assemblies
   - Better for structural variation and isoforms
   - Decreased false-positives for DGE
 - More replicates are better than more depth @liu2014rna
 
-@corley2017differentially, [SciLifeLab](https://ngisweden.scilifelab.se/file/1540-1_Comparison_of_PE_and_SE_for_RNA-seq.pdf)
+@corley2017differentially
 
 ## Workflow • DGE
 
@@ -166,7 +166,7 @@ upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
 - Adapter content
 - Kmer content
 
-<img src="assets/qc.jpg" style="height:250px; position:fixed; right:0px; bottom: 0px; margin-right: 100px; margin-bottom: 310px;">
+<img src="assets/qc.jpg" style="height:300px; position:fixed; right:0px; bottom: 0px; margin-right: 100px; margin-bottom: 300px;">
 
 [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/), [MultiQC](http://multiqc.info/)
 
@@ -351,7 +351,7 @@ ST-E00274:188:H3JWNCCXY:4:1102:32431:49900      163     1       1       60      
 
 ![](assets/igv.png)
 
-[IGV](http://software.broadinstitute.org/software/igv/), [UCSC Genome Browser](https://genome.ucsc.edu/), [SeqMonk](https://www.bioinformatics.babraham.ac.uk/projects/seqmonk/)
+[IGV](http://software.broadinstitute.org/software/igv/), [UCSC Genome Browser](https://genome.ucsc.edu/), [SeqMonk](https://www.bioinformatics.babraham.ac.uk/projects/seqmonk/), [More](https://cmdcolin.github.io/awesome-genome-visualization/?latest=true)
 
 ## Visualisation • `tview`
 
@@ -454,13 +454,12 @@ Conserved genes in the mouse transcriptome. Saturation curves of discovery of ge
 ::: {.column}
 
 - Read counts = gene expression
+- Intersection on gene models
 - Reads can be quantified on any feature (gene, transcript, exon etc)
-- Intersection on [gene models](#intro)
-- Gene/Transcript level
 
 ![](assets/rnaseq_counts.svg)
 
-[featureCounts](http://bioinf.wehi.edu.au/featureCounts/), [HTSeq](https://github.com/simon-anders/htseq)
+[featureCounts](https://subread.sourceforge.net/), [HTSeq](https://github.com/simon-anders/htseq)
 
 :::
 ::: {.column}
@@ -604,17 +603,21 @@ mf <- readRDS("assets/metadata-filtered.Rds")
 ```{r,echo=FALSE,fig.height=4.9,fig.width=6.8,dev="svg",eval=FALSE}
 temp <- as.matrix(dist(t(cvst)))
 
-df_annot <- mf[,c("patient"),drop=FALSE]
-col_patient <- c("#A6CEE3","#1F78B4","#B2DF8A","#33A02C","#FB9A99",
-                 "#E31A1C","#FDBF6F","#FF7F00")
+df_annot <- mf[, c("patient"), drop = FALSE]
+col_patient <- c(
+    "#A6CEE3", "#1F78B4", "#B2DF8A", "#33A02C", "#FB9A99",
+    "#E31A1C", "#FDBF6F", "#FF7F00"
+)
 ann_col_patient <- col_patient
 names(ann_col_patient) <- levels(factor(df_annot$patient))
 
-p <- pheatmap::pheatmap(temp,border_color=NA,annotation_col=df_annot,
-         annotation_row=df_annot,annotation_legend=T,
-         annotation_colors=list(patient=ann_col_patient),
-         fontsize_row=7,fontsize_col=7)
-ggsave("assets/dge-clustering.png",p,height=5,width=7)
+p <- pheatmap::pheatmap(temp,
+    border_color = NA, annotation_col = df_annot,
+    annotation_row = df_annot, annotation_legend = T,
+    annotation_colors = list(patient = ann_col_patient),
+    fontsize_row = 7, fontsize_col = 7
+)
+ggsave("assets/dge-clustering.png", p, height = 5, width = 7)
 ```
 
 ![](assets/dge-clustering.png)
@@ -628,32 +631,38 @@ ggsave("assets/dge-clustering.png",p,height=5,width=7)
 
 ```{r,echo=FALSE,eval=FALSE}
 # MDS
-mat1 <- as.data.frame(cmdscale(dist(t(cvst),method="euclidean"),eig=F,k=3))
+mat1 <- as.data.frame(cmdscale(dist(t(cvst), method = "euclidean"), eig = F, k = 3))
 mat1$nid <- row.names(mat1)
-mat1 <- merge(mat1,mf,by="nid")
+mat1 <- merge(mat1, mf, by = "nid")
 ```
 
 ```{r,echo=FALSE,eval=FALSE}
 # static plot
-p <- ggplot(mat1,aes(V1,V2,group=patient,colour=patient))+
-  geom_point()+
-  stat_ellipse()+
-  scale_colour_manual(values=ann_col_patient)+
-  guides(colour=guide_legend(nrow=3))+
-  labs(x="MDS1",y="MDS2")+
-  theme_bw()+
-  theme(panel.border=element_blank(),
-        legend.position="top")
-ggsave("assets/dge-mds.png",p,height=5.5,width=5)
+p <- ggplot(mat1, aes(V1, V2, group = patient, colour = patient)) +
+    geom_point() +
+    stat_ellipse() +
+    scale_colour_manual(values = ann_col_patient) +
+    guides(colour = guide_legend(nrow = 3)) +
+    labs(x = "MDS1", y = "MDS2") +
+    theme_bw() +
+    theme(
+        panel.border = element_blank(),
+        legend.position = "top"
+    )
+ggsave("assets/dge-mds.png", p, height = 5.5, width = 5)
 ```
 
 ```{r,echo=FALSE,eval=FALSE}
 # interactive plot
-mat1$tt <- paste0("<b>ID: </b>",mat1$id,"\n",
-                   "<b>NGS ID: </b>",mat1$nid)
-p1 <- plot_ly(mat1,x=~V1,y=~V2,z=~V3,text=~tt,hoverinfo="text",
-        colors=col_patient,width=750,height=500)
-add_markers(p1,color=~patient)
+mat1$tt <- paste0(
+    "<b>ID: </b>", mat1$id, "\n",
+    "<b>NGS ID: </b>", mat1$nid
+)
+p1 <- plot_ly(mat1,
+    x = ~V1, y = ~V2, z = ~V3, text = ~tt, hoverinfo = "text",
+    colors = col_patient, width = 750, height = 500
+)
+add_markers(p1, color = ~patient)
 ```
 
 ![](assets/dge-mds.png)
@@ -694,32 +703,38 @@ add_markers(p1,color=~patient)
   - Wald test `nbinomWaldTest()`
 
 ```{r,echo=FALSE,fig.height=3.9,fig.width=3.9,eval=FALSE}
-cf <- read.delim("assets/counts-filtered.txt",header=T,stringsAsFactors=F)
+cf <- read.delim("assets/counts-filtered.txt", header = T, stringsAsFactors = F)
 mf <- readRDS("assets/metadata-filtered.Rds")
 
 # filtering
-bads <- c("P8304_123","P8304_124","P8304_125","P8304_126","P8304_127","P8304_128")
+bads <- c("P8304_123", "P8304_124", "P8304_125", "P8304_126", "P8304_127", "P8304_128")
 cf <- cf %>% dplyr::select(-one_of(bads))
-mf <- dplyr::filter(mf,!(nid %in% bads)) %>% droplevels()
-mf$type <- factor(c(rep(c("type1","type1","type2","type2"),each=4),
-             rep("type2",each=3),rep("control",each=4)))
+mf <- dplyr::filter(mf, !(nid %in% bads)) %>% droplevels()
+mf$type <- factor(c(
+    rep(c("type1", "type1", "type2", "type2"), each = 4),
+    rep("type2", each = 3), rep("control", each = 4)
+))
 ```
 
 ```{r,echo=FALSE,fig.height=2.9,fig.width=2.9,eval=FALSE}
-{plot(x=log10(rowMeans(as.matrix(cf))+1),y=log10(rowVars(as.matrix(cf))+1),xlab=bquote(~-log[10]~Mean),ylab=bquote(~-log[10]~Variance),pch=20,cex=0.4)
-abline(a=0,b=1,col="red")}
+{
+    plot(x = log10(rowMeans(as.matrix(cf)) + 1), y = log10(rowVars(as.matrix(cf)) + 1), xlab = bquote(~ -log[10] ~ Mean), ylab = bquote(~ -log[10] ~ Variance), pch = 20, cex = 0.4)
+    abline(a = 0, b = 1, col = "red")
+}
 ```
 
 ```{r,echo=FALSE,fig.height=2.5,fig.width=5,dev="svg",eval=FALSE}
-d <- DESeqDataSetFromMatrix(countData=cf,colData=mf,design=as.formula(~type))
-d <- DESeq2::estimateSizeFactors(d,type="ratio")
+d <- DESeqDataSetFromMatrix(countData = cf, colData = mf, design = as.formula(~type))
+d <- DESeq2::estimateSizeFactors(d, type = "ratio")
 d <- DESeq2::estimateDispersions(d)
 
-{par(mar=c(4,4,0.2,0.5))
-par(mfrow=c(1,2))
-plotDispEsts(d)
-plotDispEsts(d,xlim=c(600,700),ylim=c(0.05,1.2),cex=1)}
-par(mfrow=c(1,1))
+{
+    par(mar = c(4, 4, 0.2, 0.5))
+    par(mfrow = c(1, 2))
+    plotDispEsts(d)
+    plotDispEsts(d, xlim = c(600, 700), ylim = c(0.05, 1.2), cex = 1)
+}
+par(mfrow = c(1, 1))
 ```
 
 ![](assets/dge-dispersion.png){width="50%"}
@@ -735,7 +750,7 @@ par(mfrow=c(1,1))
 ```{r,echo=FALSE,eval=FALSE}
 d1 <- nbinomWaldTest(d)
 d1r1 <- results(d1)
-head(d1r1,n=1)
+head(d1r1, n = 1)
 ```
 
 ```
@@ -775,8 +790,10 @@ low counts [2]     : 0, 0%
 - MA plot `plotMA()`
 
 ```{r,echo=FALSE,fig.height=2.5,fig.width=3,dev="svg",eval=FALSE}
-{par(mar=c(4,4,0.2,0.2))
-plotMA(d1)}
+{
+    par(mar = c(4, 4, 0.2, 0.2))
+    plotMA(d1)
+}
 ```
 
 ![](assets/dge-ma.png)
@@ -784,19 +801,19 @@ plotMA(d1)}
 - Volcano plot
 
 ```{r,echo=FALSE,fig.height=2.5,fig.width=3,dev="svg",eval=FALSE}
-par(mar=c(4,4,0.2,0.2))
+par(mar = c(4, 4, 0.2, 0.2))
 topT <- as.data.frame(d1r1)
 
-#Adjusted P values (FDR Q values)
-with(topT, plot(log2FoldChange, -log10(padj), pch=20, cex=1.0, xlab=bquote(~Log[2]~fold~change), ylab=bquote(~-Log[10]~Q~value)))
+# Adjusted P values (FDR Q values)
+with(topT, plot(log2FoldChange, -log10(padj), pch = 20, cex = 1.0, xlab = bquote(~ Log[2] ~ fold ~ change), ylab = bquote(~ -Log[10] ~ Q ~ value)))
 
-with(subset(topT, padj<0.05 & abs(log2FoldChange)>2), points(log2FoldChange, -log10(padj), pch=20, col="red", cex=0.5))
+with(subset(topT, padj < 0.05 & abs(log2FoldChange) > 2), points(log2FoldChange, -log10(padj), pch = 20, col = "red", cex = 0.5))
 
-#Add lines for absolute FC>2 and P-value cut-off at FDR Q<0.05
-abline(v=0, col="black", lty=3, lwd=1.0)
-abline(v=-2, col="black", lty=3, lwd=1.0)
-abline(v=2, col="black", lty=3, lwd=1.0)
-abline(h=-log10(max(topT$pvalue[topT$padj<0.05], na.rm=TRUE)), col="black", lty=3, lwd=1.0)
+# Add lines for absolute FC>2 and P-value cut-off at FDR Q<0.05
+abline(v = 0, col = "black", lty = 3, lwd = 1.0)
+abline(v = -2, col = "black", lty = 3, lwd = 1.0)
+abline(v = 2, col = "black", lty = 3, lwd = 1.0)
+abline(h = -log10(max(topT$pvalue[topT$padj < 0.05], na.rm = TRUE)), col = "black", lty = 3, lwd = 1.0)
 ```
 
 ![](assets/dge-volcano.png)
@@ -807,8 +824,8 @@ abline(h=-log10(max(topT$pvalue[topT$padj<0.05], na.rm=TRUE)), col="black", lty=
 - Normalised counts `plotCounts()`
 
 ```{r,echo=FALSE,fig.height=3,fig.width=3,dev="svg",eval=FALSE}
-par(mar=c(4.5,4.5,1,0.2))
-plotCounts(d1,"ENSG00000000003",intgroup="type")
+par(mar = c(4.5, 4.5, 1, 0.2))
+plotCounts(d1, "ENSG00000000003", intgroup = "type")
 ```
 
 ![](assets/dge-counts.png)
@@ -858,7 +875,7 @@ plotCounts(d1,"ENSG00000000003",intgroup="type")
 
 <img src="assets/help.png" style="height:250px; position:fixed; right:0px; bottom:0px; margin-right: 35px; margin-bottom: 40px;">
 
-## {background-image="assets/end.png"}
+## {background-image="/assets/images/cover.jpg"}
 
 ::: {.bottom-align}
 ### Thank you. Questions?
