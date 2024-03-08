@@ -73,7 +73,7 @@ We will use a singularity container (a virtual computer) that mimics the UPPMAX 
 Use this command to start the singularity container:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('singularity shell -B /proj/',nscid,'/users:/proj/',upid,'/nobackup -B /proj/',nscid,' /proj/',nscid,'/ngsintro.sif'))
+cat(paste0('singularity shell -B /proj/',nscid,' -B /proj/',nscid,'/users:/proj/',upid,'/nobackup /proj/',nscid,'/ngsintro.sif'))
 ```
 
 ::: {.callout-tip}
