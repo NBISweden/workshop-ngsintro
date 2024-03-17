@@ -1,0 +1,2080 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.549">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Roy Francis / Dag Ahrén">
+<meta name="description" content="Analysis of bulk RNA-Seq data to determine genome-wide gene expression">
+
+<title>RNASeq Workflow</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../assets/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<style>
+
+      .quarto-title-block .quarto-title-banner {
+        background-image: url(../../assets/images/banner.jpg);
+background-size: cover;
+      }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Mono&amp;family=Nunito:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&amp;display=swap" rel="stylesheet">
+<link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../assets/logos/nbis-scilifelab.png" alt="logo" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_schedule.html"> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_contents.html"> 
+<span class="menu-text">Contents</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_precourse.html"> 
+<span class="menu-text">Precourse</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_syllabus.html"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_info.html"> 
+<span class="menu-text">Info</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">RNASeq Workflow</h1>
+                  <div>
+        <div class="description">
+          Analysis of bulk RNA-Seq data to determine genome-wide gene expression
+        </div>
+      </div>
+                </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Roy Francis / Dag Ahrén </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">17-Mar-2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#data-description" id="toc-data-description" class="nav-link" data-scroll-target="#data-description"><span class="header-section-number">2</span> Data description</a></li>
+  <li><a href="#main-exercise" id="toc-main-exercise" class="nav-link" data-scroll-target="#main-exercise"><span class="header-section-number">3</span> Main exercise</a>
+  <ul>
+  <li><a href="#using-uppmax" id="toc-using-uppmax" class="nav-link" data-scroll-target="#using-uppmax"><span class="header-section-number">3.1</span> Using Uppmax</a>
+  <ul class="collapse">
+  <li><a href="#set-up-directory" id="toc-set-up-directory" class="nav-link" data-scroll-target="#set-up-directory"><span class="header-section-number">3.1.1</span> Set-up directory</a></li>
+  <li><a href="#create-symbolic-links" id="toc-create-symbolic-links" class="nav-link" data-scroll-target="#create-symbolic-links"><span class="header-section-number">3.1.2</span> Create symbolic links</a></li>
+  </ul></li>
+  <li><a href="#fastqc" id="toc-fastqc" class="nav-link" data-scroll-target="#fastqc"><span class="header-section-number">3.2</span> FastQC</a></li>
+  <li><a href="#hisat2" id="toc-hisat2" class="nav-link" data-scroll-target="#hisat2"><span class="header-section-number">3.3</span> HISAT2</a>
+  <ul class="collapse">
+  <li><a href="#get-reference" id="toc-get-reference" class="nav-link" data-scroll-target="#get-reference"><span class="header-section-number">3.3.1</span> Get reference</a></li>
+  <li><a href="#build-index" id="toc-build-index" class="nav-link" data-scroll-target="#build-index"><span class="header-section-number">3.3.2</span> Build index</a></li>
+  <li><a href="#map-reads" id="toc-map-reads" class="nav-link" data-scroll-target="#map-reads"><span class="header-section-number">3.3.3</span> Map reads</a></li>
+  </ul></li>
+  <li><a href="#qualimap" id="toc-qualimap" class="nav-link" data-scroll-target="#qualimap"><span class="header-section-number">3.4</span> QualiMap</a></li>
+  <li><a href="#featurecounts" id="toc-featurecounts" class="nav-link" data-scroll-target="#featurecounts"><span class="header-section-number">3.5</span> featureCounts</a></li>
+  <li><a href="#multiqc" id="toc-multiqc" class="nav-link" data-scroll-target="#multiqc"><span class="header-section-number">3.6</span> MultiQC</a></li>
+  <li><a href="#deseq2" id="toc-deseq2" class="nav-link" data-scroll-target="#deseq2"><span class="header-section-number">3.7</span> DESeq2</a></li>
+  </ul></li>
+  <li><a href="#bonus-exercises" id="toc-bonus-exercises" class="nav-link" data-scroll-target="#bonus-exercises"><span class="header-section-number">4</span> Bonus exercises</a>
+  <ul>
+  <li><a href="#functional-annotation" id="toc-functional-annotation" class="nav-link" data-scroll-target="#functional-annotation"><span class="header-section-number">4.1</span> Functional annotation</a>
+  <ul class="collapse">
+  <li><a href="#preparation" id="toc-preparation" class="nav-link" data-scroll-target="#preparation"><span class="header-section-number">4.1.1</span> Preparation</a></li>
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation"><span class="header-section-number">4.1.2</span> Interpretation</a></li>
+  </ul></li>
+  <li><a href="#rna-seq-plots" id="toc-rna-seq-plots" class="nav-link" data-scroll-target="#rna-seq-plots"><span class="header-section-number">4.2</span> RNA-Seq plots</a>
+  <ul class="collapse">
+  <li><a href="#pca-plot" id="toc-pca-plot" class="nav-link" data-scroll-target="#pca-plot"><span class="header-section-number">4.2.1</span> PCA plot</a></li>
+  <li><a href="#ma-plot" id="toc-ma-plot" class="nav-link" data-scroll-target="#ma-plot"><span class="header-section-number">4.2.2</span> MA plot</a></li>
+  <li><a href="#volcano-plot" id="toc-volcano-plot" class="nav-link" data-scroll-target="#volcano-plot"><span class="header-section-number">4.2.3</span> Volcano plot</a></li>
+  <li><a href="#heatmap" id="toc-heatmap" class="nav-link" data-scroll-target="#heatmap"><span class="header-section-number">4.2.4</span> Heatmap</a></li>
+  </ul></li>
+  <li><a href="#igv-browser" id="toc-igv-browser" class="nav-link" data-scroll-target="#igv-browser"><span class="header-section-number">4.3</span> IGV browser</a></li>
+  </ul></li>
+  <li><a href="#sbatch" id="toc-sbatch" class="nav-link" data-scroll-target="#sbatch"><span class="header-section-number">5</span> sbatch</a></li>
+  <li><a href="#nextflow" id="toc-nextflow" class="nav-link" data-scroll-target="#nextflow"><span class="header-section-number">6</span> Nextflow</a></li>
+  <li><a href="#simons-analysis" id="toc-simons-analysis" class="nav-link" data-scroll-target="#simons-analysis"><span class="header-section-number">7</span> Simon’s analysis</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">8</span> Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+
+
+
+
+
+<section id="introduction" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
+<p>RNA-seq has become a powerful approach to study the continually changing cellular transcriptome. Here, one of the most common questions is to identify genes that are differentially expressed between two conditions, e.g.&nbsp;controls and treatment. The <strong>main</strong> exercise in this tutorial will take you through a basic bioinformatic analysis pipeline to answer just that, it will show you how to find differentially expressed (DE) genes.</p>
+<p><strong>Main exercise</strong></p>
+<ul>
+<li>01 Check the quality of the raw reads with <strong>FastQC</strong></li>
+<li>02 Map the reads to the reference genome using <strong>HISAT2</strong></li>
+<li>03 Assess the post-alignment quality using <strong>QualiMap</strong></li>
+<li>04 Count the reads overlapping with genes using <strong>featureCounts</strong></li>
+<li>05 Find DE genes using <strong>DESeq2</strong> in R</li>
+</ul>
+<p>RNA-seq experiment does not necessarily end with a list of DE genes. If you have time after completing the <strong>main</strong> exercise, try one (or more) of the <strong>bonus</strong> exercises. The <strong>bonus</strong> exercises can be run independently of each other, so choose the one that matches your interest. Bonus sections are listed below.</p>
+<p><strong>Bonus exercises</strong></p>
+<ul>
+<li>01 Functional annotation of DE genes using <strong>GO/Reactome</strong> databases</li>
+<li>02 RNA-Seq figures and plots using <strong>R</strong></li>
+<li>03 Visualisation of RNA-seq BAM files using <strong>IGV</strong> genome browser</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+General guide
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>In paths, remember to change <code>username</code> with your actual UPPMAX username.</p></li>
+<li><p>You are welcome to try your own solutions to the problems, before checking the solution. Click the button to see the suggested solution. There is more than one way to complete a task. Discuss with person next to you and ask us when in doubt.</p></li>
+<li><p>Input code blocks are displayed like shown below.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">command</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="data-description" class="level2 page-columns page-full" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="data-description"><span class="header-section-number">2</span> Data description</h2>
+<p>The data used in this exercise is from the paper: <strong>Poitelon, Yannick, <em>et al</em>. YAP and TAZ control peripheral myelination and the expression of laminin receptors in Schwann cells. <a href="https://www.nature.com/articles/nn.4316">Nature neuroscience 19.7 (2016): 879</a></strong>. In this study, YAP and TAZ genes were knocked-down in Schwann cells to study myelination, using the sciatic nerve in mice as a model.</p>
+<p>Myelination is essential for nervous system function. Schwann cells interact with neurons and the basal lamina to myelinate axons using receptors, signals and transcription factors. Hippo pathway is a conserved pathway involved in cell contact inhibition, and it acts to promote cell proliferation and inhibits apoptosis. The pathway integrates mechanical signals (cell polarity, mechanotransduction, membrane tension) and gene expression response. In addition to its role in organ size control, the Hippo pathway has been implicated in tumorigenesis, for example its deregulation occurs in a broad range of human carcinomas. Transcription co-activators YAP and TAZ are two major downstream effectors of the Hippo pathway, and have redundant roles in transcriptional activation.</p>
+<p>The material for RNA-seq was collected from 2 conditions (<strong>Wt</strong> and <strong>KO</strong>), each with 3 biological replicates.</p>
+<div class="cell page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<table class="gmisc_table table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: 900; border-bottom: 1px solid grey; border-top: 2px solid grey;">Accession</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: 900; border-bottom: 1px solid grey; border-top: 2px solid grey;">Condition</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: 900; border-bottom: 1px solid grey; border-top: 2px solid grey;">Replicate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">SRR3222409</td>
+<td style="text-align: center;">KO</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">SRR3222410</td>
+<td style="text-align: center;">KO</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">SRR3222411</td>
+<td style="text-align: center;">KO</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">SRR3222412</td>
+<td style="text-align: center;">Wt</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">SRR3222413</td>
+<td style="text-align: center;">Wt</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; border-bottom: 2px solid grey;">SRR3222414</td>
+<td style="text-align: center; border-bottom: 2px solid grey;">Wt</td>
+<td style="text-align: center; border-bottom: 2px solid grey;">3</td>
+</tr>
+</tbody>
+</table>
+</div></div></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For the purpose of this tutorial, to shorten the time needed to run various bioinformatics steps, we have picked reads for a single chromosome (Chr 19) and downsampled the reads. We randomly sampled, without replacement, 25% reads from each sample, using <code>fastq-sample</code> from the toolset <a href="https://github.com/dcjones/fastq-tools">fastq-tools</a>.</p>
+</div>
+</div>
+</section>
+<section id="main-exercise" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="main-exercise"><span class="header-section-number">3</span> Main exercise</h2>
+<p>The main exercise covers Differential Gene Expression (DGE) workflow from raw reads to a list of differentially expressed genes.</p>
+<section id="using-uppmax" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="using-uppmax"><span class="header-section-number">3.1</span> Using Uppmax</h3>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Use ThinLinc
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you have issues opening GUI windows from UPPMAX through the terminal, it is recommended to use ThinLinc.</p>
+</div>
+</div>
+<p>If you are not on ThinLinc, connect to UPPMAX first. <i class="fa-solid fa-exclamation-circle" aria-label="exclamation-circle"></i> Remember to replace username.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-Y</span> username@rackham.uppmax.uu.se</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Book a node.</p>
+<p>For the RNA-Seq part of the course, we will work on the Rackham cluster. A standard compute node on cluster Rackham has 128 GB of RAM and 20 cores. We will use 1 core per person for this session. Therefore, each core gives you 6.4 GB of RAM. The code below is valid to run at the start of the day. If you are running it in the middle of a day, you need to decrease the time (<code>-t</code>). Do not run this twice and also make sure you are not running computations on a login node.</p>
+<p>Book compute resources for RNA-Seq lab.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">salloc</span> <span class="at">-A</span> naiss2024-22-212 <span class="at">-t</span> 03:00:00 <span class="at">-p</span> core <span class="at">-n</span> 1 <span class="at">--no-shell</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Check allocation. <i class="fa-solid fa-exclamation-circle" aria-label="exclamation-circle"></i> Remember to replace <strong>username</strong>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">-u</span> username</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Once allocation is granted, log on to the compute node. <i class="fa-solid fa-exclamation-circle" aria-label="exclamation-circle"></i> Remember to replace <strong>nodename</strong>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-Y</span> nodename</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="set-up-directory" class="level4" data-number="3.1.1">
+<h4 data-number="3.1.1" class="anchored" data-anchor-id="set-up-directory"><span class="header-section-number">3.1.1</span> Set-up directory</h4>
+<p>Setting up the directory structure is an important step as it helps to keep our raw data, intermediate data and results in an organised manner. All work must be carried out at this location <code>/proj/naiss2024-22-212/nobackup/username/</code> where <strong>username</strong> is your user name.</p>
+<p>Create a directory named <code>rnaseq</code>. All RNA-Seq related activities must be carried out in this sub-directory named <code>rnaseq</code>.</p>
+<div class="cell" data-chunk.title="true">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> rnaseq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> Create the directory structure as shown below.</p>
+<pre><code>username/
+rnaseq/
+  +-- 1_raw/
+  +-- 2_fastqc/
+  +-- 3_mapping/
+  +-- 4_qualimap/
+  +-- 5_dge/
+  +-- 6_multiqc/
+  +-- reference/
+  |   +-- mouse_chr19_hisat2/
+  +-- scripts/
+  +-- funannot/
+  +-- plots</code></pre>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> rnaseq</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> 1_raw 2_fastqc 3_mapping 4_qualimap 5_dge 6_multiqc reference scripts funannot plots</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> reference</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> mouse_chr19_hisat2</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>The <code>1_raw</code> directory will hold the raw fastq files (soft-links). <code>2_fastqc</code> will hold FastQC outputs. <code>3_mapping</code> will hold the mapping output files. <code>4_qualimap</code> will hold the QualiMap output files. <code>5_dge</code> will hold the counts from featureCounts and all differential gene expression related files. <code>6_multiqc</code> will hold MultiQC outputs. <code>reference</code> directory will hold the reference genome, annotations and aligner indices. The <code>funannot</code> and <code>plots</code> directory are optional for bonus steps.</p>
+<p><i class="fa-solid fa-lightbulb" aria-label="lightbulb"></i> It might be a good idea to open an additional terminal window. One to navigate through directories and another for scripting in the <code>scripts</code> directory.</p>
+</section>
+<section id="create-symbolic-links" class="level4" data-number="3.1.2">
+<h4 data-number="3.1.2" class="anchored" data-anchor-id="create-symbolic-links"><span class="header-section-number">3.1.2</span> Create symbolic links</h4>
+<p>We have the raw fastq files in this remote directory: <code>/sw/courses/ngsintro/rnaseq/main/1_raw/</code>. We are going to create symbolic links (soft-links) for these files from our <code>1_raw</code> directory to the remote directory. We do this because fastq files tend to be large files and simply copying them would use up a lot of storage space. Soft-linking files and folders allows us to work with those files as if they were actually there.</p>
+<p>Change to <code>1_raw</code> directory. Use <code>pwd</code> to check if you are standing in the correct directory.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb9"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> 1_raw</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>/proj/naiss2024-22-212/nobackup/username/rnaseq/1_raw</code></pre>
+</div>
+</div>
+<p>Run below to create softlinks. Note that the command ends in a space followed by a period.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb11"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> /sw/courses/ngsintro/rnaseq/main/1_raw/<span class="pp">*</span>.gz .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Check if your files have linked correctly. You should be able to see as below.</p>
+<div class="cell" data-chunk.title="true">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-chunk.title="true">
+<pre class="output cell-code"><code>SRR3222409-19_1.fq.gz -&gt; /sw/courses/ngsintro/rnaseq/main/1_raw/SRR3222409-19_1.fq.gz
+SRR3222409-19_2.fq.gz -&gt; /sw/courses/ngsintro/rnaseq/main/1_raw/SRR3222409-19_2.fq.gz
+SRR3222410-19_1.fq.gz -&gt; /sw/courses/ngsintro/rnaseq/main/1_raw/SRR3222410-19_1.fq.gz
+SRR3222410-19_2.fq.gz -&gt; /sw/courses/ngsintro/rnaseq/main/1_raw/SRR3222410-19_2.fq.gz
+SRR3222411-19_1.fq.gz -&gt; /sw/courses/ngsintro/rnaseq/main/1_raw/SRR3222411-19_1.fq.gz
+SRR3222411-19_2.fq.gz -&gt; /sw/courses/ngsintro/rnaseq/main/1_raw/SRR3222411-19_2.fq.gz
+SRR3222412-19_1.fq.gz -&gt; /sw/courses/ngsintro/rnaseq/main/1_raw/SRR3222412-19_1.fq.gz
+SRR3222412-19_2.fq.gz -&gt; /sw/courses/ngsintro/rnaseq/main/1_raw/SRR3222412-19_2.fq.gz
+SRR3222413-19_1.fq.gz -&gt; /sw/courses/ngsintro/rnaseq/main/1_raw/SRR3222413-19_1.fq.gz
+SRR3222413-19_2.fq.gz -&gt; /sw/courses/ngsintro/rnaseq/main/1_raw/SRR3222413-19_2.fq.gz
+SRR3222414-19_1.fq.gz -&gt; /sw/courses/ngsintro/rnaseq/main/1_raw/SRR3222414-19_1.fq.gz
+SRR3222414-19_2.fq.gz -&gt; /sw/courses/ngsintro/rnaseq/main/1_raw/SRR3222414-19_2.fq.gz</code></pre>
+</div>
+</section>
+</section>
+<section id="fastqc" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="fastqc"><span class="header-section-number">3.2</span> FastQC</h3>
+<p><strong>Quality check using FastQC</strong></p>
+<p>After receiving raw reads from a high throughput sequencing centre it is essential to check their quality. <a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC</a> provides a simple way to do some quality control check on raw sequence data. It provides a modular set of analyses which you can use to get a quick impression of whether your data has any problems of which you should be aware before doing any further analysis.</p>
+<p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> Change into the <code>2_fastqc</code> directory. Use <code>pwd</code> to check if you are standing in the correct directory.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb14"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ../2_fastqc</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>/proj/naiss2024-22-212/nobackup/username/rnaseq/2_fastqc</code></pre>
+</div>
+</div>
+<p>Load Uppmax modules <code>bioinfo-tools</code> and FastQC <code>FastQC/0.11.9</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load bioinfo-tools</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load FastQC/0.11.9</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Once the module is loaded, FastQC program is available through the command <code>fastqc</code>. Use <code>fastqc --help</code> to see the various parameters available to the program. We will use <code>-o</code> to specify the output directory path and finally, the name of the input fastq file to analyse. The syntax to run one file will look like below.</p>
+<p><i class="fa-solid fa-exclamation-circle" aria-label="exclamation-circle"></i> Don’t run this. It’s just a template.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fastqc</span> <span class="at">-o</span> . ../1_raw/filename.fq.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Based on the above command, we will write a bash loop script to process all fastq files in the directory. Writing multi-line commands through the terminal can be a pain. Therefore, we will run larger scripts from a bash script file. Move to your <code>scripts</code> directory and create a new file named <code>fastqc.sh</code>.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb18"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ../scripts</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>/proj/naiss2024-22-212/nobackup/username/rnaseq/scripts</code></pre>
+</div>
+</div>
+<p>The command below creates a new file in the current directory.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> fastqc.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Use a text editor (<code>nano</code>,<code>Emacs</code>,<code>gedit</code> etc.) to edit <code>fastqc.sh</code>.</p>
+<p><i class="fa-solid fa-lightbulb" aria-label="lightbulb"></i> <code>gedit</code> behaves like a regular text editor with a standard graphical interface.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gedit</span> fastqc.sh <span class="kw">&amp;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><i class="fa-solid fa-lightbulb" aria-label="lightbulb"></i> Adding <code>&amp;</code> at the end sends that process to the background, so that the console is free to accept new commands.</p>
+<p>Then add the lines below and save the file.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load bioinfo-tools</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load FastQC/0.11.9</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> ../1_raw/<span class="pp">*</span>.gz</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="cf">do</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"Running </span><span class="va">$i</span><span class="st"> ..."</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">fastqc</span> <span class="at">-o</span> . <span class="st">"</span><span class="va">$i</span><span class="st">"</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This script loops through all files ending in .gz. In each iteration of the loop, it executes fastqc on the file. The <code>-o .</code> flag to fastqc indicates that the output must be exported in this current directory (ie; the directory where this script is run).</p>
+<p>Change to the <code>2_fastqc</code> directory. Use <code>pwd</code> to check if you are standing in the correct directory. Run the script file <code>fastqc.sh</code></p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb23"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ../2_fastqc</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>/proj/naiss2024-22-212/nobackup/username/rnaseq/2_fastqc</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> ../scripts/fastqc.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>After the fastqc run, there should be a <code>.zip</code> file and a <code>.html</code> file for every fastq file. The <code>.html</code> file is the report that you need. Download the <code>.html</code> files to your computer and open them in a web browser. You do not need to necessarily look at all files now. We will do a comparison with all samples when using the MultiQC tool.</p>
+<p><i class="fa-solid fa-exclamation-circle" aria-label="exclamation-circle"></i> Run this step in a <strong>LOCAL</strong> terminal and <strong>NOT</strong> on Uppmax. Open a terminal locally on your computer, move to a suitable download directory and run the command below to download one html report.</p>
+<p><i class="fa-solid fa-exclamation-circle" aria-label="exclamation-circle"></i> Remember to replace <strong>username</strong> (twice).</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb26"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> username@rackham.uppmax.uu.se:/proj/naiss2024-22-212/nobackup/username/rnaseq/2_fastqc/SRR3222409-19_1_fastqc.html .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>or download the whole directory.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb27"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> <span class="at">-r</span> username@rackham.uppmax.uu.se:/proj/naiss2024-22-212/nobackup/username/rnaseq/2_fastqc .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Downloading using a GUI
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can optionally use an SFTP browser like <a href="https://filezilla-project.org/">Filezilla</a> or <a href="https://cyberduck.io/">Cyberduck</a> for a GUI interface. Those using MobaXterm, it has an embedded SFTP file browser to drag and drop.</p>
+</div>
+</div>
+<p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> Go back to the FastQC website and compare your report with the sample report for <a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html">Good Illumina data</a> and <a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc.html">Bad Illumina data</a>.</p>
+<p><i class="fa-solid fa-comments" aria-label="comments"></i> Discuss based on your reports, whether your data is of good enough quality and/or what steps are needed to fix it.</p>
+</section>
+<section id="hisat2" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="hisat2"><span class="header-section-number">3.3</span> HISAT2</h3>
+<p><strong>Mapping reads using HISAT2</strong></p>
+<p>After verifying that the quality of the raw sequencing reads is acceptable, we will map the reads to the reference genome. There are many mappers/aligners available, so it may be good to choose one that is adequate for your type of data. Here, we will use a software called <a href="http://www.ccb.jhu.edu/software/hisat/index.shtml">HISAT2</a> (Hierarchical Indexing for Spliced Alignment of Transcripts) as it is a good general purpose splice-aware aligner. It is fast and does not require a lot of RAM. Before we begin mapping, we need to obtain genome reference sequence (<code>.fasta</code> file) and build an aligner index. Due to time constraints, we will build an index only on chromosome 19.</p>
+<section id="get-reference" class="level4" data-number="3.3.1">
+<h4 data-number="3.3.1" class="anchored" data-anchor-id="get-reference"><span class="header-section-number">3.3.1</span> Get reference</h4>
+<p>It is best if the reference genome (<code>.fasta</code>) and annotation (<code>.gtf</code>) files come from the same source to avoid potential naming conventions problems. It is also good to check in the manual of the aligner you use for hints on what type of files are needed to do the mapping. We will not be using the annotation (<code>.gtf</code>) during mapping, but we will use it during quantification.</p>
+<p><i class="fa-solid fa-comments" aria-label="comments"></i> What is the idea behind building an aligner index? What files are needed to build one? Where do we take them from? Could one use an index that was generated for another project? Check out the <a href="http://www.ccb.jhu.edu/software/hisat/manual.shtml">HISAT2 manual</a> indexer section for answers. Browse through <a href="https://www.ensembl.org/index.html">Ensembl</a> and try to find the files needed. Note that we are working with Mouse (<em>Mus musculus</em>).</p>
+<p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> Move into the <code>reference</code> directory and download the Chr 19 genome (<code>.fasta</code>) file and the genome-wide annotation file (<code>.gtf</code>) from Ensembl.</p>
+<p>You should be standing here to run this:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>/proj/naiss2024-22-212/nobackup/username/rnaseq/reference</code></pre>
+</div>
+</div>
+<p>You are most likely to use the <a href="https://www.ensembl.org/index.html">latest version</a> of ensembl release genome and annotations when starting a new analysis. For this exercise, we will choose ensembl version 99.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> ftp://ftp.ensembl.org/pub/release-99/fasta/mus_musculus/dna/Mus_musculus.GRCm38.dna.chromosome.19.fa.gz</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> ftp://ftp.ensembl.org/pub/release-99/gtf/mus_musculus/Mus_musculus.GRCm38.99.gtf.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Decompress the files for use.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gunzip</span> Mus_musculus.GRCm38.dna.chromosome.19.fa.gz</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gunzip</span> Mus_musculus.GRCm38.99.gtf.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>From the full gtf file, we will also extract chr 19 alone to create a new gtf file for use later.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> Mus_musculus.GRCm38.99.gtf <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-E</span> <span class="st">"^#|^19"</span> <span class="op">&gt;</span> Mus_musculus.GRCm38.99-19.gtf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><i class="fa-solid fa-lightbulb" aria-label="lightbulb"></i> The <code>grep</code> command is set to use regular expression with the <code>-E</code> argument. And it’s looking for lines starting with <code>#</code> or <code>19</code>. <code>#</code> fetches the header and comments while <code>19</code> denotes all rows with annotations for chromosome 19.</p>
+<p>Check what you have in your directory.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-chunk.title="true">
+<pre class="output cell-code"><code>drwxrwsr-x 2 user gXXXXXXX 4.0K Jan 22 21:59 mouse_chr19_hisat2
+-rw-rw-r-- 1 user gXXXXXXX  26M Jan 22 22:46 Mus_musculus.GRCm38.99-19.gtf
+-rw-rw-r-- 1 user gXXXXXXX 771M Jan 22 22:10 Mus_musculus.GRCm38.99.gtf
+-rw-rw-r-- 1 user gXXXXXXX  60M Jan 22 22:10 Mus_musculus.GRCm38.dna.chromosome.19.fa</code></pre>
+</div>
+</section>
+<section id="build-index" class="level4" data-number="3.3.2">
+<h4 data-number="3.3.2" class="anchored" data-anchor-id="build-index"><span class="header-section-number">3.3.2</span> Build index</h4>
+<p>Move into the <code>reference</code> directory if not already there. Load module HISAT2. Remember to load <code>bioinfo-tools</code> if you haven’t done so already.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load bioinfo-tools</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load HISAT2/2.1.0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><i class="fa-solid fa-lightbulb" aria-label="lightbulb"></i> To search for the tool or other versions of a tool, use <code>module spider hisat</code>.</p>
+<p>Create a new bash script in your <code>scripts</code> directory named <code>hisat2_index.sh</code> and add the following lines:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="co"># load module</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load bioinfo-tools</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load HISAT2/2.1.0</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="ex">hisat2-build</span> <span class="dt">\</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">-p</span> 1 <span class="dt">\</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>  Mus_musculus.GRCm38.dna.chromosome.19.fa <span class="dt">\</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>  mouse_chr19_hisat2/mouse_chr19_hisat2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The above script builds a HISAT2 index using the command <code>hisat2-build</code>. It should use 1 core for computation. The paths to the FASTA (.fa) genome file is specified. And the output path is specified. The output describes the output directory and the prefix for output files. The output directory must be present before running this script. Check <code>hisat2-build --help</code> for the arguments and descriptions.</p>
+<p>Use <code>pwd</code> to check if you are standing in the correct directory. Then, run the script from the <code>reference</code> directory.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> ../scripts/hisat2_index.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Once the indexing is complete, move into the <code>mouse_chr19_hisat2</code> directory and make sure you have all the files.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span> mouse_chr19_hisat2/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-chunk.title="true">
+<pre class="output cell-code"><code>-rw-rw-r-- 1 user gXXXXXXX 23M Sep 19 12:30 mouse_chr19_hisat2.1.ht2
+-rw-rw-r-- 1 user gXXXXXXX 14M Sep 19 12:30 mouse_chr19_hisat2.2.ht2
+-rw-rw-r-- 1 user gXXXXXXX  53 Sep 19 12:29 mouse_chr19_hisat2.3.ht2
+-rw-rw-r-- 1 user gXXXXXXX 14M Sep 19 12:29 mouse_chr19_hisat2.4.ht2
+-rw-rw-r-- 1 user gXXXXXXX 25M Sep 19 12:30 mouse_chr19_hisat2.5.ht2
+-rw-rw-r-- 1 user gXXXXXXX 15M Sep 19 12:30 mouse_chr19_hisat2.6.ht2
+-rw-rw-r-- 1 user gXXXXXXX  12 Sep 19 12:29 mouse_chr19_hisat2.7.ht2
+-rw-rw-r-- 1 user gXXXXXXX   8 Sep 19 12:29 mouse_chr19_hisat2.8.ht2</code></pre>
+</div>
+<p>The index for the whole genome would be created in a similar manner. It just requires more time to run.</p>
+</section>
+<section id="map-reads" class="level4" data-number="3.3.3">
+<h4 data-number="3.3.3" class="anchored" data-anchor-id="map-reads"><span class="header-section-number">3.3.3</span> Map reads</h4>
+<p>Now that we have the index ready, we are ready to map reads. Move to the directory <code>3_mapping</code>. Use <code>pwd</code> to check if you are standing in the correct directory.</p>
+<p>You should be standing here to run this:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>/proj/naiss2024-22-212/nobackup/username/rnaseq/3_mapping</code></pre>
+</div>
+</div>
+<p>We will create softlinks to the fastq files from here to make things easier.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> 3_mapping</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> ../1_raw/<span class="pp">*</span> .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>These are the parameters that we want to specify for the mapping run:</p>
+<ul>
+<li>Specify the number of threads</li>
+<li>Specify the full genome index path</li>
+<li>Specify a summary file</li>
+<li>Indicate read1 and read2 since we have paired-end reads</li>
+<li>Direct the output (SAM) to a file</li>
+</ul>
+<p>HISAT2 aligner arguments can be obtained by running <code>hisat2 --help</code>. We should end with a script that looks like below to run one of the samples.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="ex">hisat2</span> <span class="dt">\</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-p</span> 1 <span class="dt">\</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-x</span> ../reference/mouse_chr19_hisat2/mouse_chr19_hisat2 <span class="dt">\</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--summary-file</span> <span class="st">"SRR3222409-19.summary"</span> <span class="dt">\</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">-1</span> SRR3222409-19_1.fq.gz <span class="dt">\</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">-2</span> SRR3222409-19_2.fq.gz <span class="dt">\</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">-S</span> SRR3222409-19.sam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s break this down a bit. <code>-p</code> options denotes that it will use 1 thread. In a real world scenario, we might want to use 8 to 12 threads. <code>-x</code> denotes the full path (with prefix) to the aligner index we built in the previous step. <code>--summary-file</code> specifies a summary file to write alignments metrics such as mapping rate etc. <code>-1</code> and <code>-2</code> specifies the input fastq files. Both are used here because this is a paired-end sequencing. <code>-S</code> denotes the output SAM file.</p>
+<p>But, we will not run it as above. We will make some more changes to it. We want to make the following changes:</p>
+<ul>
+<li>Rather than writing the output as a SAM file, we want to direct the output to another tool <code>samtools</code> to order alignments by coordinate and to export in BAM format</li>
+<li>Generalise the above script to be used as a bash script to read any two input files and to automatically create the output filename.</li>
+</ul>
+<p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> Now create a new bash script file named <code>hisat2_align.sh</code> in your <code>scripts</code> directory and add the script below to it.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load bioinfo-tools</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load HISAT2/2.1.0</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load samtools/1.8</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="co"># get output filename prefix</span></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="va">prefix</span><span class="op">=</span><span class="va">$(</span> <span class="fu">basename</span> <span class="va">$1</span> <span class="kw">|</span> <span class="fu">sed</span> <span class="at">-E</span> <span class="st">'s/_.+$//'</span> <span class="va">)</span></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a><span class="ex">hisat2</span> <span class="dt">\</span></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">-p</span> 1 <span class="dt">\</span></span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">-x</span> ../reference/mouse_chr19_hisat2/mouse_chr19_hisat2 <span class="dt">\</span></span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">--summary-file</span> <span class="st">"</span><span class="va">${prefix}</span><span class="st">.summary"</span> <span class="dt">\</span></span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">-1</span> <span class="va">$1</span> <span class="dt">\</span></span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">-2</span> <span class="va">$2</span> <span class="kw">|</span> <span class="ex">samtools</span> sort <span class="at">-O</span> BAM <span class="op">&gt;</span> <span class="st">"</span><span class="va">${prefix}</span><span class="st">.bam"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In the above script, the two input fasta files are not hard coded, rather we use <code>$1</code> and <code>$2</code> because they will be passed in as arguments.</p>
+<p>The output filename prefix is automatically created using this line <code>prefix=$( basename $1 | sed -E 's/_.+$//' )</code> from input filename of <code>$1</code>. For example, a file with path <code>/bla/bla/sample_1.fq.gz</code> will have the directory stripped off using the function <code>basename</code> to get <code>sample_1.fq.gz</code>. This is piped (<code>|</code>) to <code>sed</code> where all text starting from <code>_</code> to end of string (specified by this regular expression <code>_.+$</code> matching <code>_1.fq.gz</code>) is removed and the prefix will be just <code>sample</code>. This approach will work only if your filenames are labelled suitably.</p>
+<p>Lastly, the SAM output is piped (<code>|</code>) to the tool samtools for sorting and written in BAM format.</p>
+<p>Now we can run the bash script like below while standing in the <code>3_mapping</code> directory.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> ../scripts/hisat2_align.sh sample_1.fq.gz sample_2.fq.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> Similarly run the other samples.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Optional
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Try to create a new bash loop script (<code>hisat2_align_batch.sh</code>) to iterate over all fastq files in the directory and run the mapping using the <code>hisat2_align.sh</code> script. Note that there is a bit of a tricky issue here. You need to use two fastq files (<code>_1</code> and <code>_2</code>) per run rather than one file. There are many ways to do this and here is one.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co">## find only files for read 1 and extract the sample name</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="va">lines</span><span class="op">=</span><span class="va">$(</span><span class="fu">find</span> <span class="pp">*</span>_1.fq.gz <span class="kw">|</span> <span class="fu">sed</span> <span class="st">"s/_1.fq.gz//"</span><span class="va">)</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="va">${lines}</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="cf">do</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">## use the sample name and add suffix (_1.fq.gz or _2.fq.gz)</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Mapping </span><span class="va">${i}</span><span class="st">_1.fq.gz and </span><span class="va">${i}</span><span class="st">_2.fq.gz ..."</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bash</span> ../scripts/hisat2_align.sh <span class="va">${i}</span>_1.fq.gz <span class="va">${i}</span>_2.fq.gz</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Run the <code>hisat2_align_batch.sh</code> script in the <code>3_mapping</code> directory.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> ../scripts/hisat2_align_batch.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<p>At the end of the mapping jobs, you should have the following list of output files for every sample:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-chunk.title="true">
+<pre class="output cell-code"><code>-rw-rw-r-- 1 user gXXXXXXX 16M Sep 19 12:30 SRR3222409-19.bam
+-rw-rw-r-- 1 user gXXXXXXX 604 Sep 19 12:30 SRR3222409-19.summary</code></pre>
+</div>
+<p>The <code>.bam</code> file contains the alignment of all reads to the reference genome in binary format. BAM files are not human readable directly. To view a BAM file in text format, you can use <code>samtools view</code> functionality.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load samtools/1.8</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> view SRR3222409-19.bam <span class="kw">|</span> <span class="fu">head</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-chunk.title="true">
+<pre class="output cell-code"><code>SRR3222409.13658290 163 19  3084385 60  95M3S   =   3084404 120 CTTTAAGATAAGTGCCGGTTGCAGCCAGCTGTGAGAGCTGCACTCCCTTCTCTGCTCTAAAGTTCCCTCTTCTCAGAAGGTGGCACCACCCTGAGCTG  DB@D@GCHHHEFHIIG&lt;CHHHIHHIIIIHHHIIIIGHIIIIIFHIGHIHIHIIHIIHIHIIHHHHIIIIIIHFFHHIIIGCCCHHHH1GHHIIHHIII  AS:i:-3 ZS:i:-18    XN:i:0  XM:i:0  XO:i:0  XG:i:0  NM:i:0  MD:Z:95 YS:i:-6 YT:Z:CP NH:i:1
+SRR3222409.13658290 83  19  3084404 60  101M    =   3084385 -120    TGCAGCCAGCTGTGAGAGCTGCACTCCCTTCTCTGCTCTAAAGTTCCCTCTTCTCAGAAGGTGGCACCACCCTGAGCTGCTGGCAGTGAGTCTGTTCCAAG   IIIIHECHHH?IHHHIIIHIHIIIHEHHHCHHHIHIIIHHIHIIIHHHHHHIHEHIIHIIHHIIHHIHHIGHIGIIIIIIIHHIIIHHIHEHCHHG@&lt;&lt;BD   AS:i:-6 ZS:i:-16    XN:i:0  XM:i:1  XO:i:0  XG:i:0  NM:i:1  MD:Z:76T24  YS:i:-3 YT:Z:CP NH:i:1
+SRR3222409.13741570 163 19  3085066 60  15M2I84M    =   3085166 201 ATAGTACCTGGCAACAAAAAAAAAAAAGCTTTTGGCTAAAGACCAATGTGTTTAAGAGATAAAAAAAGGGGTGCTAATACAGAAGCTGAGGCCTTAGAAGA   0B@DB@HCCH1&lt;&lt;CGECCCGCHHIDD?01&lt;&lt;G1&lt;/&lt;1&lt;FH1F11&lt;1111&lt;&lt;&lt;&lt;11&lt;CGC1&lt;G1&lt;F//DHHI0/01&lt;&lt;1FG11111111&lt;111&lt;1D1&lt;1D1&lt;   AS:i:-20    XN:i:0  XM:i:3  XO:i:1  XG:i:2  NM:i:5  MD:Z:40T19C27T10    YS:i:0  YT:Z:CP NH:i:1</code></pre>
+</div>
+<p><i class="fa-solid fa-comments" aria-label="comments"></i> Can you identify what some of these columns are? SAM format description is available <a href="https://www.metagenomics.wiki/tools/samtools/bam-sam-file-format">here</a>. SAM output specifically from HISAT is described <a href="http://www.ccb.jhu.edu/software/hisat/manual.shtml">here</a>, especially the tags.</p>
+<p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> The summary file gives a summary of the mapping run. This file is used by MultiQC later to collect mapping statistics. Inspect one of the mapping log files to identify the number of uniquely mapped reads and multi-mapped reads.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> SRR3222409-19.summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-chunk.title="true">
+<pre class="output cell-code"><code>156992 reads; of these:
+  156992 (100.00%) were paired; of these:
+    7984 (5.09%) aligned concordantly 0 times
+    147178 (93.75%) aligned concordantly exactly 1 time
+    1830 (1.17%) aligned concordantly &gt;1 times
+    ----
+    7984 pairs aligned concordantly 0 times; of these:
+      690 (8.64%) aligned discordantly 1 time
+    ----
+    7294 pairs aligned 0 times concordantly or discordantly; of these:
+      14588 mates make up the pairs; of these:
+        5987 (41.04%) aligned 0 times
+        4085 (28.00%) aligned exactly 1 time
+        4516 (30.96%) aligned &gt;1 times
+98.09% overall alignment rate</code></pre>
+</div>
+<p>Next, we need to index these BAM files. Indexing creates <code>.bam.bai</code> files which are required by many downstream programs to quickly and efficiently locate reads anywhere in the BAM file.</p>
+<p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> Index all BAM files. Write a for-loop to index all BAM files using the command <code>samtools index file.bam</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load samtools/1.8</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="pp">*</span>.bam</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">do</span></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"Indexing </span><span class="va">$i</span><span class="st"> ..."</span></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">samtools</span> index <span class="va">$i</span></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">done</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, we should have <code>.bai</code> index files for all BAM files.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-chunk.title="true">
+<pre class="output cell-code"><code>-rw-rw-r-- 1 user gXXXXXXX 16M Sep 19 12:30 SRR3222409-19.bam
+-rw-rw-r-- 1 user gXXXXXXX 43K Sep 19 12:32 SRR3222409-19.bam.bai</code></pre>
+</div>
+<p><i class="fa-solid fa-exclamation-circle" aria-label="exclamation-circle"></i> If you are running short of time or unable to run the mapping, you can copy over results for all samples that have been prepared for you before class. They are available at this location: <code>/sw/courses/ngsintro/rnaseq/main/3_mapping/</code>.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb55"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> /sw/courses/ngsintro/rnaseq/main/3_mapping/<span class="pp">*</span> /proj/naiss2024-22-212/nobackup/username/rnaseq/3_mapping/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p><br></p>
+</section>
+</section>
+<section id="qualimap" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="qualimap"><span class="header-section-number">3.4</span> QualiMap</h3>
+<p><strong>Post-alignment QC using QualiMap</strong></p>
+<p>Some important quality aspects, such as saturation of sequencing depth, read distribution between different genomic features or coverage uniformity along transcripts, can be measured only after mapping reads to the reference genome. One of the tools to perform this post-alignment quality control is QualiMap. QualiMap examines sequencing alignment data in SAM/BAM files according to the features of the mapped reads and provides an overall view of the data that helps to the detect biases in the sequencing and/or mapping of the data and eases decision-making for further analysis.</p>
+<p>There are other tools with similar functionality such as <a href="http://qualimap.bioinfo.cipf.es/doc_html/analysis.html#rnaseqqc">RNASeqQC</a> or <a href="https://hartleys.github.io/QoRTs/">QoRTs</a>.</p>
+<p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> Read through <a href="http://qualimap.conesalab.org/doc_html/index.html">QualiMap</a> documentation and see if you can figure it out how to run it to assess post-alignment quality on the RNA-seq mapped samples.</p>
+<p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> Load the QualiMap module version 2.2.1 and create a bash script named <code>qualimap.sh</code> in your <code>scripts</code> directory.</p>
+<p>Add the following script to it. Note that we are using the smaller GTF file with chr19 only.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="co"># load modules</span></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load bioinfo-tools</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load QualiMap/2.2.1</span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a><span class="co"># get output filename prefix</span></span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a><span class="va">prefix</span><span class="op">=</span><span class="va">$(</span> <span class="fu">basename</span> <span class="st">"</span><span class="va">$1</span><span class="st">"</span> .bam<span class="va">)</span></span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a><span class="bu">unset</span> <span class="va">DISPLAY</span></span>
+<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a><span class="ex">qualimap</span> rnaseq <span class="at">-pe</span> <span class="dt">\</span></span>
+<span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">-bam</span> <span class="va">$1</span> <span class="dt">\</span></span>
+<span id="cb56-14"><a href="#cb56-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">-gtf</span> <span class="st">"../reference/Mus_musculus.GRCm38.99-19.gtf"</span> <span class="dt">\</span></span>
+<span id="cb56-15"><a href="#cb56-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">-outdir</span> <span class="st">"../4_qualimap/</span><span class="va">${prefix}</span><span class="st">/"</span> <span class="dt">\</span></span>
+<span id="cb56-16"><a href="#cb56-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">-outfile</span> <span class="st">"</span><span class="va">$prefix</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb56-17"><a href="#cb56-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">-outformat</span> <span class="st">"HTML"</span> <span class="dt">\</span></span>
+<span id="cb56-18"><a href="#cb56-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">--java-mem-size</span><span class="op">=</span>6G <span class="op">&gt;&amp;</span> <span class="st">"</span><span class="va">${prefix}</span><span class="st">-qualimap.log"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The line <code>prefix=$( basename "$1" .bam)</code> is used to remove directory path and <code>.bam</code> from the input filename and create a prefix which will be used to label output. The export <code>unset DISPLAY</code> forces a ‘headless mode’ on the JAVA application, which would otherwise throw an error about X11 display. If that doesn’t work, one can also try <code>export DISPLAY=:0</code> or <code>export DISPLAY=""</code>. The last part <code>&gt;&amp; "${prefix}-qualimap.log"</code> saves the <strong>standard-out</strong> as a log file.</p>
+<p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> Create a new bash loop script named <code>qualimap_batch.sh</code> with a bash loop to run the qualimap script over all BAM files. The loop should look like below.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> ../3_mapping/<span class="pp">*</span>.bam</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="cf">do</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"Running QualiMap on </span><span class="va">$i</span><span class="st"> ..."</span></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bash</span> ../scripts/qualimap.sh <span class="va">$i</span></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Run the loop script <code>qualimap_batch.sh</code> in the directory <code>4_qualimap</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> ../scripts/qualimap_batch.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Qualimap should have created a directory for every BAM file.</p>
+<div class="cell" data-chunk.title="true">
+<pre class="output cell-code"><code>drwxrwsr-x 5 user gXXXXXXX 4.0K Jan 22 22:53 SRR3222409-19
+-rw-rw-r-- 1 user gXXXXXXX  669 Jan 22 22:53 SRR3222409-19-qualimap.log</code></pre>
+</div>
+<p>Inside every directory, you should see:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-chunk.title="true">
+<pre class="output cell-code"><code>drwxrwsr-x 2 user gXXXXXXX 4.0K Jan 22 22:53 css
+drwxrwsr-x 2 user gXXXXXXX 4.0K Jan 22 22:53 images_qualimapReport
+-rw-rw-r-- 1 user gXXXXXXX  12K Jan 22 22:53 qualimapReport.html
+drwxrwsr-x 2 user gXXXXXXX 4.0K Jan 22 22:53 raw_data_qualimapReport
+-rw-rw-r-- 1 user gXXXXXXX 1.2K Jan 22 22:53 rnaseq_qc_results.txt</code></pre>
+</div>
+<p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> Download the results.</p>
+<p><i class="fa-solid fa-exclamation-circle" aria-label="exclamation-circle"></i> When downloading the HTML files, note that you MUST also download the dependency files (ie; css folder and images_qualimapReport folder), otherwise the HTML file may not render correctly. Remember to replace <strong>username</strong> (twice).</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb62"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> <span class="at">-r</span> username@rackham.uppmax.uu.se:/proj/naiss2024-22-212/nobackup/username/rnaseq/4_qualimap .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p><i class="fa-solid fa-comments" aria-label="comments"></i> Check the QualiMap report for one sample and discuss if the sample is of good quality. You only need to do this for one file now. We will do a comparison with all samples when using the MultiQC tool.</p>
+<p><i class="fa-solid fa-exclamation-circle" aria-label="exclamation-circle"></i> If you are running out of time or were unable to run QualiMap, you can also copy pre-run QualiMap output from this location: <code>/sw/courses/ngsintro/rnaseq/main/4_qualimap/</code>.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb63"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> /sw/courses/ngsintro/rnaseq/main/4_qualimap/<span class="pp">*</span> /proj/naiss2024-22-212/nobackup/username/rnaseq/4_qualimap/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="featurecounts" class="level3" data-number="3.5">
+<h3 data-number="3.5" class="anchored" data-anchor-id="featurecounts"><span class="header-section-number">3.5</span> featureCounts</h3>
+<p><strong>Counting mapped reads using featureCounts</strong></p>
+<p>After ensuring mapping quality, we can move on to enumerating reads mapping to genomic features of interest. Here we will use <strong>featureCounts</strong>, an ultrafast and accurate read summarisation program, that can count mapped reads for genomic features such as genes, exons, promoter, gene bodies, genomic bins and chromosomal locations.</p>
+<p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> Read featureCounts <a href="http://subread.sourceforge.net/SubreadUsersGuide.pdf">documentation</a> and see if you can figure it out how to use paired-end reads using an unstranded library to count fragments overlapping with exonic regions and summarise over genes.</p>
+<p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> Load the subread module on Uppmax. Create a bash script named <code>featurecounts.sh</code> in the directory <code>scripts</code>.</p>
+<p>We could run featureCounts on each BAM file, produce a text output for each sample and combine the output. But the easier way is to provide a list of all BAM files and featureCounts will combine counts for all samples into one text file.</p>
+<p>Below is the script that we will use:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="co"># load modules</span></span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load bioinfo-tools</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load subread/2.0.0</span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a><span class="ex">featureCounts</span> <span class="dt">\</span></span>
+<span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">-a</span> <span class="st">"../reference/Mus_musculus.GRCm38.99.gtf"</span> <span class="dt">\</span></span>
+<span id="cb64-9"><a href="#cb64-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">-o</span> <span class="st">"counts.txt"</span> <span class="dt">\</span></span>
+<span id="cb64-10"><a href="#cb64-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">-F</span> <span class="st">"GTF"</span> <span class="dt">\</span></span>
+<span id="cb64-11"><a href="#cb64-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">-t</span> <span class="st">"exon"</span> <span class="dt">\</span></span>
+<span id="cb64-12"><a href="#cb64-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">-g</span> <span class="st">"gene_id"</span> <span class="dt">\</span></span>
+<span id="cb64-13"><a href="#cb64-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">-p</span> <span class="dt">\</span></span>
+<span id="cb64-14"><a href="#cb64-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">-s</span> 0 <span class="dt">\</span></span>
+<span id="cb64-15"><a href="#cb64-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">-T</span> 1 <span class="dt">\</span></span>
+<span id="cb64-16"><a href="#cb64-16" aria-hidden="true" tabindex="-1"></a>  ../3_mapping/<span class="pp">*</span>.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In the above script, we indicate the path of the annotation file (<code>-a "../reference/Mus_musculus.GRCm38.99.gtf"</code>), specify the output file name (<code>-o "counts.txt"</code>), specify that that annotation file is in GTF format (<code>-F "GTF"</code>), specify that reads are to be counted over exonic features (<code>-t "exon"</code>) and summarised to the gene level (<code>-g "gene_id"</code>). We also specify that the reads are paired-end (<code>-p</code>), the library is unstranded (<code>-s 0</code>) and the number of threads to use (<code>-T 1</code>).</p>
+<p>Run the featurecounts bash script in the directory <code>5_dge</code>. Use <code>pwd</code> to check if you are standing in the correct directory.</p>
+<p>You should be standing here to run this:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>/proj/naiss2024-22-212/nobackup/username/rnaseq/5_dge</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> ../scripts/featurecounts.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You should have two output files:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-chunk.title="true">
+<pre class="output cell-code"><code>-rw-rw-r-- 1 user gXXXXXXX 2.8M Sep 15 11:05 counts.txt
+-rw-rw-r-- 1 user gXXXXXXX  658 Sep 15 11:05 counts.txt.summary</code></pre>
+</div>
+<p><i class="fa-solid fa-comments" aria-label="comments"></i> Inspect the files and try to make sense of them.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For downstream steps, we will NOT use this <code>counts.txt</code> file. Instead we will use <strong>counts_full.txt</strong> from the back-up folder. This contains counts across all chromosomes. This is located here: <code>/sw/courses/ngsintro/rnaseq/main/5_dge/</code>. Copy this file to your <code>5_dge</code> directory.</p>
+<p><i class="fa-solid fa-exclamation-circle" aria-label="exclamation-circle"></i> Remember to replace username.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb69"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /sw/courses/ngsintro/rnaseq/main/5_dge/counts_full.txt /proj/naiss2024-22-212/nobackup/username/rnaseq/5_dge/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="multiqc" class="level3" data-number="3.6">
+<h3 data-number="3.6" class="anchored" data-anchor-id="multiqc"><span class="header-section-number">3.6</span> MultiQC</h3>
+<p><strong>Combined QC report using MultiQC</strong></p>
+<p>We will use the tool <strong>MultiQC</strong> to crawl through the output, log files etc from FastQC, HISAT2, QualiMap and featureCounts to create a combined QC report.</p>
+<p>Move to the <code>6_multiqc</code> directory. You should be standing here to run this:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>/proj/naiss2024-22-212/nobackup/username/rnaseq/6_multiqc</code></pre>
+</div>
+</div>
+<p>And run this in the terminal.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load bioinfo-tools</span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load MultiQC/1.11</span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a><span class="ex">multiqc</span> <span class="at">--interactive</span> ../</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>  <span class="ex">///</span> MultiQC 🔍 <span class="kw">|</span> <span class="ex">v1.11</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span>           <span class="ex">multiqc</span> <span class="kw">|</span> <span class="ex">Search</span> path : /crex/proj/XXXXXXX/nobackup/username/rnaseq</span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span>         <span class="ex">searching</span> <span class="kw">|</span> <span class="ex">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> 100% 298/298  </span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span>          <span class="ex">qualimap</span> <span class="kw">|</span> <span class="ex">Found</span> 6 RNASeq reports</span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span>    <span class="ex">feature_counts</span> <span class="kw">|</span> <span class="ex">Found</span> 6 reports</span>
+<span id="cb72-7"><a href="#cb72-7" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span>           <span class="ex">bowtie2</span> <span class="kw">|</span> <span class="ex">Found</span> 6 reports</span>
+<span id="cb72-8"><a href="#cb72-8" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span>            <span class="ex">fastqc</span> <span class="kw">|</span> <span class="ex">Found</span> 12 reports</span>
+<span id="cb72-9"><a href="#cb72-9" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span>           <span class="ex">multiqc</span> <span class="kw">|</span> <span class="ex">Compressing</span> plot data</span>
+<span id="cb72-10"><a href="#cb72-10" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span>           <span class="ex">multiqc</span> <span class="kw">|</span> <span class="ex">Report</span>      : multiqc_report.html</span>
+<span id="cb72-11"><a href="#cb72-11" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span>           <span class="ex">multiqc</span> <span class="kw">|</span> <span class="ex">Data</span>        : multiqc_data</span>
+<span id="cb72-12"><a href="#cb72-12" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span>           <span class="ex">multiqc</span> <span class="kw">|</span> <span class="ex">MultiQC</span> complete</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The output should look like below:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-chunk.title="true">
+<pre class="output cell-code"><code>drwxrwsr-x 2 user gXXXXXXX 4.0K Sep  6 22:33 multiqc_data
+-rw-rw-r-- 1 user gXXXXXXX 1.3M Sep  6 22:33 multiqc_report.html</code></pre>
+</div>
+<p><i class="fa-solid fa-comments" aria-label="comments"></i> Download the MultiQC HTML report to your computer and inspect the report.</p>
+<p><i class="fa-solid fa-exclamation-circle" aria-label="exclamation-circle"></i> Run this step in a <strong>LOCAL</strong> terminal and <strong>NOT</strong> on Uppmax. Remember to replace username (twice).</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb75"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> username@rackham.uppmax.uu.se:/proj/naiss2024-22-212/nobackup/username/rnaseq/6_multiqc/multiqc_report.html .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="deseq2" class="level3" data-number="3.7">
+<h3 data-number="3.7" class="anchored" data-anchor-id="deseq2"><span class="header-section-number">3.7</span> DESeq2</h3>
+<p><strong>Differential gene expression using DESeq2</strong></p>
+<p>The easiest way to perform differential expression is to use one of the statistical packages, within R environment, that were specifically designed for analyses of read counts arising from RNA-seq, SAGE and similar technologies. Here, we will use one such package called <strong>DESeq2</strong>. Learning R is beyond the scope of this course so we prepared basic ready to run R scripts to find DE genes between conditions <strong>KO</strong> and <strong>Wt</strong>.</p>
+<p>Move to the <code>5_dge</code> directory and load R modules for use.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load R/4.0.0</span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load R_packages/4.0.0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Use <code>pwd</code> to check if you are standing in the correct directory. Copy the following file to the <code>5_dge</code> directory: <code>/sw/courses/ngsintro/rnaseq/main/5_dge/dge.R</code></p>
+<p>Make sure you have the <code>counts_full.txt</code>. If not, you can copy this file too: <code>/sw/courses/ngsintro/rnaseq/main/5_dge/counts_full.txt</code></p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb77"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /sw/courses/ngsintro/rnaseq/main/5_dge/dge.R .</span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /sw/courses/ngsintro/rnaseq/main/5_dge/counts_full.txt .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Now, run the R script from the shell in <code>5_dge</code> directory.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> dge.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If you are curious what’s inside dge.R, you are welcome to explore it using a text editor.</p>
+<p>This should have produced the following output files:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-chunk.title="true">
+<pre class="output cell-code"><code>-rw-rw-r-- 1 user gXXXXXXX 282K Jan 22 23:16 counts_vst_full.Rds
+-rw-rw-r-- 1 user gXXXXXXX 1.7M Jan 22 23:16 counts_vst_full.txt
+-rw-rw-r-- 1 user gXXXXXXX 727K Jan 22 23:16 dge_results_full.Rds
+-rw-rw-r-- 1 user gXXXXXXX 1.7M Jan 22 23:16 dge_results_full.txt</code></pre>
+</div>
+<p>Essentially, we have two outputs: <strong>dge_results_full</strong> and <strong>counts_vst_full</strong>. <strong>dge_results_full</strong> is the list of differentially expressed genes. This is available in human readable tab-delimited .txt file and R readable binary .Rds file. The <strong>counts_vst_full</strong> is variance-stabilised normalised counts, useful for exploratory analyses.</p>
+<p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> Copy the results text file (<code>dge_results_full.txt</code>) to your computer and inspect the results. What are the columns? How many differentially expressed genes are present after adjusted p-value of 0.05? How many genes are upregulated and how many are down-regulated? How does this change if we set a fold-change cut-off of 1?</p>
+<p><i class="fa-solid fa-lightbulb" aria-label="lightbulb"></i> Open in a spreadsheet editor like Microsoft Excel or LibreOffice Calc.</p>
+<p><i class="fa-solid fa-lightbulb" aria-label="lightbulb"></i> If you do not have the results or were unable to run the DGE step, you can copy these two here which will be required for functional annotation (optional).</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb81"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /sw/courses/ngsintro/rnaseq/main/5_dge/dge_results_full.txt .</span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /sw/courses/ngsintro/rnaseq/main/5_dge/dge_results_full.Rds .</span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /sw/courses/ngsintro/rnaseq/main/5_dge/counts_vst_full.txt .</span>
+<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /sw/courses/ngsintro/rnaseq/main/5_dge/counts_vst_full.Rds .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="bonus-exercises" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="bonus-exercises"><span class="header-section-number">4</span> Bonus exercises</h2>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Optional
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>These exercises are optional and to be run only if you have time and you want to explore this topic further.</p>
+</div>
+</div>
+<section id="functional-annotation" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="functional-annotation"><span class="header-section-number">4.1</span> Functional annotation</h3>
+<p>In this part of the exercise we will address the question which biological processes are affected in the experiment; in other words we will functionally annotate the results of the analysis of differential gene expression (performed in the main part of the exercise). We will use <strong>Gene Ontology (GO)</strong> and <strong>Reactome</strong> databases.</p>
+<p>When performing this type of analysis, one has to keep in mind that the analysis is only as accurate as the annotation available for your organism. So, if working with non-model organisms which do have experimentally-validated annotations (computationally inferred), the results may not be fully reflecting the actual situation.</p>
+<p>There are many methods to approach the question as to which biological processes and pathways are over-represented amongst the differentially expressed genes, compared to all the genes included in the DE analysis. They use several types of statistical tests (e.g.&nbsp;hypergeometric test, Fisher’s exact test etc.), and many have been developed with microarray data in mind. Not all of these methods are appropriate for RNA-seq data, which as you remember from the lecture, exhibit length bias in power of detection of differentially expressed genes (i.e.&nbsp;longer genes, which tend to gather more reads, are more likely to be detected as <strong>differentially expressed</strong> than shorter genes, solely because of the length).</p>
+<p>We will use the R / Bioconductor package <strong>goseq</strong>, specifically designed to work with RNA-seq data. This package provides methods for performing Gene Ontology and pathway analysis of RNA-seq data, taking length bias into account.</p>
+<p>In this part, we will use the same data as in the main workflow. The starting point of the exercise is the file with results of the differential expression produced in the main part of the exercise.</p>
+<section id="preparation" class="level4" data-number="4.1.1">
+<h4 data-number="4.1.1" class="anchored" data-anchor-id="preparation"><span class="header-section-number">4.1.1</span> Preparation</h4>
+<p>Change to the <code>funannot</code> directory in your <code>rnaseq</code> directory.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> funannot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Copy this file <code>/sw/courses/ngsintro/rnaseq/bonus/funannot/annotate_de_results.R</code> to your <code>rnaseq/funannot</code> directory.</p>
+<p><i class="fa-solid fa-exclamation-circle" aria-label="exclamation-circle"></i> Remember to replace username.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb83"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /sw/courses/ngsintro/rnaseq/bonus/funannot/annotate_de_results.R /proj/naiss2024-22-212/nobackup/username/rnaseq/funannot/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>We need some annotation information, so we will copy this file <code>/sw/courses/ngsintro/rnaseq/main/reference/mm-biomart99-genes.txt.gz</code> to your <code>rnaseq/reference</code> directory.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb84"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /sw/courses/ngsintro/rnaseq/main/reference/mm-biomart99-genes.txt.gz /proj/naiss2024-22-212/nobackup/username/rnaseq/reference/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Then uncompress the file. <code>gunzip ../reference/mm-biomart99-genes.txt.gz</code></p>
+<p>Load R module and R packages</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load R/4.0.0</span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load R_packages/4.0.0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Run the functional annotation script from the linux terminal.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> annotate_de_results.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>It will fetch <strong>dge_results_full.Rds</strong> from <code>5_dge/</code> and annotation files from <code>reference/</code>. When completed, you should find a directory named <strong>funannot_results</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<pre class="output cell-code"><code>-rw-rw-r-- 1 user gXXXXXXX 44K Jan 22 23:37 go_down.txt
+-rw-rw-r-- 1 user gXXXXXXX 15K Jan 22 23:37 go_up.txt
+-rw-rw-r-- 1 user gXXXXXXX 800 Jan 22 23:37 reactome_down.txt
+-rw-rw-r-- 1 user gXXXXXXX 794 Jan 22 23:37 reactome_up.txt</code></pre>
+</div>
+</section>
+<section id="interpretation" class="level4" data-number="4.1.2">
+<h4 data-number="4.1.2" class="anchored" data-anchor-id="interpretation"><span class="header-section-number">4.1.2</span> Interpretation</h4>
+<p>The results are saved as tables in the directory <strong>funannot_results</strong>. There are four tables: GO terms for up-regulated genes (go_up.txt), GO terms for down-regulated genes (go_down.txt) and similarily, Reactome pathways for up-regulated genes (reactome_up.txt) and Reactome pathways for down-regulated genes (reactome_down.txt).</p>
+<p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> Take a quick look at some of these files.</p>
+<div class="cell" data-chunk.title="true">
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> go_up.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>category  over_represented_pvalue under_represented_pvalue  numDEInCat  numInCat  term  ontology
+GO:0030016  2.23312435908185e-45  1 78  176 myofibril CC
+GO:0061061  5.40265910772947e-45  1 135 543 muscle structure development  BP
+GO:0043292  1.59611882901076e-44  1 80  189 contractile fiber CC
+GO:0030017  3.08095203872545e-43  1 72  157 sarcomere CC
+GO:0044449  2.27198318958789e-41  1 73  170 contractile fiber part  CC
+GO:0031674  3.81511780088805e-32  1 53  117 I band  CC
+GO:0003012  7.14173605862631e-32  1 84  301 muscle system process BP
+GO:0007517  9.77789997472468e-32  1 88  329 muscle organ development  BP
+GO:0014706  1.99267634186987e-31  1 90  349 striated muscle tissue development  BP</code></pre>
+<p>The columns of the results tables are:</p>
+<div class="cell" data-chunk.title="true">
+<pre class="output cell-code"><code># go
+category over_represented_pvalue under_represented_pvalue numDEInCat numInCat term ontology
+# reactome
+category over_represented_pvalue under_represented_pvalue numDEInCat numInCat path_name</code></pre>
+</div>
+<p>You can view the tables in a text editor (<code>nano</code>,<code>gedit</code> etc), and try to find GO terms and pathways relevant to the experiment using a word search functionality. You could download these files to your computer and import them into a spreadsheet program like MS Excel or LibreOffice Calc.</p>
+<p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> Try to use <code>grep</code> to find a match using a keyword, say <strong>phosphorylation</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> go_down.txt <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"phosphorylation"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><i class="fa-solid fa-comments" aria-label="comments"></i> Have a look at the GO terms and see if you think the functional annotation reflects the biology of the experiments we have just analysed?</p>
+</section>
+</section>
+<section id="rna-seq-plots" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="rna-seq-plots"><span class="header-section-number">4.2</span> RNA-Seq plots</h3>
+<p>Creating high quality plots of RNA-seq analysis are most easily done using R. Depending on your proficiency in reading R code and using R, you can in this section either just call scripts from the command lines with a set of arguments or you can open the R script in a text editor, and run the code step by step from an interactive R session.</p>
+<p>Copy the R script files from the following directory: <code>/sw/courses/ngsintro/rnaseq/bonus/plots/</code> to your <code>plots</code> directory.</p>
+<p><i class="fa-solid fa-exclamation-circle" aria-label="exclamation-circle"></i> Remember to replace username.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb93"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /sw/courses/ngsintro/rnaseq/bonus/plots/<span class="pp">*</span>.R /proj/naiss2024-22-212/nobackup/username/rnaseq/plots/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>You should have the following files:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-chunk.title="true">
+<pre class="output cell-code"><code>-rw-rw-r-- 1 user gXXXXXXX 2.0K Sep 20  2016 gene.R
+-rw-rw-r-- 1 user gXXXXXXX  842 Sep 22  2016 heatmap.R
+-rw-rw-r-- 1 user gXXXXXXX  282 Sep 22  2016 ma.R
+-rw-rw-r-- 1 user gXXXXXXX  340 Sep 22  2016 pca.R
+-rw-rw-r-- 1 user gXXXXXXX  669 Sep 22  2016 volcano.R</code></pre>
+</div>
+<p>It is important that you load module R and R_packages.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load R/4.0.0</span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load R_packages/4.0.0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="pca-plot" class="level4" data-number="4.2.1">
+<h4 data-number="4.2.1" class="anchored" data-anchor-id="pca-plot"><span class="header-section-number">4.2.1</span> PCA plot</h4>
+<p>A popular way to visualise general patterns of gene expression in your data is to produce either PCA (Principal Component Analysis) or MDS (Multi Dimensional Scaling) plots. These methods aim at summarising the main patterns of expression in the data and display them on a two-dimensional space and still retain as much information as possible. To properly evaluate these kind of results is non-trivial, but in the case of RNA-seq data we often use them to get an idea of the difference in expression between treatments and also to get an idea of the similarity among replicates. If the plots shows clear clusters of samples that corresponds to treatment it is an indication of treatment actually having an effect on gene expression. If the distance between replicates from a single treatment is very large it suggests large variance within the treatment, something that will influence the detection of differentially expressed genes between treatments.</p>
+<p>Move to the <code>plots/</code> directory. Then run the <code>pca.R</code> script like below.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> pca.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This generates a file named <strong>pca.png</strong> in the <code>plots</code> folder. To view it, use <code>eog pca.png &amp;</code> or copy it to your local disk.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assets/pca.png" class="img-fluid figure-img" width="500"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><i class="fa-solid fa-comments" aria-label="comments"></i> Do samples cluster as expected? Are there any odd or mislabelled samples? Based on these results, would you expect to find a large number of significant DE genes?</p>
+</section>
+<section id="ma-plot" class="level4" data-number="4.2.2">
+<h4 data-number="4.2.2" class="anchored" data-anchor-id="ma-plot"><span class="header-section-number">4.2.2</span> MA plot</h4>
+<p>An MA-plot plots the mean expression and estimated log-fold-change for all genes in an analysis.</p>
+<p>Run the <code>ma.R</code> script in the <code>plots</code> directory.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> ma.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This generates a file named <strong>ma.png</strong> in the <code>plots</code> folder. To view it, use <code>eog ma.png &amp;</code> or copy it to your local disk.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assets/ma.png" class="img-fluid figure-img" width="500"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><i class="fa-solid fa-comments" aria-label="comments"></i> What do you think the blue dots represent?</p>
+</section>
+<section id="volcano-plot" class="level4" data-number="4.2.3">
+<h4 data-number="4.2.3" class="anchored" data-anchor-id="volcano-plot"><span class="header-section-number">4.2.3</span> Volcano plot</h4>
+<p>A related type of figure will instead plot fold change (on log2 scale) on the x-axis and -log10 p-value on the y-axis. Scaling like this means that genes with lowest p-value will be found at the top of the plot. In this example we will highlight (in blue) the genes that are significant (p-val 0.05 after correction for multiple testing).</p>
+<p>Run the script named <code>volcano.R</code> in the <code>plots</code> directory.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> volcano.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This generates a file named <strong>volcano.png</strong> in the <code>plots</code> folder. To view it, use <code>eog volcano.png &amp;</code> or copy it to your local disk.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assets/volcano.png" class="img-fluid figure-img" width="500"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><i class="fa-solid fa-comments" aria-label="comments"></i> Anything noteworthy about the patterns in the plot? Is there a general trend in the direction of change in gene expression as a consequence of the experiment?</p>
+</section>
+<section id="heatmap" class="level4" data-number="4.2.4">
+<h4 data-number="4.2.4" class="anchored" data-anchor-id="heatmap"><span class="header-section-number">4.2.4</span> Heatmap</h4>
+<p>Another popular plots for genome-wide expression patterns is heatmap for a set of genes. If you run the script called <code>heatmap.R</code>, it will extract the top 50 genes that have the lowest p-value in the experiment and create a heatmap from these. In addition to color-coding the expression levels over samples for the genes it also clusters the samples and genes based on inferred distance between them.</p>
+<p>Run the script named <code>heatmap.R</code> in the <code>plots</code> directory.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> heatmap.R</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This generates a file named <strong>heatmap.png</strong> in the <code>plots</code> folder. To view it, use <code>eog heatmap.png &amp;</code> or copy it to your local disk.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assets/heatmap.png" class="img-fluid figure-img" width="500"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> Compare this plot to a similar plot in the paper behind the data.</p>
+</section>
+</section>
+<section id="igv-browser" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="igv-browser"><span class="header-section-number">4.3</span> IGV browser</h3>
+<p>Data visualisation is important to be able to clearly convey results, but can also be very helpful as tool for identifying issues and note-worthy patterns in the data. In this part you will use the BAM files you created earlier in the RNA-seq lab and use <a href="http://software.broadinstitute.org/software/igv/">IGV</a> (Integrated Genomic Viewer) to visualise the mapped reads and genome annotations. In addition we will produce high quality plots of both the mapped read data and the results from differential gene expression.</p>
+<p>If you are already familiar with IGV you can load the mouse genome and at least one BAM file from each of the treatments that you created earlier. The functionality of IGV is the same as if you look at genomic data, but there are a few of the features that are more interesting to use for RNA-seq data.</p>
+<p>Integrated genomics viewer from Broad Institute is a nice graphical interface to view bam files and genome annotations. It also has tools to export data and some functionality to look at splicing patterns in RNA-seq data sets. Even though it allows for some basic types of analysis it should be used more as a nice way to look at your mapped data. Looking at data in this way might seem like a daunting approach as you can not check more than a few regions, but in in many cases it can reveal mapping patterns that are hard to catch with just summary statistics.</p>
+<p>For this tutorial you can chose to run IGV directly on your own computer <i class="fa-solid fa-desktop" aria-label="desktop"></i> or on Uppmax <i class="fa-solid fa-cloud" aria-label="cloud"></i>. If you chose to run it on your own computer you will have to download some of the BAM files (and the corresponding index files) from Uppmax. If you have not yet installed IGV you also have to <a href="http://software.broadinstitute.org/software/igv/download">download</a> the program.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Local <i class="fa-solid fa-desktop" aria-label="desktop"></i>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Copy two BAM files (one from each experimental group, for example; SRR3222409-19 and SRR3222412-19) and the associated index (<code>.bam.bai</code>) files to your computer by running the below command in a <strong>LOCAL</strong> terminal and <strong>NOT</strong> on Uppmax.</p>
+<p><i class="fa-solid fa-exclamation-circle" aria-label="exclamation-circle"></i> Remember to replace <strong>username</strong>.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb101"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> username@rackham.uppmax.uu.se:/proj/naiss2024-22-212/nobackup/username/rnaseq/3_mapping/SRR3222409-19.bam ./</span>
+<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> username@rackham.uppmax.uu.se:/proj/naiss2024-22-212/nobackup/username/rnaseq/3_mapping/SRR3222409-19.bam.bai ./</span>
+<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> username@rackham.uppmax.uu.se:/proj/naiss2024-22-212/nobackup/username/rnaseq/3_mapping/SRR3222412-19.bam ./</span>
+<span id="cb101-4"><a href="#cb101-4" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> username@rackham.uppmax.uu.se:/proj/naiss2024-22-212/nobackup/username/rnaseq/3_mapping/SRR3222412-19.bam.bai ./</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Alternatively, you can use an SFTP browser like <a href="https://filezilla-project.org/">Filezilla</a> or <a href="https://cyberduck.io/">Cyberduck</a> for a GUI interface. Windows users can also use the MobaXterm SFTP file browser to drag and drop.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Uppmax <i class="fa-solid fa-cloud" aria-label="cloud"></i>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For Linux and Mac users, Log in to Uppmax in a way so that the generated graphics are exported via the network to your screen. This will allow any graphical interface that you start on your compute node to be exported to your computer. However, as the graphics are exported over the network, it can be fairly slow in redrawing windows and the experience can be fairly poor.</p>
+<p>Login in to Uppmax with X-forwarding enabled:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-Y</span> username@rackham.uppmax.uu.se</span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-Y</span> computenode</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>An alternative method is to login through <a href="https://rackham-gui.uppmax.uu.se/main/">Rackham-GUI</a>. Once you log into this interface you will have a linux desktop interface in a browser window. This interface is running on the login node, so if you want to do any heavy lifting you need to login to your reserved compute node also here. This is done by opening a terminal in the running linux environment and log on to your compute node as before. NB! If you have no active reservation you have to do that first.</p>
+<p>Load necessary modules and start IGV</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load bioinfo-tools</span>
+<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load IGV/2.8.13</span>
+<span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a><span class="ex">igv-core</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This should start the IGV so that it is visible on your screen. If not please try to reconnect to Uppmax or consider running IGV locally as that is often the fastest and most convenient solution.</p>
+</div>
+</div>
+<p>Once we have the program running, you select the genome that you would like to load. Choose <code>Mouse mm10</code>. Note that if you are working with a genome that are not part of the available genomes in IGV, one can create genome files from within IGV. Please check the manual of IGV for more information on that.</p>
+<p>To open your BAM files, go to <code>File &gt; Load from file...</code> and select your BAM file and make sure that you have a <code>.bai</code> index for that BAM file in the same folder. You can repeat this and open multiple BAM files in the same window, which makes it easy to compare samples. Then select <strong>Chr19</strong> since we only have data for that one chromosome.</p>
+<p>For every file you open a number of panels are opened that visualise the data in different ways. The first panel named <strong>Coverage</strong> summarises the coverage of base-pairs in the window you have zoomed to. The second panel shows the reads as they are mapped to the genome. If one right click with the mouse on the read panel there many options to group and color reads. The bottom panel named Refseq genes shows the gene models from the annotation.</p>
+<p>To see actual reads you have to zoom in until the reads are drawn on screen. If you have a gene of interest you can also use the search box to directly go to that gene.</p>
+<p>Here is the list of top 30 differentially expressed genes on Chr19 ordered by absolute fold change. The adjusted p value is shown as padj, the average expression of the gene is shown as baseMean.</p>
+<pre><code>      ensembl_gene_id external_gene_name    baseMean log2FoldChange         padj   gene_biotype
+1  ENSMUSG00000117896           AA387883    59.94083     -2.7846887 1.943690e-17         lncRNA
+2  ENSMUSG00000024799             Tm7sf2   947.63388     -2.0385744 1.677171e-44 protein_coding
+3  ENSMUSG00000025172             Ankrd2    59.28633      1.7519899 1.261004e-08 protein_coding
+4  ENSMUSG00000049134               Nrap   220.59983      1.6993887 1.067822e-08 protein_coding
+5  ENSMUSG00000024935             Slc1a1    63.82987      1.6821634 1.652208e-09 protein_coding
+6  ENSMUSG00000037071               Scd1  6678.59981     -1.4473717 2.961722e-14 protein_coding
+7  ENSMUSG00000024665              Fads2  3269.79425     -1.4152150 3.134559e-29 protein_coding
+8  ENSMUSG00000024747            Aldh1a7    65.81205     -1.3544431 1.002599e-06 protein_coding
+9  ENSMUSG00000025216               Lbx1    26.03640      1.3356124 1.328372e-04 protein_coding
+10 ENSMUSG00000056290             Ms4a4b    23.27050      1.3299845 5.015617e-05 protein_coding
+11 ENSMUSG00000025221             Kcnip2    34.13675     -1.3165310 1.463369e-04 protein_coding
+12 ENSMUSG00000032648               Pygm  1129.47092      1.2452572 2.736196e-04 protein_coding
+13 ENSMUSG00000043639              Rbm20    51.36261      1.1816554 7.774718e-04 protein_coding
+14 ENSMUSG00000118032            Gm50147    39.53043     -1.1797580 3.794393e-04         lncRNA
+15 ENSMUSG00000036278            Macrod1   244.02353      1.0824415 4.984802e-07 protein_coding
+16 ENSMUSG00000025203               Scd2 44054.03491     -1.0504733 1.874759e-11 protein_coding
+17 ENSMUSG00000010663              Fads1  4074.38868     -1.0503935 1.470460e-18 protein_coding
+18 ENSMUSG00000060675             Plaat3  5284.36470     -1.0462725 2.114719e-13 protein_coding
+19 ENSMUSG00000016496              Cd274    35.91671      1.0175443 5.632932e-03 protein_coding
+20 ENSMUSG00000024673              Ms4a1    25.80723      1.0130356 6.294275e-03 protein_coding
+21 ENSMUSG00000032773              Chrm1    76.11444      0.9262597 7.665519e-04 protein_coding
+22 ENSMUSG00000067279            Ppp1r3c   162.14777      0.9018589 3.672613e-04 protein_coding
+23 ENSMUSG00000025013               Tll2   108.20333     -0.9012959 1.249858e-03 protein_coding
+24 ENSMUSG00000006457              Actn3  1322.01659      0.8988003 1.352229e-02 protein_coding
+25 ENSMUSG00000075289             Carns1  1003.91026     -0.8819988 4.982949e-10 protein_coding
+26 ENSMUSG00000075010           AW112010    56.94897      0.8128744 4.027595e-02         lncRNA
+27 ENSMUSG00000025227            Mfsd13a   107.55434     -0.8126676 1.107050e-03 protein_coding
+28 ENSMUSG00000067242               Lgi1   506.42577     -0.7842945 2.570293e-06 protein_coding
+29 ENSMUSG00000024812               Tjp2  1478.96029     -0.7627251 9.004722e-07 protein_coding
+30 ENSMUSG00000047368            Abhd17b  1562.07350     -0.7625545 5.750875e-07 protein_coding</code></pre>
+<p>Have a look at few of the interesting genes on Chr19 using the <code>external_gene_name</code> identifier. Look into gene <strong>Tm7sf2</strong> or <strong>Ankrd2</strong>. You might have to right-click and change option to <strong>Squished</strong> to see more reads.</p>
+<p><i class="fa-solid fa-comments" aria-label="comments"></i> Do you expect these genes to be differentially expressed?</p>
+<p>To see some genes with large number of reads, see <strong>Scd1</strong> or <strong>Scd2</strong>.</p>
+<p><img src="assets/igv-tm7sf2.png" class="img-fluid"> IGV view of gene <strong>Tm7sf2</strong> across 6 samples.</p>
+<p><img src="assets/igv-ankrd2.png" class="img-fluid"></p>
+<p>IGV view of gene <strong>Ankrd2</strong> across 6 samples.</p>
+<p><img src="assets/igv-scd1.png" class="img-fluid"></p>
+<p>IGV view of gene <strong>Scd1</strong> across 6 samples.</p>
+<p>For more detailed information on the splice reads you can instead of just looking at the splice panel right click on the read panel and select <strong>Sashimi plots</strong>. This will open a new window showing in an easy readable fashion how reads are spliced in mapping and you will also be able to see that there are differences in between what locations reads are spliced. This hence gives some indication on the isoform usage of the gene.</p>
+<p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> Do you think the reads are from a stranded or unstranded library?</p>
+<p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> One can visualise all genes in a given pathway using the gene list option under <strong>Regions</strong> in the menu. If you need hints for how to proceed, see <a href="https://software.broadinstitute.org/software/igv/multilocus_view#GeneLists">Gene List tutorial</a> at Broad. But, we only have data from one chromosome, so this is not that useful now.</p>
+</section>
+</section>
+<section id="sbatch" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="sbatch"><span class="header-section-number">5</span> sbatch</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You are not required to run anything practically in this section. This is just to read and understand.</p>
+</div>
+</div>
+<p>We have throughout this tutorial written bash scripts and run them from the terminal directly. Remember that we are not running on the login node. We have pre-allocated resources, then logged in to a compute node to run tasks. This is called working <strong>interactively</strong> on Uppmax. This is fine for tutorials and testing purposes. But, if you were to actually work on Uppmax, you would follow a slightly different approach.</p>
+<p>The standard workflow on Uppmax is to login to the login node and then submit tasks as jobs to something called a Slurm queue. We haven’t used this option, because it involves waiting for an unpredictable amount of time for your submitted job to execute. In this section, we will take a look at how to modify a standard bash script to work with Slurm job submission.</p>
+<p>This is how our standard bash script for mapping looks like:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb105-3"><a href="#cb105-3" aria-hidden="true" tabindex="-1"></a><span class="co"># load modules</span></span>
+<span id="cb105-4"><a href="#cb105-4" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load bioinfo-tools</span>
+<span id="cb105-5"><a href="#cb105-5" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load HISAT2/2.1.0</span>
+<span id="cb105-6"><a href="#cb105-6" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load samtools/1.8</span>
+<span id="cb105-7"><a href="#cb105-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb105-8"><a href="#cb105-8" aria-hidden="true" tabindex="-1"></a><span class="co"># create output filename prefix</span></span>
+<span id="cb105-9"><a href="#cb105-9" aria-hidden="true" tabindex="-1"></a><span class="va">prefix</span><span class="op">=</span><span class="va">$(</span> <span class="fu">basename</span> <span class="st">"</span><span class="va">$1</span><span class="st">"</span> <span class="kw">|</span> <span class="fu">sed</span> <span class="at">-E</span> <span class="st">'s/_.+$//'</span> <span class="va">)</span></span>
+<span id="cb105-10"><a href="#cb105-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb105-11"><a href="#cb105-11" aria-hidden="true" tabindex="-1"></a><span class="ex">hisat2</span> <span class="dt">\</span></span>
+<span id="cb105-12"><a href="#cb105-12" aria-hidden="true" tabindex="-1"></a>-p 8 <span class="dt">\</span></span>
+<span id="cb105-13"><a href="#cb105-13" aria-hidden="true" tabindex="-1"></a>-x ../reference/mouse_chr19_hisat2/mouse_chr19_hisat2 <span class="dt">\</span></span>
+<span id="cb105-14"><a href="#cb105-14" aria-hidden="true" tabindex="-1"></a>--summary-file <span class="st">"</span><span class="va">${prefix}</span><span class="st">.summary"</span> <span class="dt">\</span></span>
+<span id="cb105-15"><a href="#cb105-15" aria-hidden="true" tabindex="-1"></a>-1 <span class="va">$1</span> <span class="dt">\</span></span>
+<span id="cb105-16"><a href="#cb105-16" aria-hidden="true" tabindex="-1"></a>-2 <span class="va">$2</span> <span class="kw">|</span> <span class="ex">samtools</span> sort <span class="at">-O</span> BAM <span class="op">&gt;</span> <span class="st">"</span><span class="va">${prefix}</span><span class="st">.bam"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We add <code>SBATCH</code> commands to the above script. The new script looks like this:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb106"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -A naiss2024-22-212</span></span>
+<span id="cb106-3"><a href="#cb106-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -p core</span></span>
+<span id="cb106-4"><a href="#cb106-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -n 8</span></span>
+<span id="cb106-5"><a href="#cb106-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -t 3:00:00</span></span>
+<span id="cb106-6"><a href="#cb106-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -J hisat2-align</span></span>
+<span id="cb106-7"><a href="#cb106-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb106-8"><a href="#cb106-8" aria-hidden="true" tabindex="-1"></a><span class="co"># load modules</span></span>
+<span id="cb106-9"><a href="#cb106-9" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load bioinfo-tools</span>
+<span id="cb106-10"><a href="#cb106-10" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load HISAT2/2.1.0</span>
+<span id="cb106-11"><a href="#cb106-11" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load samtools/1.8</span>
+<span id="cb106-12"><a href="#cb106-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb106-13"><a href="#cb106-13" aria-hidden="true" tabindex="-1"></a><span class="co"># create output filename prefix</span></span>
+<span id="cb106-14"><a href="#cb106-14" aria-hidden="true" tabindex="-1"></a><span class="va">prefix</span><span class="op">=</span><span class="va">$(</span> <span class="fu">basename</span> <span class="st">"</span><span class="va">$1</span><span class="st">"</span> <span class="kw">|</span> <span class="fu">sed</span> <span class="at">-E</span> <span class="st">"s/_.+$//"</span> <span class="va">)</span></span>
+<span id="cb106-15"><a href="#cb106-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb106-16"><a href="#cb106-16" aria-hidden="true" tabindex="-1"></a><span class="ex">hisat2</span> <span class="dt">\</span></span>
+<span id="cb106-17"><a href="#cb106-17" aria-hidden="true" tabindex="-1"></a> <span class="at">-p</span> 8 <span class="dt">\</span></span>
+<span id="cb106-18"><a href="#cb106-18" aria-hidden="true" tabindex="-1"></a> <span class="at">-x</span> ../reference/mouse_chr19_hisat2/mouse_chr19_hisat2 <span class="dt">\</span></span>
+<span id="cb106-19"><a href="#cb106-19" aria-hidden="true" tabindex="-1"></a> <span class="at">--summary-file</span> <span class="st">"</span><span class="va">${prefix}</span><span class="st">-summary.txt"</span> <span class="dt">\</span></span>
+<span id="cb106-20"><a href="#cb106-20" aria-hidden="true" tabindex="-1"></a> <span class="at">-1</span> <span class="va">$1</span> <span class="dt">\</span></span>
+<span id="cb106-21"><a href="#cb106-21" aria-hidden="true" tabindex="-1"></a> <span class="at">-2</span> <span class="va">$2</span> <span class="kw">|</span> <span class="ex">samtools</span> sort <span class="at">-O</span> BAM <span class="op">&gt;</span> <span class="st">"</span><span class="va">${prefix}</span><span class="st">.bam"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>The <code>SBATCH</code> commands in the above script is specifying the account name to use resources from, the required number of cores, the time required for the job and a job name.</p>
+<p><i class="fa-solid fa-lightbulb" aria-label="lightbulb"></i> If you run this as a normal bash script like this <code>./hisat2_align.sh ...</code> or <code>bash ./hisat2_align.sh ...</code>, the <code>SBATCH</code> comments have no effect (they are treated as comments) and the contents of the script will immediately start executing. But if you run this as script as <code>sbatch ./hisat2_align.sh ...</code>, the script is submitted as a job to the Uppmax Slurm queue. In this case, the <code>SBATCH</code> lines are interpreted and used by Slurm. At some point, your submitted job will reach the top of the queue and then the script will start to be executed.</p>
+<p>You can check your jobs in the queue by running the following command.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="ex">jobinfo</span> <span class="at">-u</span> user</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>And this gives a list like this:</p>
+<div class="cell" data-chunk.title="true">
+<pre class="output cell-code"><code>CLUSTER: rackham
+Running jobs:
+   JOBID PARTITION   NAME USER        ACCOUNT ST          START_TIME  TIME_LEFT  NODES CPUS NODELIST(REASON)
+ 5006225      core (null) user       gXXXXXXX  R 2018-09-12T14:00:03      44:31      1    1 r169
+ 5006229      core (null) user       gXXXXXXX  R 2018-09-12T14:00:03      44:31      1    1 r169
+ 5006352      core (null) user       gXXXXXXX  R 2018-09-12T14:04:14      48:42      1    1 r178
+ 5006355      core (null) user       gXXXXXXX  R 2018-09-12T14:05:17      49:45      1    1 r169
+ 5006356      core (null) user       gXXXXXXX  R 2018-09-12T14:06:08      50:36      1    5 r179</code></pre>
+</div>
+<p>If the job is pending, then you will see <code>PD</code> in the <code>ST</code> column. If your job is running, you should see <code>R</code>. Once your job starts running, you will see a file named <code>slurm-XXXX.out</code> in the directory in which you submitted the job. This is the <strong>standard-out</strong> from that job. ie; everything that you would normally see printed to your screen when running locally, is printed to this file when running as a job. Once the job is over, one would inspect the slurm output file.</p>
+<div class="cell" data-chunk.title="true">
+<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> slurm-XXXX.out</span>
+<span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> slurm-XXXX.out</span>
+<span id="cb109-3"><a href="#cb109-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> slurm-XXXX.out</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="nextflow" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="nextflow"><span class="header-section-number">6</span> Nextflow</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You are not required to run anything practically in this section. This is just to read and understand.</p>
+</div>
+</div>
+<p>Everything you have done today and more is easily done using structured pipelines. <a href="https://www.nextflow.io/">Nextflow</a> is a popular framework for creating bioinformatic pipelines and <a href="https://nf-co.re/">nf-core</a> is a collection of curated analyses pipelines. Here, we will discuss the steps for analysing our current dataset using the <a href="https://nf-co.re/rnaseq">nf-core rnaseq</a> pipeline for bulk RNA-Seq. The nf-core website and pipeline specific pages are good sources of information on what the pipeline does and what parameters can be changed.</p>
+<p><img src="https://raw.githubusercontent.com/nf-core/rnaseq/3.10.1/docs/images/nf-core-rnaseq_metro_map_grey.png" class="img-fluid"></p>
+<p>We need a <strong>samplesheet.csv</strong> to define our samples. In this case, the full size samples are used. For single-end reads, <strong>fastq_2</strong> column is left empty.</p>
+<pre><code>sample,fastq_1,fastq_2,strandedness
+ko_1,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222409_1.fq.gz,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222409_2.fq.gz,unstranded
+ko_2,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222410_1.fq.gz,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222410_2.fq.gz,unstranded
+ko_3,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222411_1.fq.gz,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222411_2.fq.gz,unstranded
+wt_1,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222412_1.fq.gz,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222412_2.fq.gz,unstranded
+wt_2,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222413_1.fq.gz,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222413_2.fq.gz,unstranded
+wt_3,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222414_1.fq.gz,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222414_2.fq.gz,unstranded</code></pre>
+<p>We need a <strong>params.config</strong> file to define parameters such as input, output, genome, annotation etc.</p>
+<pre><code>params.input = "samplesheet.csv"
+params.outdir = "results"
+params.aligner = "star_salmon"
+
+params.fasta = "/sw/data/igenomes/Mus_musculus/Ensembl/GRCm38/Sequence/WholeGenomeFasta/genome.fa"
+params.gtf = "/sw/data/igenomes/Mus_musculus/Ensembl/GRCm38/Annotation/Genes/genes.gtf"
+gene_bed = "/sw/data/igenomes/Mus_musculus/Ensembl/GRCm38/Annotation/Genes/genes.bed"
+star_index = "/sw/data/igenomes/Mus_musculus/Ensembl/GRCm38/Sequence/STARIndex/version2.7.x/"</code></pre>
+<p>And lastly we have a <strong>nextflow.sh</strong> which will be our bash script for launching the job.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb112"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-3"><a href="#cb112-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -A naiss2024-22-212</span></span>
+<span id="cb112-4"><a href="#cb112-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -p core</span></span>
+<span id="cb112-5"><a href="#cb112-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -n 1</span></span>
+<span id="cb112-6"><a href="#cb112-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -t 4:00:00</span></span>
+<span id="cb112-7"><a href="#cb112-7" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -J nf-core</span></span>
+<span id="cb112-8"><a href="#cb112-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-9"><a href="#cb112-9" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load bioinfo-tools</span>
+<span id="cb112-10"><a href="#cb112-10" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load Nextflow/21.10.6</span>
+<span id="cb112-11"><a href="#cb112-11" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load nf-core/2.1</span>
+<span id="cb112-12"><a href="#cb112-12" aria-hidden="true" tabindex="-1"></a><span class="va">NXF_HOME</span><span class="op">=</span>.</span>
+<span id="cb112-13"><a href="#cb112-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-14"><a href="#cb112-14" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/rnaseq <span class="at">-r</span> 3.7 <span class="at">-c</span> params.config <span class="at">-profile</span> uppmax <span class="at">--project</span> naiss2024-22-212 <span class="at">-resume</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Notice that we use <code>-profile uppmax</code> since this is run on Uppmax. The job is then submitted by simply running <code>sbatch nextflow.sh</code>.</p>
+<p>The slurm output from this job looks like this:</p>
+<pre><code>Note that NXF_HOME is set to $HOME/.nextflow
+Please change NXF_HOME to a place in your project directory (export NXF_HOME=yourprojectfolder)
+
+N E X T F L O W  ~  version 21.10.6
+Launching `nf-core/rnaseq` [happy_sammet] - revision: e0dfce9af5 [3.7]
+
+
+------------------------------------------------------
+                                        ,--./,-.
+        ___     __   __   __   ___     /,-._.--~'
+  |\ | |__  __ /  ` /  \ |__) |__         }  {
+  | \| |       \__, \__/ |  \ |___     \`-._,-`-,
+                                        `._,._,'
+  nf-core/rnaseq v3.7
+------------------------------------------------------
+Core Nextflow options
+  revision                  : 3.7
+  runName                   : happy_sammet
+  containerEngine           : singularity
+  launchDir                 : /crex/course_data/ngsintro/rnaseq/main_full/nextflow
+  workDir                   : /crex/course_data/ngsintro/rnaseq/main_full/nextflow/work
+  projectDir                : ./assets/nf-core/rnaseq
+  userName                  : royfranc
+  profile                   : uppmax
+  configFiles               : /crex/course_data/ngsintro/rnaseq/main_full/nextflow/assets/nf-core/rnaseq/nextflow.config, /crex/course_data/ngsintro/rnaseq/main_full/nextflow/params.config
+
+Input/output options
+  input                     : samplesheet.csv
+  outdir                    : results
+
+Reference genome options
+  fasta                     : /sw/data/igenomes/Mus_musculus/Ensembl/GRCm38/Sequence/WholeGenomeFasta/genome.fa
+  gtf                       : /sw/data/igenomes/Mus_musculus/Ensembl/GRCm38/Annotation/Genes/genes.gtf
+  save_reference            : true
+  igenomes_base             : /sw/data/igenomes/
+
+Institutional config options
+  config_profile_description: UPPMAX (Rackham) cluster profile provided by nf-core/configs.
+  config_profile_contact    : Phil Ewels (@ewels)
+  config_profile_url        : https://www.uppmax.uu.se/
+
+Max job request options
+  max_cpus                  : 20
+  max_memory                : 970 GB
+  max_time                  : 10d
+
+Generic options
+  tracedir                  : null/pipeline_info
+
+!! Only displaying parameters that differ from the pipeline defaults !!
+------------------------------------------------------
+If you use nf-core/rnaseq for your analysis please cite:
+
+* The pipeline
+  https://doi.org/10.5281/zenodo.1400710
+
+* The nf-core framework
+  https://doi.org/10.1038/s41587-020-0439-x
+
+* Software dependencies
+  https://github.com/nf-core/rnaseq/blob/master/CITATIONS.md
+------------------------------------------------------
+[-        ] process &gt; NFCORE_RNASEQ:RNASEQ:PREPAR... -
+
+[-        ] process &gt; NFCORE_RNASEQ:RNASEQ:PREPAR... -
+[-        ] process &gt; NFCORE_RNASEQ:RNASEQ:PREPAR... -
+[-        ] process &gt; NFCORE_RNASEQ:RNASEQ:PREPAR... -
+[-        ] process &gt; NFCORE_RNASEQ:RNASEQ:PREPAR... -
+[-        ] process &gt; NFCORE_RNASEQ:RNASEQ:PREPAR... -
+[-        ] process &gt; NFCORE_RNASEQ:RNASEQ:INPUT_... -
+[-        ] process &gt; NFCORE_RNASEQ:RNASEQ:CAT_FASTQ -
+[-        ] process &gt; NFCORE_RNASEQ:RNASEQ:FASTQC... -
+[-        ] process &gt; NFCORE_RNASEQ:RNASEQ:FASTQC... -
+[-        ] process &gt; NFCORE_RNASEQ:RNASEQ:ALIGN_... -
+[-        ] process &gt; NFCORE_RNASEQ:RNASEQ:ALIGN_... -
+
+...
+skipping many lines here
+...
+
+[3d/d294eb] process &gt; NFCORE_RNASEQ:RNASEQ:CUSTOM... [100%] 1 of 1 ✔
+[de/a03037] process &gt; NFCORE_RNASEQ:RNASEQ:MULTIQ... [100%] 1 of 1 ✔
+-[nf-core/rnaseq] 6/6 samples passed STAR 5% mapped threshold:
+    90.41%: ko_2
+    89.8%: ko_3
+    87.15%: ko_1
+    89.7%: wt_2
+    90.29%: wt_3
+    91.02%: wt_1
+    ..see pipeline reports for full list
+-
+-[nf-core/rnaseq] Pipeline completed successfully-
+Completed at: 13-Jan-2023 14:39:08
+Duration    : 1h 45m 30s
+CPU hours   : 90.4
+Succeeded   : 207</code></pre>
+<p>The output <code>results</code> directory looks like this:</p>
+<pre><code>results/
+├── fastqc
+├── genome
+│   ├── genes.bed
+│   ├── genome.fa.fai
+│   ├── genome.fa.sizes
+│   ├── genome_genes.gtf
+│   ├── genome.transcripts.fa
+│   ├── index
+│   └── rsem
+├── multiqc
+│   └── star_salmon
+├── pipeline_info
+│   ├── samplesheet.valid.csv
+│   └── software_versions.yml
+├── star_salmon
+│   ├── bigwig
+│   ├── deseq2_qc
+│   ├── dupradar
+│   ├── featurecounts
+│   ├── ko_1
+│   ├── ko_1.markdup.sorted.bam
+│   ├── ko_1.markdup.sorted.bam.bai
+│   ├── ko_2
+│   ├── ko_2.markdup.sorted.bam
+│   ├── ko_2.markdup.sorted.bam.bai
+│   ├── ko_3
+│   ├── ko_3.markdup.sorted.bam
+│   ├── ko_3.markdup.sorted.bam.bai
+│   ├── log
+│   ├── picard_metrics
+│   ├── preseq
+│   ├── qualimap
+│   ├── rseqc
+│   ├── salmon.merged.gene_counts_length_scaled.rds
+│   ├── salmon.merged.gene_counts_length_scaled.tsv
+│   ├── salmon.merged.gene_counts.rds
+│   ├── salmon.merged.gene_counts_scaled.rds
+│   ├── salmon.merged.gene_counts_scaled.tsv
+│   ├── salmon.merged.gene_counts.tsv
+│   ├── salmon.merged.gene_tpm.tsv
+│   ├── salmon.merged.transcript_counts.rds
+│   ├── salmon.merged.transcript_counts.tsv
+│   ├── salmon.merged.transcript_tpm.tsv
+│   ├── salmon_tx2gene.tsv
+│   ├── samtools_stats
+│   ├── stringtie
+│   ├── wt_1
+│   ├── wt_1.markdup.sorted.bam
+│   ├── wt_1.markdup.sorted.bam.bai
+│   ├── wt_2
+│   ├── wt_2.markdup.sorted.bam
+│   ├── wt_2.markdup.sorted.bam.bai
+│   ├── wt_3
+│   ├── wt_3.markdup.sorted.bam
+│   └── wt_3.markdup.sorted.bam.bai
+└── trimgalore</code></pre>
+<p>This pipeline takes you from raw reads to counts including read QC, mapping, mapping QC and quantification as well as a complete collated overview of all steps as a MultiQC report (<code>multiqc/star_salmon/multiqc_report.html</code>). The <code>star_salmon/salmon.merged.gene_counts.tsv</code> is the counts file that you would use for downstream differential gene expression using DESeq2.</p>
+<p>For standard analyses steps, it is recommended to use a pipeline as the tools are up-to-date and the analyses steps are reproducible using exactly the same versions of tools.</p>
+</section>
+<section id="simons-analysis" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="simons-analysis"><span class="header-section-number">7</span> Simon’s analysis</h2>
+<p>We had <a href="https://www.babraham.ac.uk/science-services/bioinformatics/simon-andrews">Simon Andrews</a> from the Babraham institute with us on one of the workshops and he did his own exploration into the dataset from this paper using his tool <a href="http://www.bioinformatics.babraham.ac.uk/projects/seqmonk/">SeqMonk</a>. It’s an excellent read and highly recommended. His report is available <a href="simon-report/validating_knockout.html">here</a>.</p>
+</section>
+<section id="conclusion" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">8</span> Conclusion</h2>
+<p>We hope that you enjoyed getting your hands wet working on some real-ish data. In this tutorial, we have covered the most important data processing steps that may be enough when the libraries are good. If not, there are plenty of troubleshooting procedures to try before discarding the data. And once the count table are in place, the biostatistics and data mining begins. There are no well-defined solutions here, all depends on the experiment and questions to be asked, but we strongly advise learning R. Not only to use the specifically designed statistical packages to analyse NGS count data, but also to be able to handle the data and results as well as to generate high-quality plots. There are many available tools and well-written tutorials with examples to learn from.</p>
+<p>For those interested in RNA-Seq analysis, SciLifeLab offers a more advanced course in RNA-Seq analysis each semester. For more information, see <a href="https://www.scilifelab.se/events/">SciLifeLab events</a>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>2024 <a href="https://nbis.se">NBIS</a> | <a href="https://choosealicense.com/licenses/gpl-3.0/">GPL-3 License</a></p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Published with <a href="https://quarto.org/">Quarto</a> v1.4.549
+</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
