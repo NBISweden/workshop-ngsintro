@@ -47,8 +47,7 @@ ssh -Y r292
 
 If the list is empty you can run the allocation command again and it should be in the list:
 
-```{r}
-#| class-output: bash
+```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0("salloc -A ", upid, " -t 03:30:00 -p core -n 1 --no-shell &"))
 ```
 
