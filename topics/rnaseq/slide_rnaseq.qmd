@@ -50,9 +50,18 @@ upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
 
 ## Workflow
 
-![](assets/rnaseq_workflow.svg){width="55%"}
+::: {.columns}
+::: {.column width="70%"}
 
-<img src="assets/sequence.jpg" style="height:280px; position:fixed; right:0px; bottom:0px; margin-right: 100px; margin-bottom: 130px; border-radius:4px;">
+![](assets/rnaseq_workflow.svg)
+
+:::
+::: {.column width="30%"}
+
+![](assets/sequence.jpg)
+
+:::
+:::
 
 @conesa2016survey
 
@@ -68,7 +77,7 @@ upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
 - Map reads back to assembled transcriptome
 
 ::: {.small}
-[Trinity](https://github.com/trinityrnaseq/trinityrnaseq/wiki), [SOAPdenovo-Trans](http://soap.genomics.org.cn/SOAPdenovo-Trans.html), [Oases](https://www.ebi.ac.uk/~zerbino/oases/), [rnaSPAdes](http://cab.spbu.ru/software/rnaspades/), @hsieh2019effect, @wang2017comprehensive
+[Trinity](https://github.com/trinityrnaseq/trinityrnaseq/wiki), @hsieh2019effect, @wang2017comprehensive
 :::
 
 :::
@@ -79,7 +88,7 @@ upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
 ::: {.column}
 - Biological replicates: 6 - 12 @schurch2016many
 - Sample size estimation @hart2013calculating
-- Power analysis [@zhao2018rnaseqsamplesize RNASeqPower web app](https://r8844d6ec.serve.scilifelab.se/)
+- Power analysis [[rnaseq-power web app](https://rnaseq-power.serve.scilifelab.se/)]{.small}, @zhao2018rnaseqsamplesize
 - Balanced design to avoid batch effects
 - RIN values have strong effect @gallego2014rna
 :::
@@ -117,11 +126,11 @@ upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
 
 - 80% of the RNA in a cell is ribosomal RNA (rRNA)
 - rRNA can be eliminated using polyA selection or rRNA depletion 
-- PolyA selection mostly captures only protein-coding genes / mRNA but gives cleaner results
-- Depletion of rRNA is the solution if it's important to retain all RNA species
+  - PolyA selection mostly captures only protein-coding genes / mRNA but gives cleaner results
+  - Depletion of rRNA is the solution if it's important to retain all RNA species
 - smallRNAs are purified through size selection
 - PCR amplification may be needed for low quantity input (See section PCR duplicates)
-- Almost always use stranded (directional) libraries @zhao2015comparison, @levin2010comprehensive
+- Use stranded (directional) libraries @zhao2015comparison, @levin2010comprehensive
   - Accurately identify sense/antisense transcript
   - Resolve overlapping genes
 - Exome capture
@@ -135,11 +144,11 @@ upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
 - Short reads vs long reads (Illumina/PacBio)
 - Read length @chhangawala2015impact
   - Greater than 50bp does not improve DGE
-  - Longer reads better for isoforms
+  - Longer reads are better for isoforms
 - Pooling samples
 - Sequencing depth (Coverage / Reads per sample)
 - Single-end reads (Cheaper?)
-- Almost always use paired-end reads
+- Use paired-end reads
   - Increased mappable reads
   - Increased power in assemblies
   - Better for structural variation and isoforms
@@ -166,11 +175,11 @@ upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
 - Adapter content
 - Kmer content
 
-<img src="assets/qc.jpg" style="height:300px; position:fixed; right:0px; bottom: 0px; margin-right: 100px; margin-bottom: 300px;">
+<img src="assets/qc.jpg" style="height:400px; position:fixed; right:0px; bottom: 0px; margin-right: 100px; margin-bottom: 300px;">
 
 [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/), [MultiQC](http://multiqc.info/)
 
-https://sequencing.qcfail.com/
+<https://sequencing.qcfail.com/>
 
 ![](assets/qcfail.jpg){width="90%"}
 
@@ -319,7 +328,6 @@ CAAATTAAATTTAGCCAGAGGCGCACAACATACGACCTCTAAAAAAGGTGCTGTAACATG
 
 ```
 #!genome-build GRCz10
-#!genebuild-last-updated 2016-11
 4       ensembl_havana  gene    6732    52059   .       -       .       gene_id "ENSDARG00000104632"; gene_version "2"; gene_name "rerg"; gene_source "ensembl_havana"; gene_biotype "protein_coding"; havana_gene "OTTDARG00000044080"; havana_gene_version "1";
 ```
 
@@ -547,24 +555,9 @@ ENSG00000000457    56    75    104   79    157   205   183   178   153
 ENSG00000000460    33    27    23    19    27    42    69    44    40
 ```
 
-:::: {.columns}
-::: {.column}
-
-- Pairwise correlation between samples must be high (>0.9)
-
 ![](assets/correlation.png){width="50%"}
 
-:::
-::: {.column}
-
-- Count QC using RNASeqComp
-
-![](assets/rnaseqcomp.gif){width="60%"}
-
-[RNASeqComp](https://bioconductor.org/packages/release/bioc/html/rnaseqcomp.html), @teng2016benchmark
-
-:::
-::::
+- Pairwise correlation between samples must be high (>0.9)
 
 ## MultiQC
 
@@ -582,7 +575,7 @@ ENSG00000000460    33    27    23    19    27    42    69    44    40
 - For own analysis, plots etc, use TPM
 - Other solutions: spike-ins/house-keeping genes
 
-<img src="assets/distribution.jpg" style="height:280px; position:fixed; right:0px; bottom: 0px; margin-right: 70px; margin-bottom: 140px;">
+<img src="assets/distribution.jpg" style="height:400px; position:fixed; right:0px; bottom: 0px; margin-right: 70px; margin-bottom: 140px;">
 
 @dillies2013comprehensive, @evans2018selecting, @wagner2012measurement
 
@@ -678,12 +671,44 @@ add_markers(p1, color = ~patient)
 
 - Find confounding effects as surrogate variables ([SVA](http://bioconductor.org/packages/release/bioc/html/sva.html))
 - Model known batches in the LM/GLM model
-- Correct known batches (ComBat from SVA)(Only if you are desperate! @zindler2020simulating)
+- Correct known batches (ComBat from SVA)(Can overcorrect! @zindler2020simulating)
 - Interactively evaluate batch effects and correction ([BatchQC](http://bioconductor.org/packages/release/bioc/html/BatchQC.html)) @manimaran2016batchqc 
 
 ## Differential expression
 
+:::: {.columns}
+::: {.column width="70%"}
+
 ![](assets/dge.png){width="90%"}
+
+:::
+::: {.column width="30%"}
+
+::: {.fragment}
+
+```{r}
+#| eval: false
+#| echo: false
+
+dfr <- data.frame(
+  sample=c(1,2,3,1,2,3,1,2,3,1,2,3,1,2,3,1,2,3),
+  value=c(12,8,13,22,18,25,54,47,48,50,48,41,1,0,0,2,1,1),
+  gene=c("A","A","A","A","A","A","B","B","B","B","B","B","C","C","C","C","C","C"),
+  group=c("Group 1","Group 1","Group 1","Group 2","Group 2","Group 2","Group 1","Group 1","Group 1","Group 2","Group 2","Group 2","Group 1","Group 1","Group 1","Group 2","Group 2","Group 2")
+)
+
+ggplot(dfr,aes(gene,value,col=group))+
+  geom_point(position=position_dodge(width=0.8),size = 3)+
+  scale_color_manual(values=c("#8DD3C7","#FB8072"))+
+  theme_minimal(base_size=15)+
+  theme(legend.position="top")
+```
+
+![](assets/dge-scatter.png){width="90%"}
+
+:::
+:::
+:::
 
 - Univariate testing gene-by-gene
 - More descriptive, less predictive
@@ -843,7 +868,7 @@ plotCounts(d1, "ENSG00000000003", intgroup = "type")
 
 ![](assets/go.jpg){width="50%"}
 
-<img src="assets/systembio.png" style="height:250px; position:fixed; right:0px; bottom:0px; margin-right: 70px; margin-bottom: 380px;">
+<img src="assets/systembio.png" style="height:350px; position:fixed; right:0px; bottom:0px; margin-right: 70px; margin-bottom: 300px;">
 
 ## Functional analysis • Kegg
 
@@ -851,7 +876,7 @@ plotCounts(d1, "ENSG00000000003", intgroup = "type")
 
 ![](assets/kegg.png){width="80%"}
 
-[DAVID](https://david.ncifcrf.gov/), [clusterProfiler](https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html), [ClueGO](http://apps.cytoscape.org/apps/cluego), [ErmineJ](https://erminej.msl.ubc.ca/), [pathview](https://bioconductor.org/packages/release/bioc/html/pathview.html)
+[Webgestalt](https://www.webgestalt.org/), [EnrichR](https://maayanlab.cloud/Enrichr/), [clusterProfiler](https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html), [ClueGO](http://apps.cytoscape.org/apps/cluego), [pathview](https://bioconductor.org/packages/release/bioc/html/pathview.html)
 
 ## Summary
 
@@ -868,8 +893,7 @@ plotCounts(d1, "ENSG00000000003", intgroup = "type")
 ## Further learning
 
 - Griffith lab [RNA-Seq using HiSat & StringTie tutorial](https://github.com/griffithlab/rnaseq_tutorial/wiki)
-- HBC Training [DGE using DeSeq2 tutorial](https://github.com/hbctraining/Intro-to-R-with-DGE)
-- Hemberg lab [scRNA-Seq tutorial](http://hemberg-lab.github.io/scRNA.seq.course/index.html)
+- HBC Training [DGE using DeSeq2 tutorial](https://hbctraining.github.io/main/)
 - [RNA-Seq Blog](https://www.rna-seqblog.com/)
 - SciLifeLab [courses](https://www.scilifelab.se/education/courses%26training)
 

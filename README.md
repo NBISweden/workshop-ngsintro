@@ -36,13 +36,13 @@ Clone the repo if not already done. Make sure you are standing in the repo direc
 To build the complete site,
 
 ```
-docker run --platform linux/amd64 --rm -u 1000:1000 -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-ngsintro
+docker run --platform linux/amd64 --rm -u 1000:1000 -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-ngsintro:latest
 ```
 
 To build a single file (for example `index.qmd`),
 
 ```
-docker run --platform linux/amd64 --rm -u 1000:1000 -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-ngsintro quarto render index.qmd
+docker run --platform linux/amd64 --rm -u 1000:1000 -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-ngsintro:latest quarto render index.qmd
 ```
 
 :exclamation: Output files are for local preview only. Do not push any rendered .html files or intermediates.
