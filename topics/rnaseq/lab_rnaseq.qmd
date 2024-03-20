@@ -65,9 +65,9 @@ command
 
 ## Data description
 
-The data used in this exercise is from the paper: **Poitelon, Yannick, *et al*. YAP and TAZ control peripheral myelination and the expression of laminin receptors in Schwann cells. [Nature neuroscience 19.7 (2016): 879](https://www.nature.com/articles/nn.4316)**. In this study, YAP and TAZ genes were knocked-down in Schwann cells to study myelination, using the sciatic nerve in mice as a model.
+The data used in this exercise is from the paper: **Poitelon, Yannick, *et al*. YAP and TAZ control peripheral myelination and the expression of laminin receptors in Schwann cells. [Nature neuroscience 19.7 (2016): 879](https://www.nature.com/articles/nn.4316)**. In this study, YAP and TAZ genes were knocked-down in Schwann cells to study myelination, using mice as a model.
 
-Myelination is essential for nervous system function. Schwann cells interact with neurons and the basal lamina to myelinate axons using receptors, signals and transcription factors. Hippo pathway is a conserved pathway involved in cell contact inhibition, and it acts to promote cell proliferation and inhibits apoptosis. The pathway integrates mechanical signals (cell polarity, mechanotransduction, membrane tension) and gene expression response. In addition to its role in organ size control, the Hippo pathway has been implicated in tumorigenesis, for example its deregulation occurs in a broad range of human carcinomas. Transcription co-activators YAP and TAZ are two major downstream effectors of the Hippo pathway, and have redundant roles in transcriptional activation.
+Myelination is essential for nervous system function. Schwann cells are a type of glial cell that interact with neurons and the basal lamina to myelinate axons. Myelinated axons transfer signals up to 10x faster. Hippo pathway is a conserved pathway involved in cell contact inhibition, and it acts to promote cell proliferation and inhibits apoptosis. Transcription co-activators YAP and TAZ are two major downstream effectors of the Hippo pathway, and have redundant roles in transcriptional activation. TAZ and YAP genes were knocked-down to study their effect on neurons.
 
 The material for RNA-seq was collected from 2 conditions (**Wt** and **KO**), each with 3 biological replicates.
 
@@ -380,7 +380,7 @@ Move into the `reference` directory if not already there. Load module HISAT2. Re
 
 ```{sh,eval=FALSE}
 module load bioinfo-tools
-module load HISAT2/2.1.0
+module load HISAT2/2.2.1
 ```
 
 {{< fa lightbulb >}} To search for the tool or other versions of a tool, use `module spider hisat`.
@@ -392,7 +392,7 @@ Create a new bash script in your `scripts` directory named `hisat2_index.sh` and
 
 # load module
 module load bioinfo-tools
-module load HISAT2/2.1.0
+module load HISAT2/2.2.1
 
 hisat2-build \
   -p 1 \
@@ -477,8 +477,8 @@ But, we will not run it as above. We will make some more changes to it. We want 
 #!/bin/bash
 
 module load bioinfo-tools
-module load HISAT2/2.1.0
-module load samtools/1.8
+module load HISAT2/2.2.1
+module load samtools/1.19
 
 # get output filename prefix
 prefix=$( basename $1 | sed -E 's/_.+$//' )
@@ -545,7 +545,7 @@ ls -l
 The `.bam` file contains the alignment of all reads to the reference genome in binary format. BAM files are not human readable directly. To view a BAM file in text format, you can use `samtools view` functionality.
 
 ```{sh,eval=FALSE}
-module load samtools/1.8
+module load samtools/1.19
 samtools view SRR3222409-19.bam | head
 ```
 
@@ -586,7 +586,7 @@ Next, we need to index these BAM files. Indexing creates `.bam.bai` files which 
 {{< fa clipboard-list >}} Index all BAM files. Write a for-loop to index all BAM files using the command `samtools index file.bam`.
 
 ```{sh,eval=FALSE}
-module load samtools/1.8
+module load samtools/1.19
 
 for i in *.bam
   do
@@ -725,7 +725,7 @@ Below is the script that we will use:
 
 # load modules
 module load bioinfo-tools
-module load subread/2.0.0
+module load subread/2.0.3
 
 featureCounts \
   -a "../reference/Mus_musculus.GRCm38.99.gtf" \
@@ -798,7 +798,7 @@ And run this in the terminal.
 
 ```{sh,eval=FALSE}
 module load bioinfo-tools
-module load MultiQC/1.11
+module load MultiQC/1.12
 
 multiqc --interactive ../
 ```
@@ -848,8 +848,8 @@ The easiest way to perform differential expression is to use one of the statisti
 Move to the `5_dge` directory and load R modules for use.  
 
 ```{sh,eval=FALSE}
-module load R/4.0.0
-module load R_packages/4.0.0
+module load R/4.3.1
+module load R_packages/4.3.1
 ```
 
 Use `pwd` to check if you are standing in the correct directory. Copy the following file to the `5_dge` directory: ``r paste0(path_data,"/main/5_dge/dge.R")``
@@ -943,8 +943,8 @@ Then uncompress the file. `gunzip ../reference/mm-biomart99-genes.txt.gz`
 Load R module and R packages
 
 ```{sh,eval=FALSE}
-module load R/4.0.0
-module load R_packages/4.0.0
+module load R/4.3.1
+module load R_packages/4.3.1
 ```
 
 Run the functional annotation script from the linux terminal.
@@ -1037,8 +1037,8 @@ ls -l
 It is important that you load module R and R_packages.
 
 ```{sh,eval=FALSE}
-module load R/4.0.0
-module load R_packages/4.0.0
+module load R/4.3.1
+module load R_packages/4.3.1
 ```
 
 #### PCA plot
@@ -1160,7 +1160,7 @@ Load necessary modules and start IGV
 
 ```{sh,eval=FALSE}
 module load bioinfo-tools
-module load IGV/2.8.13
+module load IGV/2.16.0
 igv-core
 ```
 
@@ -1251,8 +1251,8 @@ This is how our standard bash script for mapping looks like:
 
 # load modules
 module load bioinfo-tools
-module load HISAT2/2.1.0
-module load samtools/1.8
+module load HISAT2/2.2.1
+module load samtools/1.19
 
 # create output filename prefix
 prefix=$( basename "$1" | sed -E 's/_.+$//' )
@@ -1277,8 +1277,8 @@ cat(paste0('#!/bin/bash
 
 # load modules
 module load bioinfo-tools
-module load HISAT2/2.1.0
-module load samtools/1.8
+module load HISAT2/2.2.1
+module load samtools/1.19
 
 # create output filename prefix
 prefix=$( basename "$1" | sed -E "s/_.+$//" )
@@ -1370,8 +1370,8 @@ cat(paste0('#!/bin/bash
 #SBATCH -J nf-core
 
 module load bioinfo-tools
-module load Nextflow/21.10.6
-module load nf-core/2.1
+module load Nextflow/22.10.1
+module load nf-core/2.6
 NXF_HOME=.
 
 nextflow run nf-core/rnaseq -r 3.7 -c params.config -profile uppmax --project ',upid,' -resume'
@@ -1542,6 +1542,8 @@ results/
 │   └── wt_3.markdup.sorted.bam.bai
 └── trimgalore
 ```
+
+If you want to look into the nextflow results yourself, you can check them out here: `/crex/course_data/ngsintro/rnaseq/main_full/nextflow`.
 
 This pipeline takes you from raw reads to counts including read QC, mapping, mapping QC and quantification as well as a complete collated overview of all steps as a MultiQC report (`multiqc/star_salmon/multiqc_report.html`). The `star_salmon/salmon.merged.gene_counts.tsv` is the counts file that you would use for downstream differential gene expression using DESeq2.
 
