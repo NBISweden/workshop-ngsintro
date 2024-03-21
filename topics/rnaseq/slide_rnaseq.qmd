@@ -51,7 +51,7 @@ upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
 ## Workflow
 
 ::: {.columns}
-::: {.column width="65%"}
+::: {.column width="60%"}
 
 ![](assets/rnaseq_workflow.svg)
 
@@ -94,7 +94,7 @@ upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
 :::
 
 ::: {.column}
-![](assets/batch-effect.svg){width="80%"}
+![](assets/batch-effect.svg){width="75%"}
 :::
 ::::
 
@@ -109,9 +109,12 @@ upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
 
 :::: {.columns}
 ::: {.column}
-![](assets/rnaseq_library_prep.svg){width="90%"}
+
+![](assets/rnaseq_library_prep.svg){width="85%"}
+
 :::
 ::: {.column}
+
 ![](assets/rnaseq_read_type.svg)  
 
 - polyA selection / Ribosomal RNA depletion
@@ -163,6 +166,9 @@ upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
 
 ## Read QC
 
+::: {.columns}
+::: {.column width="65%"}
+
 - Number of reads
 - Per base sequence quality
 - Per sequence quality score
@@ -175,13 +181,17 @@ upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
 - Adapter content
 - Kmer content
 
-<img src="assets/qc.jpg" style="height:400px; position:fixed; right:0px; bottom: 0px; margin-right: 100px; margin-bottom: 300px;">
+[FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/), [MultiQC](http://multiqc.info/), <https://sequencing.qcfail.com/>
 
-[FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/), [MultiQC](http://multiqc.info/)
+![](assets/qcfail.jpg){width="60%"}
 
-<https://sequencing.qcfail.com/>
+:::
+::: {.column width="35%"}
 
-![](assets/qcfail.jpg){width="90%"}
+![](assets/qc.jpg)
+
+:::
+:::
 
 ## FastQC
 
@@ -275,6 +285,8 @@ Poor quality
 
 ![](assets/compare-aligners-speed.png){width="90%"}
 
+@baruzzo2017simulation
+
 :::
 ::: {.column width="60%"}
 
@@ -284,8 +296,6 @@ Poor quality
 
 :::
 ::::
-
-@baruzzo2017simulation
 
 ::: {.notes}
 
