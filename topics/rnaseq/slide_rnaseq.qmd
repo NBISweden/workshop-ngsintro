@@ -51,12 +51,12 @@ upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
 ## Workflow
 
 ::: {.columns}
-::: {.column width="70%"}
+::: {.column width="65%"}
 
 ![](assets/rnaseq_workflow.svg)
 
 :::
-::: {.column width="30%"}
+::: {.column width="35%"}
 
 ![](assets/sequence.jpg)
 
@@ -205,28 +205,28 @@ Poor quality
 ## Read QC • PBSQ, PSQS
 
 **Per base sequence quality**  
-![](assets/pbsq.jpg){width="60%"}
+![](assets/pbsq.jpg){width="50%"}
 
 **Per sequence quality scores**  
-![](assets/psqs.jpg){width="60%"}
+![](assets/psqs.jpg){width="50%"}
 
 ::: {.notes}
 
 ## Read QC • PBSC, PSGC
 
 **Per base sequence content**  
-![](assets/pbsc.jpg){width="60%"}
+![](assets/pbsc.jpg){width="50%"}
 
 **Per sequence GC content**  
-![](assets/psgc.jpg){width="60%"}
+![](assets/psgc.jpg){width="50%"}
 
 ## Read QC • SDL, AC
 
 **Sequence duplication level**  
-![](assets/sdl.jpg){width="60%"}
+![](assets/sdl.jpg){width="50%"}
 
 **Adapter content**  
-![](assets/ac.jpg){width="60%"}
+![](assets/ac.jpg){width="50%"}
 
 :::
 
@@ -303,7 +303,7 @@ Poor quality
 
 :::
 
-## Mapping
+##
 
 - Reads (FASTQ)
 
@@ -321,7 +321,6 @@ NCATCGTGGTATTTGCACATCTTTTCTTATCAAATAAAAAGTTTAACCTACTCAGTTATGCGCATACGTTTTTTGATGGC
 ```
 >1 dna:chromosome chromosome:GRCz10:1:1:58871917:1 REF
 GATCTTAAACATTTATTCCCCCTGCAAACATTTTCAATCATTACATTGTCATTTCCCCTC
-CAAATTAAATTTAGCCAGAGGCGCACAACATACGACCTCTAAAAAAGGTGCTGTAACATG
 ```
 
 - Annotation (GTF/GFF)
@@ -557,13 +556,16 @@ ENSG00000000460    33    27    23    19    27    42    69    44    40
 
 ![](assets/correlation.png){width="50%"}
 
-- Pairwise correlation between samples must be high (>0.9)
+Pairwise correlation between samples must be high (>0.9)
 
 ## MultiQC
 
-[![](assets/multiqc.png)](https://multiqc.info/examples/rna-seq/multiqc_report.html)
+[![](assets/multiqc.png){width="90%"}](https://multiqc.info/examples/rna-seq/multiqc_report.html)
 
-## Normalisation
+## Normalization
+
+::: {.columns}
+::: {.column width="70%"}
 
 - Control for Sequencing depth, compositional bias and more
 - Median of Ratios (DESeq2) and TMM (edgeR) perform the best
@@ -575,9 +577,15 @@ ENSG00000000460    33    27    23    19    27    42    69    44    40
 - For own analysis, plots etc, use TPM
 - Other solutions: spike-ins/house-keeping genes
 
-<img src="assets/distribution.jpg" style="height:400px; position:fixed; right:0px; bottom: 0px; margin-right: 70px; margin-bottom: 140px;">
-
 @dillies2013comprehensive, @evans2018selecting, @wagner2012measurement
+
+:::
+::: {.column width="30%"}
+
+![](assets/distribution.jpg)
+
+:::
+:::
 
 ## Exploratory
 
@@ -677,12 +685,15 @@ add_markers(p1, color = ~patient)
 ## Differential expression
 
 :::: {.columns}
-::: {.column width="70%"}
+::: {.column width="65%"}
 
-![](assets/dge.png){width="90%"}
+![](assets/dge.png)
+
+- Univariate testing gene-by-gene
+- More descriptive, less predictive
 
 :::
-::: {.column width="30%"}
+::: {.column width="35%"}
 
 ::: {.fragment}
 
@@ -704,14 +715,11 @@ ggplot(dfr,aes(gene,value,col=group))+
   theme(legend.position="top")
 ```
 
-![](assets/dge-scatter.png){width="90%"}
+![](assets/dge-scatter.png){width="80%"}
 
 :::
 :::
 :::
-
-- Univariate testing gene-by-gene
-- More descriptive, less predictive
 
 ::: {.notes}
 
@@ -807,7 +815,7 @@ low counts [2]     : 0, 0%
 (mean count < 3)
 ```
 
-## DGE
+##
 
 :::: {.columns}
 ::: {.column}
@@ -860,15 +868,24 @@ plotCounts(d1, "ENSG00000000003", intgroup = "type")
 :::
 ::::
 
-## Functional analysis • GO
+## Functional analysis • Gene Ontology
+
+::: {.columns}
+::: {.column width="70%"}
 
 - Gene set analysis (GSA)
 - Gene set enrichment analysis (GSEA)
 - Gene ontology / Reactome databases
 
-![](assets/go.jpg){width="50%"}
+![](assets/go.jpg){width="70%"}
 
-<img src="assets/systembio.png" style="height:350px; position:fixed; right:0px; bottom:0px; margin-right: 70px; margin-bottom: 300px;">
+:::
+::: {.column width="30%"}
+
+![](assets/systembio.png)
+
+:::
+:::
 
 ## Functional analysis • Kegg
 
@@ -892,12 +909,21 @@ plotCounts(d1, "ENSG00000000003", intgroup = "type")
 
 ## Further learning
 
+::: {.columns}
+::: {.column width="75%"}
+
 - Griffith lab [RNA-Seq using HiSat & StringTie tutorial](https://github.com/griffithlab/rnaseq_tutorial/wiki)
 - HBC Training [DGE using DeSeq2 tutorial](https://hbctraining.github.io/main/)
 - [RNA-Seq Blog](https://www.rna-seqblog.com/)
 - SciLifeLab [courses](https://www.scilifelab.se/education/courses%26training)
 
-<img src="assets/help.png" style="height:250px; position:fixed; right:0px; bottom:0px; margin-right: 35px; margin-bottom: 40px;">
+:::
+::: {.column width="25%"}
+
+![](assets/help.png)
+
+:::
+:::
 
 ## {background-image="/assets/images/cover.jpg"}
 
