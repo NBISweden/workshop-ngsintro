@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -A snic2021-22-750
+#SBATCH -A naiss2024-22-212
 #SBATCH -p core
 #SBATCH -n 1
 #SBATCH -t 2:00:00
