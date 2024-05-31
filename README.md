@@ -47,6 +47,12 @@ docker run --platform linux/amd64 --rm -u 1000:1000 -v ${PWD}:/qmd ghcr.io/nbisw
 
 :exclamation: Output files are for local preview only. Do not push any rendered .html files or intermediates.
 
+## Convert HTML slides to PDF
+
+```
+docker run --platform=linux/amd64 -v $PWD:/work astefanutti/decktape https://nbisweden.github.io/workshop-ngsintro/2403/topics/rnaseq/slide_rnaseq.html /work/slide_rnaseq.pdf
+```
+
 ## Repo organisation
 
 The source material is located on the *master* branch (default). The rendered material is located on the *gh-pages* branch. One only needs to update source materials in *master*. Changes pushed to the *master* branch is automatically rendered to the *gh-pages* branch using github actions.

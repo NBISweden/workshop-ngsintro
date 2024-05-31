@@ -79,7 +79,7 @@ s <- readxl::read_xlsx("schedule.xlsx") %>%
     # add links to topic
     dplyr::mutate(topic = ifelse(is.na(link_slide), topic, paste0("<span>", topic, "<a class='marker' href='", link_slide, "'>", fa("fas fa-file-powerpoint"), "</a></span>"))) %>%
     dplyr::mutate(topic = ifelse(is.na(link_lab), topic, paste0("<span>", topic, "<a class='marker' href='", link_lab, "'>", fa("fas fa-file-lines"), "</a></span>"))) %>%
-    dplyr::mutate(topic = ifelse(is.na(link_youtube), topic, paste0("<span>", topic, "<a class='marker' href='", link_youtube, "'>", fa("fab fa-youtube"),"</a></span>"))) %>%
+    dplyr::mutate(topic = ifelse(is.na(link_youtube), topic, paste0("<span>", topic, "<a class='marker' href='", link_youtube, "' target=”_blank”>", fa("fab fa-youtube"),"</a></span>"))) %>%
     dplyr::mutate(time = paste0(start_time, " - ", end_time)) %>%
     dplyr::mutate(instructor = ifelse(is.na(instructor), "", instructor)) %>%
     dplyr::mutate(assistant = ifelse(is.na(assistant), "", assistant)) %>%
