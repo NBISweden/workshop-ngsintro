@@ -1,0 +1,4 @@
+/.luarc.json
+/.quarto/
+.DS_Store
+.Rhistory
