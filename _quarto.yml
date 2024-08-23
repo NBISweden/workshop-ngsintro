@@ -119,7 +119,7 @@ nsc_project: naiss2024-22-212
 
 # location options are linkoping, lund, umea, uppsala or online. For rendering the info page.
 # one or more separated by commas or semicolon. online doesn't display any location info.
-location: uppsala
+location: linkoping
 assistants:
  - "AJ: Anna Johansson"
  - "BV: Björn Viklund"
