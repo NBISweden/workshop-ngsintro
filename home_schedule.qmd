@@ -74,7 +74,7 @@ s <- readxl::read_xlsx("schedule.xlsx") %>%
     dplyr::mutate(date = paste0("<p style='font-size:110%;padding-top:10px;padding-bottom:5px;'><span style='font-weight:bold;'><span class='marker'>",fa("fas fa-calendar"),"</span>", date, "</span>", "<span style='color:white;border-radius:4px;padding-right:4px;padding-left:4px;background:", color_primary, ";margin-left:9px;margin-right:7px;'>", day, "</span>", "<span class='marker'>", fa("fas fa-location-dot"),"</span>", room, "</p>")) %>%
     # style topic
     dplyr::mutate(topic = ifelse(tolower(topic) == "break" | tolower(topic) == "lunch", paste0("<span class='topic'>", topic, "</span>"), topic)) %>%
-    dplyr::mutate(topic = ifelse("dinner",grepl(tolower(topic)), paste0("<span class='topic-dinner'>", topic, "</span>"), topic)) %>%
+    dplyr::mutate(topic = ifelse(grepl("dinner",tolower(topic)), paste0("<span class='topic-dinner'>", topic, "</span>"), topic)) %>%
     dplyr::mutate(topic = ifelse(!startsWith(topic, "<span"), paste0("<span style='margin-right:5px;'>", topic, "</span>"), topic)) %>%
     # add links to topic
     dplyr::mutate(topic = ifelse(is.na(link_slide), topic, paste0("<span>", topic, "<a class='marker' href='", link_slide, "'>", fa("fas fa-file-powerpoint"), "</a></span>"))) %>%
