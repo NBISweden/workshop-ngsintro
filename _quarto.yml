@@ -114,8 +114,8 @@ filters:
   - reveal-logo
 
 # used site-wide wherever uppmax project ids are used
-uppmax_project: naiss2024-22-212
-nsc_project: naiss2024-22-212
+uppmax_project: naiss2024-22-1375
+nsc_project: naiss2024-22-1375
 
 # location options are linkoping, lund, umea, uppsala or online. For rendering the info page.
 # one or more separated by commas or semicolon. online doesn't display any location info.
@@ -150,7 +150,6 @@ assistants:
  - "PP: Paul Pyl"
  - "RF: Roy Francis"
  - "SD: Sebastian DiLorenzo"
- - "VH: Vincent van Hoef"
  - "VK: Varsith Konda"
  - "YL: Yuan Li"
 schedule_message: "Coffee breaks are planned for approximately 10:00 and 14:30 every day."
