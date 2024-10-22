@@ -43,11 +43,11 @@ Whole genome sequencing (WGS) is a comprehensive method for analyzing entire gen
 
 ## General guide
 
-* You will work on the computing cluster Rackham at UPPMAX
+* You will work on the computing cluster Dardel at PCD
 * If you change the node you are working on you will need to reload the tool modules.
 * Please type commands in the terminal instead of copying and pasting them which often result in formatting errors.
 * Use tab completion.
-* In paths, please replace `username` with your actual UPPMAX username.
+* In paths, please replace `username` with your actual PDC username.
 * In commands, please replace `parameter` with the correct parameter, for example your input file name, output file name, directory name, etc.
 * A line starting with `#` is a comment
 * Running a command without parameters will often return a help message on how to run the command.
@@ -78,9 +78,9 @@ In this workshop we will detect genetic variants in the region chr2:136545000-13
 
 For those interested in the details of the genetic bases for lactose tolerance, please read the first three pages of [Lactose intolerance: diagnosis, genetic, and clinical factors](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3401057/pdf/ceg-5-113.pdf) by Mattar et al. The variant rs4988235 is here referred to as LCT-13910C>T.  
 
-## Data folder on UPPMAX {#Data -}  
+## Data folder {#Data -}  
 
-All input data for this exercise is located in this folder on Rackham:
+All input data for this exercise is located in this folder on Dardel:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0(datadir))
@@ -101,15 +101,15 @@ cat(paste0(refdir))
 # Preparations {-}
 
 ## Laptop {#preparelaptop -}
-This lab will be done completely on UPPMAX and the instructions assume that you connect via ThinLinc.
-However, if you prefer to connect to UPPMAX via ssh you can instead copy some of the resulting files to your laptop and work on them there. , install IGV, and run all the IGV steps on your laptop.
+This lab will be done completely on Dardel and the instructions assume that you connect via ThinLinc.
+However, if you prefer to connect to Dardel via ssh you can instead copy some of the resulting files to your laptop and work on them there. , install IGV, and run all the IGV steps on your laptop.
 If so, please create a local workspace on your laptop, for example a folder called *ngsworkflow* on your desktop. You need to have write permission in this folder.
-If you connect to UPPMAX via ThinLinc you don't have to crete a local workspace.
+If you connect to Dardel via ThinLinc you don't have to create a local workspace.
 
-## UPPMAX {-}
-### Connect to UPPMAX {-}
+## Dardel {-}
+### Connect to Dardel {-}
 
-During this lab it is best to connect to UPPMAX with ThinLinc, which gives you a graphical remote desktop. Instructions for this is available at [**Connecting to UPPMAX**](topics/other/lab_connect.html). Please follow the instructions in section 1.2 Remote desktop connection.
+During this lab it is best to connect to Dardel with ThinLinc, which gives you a graphical remote desktop. Instructions for this is available at [**Connecting to Dardel**](topics/other/lab_connect.html). Please follow the instructions in section 1.2 Remote desktop connection.
 
 ### Logon to a node {-}
 
@@ -125,13 +125,13 @@ If no jobs are listed you should allocate a job for this lab. If you already hav
 Use this code to allocate a job on day 1 of variant-calling:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('salloc -A ',upid,' -t 04:00:00 -p core -n 1 --no-shell'))
+cat(paste0('salloc -A ',upid,' -t 04:00:00 -p shared --mem=6Gb --no-shell'))
 ```
 
 Use this code to allocate a job on day 2 of variant-calling:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('salloc -A ',upid,' -t 04:00:00 -p core -n 1 --no-shell'))
+cat(paste0('salloc -A ',upid,' -t 04:00:00 -p shared --mem=6Gb --no-shell'))
 ```
 
 Once your job allocation has been granted (should not take long) please check the allocation again using:
@@ -147,14 +147,14 @@ You should now see that you have an active job allocation. The node name for you
 ssh -Y nodename
 ```
 
-### Workspace on UPPMAX {-}
+### Workspace on Dardel {-}
 
-You should work in your folder under the course’s nobackup folder, just like you have done during the previous labs.
+You should work in your folder under the course’s project folder, just like you have done during the previous labs.
 
 Start by going there using this command:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('cd /proj/',upid,'/nobackup/username'))
+cat(paste0('cd /cfs/klemming/projects/supr/',upid,'/username/ngsworkflow'))
 ```
 
 Where `username` should be replaced with your real username.
@@ -168,7 +168,7 @@ cd ngsworkflow
 Make sure you are located in
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('/proj/',upid,'/nobackup/username/ngsworkflow'))
+cat(paste0('/cfs/klemming/projects/supr/',upid,'/username/ngsworkflow'))
 ```
 
 for the rest of this lab.
@@ -195,7 +195,7 @@ cat(paste0('ln -s ',fastqdir,'/HG00101_2.fq\n'))
 
 ### Accessing programs {#Accessingprograms -}
 
-Load the modules that are needed during this workshop. Remember that these modules must be loaded every time you login to Rackham, or when you connect to a new compute node.  
+Load the modules that are needed during this workshop. Remember that these modules must be loaded every time you login to Dardel, or when you connect to a new compute node.  
 First load the bioinfo-tools module:
 
 ```bash
@@ -205,14 +205,12 @@ module load bioinfo-tools
 This makes it possible to load the individual programs:
 
 ```bash
-module load FastQC/0.11.8
 module load bwa/0.7.17
-module load samtools/1.10
-module load GATK/4.1.4.1
+module load samtools/1.20
+module load GATK/4.3.0.0
 ```
-
+  
 Although you don't have to specify which versions of the tools to use, it is recommended to do so for reproducibility if you want to rerun the  exact same analyses later.
-When loading the module GATK/4.1.4.1 you will get a warning message about the fact that GATK commands have been updated since the previous version of GATK. This is fine and you don't have to do anything about it.
 
 ## Index the genome {-}
 
@@ -227,7 +225,7 @@ pwd
 Should return
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('/proj/',upid,'/nobackup/username/ngsworkflow'))
+cat(paste0('/cfs/klemming/projects/supr/',upid,'/username/ngsworkflow'))
 ```
 
 Generate BWA index files:
@@ -245,7 +243,7 @@ samtools faidx human_g1k_v37_chr2.fasta
 Check to see what file(s) were created using `ls -lrt`. Then Generate a GATK sequence dictionary:
 
 ```bash
-gatk --java-options -Xmx7g CreateSequenceDictionary -R human_g1k_v37_chr2.fasta -O human_g1k_v37_chr2.dict
+gatk --java-options -Xmx5g CreateSequenceDictionary -R human_g1k_v37_chr2.fasta -O human_g1k_v37_chr2.dict
 ```
 
 Again, check what file(s) were created using `ls -lrt`.
@@ -273,9 +271,9 @@ The code for adding this read group is<br/>
 When running BWA for another sample later on you have to replace *HG00097* in the read group with the new sample name. To learn more about read groups  please read [this article](https://gatk.broadinstitute.org/hc/en-us/articles/360035890671-Read-groups) at GATK forum.
 :::
 
-You also need to specify how many threads the program should use (should be the same as the number of cores you have access to and is defined by the code `-t 1` below) and what reference genome file to use. The output from `BWA` should be parsed to `samtools sort`, which sorts the sam file according to chromosome position and then converts the sam file to the binary bam format. Finally, use a file redirect `>` so that the output ends up in a file and not on your screen.
+You also need to specify how many threads the program should use, which should be the same as the number of cores you have access. As we have asked for --mem=6Gb, which corresponds to 14 cores on Dardel, we can specify `-t 14` below. You also need to specify what reference genome file to use. The output from `BWA` should be parsed to `samtools sort`, which sorts the sam file according to chromosome position and then converts the sam file to the binary bam format. Finally, use a file redirect `>` so that the output ends up in a file and not on your screen.
 
-First make sure that you are standing in the workspace you created on UPPMAX for this lab:
+First make sure that you are standing in the workspace you created on Dardel for this lab:
 
 ```bash
 pwd
@@ -283,7 +281,7 @@ pwd
 Should return
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('/proj/',upid,'/nobackup/username/ngsworkflow'))
+cat(paste0('/cfs/klemming/projects/supr/',upid,'/username/ngsworkflow'))
 ```
 
 Then use this command to align the reads, add the read group, sort the reads and write them to a bam file:
@@ -291,7 +289,7 @@ Then use this command to align the reads, add the read group, sort the reads and
 ```bash
 bwa mem \
 -R "@RG\tID:readgroup_HG00097\tPU:lanex_flowcellx\tSM:HG00097\tLB:libraryx\tPL:illumina" \
--t 1 human_g1k_v37_chr2.fasta HG00097_1.fq HG00097_2.fq | samtools sort > HG00097.bam
+-t 14 human_g1k_v37_chr2.fasta HG00097_1.fq HG00097_2.fq | samtools sort > HG00097.bam
 ```
 
 Please check that the expected output file was generated and that it has content using `ls -lrt`.
@@ -329,9 +327,9 @@ Please have a look at the [Sequence Alignment/Map Format Specification](https://
 
 ### Check bam in IGV
 
-To use IGV on UPPMAX we recommend that you are connected via ThinLinc.
+To use IGV on Dardel we recommend that you are connected via ThinLinc.
 Alternatively you can install IGV on your local computer, download the files using scp, and look at them locally.
-The instructions below assume that you have logged in to UPPMAX via ThinLinc.\
+The instructions below assume that you have logged in to Dardel via ThinLinc.\
 First use pwd to check if you are standing in the correct directory:
 
 ```bash
@@ -341,13 +339,13 @@ pwd
 Should return
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('/proj/',upid,'/nobackup/username/ngsworkflow'))
+cat(paste0('/cfs/klemming/projects/supr/',upid,'/username/ngsworkflow'))
 ```
 
 To start IGV please type this in the terminal:
 
 ```bash
-module load IGV/2.8.13
+module load IGV
 igv.sh &
 ```
 
@@ -376,13 +374,13 @@ pwd
 Should return
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('/proj/',upid,'/nobackup/username/ngsworkflow'))
+cat(paste0('/cfs/klemming/projects/supr/',upid,'/username/ngsworkflow'))
 ```
 
 Then run:
 
 ```bash
-gatk --java-options -Xmx7g HaplotypeCaller \
+gatk --java-options -Xmx4g HaplotypeCaller \
 -R human_g1k_v37_chr2.fasta \
 -I HG00097.bam \
 -O HG00097.vcf
@@ -448,7 +446,7 @@ For more detailed information about vcf files please have a look at [The Variant
 
 ### Check vcf in IGV {#vcfinigv}
 
-We assume that you have logged in to UPPMAX via ThinLinc.\
+We assume that you have logged in to Dardel via ThinLinc.\
 If you have closed IGV please open it again as described above.\
 Load the file HG00097.vcf into tracks window of IGV as you did with the HG00097.bam file earlier (load the bam file as well if it is not already loaded). You will now see all the variants called in HG00097.\
 You can view variants in the *LCT* gene by typing the gene name in the search box, and you can look specifically at the variant at position chr2:136545844 by typing that position in the search box.\
@@ -471,7 +469,7 @@ If you don't have time to complete all steps we have made precomputed intermedia
 ## BWA mem {#bwa_joint}
 
 Run `BWA mem` for all three samples in the data set. `BWA mem` should be run exactly as above, but with the new sample names.
-You also need to adjust the read group information so that it matches each new sample name. <br/>
+You also need to adjust the *read group* information so that it matches each new sample name. <br/>
 
 First use pwd to check if you are standing in the correct directory:
 
@@ -482,14 +480,14 @@ pwd
 Should return
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('/proj/',upid,'/nobackup/username/ngsworkflow'))
+cat(paste0('/cfs/klemming/projects/supr/',upid,'/username/ngsworkflow'))
 ```
 
 Then use this command for every sample to align the reads, add the read group, sort the reads and write them to a bam file:
 
 ```bash
 bwa mem -R "@RG\tID:readgroup_<sample>\tPU:lanex_flowcellx\tSM:<sample>\tLB:libraryx\tPL:illumina" \
--t 1 human_g1k_v37_chr2.fasta sample_1.fq sample_2.fq | samtools sort > sample.bam
+-t 14 human_g1k_v37_chr2.fasta sample_1.fq sample_2.fq | samtools sort > sample.bam
 ```
 
 Where `sample` should be replaced with the real samples name, i.e. HG00097, HG00100 and HG00101.
@@ -521,13 +519,13 @@ pwd
 Should return
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('/proj/',upid,'/nobackup/username/ngsworkflow'))
+cat(paste0('/cfs/klemming/projects/supr/',upid,'/username/ngsworkflow'))
 ```
 
 Then:
 
 ```bash
-gatk --java-options -Xmx7g HaplotypeCaller \
+gatk --java-options -Xmx4g HaplotypeCaller \
 -R human_g1k_v37_chr2.fasta \
 -ERC GVCF \
 -I sample.bam \
@@ -557,7 +555,7 @@ pwd
 Should return
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('/proj/',upid,'/nobackup/username/ngsworkflow'))
+cat(paste0('/cfs/klemming/projects/supr/',upid,'/username/ngsworkflow'))
 ```
 
 Then:
@@ -598,7 +596,7 @@ cat(paste0(vcfdir,'/cohort.vcf\n'))
 
 ## Check combined vcf file in IGV
 
-Again we assume that you have logged in to UPPMAX via ThinLinc.\
+Again we assume that you have logged in to Dardel via ThinLinc.\
 If you have closed IGV please open it again as described above.\
 Load the files cohort.vcf, HG00097.bam, HG00100.bam and HG00101.bam into IGV as described earlier.\
 This time lets look closer at the variant rs4988235, located at position chr2:136608646 in the HG19 reference genome. This is the variant that has been shown to lead to lactase persistence.\
@@ -634,13 +632,13 @@ If a duplicated read contains a genetic variant, the ratio of the two alleles mi
 Please read about Picard's `MarkDuplicates` [here](https://gatk.broadinstitute.org/hc/en-us/articles/360037225972-MarkDuplicates-Picard-). Picard's MarkDuplicates has recently been incorporated into the GATK suite, but the usage example in GATKs documentation describes how to call it via the stand alone Picard program. To learn how to use it as part of the GATK module, please call MarkDuplicates without input parameters like this:
 
 ```bash
-gatk --java-options -Xmx7g MarkDuplicates
+gatk --java-options -Xmx4g MarkDuplicates
 ```
 
 Please run MarkDuplicates on all three bam files generated in step 2.1. Here is the code for running MarkDuplicates on the sample HG00097:
 
 ```bash
-gatk --java-options -Xmx7g MarkDuplicates \
+gatk --java-options -Xmx4g MarkDuplicates \
     -I HG00097.bam \
     -O HG00097.md.bam \
     -M HG00097_mdmetrics.txt
@@ -650,7 +648,7 @@ gatk --java-options -Xmx7g MarkDuplicates \
 
 Another source of error is systematic biases in the assignment of base quality scores by the sequencing instrument. This can be corrected by GATK's [Base Quality Score Recalibration](https://gatk.broadinstitute.org/hc/en-us/articles/360035890531-Base-Quality-Score-Recalibration-BQSR-).
 In short, you first use [BaseRecalibrator](https://gatk.broadinstitute.org/hc/en-us/articles/360037593511-BaseRecalibrator) to build a recalibration model, and then [ApplyBQSR](https://gatk.broadinstitute.org/hc/en-us/articles/360037225212-ApplyBQSR) to recalibrate the base qualities in your bam file.  
-`BaseRecalibrator` requires a file with known SNPs as input. This file is available in the data folder on UPPMAX:
+`BaseRecalibrator` requires a file with known SNPs as input. This file is available in the data folder on Dardel:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0(refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf'))
@@ -660,7 +658,7 @@ Please recalibrate the base quality scores in all the bam files generated in the
 First run BaseRecalibrator:
 
 ```{r,echo=FALSE,comment="",class.output="sh"}
-cat(paste0('gatk --java-options -Xmx7g BaseRecalibrator \\
+cat(paste0('gatk --java-options -Xmx4g BaseRecalibrator \\
     -R human_g1k_v37_chr2.fasta \\
     -I HG00097.md.bam \\
     --known-sites ',refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf \\
@@ -670,7 +668,7 @@ cat(paste0('gatk --java-options -Xmx7g BaseRecalibrator \\
 Then run ApplyBQSR:
 
 ```bash
-gatk --java-options -Xmx7g ApplyBQSR \
+gatk --java-options -Xmx4g ApplyBQSR \
     -R human_g1k_v37_chr2.fasta \
     -I HG00097.md.bam \
     --bqsr-recal-file HG00097.recal.table \
@@ -698,13 +696,13 @@ An explanation of what the hard filters do can be found [here](https://gatk.broa
 Example solution for filtering SNVs:
 
 ```bash
-gatk --java-options -Xmx7g SelectVariants \
+gatk --java-options -Xmx4g SelectVariants \
   -R human_g1k_v37_chr2.fasta \
   -V cohort.vcf \
   --select-type-to-include SNP \
   -O cohort.snvs.vcf
 
-gatk --java-options -Xmx7g VariantFiltration \
+gatk --java-options -Xmx4g VariantFiltration \
   -R human_g1k_v37_chr2.fasta \
   -V cohort.snvs.vcf \
   -O cohort.snvs.filtered.vcf \
@@ -716,13 +714,13 @@ gatk --java-options -Xmx7g VariantFiltration \
 Example solution for filtering INDELs:
 
 ```bash
-gatk --java-options -Xmx7g SelectVariants \
+gatk --java-options -Xmx4g SelectVariants \
   -R human_g1k_v37_chr2.fasta \
   -V cohort.vcf \
   --select-type-to-include INDEL \
   -O cohort.indels.vcf
 
-gatk --java-options -Xmx7g VariantFiltration \
+gatk --java-options -Xmx4g VariantFiltration \
   -R human_g1k_v37_chr2.fasta \
   -V cohort.indels.vcf \
   -O cohort.indels.filtered.vcf \
@@ -733,7 +731,7 @@ gatk --java-options -Xmx7g VariantFiltration \
 Example solution for merging filtered SNVs and INDELs:
 
 ```bash
-gatk --java-options -Xmx7g MergeVcfs \
+gatk --java-options -Xmx4g MergeVcfs \
     -I cohort.snvs.filtered.vcf \
     -I cohort.indels.filtered.vcf \
     -O cohort.filtered.vcf
@@ -765,7 +763,7 @@ When you have finished the exercise, please have a look at this document with [a
 # SBATCH scripts {-}
 
 This section is supplementary material intended only for those of you who want to learn how to run all steps automatically in bash scripts. Please make sure that you have understood how all the individual steps work before you start with this.
-To learn more about SLURM and SBATCH scripts please look the [SLURM user guide](https://www.uppmax.uu.se/support/user-guides/slurm-user-guide/) on UPPMAX website.
+To learn more about SLURM and SBATCH scripts please look the [How to Run Jobs](https://www.pdc.kth.se/support/documents/run_jobs/job_scheduling.html) page on the PDC website.
 
 ## Variant calling in cohort {-}
 
@@ -774,15 +772,15 @@ Below is a skeleton script that can be used as a template for running [variant c
 ```bash
 #!/bin/bash
 #SBATCH -A sens2022-22-123
-#SBATCH -p core
-#SBATCH -n 1
+#SBATCH -p shared
+#SBATCH --mem=6Gb
 #SBATCH -t 1:00:00
-#SBATCH -J jointGenotyping
+#SBATCH -J JointVariantCalling
 
 module load bioinfo-tools
 module load bwa/0.7.17
-module load samtools/1.10
-module load GATK/4.1.4.1
+module load samtools/1.20
+module load GATK/4.3.0.0
 
 ## loop through the samples:
 for sample in HG00097 HG00100 HG00101;
@@ -796,7 +794,7 @@ done
 #Fill in the code for GenotypeGVCFs here
 
 ```
-Please save the sbatch script in your UPPMAX folder and call it "joint_genotyping.sbatch" or similar. Make the script executable by this command:
+Please save the sbatch script in your Dardel folder and call it "joint_genotyping.sbatch" or similar. Make the script executable by this command:
 
 ```bash
 chmod u+x joint_genotyping.sbatch
@@ -819,40 +817,40 @@ If you would like more help with creating the sbatch script, please look at our 
 ```{r,accordion=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('#!/bin/bash
 #SBATCH -A ',upid,'
-#SBATCH -p core
-#SBATCH -n 1
+#SBATCH -p shared
+#SBATCH --mem=6Gb
 #SBATCH -t 2:00:00
-#SBATCH -J jointGenotyping
+#SBATCH -J JointVariantCalling
 
 module load bioinfo-tools
 module load bwa/0.7.17
-module load samtools/1.10
-module load GATK/4.1.4.1
+module load samtools/1.20
+module load GATK/4.3.0.0
 
 for sample in HG00097 HG00100 HG00101;
 do
   echo "Now analyzing: "${sample}
   bwa mem -R \\
   "@RG\\tID:${sample}\\tPU:flowcellx_lanex\\tSM:${sample}\\tLB:libraryx\\tPL:illumina" \\
-  -t 1 human_g1k_v37_chr2.fasta "${sample}_1.fq" "${sample}_2.fq" | samtools sort > "${sample}.bam"
+  -t 14 human_g1k_v37_chr2.fasta "${sample}_1.fq" "${sample}_2.fq" | samtools sort > "${sample}.bam"
 
   samtools index "${sample}.bam"
 
-  gatk --java-options -Xmx7g HaplotypeCaller \\
+  gatk --java-options -Xmx4g HaplotypeCaller \\
   -R human_g1k_v37_chr2.fasta \\
   -ERC GVCF -I "${sample}.bam" \\
   -O "${sample}.g.vcf"
 
 done
 
-gatk --java-options -Xmx7g CombineGVCFs \\
+gatk --java-options -Xmx4g CombineGVCFs \\
 -R human_g1k_v37_chr2.fasta \\
 -V HG00097.g.vcf \\
 -V HG00100.g.vcf \\
 -V HG00101.g.vcf \\
 -O cohort.g.vcf
 
-gatk --java-options -Xmx7g GenotypeGVCFs \\
+gatk --java-options -Xmx4g GenotypeGVCFs \\
 -R human_g1k_v37_chr2.fasta \\
 -V cohort.g.vcf \\
 -O cohort.vcf'))
@@ -865,16 +863,16 @@ Now please try to incorporate the additional steps from [GATK's best practices](
 ```{r,accordion=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('#!/bin/bash
 #SBATCH -A ',upid,'
-#SBATCH -p core
-#SBATCH -n 1
+#SBATCH -p shared
+#SBATCH --mem=6Gb
 #SBATCH -t 2:00:00
 #SBATCH -J BestPractise
 
 ## load modules
 module load bioinfo-tools
 module load bwa/0.7.17
-module load samtools/1.10
-module load GATK/4.1.4.1
+module load samtools/1.20
+module load GATK/4.3.0.0
 
 # define path to reference genome
 ref="/sw/courses/ngsintro/reseq/data/ref"
@@ -891,7 +889,7 @@ ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00101_2.fq
 # index reference genome
 bwa index -a bwtsw human_g1k_v37_chr2.fasta
 samtools faidx human_g1k_v37_chr2.fasta
-gatk --java-options -Xmx7g CreateSequenceDictionary \\
+gatk --java-options -Xmx4g CreateSequenceDictionary \\
 -R human_g1k_v37_chr2.fasta \\
 -O human_g1k_v37_chr2.dict
 
@@ -902,31 +900,31 @@ do
   # map the reads
   bwa mem \\
   -R "@RG\\tID:${sample}\\tPU:flowcellx_lanex\\tSM:${sample}\\tLB:libraryx\\tPL:illumina" \\
-  -t 1 human_g1k_v37_chr2.fasta \\
+  -t 14 human_g1k_v37_chr2.fasta \\
   "${sample}_1.fq" "${sample}_2.fq" | samtools sort > "${sample}.bam"
 
   samtools index $sample".bam"
   # mark duplicates
-  gatk --java-options -Xmx7g MarkDuplicates \\
+  gatk --java-options -Xmx4g MarkDuplicates \\
   -I "${sample}.bam" \\
   -O "${sample}.md.bam" \\
   -M "${sample}_mdmetrics.txt"
 
   # base quality score recalibration
-  gatk --java-options -Xmx7g BaseRecalibrator \\
+  gatk --java-options -Xmx4g BaseRecalibrator \\
   -R human_g1k_v37_chr2.fasta \\
   -I "${sample}.md.bam" \\
   --known-sites "${ref}/1000G_phase1.snps.high_confidence.b37.chr2.vcf" \\
   -O "${sample}.recal.table"
 
-  gatk --java-options -Xmx7g ApplyBQSR \\
+  gatk --java-options -Xmx4g ApplyBQSR \\
   -R human_g1k_v37_chr2.fasta \\
   -I "${sample}.md.bam" \\
   --bqsr-recal-file "${sample}.recal.table" \\
   -O "${sample}.recal.bam"
 
   # haplotypeCaller in -ERC mode
-  gatk --java-options -Xmx7g HaplotypeCaller \\
+  gatk --java-options -Xmx4g HaplotypeCaller \\
   -R human_g1k_v37_chr2.fasta \\
   -ERC GVCF \\
   -I "${sample}.bam" \\
@@ -934,26 +932,26 @@ do
 done
 
 # joint genotyping
-gatk --java-options -Xmx7g CombineGVCFs \\
+gatk --java-options -Xmx4g CombineGVCFs \\
 -R human_g1k_v37_chr2.fasta \\
 -V HG00097.g.vcf \\
 -V HG00100.g.vcf \\
 -V HG00101.g.vcf \\
 -O cohort.g.vcf
 
-gatk --java-options -Xmx7g GenotypeGVCFs \\
+gatk --java-options -Xmx4g GenotypeGVCFs \\
 -R human_g1k_v37_chr2.fasta \\
 -V cohort.g.vcf \\
 -O cohort.vcf
 
 # variant filtration SNPs
-gatk --java-options -Xmx7g SelectVariants \\
+gatk --java-options -Xmx4g SelectVariants \\
 -R human_g1k_v37_chr2.fasta \\
 -V cohort.vcf \\
 --select-type-to-include SNP \\
 -O cohort.snvs.vcf
 
-gatk --java-options -Xmx7g VariantFiltration \\
+gatk --java-options -Xmx4g VariantFiltration \\
 -R human_g1k_v37_chr2.fasta \\
 -V cohort.snvs.vcf \\
 --filter-name QDfilter --filter-expression "QD < 2.0" \\
@@ -962,13 +960,13 @@ gatk --java-options -Xmx7g VariantFiltration \\
 -O cohort.snvs.filtered.vcf
 
 # variant filtration indels
-gatk --java-options -Xmx7g SelectVariants \\
+gatk --java-options -Xmx4g SelectVariants \\
 -R human_g1k_v37_chr2.fasta \\
 -V cohort.vcf \\
 --select-type-to-include INDEL \\
 -O cohort.indels.vcf
 
-gatk --java-options -Xmx7g VariantFiltration \\
+gatk --java-options -Xmx4g VariantFiltration \\
 -R human_g1k_v37_chr2.fasta \\
 -V cohort.indels.vcf \\
 --filter-name QDfilter --filter-expression "QD < 2.0" \\
@@ -976,7 +974,7 @@ gatk --java-options -Xmx7g VariantFiltration \\
 -O cohort.indels.filtered.vcf
 
 # merge filtered SNPs and indels
-gatk --java-options -Xmx7g MergeVcfs \\
+gatk --java-options -Xmx4g MergeVcfs \\
 -I cohort.snvs.filtered.vcf \\
 -I cohort.indels.filtered.vcf \\
 -O cohort.filtered.vcf'))
@@ -994,7 +992,7 @@ gatk --java-options -Xmx7g MergeVcfs \\
   * [samtools](http://www.htslib.org/)
 
 <!--# Alternative cluster
-The teachers may inform you that we will use the high performance computing center NSC instead of UPPMAX during this workshop. If so, please follow this link to [run the workshop on NSC](lab_vc_tetralith.html).-->
+The teachers may inform you that we will use the high performance computing center UPPMAX instead of PDC during this workshop. If so, please follow this link to [run the workshop on UPPMAX](https://nbisweden.github.io/workshop-ngsintro/2403/topics/vc/lab_vc.html).-->
 
 
 **Thanks for today!**
