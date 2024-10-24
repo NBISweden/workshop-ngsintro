@@ -20,9 +20,10 @@ upstore <- yaml::read_yaml(here("_quarto.yml"))$uppmax_storage
 Remote computing cluster Dardel at PDC in Stockholm will be use for data analyses. A PDC account is needed to use these resources.
 If you do not already have a PDC account, please fill in the form at https://blackfish.pdc.kth.se/cgi-bin/accounts/request.py **at least 2 weeks before the course start** and use the same email that you applied to the course with. Fill in this information about which course it is:
 
-**Lecturer/ Project Leader:** Martin Dahlö
-**Course / Project Title:** edu24.uppmax
-
+|   |   |
+|---|---|
+| __Lecturer/ Project Leader:__ | Martin Dahlö |
+| __Course / Project Title:__ | edu24.uppmax |
 
 ## UPPMAX
 
