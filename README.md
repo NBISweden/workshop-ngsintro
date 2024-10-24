@@ -73,8 +73,8 @@ docker push ghcr.io/nbisweden/workshop-ngsintro:2.3.0
 docker push ghcr.io/nbisweden/workshop-ngsintro:latest
 
 # run container in the root of the repo
-docker run --rm --platform linux/amd64 -u 1000:1000 -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-ngsintro:latest
-docker run --rm --platform linux/amd64 -u 1000:1000 -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-ngsintro:latest quarto render index.qmd
+docker run --rm --platform linux/amd64 -u $(id -u):$(id -g) -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-ngsintro:latest
+docker run --rm --platform linux/amd64 -u $(id -u):$(id -g) -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-ngsintro:latest quarto render index.qmd
 ```
 
 ## Test scripts
