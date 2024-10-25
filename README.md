@@ -83,7 +83,7 @@ You can use a Flask server to serve the site, and handle automatic rebuilding of
 
 ```bash
 # serve the site
-docker run --rm --platform linux/amd64 -u $(id -u):$(id -g) -v ${PWD}:/qmd -p 5000:5000  ghcr.io/nbisweden/workshop-ngsintro:latest python3 serve_quarto.py
+docker run --rm --platform linux/amd64 -u $(id -u):$(id -g) -v ${PWD}:/qmd -p 5000:5000  ghcr.io/nbisweden/workshop-ngsintro:latest python3 scripts/serve_quarto.py
 ```
 
 ## Test scripts

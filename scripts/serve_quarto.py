@@ -16,7 +16,6 @@ def read_output_dir_from_quarto_yml(quarto_yml_path):
         quarto_config = yaml.safe_load(file)
     return quarto_config.get('project', {}).get('output-dir', 'default-output-folder')
 
-output_folder = read_output_dir_from_quarto_yml(quarto_yml_path)
 
 class QuartoHandler(FileSystemEventHandler):
     def __init__(self):
@@ -61,6 +60,6 @@ def serve_file(filename):
 
 
 if __name__ == '__main__':
-    output_folder = read_output_dir_from_quarto_yml(quarto_yml_path)  # Update the output folder on the startup
+    output_folder = "../" + read_output_dir_from_quarto_yml(quarto_yml_path)  # Update the output folder on the startup, adding ../ to account for this script being in scripts/
     app.run(host='0.0.0.0', port=5000, debug=True)
 
