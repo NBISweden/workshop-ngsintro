@@ -119,4 +119,4 @@ Now you are connected to PDC and can start working.
 
 You can work on PDC interactively through a graphical-user-interface (GUI) desktop environment using ThinLinc.
 
-We have a ThinLinc server running at one of the login nodes which allows users to run a remote desktop. It can be reached using the ThinLink App. For more details please look here: <a href="https://intra.kth.se/en/2.79567/support/documents/login/interactive_hpc.html" target="_blank" rel="noopener noreferrer">https://intra.kth.se/en/2.79567/support/documents/login/interactive_hpc.html</a>
+There is a ThinLinc server running at one of the login nodes which allows users to run a remote desktop. It can be reached using the ThinLink App. For more detailed instruction, please look here: <a href="https://intra.kth.se/en/2.79567/support/documents/login/interactive_hpc.html" target="_blank" rel="noopener noreferrer">https://intra.kth.se/en/2.79567/support/documents/login/interactive_hpc.html</a>
