@@ -16,7 +16,6 @@ RUN apt-get update -y \
   libopenblas-base \
   libgdal-dev \
   curl \
-  python3-pip \
   && wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
   && apt-get install -y ./google-chrome-stable_current_amd64.deb \
   && rm -rf ./google-chrome-stable_current_amd64.deb \
@@ -24,7 +23,6 @@ RUN apt-get update -y \
   && apt-get install -y ./quarto-linux-amd64.deb \
   && rm -rf ./quarto-linux-amd64.deb \
   && Rscript -e 'install.packages(c("remotes","fontawesome","here","htmlTable","leaflet","readxl","writexl"),repos = "http://cran.us.r-project.org");' \
-  && pip3 install --no-cache-dir Flask==2.2.2 Werkzeug==2.2.2 PyYAML==6.0.2 watchdog==5.0.3 \
   && rm -rf /var/lib/apt/lists/* \
   && mkdir /qmd /.cache \
   && chmod 777 /qmd /.cache

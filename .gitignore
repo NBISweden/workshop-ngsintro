@@ -8,4 +8,3 @@ to-do.md
 /.quarto/
 .DS_Store
 [0-9]*/
-venv/
