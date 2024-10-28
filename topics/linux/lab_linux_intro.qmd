@@ -26,8 +26,8 @@ The first step of this lab is to open a ssh connection to PDC. Please refer to [
 
 Usually you would do most of the work in this lab directly on one of the login nodes at PDC, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("salloc -A ", project_id, " -t 07:00:00 -p core -n 1 --no-shell &"))
+```bash
+salloc -A `r project_id` -t 07:00:00 -p shared -n 4
 ```
 
 check which node you got (replace `username` with your PDC username)
