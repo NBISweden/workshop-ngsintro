@@ -116,6 +116,7 @@ filters:
 # used site-wide wherever project ids are used
 project_id: "edu24.uppmax"
 backup_project_id: "naiss2024-22-1375"
+workspace_path: "~/ngsintro"
 
 # location options are linkoping, lund, umea, uppsala or online. For rendering the info page.
 # one or more separated by commas or semicolon. online doesn't display any location info.
