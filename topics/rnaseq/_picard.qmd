@@ -1,0 +1,99 @@
+### Picard
+
+**Post-alignment QC using Picard**  
+
+Some important quality aspects, such as alignment rate, read distribution between different genomic features or coverage uniformity along transcripts, can be measured only after mapping reads to the reference genome. One of the tools to perform this post-alignment quality control is Picard from GATK. Picard examines sequencing alignment data in SAM/BAM files according to the features of the mapped reads and provides an overall view of the data that helps to the detect biases in the sequencing and/or mapping of the data and eases decision-making for further analysis.
+
+There are other tools with similar functionality such as [Qualimap](http://qualimap.conesalab.org/doc_html/index.html), [RNASeqQC](http://qualimap.bioinfo.cipf.es/doc_html/analysis.html#rnaseqqc) or [QoRTs](https://hartleys.github.io/QoRTs/).
+
+{{< fa clipboard-list >}} Read through [Picard](https://broadinstitute.github.io/picard/command-line-overview.html#CollectRnaSeqMetrics) documentation and see if you can figure it out how to run it to assess post-alignment quality on the RNA-seq mapped samples.
+
+{{< fa clipboard-list >}} Load the GATK module and create a bash script named `picard.sh` in your `scripts` directory.
+
+Add the following script to it. Note that we are using the smaller GTF file with chr19 only.
+
+```{sh}
+#| eval: false
+#!/bin/bash
+
+# load modules
+module load PDC/23.12
+module load bioinfo-tools
+module load GATK/4.3.0.0
+
+# get output filename prefix
+prefix=$( basename "$1" .bam)
+
+gatk --java-options -Xmx6g \
+  CollectAlignmentSummaryMetrics \
+  -R ../reference/Mus_musculus.GRCm38.dna.chromosome.19.fa \
+  -I $1 \
+  -O ${prefix}-aln.txt
+
+gatk --java-options -Xmx6g \
+  CollectRnaSeqMetrics \
+  -I $1 \
+  -O ${prefix}-rna.txt \
+  --REF_FLAT ../reference/Mus_musculus.GRCm38.99-19.gtf.genepred \
+  --RIBOSOMAL_INTERVALS ../reference/ribo_interval.txt \
+  -STRAND SECOND_READ_TRANSCRIPTION_STRAND
+```
+
+The line `prefix=$( basename "$1" .bam)` is used to remove directory path and `.bam` from the input filename and create a prefix which will be used to label output.
+
+{{< fa clipboard-list >}} Create a new bash loop script named `picard_batch.sh` with a bash loop to run the picard script over all BAM files. The loop should look like below.
+
+```{sh}
+#| eval: false
+for i in ../3_mapping/*.bam
+do
+	echo "Running Picard on $i ..."
+	bash ../scripts/picard.sh $i
+done
+```
+
+Run the loop script `picard_batch.sh` in the directory `4_picard`.
+
+```{sh}
+#| eval: false
+bash ../scripts/picard_batch.sh
+```
+
+Qualimap should have created a directory for every BAM file.
+
+```
+-rw-r--r--  1 user pg_snic2022-22-328 2.9K Oct 27 23:39 SRR3222409-19-aln.txt
+-rw-r--r--  1 user pg_snic2022-22-328 2.9K Oct 27 23:39 SRR3222409-19-rna.txt
+```
+
+MultiQC can be used to collate the output files into an HTML report.
+
+```{bash}
+#| eval: false
+
+module load PDC/23.12
+module load bioinfo-tools
+module load MultiQC/1.12
+
+multiqc --interactive . -m picard
+```
+
+{{< fa clipboard-list >}} Download the HTML file for inspection.
+
+```{r}
+#| echo: false
+#| comment: ""
+#| class.output: "sh"
+cat(paste0("scp -r username@dardel.pdc.kth.se:",path_workspace,"/4_picard ."))
+```
+
+{{< fa comments >}} Check the Picard report for one sample and discuss if the sample is of good quality. You only need to do this for one file now. We will do a comparison with all samples when using the MultiQC tool.
+
+{{< fa exclamation-circle >}} If you are running out of time or were unable to run Picard, you can also copy pre-run Picard output from this location: ``r paste0(path_resources,"/main/4_picard/")``.
+
+```{r}
+#| echo: false
+#| comment: ""
+#| class.output: "sh"
+cat(paste0("cp -r ",path_resources,"/main/4_picard/* ",path_workspace,"/4_picard/"))
+```
