@@ -63,11 +63,11 @@ Now you are connected to UPPMAX and can start working.
 
 You can work on UPPMAX interactively through a graphical-user-interface (GUI) desktop environment using ThinLinc.
 
-We have a ThinLinc server running at one of the login nodes which allows users to run a remote desktop. It can be reached from a web browser (Chrome and Firefox are the recommended web browsers) or from the ThinLink App. For more details please look here: <a href="https://uppmax.uu.se/support-sv/user-guides/thinlinc-graphical-connection-guide/" target="_blank" rel="noopener noreferrer">https://uppmax.uu.se/support-sv/user-guides/thinlinc-graphical-connection-guide/</a>
+We have a ThinLinc server running at one of the login nodes which allows users to run a remote desktop. It can be reached from a web browser (Chrome and Firefox are the recommended web browsers) or from the ThinLink App. For more details please look here: <a href="https://docs.uppmax.uu.se/getting_started/login_rackham_remote_desktop_local_thinlinc_client/" target="_blank" rel="noopener noreferrer">https://docs.uppmax.uu.se/getting_started/login_rackham_remote_desktop_local_thinlinc_client/</a>
 
 ### Web browser
 
-To be able to login via a web browser you will have to set up two-factor authentication first. Follow the <a href="https://www.uppmax.uu.se/support/user-guides/setting-up-two-factor-authentication/" target="_blank" rel="noopener noreferrer">instructions at the UPPMAX homepage</a>, and once you are done you can continue below.
+To be able to login via a web browser you will have to set up two-factor authentication first. Follow the <a href="https://docs.uppmax.uu.se/getting_started/get_uppmax_2fa/" target="_blank" rel="noopener noreferrer">instructions at the UPPMAX homepage</a>, and once you are done you can continue below.
 
 1. Go to the login page, <a href="https://rackham-gui.uppmax.uu.se/" target="_blank" rel="noopener noreferrer">https://rackham-gui.uppmax.uu.se/</a>
 2. Enter your UPPMAX username.

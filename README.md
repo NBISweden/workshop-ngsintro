@@ -79,11 +79,11 @@ docker run --rm --platform linux/amd64 -u $(id -u):$(id -g) -v ${PWD}:/qmd ghcr.
 
 ## Serving and automatic rendering
 
-You can use a Flask server to serve the site, and handle automatic rebuilding of pages when any `.qmd` file is changed. The browser has to be refreshed manually though.
+You can use `quarto preview` to serve the site, and handle automatic rebuilding of pages when any `.qmd` file is changed.
 
 ```bash
 # serve the site
-docker run --rm --platform linux/amd64 -u $(id -u):$(id -g) -v ${PWD}:/qmd -p 5000:5000  ghcr.io/nbisweden/workshop-ngsintro:latest python3 scripts/serve_quarto.py
+docker run --rm --platform linux/amd64 -u $(id -u):$(id -g) -v ${PWD}:/qmd -p 8800:8800  ghcr.io/nbisweden/workshop-ngsintro:latest quarto preview --port 8800 --host 0.0.0.0
 ```
 
 ## Test scripts
