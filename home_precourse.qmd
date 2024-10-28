@@ -11,23 +11,15 @@ format: html
 #| include: false
 library(yaml)
 library(here)
-upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
-upstore <- yaml::read_yaml(here("_quarto.yml"))$uppmax_storage
+project_id <- yaml::read_yaml(here("_quarto.yml"))$project_id
+backup_id  <- yaml::read_yaml(here("_quarto.yml"))$backup_project_id
 ```
 
-## PDC
+You will have to have 3 different accounts to complete the labs in this course; one in [SUPR](https://supr.naiss.se/) to handle the two other accounts, and one each at the compute centers [PDC](https://www.pdc.kth.se/) in Stockholm and [UPPMAX](https://uppmax.uu.se) in Uppsala.
 
-Remote computing cluster Dardel at PDC in Stockholm will be use for data analyses. A PDC account is needed to use these resources.
-If you do not already have a PDC account, please fill in the form at [https://blackfish.pdc.kth.se/cgi-bin/accounts/request.py](https://blackfish.pdc.kth.se/cgi-bin/accounts/request.py) **at least 2 weeks before the course start** and use the same email that you applied to the course with. Fill in this information about which course it is:
+## SUPR
 
-|   |   |
-|---|---|
-| __Lecturer/ Project Leader:__ | Martin Dahlö |
-| __Course / Project Title:__ | edu24.uppmax |
-
-## UPPMAX
-
-Remote computing cluster UPPMAX will be use as a fallback cluster, if there should be any problems at PDC. A SUPR/NAISS account is needed to use these resources. SUPR is also the system that you will handle your own projects in if you want to use them in your research after the course.
+A SUPR/NAISS account is needed to create the accounts for the computers we will be using during the course. SUPR is also the system that you will handle your own projects in if you want to use this kind of resources in your research after the course.
 
 If you do not already have one, create an account at [SUPR/NAISS](https://supr.naiss.se). Then, Log in to [SUPR/NAISS](https://supr.naiss.se/), preferably using the SWAMID.
 
@@ -39,7 +31,10 @@ Before proceeding with applying for project membership and user accounts, we hav
 This is where you might run into trouble if you don't have a SWAMID connected account. You will not be able to accept the user agreement online without it, so you will have to send in your acceptance in paper form together with a copy of your passport. This process can take a week or more, so please make sure you can accept the user agreement in good time.
 :::
 
-After making sure you have an accepted user agreement, go to the [**SUPR/NAISS Projects**](https://supr.naiss.se/project/) page and request membership to the project ID: [**`r paste0(upid)`**]{.badge}
+
+## UPPMAX
+
+Remote computing cluster UPPMAX will be use as a fallback cluster, if there should be any problems at PDC. After making sure you have an accepted user agreement, go to the [**SUPR/NAISS Projects**](https://supr.naiss.se/project/) page and request membership to the project ID: [**`r paste0(backup_id)`**]{.badge}
 
 ![](assets/images/supr-request.jpg){width="70%"}
 
@@ -56,7 +51,24 @@ Checking your request and approving your account requires some manual work, so y
 You will get one username & password for the account on UPPMAX, and one username and password for the account on PDC. Please keep track of both, we will tell you when to use which account during the workshop.
 :::
 
+
+## PDC
+
+Remote computing cluster Dardel at PDC in Stockholm will be use for data analyses. A PDC account is needed to use these resources. Normally you would do this the same way as when you applied for the UPPMAX account above, but PDC handles uses for their courses through another system.
+If you **do not already have a PDC account**, please fill in the form at [https://blackfish.pdc.kth.se/cgi-bin/accounts/request.py](https://blackfish.pdc.kth.se/cgi-bin/accounts/request.py) **at least 2 weeks before the course start** and use the same email that you applied to the course with. Fill in your personal information, as well as this information about which course it is:
+
+|   |   |
+|---|---|
+| __Lecturer/ Project Leader:__ | Martin Dahlö |
+| __Course / Project Title:__ | `r paste0(backup_id)` |
+
+We have notified PDC who the students for our course is and they will create the account needed to login to their computers. Follow the instructions you get from them to complete your account creation. The morning session on the Monday of the course will cover [how to connect to PDC](https://www.pdc.kth.se/support/documents/login/ssh_login.html#ssh-login), a bunch of steps that might not be trivial for novice users.
+
 ## Install tools
+
+### Eduroam
+
+Please make sure you have a working [Eduroam](https://eduroam.org/) wifi connection setup before the course, since we will only have wifi internet access in the computer room where we have the course. The instructions on how to get it working could differ university to university, so please refere to you home university's instructions on how to do that. Try searching for "eduroam" and your home university, e.g. `eduroam uppsala university`, to find it.
 
 ### ThinLinc
 
@@ -102,7 +114,7 @@ Once you have logged in to UPPMAX, run the following command.
 #| attr-output: "filename='bash'"
 #| class-output: bash
 #| echo: false
-cat(paste0("mkdir /proj/", upid, "/nobackup/username"))
+cat(paste0("mkdir /proj/", backup_id, "/nobackup/username"))
 ```
 
 This creates a directory with your user name. You will work inside this directory for the workshop. If you cannot write to the folder, the most likely reason is that you have not requested access to the workshop project via SUPR. This is described in step 1 above.
