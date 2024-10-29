@@ -8,11 +8,11 @@ format: html
 ```{r,eval=TRUE,include=FALSE}
 library(yaml)
 library(here)
-id_project <- yaml::read_yaml(here("_quarto.yml"))$id_project
+id_project     <- yaml::read_yaml(here("_quarto.yml"))$id_project
 path_resources <- yaml::read_yaml(here("_quarto.yml"))$path_resources
 path_workspace <- yaml::read_yaml(here("_quarto.yml"))$path_workspace
-site_url <- yaml::read_yaml(here("_quarto.yml"))$website$`site-url`
-output_dir <- yaml::read_yaml(here("_quarto.yml"))$project$`output-dir`
+site_url       <- yaml::read_yaml(here("_quarto.yml"))$website$`site-url`
+output_dir     <- yaml::read_yaml(here("_quarto.yml"))$project$`output-dir`
 ```
 
 ## Connect to PDC
@@ -36,10 +36,10 @@ squeue -u username
 should look something like this
 
 ```bash
-dahlo@login1 ~ $ squeue -u dahlo
+user@login1 ~ $ squeue -u user
              JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
-           5583899    shared interact    dahlo  R       2:22      1 nid001009
-dahlo@login1 ~ $
+           5583899    shared interact    user  R       2:22      1 nid001009
+user@login1 ~ $
 ```
 
 where `nid001009` is the name of the node I got (yours will probably be different).
@@ -53,7 +53,17 @@ ssh -Y nid001009
 
 It is good to know how to move around in the file system. I'm sure you all have experienced this using a graphical user interface (**GUI**) before, Windows Explorer in Windows and Finder in OSX. Using the command line can be confusing at first, but the more your do it, the easier it gets.
 
-When you connect to PDC, you will start out in your home folder. The absolute path to your home folder is `/cfs/klemming/home/<first letter of username>/<username>`,  e.g. `/cfs/klemming/home/u/username` or `/cfs/klemming/home/d/dahlo`.
+When you connect to PDC, you will start out in your home folder. The absolute path to your home folder is 
+
+```bash
+# structure
+/cfs/klemming/home/<first letter of username>/<username>
+
+# e.g. 
+/cfs/klemming/home/u/username
+# or 
+/cfs/klemming/home/a/anderson
+```
 
 Start with looking at what you have in your home folder. The command for this `ls`, and it stand for **L**i**S**t (list).
 
@@ -64,18 +74,18 @@ ls -l
 This is how my home folder looks like, and yours should look somewhat similar:
 
 ```
-[12:56:32] dahlo@login1 ~ $ ls -l
+[12:56:32] user@login1 ~ $ ls -l
 total 4384
-drwxr-xr-x  3 dahlo b2014068    2048 Apr 27  2017 archive
--rw-rw-r--  1 dahlo dahlo      49042 Sep 23  2016 bad.png
-drwxr-xr-x  2 dahlo dahlo       2048 Mar 18  2016 data
--rw-rw-r--  1 dahlo dahlo      60944 Sep 23  2016 good.png
-drwxr-xr-x  4 dahlo b2014209    2048 Oct 30  2014 igv
-drwxrwxr-x  5 dahlo dahlo       2048 Sep 20  2016 ngsintro
-drwx--S---  2 dahlo dahlo       2048 May  4  2010 private
-drwxr-xr-x 26 dahlo dahlo       4096 May 18 10:43 scripts
-drwxrwxr-x  5 dahlo dahlo    2201600 May 14 14:02 work
-[12:57:36] dahlo@login1 ~ $
+drwxr-xr-x  3 user b2014068    2048 Apr 27  2017 archive
+-rw-rw-r--  1 user user      49042 Sep 23  2016 bad.png
+drwxr-xr-x  2 user user       2048 Mar 18  2016 data
+-rw-rw-r--  1 user user      60944 Sep 23  2016 good.png
+drwxr-xr-x  4 user b2014209    2048 Oct 30  2014 igv
+drwxrwxr-x  5 user user       2048 Sep 20  2016 ngsintro
+drwx--S---  2 user user       2048 May  4  2010 private
+drwxr-xr-x 26 user user       4096 May 18 10:43 scripts
+drwxrwxr-x  5 user user    2201600 May 14 14:02 work
+[12:57:36] user@login1 ~ $
 ```
 
 Usually when you are running analysis for real, you would not keep the data or analysis result files in your own home folder. You would store all files belonging to a project in a project folder that is shared among all the project members. Since this is a course project, we have not gotten a project folder so we will be storing all the files in a subfolder in our own home folder. We start off with creating this folder, our workspace, so that we have a place to organize our course files.
@@ -87,11 +97,20 @@ mkdir `r path_workspace`
 
 As seen in the lecture, the command for moving around is `cd`. The command stands for **C**hange **D**irectory and does exactly that. It is the equivalent of double clicking a folder in a GUI.
 
-To enter the course folder, simply type ``r paste0("cd ", basename(path_workspace))``
+To enter the course folder, simply type 
+```bash
+cd `r basename(path_workspace)`
+```
 
 We can easily see that this is a relative path, since it does not start with a `/`. That means that this command will only work when you are standing in your home folder. If you are standing somewhere else and say that you want to enter a folder named ``r basename(path_workspace)``, the computer will tell you that there is no folder named ``r basename(path_workspace)`` where you are located at the moment.
 
-The absolute path to the workspace folder would be ``r path_workspace`` , or ``r paste0("/cfs/klemming/home/u/username/", basename(path_workspace))`` if you write out the whole path to your home folder.
+The absolute path to the workspace folder would be  
+  
+``r path_workspace``  
+or  
+``r paste0("/cfs/klemming/home/u/username/", basename(path_workspace))``  
+  
+if you write out the whole path to your home folder.
 
 It is the exact same thing as if you are using a GUI. If you are standing on your desktop, you can double click a folder which is located on your desktop. But if you are standing in another folder, you can't double click on that same folder, because it is just not located there. You have to move to your desktop first, and then double click it.
 
@@ -115,13 +134,22 @@ The alias will now be available in all new terminals you open.
 
 Now we have practised moving around and looking at what we have in folders. The next step will show you how to do the same thing, but without the moving around part.
 
-If we want to look at what we have in our home folder, while standing in the course's workspace folder, we type `ll /cfs/klemming/home/<first letter>/<username>/` and remember to substitute `<first letter>` with the first letter of your username, and `<username>` with your own user name.
+If we want to look at what we have in our home folder, while standing in the course's workspace folder, we type
 
 ```bash
-ll /cfs/klemming/u/username
+ll /cfs/klemming/home/<first letter>/<username>/
+```
+and remember to substitute `<first letter>` with the first letter of your username, and `<username>` with your own user name.
+
+```bash
+ll /cfs/klemming/home/u/username/
 ```
 
-Since most programmers are lazy (efficient), there is a shortcut to your home folder so that you don't have to write it all the time. If you write `~/` it means the same as if you would write `/cfs/klemming/home/u/username/`
+Since most programmers are lazy (efficient), there is a shortcut to your home folder so that you don't have to write it all the time. If you write `~/` it means the same as if you would write 
+
+```bash
+/cfs/klemming/home/u/username/
+```
 
 Try using it with `ls`:
 
@@ -131,7 +159,13 @@ ll ~/
 
 ## Copy lab files
 
-Now you will need some files. The files are located in the folder ``r file.path(path_resources, "linux/linux_tutorial")`` or they can be downloaded if you are not on UPPMAX at the moment, [files.tar.gz](assets/files.tar.gz) (instruction on how to download further down)
+Now you will need some files. The files are located in the folder 
+
+```bash 
+`r path_resources`/linux/linux_tutorial
+```
+
+or they can be downloaded if you are not on UPPMAX at the moment, [files.tar.gz](assets/files.tar.gz) (instruction on how to download further down)
 
 For structures sake, first create a folder called `linux_tutorial` inside the workspace folder, where you can put all your files belonging to this lab.
 
@@ -141,7 +175,7 @@ mkdir `r path_workspace`/linux_tutorial
 
 Next, copy the lab files to this folder.
 
-```
+```bash
 # syntax
 cp -r <source-folder> <destination-folder>
 ```
