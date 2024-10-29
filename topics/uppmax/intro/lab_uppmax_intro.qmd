@@ -8,12 +8,9 @@ format: html
 ```{r,eval=TRUE,include=FALSE}
 library(yaml)
 library(here)
-upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
+id_project <- yaml::read_yaml(here("_quarto.yml"))$id_project
+path_workspace <- yaml::read_yaml(here("_quarto.yml"))$path_workspace
 ```
-
-::: {.callout-note}
-In code blocks, the dollar sign (`$`) is not to be printed. The dollar sign is usually an indicator that the text following it should be typed in a terminal window.
-:::
 
 # Connect to UPPMAX
 
@@ -48,7 +45,7 @@ ssh -Y r292
 If the list is empty you can run the allocation command again and it should be in the list:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("salloc -A ", upid, " -t 03:30:00 -p core -n 1 --no-shell"))
+cat(paste0("salloc -A ", id_project, " -t 03:30:00 -p shared -n 1 --no-shell"))
 ```
 
 {{< fa lightbulb >}} There is a UPPMAX specific tool called `jobinfo` that supplies the same kind of information as `squeue` that you can use as well (`$ jobinfo -u username`).
@@ -63,13 +60,13 @@ Next, copy the lab files from this folder. `-r` means recursively, which means a
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat("cp -r <source> <destination>\n")
-cat(paste0("cp -r /sw/courses/ngsintro/linux/uppmax_tutorial /proj/", upid, "/nobackup/username"))
+cat(paste0("cp -r /sw/courses/ngsintro/linux/uppmax_tutorial ", path_workspace))
 ```
 
-Have a look in **`r paste0("/proj/",upid,"/nobackup/&lt;username&gt;/uppmax_tutorial")`**.
+Have a look in **`r paste0(path_workspace,"/uppmax_tutorial")`**.
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("cd /proj/", upid, "/nobackup/username/uppmax_tutorial"))
+cat(paste0(path_workspace, "/uppmax_tutorial"))
 ```
 
 ```
@@ -80,7 +77,6 @@ drwxrwxr-x 2 dahlo dahlo 2,0K May 18 16:21 .
 drwxrwxr-x 4 dahlo dahlo 2,0K May 18 15:34 ..
 -rwxrwxr-x 1 dahlo dahlo 1,2K May 18 16:21 data.bam
 -rw-rw-r-- 1 dahlo dahlo  232 May 18 16:21 job_template
-$
 ```
 
 # Run programs
@@ -250,7 +246,7 @@ less job_template
 
 #! /bin/bash -l
 #SBATCH -A gXXXXXXX
-#SBATCH -p core
+#SBATCH -p shared
 #SBATCH -J Template_script
 #SBATCH -t 01:00:00
 
@@ -332,7 +328,7 @@ This will create a booking for you which has a higher priority than the jobs sub
 Try closing down your current session on the reserved node you connected to in the beginning of the lab by typing `exit`. Then make a new booking using interactive,
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("interactive -A ", upid, " -t 02:30:00 -p core"))
+cat(paste0("interactive -A ", id_project, " -t 02:30:00 -p shared"))
 ```
 
 Congratulations, you are now ready to be let loose on the cluster!
