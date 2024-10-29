@@ -102,10 +102,10 @@ See [Connecting to UPPMAX](topics/other/lab_connect_uppmax.qmd) instructions lis
 If you want to get a primer on using the terminal, you can get started with the following **Tutorial One** at this link [Unix tutorial for beginners](http://www.ee.surrey.ac.uk/Teaching/Unix/). You can use [https://scilifelab.github.io/courses/ngsintro/common/emu/](https://scilifelab.github.io/courses/ngsintro/common/emu/) [(or this mirror)](https://bellard.org/jslinux/vm.html?url=https://bellard.org/jslinux/buildroot-x86.cfg) to try the commands in the tutorial, so that you don't mess up any real world system. If you have any questions regarding this tutorial contact: *martin.dahlo [at] nbis.se*.
 :::
 
-### Create a user folder
+### Create a user folder (UPPMAX only)
 
 ::: {.callout-note}
-Where `username` is mentioned, change to your user name.
+This part is only to be done on UPPMAX, and **not** at PDC.
 :::
 
 Once you have logged in to UPPMAX, run the following command.
