@@ -11,16 +11,16 @@ format: html
 ### Introduction to Linux
 
 - Introduction to Linux [{{< fa brands youtube >}}](https://youtu.be/qYp8shSMJ-0) [{{< fa file-pdf >}}](topics/linux/slide_linux_intro.pdf) [{{< fa file-lines >}}](topics/linux/lab_linux_intro.html)
-
-### File types in Linux
-
-- File types in Bioinformatics [{{< fa brands youtube >}}](https://youtu.be/7MR1qUZQ94w) [{{< fa file-pdf >}}](topics/linux/slide_linux_filetypes.pdf) [{{< fa file-lines >}}](topics/linux/lab_linux_filetypes.html)  
 - Linux file permissions [{{< fa file-lines >}}](topics/linux/lab_linux_permissions.html)
 
 ### Uppmax
 
 - Introduction to UPPMAX [{{< fa brands youtube >}}](https://youtu.be/cxEtfKN91q4) [{{< fa file-pdf >}}](topics/uppmax/intro/slide_uppmax_intro.pdf) [{{< fa file-lines >}}](topics/uppmax/intro/lab_uppmax_intro.html)  
 - UPPMAX Pipelines [{{< fa file-lines >}}](topics/uppmax/pipeline/lab_uppmax_pipeline.html)
+
+### File types in Linux
+
+- File types in Bioinformatics [{{< fa brands youtube >}}](https://youtu.be/7MR1qUZQ94w) [{{< fa file-pdf >}}](topics/linux/slide_linux_filetypes.pdf) [{{< fa file-lines >}}](topics/linux/lab_linux_filetypes.html)  
 
 ### Advanced Linux
 
