@@ -9,8 +9,8 @@ format: html
 ```{r,eval=TRUE,include=FALSE}
 library(yaml)
 library(here)
-upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
-nscid <- yaml::read_yaml(here("_quarto.yml"))$nsc_project
+id_project <- yaml::read_yaml(here("_quarto.yml"))$id_project_backup
+path_workspace <- yaml::read_yaml(here("_quarto.yml"))$path_workspace
 ```
 
 ```{css,include=FALSE}
@@ -58,7 +58,7 @@ After a few seconds, a window with a simple desktop session in it will appear. F
 Start an interactive session with three compute cores for todays lab:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('interactive -A ',nscid,' -t 04:00:00 -n 3'))
+cat(paste0('interactive -A ',id_project,' -t 04:00:00 -n 3'))
 ```
 
 Please adjust the requested time depending on what lab you will be working on. After a minute or so you should have gotten your interactive job.
@@ -73,7 +73,7 @@ We will use a singularity container (a virtual computer) that mimics the UPPMAX 
 Use this command to start the singularity container:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('singularity shell -B /proj/',nscid,' -B /proj/',nscid,'/users:/proj/',upid,'/nobackup /proj/',nscid,'/ngsintro.sif'))
+cat(paste0('singularity shell -B ',path_workspace,' -B ',path_workspace,':',path_workspace,' ',path_workspace,'/ngsintro.sif'))
 ```
 
 ::: {.callout-tip}
@@ -100,8 +100,8 @@ While running the UPPMAX singularity container, create a workspace for this exer
 The name of the workspace depends on what lab you are working on. For example, if you are working on the introduction to Linux lab then call the workspace "linux_tutorial". Once the workspace is created you should go into it.
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('mkdir /proj/',upid,'/nobackup/<nsc_username>/linux_tutorial\n'))
-cat(paste0('cd /proj/',upid,'/nobackup/<nsc_username>/linux_tutorial'))
+cat(paste0('mkdir ',path_workspace,'/linux_tutorial\n'))
+cat(paste0('cd ',path_workspace,'/linux_tutorial'))
 ```
 
 When you have the UPPMAX singularity container up and running you can follow regular lab instructions, except that you should not connect to UPPMAX or book a node, and you should work in the cluster workspace defined here. Also, IGV is started with a special command,see below.
@@ -111,7 +111,7 @@ When you have the UPPMAX singularity container up and running you can follow reg
 To start IGV at NSC type this in the command:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('/proj/',nscid,'/igv/igv.sh'))
+cat(paste0(path_workspace,'/igv/igv.sh'))
 ```
 
 You can use the same command both when running the UPPMAX singularity container and from a normal terminal window at NSC.
@@ -124,8 +124,4 @@ When you are done with the lab just type exit to close the singularity container
 cat(paste0('offline-uppmax$ exit'))
 ```
 
-All files and folders that you create in `r paste0('/proj/',upid,'/nobackup/nsc_username/')` while running the singularity container can be reached also from outside of the container, in this folder on Tetralith:
-
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('/proj/',nscid,'/users/<nsc_username>/\n'))
-```
+All files and folders that you create in `r path_workspace` while running the singularity container can be reached also from outside of the container.
