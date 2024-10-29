@@ -9,7 +9,9 @@ format: html
 library(yaml)
 library(here)
 
-upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
+id_project <- yaml::read_yaml(here("_quarto.yml"))$id_project
+path_resources <- yaml::read_yaml(here("_quarto.yml"))$path_resources
+path_workspace <- yaml::read_yaml(here("_quarto.yml"))$path_workspace
 ```
 
 ```{css,include=FALSE}
@@ -20,13 +22,15 @@ background-color: red;
 
 ```{r,include=FALSE}
 ## VARIABLES
-datadir <- "/sw/courses/ngsintro/reseq/data"
-fastqdir <- "/sw/courses/ngsintro/reseq/data/fastq"
-refdir <- "/sw/courses/ngsintro/reseq/data/ref"
-bamdir <- "/sw/courses/ngsintro/reseq/data/bam"
-vcfdir <- "/sw/courses/ngsintro/reseq/data/vcf"
-bpbamdir <- "/sw/courses/ngsintro/reseq/data/best_practise_bam"
-bpvcfdir <- "/sw/courses/ngsintro/reseq/data/best_practise_vcf"
+path_reseq <- file.path(path_resources,"reseq")
+
+datadir <- file.path(path_reseq, "data")
+fastqdir <- file.path(path_reseq, "data/fastq")
+refdir <- file.path(path_reseq, "data/ref")
+bamdir <- file.path(path_reseq, "data/bam")
+vcfdir <- file.path(path_reseq, "data/vcf")
+bpbamdir <- file.path(path_reseq, "data/best_practise_bam")
+bpvcfdir <- file.path(path_reseq, "data/best_practise_vcf")
 col_uppmax <- "#f4f8e8"
 col_local <- "#e5f4f8"
 ```
@@ -103,7 +107,7 @@ cat(paste0(refdir))
 ## Laptop {#preparelaptop -}
 This lab will be done completely on Dardel and the instructions assume that you connect via ThinLinc.
 However, if you prefer to connect to Dardel via ssh you can instead copy some of the resulting files to your laptop and work on them there. , install IGV, and run all the IGV steps on your laptop.
-If so, please create a local workspace on your laptop, for example a folder called *ngsworkflow* on your desktop. You need to have write permission in this folder.
+If so, please create a local workspace on your laptop, for example a folder called *vc* on your desktop. You need to have write permission in this folder.
 If you connect to Dardel via ThinLinc you don't have to create a local workspace.
 
 ## Dardel {-}
@@ -125,13 +129,13 @@ If no jobs are listed you should allocate a job for this lab. If you already hav
 Use this code to allocate a job on day 1 of variant-calling:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('salloc -A ',upid,' -t 04:00:00 -p shared --mem=6Gb --no-shell'))
+cat(paste0('salloc -A ',id_project,' -t 04:00:00 -p shared --mem=6Gb --no-shell'))
 ```
 
 Use this code to allocate a job on day 2 of variant-calling:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('salloc -A ',upid,' -t 04:00:00 -p shared --mem=6Gb --no-shell'))
+cat(paste0('salloc -A ',id_project,' -t 04:00:00 -p shared --mem=6Gb --no-shell'))
 ```
 
 Once your job allocation has been granted (should not take long) please check the allocation again using:
@@ -154,21 +158,21 @@ You should work in your folder under the course’s project folder, just like yo
 Start by going there using this command:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('cd /cfs/klemming/projects/supr/',upid,'/username/ngsworkflow'))
+cat(paste0('cd ', path_workspace, '/vc'))
 ```
 
 Where `username` should be replaced with your real username.
 Create a folder for this exercise and move into it:
 
 ```bash
-mkdir ngsworkflow
-cd ngsworkflow
+mkdir vc
+cd vc
 ```
 
 Make sure you are located in
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('/cfs/klemming/projects/supr/',upid,'/username/ngsworkflow'))
+cat(paste0('', path_workspace,' /vc'))
 ```
 
 for the rest of this lab.
@@ -225,7 +229,7 @@ pwd
 Should return
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('/cfs/klemming/projects/supr/',upid,'/username/ngsworkflow'))
+cat(paste0('', path_workspace,' /vc'))
 ```
 
 Generate BWA index files:
@@ -265,7 +269,7 @@ This is required by HaplotypeCaller. Since we don't know exactly how the reads i
 assume that each pair of fastq files was generated from one library preparation (*libraryx*), derived from one biological sample (*HG00097*), and run on one lane (*lanex*) of a flowcell (*flowcellx*) on the Illumina machine, and define a toy read group with this information.
 The code for adding this read group is<br/>
 
-**-R "@RG\\tID:HG00097\\tPU:lanex_flowcellx\\tSM:HG00097\\tLB:libraryx\\tPL:illumina"**.
+`-R "@RG\\tID:HG00097\\tPU:lanex_flowcellx\\tSM:HG00097\\tLB:libraryx\\tPL:illumina"`.
 
 ::: {.callout-note}
 When running BWA for another sample later on you have to replace *HG00097* in the read group with the new sample name. To learn more about read groups  please read [this article](https://gatk.broadinstitute.org/hc/en-us/articles/360035890671-Read-groups) at GATK forum.
@@ -281,7 +285,7 @@ pwd
 Should return
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('/cfs/klemming/projects/supr/',upid,'/username/ngsworkflow'))
+cat(paste0('', path_workspace,' /vc'))
 ```
 
 Then use this command to align the reads, add the read group, sort the reads and write them to a bam file:
@@ -311,7 +315,7 @@ samtools view -H HG00097.bam
 
 #### Question {-}
 
-1. The @SQ tag of the bam header contains information about reference sequence. What do you think SN:2 and LN:243199373 in this tag means?
+1. The `@SQ` tag of the bam header contains information about reference sequence. What do you think SN:2 and LN:243199373 in this tag means?
 
 The aligned reads can be viewed with `samtools view` without the `-H`. This will display the entire bam file which is quite large, so if you just want to look at the first 5 lines (for example) you can combine `samtools view` with `head`:
 
@@ -339,7 +343,7 @@ pwd
 Should return
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('/cfs/klemming/projects/supr/',upid,'/username/ngsworkflow'))
+cat(paste0('', path_workspace,' /vc'))
 ```
 
 To start IGV please type this in the terminal:
@@ -374,7 +378,7 @@ pwd
 Should return
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('/cfs/klemming/projects/supr/',upid,'/username/ngsworkflow'))
+cat(paste0('', path_workspace,' /vc'))
 ```
 
 Then run:
@@ -480,7 +484,7 @@ pwd
 Should return
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('/cfs/klemming/projects/supr/',upid,'/username/ngsworkflow'))
+cat(paste0('', path_workspace,' /vc'))
 ```
 
 Then use this command for every sample to align the reads, add the read group, sort the reads and write them to a bam file:
@@ -519,7 +523,7 @@ pwd
 Should return
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('/cfs/klemming/projects/supr/',upid,'/username/ngsworkflow'))
+cat(paste0('', path_workspace,' /vc'))
 ```
 
 Then:
@@ -555,7 +559,7 @@ pwd
 Should return
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('/cfs/klemming/projects/supr/',upid,'/username/ngsworkflow'))
+cat(paste0('', path_workspace,' /vc'))
 ```
 
 Then:
@@ -816,7 +820,7 @@ If you would like more help with creating the sbatch script, please look at our 
 
 ```{r,accordion=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('#!/bin/bash
-#SBATCH -A ',upid,'
+#SBATCH -A ',id_project,'
 #SBATCH -p shared
 #SBATCH --mem=6Gb
 #SBATCH -t 2:00:00
@@ -862,7 +866,7 @@ Now please try to incorporate the additional steps from [GATK's best practices](
 
 ```{r,accordion=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('#!/bin/bash
-#SBATCH -A ',upid,'
+#SBATCH -A ',id_project,'
 #SBATCH -p shared
 #SBATCH --mem=6Gb
 #SBATCH -t 2:00:00
