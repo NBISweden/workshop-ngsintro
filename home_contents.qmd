@@ -49,7 +49,8 @@ format: html
 
 ### Useful resources
 
-- Connecting to Uppmax [{{< fa file-lines >}}](topics/other/lab_connect.html)
+- Connecting to PDC [{{< fa file-lines >}}](topics/other/lab_connect_pdc.html)
+- Connecting to UPPMAX [{{< fa file-lines >}}](topics/other/lab_connect_uppmax.html)
 - Uploading & downloading files from Uppmax [{{< fa file-lines >}}](topics/other/lab_download_files.html)
 - Working on Tetralith: The backup cluster [{{< fa file-lines >}}](topics/other/lab_tetralith.html)
 - Linux cheatsheet [{{< fa file-pdf >}}](topics/linux/assets/linux_cheat_sheet.pdf)

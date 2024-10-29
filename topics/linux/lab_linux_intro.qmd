@@ -1,6 +1,6 @@
 ---
 title:  "Introduction To Linux"
-subtitle: "Command-line interface to the unix file system"
+subtitle: "Command-line interface to Linux"
 author: 'Martin Dahlö'
 format: html
 ---
@@ -8,26 +8,29 @@ format: html
 ```{r,eval=TRUE,include=FALSE}
 library(yaml)
 library(here)
-upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
+project_id <- yaml::read_yaml(here("_quarto.yml"))$project_id
+workspace_path <- yaml::read_yaml(here("_quarto.yml"))$workspace_path
+site_url <- yaml::read_yaml(here("_quarto.yml"))$website$`site-url`
+output_dir <- yaml::read_yaml(here("_quarto.yml"))$project$`output-dir`
 ```
 
 ::: {.callout-note}
 In code blocks, the dollar sign (`$`) is not to be printed. The dollar sign is usually an indicator that the text following it should be typed in a terminal window.
 :::
 
-## Connect to UPPMAX
+## Connect to PDC
 
-The first step of this lab is to open a ssh connection to UPPMAX. Please refer to [**Connecting to UPPMAX**](../other/lab_connect.html) for instructions. Once connected to UPPMAX, return here and continue reading the instructions below.
+The first step of this lab is to open a ssh connection to PDC. Please refer to [**Connecting to PDC**](../other/lab_connect_pdc.html) for instructions. Once connected to PDC, return here and continue reading the instructions below.
 
 ## Logon to a node
 
-Usually you would do most of the work in this lab directly on one of the login nodes at UPPMAX, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
+Usually you would do most of the work in this lab directly on one of the login nodes at PDC, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("salloc -A ", upid, " -t 07:00:00 -p core -n 1 --no-shell &"))
+```bash
+salloc -A `r project_id` -t 07:00:00 -p shared -n 4
 ```
 
-check which node you got (replace `username` with your UPPMAX username)
+check which node you got (replace `username` with your PDC username)
 
 ```bash
 squeue -u username
@@ -36,26 +39,24 @@ squeue -u username
 should look something like this
 
 ```bash
-dahlo@rackham2 work $ squeue -u dahlo
+dahlo@login1 ~ $ squeue -u dahlo
              JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
-           3132376      core       sh    dahlo  R       0:04      1 r292
-dahlo@rackham2 work $
+           5583899    shared interact    dahlo  R       2:22      1 nid001009
+dahlo@login1 ~ $
 ```
 
-where **r292** is the name of the node I got (yours will probably be different).
-Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested (7 hours in this case) the session will shut down, and you will lose all unsaved data. Connect to this node from within UPPMAX.
+where `nid001009` is the name of the node I got (yours will probably be different).
+Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested (7 hours in this case) the session will shut down, and you will lose all unsaved data. Connect to this node from within PDC.
 
 ```bash
-ssh -Y r292
+ssh -Y nid001009
 ```
-
-{{< fa lightbulb >}} There is a UPPMAX specific tool called `jobinfo` that supplies the same kind of information as `squeue` that you can use as well (`$ jobinfo -u username`).
 
 ## Navigation
 
 It is good to know how to move around in the file system. I'm sure you all have experienced this using a graphical user interface (**GUI**) before, Windows Explorer in Windows and Finder in OSX. Using the command line can be confusing at first, but the more your do it, the easier it gets.
 
-When you connect to UPPMAX, you will start out in your home folder. The absolute path to your home folder is usually `/home/username`
+When you connect to PDC, you will start out in your home folder. The absolute path to your home folder is `/cfs/klemming/home/<first letter of username>/<username>`,  e.g. `/cfs/klemming/home/u/username` or `/cfs/klemming/home/d/dahlo`
 
 Start with looking at what you have in your home folder. The command for this `ls`, and it stand for **L**i**S**t (list).
 
@@ -66,7 +67,7 @@ ls -l
 This is how my home folder looks like, and yours should look somewhat similar:
 
 ```
-[12:56:32] dahlo@rackham1 ~ $ ls -l
+[12:56:32] dahlo@login1 ~ $ ls -l
 total 4384
 drwxr-xr-x  3 dahlo b2014068    2048 Apr 27  2017 archive
 -rw-rw-r--  1 dahlo dahlo      49042 Sep 23  2016 bad.png
@@ -75,52 +76,57 @@ drwxr-xr-x  2 dahlo dahlo       2048 Mar 18  2016 data
 drwxr-xr-x  4 dahlo b2014209    2048 Oct 30  2014 igv
 drwxrwxr-x  5 dahlo dahlo       2048 Sep 20  2016 ngsintro
 drwx--S---  2 dahlo dahlo       2048 May  4  2010 private
-drwxr-xr-x 26 dahlo dahlo       4096 May 18 10:43 uppmaxScripts
+drwxr-xr-x 26 dahlo dahlo       4096 May 18 10:43 scripts
 drwxrwxr-x  5 dahlo dahlo    2201600 May 14 14:02 work
-[12:57:36] dahlo@rackham1 ~ $
+[12:57:36] dahlo@login1 ~ $
 ```
 
-We can start off with moving to this workshop's project folder. Each project has its own **proj folder** and **nobackup folder** that contains all the files that belong to the project. The **proj** folder is backed-up, so if a file is deleted by mistake it can be retrieved from the backups, and this is where only compressed raw data and scripts are usually stored. The **nobackup** folder is as the name implies not backed-up, and this is where all the other files belonging to the project is kept, like everything that is created by programs that you run. Backup is expensive, so we don't want to waste it on temporary files generated by your analysis programs, which could be re-run. The nobackup folder is the folder you will keep most of your files in.
+Usually when you are running analysis for real, you would not keep the data or analysis result files in your own home folder. You would store all files belonging to a project in a project folder that is shared among all the project members. Since this is a course project, we have not gotten a project folder so we will be storing all the files in a subfolder in our own home folder. We start off with creating this folder, our workspace, so that we have a place to organize our course files.
+
+```bash
+# create the course folder
+mkdir `r workspace_path`
+```
 
 As seen in the lecture, the command for moving around is `cd`. The command stands for **C**hange **D**irectory and does exactly that. It is the equivalent of double clicking a folder in a GUI.
 
-To enter the course project's proj folder, simply type **``r paste0("cd /proj/",upid)``**.
+To enter the course folder, simply type ``r paste0("cd ", basename(workspace_path))``
 
-Have a look around and see which folders there are. This is the folder where all the non-replacable files belonging to a project would go, like the raw sequencing data that is delivered by the sequencing platforms. Since we'll be creating a bunch of temporary files during these labs, we will have to do that in the nobackup folder.
+We can easily see that this is a relative path, since it does not start with a `/`. That means that this command will only work when you are standing in your home folder. If you are standing somewhere else and say that you want to enter a folder named ``r basename(workspace_path)``, the computer will tell you that there is no folder named ``r basename(workspace_path)`` where you are located at the moment.
 
-Go there using the `cd` command.
-
-```bash
-cd nobackup
-```
-
-We can easily see that this is a relative path, since it does not start with a **`/`**. That means that this command will only work when you are standing in your project folder. If you are standing somewhere else and say that you want to enter a folder named nobackup, the computer will tell you that there is no folder named nobackup where you are located at the moment.
-
-The absolute path to the course's nobackup folder would be **`r paste0("/proj/",upid,"/nobackup")`**
+The absolute path to the workspace folder would be ``r workspace_path`` , or ``r paste0("/cfs/klemming/home/u/username/", basename(workspace_path))`` if you write out the whole path to your home folder.
 
 It is the exact same thing as if you are using a GUI. If you are standing on your desktop, you can double click a folder which is located on your desktop. But if you are standing in another folder, you can't double click on that same folder, because it is just not located there. You have to move to your desktop first, and then double click it.
 
-If you look around in the nobackup folder, you probably only have a folder called **private**. This is how every nobackup folder looks before you start putting files there.
-
 Typing `ls -l` all the time is.. more annoying than one would think, so someone came up with the good idea to add a shortcut here. If you type `ll`, it is the same as typing `ls -l`. Use it from now on.
+
+::: {.callout-note}
+If `ll` does not work (you get `bash: ll: command not found`), it means that you do not have that shortcut (alias) defined. You can do it yourself by defining the alias:
+
+```bash
+alias ll="ls -lah --color --group-directories-first"
+```
+
+This alias will only work in the terminal you ran it in, and as soon as you close that terminal it will be forgotten forever. If you want to have this alias available in all your future terminals, you can append the `alias` command to your autostart file (`~/.bash_profile`) by running this command:
+
+```bash
+echo -e '\nalias ll="ls -lah --color --group-directories-first"' >> ~/.bash_profile
+```
+
+The alias will now be available in all new terminals you open.
+:::
 
 Now we have practised moving around and looking at what we have in folders. The next step will show you how to do the same thing, but without the moving around part.
 
-If we want to look at what we have in our home folder, while standing in the course's project folder, we type `ll /home/username/` and remember to substitute **\<username\>** with your own user name.
+If we want to look at what we have in our home folder, while standing in the course's workspace folder, we type `ll /cfs/klemming/home/<first letter>/<username>/` and remember to substitute `<first letter>` with the first letter of your username, and `<username>` with your own user name.
 
 ```bash
-ll /home/username
+ll /cfs/klemming/u/username
 ```
 
-Since most programmers are lazy (efficient), there is a shortcut to your home folder so that you don't have to write it all the time. If you write **`~/`** it means the same as if you would write **/home/\<username\>/**
+Since most programmers are lazy (efficient), there is a shortcut to your home folder so that you don't have to write it all the time. If you write `~/` it means the same as if you would write `/cfs/klemming/home/u/username/`
 
 Try using it with `ls`:
-
-```bash
-ll /home/username
-```
-
-or
 
 ```bash
 ll ~/
@@ -128,49 +134,41 @@ ll ~/
 
 ## Copy lab files
 
-Now you will need some files. To avoid all the course participants editing the same file all at once, undoing each other's edits, each participant will get their own copy of the needed files.
-
-The files are located in the folder **/sw/courses/ngsintro/linux/linux_tutorial**
+Now you will need some files. The files are located in the folder `/sw/courses/ngsintro/linux/linux_tutorial`
 
 or they can be downloaded if you are not on UPPMAX at the moment, [files.tar.gz](assets/files.tar.gz) (instruction on how to download further down)
 
-For structures sake, first create a folder with your username in the **nobackup** folder, and a folder called **linux_tutorial** inside that folder, where you can put all your lab files.
+For structures sake, first create a folder called `linux_tutorial` inside the workspace folder, where you can put all your files belonging to this lab.
 
-This can be done in 2 ways:
-
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("mkdir /proj/", upid, "/nobackup/username\n"))
-cat(paste0("mkdir /proj/", upid, "/nobackup/username/linux_tutorial"))
+```bash
+mkdir `r workspace_path`/linux_tutorial
 ```
-
-or
-
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("mkdir -p /proj/", upid, "/nobackup/username/linux_tutorial"))
-```
-
-The reason for this is that Linux will not like it if you try to create the folder **linux_tutorial** inside a folder (the one named like your username) that does not exist yet. Then, you have the choice to either first create the one named like your username (the first way), or to tell Linux to create it for you by giving it the **`-p`** option (the second way).
 
 Next, copy the lab files to this folder.
 
 ```
+# syntax
 cp -r <source-folder> <destination-folder>
 ```
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("cp -r /sw/courses/ngsintro/linux/linux_tutorial/* /proj/", upid, "/nobackup/username/linux_tutorial"))
+```bash
+cp -r /sw/courses/ngsintro/linux/linux_tutorial/* `r workspace_path`/linux_tutorial
 ```
 
-`-r` denotes recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, NOT sub-folders and files in sub-folders.
+`-r` denotes recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, **NOT** sub-folders and files in sub-folders.
 
 {{< fa lightbulb >}} Remember to tab-complete to avoid typos and too much writing.
 
-If you are unable to copy the files on UPPMAX, you can [download the files from this link](assets/files.tar.gz) instead of copying them. This is done with the command `wget` (*web get*). It works kind of the same way as the `cp` command, but you give it a source URL instead of a source file, and you specify the destination by giving it a prefix, a path that will be appended in front on the file name when it's downloaded.
+If you are unable to copy the files on PDC, you can [download the files from this link](assets/files.tar.gz) instead of copying them. This is done with the command `wget` (*web get*). It works kind of the same way as the `cp` command, but you give it a source URL instead of a source file, and you can specify the destination by giving it a prefix, a path that will be appended in front on the file name when it's downloaded.
 
-*i.e*; if you want to download the file http://somewhere.com/my.file and you give it the prefix `~/analysis/`, the downloaded file will be saved as `~/analysis/my.file`.
+*i.e*; if you want to download the file `http://somewhere.com/my.file` and you give it the prefix `~/analysis/`, the downloaded file will be saved as `~/analysis/my.file`.
 
-```
-Ex: wget -P <destination prefix> <source URL>
+```bash
+# Ex:
+wget -P ~/analysis/ http://somewhere.com/my.file
+
+# or download the file to where you are standing by not specifying a prefix
+wget `r site_url``r output_dir`/topics/linux/assets/files.tar.gz
 ```
 
 ## Unpack files
@@ -179,9 +177,9 @@ Go to the folder you just copied and see what is in it.
 
 {{< fa lightbulb >}} Remember to tab-complete to avoid typos and too much writing.
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("cd /proj/", upid, "/nobackup/username/linux_tutorial\n"))
-cat("ll")
+```bash
+cd `r workspace_path`/linux_tutorial
+ll
 ```
 
 **tar.gz** is a file ending given to compressed files, something you will encounter quite often. Compression decreases the size of the files which is good when downloading, and it can take thousands of files and compress them all into a single compressed file. This is both convenient for the person downloading and speeds up the transfer more than you would think.
@@ -192,15 +190,13 @@ To unpack the **files.tar.gz** file use the following line while standing in the
 tar -xzvf files.tar.gz
 ```
 
-The command will always be the same for all tar.gz files you want to unpack. `-xzvf` means e<b>X</b>tract from a **Z**ipped file, **V**erbose (prints the name of the file being unpacked), from the specified **F**ile (`f` must always be the last of the letters).
+The command will always be the same for all tar.gz files you want to unpack. `-xzvf` means e**X**tract from a **Z**ipped file, **V**erbose (prints the name of the file being unpacked), from the specified **F**ile (`f` must always be the last of the letters).
 
 Look in the folder again and see what we just unpacked:
 
-```
-[user@milou2 linux_tutorial]$ ls -la
+```bash
+[user@login1 linux_tutorial]$ ll
 total 512
-drwxrwsr-x 12 user g20XXXXX   2048 Sep 24 13:19 .
-drwxrwsr-x  6 user g20XXXXX   2048 Sep 24 13:19 ..
 drwxrwsr-x  2 user g20XXXXX   2048 Sep 19  2012 a_strange_name
 drwxrwsr-x  2 user g20XXXXX   2048 Sep 19  2012 backed_up_proj_folder
 drwxrwsr-x  2 user g20XXXXX   2048 Sep 19  2012 external_hdd
@@ -233,8 +229,8 @@ mv <source> <destination>
 
 First, take a look inside the **important_results** folder:
 
-```
-[user@milou2 linux_tutorial]$ ll important_results/
+```bash
+[user@login1 linux_tutorial]$ ll important_results/
 total 0
 -rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 dna_data_analysis_result_file_that_is_important-you_should_really_use_tab_completion_for_file_names.bam
 -rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 temp_file-1
@@ -251,8 +247,8 @@ mv important_results/temp_file-1 backed_up_proj_folder/
 
 Look in the backed-up project folder to make sure you moved the file correctly.
 
-```
-[user@milou2 linux_tutorial]$ ll backed_up_proj_folder/
+```bash
+[user@login1 linux_tutorial]$ ll backed_up_proj_folder/
 total 0
 -rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 dna_data_analysis_result_file_that_is_important-you_should_really_use_tab_completion_for_file_names.bam
 -rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 last_years_data
@@ -267,9 +263,9 @@ mv a_strange_name a_better_name
 
 Look around to see that the name change worked.
 
-```
-[user@milou2 linux_tutorial]$ mv a_strange_name a_better_name
-[user@milou2 linux_tutorial]$ ll
+```bash
+[user@login1 linux_tutorial]$ mv a_strange_name a_better_name
+[user@login1 linux_tutorial]$ ll
 total 448
 drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 a_better_name
 drwxrwsr-x 2 user g20XXXXX   2048 Sep 24 13:40 backed_up_proj_folder
@@ -297,9 +293,9 @@ cp backed_up_proj_folder/last_years_data external_hdd/
 
 Take a look in the **external_hdd** to make sure the file got copied.
 
-```
-[user@milou2 linux_tutorial]$ cp backed_up_proj_folder/last_years_data external_hdd/
-[user@milou2 linux_tutorial]$ ll external_hdd/
+```bash
+[user@login1 linux_tutorial]$ cp backed_up_proj_folder/last_years_data external_hdd/
+[user@login1 linux_tutorial]$ ll external_hdd/
 total 0
 -rwxrwxr-x 1 user g20XXXXX 0 Sep 24 13:46 last_years_data
 ```
@@ -308,10 +304,11 @@ total 0
 
 Sometimes you will delete files. Usually this is when you know that the file or files are useless to you, and they only take up space on your hard drive or UPPMAX account.
 
-To delete a file, we use the **R**e<b>M</b>ove command, **`rm`**.
+To delete a file, we use the **R**e**M**ove command, `rm`.
 Syntax:
 
-```
+```bash
+# syntax
 rm <file to remove>
 ```
 
@@ -329,8 +326,8 @@ There is no trash bin in Linux. If you delete a file, it is gone. So be careful 
 
 Try it out by deleting the useless file in the folder you are standing in. First, look around in the folder to see the file.
 
-```
-[user@milou2 linux_tutorial]$ ll
+```bash
+[user@login1 linux_tutorial]$ ll
 total 448
 drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 a_better_name
 drwxrwsr-x 2 user g20XXXXX   2048 Sep 24 13:40 backed_up_proj_folder
@@ -363,7 +360,7 @@ rmdir this_has_a_file
 If you look inside `this_has_a_file`,
 
 ```
-[user@milou2 linux_tutorial]$ ll this_has_a_file
+[user@login1 linux_tutorial]$ ll this_has_a_file
 total 0
 -rwxrwxr-x 1 user g20XXXXX 0 Jan 28  2012 file
 ```
@@ -389,8 +386,8 @@ Of course, this never happens because you **ALWAYS** name your files so that you
 
 {{< fa clipboard-list >}} Now, we are looking for that really good script we wrote a couple of months ago in that other project. Look in the project's folder, `old_project` and find the script.
 
-```
-[user@milou2 linux_tutorial]$ ll old_project/
+```bash
+[user@login1 linux_tutorial]$ ll old_project/
 total 96
 -rwxrwxr-x 1 user g20XXXXX 39904 Sep 19  2012 a
 -rwxrwxr-x 1 user g20XXXXX     0 Sep 19  2012 stuff_1
@@ -400,6 +397,7 @@ total 96
 Not so easy with those names.. We will have to use `less` to look at the files and figure out which is which.
 
 ```bash
+# syntax
 less <filename>
 ```
 
@@ -424,7 +422,9 @@ So, why care about how the program works? I'll show you why. This time we will b
 First, open the file with `nano`.
 
 ```bash
+# syntax
 nano <filename>
+
 nano /sw/courses/ngsintro/linux/linux_additional-files/large_file
 ```
 
@@ -437,23 +437,33 @@ Is the file loaded yet? Now take that waiting time and multiply it with 100-1000
 To view the first rows of the large file, use `head`.
 
 ```bash
+# syntax
 head <filename>
+
 head /sw/courses/ngsintro/linux/linux_additional-files/large_file
 ```
 
 Remember how to view an arbitrary number of first rows in a file?
 
 ```bash
+# syntax
 head -n <number of rows to view> <filename>
+
 head -n 23 /sw/courses/ngsintro/linux/linux_additional-files/large_file
 ```
 
 The same syntax for viewing the last rows of a file with tail:
 
 ```bash
+# syntax
 tail <filename>
+
 tail /sw/courses/ngsintro/linux/linux_additional-files/large_file
+
+
+# syntax
 tail -n <number of rows to view> <filename>
+
 tail -n 23 /sw/courses/ngsintro/linux/linux_additional-files/large_file
 ```
 
@@ -470,11 +480,11 @@ mv  sample_1_*  my_other_folder
 We can try it out on the example files I have prepared. There are two folders called **part_1** and **part_2**. We want to collect all the **.txt** files from both these folders in one of the folders. Look around in both the folders to see what they contain.
 
 ```
-[user@milou2 linux_tutorial]$ ll part_1/
+[user@login1 linux_tutorial]$ ll part_1/
 total 0
 -rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 file_1.txt
 -rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 file_2.txt
-[user@milou2 linux_tutorial]$ ll part_2
+[user@login1 linux_tutorial]$ ll part_2
 total 0
 -rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 file_3.txt
 -rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 file_4.txt
@@ -492,9 +502,9 @@ The wildcard works with most, if not all, Linux commands. We can try using wildc
 
 {{< fa clipboard-list >}} Try to figure out the solution on your own. Then check the answer below.
 
-```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}
-cat(paste0("ll many_files/*.docx
-ll many_files/*.txt"))
+```bash
+ll many_files/*.docx
+ll many_files/*.txt
 ```
 
 ## Utility commands
@@ -555,7 +565,9 @@ You might wonder how the heck am I supposed to be able to remember all these com
 Good news everyone, there is a manual! To get all the nitty-gritty details about `ls`, you use the `man` command.
 
 ```bash
+# syntax
 man <command you want to look at>
+
 man ls
 ```
 

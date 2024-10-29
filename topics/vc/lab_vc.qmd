@@ -109,7 +109,7 @@ If you connect to Dardel via ThinLinc you don't have to create a local workspace
 ## Dardel {-}
 ### Connect to Dardel {-}
 
-During this lab it is best to connect to Dardel with ThinLinc, which gives you a graphical remote desktop. Instructions for this is available at [**Connecting to Dardel**](topics/other/lab_connect.html). Please follow the instructions in section 1.2 Remote desktop connection.
+During this lab it is best to connect to Dardel with ThinLinc, which gives you a graphical remote desktop. Instructions for this is available at [**Connecting to Dardel**](topics/other/lab_connect_pdc.html). Please follow the instructions in section 1.2 Remote desktop connection.
 
 ### Logon to a node {-}
 
