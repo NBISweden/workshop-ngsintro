@@ -11,8 +11,8 @@ format: html
 #| include: false
 library(yaml)
 library(here)
-project_id <- yaml::read_yaml(here("_quarto.yml"))$project_id
-backup_id  <- yaml::read_yaml(here("_quarto.yml"))$backup_project_id
+id_project        <- yaml::read_yaml(here("_quarto.yml"))$id_project
+id_project_backup <- yaml::read_yaml(here("_quarto.yml"))$id_project_backup
 ```
 
 You will have to have 3 different accounts to complete the labs in this course; one in [SUPR](https://supr.naiss.se/) to handle the two other accounts, and one each at the compute centers [PDC](https://www.pdc.kth.se/) in Stockholm and [UPPMAX](https://uppmax.uu.se) in Uppsala.
@@ -34,7 +34,7 @@ This is where you might run into trouble if you don't have a SWAMID connected ac
 
 ## UPPMAX
 
-Remote computing cluster UPPMAX will be use as a fallback cluster, if there should be any problems at PDC. After making sure you have an accepted user agreement, go to the [**SUPR/NAISS Projects**](https://supr.naiss.se/project/) page and request membership to the project ID: [**`r paste0(backup_id)`**]{.badge}
+Remote computing cluster UPPMAX will be use as a fallback cluster, if there should be any problems at PDC. After making sure you have an accepted user agreement, go to the [**SUPR/NAISS Projects**](https://supr.naiss.se/project/) page and request membership to the project ID: [**`r id_project_backup`**]{.badge}
 
 ![](assets/images/supr-request.jpg){width="70%"}
 
@@ -60,7 +60,7 @@ If you **do not already have a PDC account**, please fill in the form at [https:
 |   |   |
 |---|---|
 | __Lecturer/ Project Leader:__ | Martin Dahlö |
-| __Course / Project Title:__ | `r paste0(backup_id)` |
+| __Course / Project Title:__ | `r paste0(id_project)` |
 
 We have notified PDC who the students for our course is and they will create the account needed to login to their computers. Follow the instructions you get from them to complete your account creation. The morning session on the Monday of the course will cover [how to connect to PDC](https://www.pdc.kth.se/support/documents/login/ssh_login.html#ssh-login), a bunch of steps that might not be trivial for novice users.
 
@@ -99,10 +99,10 @@ When you need to transfer data between the remote cluster and your computer, you
 See [Connecting to UPPMAX](topics/other/lab_connect_uppmax.qmd) instructions listed on the **Contents** page.
 
 ::: {.callout-tip}
-If you want to get a primer on using the terminal, you can get started with the following **Tutorial One** at this link *[Unix tutorial for beginners](http://www.ee.surrey.ac.uk/Teaching/Unix/)*. You can use [https://scilifelab.github.io/courses/ngsintro/common/emu/](https://scilifelab.github.io/courses/ngsintro/common/emu/) [(or this mirror)](https://bellard.org/jslinux/vm.html?url=https://bellard.org/jslinux/buildroot-x86.cfg) to try the commands in the tutorial, so that you don't mess up any real world system. If you have any questions regarding this tutorial contact: *martin.dahlo [at] scilifelab.uu.se*.
+If you want to get a primer on using the terminal, you can get started with the following **Tutorial One** at this link [Unix tutorial for beginners](http://www.ee.surrey.ac.uk/Teaching/Unix/). You can use [https://scilifelab.github.io/courses/ngsintro/common/emu/](https://scilifelab.github.io/courses/ngsintro/common/emu/) [(or this mirror)](https://bellard.org/jslinux/vm.html?url=https://bellard.org/jslinux/buildroot-x86.cfg) to try the commands in the tutorial, so that you don't mess up any real world system. If you have any questions regarding this tutorial contact: *martin.dahlo [at] nbis.se*.
 :::
 
-## Create a user folder
+### Create a user folder
 
 ::: {.callout-note}
 Where `username` is mentioned, change to your user name.
@@ -110,11 +110,8 @@ Where `username` is mentioned, change to your user name.
 
 Once you have logged in to UPPMAX, run the following command.
 
-```{r}
-#| attr-output: "filename='bash'"
-#| class-output: bash
-#| echo: false
-cat(paste0("mkdir /proj/", backup_id, "/nobackup/username"))
+```bash
+mkdir /proj/`r id_project_backup`/nobackup/$USER
 ```
 
 This creates a directory with your user name. You will work inside this directory for the workshop. If you cannot write to the folder, the most likely reason is that you have not requested access to the workshop project via SUPR. This is described in step 1 above.

@@ -8,22 +8,26 @@ format: html
 ```{r,eval=TRUE,include=FALSE}
 library(yaml)
 library(here)
-upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
+id_project     <- yaml::read_yaml(here("_quarto.yml"))$id_project
+path_resources <- yaml::read_yaml(here("_quarto.yml"))$path_resources
+path_workspace <- yaml::read_yaml(here("_quarto.yml"))$path_workspace
+site_url       <- yaml::read_yaml(here("_quarto.yml"))$website$`site-url`
+output_dir     <- yaml::read_yaml(here("_quarto.yml"))$project$`output-dir`
 ```
 
 ::: {.callout-note}
 In code blocks, the dollar sign (`$`) is not to be printed. The dollar sign is usually an indicator that the text following it should be typed in a terminal window.
 :::
 
-# Connect to UPPMAX
+## Connect to PDC
 
-The first step of this lab is to open a ssh connection to UPPMAX. Please refer to [**Connecting to UPPMAX**](../../other/lab_connect.html) for instructions. Once connected to UPPMAX, return here and continue reading the instructions below.
+The first step of this lab is to open a ssh connection to PDC. Please refer to [**Connecting to PDC**](../other/lab_connect_pdc.html) for instructions. Once connected to PDC, return here and continue reading the instructions below.
 
-# Logon to a node
+## Logon to a node
 
-Usually you would do most of the work in this lab directly on one of the login nodes at UPPMAX, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
+Usually you would do most of the work in this lab directly on one of the login nodes at PDC, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
 
-Check which node you got when you booked resources this morning (replace **username** with your UPPMAX username)
+Check which node you got when you booked resources this morning (replace **username** with your PDC username)
 
 ```bash
 squeue -u username
@@ -31,56 +35,56 @@ squeue -u username
 
 should look something like this
 
-```
-dahlo@rackham2 work $ squeue -u dahlo
+```bash
+user@login1 ~ $ squeue -u user
              JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
-           3132376      core       sh    dahlo  R       0:04      1 r292
-dahlo@rackham2 work $
+           5583899    shared interact    user  R       2:22      1 nid001009
+user@login1 ~ $
 ```
 
-where **r292** is the name of the node I got (yours will probably be different).
-Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested (7 hours in this case) the session will shut down, and you will lose all unsaved data. Connect to this node from within UPPMAX.
+where `nid001009` is the name of the node I got (yours will probably be different).
+Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested (7 hours in this case) the session will shut down, and you will lose all unsaved data. Connect to this node from within PDC.
 
 ```bash
-ssh -Y r292
+ssh -Y nid001009
 ```
 
 If the list is empty you can run the allocation command again and it should be in the list:
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("salloc -A ", upid, " -t 03:30:00 -p core -n 1 --no-shell"))
+```bash
+salloc -A `r id_project` -t 04:00:00 -p shared -n 4
 ```
-
-{{< fa lightbulb >}} There is a UPPMAX specific tool called `jobinfo` that supplies the same kind of information as `squeue` that you can use as well (`$ jobinfo -u username`).
 
 # Copy files for lab
 
-Now, you will need some files. To avoid all the course participants editing the same file all at once, undoing each other's edits, each participant will get their own copy of the needed files. The files are located in the folder **/sw/courses/ngsintro/linux/uppmax_tutorial**
+Now, you will need some files. To avoid all the course participants editing the same file all at once, undoing each other's edits, each participant will get their own copy of the needed files. The files are located in the folder 
 
-Next, copy the lab files from this folder. `-r` means recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, NOT sub-folders and files in sub-folders.
+```bash
+`r path_resources`/linux/uppmax_tutorial
+```
+
+Next, copy the lab files from this folder. `-r` means recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, **NOT** sub-folders and files in sub-folders.
 
 {{< fa lightbulb >}} Remember to use tab-complete to avoid typos and too much writing.
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat("cp -r <source> <destination>\n")
-cat(paste0("cp -r /sw/courses/ngsintro/linux/uppmax_tutorial /proj/", upid, "/nobackup/username"))
+```bash
+# syntax
+cp -r <source> <destination>
+
+cp -r `r path_resources`/linux/uppmax_tutorial `r path_workspace`
 ```
 
-Have a look in **`r paste0("/proj/",upid,"/nobackup/&lt;username&gt;/uppmax_tutorial")`**.
+Have a look in the folder you just copied
+```bash
+user@login1 ~ $ cd `r path_workspace`/uppmax_tutorial
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("cd /proj/", upid, "/nobackup/username/uppmax_tutorial"))
-```
-
-```
-ll
-
+user@login1 uppmax_tutorial $ ll
 total 128K
-drwxrwxr-x 2 dahlo dahlo 2,0K May 18 16:21 .
-drwxrwxr-x 4 dahlo dahlo 2,0K May 18 15:34 ..
--rwxrwxr-x 1 dahlo dahlo 1,2K May 18 16:21 data.bam
--rw-rw-r-- 1 dahlo dahlo  232 May 18 16:21 job_template
-$
+drwxrwxr-x 2 user user 2,0K May 18 16:21 .
+drwxrwxr-x 4 user user 2,0K May 18 15:34 ..
+-rwxrwxr-x 1 user user 1,2K May 18 16:21 data.bam
+-rw-rw-r-- 1 user user  232 May 18 16:21 job_template
+user@login1 uppmax_tutorial $ 
 ```
 
 # Run programs
@@ -93,19 +97,20 @@ less data.bam
 
 ![](assets/bam_binary.png)
 
-Not so pretty.. Luckily for us, there is a program called **[samtools](http://www.htslib.org/)** that is made for reading BAM files. To use it on UPPMAX we must first load the module for **samtools**. Try starting samtools before loading the module.
+Not so pretty.. Luckily for us, there is a program called [samtools](http://www.htslib.org/) that is made for reading BAM files. To use it on PDC we must first load the module for `samtools`. Try starting samtools before loading the module.
 
 ```bash
-samtools
-
+user@login1 uppmax_tutorial $ samtools
 -bash: samtools: command not found
 ```
 
 That did not work, try it again after loading the module:
 
 ```bash
-module load bioinfo-tools samtools/1.10
-samtools
+user@login1 uppmax_tutorial $ module load bioinfo-tools samtools/1.10
+Message: NOTE: The modules made available by loding this module are all UPPMAX legacy, please consider loading PDC installed modules when available, as they are optimized for working on Dardel
+
+user@login1 uppmax_tutorial $ samtools
 
 Program: samtools (Tools for alignments in the SAM format)
 Version: 1.10 (using htslib 1.10)
@@ -160,7 +165,7 @@ Commands:
 To use samtools to view a BAM file, use the following line.
 
 ```bash
-samtools view -h data.bam
+user@login1 uppmax_tutorial $ samtools view -h data.bam
 
 @HD	VN:1.0	SO:coordinate
 @SQ	SN:chr1	LN:249250621
@@ -173,11 +178,12 @@ samtools view -h data.bam
 @SQ	SN:chr16	LN:90354753
 ```
 
-**`-h`** also print the BAM file's **header**, which is the rows starting with **`@` signs** in the beginning of the file. These lines contain so called **metadata**; information about the data stored in the file. It contain things like which program was used to generate the BAM file and which chromosomes are present in the file. Try running the command without the **`-h`** to see the difference.
+`-h` also print the BAM file's **header**, which is the rows starting with **`@` signs** in the beginning of the file. These lines contain so called **metadata**; information about the data stored in the file. It contain things like which program was used to generate the BAM file and which chromosomes are present in the file. Try running the command without the `-h` to see the difference.
 
-The not-binary version (ASCII, or text version) of a BAM file is called a **SAM file**, which was just printed directly into the terminal window. The SAM file is not to much use for us printed in the terminal window, aesthetics aside. It is probably much better to have the SAM file saved as an actual file, something that is very easy to do. Any text that is printed to the terminal can be saved to a file instead of the terminal window using a 'crocodile mouth', **`>`**
+The not-binary version (ASCII, or text version) of a BAM file is called a **SAM file**, which was just printed directly into the terminal window. The SAM file is not to much use for us printed in the terminal window, aesthetics aside. It is probably much better to have the SAM file saved as an actual file, something that is very easy to do. Any text that is printed to the terminal can be saved to a file instead of the terminal window using a 'crocodile mouth', `>`
 
 ```bash
+# syntax
 program arguments > outfile
 ```
 
@@ -195,26 +201,26 @@ Look at the created file:
 ll
 ```
 
-The SAM file is now human readable. Try viewing it with **`less`**:
+The SAM file is now human readable. Try viewing it with `less`:
 
 ```bash
 less data.sam
 ```
 
-You can also edit the file with **nano**:
+You can also edit the file with `nano`:
 
 ```bash
 nano data.sam
 ```
 
-Try deleting the whole last line in the file, save it, and exit nano.
+Try deleting the whole last line in the file, save it, and exit `nano`.
 
 # Modules
 
 To view which module you have loaded at the moment, type
 
 ```bash
-module list
+user@login1 uppmax_tutorial $ module list
 
 Currently Loaded Modules:
   1) uppmax   2) bioinfo-tools   3) samtools/1.10
@@ -286,7 +292,7 @@ jobinfo -u username
 CLUSTER: rackham
 Running jobs:
    JOBID PARTITION                      NAME     USER        ACCOUNT ST          START_TIME  TIME_LEFT  NODES CPUS NODELIST(REASON)
- 3134399   devcore                               dahlo       g20XXXXX  R 2018-05-18T16:32:54      59:25      1    1 r483
+ 3134399   devcore                               user       g20XXXXX  R 2018-05-18T16:32:54      59:25      1    1 r483
 
 Nodes in use:                            462
 Nodes in devel, free to use:               2
@@ -299,7 +305,7 @@ Nodes, all in total:                     486
 
 Waiting jobs:
    JOBID    POS PARTITION                      NAME     USER        ACCOUNT ST          START_TIME   TIME_LEFT PRIORITY CPUS NODELIST(REASON)     FEATURES DEPENDENCY
- 3134401    221      core           Template_script    dahlo       g20XXXXX PD                 N/A     1:00:00   100000    1           (None)       (null)
+ 3134401    221      core           Template_script    user       g20XXXXX PD                 N/A     1:00:00   100000    1           (None)       (null)
 
 Waiting bonus jobs:
 
@@ -332,7 +338,7 @@ This will create a booking for you which has a higher priority than the jobs sub
 Try closing down your current session on the reserved node you connected to in the beginning of the lab by typing `exit`. Then make a new booking using interactive,
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("interactive -A ", upid, " -t 02:30:00 -p core"))
+cat(paste0("interactive -A ", id_project, " -t 02:30:00 -p core"))
 ```
 
 Congratulations, you are now ready to be let loose on the cluster!
