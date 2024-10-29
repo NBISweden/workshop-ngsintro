@@ -91,10 +91,10 @@ format:
       data-background-opacity: "1"
     header-logo-left: /assets/logos/nbis.png
     header-logo-left-height: 25px
-    header-logo-left-url: https://nbisweden.github.io/workshop-ngsintro/home_contents.html
+    header-logo-left-url: "https://nbisweden.github.io/workshop-ngsintro/2411/home_contents.html"
     header-logo-right: /assets/logos/scilifelab.png
     header-logo-right-height: 25px
-    header-logo-right-url: https://nbisweden.github.io/workshop-ngsintro/home_contents.html
+    header-logo-right-url: "https://nbisweden.github.io/workshop-ngsintro/2411/home_schedule.html"
     template-partials:
       - "assets/title-slide.html"
       
@@ -142,6 +142,7 @@ assistants:
  - "FB: Franziska Bonath"
  - "FR: Fariba Roshanzamir"
  - "GD: Guilherme Dias"
+ - "JD: Jyotirmoy Das"
  - "JH: Jason Hill"
  - "JB: Joakim Bygdell"
  - "JT: Jeanette Tångrot"
