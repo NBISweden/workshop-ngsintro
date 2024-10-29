@@ -9,9 +9,10 @@ format: html
 #| include: false
 library(yaml)
 library(here)
-project_id <- yaml::read_yaml(here("_quarto.yml"))$project_id
+id_project <- yaml::read_yaml(here("_quarto.yml"))$id_project
 path_resources <- paste0(yaml::read_yaml(here("_quarto.yml"))$path_resources,"/rnaseq")
-path_workspace <- paste0(yaml::read_yaml(here("_quarto.yml"))$path_workspace,"/rnaseq")
+path_rnaseq <- paste0(yaml::read_yaml(here("_quarto.yml"))$path_workspace,"/rnaseq")
+url_cluster <- yaml::read_yaml(here("_quarto.yml"))$url_cluster
 ```
 
 ```{r}
@@ -103,7 +104,7 @@ If you are not on ThinLinc, connect to UPPMAX first. {{< fa exclamation-circle >
 
 ```{sh}
 #| eval: false
-ssh -XY username@dardel.pdc.kth.se
+ssh -XY username@`r url_cluster`
 ```
 
 Book a node.
@@ -116,7 +117,7 @@ Book compute resources for RNA-Seq lab.
 #| echo: false
 #| class.output: "sh"
 #| comment: ""
-cat(paste0("salloc -A ",project_id," -t 03:00:00 -p shared -n 4 --no-shell"))
+cat(paste0("salloc -A ",id_project," -t 03:00:00 -p shared -n 4 --no-shell"))
 ```
 
 Check allocation. {{< fa exclamation-circle >}} Remember to replace **username**.
@@ -192,7 +193,7 @@ cat("cd 1_raw\npwd")
 ```{r}
 #| echo: false
 #| comment: ""
-cat(paste0(path_workspace,"/1_raw"))
+cat(paste0(path_rnaseq,"/1_raw"))
 ```
 
 Run below to create softlinks. Note that the command ends in a space followed by a period.
@@ -245,7 +246,7 @@ cat("cd ../2_fastqc\npwd")
 ```{r}
 #| echo: false
 #| comment: ""
-cat(paste0(path_workspace,"/2_fastqc"))
+cat(paste0(path_rnaseq,"/2_fastqc"))
 ```
 
 Load Uppmax modules `bioinfo-tools` and FastQC `FastQC/0.11.9`.
@@ -278,7 +279,7 @@ cat("cd ../scripts\npwd")
 ```{r}
 #| echo: false
 #| comment: ""
-cat(paste0(path_workspace,"/scripts"))
+cat(paste0(path_rnaseq,"/scripts"))
 ```
 
 The command below creates a new file in the current directory.
@@ -327,7 +328,7 @@ cat("cd ../2_fastqc\npwd")
 ```{r}
 #| echo: false
 #| comment: ""
-cat(paste0(path_workspace,"/2_fastqc"))
+cat(paste0(path_rnaseq,"/2_fastqc"))
 ```
 
 ```{sh}
@@ -345,7 +346,7 @@ After the fastqc run, there should be a `.zip` file and a `.html` file for every
 #| echo: false
 #| comment: ""
 #| class.output: "sh"
-cat(paste0("scp username@dardel.pdc.kth.se:",path_workspace,"/2_fastqc/SRR3222409-19_1_fastqc.html ."))
+cat(paste0("scp username@", url_cluster, ":",path_rnaseq,"/2_fastqc/SRR3222409-19_1_fastqc.html ."))
 ```
 
 or download the whole directory.
@@ -354,7 +355,7 @@ or download the whole directory.
 #| echo: false
 #| comment: ""
 #| class.output: "sh"
-cat(paste0("scp -r username@dardel.pdc.kth.se:",path_workspace,"/2_fastqc ."))
+cat(paste0("scp -r username@", url_cluster, ":",path_rnaseq,"/2_fastqc ."))
 ```
 
 ::: {.callout-note}
@@ -387,7 +388,7 @@ You should be standing here to run this:
 ```{r}
 #| echo: false
 #| comment: ""
-cat(paste0(path_workspace,"/reference"))
+cat(paste0(path_rnaseq,"/reference"))
 ```
 
 You are most likely to use the [latest version](https://www.ensembl.org/index.html) of ensembl release genome and annotations when starting a new analysis. For this exercise, we will choose ensembl version 99.
@@ -497,7 +498,7 @@ You should be standing here to run this:
 ```{r}
 #| echo: false
 #| comment: ""
-cat(paste0(path_workspace,"/3_mapping"))
+cat(paste0(path_rnaseq,"/3_mapping"))
 ```
 
 We will create softlinks to the fastq files from here to make things easier.
@@ -692,7 +693,7 @@ ls -l
 #| echo: false
 #| comment: ""
 #| class.output: "sh"
-cat(paste0("cp -r ",path_resources,"/main/3_mapping/* ",path_workspace,"/rnaseq/3_mapping/"))
+cat(paste0("cp -r ",path_resources,"/main/3_mapping/* ",path_rnaseq,"/rnaseq/3_mapping/"))
 ```
 
 <br>
@@ -784,7 +785,7 @@ drwxrwsr-x 2 user gXXXXXXX 4.0K Jan 22 22:53 raw_data_qualimapReport
 #| echo: false
 #| comment: ""
 #| class.output: "sh"
-cat(paste0("scp -r username@rackham.uppmax.uu.se:",path_workspace,"/4_qualimap ."))
+cat(paste0("scp -r username@", url_cluster,":",path_rnaseq,"/4_qualimap ."))
 ```
 
 {{< fa comments >}} Check the QualiMap report for one sample and discuss if the sample is of good quality. You only need to do this for one file now. We will do a comparison with all samples when using the MultiQC tool.
@@ -795,7 +796,7 @@ cat(paste0("scp -r username@rackham.uppmax.uu.se:",path_workspace,"/4_qualimap .
 #| echo: false
 #| comment: ""
 #| class.output: "sh"
-cat(paste0("cp -r ",path_resources,"/main/4_qualimap/* ",path_workspace,"/4_qualimap/"))
+cat(paste0("cp -r ",path_resources,"/main/4_qualimap/* ",path_rnaseq,"/4_qualimap/"))
 ```
 
 <br>
@@ -845,7 +846,7 @@ You should be standing here to run this:
 ```{r}
 #| echo: false
 #| comment: ""
-cat(paste0(path_workspace,"/5_dge"))
+cat(paste0(path_rnaseq,"/5_dge"))
 ```
 
 ```{sh}
@@ -879,7 +880,7 @@ For downstream steps, we will NOT use this `counts.txt` file. Instead we will us
 #| echo: false
 #| comment: ""
 #| class.output: "sh"
-cat(paste0("cp ",path_resources,"/main/5_dge/counts_full.txt ",path_workspace,"/5_dge/"))
+cat(paste0("cp ",path_resources,"/main/5_dge/counts_full.txt ",path_rnaseq,"/5_dge/"))
 ```
 
 :::
@@ -897,7 +898,7 @@ Move to the `6_multiqc` directory. You should be standing here to run this:
 ```{r}
 #| echo: false
 #| comment: ""
-cat(paste0(path_workspace,"/6_multiqc"))
+cat(paste0(path_rnaseq,"/6_multiqc"))
 ```
 
 And run this in the terminal.
@@ -946,7 +947,7 @@ drwxrwsr-x 2 user gXXXXXXX 4.0K Sep  6 22:33 multiqc_data
 #| echo: false
 #| comment: ""
 #| class.output: "sh"
-cat(paste0("scp username@dardel.pdc.kth.se:",path_workspace,"/6_multiqc/multiqc_report.html ."))
+cat(paste0("scp username@", url_cluster, ":",path_rnaseq,"/6_multiqc/multiqc_report.html ."))
 ```
 
 <br>
@@ -1053,7 +1054,7 @@ Copy this file ``r paste0(path_resources,"/bonus/funannot/annotate_de_results.R"
 #| echo: false
 #| comment: ""
 #| class.output: "sh"
-cat(paste0("cp ",path_resources,"/bonus/funannot/annotate_de_results.R ",path_workspace,"/rnaseq/funannot/"))
+cat(paste0("cp ",path_resources,"/bonus/funannot/annotate_de_results.R ",path_rnaseq,"/rnaseq/funannot/"))
 ```
 
 We need some annotation information, so we will copy this file ``r paste0(path_resources,"/main/reference/mm-biomart99-genes.txt.gz")`` to your `rnaseq/reference` directory.
@@ -1062,7 +1063,7 @@ We need some annotation information, so we will copy this file ``r paste0(path_r
 #| echo: false
 #| comment: ""
 #| class.output: "sh"
-cat(paste0("cp ",path_resources,"/main/reference/mm-biomart99-genes.txt.gz ",path_workspace,"/rnaseq/reference/"))
+cat(paste0("cp ",path_resources,"/main/reference/mm-biomart99-genes.txt.gz ",path_rnaseq,"/rnaseq/reference/"))
 ```
 
 Then uncompress the file. `gunzip ../reference/mm-biomart99-genes.txt.gz`
@@ -1151,7 +1152,7 @@ Copy the R script files from the following directory: ``r paste0(path_resources,
 #| echo: false
 #| comment: ""
 #| class.output: "sh"
-cat(paste0("cp ",path_resources,"/bonus/plots/*.R ",path_workspace,"/plots/"))
+cat(paste0("cp ",path_resources,"/bonus/plots/*.R ",path_rnaseq,"/plots/"))
 ```
 
 You should have the following files:
@@ -1282,10 +1283,10 @@ Copy two BAM files (one from each experimental group, for example; SRR3222409-19
 #| echo: false
 #| comment: ""
 #| class.output: "sh"
-cat(paste0("scp username@dardel.pdc.kth.se:",path_workspace,"/rnaseq/3_mapping/SRR3222409-19.bam ./\n"))
-cat(paste0("scp username@dardel.pdc.kth.se:",path_workspace,"/rnaseq/3_mapping/SRR3222409-19.bam.bai ./\n"))
-cat(paste0("scp username@dardel.pdc.kth.se:",path_workspace,"/rnaseq/3_mapping/SRR3222412-19.bam ./\n"))
-cat(paste0("scp username@dardel.pdc.kth.se:",path_workspace,"/rnaseq/3_mapping/SRR3222412-19.bam.bai ./\n"))
+cat(paste0("scp username@", url_cluster, ":",path_rnaseq,"/rnaseq/3_mapping/SRR3222409-19.bam ./\n"))
+cat(paste0("scp username@", url_cluster, ":",path_rnaseq,"/rnaseq/3_mapping/SRR3222409-19.bam.bai ./\n"))
+cat(paste0("scp username@", url_cluster, ":",path_rnaseq,"/rnaseq/3_mapping/SRR3222412-19.bam ./\n"))
+cat(paste0("scp username@", url_cluster, ":",path_rnaseq,"/rnaseq/3_mapping/SRR3222412-19.bam.bai ./\n"))
 ```
 
 Alternatively, you can use an SFTP browser like [Filezilla](https://filezilla-project.org/) or [Cyberduck](https://cyberduck.io/) for a GUI interface. Windows users can also use the MobaXterm SFTP file browser to drag and drop.
@@ -1299,9 +1300,8 @@ For Linux and Mac users, Log in to Uppmax in a way so that the generated graphic
 
 Login in to Uppmax with X-forwarding enabled:
 
-```{sh}
-#| eval: false
-ssh -Y username@dardel.pdc.kth.se
+```bash
+ssh -Y username@`r url_cluster`
 ssh -Y computenode
 ```
 
@@ -1427,7 +1427,7 @@ We add `SBATCH` commands to the above script. The new script looks like this:
 #| comment: ""
 #| class.output: "sh"
 cat(paste0('#!/bin/bash
-#SBATCH -A ',project_id,'
+#SBATCH -A ',id_project,'
 #SBATCH -p shared
 #SBATCH -n 8
 #SBATCH -t 3:00:00
@@ -1527,7 +1527,7 @@ And lastly we have a **nextflow.sh** which will be our bash script for launching
 #| class.output: "sh"
 cat(paste0('#!/bin/bash
 
-#SBATCH -A ',project_id,'
+#SBATCH -A ',id_project,'
 #SBATCH -p shared
 #SBATCH -n 4
 #SBATCH -t 4:00:00
@@ -1539,7 +1539,7 @@ module load nextflow/24.04.2
 module load nf-core/2.6
 NXF_HOME=.
 
-nextflow run nf-core/rnaseq -r 3.7 -c params.config -profile uppmax --project ',project_id,' -resume'
+nextflow run nf-core/rnaseq -r 3.7 -c params.config -profile uppmax --project ',id_project,' -resume'
 ))
 ```
 

@@ -107,21 +107,25 @@ execute:
   echo: true
   warning: false
   message: false
-  freeze: false
+  freeze: true
 
 filters:
   - assets/custom.lua
   - reveal-logo
 
-# used site-wide wherever project ids are used
-# project id on dardel
-project_id: "edu24.uppmax"
-# project id on fallback cluster rackham
-backup_project_id: "naiss2024-22-1375"
-# path to student's working directory
+# used site-wide
+# project id on active cluster (dardel)
+id_project: "edu24.uppmax"
+# project id on fallback cluster (rackham)
+id_project_backup: "naiss2024-22-1375"
+# path to course working directory
 path_workspace: "~/ngsintro"
-# path to course resources on dardel
+# path to course resources on cluster
 path_resources: "/sw/courses/ngsintro"
+# url to active cluster (dardel)
+url_cluster: "dardel.pdc.kth.se"
+# url to backup cluster (rackham)
+url_cluster_backup: "rackham.uppmax.uu.se"
 
 # location options are linkoping, lund, umea, uppsala or online. For rendering the info page.
 # one or more separated by commas or semicolon. online doesn't display any location info.

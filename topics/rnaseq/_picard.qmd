@@ -84,7 +84,7 @@ multiqc --interactive . -m picard
 #| echo: false
 #| comment: ""
 #| class.output: "sh"
-cat(paste0("scp -r username@dardel.pdc.kth.se:",path_workspace,"/4_picard ."))
+cat(paste0("scp -r username@", url_cluster, ":",path_workspace,"/4_picard ."))
 ```
 
 {{< fa comments >}} Check the Picard report for one sample and discuss if the sample is of good quality. You only need to do this for one file now. We will do a comparison with all samples when using the MultiQC tool.

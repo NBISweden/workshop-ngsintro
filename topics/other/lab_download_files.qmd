@@ -8,12 +8,10 @@ format: html
 ```{r,eval=TRUE,include=FALSE}
 library(yaml)
 library(here)
-upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
+id_project <- yaml::read_yaml(here("_quarto.yml"))$id_project
+path_workspace <- yaml::read_yaml(here("_quarto.yml"))$path_workspace
+url_cluster <- yaml::read_yaml(here("_quarto.yml"))$url_cluster
 ```
-
-::: {.callout-note}
-In code blocks, the dollar sign (`$`) is not to be printed. The dollar sign is usually an indicator that the text following it should be typed in a terminal window.
-:::
 
 ## Local workspace
 
@@ -28,7 +26,7 @@ Lets assume that you have a file "results.txt" in the following folder on UPPMAX
 ```{r}
 #| echo: false
 #| class-output: bash
-cat(paste0('/proj/',upid,'/nobackup/username/somefolder/'))
+cat(paste0(path_workspace,'/somefolder/'))
 ```
 
 ::: {.callout-note}
@@ -40,7 +38,7 @@ To download the file to your local workspace type:
 ```{r}
 #| output: asis
 #| echo: false
-out <- paste0("scp username@rackham.uppmax.uu.se:/proj/", upid, "/nobackup/username/somefolder/results.txt .")
+out <- paste0("scp username@", url_cluster, ":", path_workspace, "/somefolder/results.txt .")
 cat(
   "```{.bash filename='Local Terminal'}",
   out,
@@ -62,7 +60,7 @@ Now lets imagine that you have developed a script on your laptop and want to upl
 ```{r}
 #| output: asis
 #| echo: false
-out <- paste0("scp script.sh username@rackham.uppmax.uu.se:/proj/", upid, "/nobackup/username/somefolder/.")
+out <- paste0("scp script.sh username@", url_cluster, ":", path_workspace, "/somefolder/.")
 cat(
   "```{.bash filename='Local Terminal'}",
   out,
