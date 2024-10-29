@@ -8,12 +8,11 @@ format: html
 ```{r,eval=TRUE,include=FALSE}
 library(yaml)
 library(here)
-upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
+id_project <- yaml::read_yaml(here("_quarto.yml"))$id_project
+path_resources <- file.path(yaml::read_yaml(here("_quarto.yml"))$path_resources, "linux")
+path_linux <- file.path(yaml::read_yaml(here("_quarto.yml"))$path_workspace, "linux")
+path_linux_adv <- file.path(path_linux, "linux_advanced")
 ```
-
-::: {.callout-note}
-In code blocks, the dollar sign (`$`) is not to be printed. The dollar sign is usually an indicator that the text following it should be typed in a terminal window.
-:::
 
 ## Connect to UPPMAX
 
@@ -48,7 +47,7 @@ ssh -Y r292
 If the list is empty you can run the allocation command again and it should be in the list:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("salloc -A ", upid, " -t 03:30:00 -p core -n 1 --no-shell &"))
+cat(paste0("salloc -A ", id_project, " -t 03:30:00 -p shared -n 1 --no-shell &"))
 ```
 
 {{< fa lightbulb >}} There is a UPPMAX specific tool called `jobinfo` that supplies the same kind of information as `squeue` that you can use as well (`$ jobinfo -u username`).
@@ -89,15 +88,15 @@ Next, copy the lab files from this folder. `-r` means recursively, which means a
 #| echo: false
 #| class-output: bash
 cat("cp -r <source> <destination>\n")
-cat(paste0("cp -r /sw/courses/ngsintro/linux/linux_advanced /proj/", upid, "/nobackup/username"))
+cat(paste0("cp -r ", path_resources, "linux_advanced ", path_linux_adv))
 ```
 
-Have a look in ``r paste0("/proj/",upid,"/nobackup/username/linux_advanced")``.
+Have a look in ``r path_linux_adv``.
 
 ```{r}
 #| echo: false
 #| class-output: bash
-cat(paste0("cd /proj/", upid, "/nobackup/username/linux_advanced"))
+cat(paste0("cd ", path_linux_adv))
 ```
 
 ```bash
@@ -160,7 +159,7 @@ echo The volume of the rectangular cuboid with the sides $x,$y,$z is $(($x*$y*$z
 
 First off, let's open another terminal to UPPMAX so that you have 2 of them open. Scripting is a lot easier if you have one terminal on the command line ready to run commands and test things, and another one with a text editor where you write the actual code. That way you will never have to close down the text editor when you want to run the script you are writing on, and then open it up again when you want to continue editing the code.
 
-So open a new terminal window, connect it to UPPMAX and then connect it to the node you have booked. Make sure both terminals are in the ``r paste0("/proj/",upid,"/nobackup/username/linux_advanced")`` directory, and start editing a new file with gedit or nano where you write your script. Name the file whatever you want, but in the examples I will refer to it as `loop_01.sh`. Write your loops to this file (or create a new file for each new example) and test run it in the other terminal.
+So open a new terminal window, connect it to UPPMAX and then connect it to the node you have booked. Make sure both terminals are in the ``r path_linux_adv`` directory, and start editing a new file with gedit or nano where you write your script. Name the file whatever you want, but in the examples I will refer to it as `loop_01.sh`. Write your loops to this file (or create a new file for each new example) and test run it in the other terminal.
 
 **NOTE:** If you get error messages like `(gedit:27463): dconf-WARNING **: 10:59:00.575: failed to commit changes to dconf: Failed to execute child process “dbus-launch” (No such file or directory)`, and if you can't change any preferences, you can try starting gedit through the graphical menu in ThinLic instead. If you are using the Xfce desktop environment you should have a start-menu-like button at the top-left of the screen named `Applications`, or if you right-click somewhere on the desktop you should find it in the context menu that pops up. In the `Applications` menu, look in the category `Accessories` and you should find a program called `Text editor` which will start gedit *(hopefully without the errors).
 
@@ -229,7 +228,7 @@ echo Happy New Year everyone!!"))
 Let's try to do something similar to the example in the lecture slides, to run the same commands on multiple files. In the Introduction to UPPMAX, we learned how to use samtools to convert BAM files to SAM files so that humans can read them.
 In real life you will never do this, instead you will most likely always do it the other way around. SAM files take up ~4x more space on the hard drive compared to the same file in BAM format, so as soon as you see a SAM file you should convert it to a BAM file instead to conserve hard drive space. If you have many SAM files that needs converting you don't want to sit there and type all the commands by hand like a pleb.
 
-{{< fa clipboard-list >}} Write a script that converts all the SAM files in a specified directory to BAM files. Incidentally, you can find 50 SAM files in need of conversion in the folder called `sam` in the folder you copied to your folder earlier in this lab (``r paste0("/proj/",upid,"/nobackup/username/linux_advanced/sam")``). Bonus points if you make the program take the specified directory as an argument, and another bonus point if you get the program to name the resulting BAM file to the same name as the SAM file but with a .bam ending instead.
+{{< fa clipboard-list >}} Write a script that converts all the SAM files in a specified directory to BAM files. Incidentally, you can find 50 SAM files in need of conversion in the folder called `sam` in the folder you copied to your folder earlier in this lab (``r file.path(path_linux_adv, "sam")``). Bonus points if you make the program take the specified directory as an argument, and another bonus point if you get the program to name the resulting BAM file to the same name as the SAM file but with a .bam ending instead.
 
 ::: {.callout-tip}
 Remember that you have to load the samtools module to be able to run it. The way you get samtools to convert a SAM file to a BAM file is by typing the following command:
@@ -452,7 +451,7 @@ When the analysis is done, only fastq files and sorted and indexed BAM files sho
 
 {{< fa lightbulb >}} Read more about the `$SNIC_TMP` variable in the [disk storage guide](http://www.uppmax.uu.se/support/user-guides/disk-storage-guide/) on the UPPMAX homepage.
 
-There is a bunch of fastq files in the directory ``r paste0("/proj/",upid,"/nobackup/username/linux_advanced/fastq/")`` that is to be used for this exercise.
+There is a bunch of fastq files in the directory ``r paste0(path_linux_adv, "/fastq/")`` that is to be used for this exercise.
 
 Basic solution:
 
@@ -464,7 +463,7 @@ cat(paste0("# make the dummy pipeline available
 export PATH=$PATH:/sw/courses/ngsintro/linux/uppmax_pipeline_exercise/dummy_scripts
 
 # index the reference genome
-reference_indexer -r /proj/", upid, "/nobackup/username/filetypes/0_ref/ad2.fa
+reference_indexer -r ", path_linux_adv, "/filetypes/0_ref/ad2.fa
 
 # go to the input files
 cd $1
@@ -474,7 +473,7 @@ for file in *.fastq;
 do
 
     # align the reads
-    align_reads -r /proj/", upid, "/nobackup/username/filetypes/0_ref/ad2.fa -i $file -o $file.sam
+    align_reads -r ", path_linux_adv, "/filetypes/0_ref/ad2.fa -i $file -o $file.sam
 
     # convert the sam file to a bam file
     sambam_tool -f bam -i $file.sam -o $file.bam
@@ -498,9 +497,9 @@ cat(paste0("# make the dummy pipeline available in this script
 export PATH=$PATH:/sw/courses/ngsintro/linux/uppmax_pipeline_exercise/dummy_scripts
 
 # index the reference genome once, only if needed
-if [ ! -f /proj/", upid, "/nobackup/username/filetypes/0_ref/ad2.fa.idx ];
+if [ ! -f ", path_linux, "/filetypes/0_ref/ad2.fa.idx ];
 then
-    reference_indexer -r /proj/", upid, '/nobackup/username/filetypes/0_ref/ad2.fa
+    reference_indexer -r ", path_linux, '/filetypes/0_ref/ad2.fa
 fi
 
 
@@ -529,8 +528,8 @@ do
     # print a temporary script file that will be submitted to slurm
     echo "#!/bin/bash -l
 
-    #SBATCH -A ', upid, '
-    #SBATCH -p core
+    #SBATCH -A ', id_project, '
+    #SBATCH -p shared
     #SBATCH -n 1
     #SBATCH -t 00:05:00
     #SBATCH -J $file_basename
@@ -543,7 +542,7 @@ do
     # You have to escape the dollar sign in SNIC_TMP to keep bash from resolving
     # it to its value in the submitter script already.
     echo "Copying data to node local hard drive"
-    cp /proj/', upid, '/nobackup/username/filetypes/0_ref/ad2.fa* $file $SNIC_TMP/
+    cp ', path_linux, '/filetypes/0_ref/ad2.fa* $file $SNIC_TMP/
 
     # go the the nodes local hard drive
     echo "Changing directory to node local hard drive"

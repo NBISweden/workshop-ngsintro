@@ -15,10 +15,6 @@ site_url       <- yaml::read_yaml(here("_quarto.yml"))$website$`site-url`
 output_dir     <- yaml::read_yaml(here("_quarto.yml"))$project$`output-dir`
 ```
 
-::: {.callout-note}
-In code blocks, the dollar sign (`$`) is not to be printed. The dollar sign is usually an indicator that the text following it should be typed in a terminal window.
-:::
-
 ## Connect to PDC
 
 The first step of this lab is to open a ssh connection to PDC. Please refer to [**Connecting to PDC**](../other/lab_connect_pdc.html) for instructions. Once connected to PDC, return here and continue reading the instructions below.
@@ -256,7 +252,7 @@ less job_template
 
 #! /bin/bash -l
 #SBATCH -A gXXXXXXX
-#SBATCH -p core
+#SBATCH -p shared
 #SBATCH -J Template_script
 #SBATCH -t 01:00:00
 

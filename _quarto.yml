@@ -13,7 +13,7 @@ project:
     - "*.qmd"
 
 website:
-  image: "assets/images/featured.jpg"
+  image: "assets/images/featured.webp"
   favicon: "assets/favicon.png"
   navbar:
     logo: "assets/logos/nbis-scilifelab.png"
@@ -31,6 +31,8 @@ website:
         href: "home_syllabus.html"
       - text: "Info"
         href: "home_info.html"
+      - icon: "github"
+        href: "https://github.com/NBISweden/workshop-ngsintro/"
   page-footer:
     border: false
     left: "{{< meta current_year >}} [NBIS](https://nbis.se) | [GPL-3 License](https://choosealicense.com/licenses/gpl-3.0/)"
@@ -55,11 +57,12 @@ format:
     df-print: paged
     standalone: false
     fig-align: left
-    title-block-banner: "assets/images/banner.jpg"
+    title-block-banner: "assets/images/banner.webp"
     callout-icon: true
     date:  last-modified
     date-format: "DD-MMM-YYYY"
-    image: "assets/images/featured.png"
+    image: "assets/images/featured.webp"
+    lightbox: auto
   revealjs:
     quarto-required: ">=1.4.0"
     include-in-header: "assets/include_head.html"
@@ -80,10 +83,10 @@ format:
     fig-align: left
     chalkboard: true
     callout-icon: true
-    image: "/assets/images/featured.jpg"
-    hero: "/assets/images/slide-hero.png"
+    image: "/assets/images/featured.webp"
+    hero: "/assets/images/slide-hero.webp"
     title-slide-attributes:
-      data-background-image: "/assets/images/cover.jpg"
+      data-background-image: "/assets/images/cover.webp"
       data-background-size: "cover"
       data-background-opacity: "1"
     header-logo-left: /assets/logos/nbis.png
@@ -107,7 +110,7 @@ execute:
   echo: true
   warning: false
   message: false
-  freeze: false
+  freeze: true
 
 filters:
   - assets/custom.lua
@@ -122,6 +125,10 @@ id_project_backup: "naiss2024-22-1375"
 path_workspace: "~/ngsintro"
 # path to course resources on cluster
 path_resources: "/sw/courses/ngsintro"
+# url to active cluster (dardel)
+url_cluster: "dardel.pdc.kth.se"
+# url to backup cluster (rackham)
+url_cluster_backup: "rackham.uppmax.uu.se"
 
 # location options are linkoping, lund, umea, uppsala or online. For rendering the info page.
 # one or more separated by commas or semicolon. online doesn't display any location info.

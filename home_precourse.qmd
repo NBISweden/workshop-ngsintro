@@ -2,7 +2,6 @@
 title: "Precourse"
 subtitle: "These are steps to be completed before the workshop"
 date: ""
-toc: false
 sidebar: false
 format: html
 ---
@@ -11,7 +10,7 @@ format: html
 #| include: false
 library(yaml)
 library(here)
-id_project        <- yaml::read_yaml(here("_quarto.yml"))$id_project
+id_project <- yaml::read_yaml(here("_quarto.yml"))$id_project
 id_project_backup <- yaml::read_yaml(here("_quarto.yml"))$id_project_backup
 ```
 
@@ -23,7 +22,7 @@ A SUPR/NAISS account is needed to create the accounts for the computers we will 
 
 If you do not already have one, create an account at [SUPR/NAISS](https://supr.naiss.se). Then, Log in to [SUPR/NAISS](https://supr.naiss.se/), preferably using the SWAMID.
 
-![](assets/images/supr-login.jpg){width="70%"}
+![](assets/images/supr-login.webp){width="70%"}
 
 Before proceeding with applying for project membership and user accounts, we have to accept the NAISS User Agreement. Do this by clicking the [Personal Information](https://supr.naiss.se/person/) link in the left sidebar menu. The scroll down a bit until you reach the section **User Agreements**. If you already have accepted it the State will be a green box with the text Accepted in it. If it is anything else, click it to start the accepting process.
 
@@ -36,11 +35,11 @@ This is where you might run into trouble if you don't have a SWAMID connected ac
 
 Remote computing cluster UPPMAX will be use as a fallback cluster, if there should be any problems at PDC. After making sure you have an accepted user agreement, go to the [**SUPR/NAISS Projects**](https://supr.naiss.se/project/) page and request membership to the project ID: [**`r id_project_backup`**]{.badge}
 
-![](assets/images/supr-request.jpg){width="70%"}
+![](assets/images/supr-request.webp){width="70%"}
 
 Once you are accepted to a project, you should see that project listed under your active projects.
 
-![](assets/images/supr-projects.jpg){width="70%"}
+![](assets/images/supr-projects.webp){width="70%"}
 
 
 Finally you need to request a login account to UPPMAX. This will be the account you use to log in to the actual computers, so it is not the same as your SUPR account. Login to SUPR and go to the [Accounts page](https://supr.naiss.se/account/). Under the **Possible Resource Account Requests** heading click on **Request Account on Rackham @ UPPMAX** button and confirm it on the next page. If it is missing from this page, it could be because you already have a login account created (only 1 account per person allowed), or that you have not yet gotten your project memberships approved.
@@ -72,25 +71,25 @@ Please make sure you have a working [Eduroam](https://eduroam.org/) wifi connect
 
 ### ThinLinc
 
-[![](assets/images/thinlinc.png){height="50px"}]((https://www.cendio.com/thinlinc/download))
+[![](assets/images/thinlinc.webp){height="50px"}]((https://www.cendio.com/thinlinc/download))
 
 ThinLinc allows graphical connection to UPPMAX. Download and install from [https://www.cendio.com/thinlinc/download](https://www.cendio.com/thinlinc/download). It can be used directly from the browser but it is recommended to download and install the client for better copy/paste operation.
 
 ### XQuartz
 
-[![](assets/images/xquartz.png){height="60px"}](https://www.xquartz.org/)
+[![](assets/images/xquartz.webp){height="60px"}](https://www.xquartz.org/)
 
 Mac users will need to download and install [XQuartz](https://www.xquartz.org/) for X11 forwarding. *ie*; to forward remotely opened windows to local machine.
 
 ### MobaXterm (Optional)
 
-[![](assets/images/mobaxterm.png){height="60px"}](http://mobaxterm.mobatek.net)
+[![](assets/images/mobaxterm.webp){height="60px"}](http://mobaxterm.mobatek.net)
 
 If you are on a Windows system, and you want to open graphical applications from the terminal, we recommend [MobaXterm](http://mobaxterm.mobatek.net). It is recommended that you INSTALL the program and not use the portable version. MobaXterm also has an integrated SFTP file browser.
 
 ### Filezilla (Optional)
 
-[![](assets/images/filezilla.png){height="60px"}](https://filezilla-project.org/)
+[![](assets/images/filezilla.webp){height="60px"}](https://filezilla-project.org/)
 
 When you need to transfer data between the remote cluster and your computer, you can use the tools SCP or SFTP through the terminal. Windows users can use the SFTP browser available with MobaXterm. If you prefer a GUI to upload and download files from the remote cluster, we recommend installing [FileZilla](https://filezilla-project.org/).
 

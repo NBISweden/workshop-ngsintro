@@ -8,7 +8,8 @@ format: html
 ```{r,eval=TRUE,include=FALSE}
 library(yaml)
 library(here)
-upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
+id_project <- yaml::read_yaml(here("_quarto.yml"))$id_project
+url_cluster <- yaml::read_yaml(here("_quarto.yml"))$url_cluster_backup
 ```
 
 We will teach you two different ways to connect to UPPMAX. From UPPMAX point of view it doesn't matter which one you use, and you can change whenever you want to or even use both ways simultaiously. The first one is a text-based SSH connection, and the other one is a graphical remote desktop. The latter one is useful if you need to view images or documents in GUI programs without having to first download the image/document to your own computer first. Since it is using graphics, it will require you to have an internet connection that is good and stable.
@@ -30,7 +31,7 @@ Where `username` is mentioned, change to your user name.
 Fire up the available SSH program and enter the following:
 
 ```bash
-$ ssh username@rackham.uppmax.uu.se
+ssh username@`r url_cluster`
 ```
 
 Enter your password when prompted. As you type, nothing will show on the screen. No stars, no dots. It is supposed to be that way. Just type the password and press enter, it will be fine.

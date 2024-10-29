@@ -8,12 +8,10 @@ format: html
 ```{r,eval=TRUE,include=FALSE}
 library(yaml)
 library(here)
-upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
+id_project <- yaml::read_yaml(here("_quarto.yml"))$id_project
+path_resources <- file.path(yaml::read_yaml(here("_quarto.yml"))$path_resources, "linux")
+path_linux <- file.path(yaml::read_yaml(here("_quarto.yml"))$path_workspace, "linux")
 ```
-
-::: {.callout-note}
-In code blocks, the dollar sign (`$`) is not to be printed. The dollar sign is usually an indicator that the text following it should be typed in a terminal window.
-:::
 
 ## Connect to UPPMAX
 
@@ -24,7 +22,7 @@ The first step of this lab is to open a ssh connection to UPPMAX. Please refer t
 Usually you would do most of the work in this lab directly on one of the login nodes at UPPMAX, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("salloc -A ", upid, " -t 07:00:00 -p core -n 1 --no-shell &"))
+cat(paste0("salloc -A ", id_project, " -t 07:00:00 -p shared -n 1 --no-shell &"))
 ```
 
 check which node you got (replace **username** with your UPPMAX username)
@@ -61,13 +59,13 @@ Next, copy the lab files from this folder. `-r` means recursively, which means a
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat("cp -r <source> <destination>\n")
-cat(paste0("cp -r /sw/courses/ngsintro/linux/filetypes /proj/", upid, "/nobackup/username/"))
+cat(paste0("cp -r ",path_resources,"/filetypes ", path_linux))
 ```
 
-Have a look in **`r paste0("/proj/",upid,"/nobackup/username/")`**.
+Have a look in **`r path_linux`**.
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("cd /proj/", upid, "/nobackup/username/filetypes\n"))
+cat(paste0("cd ", path_linux, "/filetypes\n"))
 cat("tree")
 ```
 
@@ -318,7 +316,7 @@ If you notice that IGV over Xforwarding is excruciatingly slow, you can try to u
 
 There are 3 files we have to load in IGV.
 
-The first is the reference genome. Press the menu button located at **"Genomes - Load Genome from File..."** and find your reference genome in **0_ref/ad2.fa**. If you are having trouble finding your files, note that IGV always starts in your home directory. Use the dropdown menu at the top to navigate to **`r paste0("/proj/",upid,"/nobackup/...")`**.
+The first is the reference genome. Press the menu button located at **"Genomes - Load Genome from File..."** and find your reference genome in **0_ref/ad2.fa**. If you are having trouble finding your files, note that IGV always starts in your home directory. Use the dropdown menu at the top to navigate to **`r paste0(path_linux,"...")`**.
 
 The second file you have to load is the reads. Press the menu button **"File - Load from File..."** and select your **3_sorted/ad2.sorted.bam**.
 

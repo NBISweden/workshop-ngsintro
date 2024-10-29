@@ -11,7 +11,8 @@ format: revealjs
 # load packages
 library(yaml)
 library(here)
-upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
+id_project <- yaml::read_yaml(here("_quarto.yml"))$id_project
+path_workspace <- yaml::read_yaml(here("_quarto.yml"))$path_workspace
 # library(dplyr)
 # library(pheatmap)
 # library(plotly)
@@ -963,7 +964,7 @@ plotCounts(d1, "ENSG00000000003", intgroup = "type")
 - 03 Visualisation of RNA-seq BAM files using **IGV** genome browser
 
 [**Data:** `/sw/courses/ngsintro/rnaseq/`]{.large}  
-[**Work:** ``r paste0("/proj/",upid,"/nobackup/user/rnaseq/")``]{.large}
+[**Work:** ``r paste0(path_workspace,"/rnaseq/")``]{.large}
 
 ## Hands-On tutorial
 
@@ -999,7 +1000,7 @@ rnaseq/
 
 - Your work directory
 
-``r paste0("/proj/",upid,"/nobackup/user/rnaseq/")``
+``r paste0(path_workspace,"/rnaseq/")``
 
 ```
 [user]/

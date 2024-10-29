@@ -9,8 +9,9 @@ format: html
 ```{r,eval=TRUE,include=FALSE}
 library(yaml)
 library(here)
-upid <- yaml::read_yaml(here("_quarto.yml"))$uppmax_project
-nscid <- yaml::read_yaml(here("_quarto.yml"))$nsc_project
+id_project <- yaml::read_yaml(here("_quarto.yml"))$id_project_backup
+path_resources <- yaml::read_yaml(here("_quarto.yml"))$path_resources
+path_workspace <- yaml::read_yaml(here("_quarto.yml"))$path_workspace
 ```
 
 ```{css,include=FALSE}
@@ -21,13 +22,16 @@ background-color: red;
 
 ```{r,include=FALSE}
 ## VARIABLES
-datadir <- "/sw/courses/ngsintro/reseq/data"
-fastqdir <- "/sw/courses/ngsintro/reseq/data/fastq"
-refdir <- "/sw/courses/ngsintro/reseq/data/ref"
-bamdir <- "/sw/courses/ngsintro/reseq/data/bam"
-vcfdir <- "/sw/courses/ngsintro/reseq/data/vcf"
-bpbamdir <- "/sw/courses/ngsintro/reseq/data/best_practise_bam"
-bpvcfdir <- "/sw/courses/ngsintro/reseq/data/best_practise_vcf"
+path_reseq <- file.path(path_resources,"reseq")
+
+datadir <- file.path(path_reseq, "reseq/data")
+fastqdir <- file.path(path_reseq, "data/fastq")
+refdir <- file.path(path_reseq, "data/ref")
+bamdir <- file.path(path_reseq, "data/bam")
+vcfdir <- file.path(path_reseq, "data/vcf")
+bpbamdir <- file.path(path_reseq, "data/best_practise_bam")
+bpvcfdir <- file.path(path_reseq, "data/best_practise_vcf")
+
 col_uppmax <- "#f4f8e8"
 col_local <- "#e5f4f8"
 ```
@@ -102,14 +106,14 @@ cat(paste0(refdir))
 # Preparations {-}
 ## Local workspace  {#preparelaptop -}  
 
-The majority of the analyses in this workshop will be done on the computing cluster, but you will copy some of the resulting files to your laptop. Therefore, please start by creating a folder for this workshop on your laptop. It is up to you where you want to put this, but it can for example be a folder called *ngsworkflow* on Desktop. You need to have write permission in this folder. The folder you create here will be referred to as *local workspace* throughout this workshop.  
+The majority of the analyses in this workshop will be done on the computing cluster, but you will copy some of the resulting files to your laptop. Therefore, please start by creating a folder for this workshop on your laptop. It is up to you where you want to put this, but it can for example be a folder called *vc* on Desktop. You need to have write permission in this folder. The folder you create here will be referred to as *local workspace* throughout this workshop.  
   
 ## The NSC cluster {-}
 
 Please connect to the Tetralith cluster at NSC using `ssh`:
 
 ```bash
-$ ssh -Y nsc_username@tetralith.nsc.liu.se
+ssh -Y nsc_username@tetralith.nsc.liu.se
 ```  
 
 ::: {.callout-note}
@@ -121,7 +125,7 @@ Note that your terminal prompt changed to something like `nsc_username@tetralith
 On Tetralith you enter the *login node*, which is not intended for compute intensive tasks. You should therefore book a compute node, or in this case three cores:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('tetralith1$ interactive -A ',nscid,' -t 04:00:00 -n 3'))
+cat(paste0('tetralith1$ interactive -A ',id_project,' -t 04:00:00 -n 3'))
 ```
 
 ::: {.callout-note}
@@ -135,7 +139,7 @@ We will use a singularity container (a virtual computer) that mimics the UPPMAX 
 Use this command to start the singularity container:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('n424$ singularity shell -B /proj/',nscid,'/users:/proj/',upid,'/nobackup /proj/',nscid,'/ngsintro.sif'))
+cat(paste0('n424$ singularity shell -B ',path_workspace,':',path_workspace,' ',path_workspace,'/ngsintro.sif'))
 ```
 
 ::: {.callout-note}
@@ -155,8 +159,8 @@ To close the singularity container later on just type `exit` in the terminal, bu
 While running the UPPMAX singularity container, create a workspace folder for this exercise and move into it: 
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('offline-uppmax$ mkdir /proj/',upid,'/nobackup/<nsc_username>/ngsworkflow\n'))
-cat(paste0('offline-uppmax$ cd /proj/',upid,'/nobackup/<nsc_username>/ngsworkflow'))
+cat(paste0('offline-uppmax$ mkdir ',path_workspace,'/vc\n'))
+cat(paste0('offline-uppmax$ cd ',path_workspace,'/vc'))
 ```
 
 The folder you just created will be referred to as your *cluster workspace* throughout this workshop.  
@@ -164,7 +168,7 @@ The folder you just created will be referred to as your *cluster workspace* thro
 The *cluster workspace* can be reached also from outside of the UPPMAX singularity container, in this folder on Tetralith:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('tetralith$ /proj/',nscid,'/users/<nsc_username>/ngsworkflow\n'))
+cat(paste0('tetralith$ ',path_workspace,'/vc\n'))
 ```
 
 This is the path you must use when downloading files to your *local workspace* later on.
@@ -302,9 +306,9 @@ For help with interpreting the bam file, please look at the sam/bam format defin
   
 ### Questions  
 
-1. What does "SO:coordinate" in the "@HD" tag on the first line of the bam file mean?    
-2. What does "SN:2" and "LN:243199373" in the "@SQ tag mean? 
-3. What is encoded in the @RG tag?  
+1. What does "SO:coordinate" in the `@HD` tag on the first line of the bam file mean?    
+2. What does "SN:2" and "LN:243199373" in the `@SQ` tag mean? 
+3. What is encoded in the `@RG` tag?  
 4. What is the leftmost mapping position of the first read in the bamfile? 
   
 ### Check bam in IGV
@@ -318,7 +322,7 @@ Integrated Genomics Viewer (IGV) provides an interactive visualisation of the re
 Open a new terminal window on your laptop and navigate to your [local workspace](#preparelaptop), **but do not log in to NSC**. Download the .bam and .bam.bai files you just generated with this command:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('scp <nsc_username>@tetralith.nsc.uu.se:/proj/',nscid,'/users/<nsc_username>/ngsworkflow/HG00097.bam* .'))
+cat(paste0('scp <nsc_username>@tetralith.nsc.uu.se:',path_workspace,'/vc/HG00097.bam* .'))
 ```
 
 Check that the files are now present in your *local workspace* using `ls -lrt`. 
@@ -391,7 +395,7 @@ For more detailed information about vcf files please have a look at [The Variant
 Download the vcf file and its index to the *local workspace* on your laptop, just like you did with the bam file and its index earlier. Open a new terminal window on your laptop and navigate to your local workspace, **but do not log in to NSC**. Download the files that you just generated with:
 
 ```{r,echo=FALSE,comment="",class.output="bash", class.source="workLocally"}
-cat(paste0('scp <nsc_username>@tetralith.nsc.uu.se:/proj/',nscid,'/users/<nsc_username>/ngsworkflow/HG00097.vcf* .'))
+cat(paste0('scp <nsc_username>@tetralith.nsc.uu.se:',path_workspace,'/vc/HG00097.vcf* .'))
 ```
 
 Please replace `<nsc_nsc_username>` with your NSC user name.  
