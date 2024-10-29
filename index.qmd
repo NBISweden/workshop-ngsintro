@@ -11,6 +11,7 @@ format:
     number-sections: false
     title-block-banner: false
     page-layout: full
+    anchor-sections: false
 execute:
   freeze: false
 ---
@@ -38,7 +39,7 @@ Updated: {{< meta current_date >}} at {{< meta current_time >}}.
 :::
 :::{.home-grid-child-right}
 
-![](assets/images/hero.png){.nolightbox}
+![](assets/images/hero.webp){.nolightbox}
 
 :::
 :::
