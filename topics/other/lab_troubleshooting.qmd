@@ -21,10 +21,8 @@ Useful commands for monitoring status and user activity on UPPMAX.
 
 List all jobs running an a project
 
-```{r}
-#| echo: false
-#| class-output: bash
-cat(paste0("squeue -A ",id_project," | sort -k 4"))
+```sh
+squeue -A {{< meta id_project >}} | sort -k 4
 ```
 
 Sample output
@@ -45,10 +43,8 @@ Sample output
 
 Sorted list of jobs per user
 
-```{r}
-#| echo: false
-#| class-output: bash
-cat(paste0("squeue -A ",id_project," | tr -s ' ' | cut -d' ' -f5 | sort | uniq -c | sort -k1"))
+```sh
+squeue -A {{< meta id_project >}} | tr -s ' ' | cut -d' ' -f5 | sort | uniq -c | sort -k1
 ```
 
 Sample output
@@ -71,20 +67,16 @@ Sample output
 
 Total number of cores used on a project
 
-```{r}
-#| echo: false
-#| class-output: bash
-cat(paste0("squeue -A ",id_project," -o %C | awk '{total += $0} END{print total}'"))
+```sh
+squeue -A {{< meta id_project >}} -o %C | awk '{total += $0} END{print total}'
 ```
 
 ### Space usage
 
 Amount of storage space used per project
 
-```{r}
-#| echo: false
-#| class-output: bash
-cat(paste0("uquota | grep ",id_project))
+```sh
+uquota | grep {{< meta id_project >}}
 ```
 
 Sample output
@@ -99,10 +91,8 @@ snic2022-22-123  /proj/snic2022-22-123  GBytes       4.6          128
 
 List last activity in a directory for all users
 
-```{r}
-#| echo: false
-#| class-output: bash
-cat(paste0("bash /sw/courses/utils/list_modification_times.sh /proj/",id_project,"/nobackup/"))
+```sh
+bash /sw/courses/utils/list_modification_times.sh /proj/{{< meta id_project >}}/nobackup/
 ```
 
 Sample output
@@ -119,10 +109,8 @@ private         Not available     ()
 
 ### List reservations for a project
 
-```{r}
-#| echo: false
-#| class-output: bash
-cat(paste0("scontrol show res | grep ",id_project))
+```sh
+scontrol show res | grep {{< meta id_project >}}
 ```
 
 Sample output
@@ -138,10 +126,8 @@ ReservationName=snic2021-22-644_fri StartTime=2021-11-26T08:30:00 EndTime=2021-1
 
 ### List project members
 
-```{r}
-#| echo: false
-#| class-output: bash
-cat(paste0("projmembers ",id_project))
+```sh
+projmembers {{< meta id_project >}}
 ```
 
 Sample output
@@ -158,8 +144,7 @@ snic2022-22-123 btleren    Betül Eren Keskin
 
 Fetch user information from username
 
-```{bash}
-#| eval: false
+```sh
 finger username
 ```
 
@@ -223,8 +208,7 @@ Press <kbd>AltGr + 4</kbd>.
 
 As documented [here](https://github.com/XQuartz/XQuartz/issues/31), run:
 
-```{bash}
-#| eval: false
+```sh
 defaults write org.xquartz.X11 enable_render_extension 0
 ```
 

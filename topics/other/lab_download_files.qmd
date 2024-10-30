@@ -30,21 +30,13 @@ cat(paste0(path_workspace,'/somefolder/'))
 ```
 
 ::: {.callout-note}
-`username` and `somefolder` should be replaced with your real username and a real folder name.
+`username` and `somefolder` should be replaced with your real username and a real folder name. Run this in a LOCAL terminal.
 :::
 
 To download the file to your local workspace type:
 
-```{r}
-#| output: asis
-#| echo: false
-out <- paste0("scp username@", url_cluster, ":", path_workspace, "/somefolder/results.txt .")
-cat(
-  "```{.bash filename='Local Terminal'}",
-  out,
-  "```",
-  sep = "\n"
-)
+```sh
+scp username@{{< meta url_cluster >}}:{{< meta path_workspace >}}/somefolder/results.txt .
 ```
 
 Note that the last `.` means that the file will keep the original name.
@@ -54,17 +46,9 @@ Note that the last `.` means that the file will keep the original name.
 Now lets imagine that you have developed a script on your laptop and want to upload it to UPPMAX. The script is stored in your local workspace and is called "script.sh". Type this in your local workspace to upload the file to UPPMAX:
 
 ::: {.callout-note}
-`username` and `somefolder` should be replaced with your real username and a real folder name.
+`username` and `somefolder` should be replaced with your real username and a real folder name. Run this on UPPMAX.
 :::
 
-```{r}
-#| output: asis
-#| echo: false
-out <- paste0("scp script.sh username@", url_cluster, ":", path_workspace, "/somefolder/.")
-cat(
-  "```{.bash filename='Local Terminal'}",
-  out,
-  "```",
-  sep = "\n"
-)
+```sh
+scp script.sh username@{{< meta url_cluster >}}:{{< meta path_workspace >}}/somefolder/.
 ```
