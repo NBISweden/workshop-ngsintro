@@ -1,6 +1,6 @@
 ---
 title:  "Connecting to PDC"
-description: "Connecting to PDC through SSH and GUI (Browser and ThinLinc)"
+subtitle: "Connecting to PDC through SSH and GUI (Browser and ThinLinc)"
 date: ""
 format: html
 ---
@@ -135,5 +135,4 @@ There is a ThinLinc server running at one of the login nodes which allows users 
 
 6. When you are done with working with the remote desktop, press the power icon {{< fa power-off >}} in the top-right corner of the screen and select `Log Out`.
 
-For more detailed instruction, please look here: <a href="https://intra.kth.se/en/2.79567/support/documents/login/interactive_hpc.html" target="_blank" rel="noopener noreferrer">https://intra.kth.se/en/2.79567/support/documents/login/interactive_hpc.html</a>
-
+For more detailed instructions, please look here: <a href="https://www.pdc.kth.se/support/documents/login/interactive_hpc.html" target="_blank" rel="noopener noreferrer">https://www.pdc.kth.se/support/documents/login/interactive_hpc.html</a>

@@ -1,6 +1,6 @@
 ---
 title:  "Connecting to UPPMAX"
-description: "Connecting to UPPMAX through SSH and GUI (Browser and ThinLinc)"
+subtitle: "Connecting to UPPMAX through SSH and GUI (Browser and ThinLinc)"
 date: ""
 format: html
 ---

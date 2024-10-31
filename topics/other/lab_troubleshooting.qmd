@@ -1,6 +1,6 @@
 ---
 title:  "Status & Troubleshooting"
-description: "Utility commands/scripts, troubleshooting, tips and suggestions."
+subtitle: "Utility commands/scripts, troubleshooting, tips and suggestions."
 date: ""
 sidebar: false
 format: html
@@ -15,7 +15,7 @@ id_project <- yaml::read_yaml(here("_quarto.yml"))$id_project
 
 ## Status
 
-Useful commands for monitoring status and user activity on UPPMAX.
+Useful commands for monitoring status and user activity on HPC.
 
 ### List jobs
 
@@ -160,7 +160,8 @@ finger username
 - Open the Xquartz terminal and connect to Uppmax 
 - In my recent macos (10.xxx) , x-forwarding only works if I explicitly run the Xquartz terminal
 
-`ssh -XY username@rackham.uppmax.uu.se`
+`ssh -XY username@{{< meta url_cluster >}}`  
+`ssh -XY username@{{< meta url_cluster_backup >}}`
 
 Also use this when logging in to the compute node!
 
@@ -180,7 +181,7 @@ First ensure X-forwarding works, then run `firefox --no-remote filename.html`
 
 ### SCP fails with *
 
-Sometimes students have problems to download files with SCP when there is a `*` in the end of the line. For example; `scp user@rackham.uppmax.uu.se:/proj/bla/HG00097.bam* .`. It needs to be changed to `scp user@rackham.uppmax.uu.se:/proj/bla/HG00097.bam\* .`.
+Sometimes students have problems to download files with SCP when there is a `*` in the end of the line. For example; `scp user@{{< meta url_cluster >}}:~/ngsintro/HG00097.bam* .`. It needs to be changed to `scp user@{{< meta url_cluster >}}:~/ngsintro/HG00097.bam\* .`.
 
 ### Thinlinc
 
@@ -211,5 +212,9 @@ As documented [here](https://github.com/XQuartz/XQuartz/issues/31), run:
 ```sh
 defaults write org.xquartz.X11 enable_render_extension 0
 ```
+
+### Thinlinc client installs in Swedish
+
+There seems to be no option to change language in the app. So one will have to reinstall with some changes. In region settings, if English is set as primary and Swedish as secondary, it still installs in Swedish. The solution is to remove Swedish from the list completely and then reinstall.
 
 ***
