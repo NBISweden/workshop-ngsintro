@@ -53,7 +53,7 @@ If you **do not already have a PDC account**, please fill in the form at [https:
 | __Lecturer/ Project Leader:__ | Martin Dahlö |
 | __Course / Project Title:__ | {{< meta id_project >}} |
 
-We have notified PDC who the students for our course is and they will create the account needed to login to their computers. Follow the instructions you get from them to complete your account creation. The morning session on the Monday of the course will cover [how to connect to PDC](https://www.pdc.kth.se/support/documents/login/ssh_login.html#ssh-login), a bunch of steps that might not be trivial for novice users.
+We have notified PDC who the students for our course is and they will create the account needed to login to their computers. Follow the instructions you get from them to complete your account creation. The morning session on the Monday of the course will cover [how to connect to PDC](topics/other/lab_connect_uppmax.qmd), a bunch of steps that might not be trivial for novice users.
 
 ## Install tools
 
@@ -63,7 +63,7 @@ We have notified PDC who the students for our course is and they will create the
 
 ### ThinLinc 
 
-[![](assets/images/precourse/thinlinc.webp){.precourse-tool}](https://www.cendio.com/thinlinc/download) [{{< fa brands linux >}} {{< fa brands apple >}} {{< fa brands windows >}}]{.badge} ThinLinc allows graphical connection to UPPMAX. Download and install from [https://www.cendio.com/thinlinc/download](https://www.cendio.com/thinlinc/download). It can be used directly from the browser but it is recommended to download and install the client for better copy/paste operation.
+[![](assets/images/precourse/thinlinc.webp){.precourse-tool}](https://www.cendio.com/thinlinc/download) [{{< fa brands linux >}} {{< fa brands apple >}} {{< fa brands windows >}}]{.badge} ThinLinc allows graphical connection to UPPMAX. Download and install from [https://www.cendio.com/thinlinc/download](https://www.cendio.com/thinlinc/download).
 
 ### XQuartz
 

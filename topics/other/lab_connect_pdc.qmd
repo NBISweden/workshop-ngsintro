@@ -17,6 +17,8 @@ Let's look at the text-based SSH approach first. This type of connection work ju
 - {{< fa brands apple >}} OSX: Use Terminal (Included by default)
 - {{< fa brands windows >}} Windows: Use Powershell or Command prompt, both should be installed by default
 
+The guide below is based on [PDCs official instructions](https://www.pdc.kth.se/support/documents/login/ssh_login.html#ssh-login).
+
 ### Setting up SSH keys
 
 (If you already have done this once, please proceed to the [next section](#connecting-to-pdc-using-ssh) instead.)
@@ -83,6 +85,10 @@ Add `*.liu.se` to the field `define one yourself`. This will allow you to use th
 
 
 ### Connecting to PDC using SSH
+
+::: {.callout-important}
+If you have problems connecting to PDC even if you have set up you SSH keys in the step above, please make sure your computer has not changed it IP address since you defined allowed addresses in the [PDC login portal](https://loginportal.pdc.kth.se/). Make sure that the IP range or hostname pattern you have there allows [your current IP/hostname](https://whatismyhostname.com/)
+:::
 
 ::: {.callout-note}
 Where `username` is mentioned, change to your PDC user name.
