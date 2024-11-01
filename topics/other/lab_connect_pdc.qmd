@@ -1,6 +1,6 @@
 ---
 title:  "Connecting to PDC"
-subtitle: "Connecting to PDC through SSH and GUI (Browser and ThinLinc)"
+subtitle: "Connecting to PDC through SSH and GUI (ThinLinc)"
 date: ""
 format: html
 ---
