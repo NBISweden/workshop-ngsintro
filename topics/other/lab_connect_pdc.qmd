@@ -13,7 +13,7 @@ The reason we will teach you two ways is that some parts of this course will req
 
 Let's look at the text-based SSH approach first. This type of connection work just fine even on slow internet connections since it only transmitts small amounts of text when you work with it. You will need a terminal and an SSH program to do this, which is fortunately included in most major operating systems:
 
-- {{< fa brands linux >}} Linux: Use Terminal (Included by default)
+- {{< fa brands ubuntu >}} Linux: Use Terminal (Included by default)
 - {{< fa brands apple >}} OSX: Use Terminal (Included by default)
 - {{< fa brands windows >}} Windows: Use Powershell or Command prompt, both should be installed by default
 
