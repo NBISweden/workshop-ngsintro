@@ -59,11 +59,11 @@ We have notified PDC who the students for our course is and they will create the
 
 ### Eduroam
 
-[![](assets/images/precourse/eduroam.webp){.precourse-tool}](https://eduroam.org/) [{{< fa brands ubuntu >}} {{< fa brands apple >}} {{< fa brands windows >}}]{.badge} Please make sure you have a working [Eduroam](https://eduroam.org/) wifi connection setup before the course, since we will only have wifi internet access in the computer room where we have the course. The instructions on how to get it working could differ university to university, so please refere to you home university's instructions on how to do that. Try searching for "eduroam" and your home university, e.g. `eduroam uppsala university`, to find it.
+[![](assets/images/precourse/eduroam.webp){.precourse-tool}](https://eduroam.org/) [{{< fa brands linux >}} {{< fa brands apple >}} {{< fa brands windows >}}]{.badge} Please make sure you have a working [Eduroam](https://eduroam.org/) wifi connection setup before the course, since we will only have wifi internet access in the computer room where we have the course. The instructions on how to get it working could differ university to university, so please refere to you home university's instructions on how to do that. Try searching for "eduroam" and your home university, e.g. `eduroam uppsala university`, to find it.
 
 ### ThinLinc 
 
-[![](assets/images/precourse/thinlinc.webp){.precourse-tool}](https://www.cendio.com/thinlinc/download) [{{< fa brands ubuntu >}} {{< fa brands apple >}} {{< fa brands windows >}}]{.badge} ThinLinc allows graphical connection to UPPMAX. Download and install from [https://www.cendio.com/thinlinc/download](https://www.cendio.com/thinlinc/download). It can be used directly from the browser but it is recommended to download and install the client for better copy/paste operation.
+[![](assets/images/precourse/thinlinc.webp){.precourse-tool}](https://www.cendio.com/thinlinc/download) [{{< fa brands linux >}} {{< fa brands apple >}} {{< fa brands windows >}}]{.badge} ThinLinc allows graphical connection to UPPMAX. Download and install from [https://www.cendio.com/thinlinc/download](https://www.cendio.com/thinlinc/download). It can be used directly from the browser but it is recommended to download and install the client for better copy/paste operation.
 
 ### XQuartz
 
@@ -75,7 +75,7 @@ We have notified PDC who the students for our course is and they will create the
 
 ### Filezilla^\*^
 
-[![](assets/images/precourse/filezilla.webp){.precourse-tool}](https://filezilla-project.org/) [{{< fa brands ubuntu >}} {{< fa brands apple >}} {{< fa brands windows >}}]{.badge} When you need to transfer data between the remote cluster and your computer, you can use the tools SCP or SFTP through the terminal. Windows users can use the SFTP browser available with MobaXterm. If you prefer a GUI to upload and download files from the remote cluster, we recommend installing [FileZilla](https://filezilla-project.org/).
+[![](assets/images/precourse/filezilla.webp){.precourse-tool}](https://filezilla-project.org/) [{{< fa brands linux >}} {{< fa brands apple >}} {{< fa brands windows >}}]{.badge} When you need to transfer data between the remote cluster and your computer, you can use the tools SCP or SFTP through the terminal. Windows users can use the SFTP browser available with MobaXterm. If you prefer a GUI to upload and download files from the remote cluster, we recommend installing [FileZilla](https://filezilla-project.org/).
 
 ^\*^ Optional
 
