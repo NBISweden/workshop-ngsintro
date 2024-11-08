@@ -14,15 +14,25 @@ path_linux <- file.path(yaml::read_yaml(here("_quarto.yml"))$path_workspace, "li
 path_linux_adv <- file.path(path_linux, "linux_advanced")
 ```
 
-## Connect to UPPMAX
+```{r,eval=TRUE,include=FALSE}
+library(yaml)
+library(here)
+id_project     <- yaml::read_yaml(here("_quarto.yml"))$id_project
+path_resources <- yaml::read_yaml(here("_quarto.yml"))$path_resources
+path_workspace <- yaml::read_yaml(here("_quarto.yml"))$path_workspace
+site_url       <- yaml::read_yaml(here("_quarto.yml"))$website$`site-url`
+output_dir     <- yaml::read_yaml(here("_quarto.yml"))$project$`output-dir`
+```
 
-The first step of this lab is to open a ssh connection to UPPMAX. Please refer to [**Connecting to UPPMAX**](../other/lab_connect.html) for instructions. Once connected to UPPMAX, return here and continue reading the instructions below.
+## Connect to PDC
+
+The first step of this lab is to open a ssh connection to PDC. Please refer to [**Connecting to PDC**](../other/lab_connect_pdc.html) for instructions. Once connected to PDC, return here and continue reading the instructions below.
 
 ## Logon to a node
 
-Usually you would do most of the work in this lab directly on one of the login nodes at UPPMAX, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
+Usually you would do most of the work in this lab directly on one of the login nodes at PDC, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
 
-Check which node you got when you booked resources this morning (replace **username** with your UPPMAX username)
+Check which node you got when you booked resources this morning (replace **username** with your PDC username)
 
 ```bash
 squeue -u username
@@ -31,45 +41,49 @@ squeue -u username
 should look something like this
 
 ```bash
-dahlo@rackham2 work $ squeue -u dahlo
+user@login1 ~ $ squeue -u user
              JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
-           3132376      core       sh    dahlo  R       0:04      1 r292
-dahlo@rackham2 work $
+           5583899    shared interact    user  R       2:22      1 nid001009
+user@login1 ~ $
 ```
 
-where **r292** is the name of the node I got (yours will probably be different).
-Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested (7 hours in this case) the session will shut down, and you will lose all unsaved data. Connect to this node from within UPPMAX.
+where `nid001009` is the name of the node I got (yours will probably be different).
+Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested (7 hours in this case) the session will shut down, and you will lose all unsaved data. Connect to this node from within PDC.
 
 ```bash
-ssh -Y r292
+ssh -Y nid001009
 ```
 
 If the list is empty you can run the allocation command again and it should be in the list:
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("salloc -A ", id_project, " -t 03:30:00 -p shared -n 1 --no-shell &"))
+```bash
+salloc -A `r id_project` -t 04:00:00 -p shared -n 4
 ```
 
-{{< fa lightbulb >}} There is a UPPMAX specific tool called `jobinfo` that supplies the same kind of information as `squeue` that you can use as well (`$ jobinfo -u username`).
-
 ## First things first
+
+We will have to load the module for `nano` before we can start editing files.
+
+```bash
+module load nano
+```
 
 Let's make sure nano has **syntax highlighting** enabled. What that will do is to paint the boring code in pretty colors, making it much easier to read it. See the difference for yourself by first looking at this file before you enable it:
 
 ```bash
-nano /sw/uppmax/bin/projplot
+nano /sw/courses/ngsintro/linux/qol/test.py
 ```
 
-Close down nano when you have seen how boing it looks without colors by pressing `ctrl+x`. Now, let's enable syntax highlighting. To do this, we will simply tell nano to include the syntax highlighting instructions from a bunch of files that are already installed at uppmax. Run this command to do just that:
+Close down nano when you have seen how boing it looks without colors by pressing `ctrl+x`. Now, let's enable syntax highlighting. To do this, we will simply tell nano to include the syntax highlighting instructions from a bunch of files that are already installed on the computer. Run this command to do just that:
 
 ```bash
-find /usr/share/nano/ -iname "*.nanorc" -exec echo include {} \; >> ~/.nanorc
+find /pdc/software/eb/software/nano/7.2/share/nano/ -iname "*.nanorc" -exec echo include {} \; >> ~/.nanorc
 ```
 
-This command will put one line per language instructions (~30 of them, located in `/usr/share/nano`), into the nano autostart file (`~/.nanorc`) and put the word 'include' infront of each file name. That will make nano include the instructions from each of those files whenever it starts. Now have a look at the same file as before and enjoy the colors:
+This command will put one line per language instructions (~30 of them, located in `/pdc/software/eb/software/nano/7.2/share/nano/`), into the nano autostart file (`~/.nanorc`) and put the word 'include' infront of each file name. That will make nano include the instructions from each of those files whenever it starts. Now have a look at the same file as before and enjoy the colors:
 
 ```bash
-nano /sw/uppmax/bin/projplot
+nano /sw/courses/ngsintro/linux/qol/test.py
 ```
 
 Then close nano and continue with the lab.
