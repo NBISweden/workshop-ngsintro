@@ -17,7 +17,7 @@ output_dir     <- yaml::read_yaml(here("_quarto.yml"))$project$`output-dir`
 
 ## Connect to PDC
 
-The first step of this lab is to open a ssh connection to PDC. Please refer to [**Connecting to PDC**](../other/lab_connect_pdc.html) for instructions. Once connected to PDC, return here and continue reading the instructions below.
+The first step of this lab is to open a ssh connection to PDC. Please refer to [**Connecting to PDC**](../../other/lab_connect_pdc.html) for instructions. Once connected to PDC, return here and continue reading the instructions below.
 
 ## Logon to a node
 
@@ -318,15 +318,13 @@ squeue -u username
 
 Here we can see in the status column (`ST`)that the job is pending (`PD`) and has not started yet. The job is waiting for a node to become available. When the job starts, the status will change to `R` (running). If you run `squeue` again, you will see that the job is running.
 
-```bash
-
 In our case, we are not really interested in running this job at all. Let's cancel it instead. This can be done with the command **`scancel`**. Syntax:
 
 ```bash
 scancel <job id>
 ```
 
-You see the job id number in the output from `jobinfo` or `squeue`.
+You see the job id number in the output from `squeue`.
 
 ```bash
 scancel 3134401
@@ -336,18 +334,16 @@ If you have a lot of jobs running, you can cancel all of them by using the comma
 
 # Interactive jobs
 
-Sometimes it is more convenient to work interactively on a node instead of submitting your work as a job. Since you will not have the reservations we have during the course, you will have to book a node using the **`interactive`** command. Syntax:
+Sometimes it is more convenient to work interactively on a node instead of submitting your work as a job. You have tried this during these labs, but you will not have the reservations we have during the course so your jobs might take a little while to start. You will have to book your jobs using the `salloc` command. Syntax:
 
 ```bash
-interactive -A <project id> -t <time> -p <node or core>
+salloc -A <project id> -t <time> -c <number of cores> -p shared
 ```
 
-This will create a booking for you which has a higher priority than the jobs submitted with `sbatch`. That means that they will start faster, but only if the booking is shorter than 12 hours. If the booking is longer than 12 hours, it will get the standard priority. When the job starts you will be transferred to the node you got automatically. No need to look which node you got using sbatch and then ssh:ing to it.
+Try closing down your current session on the reserved node you connected to in the beginning of the lab by typing `exit`. Then make a new booking using `salloc` but without the reservation id,
 
-Try closing down your current session on the reserved node you connected to in the beginning of the lab by typing `exit`. Then make a new booking using interactive,
-
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("interactive -A ", id_project, " -t 02:30:00 -p core"))
+```bash
+salloc -A `r id_project` -t 3:00:00 -c 1 -p shared
 ```
 
 Congratulations, you are now ready to be let loose on the cluster!
@@ -356,32 +352,15 @@ Congratulations, you are now ready to be let loose on the cluster!
 
 Extra material if you finish too fast.
 
-## The devel queue
-
-If it is a really big job, it might be in the queue for a day or two before it starts, so it is important to know that the first thing it does is not crashing because you made a typo on line 7. One way to test this is to open a new connection to PDC, and line by line try your code. Copy-paste (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>c</kbd> and <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>v</kbd> in the terminal window) to make sure it's really the code in the script you are trying.
-
-If your script is longer than a couple of lines, this approach can be tiring. There are 12 nodes at PDC that are dedicated to do quick test runs, which have a separate queue called **devel**. They are available for use more or less all the time since not very many are using them. To avoid people abusing the free nodes for their analysis, there is a **1 hour time limit** for jobs on them. To submit jobs to this short testing queue, change `-p` to devel instead of node or core, and make sure `-t` is set to **maximum 01:00:00**. Try submitting the samtools sbatch file we used earlier to the devel queue and run it again.
-
-## Info about finished jobs
-
-If you want information about jobs you have run in the past, you can use the tool **`finishedjobinfo`**. It will print information about the jobs you have run lately.
-
-Fun things to look for in this information is **jobstate** which will tell you if the program reported any error while running. If so, jobstate will be **FAILED** and you could suspect that something didn't go according to the plan, and you should check the output from that job run (the **slurm-.out** file) and see if you can solve the error.
-
-Other good things to look for could be:
-
-* **maxmemory\_in\_GiB**: tells you how much memory the program used at most.
-* **runtime**: tells you how long time the program ran before it finished/failed
-
 ## Time and space
 
-Remember the commands **`uquota`** (show how much of your storage space you are using) and **`projinfo`** (shows you how much of your allocated time you have used) from the lecture? Try running them and see how you are doing.
+Remember the command `projinfo` (shows you how much of your allocated resources you have used) from the lecture? Try running it and see how you are doing. Run `projinfo -h` to see options you can give it.
 
 
 ::: {.callout-tip}
 
 ## Optional
 
-This optional material on uppmax pipelines will teach you the basics in creating pipelines. Continue with this if you finish the current lab ahead of time. Navigate to the exercise [Uppmax Pipelines lab](../pipeline/lab_uppmax_pipeline.html).
+This optional material on uppmax pipelines will teach you the basics in creating pipelines. Continue with this if you finish the current lab ahead of time. Navigate to the exercise [HPC Pipelines lab](../pipeline/lab_hpc_pipeline.html).
 
 :::
