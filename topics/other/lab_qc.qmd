@@ -44,16 +44,16 @@ HG00101       | Low coverage WGS
 
 ## Run FastQC
 
-### Connect to Uppmax
+### Connect to PDC
 
-During this lab it is best to connect to UPPMAX via a remote desktop (ThinLinc). Instructions for this is available in Canvas under **Workshop** > **Contents** > **Useful resources** > **Connecting to UPPMAX**. Please follow the instructions in section 2 Remote desktop connection.
+During this lab it is best to connect to Dardel via a remote desktop (ThinLinc). Please refer to [**Connecting to PDC**](../other/lab_connect_pdc.html), section 2 Remote desktop, for instructions.
 
 ### Book a node
 
-To be able to run analyses in the terminal you should book a  compute node (or in this case just one core of a node). Make sure you only do this once each day because we have reserved one core per student for the course. If you haven't already reserved a core today please use this command:
+To be able to run analyses in the terminal you should book an interactive session on a compute node. Make sure you only do this once each day because we have reserved a limited number of cores per student for the course. If you haven't already done this today please use this command:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('salloc -A ',id_project,' -t 04:00:00 -p shared -n 1 --no-shell &'))
+cat(paste0('salloc -A ',id_project,' -t 04:00:00 -p shared -c 4 --no-shell &'))
 ```
 
 Once your job allocation has been granted (should not take long) you can connect to the node using ssh. To find out the name of your node, use:
@@ -70,11 +70,18 @@ ssh -Y <nodename>
 
 ### Create a workspace
 
-You should work in your folder under the course's nobackup folder, just like you have done during the previous labs. Start by creating a workspace for this exercise in your folder, and then move into it.
+You should work in a subfolder in your home folder on Dardel, just like you have done during the previous labs. 
+Start by going to your course folder using this command:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('mkdir ',path_workspace,'/qc\n'))
-cat(paste0('cd ',path_workspace,'/qc'))
+cat(paste0('cd ', path_workspace))
+```
+
+Create a folder for this exercise and move into it:
+
+```bash
+mkdir qc
+cd qc
 ```
 
 ### Symbolic links to data
@@ -108,7 +115,7 @@ module load bioinfo-tools
 This makes it possible to load FastQC:
 
 ```bash
-module load FastQC/0.11.8
+module load fastqc/0.12.1
 ```
 
 ### Run FastQC
