@@ -86,6 +86,8 @@ You can use `quarto preview` to serve the site, and handle automatic rebuilding 
 docker run --rm -it --platform linux/amd64 -u $(id -u):$(id -g) -v ${PWD}:/qmd -p 8800:8800  ghcr.io/nbisweden/workshop-ngsintro:latest quarto preview --port 8800 --host 0.0.0.0
 ```
 
+Go to [http://localhost:8800/](http://localhost:8800/) or [http://0.0.0.0:8800](http://0.0.0.0:8800) in your browser.
+
 ## Test scripts
 
 This is regarding the directory **scripts**. This directory contains shell scripts for reseq (variant-calling) and rnaseq parts of the workshop. These are intended to be run on UPPMAX. Further instructions on using them are available within the scripts.
