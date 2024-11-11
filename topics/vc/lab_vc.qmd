@@ -766,7 +766,7 @@ To learn more about SLURM and SBATCH scripts please look the [How to Run Jobs](h
 ## Variant calling in cohort {-}
 
 Below is a skeleton script that can be used as a template for running [variant calling in a cohort](#jointvc). Please modify it to run all the steps in part two of this workshop.
-
+  
 ```{r,accordion=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('#!/bin/bash
 #SBATCH -A ',id_project,' 
@@ -792,7 +792,7 @@ done
 #Fill in the code for GenotypeGVCFs here
 '))
 ```
-Please save the sbatch script in your Dardel folder and call it "joint_genotyping.sbatch" or similar. Make the script executable by this command:
+Please save the template in your workspace and call it "joint_genotyping.sbatch" or similar. Make the script executable by this command:
 
 ```bash
 chmod u+x joint_genotyping.sbatch
@@ -810,7 +810,10 @@ If you have an active node reservation you can run the script as a normal bash s
 ./joint_genotyping.sbatch
 ```
 
-If you would like more help with creating the sbatch script, please look at our example solution:
+If you would like more help with creating the sbatch script, please look at our example solution below (click on the link):
+
+<details>
+<summary>Example solution</summary>
 
 ```{r,accordion=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('#!/bin/bash
@@ -854,9 +857,16 @@ gatk --java-options -Xmx2g GenotypeGVCFs \\
 -O cohort.vcf'))
 ```
 
+
+</details>
+
+
 ## GATK best practices {-}
 
 Now please try to incorporate the additional steps from [GATK's best practices](#gatk_bp) into the workflow. If you run out of time you can sneak peek at our example solution below.
+
+<details>
+<summary>Example solution</summary>
 
 ```{r,accordion=TRUE,echo=FALSE,comment="",class.output="sh"}
 cat(paste0('#!/bin/bash
@@ -977,6 +987,9 @@ gatk --java-options -Xmx2g MergeVcfs \\
 -I cohort.indels.filtered.vcf \\
 -O cohort.filtered.vcf'))
 ```
+
+
+</details>
 
 # Additional information {-}
 
