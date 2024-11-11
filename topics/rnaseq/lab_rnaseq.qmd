@@ -1531,7 +1531,7 @@ results/
     └── wt_3_trimmed_2.fastq.gz_trimming_report.txt
 ```
 
-If you want to look into the nextflow results yourself, you can check them out here: `{{< meta path_resources >}}/rnaseq/dardel/main_full/nextflow`.
+If you want to look into the nextflow results yourself, you can check them out here: `{{< meta path_resources >}}/rnaseq/dardel/main_full/nextflow`. You can view the multiqc report [here](nextflow/multiqc_report.html).
 
 This pipeline takes you from raw reads to counts including read QC, mapping, mapping QC and quantification as well as a complete collated overview of all steps as a MultiQC report (`multiqc/star_salmon/multiqc_report.html`). The `star_salmon/salmon.merged.gene_counts.tsv` is the counts file that you would use for downstream differential gene expression using DESeq2.
 
@@ -1543,6 +1543,6 @@ We had [Simon Andrews](https://www.babraham.ac.uk/science-services/bioinformatic
 
 ## Conclusion
 
-We hope that you enjoyed getting your hands wet working on some real-ish data. In this tutorial, we have covered the most important data processing steps that may be enough when the libraries are good. If not, there are plenty of troubleshooting procedures to try before discarding the data. And once the count table are in place, the biostatistics and data mining begins. There are no well-defined solutions here, all depends on the experiment and questions to be asked, but we strongly advise learning R. Not only to use the specifically designed statistical packages to analyse NGS count data, but also to be able to handle the data and results as well as to generate high-quality plots. There are many available tools and well-written tutorials with examples to learn from.
+We hope that you enjoyed getting your hands wet working on some real-ish data. In this tutorial, we have covered the most important data processing steps that may be sufficient when the libraries are of good quality. If not, there are plenty of troubleshooting procedures to try before discarding the data. And once the count table is in place, the biostatistics and data mining begins. There are no well-defined solutions here, all depends on the experiment and questions to be asked, but we strongly advise learning R and/or Python. Not only to use the specifically designed statistical packages to analyse NGS count data, but also to be able to handle the data and results as well as to generate high-quality plots. There are many available tools and well-written tutorials with examples to learn from.
 
 For those interested in RNA-Seq analysis, SciLifeLab offers a more advanced course in RNA-Seq analysis each semester. For more information, see [SciLifeLab events](https://www.scilifelab.se/events/).
