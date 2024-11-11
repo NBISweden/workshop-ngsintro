@@ -240,7 +240,7 @@ samtools faidx human_g1k_v37_chr2.fasta
 Check to see what file(s) were created using `ls -lrt`. Then Generate a GATK sequence dictionary:
 
 ```bash
-gatk --java-options -Xmx5g CreateSequenceDictionary -R human_g1k_v37_chr2.fasta -O human_g1k_v37_chr2.dict
+gatk --java-options -Xmx2g CreateSequenceDictionary -R human_g1k_v37_chr2.fasta -O human_g1k_v37_chr2.dict
 ```
 
 Again, check what file(s) were created using `ls -lrt`.
@@ -350,8 +350,8 @@ igv.sh &
 
 In IGV:\
 In the upper left dropdown menu choose `Human hg19` (which is the same as GRCh37).\
-In the `File` menu, select `Load from File`, navigate to your workspace and for the lab, and select `HG00097.bam`. This data in this file should then appear in the tracks window.\
-You need to Zoom in to see the reads. You can either select a region by click and drag, or by typing a region or a gene name in the text box at the top. Remember that we have data for the region chr2:136545000-136617000.\
+In the `File` menu, select `Load from File`, navigate to your workspace for the lab, and select `HG00097.bam`. This data should now appear as a track in the tracks window.\
+You need to Zoom in to see the reads. You can either select a region by click and drag, or by typing a region or a gene name in the text box at the top. Remember that we have data for the region chr2:136545000-136617000 which covers the *LTC* gene, so you can type this region or the gene name in the search box .\
 IGV can be closed by selecting exit in the `File` menu or by clicking `x` in the upper right corner of the IGV window, but you can keep it open for the rest of the lab.
 
 #### Questions {-}
@@ -373,13 +373,13 @@ pwd
 Should return
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('', path_workspace,' /vc'))
+cat(paste0('', path_workspace,'/vc'))
 ```
 
 Then run:
 
 ```bash
-gatk --java-options -Xmx4g HaplotypeCaller \
+gatk --java-options -Xmx2g HaplotypeCaller \
 -R human_g1k_v37_chr2.fasta \
 -I HG00097.bam \
 -O HG00097.vcf
@@ -479,14 +479,14 @@ pwd
 Should return
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('', path_workspace,' /vc'))
+cat(paste0('', path_workspace,'/vc'))
 ```
 
 Then use this command for every sample to align the reads, add the read group, sort the reads and write them to a bam file:
 
 ```bash
 bwa mem -R "@RG\tID:readgroup_<sample>\tPU:lanex_flowcellx\tSM:<sample>\tLB:libraryx\tPL:illumina" \
--t 14 human_g1k_v37_chr2.fasta sample_1.fq sample_2.fq | samtools sort > sample.bam
+-t 4 human_g1k_v37_chr2.fasta sample_1.fq sample_2.fq | samtools sort > sample.bam
 ```
 
 Where `sample` should be replaced with the real samples name, i.e. HG00097, HG00100 and HG00101.
@@ -518,13 +518,13 @@ pwd
 Should return
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('', path_workspace,' /vc'))
+cat(paste0('', path_workspace,'/vc'))
 ```
 
 Then:
 
 ```bash
-gatk --java-options -Xmx4g HaplotypeCaller \
+gatk --java-options -Xmx2g HaplotypeCaller \
 -R human_g1k_v37_chr2.fasta \
 -ERC GVCF \
 -I sample.bam \
@@ -560,7 +560,7 @@ cat(paste0('', path_workspace,' /vc'))
 Then:
 
 ```bash
-gatk --java-options -Xmx7g CombineGVCFs \
+gatk --java-options -Xmx2g CombineGVCFs \
 -R human_g1k_v37_chr2.fasta \
 -V sample1.g.vcf \
 -V sample2.g.vcf \
@@ -572,7 +572,7 @@ Please replace `sample1`, `sample2`, `sample3` with the real sample names.
 Then run GATK's `GenoteypeGVC` to generate a vcf file:
 
 ```bash
-gatk --java-options -Xmx7g GenotypeGVCFs \
+gatk --java-options -Xmx2g GenotypeGVCFs \
 -R human_g1k_v37_chr2.fasta \
 -V cohort.g.vcf \
 -O cohort.vcf
@@ -631,13 +631,13 @@ If a duplicated read contains a genetic variant, the ratio of the two alleles mi
 Please read about Picard's `MarkDuplicates` [here](https://gatk.broadinstitute.org/hc/en-us/articles/360037225972-MarkDuplicates-Picard-). Picard's MarkDuplicates has recently been incorporated into the GATK suite, but the usage example in GATKs documentation describes how to call it via the stand alone Picard program. To learn how to use it as part of the GATK module, please call MarkDuplicates without input parameters like this:
 
 ```bash
-gatk --java-options -Xmx4g MarkDuplicates
+gatk --java-options -Xmx2g MarkDuplicates
 ```
 
 Please run MarkDuplicates on all three bam files generated in step 2.1. Here is the code for running MarkDuplicates on the sample HG00097:
 
 ```bash
-gatk --java-options -Xmx4g MarkDuplicates \
+gatk --java-options -Xmx2g MarkDuplicates \
     -I HG00097.bam \
     -O HG00097.md.bam \
     -M HG00097_mdmetrics.txt
@@ -657,7 +657,7 @@ Please recalibrate the base quality scores in all the bam files generated in the
 First run BaseRecalibrator:
 
 ```{r,echo=FALSE,comment="",class.output="sh"}
-cat(paste0('gatk --java-options -Xmx4g BaseRecalibrator \\
+cat(paste0('gatk --java-options -Xmx2g BaseRecalibrator \\
     -R human_g1k_v37_chr2.fasta \\
     -I HG00097.md.bam \\
     --known-sites ',refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf \\
@@ -667,7 +667,7 @@ cat(paste0('gatk --java-options -Xmx4g BaseRecalibrator \\
 Then run ApplyBQSR:
 
 ```bash
-gatk --java-options -Xmx4g ApplyBQSR \
+gatk --java-options -Xmx2g ApplyBQSR \
     -R human_g1k_v37_chr2.fasta \
     -I HG00097.md.bam \
     --bqsr-recal-file HG00097.recal.table \
@@ -695,13 +695,13 @@ An explanation of what the hard filters do can be found [here](https://gatk.broa
 Example solution for filtering SNVs:
 
 ```bash
-gatk --java-options -Xmx4g SelectVariants \
+gatk --java-options -Xmx2g SelectVariants \
   -R human_g1k_v37_chr2.fasta \
   -V cohort.vcf \
   --select-type-to-include SNP \
   -O cohort.snvs.vcf
 
-gatk --java-options -Xmx4g VariantFiltration \
+gatk --java-options -Xmx2g VariantFiltration \
   -R human_g1k_v37_chr2.fasta \
   -V cohort.snvs.vcf \
   -O cohort.snvs.filtered.vcf \
@@ -713,13 +713,13 @@ gatk --java-options -Xmx4g VariantFiltration \
 Example solution for filtering INDELs:
 
 ```bash
-gatk --java-options -Xmx4g SelectVariants \
+gatk --java-options -Xmx2g SelectVariants \
   -R human_g1k_v37_chr2.fasta \
   -V cohort.vcf \
   --select-type-to-include INDEL \
   -O cohort.indels.vcf
 
-gatk --java-options -Xmx4g VariantFiltration \
+gatk --java-options -Xmx2g VariantFiltration \
   -R human_g1k_v37_chr2.fasta \
   -V cohort.indels.vcf \
   -O cohort.indels.filtered.vcf \
@@ -730,7 +730,7 @@ gatk --java-options -Xmx4g VariantFiltration \
 Example solution for merging filtered SNVs and INDELs:
 
 ```bash
-gatk --java-options -Xmx4g MergeVcfs \
+gatk --java-options -Xmx2g MergeVcfs \
     -I cohort.snvs.filtered.vcf \
     -I cohort.indels.filtered.vcf \
     -O cohort.filtered.vcf
@@ -768,18 +768,18 @@ To learn more about SLURM and SBATCH scripts please look the [How to Run Jobs](h
 
 Below is a skeleton script that can be used as a template for running [variant calling in a cohort](#jointvc). Please modify it to run all the steps in part two of this workshop.
 
-```bash
-#!/bin/bash
-#SBATCH -A sens2022-22-123
+```{r,accordion=TRUE,echo=FALSE,comment="",class.output="sh"}
+cat(paste0('#!/bin/bash
+#SBATCH -A ',id_project,' 
 #SBATCH -p shared
-#SBATCH --mem=6Gb
+#SBATCH -c 4
 #SBATCH -t 1:00:00
 #SBATCH -J JointVariantCalling
 
 module load bioinfo-tools
 module load bwa/0.7.17
 module load samtools/1.20
-module load GATK/4.3.0.0
+module load gatk/4.5.0.0
 
 ## loop through the samples:
 for sample in HG00097 HG00100 HG00101;
@@ -791,7 +791,7 @@ do
 done
 #Fill in the code for CombineGVCFs for all samples here
 #Fill in the code for GenotypeGVCFs here
-
+'))
 ```
 Please save the sbatch script in your Dardel folder and call it "joint_genotyping.sbatch" or similar. Make the script executable by this command:
 
@@ -817,39 +817,39 @@ If you would like more help with creating the sbatch script, please look at our 
 cat(paste0('#!/bin/bash
 #SBATCH -A ',id_project,'
 #SBATCH -p shared
-#SBATCH --mem=6Gb
+#SBATCH -c 4
 #SBATCH -t 2:00:00
 #SBATCH -J JointVariantCalling
 
 module load bioinfo-tools
 module load bwa/0.7.17
 module load samtools/1.20
-module load GATK/4.3.0.0
+module load gatk/4.5.0.0
 
 for sample in HG00097 HG00100 HG00101;
 do
   echo "Now analyzing: "${sample}
   bwa mem -R \\
   "@RG\\tID:${sample}\\tPU:flowcellx_lanex\\tSM:${sample}\\tLB:libraryx\\tPL:illumina" \\
-  -t 14 human_g1k_v37_chr2.fasta "${sample}_1.fq" "${sample}_2.fq" | samtools sort > "${sample}.bam"
+  -t 4 human_g1k_v37_chr2.fasta "${sample}_1.fq" "${sample}_2.fq" | samtools sort > "${sample}.bam"
 
   samtools index "${sample}.bam"
 
-  gatk --java-options -Xmx4g HaplotypeCaller \\
+  gatk --java-options -Xmx2g HaplotypeCaller \\
   -R human_g1k_v37_chr2.fasta \\
   -ERC GVCF -I "${sample}.bam" \\
   -O "${sample}.g.vcf"
 
 done
 
-gatk --java-options -Xmx4g CombineGVCFs \\
+gatk --java-options -Xmx2g CombineGVCFs \\
 -R human_g1k_v37_chr2.fasta \\
 -V HG00097.g.vcf \\
 -V HG00100.g.vcf \\
 -V HG00101.g.vcf \\
 -O cohort.g.vcf
 
-gatk --java-options -Xmx4g GenotypeGVCFs \\
+gatk --java-options -Xmx2g GenotypeGVCFs \\
 -R human_g1k_v37_chr2.fasta \\
 -V cohort.g.vcf \\
 -O cohort.vcf'))
@@ -863,7 +863,7 @@ Now please try to incorporate the additional steps from [GATK's best practices](
 cat(paste0('#!/bin/bash
 #SBATCH -A ',id_project,'
 #SBATCH -p shared
-#SBATCH --mem=6Gb
+#SBATCH -c 4
 #SBATCH -t 2:00:00
 #SBATCH -J BestPractise
 
@@ -871,7 +871,7 @@ cat(paste0('#!/bin/bash
 module load bioinfo-tools
 module load bwa/0.7.17
 module load samtools/1.20
-module load GATK/4.3.0.0
+module load gatk/4.5.0.0
 
 # define path to reference genome
 ref="/sw/courses/ngsintro/reseq/data/ref"
@@ -888,7 +888,7 @@ ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00101_2.fq
 # index reference genome
 bwa index -a bwtsw human_g1k_v37_chr2.fasta
 samtools faidx human_g1k_v37_chr2.fasta
-gatk --java-options -Xmx4g CreateSequenceDictionary \\
+gatk --java-options -Xmx2g CreateSequenceDictionary \\
 -R human_g1k_v37_chr2.fasta \\
 -O human_g1k_v37_chr2.dict
 
@@ -899,31 +899,31 @@ do
   # map the reads
   bwa mem \\
   -R "@RG\\tID:${sample}\\tPU:flowcellx_lanex\\tSM:${sample}\\tLB:libraryx\\tPL:illumina" \\
-  -t 14 human_g1k_v37_chr2.fasta \\
+  -t 4 human_g1k_v37_chr2.fasta \\
   "${sample}_1.fq" "${sample}_2.fq" | samtools sort > "${sample}.bam"
 
   samtools index $sample".bam"
   # mark duplicates
-  gatk --java-options -Xmx4g MarkDuplicates \\
+  gatk --java-options -Xmx2g MarkDuplicates \\
   -I "${sample}.bam" \\
   -O "${sample}.md.bam" \\
   -M "${sample}_mdmetrics.txt"
 
   # base quality score recalibration
-  gatk --java-options -Xmx4g BaseRecalibrator \\
+  gatk --java-options -Xmx2g BaseRecalibrator \\
   -R human_g1k_v37_chr2.fasta \\
   -I "${sample}.md.bam" \\
   --known-sites "${ref}/1000G_phase1.snps.high_confidence.b37.chr2.vcf" \\
   -O "${sample}.recal.table"
 
-  gatk --java-options -Xmx4g ApplyBQSR \\
+  gatk --java-options -Xmx2g ApplyBQSR \\
   -R human_g1k_v37_chr2.fasta \\
   -I "${sample}.md.bam" \\
   --bqsr-recal-file "${sample}.recal.table" \\
   -O "${sample}.recal.bam"
 
   # haplotypeCaller in -ERC mode
-  gatk --java-options -Xmx4g HaplotypeCaller \\
+  gatk --java-options -Xmx2g HaplotypeCaller \\
   -R human_g1k_v37_chr2.fasta \\
   -ERC GVCF \\
   -I "${sample}.bam" \\
@@ -931,26 +931,26 @@ do
 done
 
 # joint genotyping
-gatk --java-options -Xmx4g CombineGVCFs \\
+gatk --java-options -Xmx2g CombineGVCFs \\
 -R human_g1k_v37_chr2.fasta \\
 -V HG00097.g.vcf \\
 -V HG00100.g.vcf \\
 -V HG00101.g.vcf \\
 -O cohort.g.vcf
 
-gatk --java-options -Xmx4g GenotypeGVCFs \\
+gatk --java-options -Xmx2g GenotypeGVCFs \\
 -R human_g1k_v37_chr2.fasta \\
 -V cohort.g.vcf \\
 -O cohort.vcf
 
 # variant filtration SNPs
-gatk --java-options -Xmx4g SelectVariants \\
+gatk --java-options -Xmx2g SelectVariants \\
 -R human_g1k_v37_chr2.fasta \\
 -V cohort.vcf \\
 --select-type-to-include SNP \\
 -O cohort.snvs.vcf
 
-gatk --java-options -Xmx4g VariantFiltration \\
+gatk --java-options -Xmx2g VariantFiltration \\
 -R human_g1k_v37_chr2.fasta \\
 -V cohort.snvs.vcf \\
 --filter-name QDfilter --filter-expression "QD < 2.0" \\
@@ -959,13 +959,13 @@ gatk --java-options -Xmx4g VariantFiltration \\
 -O cohort.snvs.filtered.vcf
 
 # variant filtration indels
-gatk --java-options -Xmx4g SelectVariants \\
+gatk --java-options -Xmx2g SelectVariants \\
 -R human_g1k_v37_chr2.fasta \\
 -V cohort.vcf \\
 --select-type-to-include INDEL \\
 -O cohort.indels.vcf
 
-gatk --java-options -Xmx4g VariantFiltration \\
+gatk --java-options -Xmx2g VariantFiltration \\
 -R human_g1k_v37_chr2.fasta \\
 -V cohort.indels.vcf \\
 --filter-name QDfilter --filter-expression "QD < 2.0" \\
@@ -973,7 +973,7 @@ gatk --java-options -Xmx4g VariantFiltration \\
 -O cohort.indels.filtered.vcf
 
 # merge filtered SNPs and indels
-gatk --java-options -Xmx4g MergeVcfs \\
+gatk --java-options -Xmx2g MergeVcfs \\
 -I cohort.snvs.filtered.vcf \\
 -I cohort.indels.filtered.vcf \\
 -O cohort.filtered.vcf'))
