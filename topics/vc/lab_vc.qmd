@@ -110,10 +110,10 @@ However, if you prefer to connect to Dardel via ssh you can instead copy some of
 If so, please create a local workspace on your laptop, for example a folder called *vc* on your desktop. You need to have write permission in this folder.
 If you connect to Dardel via ThinLinc you don't have to create a local workspace.
 
-## Dardel {-}
-### Connect to Dardel {-}
+## HPC cluster {-}
+### Connect to PDC {-}
 
-During this lab it is best to connect to Dardel with ThinLinc, which gives you a graphical remote desktop. Instructions for this is available at [**Connecting to Dardel**](topics/other/lab_connect_pdc.html). Please follow the instructions in section 1.2 Remote desktop connection.
+During this lab it is best to connect to Dardel with ThinLinc, which gives you a graphical remote desktop. Instructions for this is available at [**Connecting to PDC**](../other/lab_connect_pdc.html). Please follow the instructions in section 1.2 Remote desktop connection.
 
 ### Logon to a node {-}
 
@@ -148,8 +148,7 @@ ssh -Y nodename
 ### Workspace on Dardel {-}
 
 You should work in a subfolder in your home folder on Dardel, just like you have done during the previous labs.
-
-Start by going there using this command:
+Start by going to your course folder using this command:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('cd ', path_workspace))
