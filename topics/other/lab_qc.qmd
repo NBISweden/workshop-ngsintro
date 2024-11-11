@@ -21,7 +21,7 @@ background-color: red;
 ```{r,include=FALSE}
 ## VARIABLES
 #colours
-fastqdir <- "/sw/courses/ngsintro/reseq/data/fastq"
+fastqdir <- "/sw/courses/ngsintro/vc/data/fastq"
 col_uppmax <- "#f4f8e8"
 col_local <- "#e5f4f8"
 ```

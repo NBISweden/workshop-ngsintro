@@ -22,15 +22,15 @@ background-color: red;
 
 ```{r,include=FALSE}
 ## VARIABLES
-path_reseq <- file.path(path_resources,"reseq")
+path_vc <- file.path(path_resources,"vc")
 
-datadir <- file.path(path_reseq, "data")
-fastqdir <- file.path(path_reseq, "data/fastq")
-refdir <- file.path(path_reseq, "data/ref")
-bamdir <- file.path(path_reseq, "data/bam")
-vcfdir <- file.path(path_reseq, "data/vcf")
-bpbamdir <- file.path(path_reseq, "data/best_practise_bam")
-bpvcfdir <- file.path(path_reseq, "data/best_practise_vcf")
+datadir <- file.path(path_vc, "data")
+fastqdir <- file.path(path_vc, "data/fastq")
+refdir <- file.path(path_vc, "data/ref")
+bamdir <- file.path(path_vc, "data/bam")
+vcfdir <- file.path(path_vc, "data/vcf")
+bpbamdir <- file.path(path_vc, "data/best_practise_bam")
+bpvcfdir <- file.path(path_vc, "data/best_practise_vcf")
 col_uppmax <- "#f4f8e8"
 col_local <- "#e5f4f8"
 ```
@@ -162,11 +162,9 @@ cd vc
 ```
 
 Make sure you are located in
-
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('', path_workspace,' /vc'))
 ```
-
+{{< meta path_workspace >}}/vc
+```
 for the rest of this lab.
 
 ### Symbolic links to data {-}
@@ -217,13 +215,10 @@ First check if you are standing in the correct directory:
 ```bash
 pwd
 ```
-
 Should return
-
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('', path_workspace,'/vc'))
 ```
-
+{{< meta path_workspace >}}/vc
+```
 Generate BWA index files:
 
 ```bash
@@ -277,11 +272,9 @@ First make sure that you are standing in the workspace you created on Dardel for
 pwd
 ```
 Should return
-
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('', path_workspace,'/vc'))
 ```
-
+{{< meta path_workspace >}}/vc
+```
 Then use this command to align the reads, add the read group, sort the reads and write them to a bam file:
 
 ```bash
@@ -335,11 +328,9 @@ pwd
 ```
 
 Should return
-
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('', path_workspace,' vc'))
 ```
-
+{{< meta path_workspace >}}/vc
+```
 To start IGV please type this in the terminal:
 
 ```bash
@@ -370,11 +361,9 @@ pwd
 ```
 
 Should return
-
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('', path_workspace,'/vc'))
 ```
-
+{{< meta path_workspace >}}/vc
+```
 Then run:
 
 ```bash
@@ -476,11 +465,9 @@ pwd
 ```
 
 Should return
-
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('', path_workspace,'/vc'))
 ```
-
+{{< meta path_workspace >}}/vc
+```
 Then use this command for every sample to align the reads, add the read group, sort the reads and write them to a bam file:
 
 ```bash
@@ -513,13 +500,10 @@ First use pwd to check if you are standing in the correct directory:
 ```bash
 pwd
 ```
-
 Should return
-
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('', path_workspace,'/vc'))
 ```
-
+{{< meta path_workspace >}}/vc
+```
 Then:
 
 ```bash
@@ -551,11 +535,9 @@ pwd
 ```
 
 Should return
-
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('', path_workspace,' /vc'))
 ```
-
+{{< meta path_workspace >}}/vc
+```
 Then:
 
 ```bash
@@ -883,16 +865,16 @@ module load samtools/1.20
 module load gatk/4.5.0.0
 
 # define path to reference genome
-ref="/sw/courses/ngsintro/reseq/data/ref"
+ref="/sw/courses/ngsintro/vc/data/ref"
 
 # make symbolic links
-ln -s /sw/courses/ngsintro/reseq/data/ref/human_g1k_v37_chr2.fasta
-ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00097_1.fq
-ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00097_2.fq
-ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00100_1.fq
-ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00100_2.fq
-ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00101_1.fq
-ln -s /sw/courses/ngsintro/reseq/data/fastq/HG00101_2.fq
+ln -s /sw/courses/ngsintro/vc/data/ref/human_g1k_v37_chr2.fasta
+ln -s /sw/courses/ngsintro/vc/data/fastq/HG00097_1.fq
+ln -s /sw/courses/ngsintro/vc/data/fastq/HG00097_2.fq
+ln -s /sw/courses/ngsintro/vc/data/fastq/HG00100_1.fq
+ln -s /sw/courses/ngsintro/vc/data/fastq/HG00100_2.fq
+ln -s /sw/courses/ngsintro/vc/data/fastq/HG00101_1.fq
+ln -s /sw/courses/ngsintro/vc/data/fastq/HG00101_2.fq
 
 # index reference genome
 bwa index -a bwtsw human_g1k_v37_chr2.fasta
