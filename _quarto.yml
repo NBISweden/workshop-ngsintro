@@ -13,7 +13,7 @@ project:
     - "*.qmd"
 
 website:
-  image: "assets/images/featured.webp"
+  image: "assets/images/seo.webp"
   favicon: "assets/favicon.png"
   navbar:
     logo: "assets/logos/nbis-scilifelab.png"
@@ -38,6 +38,7 @@ website:
     left: "{{< meta current_year >}} [NBIS](https://nbis.se) | [GPL-3 License](https://choosealicense.com/licenses/gpl-3.0/)"
     right: "Published with [Quarto](https://quarto.org/) v{{< meta quarto_version >}}"
   site-url: "https://nbisweden.github.io/workshop-ngsintro/"
+  open-graph: true
 
 format:
   html:
