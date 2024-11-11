@@ -22,7 +22,7 @@ The syllabus for this workshop are as follows.
   - Symbolic links
   - Piping commands
 - Working on remote computing cluster
-  - Logging on to UPPMAX
+  - Logging on to HPC
   - Booking resources
   - Job templates, submission and queues
   - Modules
