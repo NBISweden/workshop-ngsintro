@@ -22,8 +22,6 @@ background-color: red;
 ## VARIABLES
 #colours
 fastqdir <- "/sw/courses/ngsintro/vc/data/fastq"
-col_uppmax <- "#f4f8e8"
-col_local <- "#e5f4f8"
 ```
 
 ## FastQC
@@ -105,7 +103,7 @@ cat(paste0('ln -s ',fastqdir,'/HG00101_2.fq\n'))
 
 ### Accessing FastQC
 
-FastQC is installed in the module system on UPPMAX. Modules must be loaded *every time* you login to Rackham, or when you connect to a new compute node.  
+FastQC is installed in the module system on PDC. Modules must be loaded *every time* you login to Dardel, or when you connect to a new compute node.  
 First load the bioinfo-tools module:
 
 ```bash
@@ -134,7 +132,7 @@ ls -lrt
 
 ## Check the results
 
-The output from FastQC is a HTML report that should be opened in a web browser. When you have connected to Uppmax via ThinLinc you can open it on Rackham with this command:
+The output from FastQC is a HTML report that should be opened in a web browser. When you have connected to PDC via ThinLinc you can open it on Dardel with this command:
 
 ```bash
 firefox --no-remote filename.html &

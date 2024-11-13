@@ -31,8 +31,6 @@ bamdir <- file.path(path_vc, "data/bam")
 vcfdir <- file.path(path_vc, "data/vcf")
 bpbamdir <- file.path(path_vc, "data/best_practise_bam")
 bpvcfdir <- file.path(path_vc, "data/best_practise_vcf")
-col_uppmax <- "#f4f8e8"
-col_local <- "#e5f4f8"
 ```
 
 # Introduction {-}
