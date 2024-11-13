@@ -98,7 +98,7 @@ ssh -XY username@{{< meta url_cluster >}}
 
 Book a node.
 
-For the RNA-Seq part of the course, we will work on the Rackham cluster. A standard compute node on cluster Rackham has 128 GB of RAM and 20 cores. We will use 1 core per person for this session. Therefore, each core gives you 6.4 GB of RAM. The code below is valid to run at the start of the day. If you are running it in the middle of a day, you need to decrease the time (`-t`). Do not run this twice and also make sure you are not running computations on a login node.
+For the RNA-Seq part of the course, we will work on the HPC. The code below is valid to run at the start of the day. If you are running it in the middle of a day, you need to decrease the time (`-t`). Do not run this twice and also make sure you are not running computations on a login node.
 
 Book compute resources for RNA-Seq lab.
 
@@ -1284,20 +1284,14 @@ The `SBATCH` commands in the above script is specifying the account name to use 
 You can check your jobs in the queue by running the following command.
 
 ```sh
-jobinfo -u user
+squeue -u username
 ```
 
 And this gives a list like this:
 
 ```
-CLUSTER: rackham
-Running jobs:
-   JOBID PARTITION   NAME USER        ACCOUNT ST          START_TIME  TIME_LEFT  NODES CPUS NODELIST(REASON)
- 5006225      core (null) user       gXXXXXXX  R 2018-09-12T14:00:03      44:31      1    1 r169
- 5006229      core (null) user       gXXXXXXX  R 2018-09-12T14:00:03      44:31      1    1 r169
- 5006352      core (null) user       gXXXXXXX  R 2018-09-12T14:04:14      48:42      1    1 r178
- 5006355      core (null) user       gXXXXXXX  R 2018-09-12T14:05:17      49:45      1    1 r169
- 5006356      core (null) user       gXXXXXXX  R 2018-09-12T14:06:08      50:36      1    5 r179
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+           5856340    shared no-shell royfranc  R       0:05      1 nid002577
 ```
 
 If the job is pending, then you will see `PD` in the `ST` column. If your job is running, you should see `R`. Once your job starts running, you will see a file named `slurm-XXXX.out` in the directory in which you submitted the job. This is the **standard-out** from that job. ie; everything that you would normally see printed to your screen when running locally, is printed to this file when running as a job. Once the job is over, one would inspect the slurm output file.
