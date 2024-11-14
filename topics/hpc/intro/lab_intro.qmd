@@ -56,7 +56,7 @@ salloc -A `r id_project` -t 04:00:00 -p shared -c 4
 Now, you will need some files. To avoid all the course participants editing the same file all at once, undoing each other's edits, each participant will get their own copy of the needed files. The files are located in the folder 
 
 ```bash
-`r path_resources`/linux/hpc_tutorial
+`r path_resources`/hpc/intro
 ```
 
 Next, copy the lab files from this folder. `-r` means recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, **NOT** sub-folders and files in sub-folders.
@@ -67,7 +67,7 @@ Next, copy the lab files from this folder. `-r` means recursively, which means a
 # syntax
 cp -r <source> <destination>
 
-cp -r `r path_resources`/linux/hpc_tutorial `r path_workspace`
+cp -r `r path_resources`/hpc/intro `r path_workspace`
 ```
 
 Have a look in the folder you just copied
@@ -361,6 +361,6 @@ Remember the command `projinfo` (shows you how much of your allocated resources 
 
 ## Optional
 
-This optional material on uppmax pipelines will teach you the basics in creating pipelines. Continue with this if you finish the current lab ahead of time. Navigate to the exercise [HPC Pipelines lab](../pipeline/lab_hpc_pipeline.html).
+This optional material on HPC pipelines will teach you the basics in creating pipelines. Continue with this if you finish the current lab ahead of time. Navigate to the exercise [HPC Pipelines lab](../pipeline/lab_pipeline.html).
 
 :::

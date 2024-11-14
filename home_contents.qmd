@@ -15,8 +15,8 @@ format: html
 
 ### High-Performance Computing cluster
 
-- Introduction to HPC [{{< fa brands youtube >}}](https://youtu.be/cxEtfKN91q4) [{{< fa file-pdf >}}](topics/hpc/intro/slide_hpc_intro.pdf) [{{< fa file-lines >}}](topics/hpc/intro/lab_hpc_intro.html)  
-- HPC Pipelines [{{< fa file-lines >}}](topics/hpc/pipeline/lab_hpc_pipeline.html)
+- Introduction to HPC [{{< fa brands youtube >}}](https://youtu.be/cxEtfKN91q4) [{{< fa file-pdf >}}](topics/hpc/intro/slide_hpc_intro.pdf) [{{< fa file-lines >}}](topics/hpc/intro/lab_intro.html)  
+- HPC Pipelines [{{< fa file-lines >}}](topics/hpc/pipeline/lab_pipeline.html)
 
 ### File types in Linux
 

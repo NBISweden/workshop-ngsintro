@@ -1,6 +1,6 @@
 ---
-title: 'Uppmax Pipeline'
-subtitle: "Building Bioinformatic pipelines"
+title: 'HPC Pipelines'
+subtitle: "Building bioinformatic pipelines"
 author: 'Martin Dahlö'
 format: html
 ---
@@ -8,19 +8,22 @@ format: html
 ```{r,eval=TRUE,include=FALSE}
 library(yaml)
 library(here)
-id_project <- yaml::read_yaml(here("_quarto.yml"))$id_project
+id_project     <- yaml::read_yaml(here("_quarto.yml"))$id_project
+path_resources <- yaml::read_yaml(here("_quarto.yml"))$path_resources
 path_workspace <- yaml::read_yaml(here("_quarto.yml"))$path_workspace
+site_url       <- yaml::read_yaml(here("_quarto.yml"))$website$`site-url`
+output_dir     <- yaml::read_yaml(here("_quarto.yml"))$project$`output-dir`
 ```
 
-# Connect to UPPMAX
+## Connect to PDC
 
-The first step of this lab is to open a ssh connection to UPPMAX. Please refer to [**Connecting to UPPMAX**](../../other/lab_connect.html) for instructions. Once connected to UPPMAX, return here and continue reading the instructions below.
+The first step of this lab is to open a ssh connection to PDC. Please refer to [Connecting to PDC](../../other/lab_connect_pdc.html) for instructions. Once connected to PDC, return here and continue reading the instructions below.
 
-# Logon to a node
+## Logon to a node
 
-Usually you would do most of the work in this lab directly on one of the login nodes at UPPMAX, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
+Usually you would do most of the work in this lab directly on one of the login nodes at PDC, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
 
-Check which node you got when you booked resources this morning (replace **username** with your UPPMAX username)
+Check which node you got when you booked resources this morning (replace **username** with your PDC username)
 
 ```bash
 squeue -u username
@@ -28,46 +31,46 @@ squeue -u username
 
 should look something like this
 
-```
-dahlo@rackham2 work $ squeue -u dahlo
+```bash
+user@login1 ~ $ squeue -u user
              JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
-           3132376      core       sh    dahlo  R       0:04      1 r292
-dahlo@rackham2 work $
+           5583899    shared interact    user  R       2:22      1 nid001009
+user@login1 ~ $
 ```
 
-where **r292** is the name of the node I got (yours will probably be different).
-Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested (7 hours in this case) the session will shut down, and you will lose all unsaved data. Connect to this node from within UPPMAX.
+where `nid001009` is the name of the node I got (yours will probably be different).
+Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested (7 hours in this case) the session will shut down, and you will lose all unsaved data. Connect to this node from within PDC.
 
 ```bash
-ssh -Y r292
+ssh -Y nid001009
 ```
 
 If the list is empty you can run the allocation command again and it should be in the list:
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("salloc -A ", id_project, " -t 03:30:00 -p shared -n 1 --no-shell"))
+```bash
+salloc -A `r id_project` -t 04:00:00 -p shared -c 4
 ```
-
-{{< fa lightbulb >}} There is a UPPMAX specific tool called `jobinfo` that supplies the same kind of information as `squeue` that you can use as well (`$ jobinfo -u username`).
 
 # Copy files for lab
 
-Now, you will need some files. To avoid all the course participants editing the same file all at once, undoing each other's edits, each participant will get their own copy of the needed files. The files are located in the folder **`/sw/courses/ngsintro/linux/uppmax_pipeline_exercise/data`**.
+Now, you will need some files. To avoid all the course participants editing the same file all at once, undoing each other's edits, each participant will get their own copy of the needed files. The files are located in the folder `/sw/courses/ngsintro/hpc/pipeline_exercise/data`.
 
 Next, copy the lab files from this folder. `-r` means recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, NOT sub-folders and files in sub-folders.
 
 {{< fa lightbulb >}} Remember to use tab-complete to avoid typos and too much writing.
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat("cp -r <source> <destination>\n")
-cat(paste0("cp -r /sw/courses/ngsintro/linux/uppmax_pipeline_exercise/data ", path_workspace, "/uppmax_pipeline_exercise"))
+```bash
+# syntax
+cp -r <source> <destination>
+
+cp -r `r path_resources`/hpc/pipeline_exercise/data `r path_workspace`/hpc_pipeline_exercise
 ```
 
-Have a look in **`r paste0(path_workspace,"/uppmax_pipeline_exercise")`**.
+Have a look in **`r path_workspace`/hpc_pipeline_exercise**.
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("cd ", path_workspace, "/uppmax_pipeline_exercise\n"))
-cat("ll")
+```bash
+cd `r path_workspace`/hpc_pipeline_exercise
+ll
 ```
 
 If you see files, the copying was successful.
@@ -93,7 +96,7 @@ nano
 
 how does the computer know which program to start? You gave it the name `nano`, but that could refer to any file named nano in the computer, yet it starts the correct one every time. The answer is that it looks in the directories stored in the `$PATH` variable and start the first program it finds that is named `nano`.
 
-To see which directories that are available by default, type
+To see which directories that are checked by default, type
 
 ```bash
 echo $PATH
@@ -105,30 +108,30 @@ It should give you something like this, a list of directories, separated by colo
 echo $PATH
 /home/dahlo/perl//bin/:/home/dahlo/.pyenv/shims:/home/dahlo/.pyenv/bin:
 /usr/lib64/qt-3.3/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:
-/sbin:/opt/thinlinc/bin:/sw/uppmax/bin:/home/dahlo/usr/bin
+/sbin:/opt/thinlinc/bin:/sw/pdc/bin:/home/dahlo/usr/bin
 ```
 
 Try loading a module, and then look at the `$PATH` variable again. You'll see that there are a few extra directories there now, after the module has been loaded.
 
 ```bash
-module load bioinfo-tools samtools/1.6
+module load bioinfo-tools samtools
 echo $PATH
 /sw/apps/bioinfo/samtools/1.6/rackham/bin:/home/dahlo/perl/bin:/home/dahlo/.pyenv/shims:
 /home/dahlo/.pyenv/bin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:
-/usr/sbin:/sbin:/opt/thinlinc/bin:/sw/uppmax/bin:/home/dahlo/usr/bin
+/usr/sbin:/sbin:/opt/thinlinc/bin:/sw/pdc/bin:/home/dahlo/usr/bin
 ```
 
 To pretend that we are loading a module, instead of actually loading a module for them, we'll manually do what the module system would have done. We will just add a the directory containing my dummy scripts to the `$PATH` variable, and it will be like we loaded the module for them. Now, when we type the name of one of my scripts, the computer will look in all the directories specified in the `$PATH` variable, which now includes the location where i keep my scripts. The computer will now find programs named as my scripts are and it will run them.
 
 ```bash
-export PATH=$PATH:/sw/courses/ngsintro/linux/uppmax_pipeline_exercise/dummy_scripts
+export PATH=$PATH:`r path_resources`/hpc/pipeline_exercise/dummy_scripts
 ```
 
 This will set the `$PATH` variable to whatever it is at the moment, and add a directory at the end of it. Note the lack of a dollar sign infront of the variable name directly after **export**. You don't use dollar signs when **assigning** values to variables, and you always use dollar signs when **getting** values from variables.
 
 ::: {.alert .alert-warning}
 
-{{< fa exclamation-circle >}} **Important**
+{{< fa exclamation-circle >}} Important
 
 The export command affects only the terminal you type it in. If you have 2 terminals open, only the terminal you typed it in will have a modified path. If you close that terminal and open a new one, it will not have the modified path.
 
@@ -200,10 +203,9 @@ Right, so now you know how to figure out how to run programs (just type the prog
 
 First, go to the exome directory in the lab directory that you copied to your folder in step 2 in this lab:
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("cd ", path_workspace, "/uppmax_pipeline_exercise/exomeSeq"))
+```bash
+cd `r path_workspace`/hpc_pipeline_exercise/exomeSeq
 ```
-
 In there, you will find a folder called `raw_data`, containing a fastq file: `my_reads.rawdata.fastq`. This file contains the raw data that you will analyse.
 
 * Filter the raw data using the program `filter_reads`, to get rid of low quality reads.
@@ -228,12 +230,15 @@ The simplest way to work with scripts is to have 2 terminals open. One will have
 
 Start writing you script with `nano`:
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("cd ", path_workspace, "/uppmax_pipeline_exercise/exomeSeq\n"))
-cat("nano exome_analysis_script.sh")
+```bash
+# if you have not already done so, load the nano module
+module load nano
+
+cd `r path_workspace`/hpc_pipeline_exercise/exomeSeq
+nano exome_analysis_script.sh
 ```
 
-The `.sh` ending is commonly used for **sh**ell scripts which is what we are creating. The default shell at UPPMAX is as we know called bash, so whenever we write `sh` the computer will use bash. If the default shell at UPPMAX would change for some reason, maybe to **zsh** or any other type of shell, `sh` would point the the new shell instead.
+The `.sh` ending is commonly used for **sh**ell scripts which is what we are creating. The default shell here is called `bash`, so whenever we write `sh`, the computer will use `bash`. If the default shell would change for some reason, maybe to `zsh` or any other type of shell, `sh` would point the the new shell instead.
 
 ![](assets/dualTerminals.png)
 
@@ -251,7 +256,7 @@ A tip is to read the error list from the top-down. An error early in the pipelin
 
 # Submitting a dummy pipeline
 
-The whole point with computer centres like UPPMAX is that you can run multiple programs at the same time to speed things up. To do this efficiently you will have to submit jobs to the queue system. As you saw in yesterday's exercise, it is ordinary shell scripts that you submit to the queue system, with a couple of extra options in the beginning. So to be able to submit our script to the queue system, the only thing we have to do is to add the queue system options in the beginning of the script.
+The whole point with large computer centres like this is that you can run multiple programs at the same time to speed things up. To do this efficiently you will have to submit jobs to the queue system. As you saw in yesterday's exercise, it is ordinary shell scripts that you submit to the queue system, with a couple of extra options in the beginning. So to be able to submit our script to the queue system, the only thing we have to do is to add the queue system options in the beginning of the script.
 
 The options needed by the queue are, as we learned yesterday:
 
@@ -271,14 +276,14 @@ The `-l` after bash is a flag that tells bash that the script should be treated 
 
 The next couple of rows will contain all the options you want to give SLURM:
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("#!/bin/bash -l
-#SBATCH -A ", id_project, "
+```bash
+#!/bin/bash -l
+#SBATCH -A `r id_project`
 #SBATCH -t 00:05:00
-#SBATCH -p shared"))
+#SBATCH -p shared
 ```
 
-SLURM options always start with **`#SBATCH`** followed by a flag (`-A` for account, `-t` for time, `-p` for partition) and the value for that flag. Your script should now look something like this (ignore the old project id and path to the scripts):
+SLURM options always start with `#SBATCH` followed by a flag (`-A` for account, `-t` for time, `-p` for partition) and the value for that flag. Your script should now look something like this (ignore the old project id and path to the scripts):
 
 ![](assets/slurmScript.png)
 

@@ -15,7 +15,7 @@ bash 1_linux_advanced.sh $projid
 echo "Ended script 1"
 
 echo "Starting script 2"
-bash 2_linux_uppmax.sh $projid
+bash 2_linux_hpc.sh $projid
 echo "Ended script 2"
 
 echo "Starting script 3"
