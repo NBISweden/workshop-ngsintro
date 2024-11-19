@@ -76,15 +76,35 @@ squeue -A {{< meta id_project >}} -o %C | awk '{total += $0} END{print total}'
 Amount of storage space used per project
 
 ```sh
-uquota | grep {{< meta id_project >}}
+projinfo
 ```
 
 Sample output
 
 ```
-Your project     Your File Area         Unit       Usage  Quota Limit  Over Quota
----------------  ---------------------  --------  ------  -----------  ----------
-snic2022-22-123  /proj/snic2022-22-123  GBytes       4.6          128
+Information for compute project: edu24.uppmax (PI: mdahlo)
+UPPMAX intro course
+Active from 2024-09-29 00:00:00 to 2025-02-03 00:00:00
+Members: asmae,ccollins,dianaek,emmers,eswku,heddaja,larsger,laurea,leonco,malina,mariaio,marziar,mdahlo,muyi,peihung,royfranc,rubencw,shaja23,svelo,szczot,theoseri,tudoran,vibe1827,xuji
+dardel: 2000 corehours/month, used 39.51% (790 corehours) during the past 30 days
+Usage by user royfranc: 36.85% (736 corehours)
+```
+
+### List project members
+
+```sh
+projinfo
+```
+
+Sample output
+
+```
+Information for compute project: edu24.uppmax (PI: mdahlo)
+UPPMAX intro course
+Active from 2024-09-29 00:00:00 to 2025-02-03 00:00:00
+Members: asmae,ccollins,dianaek,emmers,eswku,heddaja,larsger,laurea,leonco,malina,mariaio,marziar,mdahlo,muyi,peihung,royfranc,rubencw,shaja23,svelo,szczot,theoseri,tudoran,vibe1827,xuji
+dardel: 2000 corehours/month, used 39.51% (790 corehours) during the past 30 days
+Usage by user royfranc: 36.85% (736 corehours)
 ```
 
 ### User activity
@@ -124,22 +144,6 @@ ReservationName=snic2021-22-644_fri StartTime=2021-11-26T08:30:00 EndTime=2021-1
    Users=(null) Accounts=snic2021-22-644 Licenses=(null) State=INACTIVE BurstBuffer=(null) Watts=n/a
 ```
 
-### List project members
-
-```sh
-projmembers {{< meta id_project >}}
-```
-
-Sample output
-
-```
-snic2022-22-123 abusiddi   Abu Bakar Siddique
-snic2022-22-123 afifac     Afifa Enam Chowdhury
-snic2022-22-123 asve0014   Ashish Verma
-snic2022-22-123 berka      Berkay Paylar
-snic2022-22-123 btleren    Betül Eren Keskin
-```
-
 ### User identity
 
 Fetch user information from username
@@ -171,7 +175,7 @@ Also use this when logging in to the compute node!
 
 In MobaXTerm, go to settings and make sure that X-forwarding is checked.
 
-#### Testing X-forwarding
+#### Testing X-forwarding on Rackham
 
 Type `xeyes` in the terminal.
 
