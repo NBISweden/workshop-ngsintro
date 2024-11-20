@@ -53,10 +53,10 @@ salloc -A `r id_project` -t 04:00:00 -p shared -c 4
 
 # Copy files for lab
 
-Now, you will need some files. To avoid all the course participants editing the same file all at once, undoing each other's edits, each participant will get their own copy of the needed files. The files are located in the folder 
+Now, you will need some files. To avoid all the course participants editing the same file all at once, undoing each other's edits, each participant will get their own copy of the needed files. The files for the HPC part of the course are located in the folder 
 
 ```bash
-`r path_resources`/hpc/intro
+`r path_resources`/hpc
 ```
 
 Next, copy the lab files from this folder. `-r` means recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, **NOT** sub-folders and files in sub-folders.
@@ -67,20 +67,20 @@ Next, copy the lab files from this folder. `-r` means recursively, which means a
 # syntax
 cp -r <source> <destination>
 
-cp -r `r path_resources`/hpc/intro `r path_workspace`
+cp -r `r path_resources`/hpc `r path_workspace`
 ```
 
 Have a look in the folder you just copied
 ```bash
-user@login1 ~ $ cd `r path_workspace`/hpc_tutorial
+user@login1 ~ $ cd `r path_workspace`/hpc/intro
 
-user@login1 hpc_tutorial $ ll
+user@login1 intro $ ll
 total 128K
 drwxrwxr-x 2 user user 2,0K May 18 16:21 .
 drwxrwxr-x 4 user user 2,0K May 18 15:34 ..
 -rwxrwxr-x 1 user user 1,2K May 18 16:21 data.bam
 -rw-rw-r-- 1 user user  232 May 18 16:21 job_template
-user@login1 hpc_tutorial $ 
+user@login1 intro $ 
 ```
 
 # Run programs
@@ -96,17 +96,17 @@ less data.bam
 Not so pretty.. Luckily for us, there is a program called [samtools](http://www.htslib.org/) that is made for reading BAM files. To use it on PDC we must first load the module for `samtools`. Try starting samtools before loading the module.
 
 ```bash
-user@login1 hpc_tutorial $ samtools
+user@login1 intro $ samtools
 -bash: samtools: command not found
 ```
 
 That did not work, try it again after loading the module:
 
 ```bash
-user@login1 hpc_tutorial $ module load bioinfo-tools samtools/1.20
+user@login1 intro $ module load bioinfo-tools samtools/1.20
 Message: NOTE: The modules made available by loding this module are all PDC legacy, please consider loading PDC installed modules when available, as they are optimized for working on Dardel
 
-user@login1 hpc_tutorial $ samtools
+user@login1 intro $ samtools
 
 Program: samtools (Tools for alignments in the SAM format)
 Version: 1.20 (using htslib 1.20)
@@ -174,7 +174,7 @@ Commands:
 To use samtools to view a BAM file, use the following line.
 
 ```bash
-user@login1 hpc_tutorial $ samtools view -h data.bam
+user@login1 intro $ samtools view -h data.bam
 
 @HD	VN:1.0	SO:coordinate
 @SQ	SN:chr1	LN:249250621
@@ -219,6 +219,10 @@ less data.sam
 You can also edit the file with `nano`:
 
 ```bash
+# load the nano module
+module load nano
+
+# edit the file using nano
 nano data.sam
 ```
 
@@ -229,7 +233,7 @@ Try deleting the whole last line in the file, save it, and exit `nano`.
 To view which module you have loaded at the moment, type
 
 ```bash
-user@login1 hpc_tutorial $ module list
+user@login1 intro $ module list
 
 Currently Loaded Modules:
   1) craype-x86-rome                       11) PrgEnv-cray/8.5.0
@@ -271,7 +275,7 @@ Look in the list from `module list` to see the name of the module you want to un
 
 Not all jobs are as small as converting this tiny BAM file to a SAM file. Usually the BAM files are several gigabytes, and can take hours to convert to SAM files. You will not have reserved nodes waiting for you to do something either, so running programs is done by submitting a job to the queue system. What you submit to the queue system is a script file that will be executed as soon as it reaches the front of the queue. The scripting language used in these scripts is **bash**, which is the same language as you usually use in a terminal i.e. everything so far in the lecture and lab has been in the bash language (`cd`, `ls`, `cp`, `mv`, etc.).
 
-Have a look at **job_template** in your **hpc_tutorial** folder.
+Have a look at **job_template** in your **intro** folder.
 
 ```bash
 less job_template
