@@ -131,6 +131,13 @@ url_cluster: "dardel.pdc.kth.se"
 # url to backup cluster (rackham)
 url_cluster_backup: "rackham.uppmax.uu.se"
 
+# reservation ids
+id_slurm_res_mon: "edu24-11-25"
+id_slurm_res_tue: "edu24-11-26"
+id_slurm_res_wed: "edu24-11-27"
+id_slurm_res_thu: "edu24-11-28"
+id_slurm_res_fri: "edu24-11-29"
+
 # location options are linkoping, lund, umea, uppsala or online. For rendering the info page.
 # one or more separated by commas or semicolon. online doesn't display any location info.
 location: linkoping
