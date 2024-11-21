@@ -5,25 +5,15 @@ author: 'Martin Dahlö'
 format: html
 ---
 
-```{r,eval=TRUE,include=FALSE}
-library(yaml)
-library(here)
-id_project     <- yaml::read_yaml(here("_quarto.yml"))$id_project
-path_resources <- yaml::read_yaml(here("_quarto.yml"))$path_resources
-path_workspace <- yaml::read_yaml(here("_quarto.yml"))$path_workspace
-site_url       <- yaml::read_yaml(here("_quarto.yml"))$website$`site-url`
-output_dir     <- yaml::read_yaml(here("_quarto.yml"))$project$`output-dir`
-```
-
 ## Connect to PDC
 
 The first step of this lab is to open a ssh connection to PDC. Please refer to [**Connecting to PDC**](../../other/lab_connect_pdc.html) for instructions. Once connected to PDC, return here and continue reading the instructions below.
 
 ## Logon to a node
 
-Usually you would do most of the work in this lab directly on one of the login nodes at PDC, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
+Usually you would do most of the work in this lab directly on one of the login nodes, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
 
-Check which node you got when you booked resources this morning (replace **username** with your PDC username)
+Check which node you got when you booked resources this morning (replace `username` with your username)
 
 ```bash
 squeue -u username
@@ -39,7 +29,7 @@ user@login1 ~ $
 ```
 
 where `nid001009` is the name of the node I got (yours will probably be different).
-Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested (7 hours in this case) the session will shut down, and you will lose all unsaved data. Connect to this node from within PDC.
+Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested the session will shut down, and you will lose all unsaved data. Connect to this node from within PDC.
 
 ```bash
 ssh -Y nid001009
@@ -48,7 +38,7 @@ ssh -Y nid001009
 If the list is empty you can run the allocation command again and it should be in the list:
 
 ```bash
-salloc -A `r id_project` -t 04:00:00 -p shared -c 4
+salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_mon >}} -t 04:00:00 -p shared -c 1
 ```
 
 # Copy files for lab
@@ -56,10 +46,10 @@ salloc -A `r id_project` -t 04:00:00 -p shared -c 4
 Now, you will need some files. To avoid all the course participants editing the same file all at once, undoing each other's edits, each participant will get their own copy of the needed files. The files for the HPC part of the course are located in the folder 
 
 ```bash
-`r path_resources`/hpc
+{{< meta path_resources >}}/hpc
 ```
 
-Next, copy the lab files from this folder. `-r` means recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, **NOT** sub-folders and files in sub-folders.
+Next, copy the lab files from this folder. `-r` means recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, **not** sub-folders and files in sub-folders.
 
 {{< fa lightbulb >}} Remember to use tab-complete to avoid typos and too much writing.
 
@@ -67,12 +57,12 @@ Next, copy the lab files from this folder. `-r` means recursively, which means a
 # syntax
 cp -r <source> <destination>
 
-cp -r `r path_resources`/hpc `r path_workspace`
+cp -r {{< meta path_resources >}}/hpc {{< meta path_workspace >}}
 ```
 
 Have a look in the folder you just copied
 ```bash
-user@login1 ~ $ cd `r path_workspace`/hpc/intro
+user@login1 ~ $ cd {{< meta path_workspace >}}/hpc/intro
 
 user@login1 intro $ ll
 total 128K
@@ -85,7 +75,7 @@ user@login1 intro $
 
 # Run programs
 
-Among the files that were copied is **data.bam**. BAM is a popular format to store aligned sequence data, but since it is a, so called, binary format it doesn't look that good if you are human. Try it using less:
+Among the files that were copied is `data.bam`. BAM is a popular format to store aligned sequence data, but since it is a, so called, binary format it doesn't look that good if you are human. Try it using less:
 
 ```bash
 less data.bam
@@ -93,7 +83,7 @@ less data.bam
 
 ![](assets/bam_binary.png)
 
-Not so pretty.. Luckily for us, there is a program called [samtools](http://www.htslib.org/) that is made for reading BAM files. To use it on PDC we must first load the module for `samtools`. Try starting samtools before loading the module.
+Not so pretty.. Luckily for us, there is a program called [samtools](http://www.htslib.org/) that is made for reading BAM files. To use it we must first load the module for `samtools`. Try starting samtools before loading the module.
 
 ```bash
 user@login1 intro $ samtools
@@ -169,7 +159,7 @@ Commands:
 
 ```
 
-{{< fa exclamation-circle >}} All modules are unloaded when you disconnect from PDC, so you will have to load the modules again every time you log in. If you load a module in a terminal window, it will not affect the modules you have loaded in another terminal window, even if both terminals are connected to PDC. Each terminal is independent of the others.
+{{< fa exclamation-circle >}} All modules are unloaded when you disconnect from the cluster, so you will have to load the modules again every time you log in. If you load a module in a terminal window, it will not affect the modules you have loaded in another terminal window, even if both terminals are connected to the cluster. Each terminal is independent of the others.
 
 To use samtools to view a BAM file, use the following line.
 
@@ -185,9 +175,11 @@ user@login1 intro $ samtools view -h data.bam
 @SQ	SN:chr14	LN:107349540
 @SQ	SN:chr15	LN:102531392
 @SQ	SN:chr16	LN:90354753
+...
+...
 ```
-
-`-h` also print the BAM file's **header**, which is the rows starting with **`@` signs** in the beginning of the file. These lines contain so called **metadata**; information about the data stored in the file. It contain things like which program was used to generate the BAM file and which chromosomes are present in the file. Try running the command without the `-h` to see the difference.
+ 
+`- h` also print the BAM file's **header**, which is the rows starting with `@` signs in the beginning of the file. These lines contain so called **metadata**; information about the data stored in the file. It contain things like which program was used to generate the BAM file and which chromosomes are present in the file. Try running the command without the `-h` to see the difference.
 
 The not-binary version (ASCII, or text version) of a BAM file is called a **SAM file**, which was just printed directly into the terminal window. The SAM file is not to much use for us printed in the terminal window, aesthetics aside. It is probably much better to have the SAM file saved as an actual file, something that is very easy to do. Any text that is printed to the terminal can be saved to a file instead of the terminal window using a 'crocodile mouth', `>`
 
@@ -196,7 +188,7 @@ The not-binary version (ASCII, or text version) of a BAM file is called a **SAM 
 program arguments > outfile
 ```
 
-which will launch a program named **program**, supply it with the argument **arguments**, and write any output that would have been printed to the screen to the file **outfile** instead.
+which will launch a program named `program`, supply it with the argument `arguments`, and write any output that would have been printed to the screen to the file `outfile` instead.
 
 To use this on samtools,
 
@@ -252,7 +244,7 @@ Currently Loaded Modules:
 
 ```
 
-Let's say that you want to make sure you are using the latest version samtools. Look at which version you have loaded at the moment (`samtools/1.20`).
+Let's say that you want to make sure you are using the latest version samtools. Look at which version you have loaded at the moment (`samtools/1.20` in the example above).
 
 Now type
 
@@ -260,22 +252,21 @@ Now type
 module avail
 ```
 
-to see which programs are available at PDC. Can you find samtools in the list? Which is the latest version of samtools available at PDC?
+to see which programs are available to load. Can you find `samtools` in the list? Which is the latest version of samtools available?
 
 To change which samtools module you have loaded, you have to unload the the module you have loaded and then load the other module. To unload a module, use
 
 ```bash
 module unload <module name>
-
 ```
 
-Look in the list from `module list` to see the name of the module you want to unload. When the old module is unloaded, load `samtools/1.15.1` (or try with the latest samtools module!).
+Look in the list from `module list` to see the name of the module you want to unload. When the old module is unloaded, load antoher version of `samtools`. 
 
 # Submitting a job
 
 Not all jobs are as small as converting this tiny BAM file to a SAM file. Usually the BAM files are several gigabytes, and can take hours to convert to SAM files. You will not have reserved nodes waiting for you to do something either, so running programs is done by submitting a job to the queue system. What you submit to the queue system is a script file that will be executed as soon as it reaches the front of the queue. The scripting language used in these scripts is **bash**, which is the same language as you usually use in a terminal i.e. everything so far in the lecture and lab has been in the bash language (`cd`, `ls`, `cp`, `mv`, etc.).
 
-Have a look at **job_template** in your **intro** folder.
+Have a look at `job_template` in your `intro` folder.
 
 ```bash
 less job_template
@@ -285,6 +276,7 @@ less job_template
 #SBATCH -p shared
 #SBATCH -J Template_script
 #SBATCH -t 01:00:00
+#SBATCH -c 1
 
 # load some modules
 module load bioinfo-tools
@@ -296,7 +288,7 @@ cd /cfs/klemming/projects/supr/naiss2099-99-999
 echo Hello world!
 ```
 
-Edit this file to make the job convert **data.bam** to a SAM file named **jobData.sam**. Remember how the queue works? Try to approximate the runtime of the job (almost instant in this case) and increase it by ~50%, and use that time approximation when writing your script file. Longer jobs will wait longer in the queue because it is harder to fit them into gaps in the queue! Also remember to change the project ID to match this course occasion.
+Edit this file to make the job convert `data.bam` to a SAM file named `jobData.sam`. Remember how the queue works? Try to approximate the runtime of the job (almost instant in this case) and increase it by ~50%, and use that time approximation when writing your script file. Longer jobs will wait longer in the queue because it is harder to fit them into gaps in the queue! Also remember to change the project ID to match this course occasion.
 
 Remember, just write the command you would run if you were sitting by the computer, i.e. load the correct modules, go to the correct folder, and run samtools the right way.
 
@@ -308,21 +300,20 @@ sbatch job_template
 
 # Job queue
 
-If you want to know how your jobs are doing in the queue, you can check their status with `$ squeue -u username`
+If you want to know how your jobs are doing in the queue, you can check their status with `squeue -u username`
 
-Rewrite the previous sbatch file so that you book 3 days of time, and to use a node instead of a core. This will cause your job to stand in the queue for a bit longer, so that we can have a look at it while it is queuing. Submit it to the queue and run `squeue`.
+Rewrite the previous sbatch file so that you book 3 days of time, and to use a whole node instead of a single core. This will cause your job to stand in the queue for a bit longer, so that we can have a look at it while it is queuing. Submit it to the queue and run `squeue`.
 
 ```bash
 squeue -u username
 
   JOBID PARTITION     NAME     USER   ST       TIME  NODES NODELIST(REASON)
 5104668    shared Template   username PD       0:00      1 (Priority)
-
 ```
 
 Here we can see in the status column (`ST`)that the job is pending (`PD`) and has not started yet. The job is waiting for a node to become available. When the job starts, the status will change to `R` (running). If you run `squeue` again, you will see that the job is running.
 
-In our case, we are not really interested in running this job at all. Let's cancel it instead. This can be done with the command **`scancel`**. Syntax:
+In our case, we are not really interested in running this job at all. Let's cancel it instead. This can be done with the command `scancel`. Syntax:
 
 ```bash
 scancel <job id>
@@ -331,7 +322,7 @@ scancel <job id>
 You see the job id number in the output from `squeue`.
 
 ```bash
-scancel 3134401
+scancel 5104668
 ```
 
 If you have a lot of jobs running, you can cancel all of them by using the command `scancel -u username`.
@@ -347,7 +338,7 @@ salloc -A <project id> -t <time> -c <number of cores> -p shared
 Try closing down your current session on the reserved node you connected to in the beginning of the lab by typing `exit`. Then make a new booking using `salloc` but without the reservation id,
 
 ```bash
-salloc -A `r id_project` -t 3:00:00 -c 1 -p shared
+salloc -A {{< meta id_project >}} -t 3:00:00 -c 1 -p shared
 ```
 
 Congratulations, you are now ready to be let loose on the cluster!
