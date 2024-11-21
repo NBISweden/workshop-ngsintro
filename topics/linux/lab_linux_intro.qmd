@@ -15,19 +15,20 @@ site_url       <- yaml::read_yaml(here("_quarto.yml"))$website$`site-url`
 output_dir     <- yaml::read_yaml(here("_quarto.yml"))$project$`output-dir`
 ```
 
+
 ## Connect to PDC
 
 The first step of this lab is to open a ssh connection to PDC. Please refer to [**Connecting to PDC**](../other/lab_connect_pdc.html) for instructions. Once connected to PDC, return here and continue reading the instructions below.
 
 ## Logon to a node
 
-Usually you would do most of the work in this lab directly on one of the login nodes at PDC, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
+Usually you would do most of the work in this lab directly on one of the login nodes, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
 
 ```bash
-salloc -A `r id_project` -t 07:00:00 -p shared -n 4
+salloc -A {{< meta id_project >}} -t 07:00:00 -p shared -n 1
 ```
 
-check which node you got (replace `username` with your PDC username)
+check which node you got (replace `username` with your username)
 
 ```bash
 squeue -u username
@@ -36,14 +37,14 @@ squeue -u username
 should look something like this
 
 ```bash
-user@login1 ~ $ squeue -u user
+user@login1 ~ $ squeue -u username
              JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
            5583899    shared interact    user  R       2:22      1 nid001009
 user@login1 ~ $
 ```
 
 where `nid001009` is the name of the node I got (yours will probably be different).
-Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested (7 hours in this case) the session will shut down, and you will lose all unsaved data. Connect to this node from within PDC.
+Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested (7 hours in this case) the session will shut down, and you will lose all unsaved data. Connect to this node from the login node.
 
 ```bash
 ssh -Y nid001009
@@ -73,7 +74,7 @@ ls -l
 
 This is how my home folder looks like, and yours should look somewhat similar:
 
-```
+```bash
 [12:56:32] user@login1 ~ $ ls -l
 total 4384
 drwxr-xr-x  3 user b2014068    2048 Apr 27  2017 archive
@@ -92,21 +93,21 @@ Usually when you are running analysis for real, you would not keep the data or a
 
 ```bash
 # create the course folder
-mkdir `r path_workspace`
+mkdir {{< meta path_workspace >}}
 ```
 
 As seen in the lecture, the command for moving around is `cd`. The command stands for **C**hange **D**irectory and does exactly that. It is the equivalent of double clicking a folder in a GUI.
 
 To enter the course folder, simply type 
 ```bash
-cd `r basename(path_workspace)`
+cd {{< meta path_workspace >}}
 ```
 
 We can easily see that this is a relative path, since it does not start with a `/`. That means that this command will only work when you are standing in your home folder. If you are standing somewhere else and say that you want to enter a folder named ``r basename(path_workspace)``, the computer will tell you that there is no folder named ``r basename(path_workspace)`` where you are located at the moment.
 
 The absolute path to the workspace folder would be  
   
-``r path_workspace``  
+`{{< meta path_workspace >}}`
 or  
 ``r paste0("/cfs/klemming/home/u/username/", basename(path_workspace))``  
   
@@ -162,15 +163,15 @@ ll ~/
 Now you will need some files. The files are located in the folder 
 
 ```bash 
-`r path_resources`/linux/linux_tutorial
+{{< meta path_resources >}}/linux/linux_tutorial
 ```
 
-or they can be downloaded if you are not on UPPMAX at the moment, [files.tar.gz](assets/files.tar.gz) (instruction on how to download further down)
+or they can be downloaded if you are not logged on the cluster at the moment, [files.tar.gz](assets/files.tar.gz) (instruction on how to download further down)
 
 For structures sake, first create a folder called `linux_tutorial` inside the workspace folder, where you can put all your files belonging to this lab.
 
 ```bash
-mkdir `r path_workspace`/linux_tutorial
+mkdir {{< meta path_workspace >}}/linux_tutorial
 ```
 
 Next, copy the lab files to this folder.
@@ -178,13 +179,11 @@ Next, copy the lab files to this folder.
 ```bash
 # syntax
 cp -r <source-folder> <destination-folder>
+
+cp -r {{< meta path_resources >}}/linux/linux_tutorial/* {{< path_workspace >}}/linux_tutorial
 ```
 
-```bash
-cp -r `r path_resources`/linux/linux_tutorial/* `r path_workspace`/linux_tutorial
-```
-
-`-r` denotes recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, **NOT** sub-folders and files in sub-folders.
+`-r` denotes recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, **not** sub-folders and files in sub-folders.
 
 {{< fa lightbulb >}} Remember to tab-complete to avoid typos and too much writing.
 
@@ -207,19 +206,19 @@ Go to the folder you just copied and see what is in it.
 {{< fa lightbulb >}} Remember to tab-complete to avoid typos and too much writing.
 
 ```bash
-cd `r path_workspace`/linux_tutorial
+cd {{< meta path_workspace >}}/linux_tutorial
 ll
 ```
 
-**tar.gz** is a file ending given to compressed files, something you will encounter quite often. Compression decreases the size of the files which is good when downloading, and it can take thousands of files and compress them all into a single compressed file. This is both convenient for the person downloading and speeds up the transfer more than you would think.
+`tar.gz` is a file ending given to compressed files, something you will encounter quite often. Compression decreases the size of the files which is good when downloading, and it can take thousands of files and compress them all into a single compressed file. This is both convenient for the person downloading and speeds up the transfer more than you would think.
 
-To unpack the **files.tar.gz** file use the following line while standing in the newly copied **linux_tutorial** folder.
+To unpack the `files.tar.gz` file use the following line while standing in the newly copied `linux_tutorial` folder.
 
 ```bash
 tar -xzvf files.tar.gz
 ```
 
-The command will always be the same for all tar.gz files you want to unpack. `-xzvf` means e**X**tract from a **Z**ipped file, **V**erbose (prints the name of the file being unpacked), from the specified **F**ile (`f` must always be the last of the letters).
+The command will always be the same for all `tar.gz` files you want to unpack. `-xzvf` means e**X**tract from a **Z**ipped file, **V**erbose (prints the name of the file being unpacked), from the specified **F**ile (`f` must always be the last of the letters).
 
 Look in the folder again and see what we just unpacked:
 
@@ -256,7 +255,7 @@ The syntax for the move command is:
 mv <source> <destination>
 ```
 
-First, take a look inside the **important_results** folder:
+First, take a look inside the `important_results` folder:
 
 ```bash
 [user@login1 linux_tutorial]$ ll important_results/
@@ -311,7 +310,7 @@ drwxrwsr-x 2 user g20XXXXX   2048 Jan 28  2012 this_is_empty
 -rwxrwxr-x 1 user g20XXXXX      0 Sep 19  2012 useless_file
 ```
 
-Sometimes you don't want to move things, you want to copy them. Moving a file will remove the original file, whereas copying the file will leave the original untouched. An example when you want to do this could be that you want to give a copy of a file to a friend. Imagine that you have a external hard drive that you want to place the file on. The file you want to give to your friend is data from last years project, which is located in your backed_up_project_folder, `backed_up_proj_folder/last_years_data`
+Sometimes you don't want to move things, you want to copy them. Moving a file will remove the original file, whereas copying the file will leave the original untouched. An example when you want to do this could be that you want to give a copy of a file to a friend. Imagine that you have a external hard drive that you want to place the file on. The file you want to give to your friend is data from last years project, which is located in your backed up project folder, `backed_up_proj_folder/last_years_data`
 
 As with the move command, the syntax is
 
@@ -320,7 +319,7 @@ cp <source> <destination>
 cp backed_up_proj_folder/last_years_data external_hdd/
 ```
 
-Take a look in the **external_hdd** to make sure the file got copied.
+Take a look in the `external_hdd` to make sure the file got copied.
 
 ```bash
 [user@login1 linux_tutorial]$ cp backed_up_proj_folder/last_years_data external_hdd/
@@ -331,7 +330,7 @@ total 0
 
 ## Deleting files
 
-Sometimes you will delete files. Usually this is when you know that the file or files are useless to you, and they only take up space on your hard drive or UPPMAX account.
+Sometimes you will delete files. Usually this is when you know that the file or files are useless to you, and they only take up space on your hard drive or your project's folder.
 
 To delete a file, we use the **R**e**M**ove command, `rm`.
 Syntax:
@@ -411,7 +410,7 @@ rm -r this_has_a_file
 
 So what happens if you give your files bad names like `file1` or `results`? You take a break in a project and return to it 4 months later, and all those short names you gave your files doesn't tell you at all what the files actually contain.
 
-Of course, this never happens because you **ALWAYS** name your files so that you definitely know what they contain. But let's say it did happen. Then the only way out is to look at the contents of the files and try to figure out if it is the file you are looking for.
+Of course, this never happens because you **ALWAYS** name your files so that you definitely know what they contain (right?). But let's say it did happen. Then the only way out is to look at the contents of the files and try to figure out if it is the file you are looking for.
 
 {{< fa clipboard-list >}} Now, we are looking for that really good script we wrote a couple of months ago in that other project. Look in the project's folder, `old_project` and find the script.
 
@@ -444,24 +443,27 @@ That's more like it!
 
 Now imagine that you had hundreds of files with weird names, and you really needed to find it. *Lesson learned:* name your files so that you know what they are! And don't be afraid to create folders to organise files.
 
-Another thing to think about when opening files in Linux is which program should you open the file in? The programs we covered during the lectures are **nano** and **less**. The main difference between these programs in that **less can't edit files**, only view them. Another difference is that **less doesn't load the whole file** into the RAM memory when opening it.
+Another thing to think about when opening files in Linux is which program should you open the file in? The programs we covered during the lectures are `nano` and `less`. The main difference between these programs in that **less can't edit files**, only view them. Another difference is that **less doesn't load the whole file** into the RAM memory when opening it.
 
 So, why care about how the program works? I'll show you why. This time we will be opening a larger file, located in the course's project folder. It's 65 megabytes, so it is a tiny file compared with bio-data. Normal sequencing files can easily be 100-1000 times larger than this.
 
 First, open the file with `nano`.
 
 ```bash
+# load the nano module if you have not done so already
+module load nano
+
 # syntax
 nano <filename>
 
-nano `r path_resources`/linux/linux_additional-files/large_file
+nano {{< meta path_resources >}}/linux/linux_additional-files/large_file
 ```
 
-{{< fa lightbulb >}} Press `Ctrl`+`X` to close it down, use arrows to scroll up/down).
+{{< fa lightbulb >}} Press `Ctrl+X` to close it down, use arrows to scroll up/down).
 
 Is the file loaded yet? Now take that waiting time and multiply it with 100-1000. Now open the file with less. Notice the difference?
 
-**`head`** and **`tail`** works the same was as less in this regard. They don't load the whole file into RAM, they just take what they need.
+`head` and `tail` works the same was as `less` in this regard. They don't load the whole file into RAM, they just take what they need.
 
 To view the first rows of the large file, use `head`.
 
@@ -469,7 +471,7 @@ To view the first rows of the large file, use `head`.
 # syntax
 head <filename>
 
-head `r path_resources`/linux/linux_additional-files/large_file
+head {{< meta path_resources >}}/linux/linux_additional-files/large_file
 ```
 
 Remember how to view an arbitrary number of first rows in a file?
@@ -478,7 +480,7 @@ Remember how to view an arbitrary number of first rows in a file?
 # syntax
 head -n <number of rows to view> <filename>
 
-head -n 23 `r path_resources`/linux/linux_additional-files/large_file
+head -n 23 {{< meta path_resources >}}/linux/linux_additional-files/large_file
 ```
 
 The same syntax for viewing the last rows of a file with tail:
@@ -487,13 +489,13 @@ The same syntax for viewing the last rows of a file with tail:
 # syntax
 tail <filename>
 
-tail `r path_resources`/linux/linux_additional-files/large_file
+tail {{< meta path_resources >}}/linux/linux_additional-files/large_file
 
 
 # syntax
 tail -n <number of rows to view> <filename>
 
-tail -n 23 `r path_resources`/linux/linux_additional-files/large_file
+tail -n 23 {{< meta path_resources >}}/linux/linux_additional-files/large_file
 ```
 
 ## Wildcards
@@ -506,7 +508,7 @@ Sometimes (most of the time really) you have many files. So many that it would t
 mv  sample_1_*  my_other_folder
 ```
 
-We can try it out on the example files I have prepared. There are two folders called **part_1** and **part_2**. We want to collect all the **.txt** files from both these folders in one of the folders. Look around in both the folders to see what they contain.
+We can try it out on the example files I have prepared. There are two folders called `part_1` and `part_2`. We want to collect all the `.txt` files from both these folders in one of the folders. Look around in both the folders to see what they contain.
 
 ```
 [user@login1 linux_tutorial]$ ll part_1/
@@ -521,13 +523,13 @@ total 0
 -rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 incomplete_datasets.dat
 ```
 
-We see that **part_1** only contains `.txt` files, and that **part_2** contains some other files as well. The best option seems to be to move all `.txt` files from **part_2** info **part_1**.
+We see that `part_1` only contains `.txt` files, and that `part_2` contains some other files as well. The best option seems to be to move all `.txt` files from `part_2` info `part_1`.
 
 ```bash
 mv part_2/*.txt part_1/
 ```
 
-The wildcard works with most, if not all, Linux commands. We can try using wildcards with **`ls`**. Look in the folder `many_files`. Yes, there are hundreds of .docx files in there. But, there are a couple of **.txt** files in there as well. Find out how many .docx and .txt files exist.
+The wildcard works with most, if not all, Linux commands. We can try using wildcards with `ls`. Look in the folder `many_files`. Yes, there are hundreds of `.docx` files in there. But, there are a couple of `.txt` files in there as well. Find out how many `.docx` and `.txt` files exist.
 
 {{< fa clipboard-list >}} Try to figure out the solution on your own. Then check the answer below.
 
@@ -546,7 +548,7 @@ Ok, the last 2 commands for now are `top` and `man`.
 top
 ```
 
-{{< fa lightbulb >}} Press <kbd>q</kbd> to exit.
+{{< fa lightbulb >}} Press `q` to exit.
 
 ```
 Tasks: 376 total,   2 running, 290 sleeping,   0 stopped,   0 zombie
@@ -577,15 +579,15 @@ KiB Swap: 99999744 total, 99999744 free,        0 used. 22658832 avail Mem
 
 Each row in top corresponds to one program running on the computer, and the column describe various information about the program. **The right-most column** shows you which program the row is about.
 
-There are mainly 2 things that are interesting when looking in top. The column **%CPU** describes how much cpu is used by each program. If you are doing calculations, which is what bioinformatics is mostly about, the cpu usage should be high. The numbers in the column is how many percent of a core the program is running. If you have a computer with 8 cores, like the UPPMAX computers, you can have 8 programs using 100% of a core each running at the same time without anything slowing down. As soon as you start a 9th program, it will have to share a core with another program and those 2 programs will run at half-speed since a core can only work that fast. In the example above, program **gnome-shell** is using 12.3% of a core.
+There are mainly 2 things that are interesting when looking in top. The column `%CPU` describes how much cpu is used by each program. If you are doing calculations, which is what bioinformatics is mostly about, the cpu usage should be high. The numbers in the column is how many percent of a core the program is running. If you have a computer with 8 cores, you can have 8 programs using 100% of a core each running at the same time without anything slowing down. As soon as you start a 9th program, it will have to share a core with another program and those 2 programs will run at half-speed since a core can only work that fast. In the example above, program `gnome-shell` is using `12.3%` of a core.
 
-The column **%MEM** describes how much memory each program uses. The numbers mean how many percent of the total memory a program uses. In the example above, the program firefox is using 3.2% of the total memory.
+The column `%MEM` describes how much memory each program uses. The numbers mean how many percent of the total memory a program uses. In the example above, the program firefox is using `3.2%` of the total memory.
 
-The area in the top describes the overall memory usage. **Total** tells you how much memory the computer has, **used** tells you how much of the memory is being used at the moment, and **free** tells you how much memory is free at the moment.
+The area in the top describes the overall memory usage. `Total` tells you how much memory the computer has, `used` tells you how much of the memory is being used at the moment, and `free` tells you how much memory is free at the moment.
 
-Total = Used + Free
+`Total = Used + Free`
 
-A warning sign you can look for in top is when you are running an analysis which seems to take forever to complete, and you see that there is almost no cpu usage on the computer. That means that the computer is not doing any calculation, which could be bad. If you look at the memory usage at the same time, and see that it's maxed out (used 100% of total), you can more or less abort the analysis.
+A warning sign you can look for in top is when you are running an analysis which seems to take forever to complete, and you see that there is almost no cpu usage on the computer. That means that the computer is not doing any calculation, which could be bad. If you look at the memory usage at the same time, and see that it's maxed out (used 100% of total), you can just abort the analysis.
 
 When the memory runs out, the computer more or less stops. Since it can't fit everything into the RAM memory, it will start using the hard drive to store the things it can't fit in the RAM. Since the hard drive is ~1000 times slower than the RAM, things will be going in slow-motion. The solution could be to either change the settings of the program you are running to decrease the memory usage (if the program has that functionality), or just get a computer with more memory.
 
@@ -598,9 +600,7 @@ Good news everyone, there is a manual! To get all the nitty-gritty details about
 man <command you want to look at>
 
 man ls
-```
 
-```
 LS(1)                            User Commands                            LS(1)
 
 NAME
@@ -633,7 +633,7 @@ DESCRIPTION
  Manual page ls(1) line 1 (press h for help or q to quit)
 ```
 
-This will open a less window (remember, <kbd>q</kbd> to close it down, arrows to scroll) with the manual page about `ls`. Here you will be able to read everything about `ls`. You'll see which flag does what (`-a` is to show the hidden files, which in linux are files with a name starting with a dot `.`), which syntax the program has, etc. If you are unsure about how to use a command, look it up using `man`.
+This will open a less window (remember, `q` to close it down, arrows to scroll) with the manual page about `ls`. Here you will be able to read everything about `ls`. You'll see which flag does what (`-a` is to show the hidden files, which in linux are files with a name starting with a dot `.`), which syntax the program has, etc. If you are unsure about how to use a command, look it up using `man`.
 
 The `man` pages can be a bit tricky to understand at first, but you get used to it with time. If it is still unclear, try searching for it on the internet. You are bound to find someone with the exact same question as you, that has already asked on a forum, and gotten a good answer. 5 years ago.
 

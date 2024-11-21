@@ -11,8 +11,6 @@ The first step of this lab is to open a ssh connection to PDC. Please refer to [
 
 ## Logon to a node
 
-Usually you would do most of the work in this lab directly on one of the login nodes, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
-
 Check which node you got when you booked resources this morning (replace `username` with your username)
 
 ```bash
@@ -29,7 +27,7 @@ user@login1 ~ $
 ```
 
 where `nid001009` is the name of the node I got (yours will probably be different).
-Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested the session will shut down, and you will lose all unsaved data. Connect to this node from within PDC.
+Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested the session will shut down, and you will lose all unsaved data. Connect to this node from the login node.
 
 ```bash
 ssh -Y nid001009
