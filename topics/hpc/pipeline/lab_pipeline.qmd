@@ -5,16 +5,6 @@ author: 'Martin Dahlö'
 format: html
 ---
 
-```{r,eval=TRUE,include=FALSE}
-library(yaml)
-library(here)
-id_project     <- yaml::read_yaml(here("_quarto.yml"))$id_project
-path_resources <- yaml::read_yaml(here("_quarto.yml"))$path_resources
-path_workspace <- yaml::read_yaml(here("_quarto.yml"))$path_workspace
-site_url       <- yaml::read_yaml(here("_quarto.yml"))$website$`site-url`
-output_dir     <- yaml::read_yaml(here("_quarto.yml"))$project$`output-dir`
-```
-
 ## Connect to PDC
 
 The first step of this lab is to open a ssh connection to PDC. Please refer to [Connecting to PDC](../../other/lab_connect_pdc.html) for instructions. Once connected to PDC, return here and continue reading the instructions below.
@@ -23,7 +13,7 @@ The first step of this lab is to open a ssh connection to PDC. Please refer to [
 
 Usually you would do most of the work in this lab directly on one of the login nodes at PDC, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
 
-Check which node you got when you booked resources this morning (replace **username** with your PDC username)
+Check which node you got when you booked resources this morning (replace `username` with your PDC username)
 
 ```bash
 squeue -u username
@@ -48,12 +38,12 @@ ssh -Y nid001009
 If the list is empty you can run the allocation command again and it should be in the list:
 
 ```bash
-salloc -A `r id_project` -t 04:00:00 -p shared -c 4
+salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_mon >}} -t 04:00:00 -p shared -c 1 
 ```
 
 # Copy files for lab
 
-Now, you will need some files. To avoid all the course participants editing the same file all at once, undoing each other's edits, each participant will get their own copy of the needed files. The files are located in the folder `/sw/courses/ngsintro/hpc/pipeline_exercise/data`.
+Now, you will need some files. To avoid all the course participants editing the same file all at once, undoing each other's edits, each participant will get their own copy of the needed files. The files are located in the folder `{{< meta path_resources >}}/hpc/pipeline/data`.
 
 Next, copy the lab files from this folder. `-r` means recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, NOT sub-folders and files in sub-folders.
 
@@ -63,13 +53,13 @@ Next, copy the lab files from this folder. `-r` means recursively, which means a
 # syntax
 cp -r <source> <destination>
 
-cp -r `r path_resources`/hpc/pipeline_exercise/data `r path_workspace`/hpc_pipeline_exercise
+cp -r {{< meta path_resources >}}/hpc/pipeline/data {{< meta path_workspace >}}/hpc/pipeline
 ```
 
-Have a look in **`r path_workspace`/hpc_pipeline_exercise**.
+Have a look in `{{< meta path_workspace >}}/hpc/pipeline`
 
 ```bash
-cd `r path_workspace`/hpc_pipeline_exercise
+cd {{< meta path_workspace >}}/hpc/pipeline
 ll
 ```
 
@@ -85,16 +75,23 @@ To avoid this, scripts can be used. First, we'll do an analysis manually without
 
 In this exercise, we'll pretend that we are running analyses. This will give you a peek at what running programs in linux is like, and get you ready for the real stuff during the week!
 
-The first thing you usually do is to load the modules for the programs you want to run. During this exercise we'll only run my dummy scripts that don't actually do any analysis, so they don't have a module of their own. What we can do instead is to manually do what module loading usually does: to modify the **`$PATH variable`**.
+The first thing you usually do is to load the modules for the programs you want to run. During this exercise we'll only run my dummy scripts that don't actually do any analysis, so they don't have a module of their own. What we can do instead is to manually do what module loading usually does: to modify the `$PATH` variable.
 
 The `$PATH` variable specifies directories where the computer should look for programs whenever you type a command.
 For instance, when you type
 
 ```bash
-nano
+less
 ```
 
-how does the computer know which program to start? You gave it the name `nano`, but that could refer to any file named nano in the computer, yet it starts the correct one every time. The answer is that it looks in the directories stored in the `$PATH` variable and start the first program it finds that is named `nano`.
+how does the computer know which program to start? You gave it the name `less`, but that could refer to any file named `less` in the computer, yet it starts the correct one every time. The answer is that it looks in the directories stored in the `$PATH` variable and start the first program it finds that is named `less`. You can check exactly which program it starts by typing `which less`. It will give you something like the following:
+
+```bash
+which less
+/usr/bin/less
+```
+
+telling you that the program `less` is located in the directory `/usr/bin`.
 
 To see which directories that are checked by default, type
 
@@ -102,13 +99,13 @@ To see which directories that are checked by default, type
 echo $PATH
 ```
 
-It should give you something like this, a list of directories, separated by colon signs:
+It should give you something like this, a long list of directories (abbreviated below), separated by colon signs:
 
 ```bash
 echo $PATH
-/home/dahlo/perl//bin/:/home/dahlo/.pyenv/shims:/home/dahlo/.pyenv/bin:
-/usr/lib64/qt-3.3/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:
-/sbin:/opt/thinlinc/bin:/sw/pdc/bin:/home/dahlo/usr/bin
+/pdc/software/modules/systemdefault/bin:/opt/cray/pe/mpich/8.1.28/of
+i/crayclang/17.0/bin: ...
+...
 ```
 
 Try loading a module, and then look at the `$PATH` variable again. You'll see that there are a few extra directories there now, after the module has been loaded.
@@ -116,24 +113,28 @@ Try loading a module, and then look at the `$PATH` variable again. You'll see th
 ```bash
 module load bioinfo-tools samtools
 echo $PATH
-/sw/apps/bioinfo/samtools/1.6/rackham/bin:/home/dahlo/perl/bin:/home/dahlo/.pyenv/shims:
-/home/dahlo/.pyenv/bin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:
-/usr/sbin:/sbin:/opt/thinlinc/bin:/sw/pdc/bin:/home/dahlo/usr/bin
+/pdc/software/eb/software/samtools/1.20/bin:/pdc/software/eb/softwar
+e/htslib/1.20/bin:/pdc/software/eb/software/libdeflate/1.19/bin:/pdc
+/software/eb/software/xz/5.4.5/bin:/pdc/software/eb/software/bzip2/1
+.0.8/bin:/pdc/software/eb/software/ncurses/6.4/bin:/pdc/software/mod
+ules/systemdefault/bin:/opt/cray/pe/mpich/8.1.28/ofi/crayclang/17.0/
+bin: ...
+...
 ```
 
-To pretend that we are loading a module, instead of actually loading a module for them, we'll manually do what the module system would have done. We will just add a the directory containing my dummy scripts to the `$PATH` variable, and it will be like we loaded the module for them. Now, when we type the name of one of my scripts, the computer will look in all the directories specified in the `$PATH` variable, which now includes the location where i keep my scripts. The computer will now find programs named as my scripts are and it will run them.
+To pretend that we are loading a module, instead of actually loading a module, we'll manually do what the module system would have done. We will just add a the directory containing my dummy scripts to the `$PATH` variable, and it will be like we loaded the module for them. Now, when we type the name of one of my scripts, the computer will look in all the directories specified in the `$PATH` variable, which now includes the location where i keep my scripts. The computer will now find programs named as my scripts are and it will run them.
 
 ```bash
-export PATH=$PATH:`r path_resources`/hpc/pipeline_exercise/dummy_scripts
+export PATH=$PATH:{{< meta path_resources >}}/hpc/pipeline/dummy_scripts
 ```
 
-This will set the `$PATH` variable to whatever it is at the moment, and add a directory at the end of it. Note the lack of a dollar sign infront of the variable name directly after **export**. You don't use dollar signs when **assigning** values to variables, and you always use dollar signs when **getting** values from variables.
+This will set the `$PATH` variable to whatever it is at the moment, and add a directory at the end of it. Note the lack of a dollar sign in front of the variable name directly after `export`. You don't use dollar signs when **assigning** values to variables, and you always use dollar signs when **getting** values from variables.
 
 ::: {.alert .alert-warning}
 
 {{< fa exclamation-circle >}} Important
 
-The export command affects only the terminal you type it in. If you have 2 terminals open, only the terminal you typed it in will have a modified path. If you close that terminal and open a new one, it will not have the modified path.
+The `export` command affects only the terminal you type it in. If you have 2 terminals open, only the terminal you typed it in will have a modified path. If you close that terminal and open a new one, it will not have the modified path.
 
 :::
 
@@ -149,25 +150,22 @@ Let's pretend that we want to run an exome analysis. You will learn how to do th
 
 To simulate this, I have written 3 programs:
 
-* filter_reads
-* align_reads
-* find_snps
+* `filter_reads`
+* `align_reads`
+* `find_snps`
 
 To find out how to run the programs type
 
 ```bash
 <program name> -h
-```
 
-```bash
-or
+# or
 <program name> --help
 ```
 
 This is useful to remember, since most programs has this function. If you do this for the filter program, you get
 
 ```bash
-filter_reads -h
 Usage: filter_reads -i <input file> -o <output file> [-c <cutoff>]
 
 Example runs:
@@ -192,10 +190,10 @@ Options:
   -c CUTOFF, --cutoff=CUTOFF
                         The cutoff value for quality. Reads below this value
                         will be filtered (default: 35).
-
+  -d, --devel           Development mode
 ```
 
-This help text tells you that the program has to be run a certain way. The options `-i` and `-o` are mandatory, since they are explicitly written. The hard brackets `[ ]` around `-c <cutoff>` means that the cutoff value is NOT mandatory. They can be specified if the user wishes to change the cutoff from the default values.
+This help text tells you that the program has to be run a certain way. The options `-i` and `-o` are mandatory, since they are explicitly written. The hard brackets `[ ]` around `-c <cutoff>` means that the cutoff value is **not** mandatory. They can be specified if the user wishes to change the cutoff from the default values.
 
 Further down, in the `Options:` section, each of the options are explained more in detail. You can also see that each option can be specified in two way, a short and a long format. The cutoff value can be specified either by the short `-c`, or the long `--cutoff`. It doesn't matter which format you choose, it's completely up to you, which ever you feel more comfortable with.
 
@@ -204,7 +202,7 @@ Right, so now you know how to figure out how to run programs (just type the prog
 First, go to the exome directory in the lab directory that you copied to your folder in step 2 in this lab:
 
 ```bash
-cd `r path_workspace`/hpc_pipeline_exercise/exomeSeq
+cd {{< meta path_workspace >}}/hpc/pipeline/exomeSeq
 ```
 In there, you will find a folder called `raw_data`, containing a fastq file: `my_reads.rawdata.fastq`. This file contains the raw data that you will analyse.
 
@@ -212,7 +210,7 @@ In there, you will find a folder called `raw_data`, containing a fastq file: `my
 * Align the filtered reads with the program `align_reads`, to the human reference genome located here:
 
 ```bash
-/sw/data/uppnex/reference/Homo_sapiens/hg19/concat_rm/Homo_sapiens.GRCh37.57.dna_rm.concat.fa
+/sw/data/reference/Homo_sapiens/hg19/concat_rm/Homo_sapiens.GRCh37.57.dna_rm.concat.fa
 ```
 
 * Find SNPs in your aligned data with the program `find_snps`. To find SNPs we have to have a reference to compare our data with. The same reference genome as you aligned to is the one to use.
@@ -234,7 +232,7 @@ Start writing you script with `nano`:
 # if you have not already done so, load the nano module
 module load nano
 
-cd `r path_workspace`/hpc_pipeline_exercise/exomeSeq
+cd {{< meta path_workspace >}}/hpc/pipeline/exomeSeq
 nano exome_analysis_script.sh
 ```
 
@@ -256,9 +254,9 @@ A tip is to read the error list from the top-down. An error early in the pipelin
 
 # Submitting a dummy pipeline
 
-The whole point with large computer centres like this is that you can run multiple programs at the same time to speed things up. To do this efficiently you will have to submit jobs to the queue system. As you saw in yesterday's exercise, it is ordinary shell scripts that you submit to the queue system, with a couple of extra options in the beginning. So to be able to submit our script to the queue system, the only thing we have to do is to add the queue system options in the beginning of the script.
+The whole point with large computer centers like this is that you can run multiple programs at the same time to speed things up. To do this efficiently you will have to submit jobs to the queue system. As you saw in yesterday's exercise, it is ordinary shell scripts that you submit to the queue system, with a couple of extra options in the beginning. So to be able to submit our script to the queue system, the only thing we have to do is to add the queue system options in the beginning of the script.
 
-The options needed by the queue are, as we learned yesterday:
+The options needed by the queue are, as we learned previously:
 
 * Who is paying for the job?
 * How long time will the job need?
@@ -270,7 +268,7 @@ The options needed by the queue are, as we learned yesterday:
 #!/bin/bash -l
 ```
 
-This is how Linux knows which program should open a file, since it does not care about the file ending like Windows commonly does (.ppt, .pdf, .html might be familiar file endings). The `#!` indicates that the next words will be the path to the program that should open the file. It could be `#!/bin/bash`, or `#!/bin/python`, or any other path to a executable program.
+This is how Linux knows which program should open a file, since it does not care about the file ending like Windows commonly does (`.ppt`, `.pdf`, `.html` might be familiar file endings). The `#!` indicates that the next words will be the path to the program that should open the file. It could be `#!/bin/bash`, or `#!/bin/python`, or any other path to a executable program.
 
 The `-l` after bash is a flag that tells bash that the script should be treated as a login shell, so everything behaves as when you are logged in. Without it commands like `module` and some other would not work. If it's not a login shell, it's running as a script, and then it does not need to bother making the interface human friendly so it will skip things to make it start faster and consume less resources.
 
@@ -278,12 +276,13 @@ The next couple of rows will contain all the options you want to give SLURM:
 
 ```bash
 #!/bin/bash -l
-#SBATCH -A `r id_project`
+#SBATCH -A {{< meta id_project >}}
 #SBATCH -t 00:05:00
 #SBATCH -p shared
+#SBATCH -J exome_analysis
 ```
 
-SLURM options always start with `#SBATCH` followed by a flag (`-A` for account, `-t` for time, `-p` for partition) and the value for that flag. Your script should now look something like this (ignore the old project id and path to the scripts):
+SLURM options always start with `#SBATCH` followed by a flag (`-A` for account, `-t` for time, `-p` for partition, `-J` for job name) and the value for that flag. Your script should now look something like this (ignore the old project id and path to the scripts):
 
 ![](assets/slurmScript.png)
 
