@@ -47,7 +47,13 @@ Now, you will need some files. To avoid all the course participants editing the 
 {{< meta path_resources >}}/hpc
 ```
 
-Next, copy the lab files from this folder. `-r` means recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, **not** sub-folders and files in sub-folders.
+First, we will create a folder for the HPC part of the course in your workspace,
+
+```bash
+mkdir {{< meta path_workspace >}}/hpc
+```
+
+Next, copy the lab files to this folder. `-r` means recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, **not** sub-folders and files in sub-folders.
 
 {{< fa lightbulb >}} Remember to use tab-complete to avoid typos and too much writing.
 
@@ -55,7 +61,7 @@ Next, copy the lab files from this folder. `-r` means recursively, which means a
 # syntax
 cp -r <source> <destination>
 
-cp -r {{< meta path_resources >}}/hpc {{< meta path_workspace >}}
+cp -r {{< meta path_resources >}}/hpc/intro {{< meta path_workspace >}}/hpc
 ```
 
 Have a look in the folder you just copied
