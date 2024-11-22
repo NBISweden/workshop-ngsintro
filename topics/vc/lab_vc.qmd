@@ -124,10 +124,16 @@ squeue -u username
 Where `username` should be replaced with your username.<br/>
 If no jobs are listed you should allocate a job for this lab. If you already have an active job allocation please proceed to **Connect to the node** below.<br/>
 
-Use this code to allocate a job:
+Use this code to allocate a job on Wednesday:
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('salloc -A ',id_project,' -t 04:00:00 -p shared -c 4 --no-shell'))
+```bash
+salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_wed >}} -t 04:00:00 -p shared -c 4 --no-shell
+```
+
+Use this code to allocate a job on Thursday:
+
+```bash
+salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_thu >}} -t 04:00:00 -p shared -c 4 --no-shell
 ```
 
 Once your job allocation has been granted (should not take long) please check the allocation again using:
@@ -319,7 +325,9 @@ Please have a look at the [Sequence Alignment/Map Format Specification](https://
 To use IGV on Dardel we recommend that you are connected via ThinLinc.
 Alternatively you can install IGV on your local computer, download the files using scp, and look at them locally.
 The instructions below assume that you have logged in to Dardel via ThinLinc.\
-First use pwd to check if you are standing in the correct directory:
+IGV uses java, and unfortunately it uses another version of Java than the installed version of GATK. Therefore you will not be able to use IGV and GATK in the same terminal window (this might be different if you work on another compute system later on!). 
+Because of this you need to open a new terminal window on Dardel to run IGV. 
+Open a new terminal window and navigate to your workspace for this lab. Use pwd to confirm that you are standing in the correct directory:
 
 ```bash
 pwd
@@ -332,6 +340,7 @@ Should return
 To start IGV please type this in the terminal:
 
 ```bash
+module load bioinfo-tools
 module load IGV
 igv.sh &
 ```

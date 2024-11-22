@@ -46,24 +46,35 @@ HG00101       | Low coverage WGS
 
 During this lab it is best to connect to Dardel via a remote desktop (ThinLinc). Please refer to [**Connecting to PDC**](../other/lab_connect_pdc.html), section 2 Remote desktop, for instructions.
 
-### Book a node
+### Log on to a node
 
-To be able to run analyses in the terminal you should book an interactive session on a compute node. Make sure you only do this once each day because we have reserved a limited number of cores per student for the course. If you haven't already done this today please use this command:
-
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('salloc -A ',id_project,' -t 04:00:00 -p shared -c 4 --no-shell &'))
-```
-
-Once your job allocation has been granted (should not take long) you can connect to the node using ssh. To find out the name of your node, use:
+Check which node you got when you booked resources this morning (replace `username` with your username)
 
 ```bash
 squeue -u username
 ```
 
-The node name is found under nodelist header, you should only see one. Connect to that node:
+should look something like this
 
 ```bash
-ssh -Y <nodename>
+user@login1 ~ $ squeue -u user
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+           5583899    shared interact    user  R       2:22      1 nid001009
+user@login1 ~ $
+```
+
+where `nid001009` is the name of the node (yours will probably be different). Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested the session will shut down, and you will lose all unsaved data.  
+
+If the list is empty you can run the allocation command again and it should be in the list:
+
+```bash
+salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_tue >}} -t 04:00:00 -p shared -c 1
+```
+
+Connect to this node from the login node.
+
+```bash
+ssh -Y nid001009
 ```
 
 ### Create a workspace
