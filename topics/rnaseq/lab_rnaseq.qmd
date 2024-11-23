@@ -102,8 +102,12 @@ For the RNA-Seq part of the course, we will work on the HPC. The code below is v
 
 Book compute resources for RNA-Seq lab.
 
+::: {.callout-tip}
+The `--reservation` is only used during the workshop and not needed when working on your projects. Use `{{< meta id_slurm_res_thu >}}` for Thursday and `{{< meta id_slurm_res_fri >}}` for Friday.
+:::
+
 ```sh
-salloc -A {{< meta id_project >}} -t 03:00:00 -p shared -c 4 --no-shell
+salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_thu >}} -t 03:00:00 -p shared -c 4 --no-shell
 ```
 
 Check allocation. {{< fa exclamation-circle >}} Remember to replace **username**.
