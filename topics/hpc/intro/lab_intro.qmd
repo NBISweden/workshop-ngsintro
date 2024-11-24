@@ -306,13 +306,13 @@ sbatch job_template
 
 If you want to know how your jobs are doing in the queue, you can check their status with `squeue -u username`
 
-Rewrite the previous sbatch file so that you book 3 days of time, and to use a whole node instead of a single core. This will cause your job to stand in the queue for a bit longer, so that we can have a look at it while it is queuing. Submit it to the queue and run `squeue`.
+Rewrite the previous sbatch file so that you book 3 days of time, and to use a whole node instead of a single core, i.e. change the partition to `main` instead of `shared`. This will cause your job to stand in the queue for a bit longer, so that we can have a look at it while it is queuing. Submit it to the queue and run `squeue`.
 
 ```bash
 squeue -u username
 
   JOBID PARTITION     NAME     USER   ST       TIME  NODES NODELIST(REASON)
-5104668    shared Template   username PD       0:00      1 (Priority)
+5104668      main Template   username PD       0:00      1 (Priority)
 ```
 
 Here we can see in the status column (`ST`)that the job is pending (`PD`) and has not started yet. The job is waiting for a node to become available. When the job starts, the status will change to `R` (running). If you run `squeue` again, you will see that the job is running.

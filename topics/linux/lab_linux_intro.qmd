@@ -8,8 +8,6 @@ format: html
 ```{r,eval=TRUE,include=FALSE}
 library(yaml)
 library(here)
-id_project     <- yaml::read_yaml(here("_quarto.yml"))$id_project
-path_resources <- yaml::read_yaml(here("_quarto.yml"))$path_resources
 path_workspace <- yaml::read_yaml(here("_quarto.yml"))$path_workspace
 site_url       <- yaml::read_yaml(here("_quarto.yml"))$website$`site-url`
 output_dir     <- yaml::read_yaml(here("_quarto.yml"))$project$`output-dir`
@@ -25,7 +23,7 @@ The first step of this lab is to open a ssh connection to PDC. Please refer to [
 Usually you would do most of the work in this lab directly on one of the login nodes, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
 
 ```bash
-salloc -A {{< meta id_project >}} -t 07:00:00 -p shared -n 1
+salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_mon >}} -t 07:00:00 -p shared -n 1
 ```
 
 check which node you got (replace `username` with your username)
@@ -77,11 +75,11 @@ This is how my home folder looks like, and yours should look somewhat similar:
 ```bash
 [12:56:32] user@login1 ~ $ ls -l
 total 4384
-drwxr-xr-x  3 user b2014068    2048 Apr 27  2017 archive
+drwxr-xr-x  3 user g20XXXXX   2048 Apr 27  2017 archive
 -rw-rw-r--  1 user user      49042 Sep 23  2016 bad.png
 drwxr-xr-x  2 user user       2048 Mar 18  2016 data
 -rw-rw-r--  1 user user      60944 Sep 23  2016 good.png
-drwxr-xr-x  4 user b2014209    2048 Oct 30  2014 igv
+drwxr-xr-x  4 user g20XXXXX   2048 Oct 30  2014 igv
 drwxrwxr-x  5 user user       2048 Sep 20  2016 ngsintro
 drwx--S---  2 user user       2048 May  4  2010 private
 drwxr-xr-x 26 user user       4096 May 18 10:43 scripts
@@ -180,7 +178,7 @@ Next, copy the lab files to this folder.
 # syntax
 cp -r <source-folder> <destination-folder>
 
-cp -r {{< meta path_resources >}}/linux/linux_tutorial/* {{< path_workspace >}}/linux_tutorial
+cp -r {{< meta path_resources >}}/linux/linux_tutorial/* {{< meta path_workspace >}}/linux_tutorial
 ```
 
 `-r` denotes recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, **not** sub-folders and files in sub-folders.
