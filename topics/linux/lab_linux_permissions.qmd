@@ -5,13 +5,6 @@ author: 'Martin Dahlö'
 format: html
 ---
 
-```{r,eval=TRUE,include=FALSE}
-library(yaml)
-library(here)
-id_project <- yaml::read_yaml(here("_quarto.yml"))$id_project
-path_workspace <- yaml::read_yaml(here("_quarto.yml"))$path_workspace
-```
-
 ## Ownership & Permissions
 
 As Linux can be a multi-user environment it is important that files and directories can have different owners and permissions to keep people from editing or executing your files.
@@ -49,25 +42,25 @@ Directory: Whether the directory can be entered using `cd`.
 
 Make an empty directory we can work in and make a file.
 
-```{r,echo=FALSE,class.output="bash",comment='',results='markup'}
-cat(paste0("cd ", path_workspace, "
-mkdir advlinux
-cd advlinux
-touch  filename
-ls -lh
+```bash
+user@login1 ~ $ cd {{< meta path_workspace >}}
+user@login1 ngsintro $ mkdir advlinux
+user@login1 ngsintro $ cd advlinux
+user@login1 advlinux $ touch  filename
+user@login1 advlinux $ ls -lh
 total 0
- -rw-r--r-- 1 S_D staff 0B Sep 21 13:54 filename"))
+ -rw-r--r-- 1 user g20XXXXX 0 Sep 21 13:54 filename"))
 ```
 
 (`-lh` means long and human readable, displaying more information about the files or directories in a human understandable format)
 
 This shows us a cryptic line for each file/folder, where the columns are as following:
 
-```
--rw-rw-r--   : permissions
+```bash
+-rw-r--r--   : permissions
 1            : number of linked hard-links
-S_D          : owner of the file
-staff        : to which group this file belongs to
+user         : owner of the file
+g20XXXXX     : to which group this file belongs to
 0            : file size
 Sep 21 13:54 : modification/creation date and time
 filename     : file/directory name
@@ -76,13 +69,16 @@ filename     : file/directory name
 
 The first segment, `-rw-r--r--`, describes the ownerships and permissions of our newly created file. The very first character, in this case `-`, shows the file's type. It can be any of these:
 
-**`d`** = directory
-**`-`** = regular file
-**`l`** = symbolic link
-**`s`** = Unix domain socket
-**`p`** = named pipe
-**`c`** = character device file
-**`b`** = block device file
+**Common ones**  
+**`d`** = directory  
+**`-`** = regular file  
+**`l`** = symbolic link  
+  
+**Less common ones**  
+**`s`** = Unix domain socket  
+**`p`** = named pipe  
+**`c`** = character device file  
+**`b`** = block device file  
 
 As expected the file we have just created is a regular file. Ignore the types other than directory, regular and symbolic link as they are outside the scope of this course.
 
@@ -100,12 +96,12 @@ This translates our files permissions to say this `-rw-r--r--`:
 As another example, lets create a directory.
 
 ```bash
-mkdir directoryname
-ls -lh
+user@login1 advlinux $ mkdir directoryname
+user@login1 advlinux $ ls -lh
 
 total 0
-drwxr-xr-x  2 S_D  staff    68B Sep 21 14:41 directoryname
--rw-r--r--  1 S_D  staff     0B Sep 21 13:54 filename
+drwxr-xr-x  2 user  g20XXXXX    68B Sep 21 14:41 directoryname
+-rw-r--r--  1 user  g20XXXXX     0B Sep 21 13:54 filename
 ```
 
 As you can see the first character correctly identifies it as **`d`**, a directory, and all user groups have **`x`**, execute permissions, to enter the directory by default.
@@ -121,18 +117,18 @@ The command to set file permission is `chmod` which means **CH**ange **MOD**e. O
 Lets revisit our example file and directory to test this.
 
 ```bash
-ls -lh
+user@login1 advlinux $ ls -lh
 
 total 0
-drwxr-xr-x  2 S_D  staff    68B Sep 21 14:41 directoryname
--rw-r--r--  1 S_D  staff     0B Sep 21 13:54 filename
+drwxr-xr-x  2 user  g20XXXXX    68B Sep 21 14:41 directoryname
+-rw-r--r--  1 user  g20XXXXX     0B Sep 21 13:54 filename
 
-chmod a=x filename
-ls -lh
+user@login1 advlinux $ chmod a=x filename
+user@login1 advlinux $ ls -lh
 
 total 0
-drwxr-xr-x  2 S_D  staff    68B Sep 21 14:41 directoryname
----x--x--x  1 S_D  staff     0B Sep 21 13:54 filename
+drwxr-xr-x  2 user  g20XXXXX    68B Sep 21 14:41 directoryname
+---x--x--x  1 user  g20XXXXX     0B Sep 21 13:54 filename
 ```
 
 As you can see this affected all three, **`a`**, it wiped the previous permissions, **`=`**, and added an executable permission, **`x`**, to all three groups.
@@ -140,11 +136,11 @@ As you can see this affected all three, **`a`**, it wiped the previous permissio
 Try some others both on the file and directory to get the hang of it.
 
 ```bash
-chmod g+r filename
-chmod u-x filename
+chmod g+r   filename
+chmod u-x   filename
 chmod ug=rx filename
-chmod a=- filename
-chmod a+w directoryname
+chmod a=-   filename
+chmod a+w   directoryname
 ```
 
 {{< fa clipboard-list >}} In no more than two commands, change the file permissions from
@@ -161,9 +157,9 @@ to
 
 Notice also that we here gave everyone writing permission to the file, that means that ANYONE can write to the file. Not very safe.
 
-```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}
-cat(paste0("chmod ug+rw filename
-chmod o=wx filename"))
+```bash
+chmod ug+rw filename
+chmod o=wx filename
 ```
 
 ## Symbolic links
@@ -171,7 +167,7 @@ chmod o=wx filename"))
 
 Much like a windows user has a shortcut on his desktop to *WorldOfWarcraft.exe*, being able to create links to files or directories is good to know in Linux. An important thing to remember about symbolic links is that they are not updated, so if you or someone else moves or removes the original file/directory the link will stop working.
 
-Make sure you are standing in the directory **`r paste0(path_workspace,'/advlinux')`**. Then remove our old file and directory.
+Make sure you are standing in the directory `{{< meta path_workspace >}}/advlinux`. Then remove our old file and directory.
 
 ::: {.alert .alert-danger}
 **{{< fa skull-crossbones >}} Danger**
@@ -195,15 +191,15 @@ Lets put some information into the file, just put some text, anything, like "sla
 ```bash
 nano stuff/linkfile
 ```
-Now let's create a link to this file in our original folder. **`ln`** stands for link and **`-s`** makes it symbolic. The other options are not in the scope of this course, but feel free to read about them on your own, https://stackoverflow.com/a/29786294
+Now let's create a link to this file in our original folder. **`ln`** stands for link and **`-s`** makes it symbolic. The other options are not in the scope of this course, but feel free to read about them on your own, [https://stackoverflow.com/a/29786294](https://stackoverflow.com/a/29786294).
 
 ```bash
-ln -s stuff/linkfile
-ls -l
+user@login1 advlinux $ ln -s stuff/linkfile
+user@login1 advlinux $ ls -l
 
 total 8
-lrwxr-xr-x  1 S_D  staff    14B Sep 21 15:38 linkfile -> stuff/linkfile
-drwxr-xr-x  3 S_D  staff   102B Sep 21 15:36 stuff
+lrwxr-xr-x  1 user  g20XXXXX    14B Sep 21 15:38 linkfile -> stuff/linkfile
+drwxr-xr-x  3 user  g20XXXXX   102B Sep 21 15:36 stuff
 ```
 
 Notice that we see the type of the file is `l`, for symbolic link, and that we have a pointer after the links name for where the link goes, `-> stuff/linkfile`.
@@ -234,28 +230,28 @@ mkdir -p one/two/three
 Now let's enter the directory and create some files there.
 
 ```bash
-cd one/two/three
-touch a b c d e
-ls -lh
+user@login1 advlinux $ cd one/two/three
+user@login1 advlinux $ touch a b c d e
+user@login1 advlinux $ ls -lh
 
 total 0
--rw-r--r--  1 S_D  staff     0B Sep 21 16:11 a
--rw-r--r--  1 S_D  staff     0B Sep 21 16:11 b
--rw-r--r--  1 S_D  staff     0B Sep 21 16:11 c
--rw-r--r--  1 S_D  staff     0B Sep 21 16:11 d
--rw-r--r--  1 S_D  staff     0B Sep 21 16:11 e
+-rw-r--r--  1 user  g20XXXXX     0B Sep 21 16:11 a
+-rw-r--r--  1 user  g20XXXXX     0B Sep 21 16:11 b
+-rw-r--r--  1 user  g20XXXXX     0B Sep 21 16:11 c
+-rw-r--r--  1 user  g20XXXXX     0B Sep 21 16:11 d
+-rw-r--r--  1 user  g20XXXXX     0B Sep 21 16:11 e
 ```
 
-Return to our starting folder and create a symbolic link to folder three.
+Return to our starting folder and create a symbolic link to folder `three`.
 
 ```bash
-cd ../../..
-ln -s one/two/three
-ls -lh
+user@login1 advlinux $ cd ../../..
+user@login1 advlinux $ ln -s one/two/three
+user@login1 advlinux $ ls -lh
 
 total 8
-drwxr-xr-x  3 S_D  staff   102B Sep 21 16:11 one
-lrwxr-xr-x  1 S_D  staff    13B Sep 21 16:13 three -> one/two/three
+drwxr-xr-x  3 user  g20XXXXX   102B Sep 21 16:11 one
+lrwxr-xr-x  1 user  g20XXXXX    13B Sep 21 16:13 three -> one/two/three
 ```
 
 Once again, we see that it is correctly identified as a symbolic link, `l`, that it's default name is the same as the directory it is pointing to, same as the files link had the same name as the file by default previously, and that we have the additional pointer after the links name showing us where it's going.
@@ -281,7 +277,7 @@ rm -r *
 Then let's create a file with some text in it that we can work with. I have supplied some great text below.
 
 ```bash
-nano textfile
+user@login1 advlinux $ nano textfile
 
 Cats sleep anywhere, any table, any chair.
 Top of piano, window-ledge, in the middle, on the edge.
@@ -318,7 +314,7 @@ grep "Cat" text*
 
 The `*` will ensure that any file starting with **text** and then anything following will be searched. This example would perhaps be more real if we had several text files with different texts and we were looking for a specific string in any of them.
 
-Copy the file sample_1.sam to your folder using the command below
+Copy the file `sample_1.sam` to your folder using the command below
 
 ```bash
 cp /sw/courses/ngsintro/linux/linux_additional-files/sample_1.sam .
@@ -338,7 +334,7 @@ grep "TACCACCGAAATCTGTGCAGAGGAGAACGCAGCTCCGCCCTCGCGGTGCTCTCCGGGTCTGTGCTGAGGAG" s
 
 A useful tool in linux environment is the use of pipes. What they essentially do is connect the first command to the second command and the second command to the third command etc for as many commands as you want or need.
 
-This is often used in UPPMAX jobs and other analysis as there are three major benefits. The first is that you do not have to stand in line to get a core or a node twice. The second is that you do not generate intermediary data which will clog your storage, you go from start file to result. The third is that it may actually be faster.
+This is often used in jobs and other analysis as there are three major benefits. The first is that you do not have to stand in line to get a core or a node twice. The second is that you do not generate intermediary data which will clog your storage, you go from start file to result. The third is that it may actually be faster.
 
 The pipe command has this syntax
 
@@ -346,100 +342,122 @@ The pipe command has this syntax
 command 1 | command 2
 ```
 
-The `|` is the pipe symbol (on mac keyboard alt+7), signifying that whatever output usually comes out of command 1 should instead be directly sent to command 2 and output in the manner that command 2 inputs.
+The `|` is the pipe symbol (on mac keyboard `alt+7`), signifying that whatever output usually comes out of `command 1` should instead be directly sent to `command 2` and output in the manner that `command 2` inputs.
 
 In a hypothetical situation you have a folder with hundreds of files and you know the file you are looking for is very large but you can't remember its name.
 
-Let's do a `ls -l` in the `/etc` directory and pipe the output to be sorted by file size. `-n` means we are sorting numerically and not alphabetically, `-k 5` says *look at the fifth column of output*, which happens to be the file size of `ls` command.
+Let's do a `ls -l` in the `/etc` directory and pipe the output to be sorted by file size.
 
 ```bash
-ls -l /etc | sort -k 5 -n
+ls -l /etc | sort -n -k 5
 ```
+`-n` means we are sorting numerically and not alphabetically, `-k 5` says *look at the fifth column of output*, which happens to be the file size of `ls` command.
 
 An example use would be to align a file and directly send the now aligned file to be converted into a different format that may be required for another part of the analysis.
 
-The next step requires us to use a bioinformatics software called **samtools**. To be able to use this program we first have to load the module for it. We will cover this in the UPPMAX lectures, so if you are a bit too fast for you own good, you will just have to type this command:
+The next step requires us to use a bioinformatics software called **samtools**. To be able to use this program we first have to load the module for it. We will cover this in the HPC lectures, so if you are a bit too fast for you own good, you will just have to type this command:
 
 ```bash
 module load bioinfo-tools samtools
 ```
 
-Here is an example where we convert the samfile to a bamfile (**`-Sb`** literally means the input is **S**am and to output in **b**am) and pipe it to immediately get sorted, not even creating the unsorted bamfile intermediary. Notice that samtools is made to take the single `-` after samtools sort as the position of the piped data from samtools view.
+Here is an example where we convert the samfile to a bamfile:
 
 ```bash
-samtools view -bS sample_1.sam | samtools sort - -o outbam
+samtools view -bS sample_1.sam | samtools sort -o outbam -
 ```
 
-This should have generated a file called **outbam.bam** in your current folder. We will have some more examples of pipes in the next section.
+`-Sb` literally means the input is **S**am and to output in **b**am, and pipe it to immediately get sorted, not even creating the unsorted bamfile intermediary. Notice that samtools is made to take the single `-` at the end of the `samtools sort` command to make it read the piped data from `samtools view` instead of reading it from a file.
+
+This should have generated a file called `outbam.bam` in your current folder. We will have some more examples of pipes in the next section.
 
 ## Word Count
 
-**`wc`** for **W**ord **C**ount is a useful command for counting the number of occurrences of a word in a file. This is easiest explained with an example.
+`wc` for **W**ord **C**ount is a useful command for counting the number of occurrences of a word in a file. This is easiest explained with an example.
 
-Let's return to our **sample_1.sam**.
+Let's return to our `sample_1.sam`.
 
 ```bash
-wc sample_1.sam
+user@login1 advlinux $ wc sample_1.sam
 233288 3666760 58105794 sample_1.sam
 ```
 
 This can be interpreted like this:
 
-Number of lines = 233288   
-Number of words = 3666760  
-Number of characters = 58105794  
+```
+Number of lines      = 233288 
+Number of words      = 3666760
+Number of characters = 58105794
+```
 
 To make this more meaningful, let's use the pipes and `grep` command seen previously to see how many lines and how many times the string of nucleotides `CATCATCAT` exist in this file.
 
 ```bash
-grep "CATCATCAT" sample_1.sam | wc
+user@login1 advlinux $ grep "CATCATCAT" sample_1.sam | wc
 60  957 15074
 ```
 
-To see only the line count you can add `-l` after `wc` and to count only characters **-m**.
+To see only the line count you can add `-l` after `wc`. To count only characters you add `-m`, and to only count words you add `-w`.
 
 {{< fa clipboard-list >}} Output only the amount of lines that have **chr1** in them from sample_1.sam.
 
-```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}
-cat(paste0('grep "chr1" sample_1.sam | wc -l'))
+<details>
+<summary>Solution</summary>
+```bash
+grep "chr1" sample_1.sam | wc -l
 ```
+</details>
 
-{{< fa clipboard-list >}} Count the lines containing `CATCATCAT` in the outbam.bam file.
+{{< fa clipboard-list >}} Count the lines containing `CATCATCAT` in the `outbam.bam` file.
 
-```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}
-cat(paste0('samtools view outbam.bam | grep "CATCATCAT" | wc -l'))
+
+<details>
+<summary>Solution</summary>
+```bash
+samtools view outbam.bam | grep "CATCATCAT" | wc -l
 ```
+</details>
 
 ## Bonus exercise 1
 
 These are some harder assignments, so don't worry about it if you didn't have time to do it.
 
-Lets look at `grep` and use some regular expressions http://www.cheatography.com/davechild/cheat-sheets/regular-expressions/
+Lets look at `grep` and use some regular expressions [http://www.cheatography.com/davechild/cheat-sheets/regular-expressions/](http://www.cheatography.com/davechild/cheat-sheets/regular-expressions/)
 
-{{< fa clipboard-list >}} From file **sample_1.sam** find all lines that start with `@` and put them in a file called **at.txt**.
+{{< fa clipboard-list >}} From file `sample_1.sam` find all lines that start with `@` and put them in a file called `at.txt`.
 
-```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}
-cat(paste0('grep "^@" sample_1.sam > at.txt'))
+
+<details>
+<summary>Solution</summary>
+```bash
+grep "^@" sample_1.sam > at.txt
 ```
+</details>
 
-{{< fa clipboard-list >}} Find all the lines that end with at least 3 numbers from **at.txt**.
+{{< fa clipboard-list >}} Find all the lines that end with at least 3 numbers from `at.txt`.
 {{< fa lightbulb >}} **Sometimes**, you have to escape {} with \\{\\})
 
-```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}
-cat(paste0('grep "[0-9]\\{3\\}$" sample_1.sam'))
+<details>
+<summary>Solution</summary>
+```bash
+grep "[0-9]\\{3\\}$" sample_1.sam
 ```
+</details>
 
 ## Bonus exercise 2
 
-`[sed](http://www.grymoire.com/Unix/Sed.html)` is a handy tool to replace strings in files.
+[sed](http://www.grymoire.com/Unix/Sed.html) is a handy tool to replace strings in files.
 
-{{< fa clipboard-list >}} You have realized that all the chromosomes have been misnamed as **chr3** when they should be **chr4**. Use `sed` to replace **chr3** with **chr4** in **sample_1.sam** and output it to **sample_2.sam**.
+{{< fa clipboard-list >}} You have realized that all the chromosomes have been misnamed as **chr3** when they should be **chr4**. Use `sed` to replace **chr3** with **chr4** in `sample_1.sam` and output it to `sample_2.sam`.
 
 {{< fa lightbulb >}} The solution to this replaces the first instance on each line of chr3. What if we have multiple instances? What if we had wanted to replace **chr1**? This would effect chr10-19 as well! There are many things to consider :).
 
-```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}
-cat(paste0('sed "s/chr1/chr2/" sample_1.sam > sample_2.sam'))
+<details>
+<summary>Solution</summary>
+```bash
+sed "s/chr1/chr2/" sample_1.sam > sample_2.sam
 ```
+</details>
 
 ## Bonus exercise 3
 
@@ -451,15 +469,18 @@ Create a couple of files as seen below
 touch one.bam two.sam three.bam four.sam five.bam six.sam
 ```
 
-{{< fa clipboard-list >}} All the files are actually in bam format. What a crazy mistake! Create a bash loop that changes all files ending in **.sam** to end with **.bam** instead.
+{{< fa clipboard-list >}} All the files are actually in bam format. What a crazy mistake! Create a bash loop that changes all files ending in `.sam` to end with `.bam` instead.
 
 {{< fa lightbulb >}} The bash loop syntax is this:
 
 ```bash
-for _variable_ in _pattern_; do _command with $variable_; done
+for _variable_ in _pattern_
+do 
+    _command with $variable_
+done
 ```
 
-{{< fa lightbulb >}} To rename file1 to file2 you write this:
+{{< fa lightbulb >}} To rename `file1` to `file2` you write this:
 
 ```bash
 mv file1 file2
@@ -480,9 +501,12 @@ echo ${i/name}stuff
 filestuff
 ```
 
-```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}
-cat(paste0("for f in *.sam
+<details>
+<summary>Solution</summary>
+```bash
+for f in *.sam
 do
-  mv $f ${f/.sam}.bam;
-done"))
+    mv $f ${f/.sam}.bam
+done
 ```
+</details>
