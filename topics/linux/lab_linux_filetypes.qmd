@@ -13,19 +13,22 @@ path_resources <- file.path(yaml::read_yaml(here("_quarto.yml"))$path_resources,
 path_linux <- file.path(yaml::read_yaml(here("_quarto.yml"))$path_workspace, "linux")
 ```
 
-## Connect to UPPMAX
+## Zoom link for help over zoom
+[https://liu-se.zoom.us/j/65307893994](https://liu-se.zoom.us/j/65307893994)
 
-The first step of this lab is to open a ssh connection to UPPMAX. Please refer to [**Connecting to UPPMAX**](../other/lab_connect.html) for instructions. Once connected to UPPMAX, return here and continue reading the instructions below.
+## Connect to PDC
+
+The first step of this lab is to open a ssh connection to PDC. Please refer to [**Connecting to PDC**](../other/lab_connect_pdc.html) for instructions. Once connected to PDC, return here and continue reading the instructions below.
 
 ## Logon to a node
 
-Usually you would do most of the work in this lab directly on one of the login nodes at UPPMAX, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
+Usually you would do most of the work in this lab directly on one of the login nodes, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("salloc -A ", id_project, " -t 07:00:00 -p shared -n 1 --no-shell &"))
+```bash
+salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_tue >}} -t 08:00:00 -p shared -n 1
 ```
 
-check which node you got (replace **username** with your UPPMAX username)
+check which node you got (replace `username` with your username)
 
 ```bash
 squeue -u username
@@ -34,46 +37,48 @@ squeue -u username
 should look something like this
 
 ```bash
-dahlo@rackham2 work $ squeue -u dahlo
+user@login1 ~ $ squeue -u username
              JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
-           3132376      core       sh    dahlo  R       0:04      1 r292
-dahlo@rackham2 work $
+           5583899    shared interact    user  R       2:22      1 nid001009
+user@login1 ~ $
 ```
 
-where **r292** is the name of the node I got (yours will probably be different).
-Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested (7 hours in this case) the session will shut down, and you will lose all unsaved data. Connect to this node from within UPPMAX.
+where `nid001009` is the name of the node I got (yours will probably be different).
+Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested (7 hours in this case) the session will shut down, and you will lose all unsaved data. Connect to this node from the login node.
 
 ```bash
-ssh -Y r292
+ssh -Y nid001009
 ```
-
-{{< fa lightbulb >}} There is a UPPMAX specific tool called `jobinfo` that supplies the same kind of information as `squeue` that you can use as well (`$ jobinfo -u username`).
 
 ## Copy lab files
 
-Now you will need some files. To avoid all the course participants editing the same file all at once, undoing each other's edits, each participant will get their own copy of the needed files. The files are located in the folder `/sw/courses/ngsintro/linux/filetypes`
+Now you will need some files. To avoid all the course participants editing the same file all at once, undoing each other's edits, each participant will get their own copy of the needed files. The files are located in the folder `{{< meta path_resources >}}/linux/filetypes`
 
 Next, copy the lab files from this folder. `-r` means recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, NOT sub-folders and files in sub-folders.
 
 {{< fa lightbulb >}} Remember to use tab-complete to avoid typos and too much writing.
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat("cp -r <source> <destination>\n")
-cat(paste0("cp -r ",path_resources,"/filetypes ", path_linux))
+```bash
+cp -r <source> <destination>
+cp -r {{< meta path_resources >}}/linux/filetypes {{< meta path_workspace >}}
 ```
 
-Have a look in **`r path_linux`**.
+Have a look in `{{< meta path_workspace >}}/filetypes` using the `tree` command.
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0("cd ", path_linux, "/filetypes\n"))
-cat("tree")
+```bash
+# go to the folder
+cd  {{< meta path_workspace >}}/filetypes
+
+# load the tree module and run it
+module load tree
+tree
 ```
 
 This will print a file tree, which gives you a nice overview of the folders where you are standing in. As you can see, you have a couple of files and a couple of empty folders. In the **0_ref** folder you have a reference genome in fasta format and annotations for the genome in GTF format. In **0_seq** you have a fastq file containing the reads we will align.
 
 ## Run pipeline
 
-The best way to see all the different file formats is to run a small pipeline and see which files we encounter along the way. The pipeline is roughly the same steps you'll do in the variant-calling part of the course, so for now we'll stick with the dummy pipeline which some of you might have encoutered in the [extra material](lab_uppmax_pipeline.html) for the UPPMAX exercise.
+The best way to see all the different file formats is to run a small pipeline and see which files we encounter along the way. The pipeline is roughly the same steps you'll do in the variant-calling part of the course, so for now we'll stick with the dummy pipeline which some of you might have encoutered in the [extra material](../hpc/pipeline/lab_hpc_pipeline.html) for the HPC exercise.
 
 The programs in the dummy pipeline does not actually do any analysis but they work the same way as the real deal, although slightly simplified, to get you familiar with how to work with analysis programs. The data is from a sequencing of the adenovirus genome, which is tiny compared to the human genome (36kb vs 3gb).
 
@@ -101,26 +106,32 @@ echo $PATH
 It should give you something like this, a list of directories, separated by colon signs:
 
 ```bash
-dahlo@rackham2 work $ echo $PATH
-/home/dahlo/perl//bin/:/home/dahlo/.pyenv/shims:/home/dahlo/.pyenv/bin:
-/usr/lib64/qt-3.3/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:
-/sbin:/opt/thinlinc/bin:/sw/uppmax/bin:/home/dahlo/usr/bin
+user@rackham2 work $ echo $PATH
+/pdc/software/eb/software/tree/2.1.1/bin:/pdc/software/modules/sy
+stemdefault/bin:/opt/cray/pe/mpich/8.1.28/ofi/crayclang/17.0/bin:
+/opt/cray/pe/mpich/8.1.28/bin:/opt/cray/pe/craype/2.7.30/bin:/opt
+...
+...
 ```
 
 Try loading a module, and then look at the `$PATH` variable again. You'll see that there are a few extra directories there now, after the module has been loaded.
 
 ```bash
-dahlo@rackham2 work $ module load bioinfo-tools samtools/1.10
-dahlo@rackham2 work $ echo $PATH
-/sw/apps/bioinfo/samtools/1.10/rackham/bin:/home/dahlo/perl/bin:/home/dahlo/.pyenv/shims:
-/home/dahlo/.pyenv/bin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:
-/usr/sbin:/sbin:/opt/thinlinc/bin:/sw/uppmax/bin:/home/dahlo/usr/bin
+user@rackham2 work $ module load bioinfo-tools samtools/1.20
+user@rackham2 work $ echo $PATH
+/pdc/software/eb/software/samtools/1.20/bin:/pdc/software/eb/soft
+ware/htslib/1.20/bin:/pdc/software/eb/software/libdeflate/1.19/bi
+n:/pdc/software/eb/software/xz/5.4.5/bin:/pdc/software/eb/softwar
+e/bzip2/1.0.8/bin:/pdc/software/eb/software/ncurses/6.4/bin:/pdc/
+software/eb/software/tree/2.1.1/bin:/pdc/software/modules/systemd
+...
+...
 ```
 
 To pretend that we are loading a module, we will just add a the directory containing my dummy scripts to the `$PATH` variable, and it will be like we loaded the module for them.
 
 ```bash
-export PATH=$PATH:/sw/courses/ngsintro/linux/uppmax_pipeline_exercise/dummy_scripts
+export PATH=$PATH:{{< meta path_resources >}}/hpc/pipeline/dummy_scripts/
 ```
 
 This will set the `$PATH` variable to whatever it is at the moment, and add a directory at the end of it. Note the lack of a dollar sign in front of the variable name directly after `export`. You don't use dollar sign when  **assigning** values to variables, and you always use dollar signs when **getting** values from variables.
@@ -158,17 +169,17 @@ You should see 2 files: the fasta file, the gtf file. Have a look at each of the
 Syntax: reference_indexer -r <name of the fasta file you want to index>
 ```
 
-```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}
-cat(paste0("$ reference_indexer -r 0_ref/ad2.fa"))
+```bash
+reference_indexer -r 0_ref/ad2.fa
 ```
 
-Since the genome is so small this should only take a second or so. The human genome will probably take a couple of hours. Look in the **0_ref folder** again and see if anything has changed.
+Since the genome is so small this should only take a second or so. The human genome will probably take a couple of hours. Look in the `0_ref folder` again and see if anything has changed.
 
 ```bash
 ll 0_ref
 ```
 
-The new file you see is the index file created by **reference_indexer**. This index is in the same format as you would get from the real program **samtools**. Try viewing the index file with `less` and see how it looks. The samtools type of index contains one row per fasta record in the reference file. In this case, there is only one record for the adenovirus genome, and it's called `ad2` in the fasta file. The human reference genome typically have one record per chromosome, so a index of the human genome would then have 24 rows.
+The new file you see is the index file created by `reference_indexer`. This index is in the same format as you would get from the real program **samtools**. Try viewing the index file with `less` and see how it looks. The samtools type of index contains one row per fasta record in the reference file. In this case, there is only one record for the adenovirus genome, and it's called `ad2` in the fasta file. The human reference genome typically have one record per chromosome, so a index of the human genome would then have 24 rows.
 
 The numbers after the record name specifies how many bases the record has, how far into the file (in bytes) the record starts, the number of bases on each line in the record, and how many bytes each line takes up in the file.
 Using this information the program can quickly jump to the start location of each record, without having to read the file from the first row every time.
@@ -188,17 +199,17 @@ We are now ready to align our reads.
 5. Index the BAM file.
 6. View the aligned data together with the annotations.
 
-{{< fa clipboard-list >}} Align reads using **align_reads**, naming the output file **ad2.sam**, placed in the **1_alignment** folder.
+{{< fa clipboard-list >}} Align reads using `align_reads`, naming the output file `ad2.sam`, placed in the `1_alignment` folder.
 
 ```bash
 Syntax: align_reads -r <reference genome> -i <fastq file with reads> -o <name of the output file>
 ```
 
-```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}
-cat(paste0("$ align_reads -r 0_ref/ad2.fa -i 0_seq/ad2.fq -o 1_alignment/ad2.sam"))
+```bash
+align_reads -r 0_ref/ad2.fa -i 0_seq/ad2.fq -o 1_alignment/ad2.sam
 ```
 
-This will create a SAM file in **1_alignment** called **ad2.sam**. Have a look at it with less. If you think the file looks messy, add a `-S` after less to make it stop wrapping long lines, `less -S 1_alignment/ad2.sam` and scroll sideways using the arrow keys. As you can see there is one row per aligned read in this file. Each row contains information about the read, like the name of the read, where in the reference genome it aligned, and also a copy of the reads sequence and quality score, among other things.
+This will create a SAM file in `1_alignment` called `ad2.sam`. Have a look at it with less. If you think the file looks messy, add a `-S` after less to make it stop wrapping long lines, `less -S 1_alignment/ad2.sam` and scroll sideways using the arrow keys. As you can see there is one row per aligned read in this file. Each row contains information about the read, like the name of the read, where in the reference genome it aligned, and also a copy of the reads sequence and quality score, among other things.
 
 ### SAM to BAM
 
@@ -209,23 +220,23 @@ This will create a SAM file in **1_alignment** called **ad2.sam**. Have a look a
 5. Index the BAM file.
 6. View the aligned data together with the annotations.
 
-{{< fa clipboard-list >}} The next step is to convert the SAM file to a BAM file. This is more or less just compressing the file, like creating a zip file. To do that we will use the dummy program **sambam_tools**, telling it we want to convert a file to BAM (**-f bam**), which file we want to convert (**-i**), where it should save the resulting BAM file (**-o**). Save the BAM file in the **2_bam** folder and name it **ad2.bam**.
+{{< fa clipboard-list >}} The next step is to convert the SAM file to a BAM file. This is more or less just compressing the file, like creating a zip file. To do that we will use the dummy program `sambam_tools`, telling it we want to convert a file to BAM (`-f bam`), which file we want to convert (`-i`), where it should save the resulting BAM file (`-o`). Save the BAM file in the `2_bam` folder and name it `ad2.bam`.
 
 ```bash
 Syntax: sambam_tool -f bam -i <sam file> -o <bam>
 ```
 
-```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}
-cat(paste0("$ sambam_tool -f bam -i 1_alignment/ad2.sam -o 2_bam/ad2.bam"))
+```bash
+sambam_tool -f bam -i 1_alignment/ad2.sam -o 2_bam/ad2.bam
 ```
 
-Have a look in the **2_bam** folder.
+Have a look in the `2_bam` folder.
 
 ```bash
 ll 2_bam
 ```
 
-The created BAM file is an exact copy of the SAM file, but stored in a much more efficient format. Aligners usually have an option to output BAM format directly, saving you the trouble to convert it yourself, but not all tools can do this (they really should though). Have a look at the difference in file size, though in this example it's quite an extreme difference (2.9 MB vs 0.3 MB). The quality score of all reads is the same (BBBBBBBBB..), and files with less differences are easier to compress. Usually the BAM file is about 25% of the size of the SAM file.
+The created BAM file is an exact copy of the SAM file, but stored in a much more efficient format. Aligners usually have an option to output BAM format directly, saving you the trouble to convert it yourself, but not all tools can do this (they really should though). Have a look at the difference in file size, though in this example it's quite an extreme difference (2.9 MB vs 0.3 MB). The quality score of all reads is the same (`BBBBBBBBB..`), and files with less differences are easier to compress. Usually the BAM file is about 25% of the size of the SAM file.
 
 Since the BAM format is a binary format we can't look at it with `less`. We would have to use a tool, like **samtools** which you will probably see later in the week, to first convert the file back to a SAM file before we can read it. In that case we can just look at the SAM file before converting it since they will be the same.
 
@@ -240,17 +251,17 @@ Since the BAM format is a binary format we can't look at it with `less`. We woul
 
 A BAM file is taking up much less space than the SAM file, but we can still improve performance. An indexed BAM file is infinitely faster for programs to work with, but before we can index it, we have to sort it since it's not possible to index an unsorted file in any meaningful way.
 
-{{< fa clipboard-list >}} To sort the BAM file we'll use the **sambam_tool** again, but specifying a different function, **-f sort** instead. Tell it to store the sorted BAM file in the **3_sorted** folder and name the file **ad2.sorted.bam**
+{{< fa clipboard-list >}} To sort the BAM file we'll use the `sambam_tool` again, but specifying a different function, `-f sort` instead. Tell it to store the sorted BAM file in the `3_sorted` folder and name the file `ad2.sorted.bam`
 
 ```bash
 Syntax: sambam_tool -f sort -i <unsorted bam file> -o <sorted bam file>
 ```
 
-```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}
-cat(paste0("$ sambam_tool -f sort -i 2_bam/ad2.bam -o 3_sorted/ad2.sorted.bam"))
+```bash
+sambam_tool -f sort -i 2_bam/ad2.bam -o 3_sorted/ad2.sorted.bam
 ```
 
-This will sort the **ad2.bam** file and create a new BAM file which is sorted, called **ad2.sorted.bam**.
+This will sort the `ad2.bam` file and create a new BAM file which is sorted, called `ad2.sorted.bam`
 
 {{< fa clipboard-list >}} Now when we have a sorted BAM file, we can index it. Use the command
 
@@ -258,11 +269,11 @@ This will sort the **ad2.bam** file and create a new BAM file which is sorted, c
 Syntax: sambam_tool -f index -i <sorted bam file>
 ```
 
-```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}
-cat(paste0("$ sambam_tool -f index -i 3_sorted/ad2.sorted.bam"))
+```bash
+sambam_tool -f index -i 3_sorted/ad2.sorted.bam
 ```
 
-This will create an index named **ad2.sorted.bam.bai** in the same folder as the **ad2.sorted.bam** file is located. It's nicer to have the **.bam** and **.bai** named to the same "prefix", so rename the **.bai** file to not have the **.bam** in its name.
+This will create an index named `ad2.sorted.bam.bai` in the same folder as the `ad2.sorted.bam` file is located. It's nicer to have the `.bam` and `.bai` named to the same "prefix", so rename the `.bai` file to not have the `.bam` in its name.
 
 ```bash
 mv 3_sorted/ad2.sorted.bam.bai 3_sorted/ad2.sorted.bai
@@ -283,7 +294,7 @@ Now that we have to data aligned and prepared for easy access, we will view it i
 less -S 0_ref/ad2.gtf
 ```
 
-The **-S** will tell less to not wrap the lines, and instead show one line per line. If the line is longer than the window, you can user the left and right arrow to scroll to the left and right. Many tabular files are much more readable when using the `-S` option. Try viewing the file without it and see the difference.
+The `-S` will tell less to not wrap the lines, and instead show one line per line. If the line is longer than the window, you can user the left and right arrow to scroll to the left and right. Many tabular files are much more readable when using the `-S` option. Try viewing the file without it and see the difference.
 
 To view the file, we will use the program **IGV** (Integrated Genome Viewer). Before we can do this, we have to load the module for IGV.
 
@@ -300,7 +311,7 @@ Now you have to quit and reinstall [XQuartz](https://www.xquartz.org/), then rec
 {{< fa lightbulb >}} If you are using a Mac you might have to install the program [XQuartz](https://www.xquartz.org/), if you have not already installed that program. By using `-Y` in your ssh command you enable graphical transfer over ssh, but you will also have to have a program able to receive the graphics in order to display it.
 
 ```bash
-module load bioinfo-tools IGV/2.4.2
+module load bioinfo-tools IGV
 ```
 
 Start it by typing the following command (now we'll find out if you used `-Y` in all your ssh connections!):
@@ -311,16 +322,16 @@ igv.sh
 
 ::: {.callout-tip}
 
-If you notice that IGV over Xforwarding is excruciatingly slow, you can try to use the web based ThinLinc client instead. Unfortunately this requires you to have set up a two factor authentification (2FA) with UPPMAX, so it's something you can try on your own. [Instructions for setting up the 2FA at UPPMAX](https://www.uppmax.uu.se/support/user-guides/setting-up-two-factor-authentication/). When you are all set up, go to the address [https://rackham-gui.uppmax.uu.se](https://rackham-gui.uppmax.uu.se) and login with your normal UPPMAX username and password together with your 2FA (described at the login screen). This will get you a remote desktop on one of the login nodes, and you can open a terminal and run IGV there instead. Once IGV is started, either using Xforwarding or the remote desktop in your web browser, we are ready to go.
+If you notice that IGV over Xforwarding is excruciatingly slow, you can try to use the ThinLinc client instead, [please read the instrucutions on how to connect here](../other/lab_connect_pdc.html#remote-desktop). This will get you a remote desktop on one of the login nodes, and you can open a terminal and run IGV there instead. Once IGV is started, either using Xforwarding or the remote desktop, we are ready to go.
 :::
 
 There are 3 files we have to load in IGV.
 
-The first is the reference genome. Press the menu button located at **"Genomes - Load Genome from File..."** and find your reference genome in **0_ref/ad2.fa**. If you are having trouble finding your files, note that IGV always starts in your home directory. Use the dropdown menu at the top to navigate to **`r paste0(path_linux,"...")`**.
+The first is the reference genome. Press the menu button located at **"Genomes - Load Genome from File..."** and find your reference genome in `0_ref/ad2.fa`. If you are having trouble finding your files, note that IGV always starts in your home directory. Use the dropdown menu at the top to navigate to `{{< meta path_workspace >}}/filetypes`
 
-The second file you have to load is the reads. Press the menu button **"File - Load from File..."** and select your **3_sorted/ad2.sorted.bam**.
+The second file you have to load is the reads. Press the menu button **"File - Load from File..."** (not the same menu as in the step before) and select your `3_sorted/ad2.sorted.bam`.
 
-The last file you have to load is the annotation data. Press **"File - Load from File..."** again and select you annotation file in **0_ref/ad2.gtf**.
+The last file you have to load is the annotation data. Press **"File - Load from File..."** again and select you annotation file in `0_ref/ad2.gtf`.
 
 This will show you the reference genome, how all the reads are aligned to it, and all the annotation data. Try zooming in on an area and have a look at the reads and annotations. The figures you see in the picture are all derived from the data in the files you have given it.
 
@@ -332,20 +343,20 @@ The reference genome, a fasta file containing the DNA sequence of the reference 
 
 ## Create a CRAM file
 
-The CRAM format is even more efficient than the BAM format. To create a CRAM file we'll have to use **samtools**, so we will load the module for it.
+The CRAM format is even more efficient than the BAM format. To create a CRAM file we'll have to use `samtools`, so we will load the module for it.
 
 ```bash
-module load bioinfo-tools samtools/1.10
+module load bioinfo-tools samtools
 ```
 
-{{< fa clipboard-list >}} Tell samtools that you want CRAM output (**`-C`**) and specify which reference genome it should use to do the CRAM conversion (**`-T`**)
+{{< fa clipboard-list >}} Tell samtools that you want CRAM output (`-C`) and specify which reference genome it should use to do the CRAM conversion (`-T`)
 
 ```bash
 Syntax: samtools view -C -T <reference genome> -o <name of cram file> <bam file to convert>
 ```
 
-```{r,echo=FALSE,accordion=TRUE,class.output="bash",comment='',results='markup'}
-cat(paste0("$ samtools view -C -T 0_ref/ad2.fa -o 4_cram/ad2.cram 3_sorted/ad2.sorted.bam"))
+```bash
+samtools view -C -T 0_ref/ad2.fa -o 4_cram/ad2.cram 3_sorted/ad2.sorted.bam
 ```
 
 Compare the sizes of the convered BAM file and the newly created CRAM file:
@@ -354,12 +365,12 @@ Compare the sizes of the convered BAM file and the newly created CRAM file:
 ll -h 3_sorted/ad2.sorted.bam 4_cram/ad2.cram
 ```
 
-This will list both the files, and print the file size in a human readable format (**`-h`**). The CRAM file is roughly 1/3 of the size of the BAM file. This is probably because all the reads in the simulated data has the same quality value (BBBBBBBBBB). Fewer types of quality values are easier to compress, hence this amazing compression ratio. Real data will have much more diverse quality scores, and the CRAM file would be pethaps 70-80% of the original BAM file.
+This will list both the files, and print the file size in a human readable format (`-h`). The CRAM file is roughly 1/3 of the size of the BAM file. This is probably because all the reads in the simulated data has the same quality value (`BBBBBBBBBB`). Fewer types of quality values are easier to compress, hence this amazing compression ratio. Real data will have much more diverse quality scores, and the CRAM file would be pethaps 70-80% of the original BAM file.
 
 ::: {.callout-note}
 
 ## Optional
 
-If you have been fast to finish this lab and you still have time left (or just can't get enough of linux stuff), please have a look at the [advanced linux tutorial](lab_linux_advanced.html) where you can learn the basics in bash programming using variables, loops and control statements.
+If you have been fast to finish this lab and you still have time left (or just can't get enough of linux stuff), please have a look at the [advanced linux tutorial](lab_linux_advanced.html) where you can learn the basics in bash programming using variables, loops and control statements. This is the material we will cover in the afternoon session, but you can get a head start if you want to.
 
 :::
