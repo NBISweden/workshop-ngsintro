@@ -1,5 +1,5 @@
 ---
-title:  'HPC Introduction'
+title:  'Intro to high-performance computing'
 subtitle: "High-performance computing cluster: Dardel"
 author: 'Martin Dahlö'
 format: html

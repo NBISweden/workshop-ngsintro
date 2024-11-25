@@ -8,18 +8,6 @@ format: html
 ```{r,eval=TRUE,include=FALSE}
 library(yaml)
 library(here)
-id_project <- yaml::read_yaml(here("_quarto.yml"))$id_project
-path_resources <- file.path(yaml::read_yaml(here("_quarto.yml"))$path_resources, "linux")
-path_linux <- file.path(yaml::read_yaml(here("_quarto.yml"))$path_workspace, "linux")
-path_linux_adv <- file.path(path_linux, "linux_advanced")
-```
-
-```{r,eval=TRUE,include=FALSE}
-library(yaml)
-library(here)
-id_project     <- yaml::read_yaml(here("_quarto.yml"))$id_project
-path_resources <- yaml::read_yaml(here("_quarto.yml"))$path_resources
-path_workspace <- yaml::read_yaml(here("_quarto.yml"))$path_workspace
 site_url       <- yaml::read_yaml(here("_quarto.yml"))$website$`site-url`
 output_dir     <- yaml::read_yaml(here("_quarto.yml"))$project$`output-dir`
 ```
@@ -72,7 +60,7 @@ module load nano
 Let's make sure nano has **syntax highlighting** enabled. What that will do is to paint the boring code in pretty colors, making it much easier to read it. See the difference for yourself by first looking at this file before you enable it:
 
 ```bash
-nano {{< meta path_resources >}}/linux/qol/test.py
+nano {{< meta path_resources >}}/linux/qol/generate_random_protein.py
 ```
 
 Close down nano when you have seen how boing it looks without colors by pressing `ctrl+x`. Now, let's enable syntax highlighting. To do this, we will simply tell nano to include the syntax highlighting instructions from a bunch of files that are already installed on the computer. Run this command to do just that:
@@ -84,16 +72,14 @@ find /pdc/software/eb/software/nano/7.2/share/nano/ -iname "*.nanorc" -exec echo
 This command will put one line per language instructions (~30 of them, located in `/pdc/software/eb/software/nano/7.2/share/nano/`), into the nano autostart file (`~/.nanorc`) and put the word 'include' infront of each file name. That will make nano include the instructions from each of those files whenever it starts. Now have a look at the same file as before and enjoy the colors:
 
 ```bash
-nano {{< meta path_resources >}}/linux/qol/test.py
+nano {{< meta path_resources >}}/linux/qol/generate_random_protein.py
 ```
 
 Then close nano and continue with the lab.
 
 ## Copy files for lab
 
-Now, you will need some files. To avoid all the course participants editing the same file all at once, undoing each other's edits, each participant will get their own copy of the needed files. The files are located in the folder `{{< meta path_resources >}}/linux_advanced/`
-
-If you for some reason have problems copying the files, or if you are not on the cluster when running this lab, you can download these files [here](assets/linux_advanced.tar.gz). You can unpack the file using the command `tar -xzvf linux_advanced.tar.gz` once you have downloaded it. After unpacking, continue the lab from step 4.
+Now, you will need some files. To avoid all the course participants editing the same file all at once, undoing each other's edits, each participant will get their own copy of the needed files. The files are located in the folder `{{< meta path_resources >}}/linux/linux_advanced/`
 
 Next, copy the lab files from this folder. `-r` means recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, NOT sub-folders and files in sub-folders.
 
@@ -116,6 +102,18 @@ ll
 
 If you see files, the copying was successful.
 
+::: {.callout-tip}
+If you for some reason have problems copying the files, or if you are not on the cluster when running this lab, you can download these files [here](assets/linux_advanced.tar.gz). You can download and unpack the file using the commands below: 
+
+```bash
+wget `r site_url``r output_dir`/topics/linux/assets/linux_advanced.tar.gz
+mkdir -p ~/ngsintro
+tar -C ~/ngsintro -xzvf linux_advanced.tar.gz
+```
+The `-C ~/ngsintro` in that command will make the files be unpacked in the folder `~/ngsintro` instead of whichever folder you are in when you run the command. This makes sure the instructions in the lab will work as intended.
+
+After unpacking, continue the lab from [the "Using variables" section](#using-variables).
+:::
 
 ## Using variables
 
@@ -154,7 +152,7 @@ a=4
 echo $a squared is $(($a*$a))
 ```
 
-{{< fa clipboard-list >}} Write a echo command that will print out the volume of a [rectangular cuboid](https://www.mathsisfun.com/cuboid.html), with the side lengths specified by variables named `x`, `y`, and `z`. To see that it works correctly, the volume of a rectangular cuboid with sides 5,5,5 is 125, and for 4,5,10 is 200. *Give it a couple of tries on your own first. If you get completely stuck you can see a suggested solution below.*
+{{< fa clipboard-list >}} Write a echo command that will print out the volume of a [rectangular cuboid](https://www.mathsisfun.com/cuboid.html), with the side lengths specified by variables named `x`, `y`, and `z`. To see that it works correctly, the volume of a rectangular cuboid with sides 5,5,5 is 125, and for 4,5,10 is 200. Give it a couple of tries on your own first. If you get completely stuck you can see a suggested solution below.
 
 <details>
 <summary>Solution</summary>
@@ -168,11 +166,13 @@ echo The volume of the rectangular cuboid with the sides $x,$y,$z is $(($x*$y*$z
 
 ## Exercises
 
-First off, let's open another terminal to UPPMAX so that you have 2 of them open. Scripting is a lot easier if you have one terminal on the command line ready to run commands and test things, and another one with a text editor where you write the actual code. That way you will never have to close down the text editor when you want to run the script you are writing on, and then open it up again when you want to continue editing the code.
+First off, let's open another terminal to the cluster so that you have 2 of them open. Scripting is a lot easier if you have one terminal on the command line ready to run commands and test things, and another one with a text editor where you write the actual code. That way you will never have to close down the text editor when you want to run the script you are writing on, and then open it up again when you want to continue editing the code.
 
-So open a new terminal window, connect it to UPPMAX and then connect it to the node you have booked. Make sure both terminals are in the `{{< meta path_workspace >}}/linux_advanced` directory, and start editing a new file with gedit or nano where you write your script. Name the file whatever you want, but in the examples I will refer to it as `loop_01.sh`. Write your loops to this file (or create a new file for each new example) and test run it in the other terminal.
+So open a new terminal window, connect it to the cluster and then connect it to the node you have booked. Make sure both terminals are in the `{{< meta path_workspace >}}/linux_advanced` directory, and start editing a new file with `gedit` or `nano` where you write your script. Name the file whatever you want, but in the examples I will refer to it as `loop_01.sh`. Write your loops to this file (or create a new file for each new example) and test run it in the other terminal.
 
-**NOTE:** If you get error messages like `(gedit:27463): dconf-WARNING **: 10:59:00.575: failed to commit changes to dconf: Failed to execute child process “dbus-launch” (No such file or directory)`, and if you can't change any preferences, you can try starting gedit through the graphical menu in ThinLic instead. If you are using the Xfce desktop environment you should have a start-menu-like button at the top-left of the screen named `Applications`, or if you right-click somewhere on the desktop you should find it in the context menu that pops up. In the `Applications` menu, look in the category `Accessories` and you should find a program called `Text editor` which will start gedit *(hopefully without the errors).
+::: {.callout-tip}
+If you get error messages like this when you run `gedit`, `(gedit:27463): dconf-WARNING **: 10:59:00.575: failed to commit changes to dconf: Failed to execute child process “dbus-launch” (No such file or directory)`, and if you can't change any preferences, you can try starting gedit through the graphical menu in ThinLinc instead. If you are using the Xfce desktop environment you should have a start-menu-like button at the top-left of the screen named `Applications`, or if you right-click somewhere on the desktop you should find it in the context menu that pops up. In the `Applications` menu, look in the category `Accessories` and you should find a program called `Text editor` which will start `gedit`.
+:::
 
 The most simple loops are the ones that loop over a predefined list. You saw examples of this in the lecture slides, for example:
 
@@ -211,9 +211,7 @@ done
 
 {{< fa clipboard-list >}} Let's say it's New Year's Eve and you want to impress your friends with a computerized countdown of the last 10 seconds of the year (don't we all?).
 
-::: {.callout-tip}
 Start off with getting a loop to count down from 10 to 0 first. Notice how fast the computer counts? That won't do if it's seconds we want to be counting down. Try looking the man page for the `sleep` command (`man sleep`) and figure out how to use it. The point of using `sleep` is to tell the computer to wait for 1 second after printing the number, instead of rushing to the next iteration in the loop directly. Try to implement this on your own.
-:::
 
 <details>
 <summary>Solution</summary>
@@ -236,13 +234,13 @@ echo Happy New Year everyone!!
 
 ### Exercise 2
 
-Let's try to do something similar to the example in the lecture slides, to run the same commands on multiple files. In the Introduction to UPPMAX, we learned how to use samtools to convert BAM files to SAM files so that humans can read them.
-In real life you will never do this, instead you will most likely always do it the other way around. SAM files take up ~4x more space on the hard drive compared to the same file in BAM format, so as soon as you see a SAM file you should convert it to a BAM file instead to conserve hard drive space. If you have many SAM files that needs converting you don't want to sit there and type all the commands by hand like a pleb.
+Let's try to do something similar to the example in the lecture slides, to run the same commands on multiple files. In the [Intro to high-performance computing](../hpc/intro/lab_intro.html) lab, we learned how to use `samtools` to convert BAM files to SAM files so that humans can read them.
+In real life you will never do this, instead you will most likely always do it the other way around. SAM files take up ~4x more space on the hard drive compared to the same file in BAM format, so as soon as you see a SAM file you should instinctively convert it to a BAM file instead to conserve hard drive space. If you have many SAM files that needs converting you don't want to sit there and type all the commands by hand like some kind of animal.
 
-{{< fa clipboard-list >}} Write a script that converts all the SAM files in a specified directory to BAM files. Incidentally, you can find 50 SAM files in need of conversion in the folder called `sam` in the folder you copied to your folder earlier in this lab (`{{< meta path_workspace >}}/linux_advanced/sam`). Bonus points if you make the program take the specified directory as an argument, and another bonus point if you get the program to name the resulting BAM file to the same name as the SAM file but with a .bam ending instead.
+{{< fa clipboard-list >}} Write a script that converts all the SAM files in a specified directory to BAM files. Incidentally, you can find 50 SAM files in need of conversion in the folder called `sam` in the folder you copied to your folder earlier in this lab (`{{< meta path_workspace >}}/linux_advanced/sam`). Bonus points if you make the program take the specified directory as an argument, and another bonus point if you get the program to name the resulting BAM file to the same name as the SAM file but with a `.bam` ending instead of `.sam`.
 
 ::: {.callout-tip}
-Remember that you have to load the samtools module to be able to run it. The way you get samtools to convert a SAM file to a BAM file is by typing the following command:
+Remember that you have to load the `samtools` module to be able to run it. The way you get `samtools` to convert a SAM file to a BAM file is by typing the following command:
 
 ```bash
 samtools view -bS sample_1.sam > sample_1.bam
@@ -250,7 +248,7 @@ samtools view -bS sample_1.sam > sample_1.bam
 
 The `-b` option tells samtools to output BAM format, and the `-S` option tells samtools that the input is in SAM format.
 
-Remember, Google is a good place to get help. If you get stuck, google "bash remove file ending" or "bash argument to script" and look for hits from [StackOverflow/StackExchange](https://stackoverflow.com/) or similar pages. There are always many different way to solve a problem. Try finding one you understand what they do and test if you can get them to work the way you want. If not, look for another solution and try that one instead.
+Remember, Google is a good place to get help. If you get stuck, google `bash remove file ending` or `bash argument to script` and look for hits from [StackOverflow/StackExchange](https://stackoverflow.com/) or similar pages. There are always many different way to solve a problem. Try finding one you understand what they do and test if you can get them to work the way you want. If not, look for another solution and try that one instead.
 :::
 
 Basic, without bonus points:
@@ -397,17 +395,16 @@ done
 
 Maths and programming are usually a very good combination, so many of the examples of programming you'll see involve some kind of maths. Now we will write a loop that will calculate the factorial of a number. As [wikipedia will tell you](https://en.wikipedia.org/wiki/Factorial), "the factorial of a non-negative integer n, denoted by n!, is the product of all positive integers less than or equal to n", i.e. multiply all the integers, starting from 1, leading up to and including a number with each other.
 
-The factorial of 5, written 5!, would be `1*2*3*4*5=120`. Doing this by hand would start taking its time even after a couple of steps, but since we know how to loop that should not be a problem anymore.
+The factorial of 5, written `5!`, would be `1*2*3*4*5=120`. Doing this by hand would start taking its time even after a couple of steps, but since we know how to loop that should not be a problem anymore.
 
 {{< fa clipboard-list >}} Write a loop that will calculate the factorial of a given number stored in the variable `$n`.
 
 ::: {.callout-tip}
-A problem that you will encounter is that the sequence expression, `{1..10}`, from the previous exercise doesn't handle variables. This is because of the way bash is built. The sequence expressions are handled before handling the variables so when bash tries to generate the sequence, the variable names have not yet been replaced with the values they contain. This leads to bash trying to create a sequence from 1 to `$n`, which of course doesn't mean anything.
+A problem that you will encounter is that the sequence expression, `{1..10}`, from the previous exercise doesn't handle variables. This is because of the way bash is built. The sequence expressions are handled before handling the variables so when bash tries to generate the sequence, the variable names have not yet been replaced with the values they contain. This leads to bash trying to create a sequence from `1 to $n`, which of course doesn't mean anything.
 
 To get around this we can use a different way of generating sequences (there are **always** alternatives). There is a program called `seq` that does pretty much the same thing as the sequence expression, and since it is a program it will be executed **after** the variables have been handled. It's as easy to use as the sequence expressions; instead of writing `{1..10}` just write `$( seq 1 10 )`.
 
-The `$()` tells bash to run something in a subshell, which pretty much means it will run the command within the paratheses and then take whatever that command printed to the screen and replace the parantheses e
-xpression:
+The `$()` tells bash to run something in a subshell, which pretty much means it will run the command within the paratheses and then take whatever that command printed to the screen and replace the parantheses expression:
 
 ```bash
 echo $(seq 1 5)
@@ -454,11 +451,9 @@ echo The factorial of $n is $factorial
 
 Now, let's combine everything you've learned so far in this course.
 
-{{< fa clipboard-list >}} Write a script that runs the pipeline from the Bioinformatics filetypes lab for each fastq file in a specified directory, using the same reference genome as in the file type exercise. Navigate to the **Linux 2: File types in Bioinformatics** lab on the **Contents** page.
+{{< fa clipboard-list >}} Write a script that runs the pipeline from the [filetypes](../linux/lab_linux_filetypes.html) lab for each fastq file in a specified directory, using the same reference genome as in the filetype lab.
 
-If that sounds too easy, make the script submit a slurm job for each sample that will run the pipeline for that sample on a calculation node (1 core, 5 minutes each). 
-
-When the analysis is done, only fastq files and sorted and indexed BAM files should be in your folder.
+If that sounds too easy, make the script submits a slurm job for each sample that will run the pipeline for that sample on a calculation node (1 core, 5 minutes each). When the analysis is done, only fastq files and sorted and indexed BAM files should be in your folder.
 
 There is a bunch of fastq files in the directory `{{< meta path_workspace >}}/linux_advanced/fastq` that is to be used for this exercise.
 
@@ -502,12 +497,12 @@ Advanced solution:
 <summary>Solution</summary>
 ```bash
 # make the dummy pipeline available in this script
-export PATH=$PATH:{{< meta path_resources >}}/hpc/pipeline/dummy_scripts
+export PATH=$PATH:/sw/courses/ngsintro/hpc/pipeline/dummy_scripts
 
 # index the reference genome once, only if needed
-if [ ! -f {{< meta path_workspace >}}/filetypes/0_ref/ad2.fa.idx ];
+if [ ! -f ~/ngsintro/filetypes/0_ref/ad2.fa.idx ];
 then
-    reference_indexer -r {{< meta path_workspace >}}/filetypes/0_ref/ad2.fa
+    reference_indexer -r ~/ngsintro/filetypes/0_ref/ad2.fa
 fi
 
 
@@ -517,6 +512,9 @@ input_absolute_path=$(pwd)
 
 # go back to the previous directory now that the absolute path has been saved
 cd -
+
+# alternative way to get the absolute path to the input files
+# input_absolute_path=$(realpath $1)
 
 
 
@@ -534,59 +532,53 @@ do
     file_prefix=$(basename $file .fastq)
 
     # print a temporary script file that will be submitted to slurm
-    echo "#!/bin/bash -l
+    echo """#!/bin/bash -l
 
-    #SBATCH -A {{< meta id_project >}}'
-    #SBATCH -p shared
-    #SBATCH -n 1
-    #SBATCH -t 00:05:00
-    #SBATCH -J $file_basename
+#SBATCH -A edu24.uppmax
+#SBATCH -p shared
+#SBATCH -c 1
+#SBATCH -t 00:05:00
+#SBATCH -J $file_basename
 
-    # make the dummy pipeline available on the calculation node
-    echo "Loading modules"
-    export PATH=$PATH:{{< meta path_resources >}}/hpc/pipeline/dummy_scripts
+# make the dummy pipeline available on the calculation node
+echo "Loading modules"
+export PATH=\$PATH:/sw/courses/ngsintro/hpc/pipeline/dummy_scripts
 
-    # copy the reference genome, index and sample file to the nodes local hard drive.
-    # You have to escape the dollar sign in SNIC_TMP to keep bash from resolving
-    # it to its value in the submitter script already.
-    echo "Copying data to node local hard drive"
-    cp ', path_linux, '/filetypes/0_ref/ad2.fa* $file $SNIC_TMP/
+# go to the input files
+cd $input_absolute_path
 
-    # go the the nodes local hard drive
-    echo "Changing directory to node local hard drive"
-    cd $SNIC_TMP
+# align the reads
+echo "Aligning the reads"
+align_reads -r ~/ngsintro/filetypes/0_ref/ad2.fa -i $file_basename -o $file_prefix.sam                                                                                    
 
-    # align the reads
-    echo "Aligning the reads"
-    align_reads -r ad2.fa -i $file_basename -o $file_prefix.sam
+# convert the SAM file to a BAM file
+echo "Converting sam to bam"
+sambam_tool -f bam -i $file_prefix.sam -o $file_prefix.bam
 
-    # convert the SAM file to a BAM file
-    echo "Converting sam to bam"
-    sambam_tool -f bam -i $file_prefix.sam -o $file_prefix.bam
+# sort the BAM file
+echo "Sorting the bam file"
+sambam_tool -f sort -i $file_prefix.bam -o $file_prefix.sorted.bam
 
-    # sort the BAM file
-    echo "Sorting the bam file"
-    sambam_tool -f sort -i $file_prefix.bam -o $file_prefix.sorted.bam
+# index the BAM file
+echo "Indexing the sorted bam file"
+sambam_tool -f index -i $file_prefix.sorted.bam
 
-    # index the BAM file
-    echo "Indexing the sorted bam file"
-    sambam_tool -f index -i $file_prefix.sorted.bam
+# rename the index file to the same as the .bam file but with different file ending
+mv $file_prefix.sorted.bam.bai $file_prefix.sorted.bai
 
-    # copy back the files you want to keep
-    echo "Copying results back to network storage"
-    cp $file_prefix.sorted.bam $input_absolute_path/
-    cp $file_prefix.sorted.bam.bai $input_absolute_path/$file_prefix.sorted.bai
+# delete the files you don't want to keep
+rm $file_prefix.sam $file_prefix.bam
 
 
-    echo "Finished"
-    " > tmp.sbatch
+echo "Finished"
+""" > tmp.sbatch
 
     # submit the temporary script file
     sbatch tmp.sbatch
 
 done
 
-# remove the temporary file now that everything has been submitted
+# remove the temporary job file now that everything has been submitted
 rm tmp.sbatch
 ```
 </details>
