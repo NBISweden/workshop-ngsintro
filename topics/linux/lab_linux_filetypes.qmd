@@ -304,7 +304,7 @@ NOTE: Many Mac users are getting only black background when running IGV using XQ
 # open a terminal on your mac and run this command:
 defaults write org.xquartz.X11 enable_render_extension 0
 
-Now you have to quit and reinstall [XQuartz](https://www.xquartz.org/), then reconnect to uppmax and it should now look the way it should.
+Now you have to quit and reinstall [XQuartz](https://www.xquartz.org/), then reconnect to the cluster and it should now look the way it should.
 
 ```
 

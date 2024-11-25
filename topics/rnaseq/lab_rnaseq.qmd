@@ -1429,7 +1429,7 @@ Core Nextflow options
 
 WARN: The following invalid input values have been detected:
 
-* --project: edu24.uppmax
+* --project: {{< meta id_project >}}
 * --max_memory: 1.7 TB
 * --max_cpus: 256
 * --max_time: 7d

@@ -107,10 +107,10 @@ If you for some reason have problems copying the files, or if you are not on the
 
 ```bash
 wget `r site_url``r output_dir`/topics/linux/assets/linux_advanced.tar.gz
-mkdir -p ~/ngsintro
-tar -C ~/ngsintro -xzvf linux_advanced.tar.gz
+mkdir -p {{< meta path_workspace >}}
+tar -C {{< meta path_workspace >}} -xzvf linux_advanced.tar.gz
 ```
-The `-C ~/ngsintro` in that command will make the files be unpacked in the folder `~/ngsintro` instead of whichever folder you are in when you run the command. This makes sure the instructions in the lab will work as intended.
+The `-C {{< meta path_workspace >}}` in that command will make the files be unpacked in the folder `{{< meta path_workspace >}}` instead of whichever folder you are in when you run the command. This makes sure the instructions in the lab will work as intended.
 
 After unpacking, continue the lab from [the "Using variables" section](#using-variables).
 :::
@@ -497,12 +497,12 @@ Advanced solution:
 <summary>Solution</summary>
 ```bash
 # make the dummy pipeline available in this script
-export PATH=$PATH:/sw/courses/ngsintro/hpc/pipeline/dummy_scripts
+export PATH=$PATH:{{< meta path_resources >}}/hpc/pipeline/dummy_scripts
 
 # index the reference genome once, only if needed
-if [ ! -f ~/ngsintro/filetypes/0_ref/ad2.fa.idx ];
+if [ ! -f {{< meta path_workspace >}}/filetypes/0_ref/ad2.fa.idx ];
 then
-    reference_indexer -r ~/ngsintro/filetypes/0_ref/ad2.fa
+    reference_indexer -r {{< meta path_workspace >}}/filetypes/0_ref/ad2.fa
 fi
 
 
@@ -534,7 +534,7 @@ do
     # print a temporary script file that will be submitted to slurm
     echo """#!/bin/bash -l
 
-#SBATCH -A edu24.uppmax
+#SBATCH -A {{< meta id_project >}}
 #SBATCH -p shared
 #SBATCH -c 1
 #SBATCH -t 00:05:00
@@ -542,14 +542,14 @@ do
 
 # make the dummy pipeline available on the calculation node
 echo "Loading modules"
-export PATH=\$PATH:/sw/courses/ngsintro/hpc/pipeline/dummy_scripts
+export PATH=\$PATH:{{< meta path_resources >}}/hpc/pipeline/dummy_scripts
 
 # go to the input files
 cd $input_absolute_path
 
 # align the reads
 echo "Aligning the reads"
-align_reads -r ~/ngsintro/filetypes/0_ref/ad2.fa -i $file_basename -o $file_prefix.sam                                                                                    
+align_reads -r {{< meta path_workspace >}}/filetypes/0_ref/ad2.fa -i $file_basename -o $file_prefix.sam                                                                                    
 
 # convert the SAM file to a BAM file
 echo "Converting sam to bam"
