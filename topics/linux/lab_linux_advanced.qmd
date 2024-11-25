@@ -24,15 +24,16 @@ site_url       <- yaml::read_yaml(here("_quarto.yml"))$website$`site-url`
 output_dir     <- yaml::read_yaml(here("_quarto.yml"))$project$`output-dir`
 ```
 
+## Zoom link for help over zoom
+[https://liu-se.zoom.us/j/65307893994](https://liu-se.zoom.us/j/65307893994)
+
 ## Connect to PDC
 
-The first step of this lab is to open a ssh connection to PDC. Please refer to [**Connecting to PDC**](../other/lab_connect_pdc.html) for instructions. Once connected to PDC, return here and continue reading the instructions below.
+The first step of this lab is to open a ssh connection to PDC. Please refer to [**Connecting to PDC**](../../other/lab_connect_pdc.html) for instructions. Once connected to PDC, return here and continue reading the instructions below.
 
 ## Logon to a node
 
-Usually you would do most of the work in this lab directly on one of the login nodes at PDC, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
-
-Check which node you got when you booked resources this morning (replace **username** with your PDC username)
+Check which node you got when you booked resources this morning (replace `username` with your username)
 
 ```bash
 squeue -u username
@@ -48,7 +49,7 @@ user@login1 ~ $
 ```
 
 where `nid001009` is the name of the node I got (yours will probably be different).
-Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested (7 hours in this case) the session will shut down, and you will lose all unsaved data. Connect to this node from within PDC.
+Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested the session will shut down, and you will lose all unsaved data. Connect to this node from the login node.
 
 ```bash
 ssh -Y nid001009
@@ -57,7 +58,7 @@ ssh -Y nid001009
 If the list is empty you can run the allocation command again and it should be in the list:
 
 ```bash
-salloc -A `r id_project` -t 04:00:00 -p shared -n 4
+salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_tue >}} -t 04:00:00 -p shared -c 1
 ```
 
 ## First things first
@@ -71,7 +72,7 @@ module load nano
 Let's make sure nano has **syntax highlighting** enabled. What that will do is to paint the boring code in pretty colors, making it much easier to read it. See the difference for yourself by first looking at this file before you enable it:
 
 ```bash
-nano /sw/courses/ngsintro/linux/qol/test.py
+nano {{< meta path_resources >}}/linux/qol/test.py
 ```
 
 Close down nano when you have seen how boing it looks without colors by pressing `ctrl+x`. Now, let's enable syntax highlighting. To do this, we will simply tell nano to include the syntax highlighting instructions from a bunch of files that are already installed on the computer. Run this command to do just that:
@@ -83,34 +84,30 @@ find /pdc/software/eb/software/nano/7.2/share/nano/ -iname "*.nanorc" -exec echo
 This command will put one line per language instructions (~30 of them, located in `/pdc/software/eb/software/nano/7.2/share/nano/`), into the nano autostart file (`~/.nanorc`) and put the word 'include' infront of each file name. That will make nano include the instructions from each of those files whenever it starts. Now have a look at the same file as before and enjoy the colors:
 
 ```bash
-nano /sw/courses/ngsintro/linux/qol/test.py
+nano {{< meta path_resources >}}/linux/qol/test.py
 ```
 
 Then close nano and continue with the lab.
 
 ## Copy files for lab
 
-Now, you will need some files. To avoid all the course participants editing the same file all at once, undoing each other's edits, each participant will get their own copy of the needed files. The files are located in the folder `/sw/courses/ngsintro/linux/linux_advanced/`.
+Now, you will need some files. To avoid all the course participants editing the same file all at once, undoing each other's edits, each participant will get their own copy of the needed files. The files are located in the folder `{{< meta path_resources >}}/linux_advanced/`
 
-If you for some reason have problems copying the files, or if you are not on UPPMAX when running this lab, you can download these files [here](assets/linux_advanced.tar.gz). You can unpack the file using the command `tar -xzvf linux_advanced.tar.gz` once you have downloaded it. After unpacking, continue the lab from step 4.
+If you for some reason have problems copying the files, or if you are not on the cluster when running this lab, you can download these files [here](assets/linux_advanced.tar.gz). You can unpack the file using the command `tar -xzvf linux_advanced.tar.gz` once you have downloaded it. After unpacking, continue the lab from step 4.
 
 Next, copy the lab files from this folder. `-r` means recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, NOT sub-folders and files in sub-folders.
 
 {{< fa lightbulb >}} Remember to use tab-complete to avoid typos and too much writing.
 
-```{r}
-#| echo: false
-#| class-output: bash
-cat("cp -r <source> <destination>\n")
-cat(paste0("cp -r ", path_resources, "linux_advanced ", path_linux_adv))
+```bash
+cp -r <source> <destination>
+cp -r {{< meta path_resources >}}/linux/linux_advanced {{< meta path_workspace >}}/linux_advanced
 ```
 
-Have a look in ``r path_linux_adv``.
+Have a look in `{{< meta path_workspace >}}/linux_advanced`
 
-```{r}
-#| echo: false
-#| class-output: bash
-cat(paste0("cd ", path_linux_adv))
+```bash
+cd {{< meta path_workspace >}}/linux_advanced
 ```
 
 ```bash
@@ -159,21 +156,21 @@ echo $a squared is $(($a*$a))
 
 {{< fa clipboard-list >}} Write a echo command that will print out the volume of a [rectangular cuboid](https://www.mathsisfun.com/cuboid.html), with the side lengths specified by variables named `x`, `y`, and `z`. To see that it works correctly, the volume of a rectangular cuboid with sides 5,5,5 is 125, and for 4,5,10 is 200. *Give it a couple of tries on your own first. If you get completely stuck you can see a suggested solution below.*
 
-```{r}
-#| echo: false
-#| code-fold: true
-#| class-output: bash
-cat(paste0("x=4
+<details>
+<summary>Solution</summary>
+```bash
+x=4
 y=5
 z=10
-echo The volume of the rectangular cuboid with the sides $x,$y,$z is $(($x*$y*$z))."))
+echo The volume of the rectangular cuboid with the sides $x,$y,$z is $(($x*$y*$z)).
 ```
+</details>
 
 ## Exercises
 
 First off, let's open another terminal to UPPMAX so that you have 2 of them open. Scripting is a lot easier if you have one terminal on the command line ready to run commands and test things, and another one with a text editor where you write the actual code. That way you will never have to close down the text editor when you want to run the script you are writing on, and then open it up again when you want to continue editing the code.
 
-So open a new terminal window, connect it to UPPMAX and then connect it to the node you have booked. Make sure both terminals are in the ``r path_linux_adv`` directory, and start editing a new file with gedit or nano where you write your script. Name the file whatever you want, but in the examples I will refer to it as `loop_01.sh`. Write your loops to this file (or create a new file for each new example) and test run it in the other terminal.
+So open a new terminal window, connect it to UPPMAX and then connect it to the node you have booked. Make sure both terminals are in the `{{< meta path_workspace >}}/linux_advanced` directory, and start editing a new file with gedit or nano where you write your script. Name the file whatever you want, but in the examples I will refer to it as `loop_01.sh`. Write your loops to this file (or create a new file for each new example) and test run it in the other terminal.
 
 **NOTE:** If you get error messages like `(gedit:27463): dconf-WARNING **: 10:59:00.575: failed to commit changes to dconf: Failed to execute child process “dbus-launch” (No such file or directory)`, and if you can't change any preferences, you can try starting gedit through the graphical menu in ThinLic instead. If you are using the Xfce desktop environment you should have a start-menu-like button at the top-left of the screen named `Applications`, or if you right-click somewhere on the desktop you should find it in the context menu that pops up. In the `Applications` menu, look in the category `Accessories` and you should find a program called `Text editor` which will start gedit *(hopefully without the errors).
 
@@ -218,11 +215,10 @@ done
 Start off with getting a loop to count down from 10 to 0 first. Notice how fast the computer counts? That won't do if it's seconds we want to be counting down. Try looking the man page for the `sleep` command (`man sleep`) and figure out how to use it. The point of using `sleep` is to tell the computer to wait for 1 second after printing the number, instead of rushing to the next iteration in the loop directly. Try to implement this on your own.
 :::
 
-```{r}
-#| echo: false
-#| code-fold: true
-#| class-output: bash
-cat(paste0("# declare the values the loop will loop over
+<details>
+<summary>Solution</summary>
+```bash
+# declare the values the loop will loop over
 for secondsToGo in {10..0};
 do
     # print out the current number
@@ -234,15 +230,16 @@ do
 done
 
 # Declare the start of a new year in a festive manner
-echo Happy New Year everyone!!"))
+echo Happy New Year everyone!!
 ```
+</details>
 
 ### Exercise 2
 
 Let's try to do something similar to the example in the lecture slides, to run the same commands on multiple files. In the Introduction to UPPMAX, we learned how to use samtools to convert BAM files to SAM files so that humans can read them.
 In real life you will never do this, instead you will most likely always do it the other way around. SAM files take up ~4x more space on the hard drive compared to the same file in BAM format, so as soon as you see a SAM file you should convert it to a BAM file instead to conserve hard drive space. If you have many SAM files that needs converting you don't want to sit there and type all the commands by hand like a pleb.
 
-{{< fa clipboard-list >}} Write a script that converts all the SAM files in a specified directory to BAM files. Incidentally, you can find 50 SAM files in need of conversion in the folder called `sam` in the folder you copied to your folder earlier in this lab (``r file.path(path_linux_adv, "sam")``). Bonus points if you make the program take the specified directory as an argument, and another bonus point if you get the program to name the resulting BAM file to the same name as the SAM file but with a .bam ending instead.
+{{< fa clipboard-list >}} Write a script that converts all the SAM files in a specified directory to BAM files. Incidentally, you can find 50 SAM files in need of conversion in the folder called `sam` in the folder you copied to your folder earlier in this lab (`{{< meta path_workspace >}}/linux_advanced/sam`). Bonus points if you make the program take the specified directory as an argument, and another bonus point if you get the program to name the resulting BAM file to the same name as the SAM file but with a .bam ending instead.
 
 ::: {.callout-tip}
 Remember that you have to load the samtools module to be able to run it. The way you get samtools to convert a SAM file to a BAM file is by typing the following command:
@@ -258,12 +255,11 @@ Remember, Google is a good place to get help. If you get stuck, google "bash rem
 
 Basic, without bonus points:
 
-```{r}
-#| echo: false
-#| code-fold: true
-#| class-output: bash
-cat(paste0("# load the modules needed for samtools
-module load bioinfo-tools samtools/1.3
+<details>
+<summary>Solution</summary>
+```bash
+# load the modules needed for samtools
+module load bioinfo-tools samtools
 
 # move to the SAM files directory to start with
 cd sam
@@ -273,17 +269,17 @@ for file in *.sam;
 do
     # do the actual converting, just slapping on .bam at the end of the name
     samtools view -bS $file > $file.bam
-done"))
+done
 ```
+</details>
 
 Advanced, with bonus points:
 
-```{r}
-#| echo: false
-#| code-fold: true
-#| class-output: bash
-cat(paste0('# load the modules needed for samtools
-module load bioinfo-tools samtools/1.3
+<details>
+<summary>Solution</summary>
+```bash
+# load the modules needed for samtools
+module load bioinfo-tools samtools
 
 # move to the SAM files directory to start with.
 # $1 contains the first argument given to the program
@@ -300,8 +296,9 @@ do
 
     # do the actual converting
     samtools view -bS $file > $(basename $file .sam).bam
-done'))
+done
 ```
+</details>
 
 ### Exercise 3
 
@@ -335,12 +332,11 @@ fi
 
 Basic:
 
-```{r}
-#| echo: false
-#| code-fold: true
-#| class-output: bash
-cat(paste0("# load the modules needed for samtools
-module load bioinfo-tools samtools/1.3
+<details>
+<summary>Solution</summary>
+```bash
+# load the modules needed for samtools
+module load bioinfo-tools samtools
 
 # move to the SAM files directory to start with.
 cd sam
@@ -354,17 +350,17 @@ do
         # do the actual converting, just slapping on .bam at the end of the name
         samtools view -bS $file > $file.bam
     fi
-done"))
+done
 ```
+</details>
 
 Advanced:
 
-```{r}
-#| echo: false
-#| code-fold: true
-#| class-output: bash
-cat(paste0('# load the modules needed for samtools
-module load bioinfo-tools samtools/1.3
+<details>
+<summary>Solution</summary>
+```bash
+# load the modules needed for samtools
+module load bioinfo-tools samtools
 
 cd $1
 
@@ -393,8 +389,9 @@ do
         # inform the user that the conversion is skipped
         echo "Skipping conversion of $file as $filename_bam already exist"
     fi
-done'))
+done
 ```
+</details>
 
 ### Bonus exercise 1  
 
@@ -424,11 +421,10 @@ echo 1 2 3 4 5
 
 :::
 
-```{r}
-#| echo: false
-#| code-fold: true
-#| class-output: bash
-cat(paste0("# set the number you want to calculate the factorial of
+<details>
+<summary>Solution</summary>
+```bash
+# set the number you want to calculate the factorial of
 n=10
 
 # you have to initialize a variable before you can start using it.
@@ -450,8 +446,9 @@ do
 done
 
 # print the result
-echo The factorial of $n is $factorial"))
+echo The factorial of $n is $factorial
 ```
+</details>
 
 ### Bonus exercise 2
 
@@ -459,25 +456,22 @@ Now, let's combine everything you've learned so far in this course.
 
 {{< fa clipboard-list >}} Write a script that runs the pipeline from the Bioinformatics filetypes lab for each fastq file in a specified directory, using the same reference genome as in the file type exercise. Navigate to the **Linux 2: File types in Bioinformatics** lab on the **Contents** page.
 
-If that sounds too easy, make the script submit a slurm job for each sample that will run the pipeline for that sample on a calculation node (1 core, 5 minutes each). And if that is too easy, add that the pipeline will use the local hard drive on the calculation node for all files used in the analysis.
+If that sounds too easy, make the script submit a slurm job for each sample that will run the pipeline for that sample on a calculation node (1 core, 5 minutes each). 
 
 When the analysis is done, only fastq files and sorted and indexed BAM files should be in your folder.
 
-{{< fa lightbulb >}} Read more about the `$SNIC_TMP` variable in the [disk storage guide](http://www.uppmax.uu.se/support/user-guides/disk-storage-guide/) on the UPPMAX homepage.
-
-There is a bunch of fastq files in the directory ``r paste0(path_linux_adv, "/fastq/")`` that is to be used for this exercise.
+There is a bunch of fastq files in the directory `{{< meta path_workspace >}}/linux_advanced/fastq` that is to be used for this exercise.
 
 Basic solution:
 
-```{r}
-#| echo: false
-#| code-fold: true
-#| class-output: bash
-cat(paste0("# make the dummy pipeline available
-export PATH=$PATH:/sw/courses/ngsintro/linux/uppmax_pipeline_exercise/dummy_scripts
+<details>
+<summary>Solution</summary>
+```bash
+# make the dummy pipeline available
+export PATH=$PATH:{{< meta path_resources >}}/hpc/pipeline/dummy_scripts
 
 # index the reference genome
-reference_indexer -r ", path_linux_adv, "/filetypes/0_ref/ad2.fa
+reference_indexer -r {{< meta path_workspace >}}/filetypes/0_ref/ad2.fa
 
 # go to the input files
 cd $1
@@ -487,7 +481,7 @@ for file in *.fastq;
 do
 
     # align the reads
-    align_reads -r ", path_linux_adv, "/filetypes/0_ref/ad2.fa -i $file -o $file.sam
+    align_reads -r {{< meta path_workspace >}}/filetypes/0_ref/ad2.fa -i $file -o $file.sam
 
     # convert the sam file to a bam file
     sambam_tool -f bam -i $file.sam -o $file.bam
@@ -498,22 +492,22 @@ do
     # index the bam file
     sambam_tool -f index -i $file.sorted.bam
 
-done"))
+done
 ```
+</details>
 
 Advanced solution:
 
-```{r}
-#| echo: false
-#| code-fold: true
-#| class-output: bash
-cat(paste0("# make the dummy pipeline available in this script
-export PATH=$PATH:/sw/courses/ngsintro/linux/uppmax_pipeline_exercise/dummy_scripts
+<details>
+<summary>Solution</summary>
+```bash
+# make the dummy pipeline available in this script
+export PATH=$PATH:{{< meta path_resources >}}/hpc/pipeline/dummy_scripts
 
 # index the reference genome once, only if needed
-if [ ! -f ", path_linux, "/filetypes/0_ref/ad2.fa.idx ];
+if [ ! -f {{< meta path_workspace >}}/filetypes/0_ref/ad2.fa.idx ];
 then
-    reference_indexer -r ", path_linux, '/filetypes/0_ref/ad2.fa
+    reference_indexer -r {{< meta path_workspace >}}/filetypes/0_ref/ad2.fa
 fi
 
 
@@ -542,7 +536,7 @@ do
     # print a temporary script file that will be submitted to slurm
     echo "#!/bin/bash -l
 
-    #SBATCH -A ', id_project, '
+    #SBATCH -A {{< meta id_project >}}'
     #SBATCH -p shared
     #SBATCH -n 1
     #SBATCH -t 00:05:00
@@ -550,7 +544,7 @@ do
 
     # make the dummy pipeline available on the calculation node
     echo "Loading modules"
-    export PATH=$PATH:/sw/courses/ngsintro/linux/uppmax_pipeline_exercise/dummy_scripts
+    export PATH=$PATH:{{< meta path_resources >}}/hpc/pipeline/dummy_scripts
 
     # copy the reference genome, index and sample file to the nodes local hard drive.
     # You have to escape the dollar sign in SNIC_TMP to keep bash from resolving
@@ -593,5 +587,6 @@ do
 done
 
 # remove the temporary file now that everything has been submitted
-rm tmp.sbatch'))
+rm tmp.sbatch
 ```
+</details>
