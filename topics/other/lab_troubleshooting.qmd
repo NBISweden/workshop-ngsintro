@@ -22,7 +22,7 @@ Useful commands for monitoring status and user activity on HPC.
 List all jobs running an a project
 
 ```sh
-squeue -A {{< meta id_project >}} | sort -k 4
+squeue -A {{< meta id_project >}} | tail -n +2 | sort -k 4
 ```
 
 Sample output
@@ -35,7 +35,6 @@ Sample output
   23185433      core   (null) inene424  R    2:47:42      1 r479
   23185391      core   (null) inene424  R    2:50:04      1 r479
   23185540      core   (null)  shengyz  R    2:46:20      1 r480
-     JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
   23185119      core   (null)    wingf  R    2:53:40      1 r479
 ```
 
@@ -44,7 +43,7 @@ Sample output
 Sorted list of jobs per user
 
 ```sh
-squeue -A {{< meta id_project >}} | tr -s ' ' | cut -d' ' -f5 | sort | uniq -c | sort -k1
+squeue -A {{< meta id_project >}} | tr -s ' ' | tail -n +2 | cut -d' ' -f5 | sort | uniq -c | sort -k1
 ```
 
 Sample output
@@ -52,7 +51,6 @@ Sample output
 ```
       1 tami
       1 tommal
-      1 USER
       1 valeriia
       1 vioww
       1 vishnupk
@@ -109,7 +107,7 @@ Usage by user royfranc: 36.85% (736 corehours)
 
 ### User activity
 
-List last activity in a directory for all users in a project (not possible on Dardel, as courses don't have proejct directories)
+List last activity in a directory for all users in a project (not possible on Dardel, as courses don't have project directories)
 
 ```sh
 bash /sw/courses/utils/list_modification_times.sh /proj/{{< meta id_project >}}/nobackup/
@@ -144,7 +142,7 @@ ReservationName=snic2021-22-644_fri StartTime=2021-11-26T08:30:00 EndTime=2021-1
    Users=(null) Accounts=snic2021-22-644 Licenses=(null) State=INACTIVE BurstBuffer=(null) Watts=n/a
 ```
 
-### User identity
+### User identity on Rackham
 
 Fetch user information from username
 
