@@ -1054,7 +1054,7 @@ Move to the `plots/` directory. Then run the `pca.R` script like below.
 Rscript pca.R
 ```
 
-This generates a file named **pca.png** in the `plots` folder. To view it, use `eog pca.png &` or copy it to your local disk.
+This generates a file named **pca.png** in the `plots` folder. To view it, download it to your local disk.
 
 ![](assets/pca.png){width="500px"}
 
@@ -1070,7 +1070,7 @@ Run the `ma.R` script in the `plots` directory.
 Rscript ma.R
 ```
 
-This generates a file named **ma.png** in the `plots` folder. To view it, use `eog ma.png &` or copy it to your local disk.
+This generates a file named **ma.png** in the `plots` folder. To view it, download it to your local disk.
 
 ![](assets/ma.png){width="500px"}
 
@@ -1086,7 +1086,7 @@ Run the script named `volcano.R` in the `plots` directory.
 Rscript volcano.R
 ```
 
-This generates a file named **volcano.png** in the `plots` folder. To view it, use `eog volcano.png &` or copy it to your local disk.
+This generates a file named **volcano.png** in the `plots` folder. To view it, download it to your local disk.
 
 ![](assets/volcano.png){width="500px"}
 
@@ -1102,7 +1102,7 @@ Run the script named `heatmap.R` in the `plots` directory.
 Rscript heatmap.R
 ```
 
-This generates a file named **heatmap.png** in the `plots` folder. To view it, use `eog heatmap.png &` or copy it to your local disk.
+This generates a file named **heatmap.png** in the `plots` folder. To view it, download it to your local disk.
 
 ![](assets/heatmap.png){width="500px"}
 
