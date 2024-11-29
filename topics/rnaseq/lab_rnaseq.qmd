@@ -700,7 +700,7 @@ drwxrwsr-x 2 user gXXXXXXX 4.0K Jan 22 22:53 raw_data_qualimapReport
 {{< fa exclamation-circle >}} When downloading the HTML files, note that you MUST also download the dependency files (ie; css folder and images_qualimapReport folder), otherwise the HTML file may not render correctly. Remember to replace **username**.
 
 ```sh
-scp -r username@{{< meta url_cluster >}}/rnaseq:{{< meta path_workspace >}}/rnaseq/4_qualimap .
+scp -r username@{{< meta url_cluster >}}:{{< meta path_workspace >}}/rnaseq/4_qualimap .
 ```
 
 {{< fa comments >}} Check the QualiMap report for one sample and discuss if the sample is of good quality. You only need to do this for one file now. We will do a comparison with all samples when using the MultiQC tool.
