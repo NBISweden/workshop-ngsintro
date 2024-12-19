@@ -1,7 +1,7 @@
 project:
   type: website
   # output directory used on gh-pages branch. format: YYMM
-  output-dir: "2411"
+  output-dir: "2503"
   render: 
     - "!README.md"
     - "!LICENSE"
@@ -119,9 +119,9 @@ filters:
 
 # used site-wide
 # project id on active cluster (dardel)
-id_project: "edu24.uppmax"
+id_project: "edu25.uppmax"
 # project id on fallback cluster (rackham)
-id_project_backup: "naiss2024-22-1375"
+id_project_backup: "naissXXXX-XX-XXXX"
 # path to course working directory
 path_workspace: "~/ngsintro"
 # path to course resources on cluster
@@ -132,15 +132,15 @@ url_cluster: "dardel.pdc.kth.se"
 url_cluster_backup: "rackham.uppmax.uu.se"
 
 # reservation ids
-id_slurm_res_mon: "edu24-11-25"
-id_slurm_res_tue: "edu24-11-26"
-id_slurm_res_wed: "edu24-11-27"
-id_slurm_res_thu: "edu24-11-28"
-id_slurm_res_fri: "edu24-11-29"
+id_slurm_res_mon: "edu25-03-24"
+id_slurm_res_tue: "edu25-03-25"
+id_slurm_res_wed: "edu25-03-26"
+id_slurm_res_thu: "edu25-03-27"
+id_slurm_res_fri: "edu25-03-28"
 
 # location options are linkoping, lund, umea, uppsala or online. For rendering the info page.
 # one or more separated by commas or semicolon. online doesn't display any location info.
-location: linkoping
+location: online
 assistants:
  - "AJ: Anna Johansson"
  - "BV: Björn Viklund"
@@ -174,7 +174,7 @@ assistants:
  - "SD: Sebastian DiLorenzo"
  - "VK: Varsith Konda"
  - "YL: Yuan Li"
-schedule_message: "Coffee breaks are planned for approximately 10:00 and 14:30 every day."
+schedule_message: "Breaks are planned for approximately 10:00 and 14:30 every day."
 colors:
   primary: "#95b540"
   secondary: "#E9F2D1"
