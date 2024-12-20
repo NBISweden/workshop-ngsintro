@@ -1,5 +1,7 @@
 ```{r}
 #| echo: false
+icons <- awesomeIcons(icon = dfr2$marker_icon, markerColor = dfr2$marker_color, iconColor = "#FFFFFF", library = "fa")
+
 htmltools::div(
   style = "margin-bottom:1em;",
   htmltools::tagList(leaflet(height = 450, width = "auto", elementId = paste0("leaflet-", p)) %>%
