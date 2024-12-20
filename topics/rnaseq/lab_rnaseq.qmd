@@ -44,7 +44,7 @@ RNA-seq experiment does not necessarily end with a list of DE genes. If you have
 
 ## General guide
 
-In paths, remember to change `username` with your actual UPPMAX username.
+In code and paths, remember to change `username` with your actual HPC username.
 
 You are welcome to try your own solutions to the problems, before checking the solution. Click the button to see the suggested solution. There is more than one way to complete a task. Discuss with person next to you and ask us when in doubt.
 
@@ -81,16 +81,16 @@ For the purpose of this tutorial, to shorten the time needed to run various bioi
 
 The main exercise covers Differential Gene Expression (DGE) workflow from raw reads to a list of differentially expressed genes.
 
-### Using Uppmax
+### Using HPC
 
 ::: {.callout-tip}
 ## Use ThinLinc
 
-If you have issues opening GUI windows from UPPMAX through the terminal, it is recommended to use ThinLinc.
+If you have issues opening GUI windows from HPC through the terminal, it is recommended to use ThinLinc.
 
 :::
 
-If you are not on ThinLinc, connect to UPPMAX first. {{< fa exclamation-circle >}} Remember to replace username.
+If you are not on ThinLinc, connect to HPC first. {{< fa exclamation-circle >}} Remember to replace username.
 
 ```sh
 ssh -XY username@{{< meta url_cluster >}}
@@ -98,12 +98,16 @@ ssh -XY username@{{< meta url_cluster >}}
 
 Book a node.
 
-For the RNA-Seq part of the course, we will work on the Rackham cluster. A standard compute node on cluster Rackham has 128 GB of RAM and 20 cores. We will use 1 core per person for this session. Therefore, each core gives you 6.4 GB of RAM. The code below is valid to run at the start of the day. If you are running it in the middle of a day, you need to decrease the time (`-t`). Do not run this twice and also make sure you are not running computations on a login node.
+For the RNA-Seq part of the course, we will work on the HPC. The code below is valid to run at the start of the day. If you are running it in the middle of a day, you need to decrease the time (`-t`). Do not run this twice and also make sure you are not running computations on a login node.
 
 Book compute resources for RNA-Seq lab.
 
+::: {.callout-tip}
+The `--reservation` is only used during the workshop and not needed when working on your projects. Use `{{< meta id_slurm_res_thu >}}` for Thursday and `{{< meta id_slurm_res_fri >}}` for Friday.
+:::
+
 ```sh
-salloc -A {{< meta id_project >}} -t 03:00:00 -p shared -n 4 --no-shell
+salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_thu >}} -t 03:00:00 -p shared -c 4 --no-shell
 ```
 
 Check allocation. {{< fa exclamation-circle >}} Remember to replace **username**.
@@ -120,18 +124,19 @@ ssh -Y nodename
 
 #### Set-up directory
 
-Setting up the directory structure is an important step as it helps to keep our raw data, intermediate data and results in an organised manner. We suggest a location in your home directory for the whole workshop (`~/ngsintro`) and within that a directory for this lab (`~/ngsintro/rnaseq`).
+Setting up the directory structure is an important step as it helps to keep our raw data, intermediate data and results in an organised manner. We suggest a location in your home directory for the whole workshop (`{{< meta path_workspace >}}`) and within that a directory for this lab (`{{< meta path_workspace >}}/rnaseq`).
 
 Create a directory named `rnaseq`.
 
 ```sh
+cd {{< meta path_workspace >}}
 mkdir rnaseq
 ```
 
 {{< fa clipboard-list >}} Create the directory structure as shown below.
 
 ```
-ngsintro/
+{{< meta path_workspace >}}/
 rnaseq/
   +-- 1_raw/
   +-- 2_fastqc/
@@ -217,12 +222,11 @@ pwd
 {{< meta path_workspace >}}/rnaseq/2_fastqc
 ```
 
-Load Uppmax modules `bioinfo-tools` and FastQC `FastQC/0.11.9`.
+Load modules `bioinfo-tools` and FastQC `fastqc/0.12.1`.
 
 ```sh
-module load PDC/23.12
 module load bioinfo-tools
-module load FastQC/0.11.9
+module load fastqc/0.12.1
 ```
 
 Once the module is loaded, FastQC program is available through the command `fastqc`. Use `fastqc --help` to see the various parameters available to the program. We will use `-o` to specify the output directory path and finally, the name of the input fastq file to analyse. The syntax to run one file will look like below.
@@ -250,10 +254,12 @@ The command below creates a new file in the current directory.
 touch fastqc.sh
 ```
 
-Use a text editor (`nano`,`Emacs` etc.) to edit `fastqc.sh`.
+Use a text editor (`nano`,`Emacs`, `gedit` etc.) to edit `fastqc.sh`.
 
-```sh
-nano fastqc.sh
+{{< fa lightbulb >}} `gedit` behaves like a regular text editor with a standard graphical interface.
+
+```{sh,eval=FALSE}
+gedit fastqc.sh &
 ```
 
 Then add the lines below and save the file.
@@ -262,9 +268,8 @@ Then add the lines below and save the file.
 #| eval: false
 #!/bin/bash
 
-module load PDC/23.12
 module load bioinfo-tools
-module load FastQC/0.11.9
+module load fastqc/0.12.1
 
 for i in ../1_raw/*.gz
 do
@@ -293,7 +298,7 @@ bash ../scripts/fastqc.sh
 
 After the fastqc run, there should be a `.zip` file and a `.html` file for every fastq file. The `.html` file is the report that you need. Download the `.html` files to your computer and open them in a web browser. You do not need to necessarily look at all files now. We will do a comparison with all samples when using the MultiQC tool.
 
-{{< fa exclamation-circle >}} Run this step in a **LOCAL** terminal and **NOT** on Uppmax. Open a terminal locally on your computer, move to a suitable download directory and run the command below to download one html report.
+{{< fa exclamation-circle >}} Run this step in a **LOCAL** terminal and **NOT** on HPC. Open a terminal locally on your computer, move to a suitable download directory and run the command below to download one html report.
 
 {{< fa exclamation-circle >}} Remember to replace **username**.
 
@@ -375,12 +380,11 @@ drwxrwsr-x 2 user gXXXXXXX 4.0K Jan 22 21:59 mouse_chr19_hisat2
 
 #### Build index
 
-Move into the `reference` directory if not already there. Load module HISAT2. Remember to load `bioinfo-tools` if you haven't done so already.
+Move into the `reference` directory if not already there. Load module hisat2. Remember to load `bioinfo-tools` if you haven't done so already.
 
 ```sh
-module load PDC/23.12
 module load bioinfo-tools
-module load HISAT2/2.2.1
+module load hisat2/2.2.1
 ```
 
 {{< fa lightbulb >}} To search for the tool or other versions of a tool, use `module spider hisat`.
@@ -391,9 +395,8 @@ Create a new bash script in your `scripts` directory named `hisat2_index.sh` and
 #!/bin/bash
 
 # load module
-module load PDC/23.12
 module load bioinfo-tools
-module load HISAT2/2.2.1
+module load hisat2/2.2.1
 
 hisat2-build \
   -p 1 \
@@ -477,9 +480,8 @@ But, we will not run it as above. We will make some more changes to it. We want 
 ```sh
 #!/bin/bash
 
-module load PDC/23.12
 module load bioinfo-tools
-module load HISAT2/2.2.1
+module load hisat2/2.2.1
 module load samtools/1.20
 
 # get output filename prefix
@@ -547,7 +549,6 @@ ls -l
 The `.bam` file contains the alignment of all reads to the reference genome in binary format. BAM files are not human readable directly. To view a BAM file in text format, you can use `samtools view` functionality.
 
 ```sh
-module load PDC/23.12
 module load bioinfo-tools
 module load samtools/1.20
 samtools view SRR3222409-19.bam | head
@@ -590,9 +591,8 @@ Next, we need to index these BAM files. Indexing creates `.bam.bai` files which 
 {{< fa clipboard-list >}} Index all BAM files. Write a for-loop to index all BAM files using the command `samtools index file.bam`.
 
 ```sh
-module load PDC/23.12
 module load bioinfo-tools
-module load samtools/1.19
+module load samtools/1.20
 
 for i in *.bam
   do
@@ -697,10 +697,10 @@ drwxrwsr-x 2 user gXXXXXXX 4.0K Jan 22 22:53 raw_data_qualimapReport
 
 {{< fa clipboard-list >}} Download the results.
 
-{{< fa exclamation-circle >}} When downloading the HTML files, note that you MUST also download the dependency files (ie; css folder and images_qualimapReport folder), otherwise the HTML file may not render correctly. Remember to replace **username** (twice).
+{{< fa exclamation-circle >}} When downloading the HTML files, note that you MUST also download the dependency files (ie; css folder and images_qualimapReport folder), otherwise the HTML file may not render correctly. Remember to replace **username**.
 
 ```sh
-scp -r username@{{< meta url_cluster >}}/rnaseq:{{< meta path_workspace >}}/rnaseq/4_qualimap .
+scp -r username@{{< meta url_cluster >}}:{{< meta path_workspace >}}/rnaseq/4_qualimap .
 ```
 
 {{< fa comments >}} Check the QualiMap report for one sample and discuss if the sample is of good quality. You only need to do this for one file now. We will do a comparison with all samples when using the MultiQC tool.
@@ -721,7 +721,7 @@ After ensuring mapping quality, we can move on to enumerating reads mapping to g
 
 {{< fa clipboard-list >}} Read featureCounts [documentation](http://subread.sourceforge.net/SubreadUsersGuide.pdf) and see if you can figure it out how to use paired-end reads using an unstranded library to count fragments overlapping with exonic regions and summarise over genes.
 
-{{< fa clipboard-list >}} Load the subread module on Uppmax. Create a bash script named `featurecounts.sh` in the directory `scripts`.
+{{< fa clipboard-list >}} Load the subread module on HPC. Create a bash script named `featurecounts.sh` in the directory `scripts`.
 
 We could run featureCounts on each BAM file, produce a text output for each sample and combine the output. But the easier way is to provide a list of all BAM files and featureCounts will combine counts for all samples into one text file.
 
@@ -781,10 +781,8 @@ ls -l
 
 For downstream steps, we will NOT use this `counts.txt` file. Instead we will use **counts_full.txt** from the back-up folder. This contains counts across all chromosomes. This is located here: `{{< meta path_resources >}}/rnaseq/dardel/main/5_dge/`. Copy this file to your `5_dge` directory.
 
-{{< fa exclamation-circle >}} Remember to replace username.
-
 ```sh
-cp {{< meta path_resources >}}/rnaseq/dardel/main/5_dge/counts_full.txt {{< meta path_workspace >}}/rnaseq/5_dge/"))
+cp {{< meta path_resources >}}/rnaseq/dardel/main/5_dge/counts_full.txt {{< meta path_workspace >}}/rnaseq/5_dge/
 ```
 
 :::
@@ -795,7 +793,7 @@ cp {{< meta path_resources >}}/rnaseq/dardel/main/5_dge/counts_full.txt {{< meta
 
 **Combined QC report using MultiQC**  
 
-We will use the tool **MultiQC** to crawl through the output, log files etc from FastQC, HISAT2, Picard and featureCounts to create a combined QC report.
+We will use the tool **MultiQC** to crawl through the output, log files etc from FastQC, HISAT2, QualiMap and featureCounts to create a combined QC report.
 
 Move to the `6_multiqc` directory. You should be standing here to run this:
 
@@ -806,7 +804,6 @@ Move to the `6_multiqc` directory. You should be standing here to run this:
 And run this in the terminal.
 
 ```sh
-module load PDC/23.12
 module load bioinfo-tools
 module load MultiQC/1.12
 
@@ -841,7 +838,7 @@ drwxrwsr-x 2 user gXXXXXXX 4.0K Sep  6 22:33 multiqc_data
 
 {{< fa comments >}} Download the MultiQC HTML report to your computer and inspect the report.
 
-{{< fa exclamation-circle >}} Run this step in a **LOCAL** terminal and **NOT** on Uppmax. Remember to replace username (twice).
+{{< fa exclamation-circle >}} Run this step in a **LOCAL** terminal and **NOT** on HPC. Remember to replace username.
 
 ```sh
 scp username@{{< meta url_cluster >}}:{{< meta path_workspace >}}/rnaseq/6_multiqc/multiqc_report.html .
@@ -855,13 +852,14 @@ scp username@{{< meta url_cluster >}}:{{< meta path_workspace >}}/rnaseq/6_multi
 
 The easiest way to perform differential expression is to use one of the statistical packages, within R environment, that were specifically designed for analyses of read counts arising from RNA-seq, SAGE and similar technologies. Here, we will use one such package called **DESeq2**. Learning R is beyond the scope of this course so we prepared basic ready to run R scripts to find DE genes between conditions **KO** and **Wt**.
 
-Move to the `5_dge` directory and load R modules for use.  
+Move to the `5_dge` directory and load R module for use.  
 
 ```sh
+module load PDC/23.12
 module load R/4.4.0
 ```
 
-Use `pwd` to check if you are standing in the correct directory. Copy the following file to the `5_dge` directory: `{{< meta path_resources >}}/rnaseq/dardel/main/5_dge/dge.R`
+Use `pwd` to check if you are standing in the correct directory. Copy the following file `{{< meta path_resources >}}/rnaseq/dardel/main/5_dge/dge.R` to the `5_dge` directory.
 
 Make sure you have the `counts_full.txt`. If not, you can copy this file too: `{{< meta path_resources >}}/rnaseq/dardel/main/5_dge/counts_full.txt`
 
@@ -935,8 +933,6 @@ cd funannot
 
 Copy this file `{{< meta path_resources >}}/rnaseq/dardel/bonus/funannot/annotate_de_results.R` to your `rnaseq/funannot` directory.
 
-{{< fa exclamation-circle >}} Remember to replace username.
-
 ```sh
 cp {{< meta path_resources >}}/rnaseq/dardel/bonus/funannot/annotate_de_results.R {{< meta path_workspace >}}/rnaseq/funannot/
 ```
@@ -949,9 +945,10 @@ cp {{< meta path_resources >}}/rnaseq/dardel/main/reference/mm-biomart99-genes.t
 
 Then uncompress the file. `gunzip ../reference/mm-biomart99-genes.txt.gz`
 
-Load R module and R packages
+Load R module
 
 ```sh
+module load PDC/23.12
 module load R/4.4.0
 ```
 
@@ -1022,8 +1019,6 @@ Creating high quality plots of RNA-seq analysis are most easily done using R. De
 
 Copy the R script files from the following directory: `{{< meta path_resources >}}/rnaseq/dardel/bonus/plots/` to your `plots` directory.
 
-{{< fa exclamation-circle >}} Remember to replace username.
-
 ```sh
 cp {{< meta path_resources >}}/rnaseq/dardel/bonus/plots/*.R {{< meta path_workspace >}}/rnaseq/plots/
 ```
@@ -1042,9 +1037,10 @@ ls -l
 -rw-rw-r-- 1 user gXXXXXXX  669 Sep 22  2016 volcano.R
 ```
 
-It is important that you load module R and R_packages.
+It is important that you load module R.
 
 ```sh
+module load PDC/23.12
 module load R/4.4.0
 ```
 
@@ -1058,7 +1054,7 @@ Move to the `plots/` directory. Then run the `pca.R` script like below.
 Rscript pca.R
 ```
 
-This generates a file named **pca.png** in the `plots` folder. To view it, use `eog pca.png &` or copy it to your local disk.
+This generates a file named **pca.png** in the `plots` folder. To view it, download it to your local disk.
 
 ![](assets/pca.png){width="500px"}
 
@@ -1074,7 +1070,7 @@ Run the `ma.R` script in the `plots` directory.
 Rscript ma.R
 ```
 
-This generates a file named **ma.png** in the `plots` folder. To view it, use `eog ma.png &` or copy it to your local disk.
+This generates a file named **ma.png** in the `plots` folder. To view it, download it to your local disk.
 
 ![](assets/ma.png){width="500px"}
 
@@ -1090,9 +1086,9 @@ Run the script named `volcano.R` in the `plots` directory.
 Rscript volcano.R
 ```
 
-This generates a file named **volcano.png** in the `plots` folder. To view it, use `eog volcano.png &` or copy it to your local disk.
+This generates a file named **volcano.png** in the `plots` folder. To view it, download it to your local disk.
 
-![](assets/volcano.png"{width="500px"}
+![](assets/volcano.png){width="500px"}
 
 {{< fa comments >}} Anything noteworthy about the patterns in the plot? Is there a general trend in the direction of change in gene expression as a consequence of the experiment?
 
@@ -1106,7 +1102,7 @@ Run the script named `heatmap.R` in the `plots` directory.
 Rscript heatmap.R
 ```
 
-This generates a file named **heatmap.png** in the `plots` folder. To view it, use `eog heatmap.png &` or copy it to your local disk.
+This generates a file named **heatmap.png** in the `plots` folder. To view it, download it to your local disk.
 
 ![](assets/heatmap.png){width="500px"}
 
@@ -1120,13 +1116,13 @@ If you are already familiar with IGV you can load the mouse genome and at least 
 
 Integrated genomics viewer from Broad Institute is a nice graphical interface to view bam files and genome annotations. It also has tools to export data and some functionality to look at splicing patterns in RNA-seq data sets. Even though it allows for some basic types of analysis it should be used more as a nice way to look at your mapped data. Looking at data in this way might seem like a daunting approach as you can not check more than a few regions, but in in many cases it can reveal mapping patterns that are hard to catch with just summary statistics.
 
-For this tutorial you can chose to run IGV directly on your own computer {{< fa desktop >}} or on Uppmax {{< fa cloud >}}. If you chose to run it on your own computer you will have to download some of the BAM files (and the corresponding index files) from Uppmax. If you have not yet installed IGV you also have to [download](http://software.broadinstitute.org/software/igv/download) the program.
+For this tutorial you can chose to run IGV directly on your own computer {{< fa desktop >}} or on HPC {{< fa cloud >}}. If you chose to run it on your own computer you will have to download some of the BAM files (and the corresponding index files) from HPC. If you have not yet installed IGV you also have to [download](http://software.broadinstitute.org/software/igv/download) the program.
 
 ::: {.callout-note}
 
 ## Local {{< fa desktop >}}
 
-Copy two BAM files (one from each experimental group, for example; SRR3222409-19 and SRR3222412-19) and the associated index (`.bam.bai`) files to your computer by running the below command in a **LOCAL** terminal and **NOT** on Uppmax.
+Copy two BAM files (one from each experimental group, for example; SRR3222409-19 and SRR3222412-19) and the associated index (`.bam.bai`) files to your computer by running the below command in a **LOCAL** terminal and **NOT** on HPC.
 
 {{< fa exclamation-circle >}} Remember to replace **username**.
 
@@ -1142,29 +1138,28 @@ Alternatively, you can use an SFTP browser like [Filezilla](https://filezilla-pr
 
 ::: {.callout-note}
 
-## Uppmax {{< fa cloud >}}
+## HPC {{< fa cloud >}}
 
-For Linux and Mac users, Log in to Uppmax in a way so that the generated graphics are exported via the network to your screen. This will allow any graphical interface that you start on your compute node to be exported to your computer. However, as the graphics are exported over the network, it can be fairly slow in redrawing windows and the experience can be fairly poor.
+For Linux and Mac users, Log in to HPC in a way so that the generated graphics are exported via the network to your screen. This will allow any graphical interface that you start on your compute node to be exported to your computer. However, as the graphics are exported over the network, it can be fairly slow in redrawing windows and the experience can be fairly poor.
 
-Login in to Uppmax with X-forwarding enabled:
+Login in to HPC with X-forwarding enabled:
 
 ```sh
 ssh -Y username@{{< meta url_cluster >}}
 ssh -Y computenode
 ```
 
-An alternative method is to login through [Rackham-GUI](https://rackham-gui.uppmax.uu.se/main/). Once you log into this interface you will have a linux desktop interface in a browser window. This interface is running on the login node, so if you want to do any heavy lifting you need to login to your reserved compute node also here. This is done by opening a terminal in the running linux environment and log on to your compute node as before. NB! If you have no active reservation you have to do that first.
+An alternative method is to login through ThinLinc. Once you log into this interface you will have a linux desktop interface in a browser window. This interface is running on the login node, so if you want to do any heavy lifting you need to login to your reserved compute node also here. This is done by opening a terminal in the running linux environment and log on to your compute node as before. NB! If you have no active reservation you have to do that first.
 
 Load necessary modules and start IGV
 
 ```sh
-module load PDC/23.12
 module load bioinfo-tools
 module load IGV/2.16.0
 igv-core
 ```
 
-This should start the IGV so that it is visible on your screen. If not please try to reconnect to Uppmax or consider running IGV locally as that is often the fastest and most convenient solution.
+This should start the IGV so that it is visible on your screen. If not please try to reconnect to HPC or consider running IGV locally as that is often the fastest and most convenient solution.
 :::
 
 Once we have the program running, you select the genome that you would like to load. Choose `Mouse mm10`. Note that if you are working with a genome that are not part of the available genomes in IGV, one can create genome files from within IGV. Please check the manual of IGV for more information on that.
@@ -1235,9 +1230,9 @@ For more detailed information on the splice reads you can instead of just lookin
 You are not required to run anything practically in this section. This is just to read and understand.
 :::
 
-We have throughout this tutorial written bash scripts and run them from the terminal directly. Remember that we are not running on the login node. We have pre-allocated resources, then logged in to a compute node to run tasks. This is called working **interactively** on Uppmax. This is fine for tutorials and testing purposes. But, if you were to actually work on Uppmax, you would follow a slightly different approach.
+We have throughout this tutorial written bash scripts and run them from the terminal directly. Remember that we are not running on the login node. We have pre-allocated resources, then logged in to a compute node to run tasks. This is called working **interactively** on HPC. This is fine for tutorials and testing purposes. But, if you were to actually work on HPC, you would follow a slightly different approach.
 
-The standard workflow on Uppmax is to login to the login node and then submit tasks as jobs to something called a Slurm queue. We haven't used this option, because it involves waiting for an unpredictable amount of time for your submitted job to execute. In this section, we will take a look at how to modify a standard bash script to work with Slurm job submission.
+The standard workflow on HPC is to login to the login node and then submit tasks as jobs to something called a Slurm queue. We haven't used this option, because it involves waiting for an unpredictable amount of time for your submitted job to execute. In this section, we will take a look at how to modify a standard bash script to work with Slurm job submission.
 
 This is how our standard bash script for mapping looks like:
 
@@ -1245,9 +1240,8 @@ This is how our standard bash script for mapping looks like:
 #!/bin/bash
 
 # load modules
-module load PDC/23.12
 module load bioinfo-tools
-module load HISAT2/2.2.1
+module load hisat2/2.2.1
 module load samtools/1.20
 
 # create output filename prefix
@@ -1267,14 +1261,13 @@ We add `SBATCH` commands to the above script. The new script looks like this:
 #!/bin/bash
 #SBATCH -A {{< meta id_project >}}
 #SBATCH -p shared
-#SBATCH -n 8
+#SBATCH -c 8
 #SBATCH -t 3:00:00
 #SBATCH -J hisat2-align
 
 # load modules
-module load PDC/23.12
 module load bioinfo-tools
-module load HISAT2/2.2.1
+module load hisat2/2.2.1
 module load samtools/1.20
 
 # create output filename prefix
@@ -1290,25 +1283,19 @@ hisat2 \\
 
 The `SBATCH` commands in the above script is specifying the account name to use resources from, the required number of cores, the time required for the job and a job name.
 
-{{< fa lightbulb >}} If you run this as a normal bash script like this `./hisat2_align.sh ...` or `bash ./hisat2_align.sh ...`, the `SBATCH` comments have no effect (they are treated as comments) and the contents of the script will immediately start executing. But if you run this as script as `sbatch ./hisat2_align.sh ...`, the script is submitted as a job to the Uppmax Slurm queue. In this case, the `SBATCH` lines are interpreted and used by Slurm. At some point, your submitted job will reach the top of the queue and then the script will start to be executed.
+{{< fa lightbulb >}} If you run this as a normal bash script like this `./hisat2_align.sh ...` or `bash ./hisat2_align.sh ...`, the `SBATCH` comments have no effect (they are treated as comments) and the contents of the script will immediately start executing. But if you run this as script as `sbatch ./hisat2_align.sh ...`, the script is submitted as a job to the HPC Slurm queue. In this case, the `SBATCH` lines are interpreted and used by Slurm. At some point, your submitted job will reach the top of the queue and then the script will start to be executed.
 
 You can check your jobs in the queue by running the following command.
 
 ```sh
-jobinfo -u user
+squeue -u username
 ```
 
 And this gives a list like this:
 
 ```
-CLUSTER: rackham
-Running jobs:
-   JOBID PARTITION   NAME USER        ACCOUNT ST          START_TIME  TIME_LEFT  NODES CPUS NODELIST(REASON)
- 5006225      core (null) user       gXXXXXXX  R 2018-09-12T14:00:03      44:31      1    1 r169
- 5006229      core (null) user       gXXXXXXX  R 2018-09-12T14:00:03      44:31      1    1 r169
- 5006352      core (null) user       gXXXXXXX  R 2018-09-12T14:04:14      48:42      1    1 r178
- 5006355      core (null) user       gXXXXXXX  R 2018-09-12T14:05:17      49:45      1    1 r169
- 5006356      core (null) user       gXXXXXXX  R 2018-09-12T14:06:08      50:36      1    5 r179
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+           5856340    shared no-shell royfranc  R       0:05      1 nid002577
 ```
 
 If the job is pending, then you will see `PD` in the `ST` column. If your job is running, you should see `R`. Once your job starts running, you will see a file named `slurm-XXXX.out` in the directory in which you submitted the job. This is the **standard-out** from that job. ie; everything that you would normally see printed to your screen when running locally, is printed to this file when running as a job. Once the job is over, one would inspect the slurm output file.
@@ -1327,18 +1314,18 @@ You are not required to run anything practically in this section. This is just t
 
 Everything you have done today and more is easily done using structured pipelines. [Nextflow](https://www.nextflow.io/) is a popular framework for creating bioinformatic pipelines and [nf-core](https://nf-co.re/) is a collection of curated analyses pipelines. Here, we will discuss the steps for analysing our current dataset using the [nf-core rnaseq](https://nf-co.re/rnaseq) pipeline for bulk RNA-Seq. The nf-core website and pipeline specific pages are good sources of information on what the pipeline does and what parameters can be changed.
 
-![](https://raw.githubusercontent.com/nf-core/rnaseq/3.10.1/docs/images/nf-core-rnaseq_metro_map_grey.png)
+![](https://raw.githubusercontent.com/nf-core/rnaseq/3.17.0/docs/images/nf-core-rnaseq_metro_map_grey.png)
 
 We need a **samplesheet.csv** to define our samples. In this case, the full size samples are used. For single-end reads, **fastq_2** column is left empty.
 
 ```
 sample,fastq_1,fastq_2,strandedness
-ko_1,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222409_1.fq.gz,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222409_2.fq.gz,unstranded
-ko_2,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222410_1.fq.gz,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222410_2.fq.gz,unstranded
-ko_3,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222411_1.fq.gz,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222411_2.fq.gz,unstranded
-wt_1,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222412_1.fq.gz,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222412_2.fq.gz,unstranded
-wt_2,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222413_1.fq.gz,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222413_2.fq.gz,unstranded
-wt_3,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222414_1.fq.gz,/crex/course_data/ngsintro/rnaseq/main_full/1_raw/SRR3222414_2.fq.gz,unstranded
+ko_1,{{< meta path_resources >}}/rnaseq/rackham/main_full/1_raw/SRR3222409_1.fq.gz,{{< meta path_resources >}}/rnaseq/rackham/main_full/1_raw/SRR3222409_2.fq.gz,unstranded
+ko_2,{{< meta path_resources >}}/rnaseq/rackham/main_full/1_raw/SRR3222410_1.fq.gz,{{< meta path_resources >}}/rnaseq/rackham/main_full/1_raw/SRR3222410_2.fq.gz,unstranded
+ko_3,{{< meta path_resources >}}/rnaseq/rackham/main_full/1_raw/SRR3222411_1.fq.gz,{{< meta path_resources >}}/rnaseq/rackham/main_full/1_raw/SRR3222411_2.fq.gz,unstranded
+wt_1,{{< meta path_resources >}}/rnaseq/rackham/main_full/1_raw/SRR3222412_1.fq.gz,{{< meta path_resources >}}/rnaseq/rackham/main_full/1_raw/SRR3222412_2.fq.gz,unstranded
+wt_2,{{< meta path_resources >}}/rnaseq/rackham/main_full/1_raw/SRR3222413_1.fq.gz,{{< meta path_resources >}}/rnaseq/rackham/main_full/1_raw/SRR3222413_2.fq.gz,unstranded
+wt_3,{{< meta path_resources >}}/rnaseq/rackham/main_full/1_raw/SRR3222414_1.fq.gz,{{< meta path_resources >}}/rnaseq/rackham/main_full/1_raw/SRR3222414_2.fq.gz,unstranded
 ```
 
 We need a **params.config** file to define parameters such as input, output, genome, annotation etc.
@@ -1361,30 +1348,38 @@ And lastly we have a **nextflow.sh** which will be our bash script for launching
 
 #SBATCH -A {{< meta id_project >}}
 #SBATCH -p shared
-#SBATCH -n 4
-#SBATCH -t 4:00:00
+#SBATCH -c 10
+#SBATCH -t 8:00:00
 #SBATCH -J nf-core
 
 module load PDC/23.12
+module load singularity/4.1.1-cpeGNU-23.12
 module load bioinfo-tools
 module load nextflow/24.04.2
 module load nf-core/2.6
-NXF_HOME=.
 
-nextflow run nf-core/rnaseq -r 3.7 -c params.config -profile uppmax --project {{< meta id_project >}} -resume'
+export NXF_HOME=$PWD
+export SINGULARITY_CACHEDIR=${PWD}/SINGULARITY_CACHEDIR
+export SINGULARITY_TMPDIR=${PWD}/SINGULARITY_TMPDIR
+export NXF_SINGULARITY_CACHEDIR=${SINGULARITY_CACHEDIR}
+mkdir -p SINGULARITY_CACHEDIR SINGULARITY_TMPDIR
+
+# nextflow drop nf-core/rnaseq
+nextflow run nf-core/rnaseq -r 3.17.0 -c params.config -profile pdc_kth --project {{< meta id_project >}} -resume'
 ```
 
-Notice that we use `-profile uppmax` since this is run on Uppmax. The job is then submitted by simply running `sbatch nextflow.sh`.
+Notice that we use `-profile pdc_kth` specific to the HPC. The job is then submitted by simply running `sbatch nextflow.sh`.
 
 The slurm output from this job looks like this:
 
 ```
-Note that NXF_HOME is set to $HOME/.nextflow
-Please change NXF_HOME to a place in your project directory (export NXF_HOME=yourprojectfolder)
+ N E X T F L O W   ~  version 24.04.2
 
-N E X T F L O W  ~  version 21.10.6
-Launching `nf-core/rnaseq` [happy_sammet] - revision: e0dfce9af5 [3.7]
+Pulling nf-core/rnaseq ...
+ downloaded from https://github.com/nf-core/rnaseq.git
+Launching `https://github.com/nf-core/rnaseq` [suspicious_meucci] DSL2 - revision: 00f924cf92 [3.17.0]
 
+WARN: Nextflow self-contained distribution allows only core plugins -- User config plugins will be ignored: nf-schema@2.1.1
 
 ------------------------------------------------------
                                         ,--./,-.
@@ -1392,19 +1387,8 @@ Launching `nf-core/rnaseq` [happy_sammet] - revision: e0dfce9af5 [3.7]
   |\ | |__  __ /  ` /  \ |__) |__         }  {
   | \| |       \__, \__/ |  \ |___     \`-._,-`-,
                                         `._,._,'
-  nf-core/rnaseq v3.7
+  nf-core/rnaseq 3.17.0
 ------------------------------------------------------
-Core Nextflow options
-  revision                  : 3.7
-  runName                   : happy_sammet
-  containerEngine           : singularity
-  launchDir                 : /crex/course_data/ngsintro/rnaseq/main_full/nextflow
-  workDir                   : /crex/course_data/ngsintro/rnaseq/main_full/nextflow/work
-  projectDir                : ./assets/nf-core/rnaseq
-  userName                  : royfranc
-  profile                   : uppmax
-  configFiles               : /crex/course_data/ngsintro/rnaseq/main_full/nextflow/assets/nf-core/rnaseq/nextflow.config, /crex/course_data/ngsintro/rnaseq/main_full/nextflow/params.config
-
 Input/output options
   input                     : samplesheet.csv
   outdir                    : results
@@ -1412,69 +1396,65 @@ Input/output options
 Reference genome options
   fasta                     : /sw/data/igenomes/Mus_musculus/Ensembl/GRCm38/Sequence/WholeGenomeFasta/genome.fa
   gtf                       : /sw/data/igenomes/Mus_musculus/Ensembl/GRCm38/Annotation/Genes/genes.gtf
-  save_reference            : true
-  igenomes_base             : /sw/data/igenomes/
+
+Alignment options
+  min_mapped_reads          : 5
 
 Institutional config options
-  config_profile_description: UPPMAX (Rackham) cluster profile provided by nf-core/configs.
-  config_profile_contact    : Phil Ewels (@ewels)
-  config_profile_url        : https://www.uppmax.uu.se/
+  config_profile_description: PDC profile.
+  config_profile_contact    : Pontus Freyhult (@pontus)
+  config_profile_url        : https://www.pdc.kth.se/
 
-Max job request options
-  max_cpus                  : 20
-  max_memory                : 970 GB
-  max_time                  : 10d
-
-Generic options
-  tracedir                  : null/pipeline_info
+Core Nextflow options
+  revision                  : 3.17.0
+  runName                   : suspicious_meucci
+  containerEngine           : singularity
+  launchDir                 : /cfs/klemming/projects/supr/snic2022-22-328/user/ngsintro/nextflow
+  workDir                   : /cfs/klemming/projects/supr/snic2022-22-328/user/ngsintro/nextflow/work
+  projectDir                : /cfs/klemming/home/r/user/proj-nbis/ngsintro/nextflow/assets/nf-core/rnaseq
+  userName                  : user
+  profile                   : pdc_kth
+  configFiles               :
 
 !! Only displaying parameters that differ from the pipeline defaults !!
 ------------------------------------------------------
-If you use nf-core/rnaseq for your analysis please cite:
-
 * The pipeline
-  https://doi.org/10.5281/zenodo.1400710
+    https://doi.org/10.5281/zenodo.1400710
 
 * The nf-core framework
-  https://doi.org/10.1038/s41587-020-0439-x
+    https://doi.org/10.1038/s41587-020-0439-x
 
 * Software dependencies
-  https://github.com/nf-core/rnaseq/blob/master/CITATIONS.md
-------------------------------------------------------
-[-        ] process > NFCORE_RNASEQ:RNASEQ:PREPAR... -
+    https://github.com/nf-core/rnaseq/blob/master/CITATIONS.md
 
-[-        ] process > NFCORE_RNASEQ:RNASEQ:PREPAR... -
-[-        ] process > NFCORE_RNASEQ:RNASEQ:PREPAR... -
-[-        ] process > NFCORE_RNASEQ:RNASEQ:PREPAR... -
-[-        ] process > NFCORE_RNASEQ:RNASEQ:PREPAR... -
-[-        ] process > NFCORE_RNASEQ:RNASEQ:PREPAR... -
-[-        ] process > NFCORE_RNASEQ:RNASEQ:INPUT_... -
-[-        ] process > NFCORE_RNASEQ:RNASEQ:CAT_FASTQ -
-[-        ] process > NFCORE_RNASEQ:RNASEQ:FASTQC... -
-[-        ] process > NFCORE_RNASEQ:RNASEQ:FASTQC... -
-[-        ] process > NFCORE_RNASEQ:RNASEQ:ALIGN_... -
-[-        ] process > NFCORE_RNASEQ:RNASEQ:ALIGN_... -
+WARN: The following invalid input values have been detected:
+
+* --project: {{< meta id_project >}}
+* --max_memory: 1.7 TB
+* --max_cpus: 256
+* --max_time: 7d
+* --schema_ignore_params: genomes,input_paths,cluster-options,clusterOptions,project,validationSchemaIgnoreParams
+* --validationSchemaIgnoreParams: genomes,input_paths,cluster-options,clusterOptions,project,schema_ignore_params
+* --validation-schema-ignore-params: genomes,input_paths,cluster-options,clusterOptions,project,schema_ignore_params
+
+[-        ] NFC…:PREPARE_GENOME:GTF_FILTER -
+[-        ] NFC…SEQ:PREPARE_GENOME:GTF2BED -
+[-        ] NFC…OME:MAKE_TRANSCRIPTS_FASTA -
+[-        ] NFC…ENOME:CUSTOM_GETCHROMSIZES -
+[-        ] NFC…AR_GENOMEGENERATE_IGENOMES -
 
 ...
 skipping many lines here
 ...
 
-[3d/d294eb] process > NFCORE_RNASEQ:RNASEQ:CUSTOM... [100%] 1 of 1 ✔
-[de/a03037] process > NFCORE_RNASEQ:RNASEQ:MULTIQ... [100%] 1 of 1 ✔
--[nf-core/rnaseq] 6/6 samples passed STAR 5% mapped threshold:
-    90.41%: ko_2
-    89.8%: ko_3
-    87.15%: ko_1
-    89.7%: wt_2
-    90.29%: wt_3
-    91.02%: wt_1
-    ..see pipeline reports for full list
--
--[nf-core/rnaseq] Pipeline completed successfully-
-Completed at: 13-Jan-2023 14:39:08
-Duration    : 1h 45m 30s
-CPU hours   : 90.4
-Succeeded   : 207
+[01/165fc2] NFC…QC_READDISTRIBUTION (wt_2) | 6 of 6 ✔
+[5b/1612c9] NFC…EQC_READDUPLICATION (wt_2) | 6 of 6 ✔
+[df/0115fa] NFC…_RNASEQ:RNASEQ:MULTIQC (1) | 1 of 1 ✔
+-[nf-core/rnaseq] Pipeline completed successfully -
+Completed at: 11-Nov-2024 14:41:08
+Duration    : 1h 38m 43s
+CPU hours   : 57.9
+Succeeded   : 205
 ```
 
 The output `results` directory looks like this:
@@ -1482,64 +1462,74 @@ The output `results` directory looks like this:
 ```
 results/
 ├── fastqc
-├── genome
-│   ├── genes.bed
-│   ├── genome.fa.fai
-│   ├── genome.fa.sizes
-│   ├── genome_genes.gtf
-│   ├── genome.transcripts.fa
-│   ├── index
-│   └── rsem
+│   ├── raw
+│   └── trim
 ├── multiqc
-│   └── star_salmon
+│   └── star_salmon
 ├── pipeline_info
-│   ├── samplesheet.valid.csv
-│   └── software_versions.yml
+│   ├── nf_core_rnaseq_software_mqc_versions.yml
+│   ├── params_2024-11-08_20-02-55.json
+│   ├── params_2024-11-08_22-29-50.json
+│   ├── params_2024-11-09_12-28-08.json
+│   └── params_2024-11-11_13-02-41.json
 ├── star_salmon
-│   ├── bigwig
-│   ├── deseq2_qc
-│   ├── dupradar
-│   ├── featurecounts
-│   ├── ko_1
-│   ├── ko_1.markdup.sorted.bam
-│   ├── ko_1.markdup.sorted.bam.bai
-│   ├── ko_2
-│   ├── ko_2.markdup.sorted.bam
-│   ├── ko_2.markdup.sorted.bam.bai
-│   ├── ko_3
-│   ├── ko_3.markdup.sorted.bam
-│   ├── ko_3.markdup.sorted.bam.bai
-│   ├── log
-│   ├── picard_metrics
-│   ├── preseq
-│   ├── qualimap
-│   ├── rseqc
-│   ├── salmon.merged.gene_counts_length_scaled.rds
-│   ├── salmon.merged.gene_counts_length_scaled.tsv
-│   ├── salmon.merged.gene_counts.rds
-│   ├── salmon.merged.gene_counts_scaled.rds
-│   ├── salmon.merged.gene_counts_scaled.tsv
-│   ├── salmon.merged.gene_counts.tsv
-│   ├── salmon.merged.gene_tpm.tsv
-│   ├── salmon.merged.transcript_counts.rds
-│   ├── salmon.merged.transcript_counts.tsv
-│   ├── salmon.merged.transcript_tpm.tsv
-│   ├── salmon_tx2gene.tsv
-│   ├── samtools_stats
-│   ├── stringtie
-│   ├── wt_1
-│   ├── wt_1.markdup.sorted.bam
-│   ├── wt_1.markdup.sorted.bam.bai
-│   ├── wt_2
-│   ├── wt_2.markdup.sorted.bam
-│   ├── wt_2.markdup.sorted.bam.bai
-│   ├── wt_3
-│   ├── wt_3.markdup.sorted.bam
-│   └── wt_3.markdup.sorted.bam.bai
+│   ├── bigwig
+│   ├── deseq2_qc
+│   ├── dupradar
+│   ├── featurecounts
+│   ├── ko_1
+│   ├── ko_1.markdup.sorted.bam
+│   ├── ko_1.markdup.sorted.bam.bai
+│   ├── ko_2
+│   ├── ko_2.markdup.sorted.bam
+│   ├── ko_2.markdup.sorted.bam.bai
+│   ├── ko_3
+│   ├── ko_3.markdup.sorted.bam
+│   ├── ko_3.markdup.sorted.bam.bai
+│   ├── log
+│   ├── null.merged.gene_counts_length_scaled.SummarizedExperiment.rds
+│   ├── null.merged.gene_counts_scaled.SummarizedExperiment.rds
+│   ├── null.merged.gene_counts.SummarizedExperiment.rds
+│   ├── null.merged.transcript_counts.SummarizedExperiment.rds
+│   ├── picard_metrics
+│   ├── qualimap
+│   ├── rseqc
+│   ├── salmon.merged.gene_counts_length_scaled.tsv
+│   ├── salmon.merged.gene_counts_scaled.tsv
+│   ├── salmon.merged.gene_counts.tsv
+│   ├── salmon.merged.gene_lengths.tsv
+│   ├── salmon.merged.gene_tpm.tsv
+│   ├── salmon.merged.transcript_counts.tsv
+│   ├── salmon.merged.transcript_lengths.tsv
+│   ├── salmon.merged.transcript_tpm.tsv
+│   ├── samtools_stats
+│   ├── stringtie
+│   ├── tx2gene.tsv
+│   ├── wt_1
+│   ├── wt_1.markdup.sorted.bam
+│   ├── wt_1.markdup.sorted.bam.bai
+│   ├── wt_2
+│   ├── wt_2.markdup.sorted.bam
+│   ├── wt_2.markdup.sorted.bam.bai
+│   ├── wt_3
+│   ├── wt_3.markdup.sorted.bam
+│   └── wt_3.markdup.sorted.bam.bai
 └── trimgalore
+    ├── ko_1_trimmed_1.fastq.gz_trimming_report.txt
+    ├── ko_1_trimmed_2.fastq.gz_trimming_report.txt
+    ├── ko_2_trimmed_1.fastq.gz_trimming_report.txt
+    ├── ko_2_trimmed_2.fastq.gz_trimming_report.txt
+    ├── ko_3_trimmed_1.fastq.gz_trimming_report.txt
+    ├── ko_3_trimmed_2.fastq.gz_trimming_report.txt
+    ├── wt_1_trimmed_1.fastq.gz_trimming_report.txt
+    ├── wt_1_trimmed_2.fastq.gz_trimming_report.txt
+    ├── wt_2_trimmed_1.fastq.gz_trimming_report.txt
+    ├── wt_2_trimmed_2.fastq.gz_trimming_report.txt
+    ├── wt_3_trimmed_1.fastq.gz_trimming_report.txt
+    └── wt_3_trimmed_2.fastq.gz_trimming_report.txt
 ```
 
-If you want to look into the nextflow results yourself, you can check them out here: `/crex/course_data/ngsintro/rnaseq/main_full/nextflow`.
+If you want to look into the nextflow results yourself, you can check them out here: `{{< meta path_resources >}}/rnaseq/dardel/main_full/nextflow`. You can view the multiqc report [here](nextflow/multiqc_report.html).
 
 This pipeline takes you from raw reads to counts including read QC, mapping, mapping QC and quantification as well as a complete collated overview of all steps as a MultiQC report (`multiqc/star_salmon/multiqc_report.html`). The `star_salmon/salmon.merged.gene_counts.tsv` is the counts file that you would use for downstream differential gene expression using DESeq2.
 
@@ -1551,6 +1541,6 @@ We had [Simon Andrews](https://www.babraham.ac.uk/science-services/bioinformatic
 
 ## Conclusion
 
-We hope that you enjoyed getting your hands wet working on some real-ish data. In this tutorial, we have covered the most important data processing steps that may be enough when the libraries are good. If not, there are plenty of troubleshooting procedures to try before discarding the data. And once the count table are in place, the biostatistics and data mining begins. There are no well-defined solutions here, all depends on the experiment and questions to be asked, but we strongly advise learning R. Not only to use the specifically designed statistical packages to analyse NGS count data, but also to be able to handle the data and results as well as to generate high-quality plots. There are many available tools and well-written tutorials with examples to learn from.
+We hope that you enjoyed getting your hands wet working on some real-ish data. In this tutorial, we have covered the most important data processing steps that may be sufficient when the libraries are of good quality. If not, there are plenty of troubleshooting procedures to try before discarding the data. And once the count table is in place, the biostatistics and data mining begins. There are no well-defined solutions here, all depends on the experiment and questions to be asked, but we strongly advise learning R and/or Python. Not only to use the specifically designed statistical packages to analyse NGS count data, but also to be able to handle the data and results as well as to generate high-quality plots. There are many available tools and well-written tutorials with examples to learn from.
 
 For those interested in RNA-Seq analysis, SciLifeLab offers a more advanced course in RNA-Seq analysis each semester. For more information, see [SciLifeLab events](https://www.scilifelab.se/events/).

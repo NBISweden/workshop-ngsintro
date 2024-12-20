@@ -21,9 +21,7 @@ background-color: red;
 ```{r,include=FALSE}
 ## VARIABLES
 #colours
-fastqdir <- "/sw/courses/ngsintro/reseq/data/fastq"
-col_uppmax <- "#f4f8e8"
-col_local <- "#e5f4f8"
+fastqdir <- "/sw/courses/ngsintro/vc/data/fastq"
 ```
 
 ## FastQC
@@ -44,37 +42,55 @@ HG00101       | Low coverage WGS
 
 ## Run FastQC
 
-### Connect to Uppmax
+### Connect to PDC
 
-During this lab it is best to connect to UPPMAX via a remote desktop (ThinLinc). Instructions for this is available in Canvas under **Workshop** > **Contents** > **Useful resources** > **Connecting to UPPMAX**. Please follow the instructions in section 2 Remote desktop connection.
+During this lab it is best to connect to Dardel via a remote desktop (ThinLinc). Please refer to [**Connecting to PDC**](../other/lab_connect_pdc.html), section 2 Remote desktop, for instructions.
 
-### Book a node
+### Log on to a node
 
-To be able to run analyses in the terminal you should book a  compute node (or in this case just one core of a node). Make sure you only do this once each day because we have reserved one core per student for the course. If you haven't already reserved a core today please use this command:
-
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('salloc -A ',id_project,' -t 04:00:00 -p shared -n 1 --no-shell &'))
-```
-
-Once your job allocation has been granted (should not take long) you can connect to the node using ssh. To find out the name of your node, use:
+Check which node you got when you booked resources this morning (replace `username` with your username)
 
 ```bash
 squeue -u username
 ```
 
-The node name is found under nodelist header, you should only see one. Connect to that node:
+should look something like this
 
 ```bash
-ssh -Y <nodename>
+user@login1 ~ $ squeue -u user
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+           5583899    shared interact    user  R       2:22      1 nid001009
+user@login1 ~ $
+```
+
+where `nid001009` is the name of the node (yours will probably be different). Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested the session will shut down, and you will lose all unsaved data.  
+
+If the list is empty you can run the allocation command again and it should be in the list:
+
+```bash
+salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_tue >}} -t 04:00:00 -p shared -c 1
+```
+
+Connect to this node from the login node.
+
+```bash
+ssh -Y nid001009
 ```
 
 ### Create a workspace
 
-You should work in your folder under the course's nobackup folder, just like you have done during the previous labs. Start by creating a workspace for this exercise in your folder, and then move into it.
+You should work in a subfolder in your home folder on Dardel, just like you have done during the previous labs. 
+Start by going to your course folder using this command:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('mkdir ',path_workspace,'/qc\n'))
-cat(paste0('cd ',path_workspace,'/qc'))
+cat(paste0('cd ', path_workspace))
+```
+
+Create a folder for this exercise and move into it:
+
+```bash
+mkdir qc
+cd qc
 ```
 
 ### Symbolic links to data
@@ -98,7 +114,7 @@ cat(paste0('ln -s ',fastqdir,'/HG00101_2.fq\n'))
 
 ### Accessing FastQC
 
-FastQC is installed in the module system on UPPMAX. Modules must be loaded *every time* you login to Rackham, or when you connect to a new compute node.  
+FastQC is installed in the module system on PDC. Modules must be loaded *every time* you login to Dardel, or when you connect to a new compute node.  
 First load the bioinfo-tools module:
 
 ```bash
@@ -108,7 +124,7 @@ module load bioinfo-tools
 This makes it possible to load FastQC:
 
 ```bash
-module load FastQC/0.11.8
+module load fastqc/0.12.1
 ```
 
 ### Run FastQC
@@ -127,7 +143,7 @@ ls -lrt
 
 ## Check the results
 
-The output from FastQC is a HTML report that should be opened in a web browser. When you have connected to Uppmax via ThinLinc you can open it on Rackham with this command:
+The output from FastQC is a HTML report that should be opened in a web browser. When you have connected to PDC via ThinLinc you can open it on Dardel with this command:
 
 ```bash
 firefox --no-remote filename.html &

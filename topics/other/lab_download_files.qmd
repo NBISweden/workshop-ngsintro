@@ -1,17 +1,9 @@
 ---
-title: "Uppmax IO"
-subtitle: "Downloading and uploading files from Uppmax"
+title: "HPC IO"
+subtitle: "Downloading and uploading files from HPC cluster"
 date: ""
 format: html
 ---
-
-```{r,eval=TRUE,include=FALSE}
-library(yaml)
-library(here)
-id_project <- yaml::read_yaml(here("_quarto.yml"))$id_project
-path_workspace <- yaml::read_yaml(here("_quarto.yml"))$path_workspace
-url_cluster <- yaml::read_yaml(here("_quarto.yml"))$url_cluster
-```
 
 ## Local workspace
 
@@ -19,52 +11,34 @@ Start by creating a folder on your laptop where the files that you will download
 
 Open a terminal window on your laptop and move into your local workspace.
 
-## Download a file from UPPMAX
+## Download a file from HPC
 
-Lets assume that you have a file "results.txt" in the following folder on UPPMAX:
+Lets assume that you have a file "results.txt" in the following folder on HPC:
 
-```{r}
-#| echo: false
-#| class-output: bash
-cat(paste0(path_workspace,'/somefolder/'))
+```
+{{< meta path_workspace >}}/somefolder/
 ```
 
 ::: {.callout-note}
-`username` and `somefolder` should be replaced with your real username and a real folder name.
+`username` and `somefolder` should be replaced with your real username and a real folder name. Run this in a LOCAL terminal.
 :::
 
 To download the file to your local workspace type:
 
-```{r}
-#| output: asis
-#| echo: false
-out <- paste0("scp username@", url_cluster, ":", path_workspace, "/somefolder/results.txt .")
-cat(
-  "```{.bash filename='Local Terminal'}",
-  out,
-  "```",
-  sep = "\n"
-)
+```sh
+scp username@{{< meta url_cluster >}}:{{< meta path_workspace >}}/somefolder/results.txt .
 ```
 
 Note that the last `.` means that the file will keep the original name.
 
-## Upload a file to UPPMAX
+## Upload a file to HPC
 
-Now lets imagine that you have developed a script on your laptop and want to upload it to UPPMAX. The script is stored in your local workspace and is called "script.sh". Type this in your local workspace to upload the file to UPPMAX:
+Now lets imagine that you have developed a script on your laptop and want to upload it to HPC. The script is stored in your local workspace and is called "script.sh". Type this in your local workspace to upload the file to HPC:
 
 ::: {.callout-note}
-`username` and `somefolder` should be replaced with your real username and a real folder name.
+`username` and `somefolder` should be replaced with your real username and a real folder name. Run this on HPC.
 :::
 
-```{r}
-#| output: asis
-#| echo: false
-out <- paste0("scp script.sh username@", url_cluster, ":", path_workspace, "/somefolder/.")
-cat(
-  "```{.bash filename='Local Terminal'}",
-  out,
-  "```",
-  sep = "\n"
-)
+```sh
+scp script.sh username@{{< meta url_cluster >}}:{{< meta path_workspace >}}/somefolder/.
 ```

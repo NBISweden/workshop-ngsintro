@@ -83,8 +83,10 @@ You can use `quarto preview` to serve the site, and handle automatic rebuilding 
 
 ```bash
 # serve the site
-docker run --rm --platform linux/amd64 -u $(id -u):$(id -g) -v ${PWD}:/qmd -p 8800:8800  ghcr.io/nbisweden/workshop-ngsintro:latest quarto preview --port 8800 --host 0.0.0.0
+docker run --rm -it --platform linux/amd64 -u $(id -u):$(id -g) -v ${PWD}:/qmd -p 8800:8800  ghcr.io/nbisweden/workshop-ngsintro:latest quarto preview --port 8800 --host 0.0.0.0
 ```
+
+Go to [http://localhost:8800/](http://localhost:8800/) or [http://0.0.0.0:8800](http://0.0.0.0:8800) in your browser.
 
 ## Test scripts
 

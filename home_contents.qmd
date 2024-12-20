@@ -11,16 +11,16 @@ format: html
 ### Introduction to Linux
 
 - Introduction to Linux [{{< fa brands youtube >}}](https://youtu.be/qYp8shSMJ-0) [{{< fa file-pdf >}}](topics/linux/slide_linux_intro.pdf) [{{< fa file-lines >}}](topics/linux/lab_linux_intro.html)
+- Linux file permissions [{{< fa file-lines >}}](topics/linux/lab_linux_permissions.html)
+
+### High-Performance Computing cluster
+
+- Introduction to HPC [{{< fa brands youtube >}}](https://youtu.be/cxEtfKN91q4) [{{< fa file-pdf >}}](topics/hpc/intro/slide_hpc_intro.pdf) [{{< fa file-lines >}}](topics/hpc/intro/lab_intro.html)  
+- HPC Pipelines [{{< fa file-lines >}}](topics/hpc/pipeline/lab_pipeline.html)
 
 ### File types in Linux
 
 - File types in Bioinformatics [{{< fa brands youtube >}}](https://youtu.be/7MR1qUZQ94w) [{{< fa file-pdf >}}](topics/linux/slide_linux_filetypes.pdf) [{{< fa file-lines >}}](topics/linux/lab_linux_filetypes.html)  
-- Linux file permissions [{{< fa file-lines >}}](topics/linux/lab_linux_permissions.html)
-
-### Uppmax
-
-- Introduction to UPPMAX [{{< fa brands youtube >}}](https://youtu.be/cxEtfKN91q4) [{{< fa file-pdf >}}](topics/uppmax/intro/slide_uppmax_intro.pdf) [{{< fa file-lines >}}](topics/uppmax/intro/lab_uppmax_intro.html)  
-- UPPMAX Pipelines [{{< fa file-lines >}}](topics/uppmax/pipeline/lab_uppmax_pipeline.html)
 
 ### Advanced Linux
 
@@ -49,9 +49,9 @@ format: html
 
 ### Useful resources
 
-- Connecting to PDC [{{< fa file-lines >}}](topics/other/lab_connect_pdc.html)
-- Connecting to UPPMAX [{{< fa file-lines >}}](topics/other/lab_connect_uppmax.html)
-- Uploading & downloading files from Uppmax [{{< fa file-lines >}}](topics/other/lab_download_files.html)
+- Connecting to HPC PDC [{{< fa file-lines >}}](topics/other/lab_connect_pdc.html)
+- Connecting to HPC UPPMAX [{{< fa file-lines >}}](topics/other/lab_connect_uppmax.html)
+- Uploading & downloading files from HPC [{{< fa file-lines >}}](topics/other/lab_download_files.html)
 - Working on Tetralith: The backup cluster [{{< fa file-lines >}}](topics/other/lab_tetralith.html)
 - Linux cheatsheet [{{< fa file-pdf >}}](topics/linux/assets/linux_cheat_sheet.pdf)
 - Bash cheat sheet 1 [{{< fa file-pdf >}}](topics/linux/assets/bash_cheat_sheet_1.pdf)

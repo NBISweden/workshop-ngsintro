@@ -7,12 +7,9 @@ format: revealjs
 
 ## Setup {visibility="hidden"}
 
-```{r,include=FALSE}
-# load packages
-library(yaml)
-library(here)
-id_project <- yaml::read_yaml(here("_quarto.yml"))$id_project
-path_workspace <- yaml::read_yaml(here("_quarto.yml"))$path_workspace
+```{r}
+#| include: false
+
 # library(dplyr)
 # library(pheatmap)
 # library(plotly)
@@ -963,8 +960,8 @@ plotCounts(d1, "ENSG00000000003", intgroup = "type")
 - 02 RNA-Seq figures and plots using **R**
 - 03 Visualisation of RNA-seq BAM files using **IGV** genome browser
 
-[**Data:** `/sw/courses/ngsintro/rnaseq/`]{.large}  
-[**Work:** ``r paste0(path_workspace,"/rnaseq/")``]{.large}
+[**Data:** `{{< meta path_resources >}}/rnaseq/dardel`]{.large}  
+[**Work:** `{{< meta path_workspace >}}/rnaseq/`]{.large}
 
 ## Hands-On tutorial
 
@@ -973,26 +970,30 @@ plotCounts(d1, "ENSG00000000003", intgroup = "type")
 
 - Course data directory
 
-`/sw/courses/ngsintro/rnaseq/`
+`{{< meta path_resources >}}/rnaseq/dardel`
 
 ```
-rnaseq/
-+-- bonus/
-|   +-- assembly/
-|   +-- exon/
-|   +-- funannot/
-|   +-- plots/
-+-- documents/
-+-- main/
-    +-- 1_raw/
-    +-- 2_fastqc/
-    +-- 3_mapping/
-    +-- 4_qualimap/
-    +-- 5_dge/
-    +-- 6_multiqc/
-    +-- reference/
-    |   +-- mouse_chr19_hisat2/
-    +-- scripts/
+dardel/
+├── bonus
+│   ├── assembly
+│   ├── exon
+│   ├── funannot
+│   └── plots
+├── main
+│   ├── 1_raw
+│   ├── 2_fastqc
+│   ├── 3_mapping
+│   ├── 4_qorts
+│   ├── 4_qualimap
+│   ├── 5_dge
+│   ├── 6_multiqc
+│   ├── reference
+│   │   └── mouse_chr19_hisat2
+│   └── scripts
+├── main_full
+│   └── nextflow
+├── r
+└── README.md
 ```
 
 :::
@@ -1000,24 +1001,22 @@ rnaseq/
 
 - Your work directory
 
-``r paste0(path_workspace,"/rnaseq/")``
+`{{< meta path_workspace >}}/rnaseq/`
 
 ```
-[user]/
 rnaseq/
-  +-- 1_raw/
-  +-- 2_fastqc/
-  +-- 3_mapping/
-  +-- 4_qualimap/
-  +-- 5_dge/
-  +-- 6_multiqc/
-  +-- reference/
-  |   +-- mouse_chr19_hisat2/
-  +-- scripts/
-  +-- funannot/
-  +-- plots/
+├── 1_raw
+├── 2_fastqc
+├── 3_mapping
+├── 4_picard
+├── 4_qualimap
+├── 5_dge
+├── 6_multiqc
+├── funannot
+├── plots
+├── reference
+└── scripts
 ```
 
 :::
 ::::
-

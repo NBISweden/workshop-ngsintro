@@ -1,16 +1,9 @@
 ---
 title:  "Connecting to UPPMAX"
-description: "Connecting to UPPMAX through SSH and GUI (Browser and ThinLinc)"
+subtitle: "Connecting to UPPMAX through SSH and GUI (Browser and ThinLinc)"
 date: ""
 format: html
 ---
-
-```{r,eval=TRUE,include=FALSE}
-library(yaml)
-library(here)
-id_project <- yaml::read_yaml(here("_quarto.yml"))$id_project
-url_cluster <- yaml::read_yaml(here("_quarto.yml"))$url_cluster_backup
-```
 
 We will teach you two different ways to connect to UPPMAX. From UPPMAX point of view it doesn't matter which one you use, and you can change whenever you want to or even use both ways simultaiously. The first one is a text-based SSH connection, and the other one is a graphical remote desktop. The latter one is useful if you need to view images or documents in GUI programs without having to first download the image/document to your own computer first. Since it is using graphics, it will require you to have an internet connection that is good and stable.
 
@@ -20,7 +13,7 @@ The reason we will teach you two ways is that some parts of this course will req
 
 Let's look at the text-based SSH approach first. This type of connection work just fine even on slow internet connections since it only transmitts small amounts of text when you work with it. You will need an SSH program to do this, which fortunately is included in most major operating systems:
 
-- {{< fa brands linux >}} Linux: Use Terminal (Included by default)
+- {{< fa brands ubuntu >}} Linux: Use Terminal (Included by default)
 - {{< fa brands apple >}} OSX: Use Terminal (Included by default)
 - {{< fa brands windows >}} Windows: Use Powershell or Command prompt, both should be installed by default
 
@@ -30,8 +23,8 @@ Where `username` is mentioned, change to your user name.
 
 Fire up the available SSH program and enter the following:
 
-```bash
-ssh username@`r url_cluster`
+```sh
+ssh username@{{< meta url_cluster_backup >}}
 ```
 
 Enter your password when prompted. As you type, nothing will show on the screen. No stars, no dots. It is supposed to be that way. Just type the password and press enter, it will be fine.

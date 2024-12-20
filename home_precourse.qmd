@@ -6,14 +6,6 @@ sidebar: false
 format: html
 ---
 
-```{r}
-#| include: false
-library(yaml)
-library(here)
-id_project <- yaml::read_yaml(here("_quarto.yml"))$id_project
-id_project_backup <- yaml::read_yaml(here("_quarto.yml"))$id_project_backup
-```
-
 You will have to have 3 different accounts to complete the labs in this course; one in [SUPR](https://supr.naiss.se/) to handle the two other accounts, and one each at the compute centers [PDC](https://www.pdc.kth.se/) in Stockholm and [UPPMAX](https://uppmax.uu.se) in Uppsala.
 
 ## SUPR
@@ -22,7 +14,7 @@ A SUPR/NAISS account is needed to create the accounts for the computers we will 
 
 If you do not already have one, create an account at [SUPR/NAISS](https://supr.naiss.se). Then, Log in to [SUPR/NAISS](https://supr.naiss.se/), preferably using the SWAMID.
 
-![](assets/images/supr-login.webp){width="70%"}
+![](assets/images/precourse/supr-login.webp){width="70%"}
 
 Before proceeding with applying for project membership and user accounts, we have to accept the NAISS User Agreement. Do this by clicking the [Personal Information](https://supr.naiss.se/person/) link in the left sidebar menu. The scroll down a bit until you reach the section **User Agreements**. If you already have accepted it the State will be a green box with the text Accepted in it. If it is anything else, click it to start the accepting process.
 
@@ -33,13 +25,13 @@ This is where you might run into trouble if you don't have a SWAMID connected ac
 
 ## UPPMAX
 
-Remote computing cluster UPPMAX will be use as a fallback cluster, if there should be any problems at PDC. After making sure you have an accepted user agreement, go to the [**SUPR/NAISS Projects**](https://supr.naiss.se/project/) page and request membership to the project ID: [**`r id_project_backup`**]{.badge}
+Remote computing cluster UPPMAX will be use as a fallback cluster, if there should be any problems at PDC. After making sure you have an accepted user agreement, go to the [**SUPR/NAISS Projects**](https://supr.naiss.se/project/) page and request membership to the project ID: [**{{< meta id_project_backup >}}**]{.badge}
 
-![](assets/images/supr-request.webp){width="70%"}
+![](assets/images/precourse/supr-request.webp){width="70%"}
 
 Once you are accepted to a project, you should see that project listed under your active projects.
 
-![](assets/images/supr-projects.webp){width="70%"}
+![](assets/images/precourse/supr-projects.webp){width="70%"}
 
 
 Finally you need to request a login account to UPPMAX. This will be the account you use to log in to the actual computers, so it is not the same as your SUPR account. Login to SUPR and go to the [Accounts page](https://supr.naiss.se/account/). Under the **Possible Resource Account Requests** heading click on **Request Account on Rackham @ UPPMAX** button and confirm it on the next page. If it is missing from this page, it could be because you already have a login account created (only 1 account per person allowed), or that you have not yet gotten your project memberships approved.
@@ -59,39 +51,33 @@ If you **do not already have a PDC account**, please fill in the form at [https:
 |   |   |
 |---|---|
 | __Lecturer/ Project Leader:__ | Martin Dahlö |
-| __Course / Project Title:__ | `r paste0(id_project)` |
+| __Course / Project Title:__ | {{< meta id_project >}} |
 
-We have notified PDC who the students for our course is and they will create the account needed to login to their computers. Follow the instructions you get from them to complete your account creation. The morning session on the Monday of the course will cover [how to connect to PDC](https://www.pdc.kth.se/support/documents/login/ssh_login.html#ssh-login), a bunch of steps that might not be trivial for novice users.
+We have notified PDC who the students for our course is and they will create the account needed to login to their computers. Follow the instructions you get from them to complete your account creation. The morning session on the Monday of the course will cover [how to connect to PDC](topics/other/lab_connect_pdc.qmd), a bunch of steps that might not be trivial for novice users.
 
 ## Install tools
 
 ### Eduroam
 
-Please make sure you have a working [Eduroam](https://eduroam.org/) wifi connection setup before the course, since we will only have wifi internet access in the computer room where we have the course. The instructions on how to get it working could differ university to university, so please refere to you home university's instructions on how to do that. Try searching for "eduroam" and your home university, e.g. `eduroam uppsala university`, to find it.
+[![](assets/images/precourse/eduroam.webp){.precourse-tool}](https://eduroam.org/) [{{< fa brands ubuntu >}} {{< fa brands apple >}} {{< fa brands windows >}}]{.badge} Please make sure you have a working [Eduroam](https://eduroam.org/) wifi connection setup before the course, since we will only have wifi internet access in the computer room where we have the course. The instructions on how to get it working could differ university to university, so please refere to you home university's instructions on how to do that. Try searching for "eduroam" and your home university, e.g. `eduroam uppsala university`, to find it.
 
-### ThinLinc
+### ThinLinc 
 
-[![](assets/images/thinlinc.webp){height="50px"}]((https://www.cendio.com/thinlinc/download))
-
-ThinLinc allows graphical connection to UPPMAX. Download and install from [https://www.cendio.com/thinlinc/download](https://www.cendio.com/thinlinc/download). It can be used directly from the browser but it is recommended to download and install the client for better copy/paste operation.
+[![](assets/images/precourse/thinlinc.webp){.precourse-tool}](https://www.cendio.com/thinlinc/download) [{{< fa brands ubuntu >}} {{< fa brands apple >}} {{< fa brands windows >}}]{.badge} ThinLinc allows graphical connection to UPPMAX. Download and install from [https://www.cendio.com/thinlinc/download](https://www.cendio.com/thinlinc/download).
 
 ### XQuartz
 
-[![](assets/images/xquartz.webp){height="60px"}](https://www.xquartz.org/)
+[![](assets/images/precourse/xquartz.webp){.precourse-tool}](https://www.xquartz.org/) [{{< fa brands apple >}}]{.badge} Mac users will need to download and install [XQuartz](https://www.xquartz.org/) for X11 forwarding. *ie*; to forward remotely opened windows to local machine.
 
-Mac users will need to download and install [XQuartz](https://www.xquartz.org/) for X11 forwarding. *ie*; to forward remotely opened windows to local machine.
+### MobaXterm^\*^
 
-### MobaXterm (Optional)
+[![](assets/images/precourse/mobaxterm.webp){.precourse-tool}](http://mobaxterm.mobatek.net) [{{< fa brands windows >}}]{.badge} If you are on a Windows system, and you want to open graphical applications from the terminal, we recommend [MobaXterm](http://mobaxterm.mobatek.net). It is recommended that you INSTALL the program and not use the portable version. MobaXterm also has an integrated SFTP file browser.
 
-[![](assets/images/mobaxterm.webp){height="60px"}](http://mobaxterm.mobatek.net)
+### Filezilla^\*^
 
-If you are on a Windows system, and you want to open graphical applications from the terminal, we recommend [MobaXterm](http://mobaxterm.mobatek.net). It is recommended that you INSTALL the program and not use the portable version. MobaXterm also has an integrated SFTP file browser.
+[![](assets/images/precourse/filezilla.webp){.precourse-tool}](https://filezilla-project.org/) [{{< fa brands ubuntu >}} {{< fa brands apple >}} {{< fa brands windows >}}]{.badge} When you need to transfer data between the remote cluster and your computer, you can use the tools SCP or SFTP through the terminal. Windows users can use the SFTP browser available with MobaXterm. If you prefer a GUI to upload and download files from the remote cluster, we recommend installing [FileZilla](https://filezilla-project.org/).
 
-### Filezilla (Optional)
-
-[![](assets/images/filezilla.webp){height="60px"}](https://filezilla-project.org/)
-
-When you need to transfer data between the remote cluster and your computer, you can use the tools SCP or SFTP through the terminal. Windows users can use the SFTP browser available with MobaXterm. If you prefer a GUI to upload and download files from the remote cluster, we recommend installing [FileZilla](https://filezilla-project.org/).
+^\*^ Optional
 
 ## Connect to UPPMAX
 
@@ -101,16 +87,16 @@ See [Connecting to UPPMAX](topics/other/lab_connect_uppmax.qmd) instructions lis
 If you want to get a primer on using the terminal, you can get started with the following **Tutorial One** at this link [Unix tutorial for beginners](http://www.ee.surrey.ac.uk/Teaching/Unix/). You can use [https://scilifelab.github.io/courses/ngsintro/common/emu/](https://scilifelab.github.io/courses/ngsintro/common/emu/) [(or this mirror)](https://bellard.org/jslinux/vm.html?url=https://bellard.org/jslinux/buildroot-x86.cfg) to try the commands in the tutorial, so that you don't mess up any real world system. If you have any questions regarding this tutorial contact: *martin.dahlo [at] nbis.se*.
 :::
 
-### Create a user folder (UPPMAX only)
+### Create a user folder
 
 ::: {.callout-note}
-This part is only to be done on UPPMAX, and **not** at PDC.
+This part is only to be done on **UPPMAX**, and **NOT** at PDC.
 :::
 
 Once you have logged in to UPPMAX, run the following command.
 
-```bash
-mkdir /proj/`r id_project_backup`/nobackup/$USER
+```sh
+mkdir /proj/{{< meta id_project_backup >}}/nobackup/$USER
 ```
 
 This creates a directory with your user name. You will work inside this directory for the workshop. If you cannot write to the folder, the most likely reason is that you have not requested access to the workshop project via SUPR. This is described in step 1 above.

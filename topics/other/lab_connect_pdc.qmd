@@ -1,19 +1,9 @@
 ---
 title:  "Connecting to PDC"
-description: "Connecting to PDC through SSH and GUI (Browser and ThinLinc)"
+subtitle: "Connecting to PDC through SSH and GUI (ThinLinc)"
 date: ""
 format: html
 ---
-
-```{r}
-#| eval: true
-#| include: false
-
-library(yaml)
-library(here)
-id_project <- yaml::read_yaml(here("_quarto.yml"))$id_project
-url_cluster <- yaml::read_yaml(here("_quarto.yml"))$url_cluster
-```
 
 We will teach you two different ways to connect to PDC. From PDC's point of view, it doesn't matter which one you use, and you can change whenever you want to or even use both ways simultaneously. The first one is a text-based SSH connection, and the other one is a graphical remote desktop. The latter one is useful if you need to view images or documents in GUI programs without having to first download the image/document to your own computer first. Since it is using graphics, it will require you to have an internet connection that is good and stable.
 
@@ -23,9 +13,11 @@ The reason we will teach you two ways is that some parts of this course will req
 
 Let's look at the text-based SSH approach first. This type of connection work just fine even on slow internet connections since it only transmitts small amounts of text when you work with it. You will need a terminal and an SSH program to do this, which is fortunately included in most major operating systems:
 
-- {{< fa brands linux >}} Linux: Use Terminal (Included by default)
+- {{< fa brands ubuntu >}} Linux: Use Terminal (Included by default)
 - {{< fa brands apple >}} OSX: Use Terminal (Included by default)
 - {{< fa brands windows >}} Windows: Use Powershell or Command prompt, both should be installed by default
+
+The guide below is based on [PDCs official instructions](https://www.pdc.kth.se/support/documents/login/ssh_login.html#ssh-login).
 
 ### Setting up SSH keys
 
@@ -35,13 +27,13 @@ Before you can connect to PDC, you will have to create SSH keys and tell PDC whi
 
 Generate a key pair.
 
-```bash
+```sh
 ssh-keygen
 ```
 
 and accept the default names it suggests by just pressing enter on the question about `file in which to save the key`. When it asks for a password, provide the password you will use to unlock the key each time you use it. Repeat the password when asked to in the next question. Once that is done it will say something like
 
-```bash
+```sh
 user@computerName ~ $ ssh-keygen 
 Generating public/private ed25519 key pair.
 Enter file in which to save the key (/home/user/.ssh/id_ed25519):
@@ -67,7 +59,7 @@ The key's randomart image is:
 
 The cool thing with SSH keys ([public-key cryptography](https://en.wikipedia.org/wiki/Public-key_cryptography)) like this is that they consist of two parts. One is the public key, which you can publish on the internet for everyone to see. The other part is the private part, which should be kept hidden from everyone, like a password. The public key is given to, in this case, PDC and they will let anyone who has the private key in. Print your public key to the terminal and copy the text so that you can use it in the next step.
 
-```bash
+```sh
 cat ~/.ssh/id_ed25519.pub
 ```
 
@@ -94,21 +86,25 @@ Add `*.liu.se` to the field `define one yourself`. This will allow you to use th
 
 ### Connecting to PDC using SSH
 
+::: {.callout-important}
+If you have problems connecting to PDC even if you have set up you SSH keys in the step above, please make sure your computer has not changed it IP address since you defined allowed addresses in the [PDC login portal](https://loginportal.pdc.kth.se/). Make sure that the IP range or hostname pattern you have there allows [your current IP/hostname](https://whatismyhostname.com/)
+:::
+
 ::: {.callout-note}
 Where `username` is mentioned, change to your PDC user name.
 :::
 
 Fire up the available SSH program and enter the following:
 
-```bash
-ssh username@`r url_cluster`
+```sh
+ssh username@{{< meta url_cluster >}}
 ```
 
 Enter your password when prompted. As you type, nothing will show on the screen. No stars, no dots. It is supposed to be that way. Just type the password and press enter, it will be fine.
 
 Now your screen should look something like this:
 
-```bash
+```sh
 user@computerName ~ $ ssh username@dardel.pdc.kth.se
 Enter passphrase for key '/home/user/.ssh/id_ed25519':
 Last login: Mon Oct 23 21:11:35 2024 from 385-142-529-933.bredband.obe.net
@@ -145,5 +141,4 @@ There is a ThinLinc server running at one of the login nodes which allows users 
 
 6. When you are done with working with the remote desktop, press the power icon {{< fa power-off >}} in the top-right corner of the screen and select `Log Out`.
 
-For more detailed instruction, please look here: <a href="https://intra.kth.se/en/2.79567/support/documents/login/interactive_hpc.html" target="_blank" rel="noopener noreferrer">https://intra.kth.se/en/2.79567/support/documents/login/interactive_hpc.html</a>
-
+For more detailed instructions, please look here: <a href="https://www.pdc.kth.se/support/documents/login/interactive_hpc.html" target="_blank" rel="noopener noreferrer">https://www.pdc.kth.se/support/documents/login/interactive_hpc.html</a>
