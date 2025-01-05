@@ -10,14 +10,14 @@ format: html
 
 ## LIBRARIES AND VARIABLES
 ## load libraries
-#library(ggplot2) # plotting
-#library(stringr) # text processing
-#library(tidyr) # data wrangling
+# library(ggplot2) # plotting
+# library(stringr) # text processing
+# library(tidyr) # data wrangling
 library(dplyr) # data handling
 library(htmlTable)
 
-col_condition=c("#fb8072","#8dd3c7")
-col_rep <- c("#80b1d3","#fdb462","#bebada")
+col_condition <- c("#fb8072", "#8dd3c7")
+col_rep <- c("#80b1d3", "#fdb462", "#bebada")
 ```
 
 ## Introduction
@@ -68,9 +68,9 @@ The material for RNA-seq was collected from 2 conditions (**Wt** and **KO**), ea
 ```{r}
 #| column: margin
 #| echo: false
-data.frame(Accession=c("SRR3222409","SRR3222410","SRR3222411","SRR3222412","SRR3222413","SRR3222414"),Condition=c(rep(c("KO","Wt"),each=3)),Replicate=rep(1:3,2)) %>%
-  addHtmlTableStyle(align = "c") %>% 
-  htmlTable(rnames=FALSE)
+data.frame(Accession = c("SRR3222409", "SRR3222410", "SRR3222411", "SRR3222412", "SRR3222413", "SRR3222414"), Condition = c(rep(c("KO", "Wt"), each = 3)), Replicate = rep(1:3, 2)) %>%
+  addHtmlTableStyle(align = "c") %>%
+  htmlTable(rnames = FALSE)
 ```
 
 ::: {.callout-note}
@@ -205,7 +205,7 @@ SRR3222414-19_1.fq.gz -> /sw/courses/ngsintro/rnaseq/main/1_raw/SRR3222414-19_1.
 SRR3222414-19_2.fq.gz -> /sw/courses/ngsintro/rnaseq/main/1_raw/SRR3222414-19_2.fq.gz
 ```
 
-### FastQC
+### Read QC
 
 **Quality check using FastQC**  
 
@@ -323,7 +323,7 @@ You can optionally use an SFTP browser like [Filezilla](https://filezilla-projec
 
 {{< fa comments >}} Discuss based on your reports, whether your data is of good enough quality and/or what steps are needed to fix it.
 
-### HISAT2
+### Mapping
 
 **Mapping reads using HISAT2**  
 
@@ -620,7 +620,7 @@ cp -r {{< meta path_resources >}}/rnaseq/dardel/main/3_mapping/* {{< meta path_w
 
 <br>
 
-### QualiMap
+### Alignment QC
 
 **Post-alignment QC using QualiMap**  
 
@@ -713,7 +713,7 @@ cp -r {{< meta path_resources >}}/rnaseq/dardel/main/4_qualimap/* {{< meta path_
 
 <br>
 
-### featureCounts
+### Quantification
 
 **Counting mapped reads using featureCounts**  
 
@@ -789,7 +789,7 @@ cp {{< meta path_resources >}}/rnaseq/dardel/main/5_dge/counts_full.txt {{< meta
 
 <br>
 
-### MultiQC
+### QC report
 
 **Combined QC report using MultiQC**  
 
@@ -846,96 +846,11 @@ scp username@{{< meta url_cluster >}}:{{< meta path_workspace >}}/rnaseq/6_multi
 
 <br>
 
-### DESeq2  
+### DGE
 
 **Differential gene expression using DESeq2**
 
 The easiest way to perform differential expression is to use one of the statistical packages, within R environment, that were specifically designed for analyses of read counts arising from RNA-seq, SAGE and similar technologies. Here, we will use one such package called **DESeq2**. Learning R is beyond the scope of this course so we prepared basic ready to run R scripts to find DE genes between conditions **KO** and **Wt**.
-
-Move to the `5_dge` directory and load R module for use.  
-
-```sh
-module load PDC/23.12
-module load R/4.4.0
-```
-
-Use `pwd` to check if you are standing in the correct directory. Copy the following file `{{< meta path_resources >}}/rnaseq/dardel/main/5_dge/dge.R` to the `5_dge` directory.
-
-Make sure you have the `counts_full.txt`. If not, you can copy this file too: `{{< meta path_resources >}}/rnaseq/dardel/main/5_dge/counts_full.txt`
-
-```sh
-cp {{< meta path_resources >}}/rnaseq/dardel/main/5_dge/dge.R .
-cp {{< meta path_resources >}}/rnaseq/dardel/main/5_dge/counts_full.txt .
-```
-
-Now, run the R script from the shell in `5_dge` directory.
-
-```sh
-Rscript dge.R
-```
-
-If you are curious what's inside dge.R, you are welcome to explore it using a text editor.
-
-This should have produced the following output files:
-
-```sh
-ls -l
-```
-
-```
--rw-rw-r-- 1 user gXXXXXXX 282K Jan 22 23:16 counts_vst_full.Rds
--rw-rw-r-- 1 user gXXXXXXX 1.7M Jan 22 23:16 counts_vst_full.txt
--rw-rw-r-- 1 user gXXXXXXX 727K Jan 22 23:16 dge_results_full.Rds
--rw-rw-r-- 1 user gXXXXXXX 1.7M Jan 22 23:16 dge_results_full.txt
-```
-
-Essentially, we have two outputs: **dge_results_full** and **counts_vst_full**. **dge_results_full** is the list of differentially expressed genes. This is available in human readable tab-delimited .txt file and R readable binary .Rds file. The **counts_vst_full** is variance-stabilised normalised counts, useful for exploratory analyses.
-
-{{< fa clipboard-list >}}  Copy the results text file (`dge_results_full.txt`) to your computer and inspect the results. What are the columns? How many differentially expressed genes are present after adjusted p-value of 0.05? How many genes are upregulated and how many are down-regulated? How does this change if we set a fold-change cut-off of 1?
-
-{{< fa lightbulb >}} Open in a spreadsheet editor like Microsoft Excel or LibreOffice Calc.
-
-{{< fa lightbulb >}} If you do not have the results or were unable to run the DGE step, you can copy these two here which will be required for functional annotation (optional).
-
-```sh
-cp {{< meta path_resources >}}/rnaseq/dardel/main/5_dge/dge_results_full.txt .
-cp {{< meta path_resources >}}/rnaseq/dardel/main/5_dge/dge_results_full.Rds .
-cp {{< meta path_resources >}}/rnaseq/dardel/main/5_dge/counts_vst_full.txt .
-cp {{< meta path_resources >}}/rnaseq/dardel/main/5_dge/counts_vst_full.Rds .
-```
-
-## Bonus exercises
-
-::: {.callout-warning}
-## Optional
-These exercises are optional and to be run only if you have time and you want to explore this topic further.
-:::
-
-### Functional annotation
-
-In this part of the exercise we will address the question which biological processes are affected in the experiment; in other words we will functionally annotate the results of the analysis of differential gene expression (performed in the main part of the exercise). We will use **Gene Ontology (GO)** and **Reactome** databases.
-
-When performing this type of analysis, one has to keep in mind that the analysis is only as accurate as the annotation available for your organism. So, if working with non-model organisms which do have experimentally-validated annotations (computationally inferred), the results may not be fully reflecting the actual situation.
-
-There are many methods to approach the question as to which biological processes and pathways are over-represented amongst the differentially expressed genes, compared to all the genes included in the DE analysis. They use several types of statistical tests (e.g. hypergeometric test, Fisher's exact test etc.), and many have been developed with microarray data in mind. Not all of these methods are appropriate for RNA-seq data, which as you remember from the lecture, exhibit length bias in power of detection of differentially expressed genes (i.e. longer genes, which tend to gather more reads, are more likely to be detected as **differentially expressed** than shorter genes, solely because of the length).
-
-We will use the R / Bioconductor package **goseq**, specifically designed to work with RNA-seq data. This package provides methods for performing Gene Ontology and pathway analysis of RNA-seq data, taking length bias into account.
-
-In this part, we will use the same data as in the main workflow. The starting point of the exercise is the file with results of the differential expression produced in the main part of the exercise.
-
-#### Preparation
-
-Change to the `funannot` directory in your `rnaseq` directory.
-
-```
-cd funannot
-```
-
-Copy this file `{{< meta path_resources >}}/rnaseq/dardel/bonus/funannot/annotate_de_results.R` to your `rnaseq/funannot` directory.
-
-```sh
-cp {{< meta path_resources >}}/rnaseq/dardel/bonus/funannot/annotate_de_results.R {{< meta path_workspace >}}/rnaseq/funannot/
-```
 
 We need some annotation information, so we will copy this file `{{< meta path_resources >}}/rnaseq/dardel/main/reference/mm-biomart99-genes.txt.gz` to your `rnaseq/reference` directory.
 
@@ -945,99 +860,62 @@ cp {{< meta path_resources >}}/rnaseq/dardel/main/reference/mm-biomart99-genes.t
 
 Then uncompress the file. `gunzip ../reference/mm-biomart99-genes.txt.gz`
 
-Load R module
+Move to the `5_dge` directory and load R module for use.  
 
 ```sh
 module load PDC/23.12
 module load R/4.4.0
 ```
 
-Run the functional annotation script from the linux terminal.
+Use `pwd` to check if you are standing in the correct directory. Copy the following file `{{< meta path_resources >}}/rnaseq/dardel/main/5_dge/dge.r` to the `5_dge` directory.
+
+Make sure you have the `counts_full.txt`. If not, you can copy this file too: `{{< meta path_resources >}}/rnaseq/dardel/main/5_dge/counts_full.txt`
 
 ```sh
-Rscript annotate_de_results.R
+cp {{< meta path_resources >}}/rnaseq/dardel/main/5_dge/counts_full.txt .
 ```
 
-It will fetch **dge_results_full.Rds** from `5_dge/` and annotation files from `reference/`. When completed, you should find a directory named **funannot_results**.
+Now, run the R script from the shell in `5_dge` directory.
+
+```sh
+Rscript {{< meta path_resources >}}/rnaseq/dardel/main/5_dge/dge.r
+```
+
+If you are curious what's inside dge.r, you are welcome to explore it using a text editor.
+
+This should have produced the following output files:
 
 ```sh
 ls -l
 ```
 
 ```
--rw-rw-r-- 1 user gXXXXXXX 44K Jan 22 23:37 go_down.txt
--rw-rw-r-- 1 user gXXXXXXX 15K Jan 22 23:37 go_up.txt
--rw-rw-r-- 1 user gXXXXXXX 800 Jan 22 23:37 reactome_down.txt
--rw-rw-r-- 1 user gXXXXXXX 794 Jan 22 23:37 reactome_up.txt
+-rw-rw-r-- 1 user gXXXXXXX 282K Jan 22 23:16 counts_vst_full.rds
+-rw-rw-r-- 1 user gXXXXXXX 1.7M Jan 22 23:16 counts_vst_full.txt
+-rw-rw-r-- 1 user gXXXXXXX 727K Jan 22 23:16 dge_results_full.rds
+-rw-rw-r-- 1 user gXXXXXXX 1.7M Jan 22 23:16 dge_results_full.txt
 ```
 
-#### Interpretation
+Essentially, we have two outputs: **dge_results_full** and **counts_vst_full**. **dge_results_full** is the list of differentially expressed genes. This is available in human readable tab-delimited .txt file and R readable binary .rds file. The **counts_vst_full** is variance-stabilised normalised counts, useful for exploratory analyses.
 
-The results are saved as tables in the directory **funannot_results**. There are four tables: GO terms for up-regulated genes (go_up.txt), GO terms for down-regulated genes (go_down.txt) and similarily, Reactome pathways for up-regulated genes (reactome_up.txt) and Reactome pathways for down-regulated genes (reactome_down.txt).
+{{< fa clipboard-list >}}  Copy the results text file (`dge_results_full.txt`) to your computer and inspect the results. What are the columns? How many differentially expressed genes are present after adjusted p-value of 0.05? How many genes are upregulated and how many are down-regulated? How does this change if we set a fold-change cut-off of 1?
 
-{{< fa clipboard-list >}} Take a quick look at some of these files.
+{{< fa lightbulb >}} Open in a spreadsheet editor like Microsoft Excel or LibreOffice Calc.
+
+{{< fa lightbulb >}} If you do not have the results or were unable to run the DGE step, you can copy these two here which will be required for functional annotation (optional).
 
 ```sh
-head go_up.txt
+cp {{< meta path_resources >}}/rnaseq/dardel/main/5_dge/dge_results_full.txt .
+cp {{< meta path_resources >}}/rnaseq/dardel/main/5_dge/dge_results_full.rds .
+cp {{< meta path_resources >}}/rnaseq/dardel/main/5_dge/counts_vst_full.txt .
+cp {{< meta path_resources >}}/rnaseq/dardel/main/5_dge/counts_vst_full.rds .
 ```
-
-```
-category  over_represented_pvalue under_represented_pvalue  numDEInCat  numInCat  term  ontology
-GO:0030016  2.23312435908185e-45  1 78  176 myofibril CC
-GO:0061061  5.40265910772947e-45  1 135 543 muscle structure development  BP
-GO:0043292  1.59611882901076e-44  1 80  189 contractile fiber CC
-GO:0030017  3.08095203872545e-43  1 72  157 sarcomere CC
-GO:0044449  2.27198318958789e-41  1 73  170 contractile fiber part  CC
-GO:0031674  3.81511780088805e-32  1 53  117 I band  CC
-GO:0003012  7.14173605862631e-32  1 84  301 muscle system process BP
-GO:0007517  9.77789997472468e-32  1 88  329 muscle organ development  BP
-GO:0014706  1.99267634186987e-31  1 90  349 striated muscle tissue development  BP
-```
-
-The columns of the results tables are:
-
-```
-# go
-category over_represented_pvalue under_represented_pvalue numDEInCat numInCat term ontology
-# reactome
-category over_represented_pvalue under_represented_pvalue numDEInCat numInCat path_name
-```
-
-You can view the tables and try to find GO terms and pathways relevant to the experiment using a word search functionality. You could download these files to your computer and import them into a spreadsheet program like MS Excel or LibreOffice Calc.
-
-{{< fa clipboard-list >}} Try to use `grep` to find a match using a keyword, say **phosphorylation**.
-
-```sh
-cat go_down.txt | grep "phosphorylation"
-```
-
-{{< fa comments >}} Have a look at the GO terms and see if you think the functional annotation reflects the biology of the experiments we have just analysed?
 
 ### RNA-Seq plots
 
-Creating high quality plots of RNA-seq analysis are most easily done using R. Depending on your proficiency in reading R code and using R, you can in this section either just call scripts from the command lines with a set of arguments or you can open the R script in a text editor, and run the code step by step from an interactive R session.
+We use R to create exploratory plots and investigate the results of differential expression analysis. Depending on your proficiency in reading R code and using R, you can in this section either just call scripts from the command lines with a set of arguments or you can open the R script in a text editor, and run the code step by step from an interactive R session.
 
-Copy the R script files from the following directory: `{{< meta path_resources >}}/rnaseq/dardel/bonus/plots/` to your `plots` directory.
-
-```sh
-cp {{< meta path_resources >}}/rnaseq/dardel/bonus/plots/*.R {{< meta path_workspace >}}/rnaseq/plots/
-```
-
-You should have the following files:
-
-```sh
-ls -l
-```
-
-```
--rw-rw-r-- 1 user gXXXXXXX 2.0K Sep 20  2016 gene.R
--rw-rw-r-- 1 user gXXXXXXX  842 Sep 22  2016 heatmap.R
--rw-rw-r-- 1 user gXXXXXXX  282 Sep 22  2016 ma.R
--rw-rw-r-- 1 user gXXXXXXX  340 Sep 22  2016 pca.R
--rw-rw-r-- 1 user gXXXXXXX  669 Sep 22  2016 volcano.R
-```
-
-It is important that you load module R.
+Load the module R.
 
 ```sh
 module load PDC/23.12
@@ -1048,13 +926,13 @@ module load R/4.4.0
 
 A popular way to visualise general patterns of gene expression in your data is to produce either PCA (Principal Component Analysis) or MDS (Multi Dimensional Scaling) plots. These methods aim at summarising the main patterns of expression in the data and display them on a two-dimensional space and still retain as much information as possible. To properly evaluate these kind of results is non-trivial, but in the case of RNA-seq data we often use them to get an idea of the difference in expression between treatments and also to get an idea of the similarity among replicates. If the plots shows clear clusters of samples that corresponds to treatment it is an indication of treatment actually having an effect on gene expression. If the distance between replicates from a single treatment is very large it suggests large variance within the treatment, something that will influence the detection of differentially expressed genes between treatments.
 
-Move to the `plots/` directory. Then run the `pca.R` script like below.
+Move to the `5_dge/` directory. Then run the `pca.r` script like below.
 
 ```sh
-Rscript pca.R
+Rscript {{< meta path_resources >}}/rnaseq/dardel/main/scripts/pca.r
 ```
 
-This generates a file named **pca.png** in the `plots` folder. To view it, download it to your local disk.
+This generates a file named **pca.png** in the `5_dge` folder. To view it, download it to your local disk.
 
 ![](assets/pca.png){width="500px"}
 
@@ -1064,13 +942,13 @@ This generates a file named **pca.png** in the `plots` folder. To view it, downl
 
 An MA-plot plots the mean expression and estimated log-fold-change for all genes in an analysis.
 
-Run the `ma.R` script in the `plots` directory.
+Run the `ma.r` script in the `5_dge` directory.
 
 ```sh
-Rscript ma.R
+Rscript {{< meta path_resources >}}/rnaseq/dardel/main/scripts/ma.r
 ```
 
-This generates a file named **ma.png** in the `plots` folder. To view it, download it to your local disk.
+This generates a file named **ma.png** in the `5_dge` folder. To view it, download it to your local disk.
 
 ![](assets/ma.png){width="500px"}
 
@@ -1078,35 +956,128 @@ This generates a file named **ma.png** in the `plots` folder. To view it, downlo
 
 #### Volcano plot
 
-A related type of figure will instead plot fold change (on log2 scale) on the x-axis and -log10 p-value on the y-axis. Scaling like this means that genes with lowest p-value will be found at the top of the plot. In this example we will highlight (in blue) the genes that are significant (p-val 0.05 after correction for multiple testing).
+A related type of figure will instead plot fold change (on log2 scale) on the x-axis and -log10 p-value on the y-axis. Scaling like this means that genes with lowest p-value will be found at the top of the plot.
 
-Run the script named `volcano.R` in the `plots` directory.
+Run the script named `volcano.r` in the `5_dge` directory.
 
 ```sh
-Rscript volcano.R
+Rscript {{< meta path_resources >}}/rnaseq/dardel/main/scripts/volcano.r
 ```
 
-This generates a file named **volcano.png** in the `plots` folder. To view it, download it to your local disk.
+This generates a file named **volcano.png** in the `5_dge` folder. To view it, download it to your local disk.
 
 ![](assets/volcano.png){width="500px"}
 
-{{< fa comments >}} Anything noteworthy about the patterns in the plot? Is there a general trend in the direction of change in gene expression as a consequence of the experiment?
+{{< fa comments >}} Anything noteworthy about the patterns in the plot? What do you think are the different colors? Is there a general trend in the direction of change in gene expression as a consequence of the experiment?
 
 #### Heatmap
 
-Another popular plots for genome-wide expression patterns is heatmap for a set of genes. If you run the script called `heatmap.R`, it will extract the top 50 genes that have the lowest p-value in the experiment and create a heatmap from these. In addition to color-coding the expression levels over samples for the genes it also clusters the samples and genes based on inferred distance between them.
+Another popular plots for genome-wide expression patterns is heatmap for a set of genes. If you run the script called `heatmap.r`, it will extract the top 50 genes that have the lowest p-value in the experiment and create a heatmap from these. In addition to color-coding the expression levels over samples for the genes it also clusters the samples and genes based on inferred distance between them.
 
-Run the script named `heatmap.R` in the `plots` directory.
+Run the script named `heatmap.r` in the `5_dge` directory.
 
 ```sh
-Rscript heatmap.R
+Rscript {{< meta path_resources >}}/rnaseq/dardel/main/scripts/heatmap.r
 ```
 
-This generates a file named **heatmap.png** in the `plots` folder. To view it, download it to your local disk.
+This generates a file named **heatmap.png** in the `5_dge` folder. To view it, download it to your local disk.
 
 ![](assets/heatmap.png){width="500px"}
 
 {{< fa clipboard-list >}} Compare this plot to a similar plot in the paper behind the data.
+
+## Bonus exercises
+
+::: {.callout-warning}
+## Optional
+These exercises are optional and to be run only if you have time and you want to explore this topic further.
+:::
+
+### Gene set analysis
+
+In this part of the exercise, we will try some approaches to make sense of the differentially expressed genes. If you are not closely familiar with the genes and it's relationship to your experimental setup, it's hard to draw conclusions by simply looking at the gene list. We will use gene set analysis (GSA) and gene set enrichment analysis (GSEA) that ingests the gene list and returns to us functional terms which may be more meaningful in understanding the biological consequences of your experiment. We will use **Gene Ontology (GO)** database.
+
+When performing this type of analysis, one has to keep in mind that the analysis is only as accurate as the annotation available for your organism. So, if working with non-model organisms which do have experimentally-validated annotations (computationally inferred), the results may not be fully reflecting the actual situation.
+
+There are many methods to approach the question as to which biological processes and pathways are over-represented amongst the differentially expressed genes, compared to all the genes included in the DE analysis. They use several types of statistical tests (e.g. hypergeometric test, Fisher's exact test etc.), and many have been developed with microarray data in mind.
+
+We will use the R / Bioconductor package **clusterProfiler**. This package provides methods for performing gene set analysis and gene set enrichment analysis.
+
+In this part, we will use the same data as in the main workflow. The starting point of the exercise is the file with results of the differential expression produced in the main part of the exercise.
+
+Change to the `5_dge` directory in your `rnaseq` directory.
+
+```
+cd 5_dge
+```
+
+Load R module
+
+```sh
+module load PDC/23.12
+module load R/4.4.0
+```
+
+Run the GSE script from the linux terminal.
+
+```sh
+Rscript {{< meta path_resources >}}/rnaseq/dardel/main/scripts/gse-clusterprofiler.r
+```
+
+It will read the **dge_results_full.rds** and filter the table to get the differentially expressed genes and perform over-representation analysis. When completed, you should find the following files:
+
+```sh
+ls -l
+```
+
+```
+-rw-r--r--  1 user  staff   3.8M Jan  4 16:00 gse-bp.rds
+-rw-r--r--  1 user  staff   205K Jan  4 16:00 gse-bp.txt
+-rw-r--r--  1 user  staff   1.0M Jan  4 16:00 gse-cc.rds
+-rw-r--r--  1 user  staff    31K Jan  4 16:00 gse-cc.txt
+-rw-r--r--  1 user  staff   841K Jan  4 16:00 gse-mf.rds
+-rw-r--r--  1 user  staff    14K Jan  4 16:00 gse-mf.txt
+```
+
+The results are GO terms from three different gene ontology databases: Biological process (BP), cellular component (CC) and molecular function (MF). They are written as text files and RDS files which is an R specific format.
+
+{{< fa clipboard-list >}} Take a quick look at some of these files.
+
+```sh
+head gse-bp.txt | cut -f2
+```
+
+```
+Description
+striated muscle cell differentiation
+muscle system process
+cellular component assembly involved in morphogenesis
+muscle tissue development
+muscle contraction
+muscle organ development
+muscle cell development
+striated muscle cell development
+muscle cell differentiation
+```
+
+```sh
+head gse-cc.txt | cut -f2
+```
+
+```
+Description
+myofibril
+sarcomere
+contractile fiber
+I band
+Z disc
+striated muscle thin filament
+myofilament
+actin cytoskeleton
+synaptic membrane
+```
+
+{{< fa comments >}} Explore the output files and figure out what the columns mean. Do you think the terms reflects the biology of the experiment we have just analysed?
 
 ### IGV browser
 
