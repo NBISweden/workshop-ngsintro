@@ -280,16 +280,21 @@ echo "MultiQC took $((${multiqc_end_time}-${multiqc_start_time})) seconds."
 echo "Running DGE ..."
 dge_start_time=`date +%s`
 
+cp ${path_base}/main/reference/mm*gz ./reference
+gunzip ./reference/*.gz
 cd 5_dge
-cp ${path_base}/main/5_dge/dge.R .
 cp ${path_base}/main/5_dge/counts_full.txt .
 
 if [ ${compute} == "long" ];
  then
-  Rscript --vanilla dge.R
+  Rscript --vanilla ${path_base}/main/scripts/dge.r
+  Rscript --vanilla ${path_base}/main/scripts/pca.r
+	Rscript --vanilla ${path_base}/main/scripts/ma.r
+	Rscript --vanilla ${path_base}/main/scripts/volcano.r
+	Rscript --vanilla ${path_base}/main/scripts/heatmap.r
  else
-  cp ${path_base}/main/5_dge/dge_results_full.Rds .
-  cp ${path_base}/main/5_dge/counts_vst_full.Rds .
+  cp ${path_base}/main/5_dge/dge_results_full.rds .
+  cp ${path_base}/main/5_dge/counts_vst_full.rds .
   cp ${path_base}/main/5_dge/dge_results_full.txt .
   cp ${path_base}/main/5_dge/counts_vst_full.txt .
 fi
@@ -299,43 +304,29 @@ cd ..
 dge_end_time=`date +%s`
 echo "DGE took $((${dge_end_time}-${dge_start_time})) seconds."
 
-## BONUS -----------------------------------------------------------------------
+## GSE -------------------------------------------------------------------------
 
-## functional annotation -------------------------------------------------------
+echo "Running GSE ..."
+gse_start_time=`date +%s`
 
-echo "Running Functional annotation ..."
-funannot_start_time=`date +%s`
+cd 5_dge
 
-cp ${path_base}/main/reference/mm*gz ./reference
-gunzip ./reference/*.gz
-
-mkdir funannot
-cp -r ${path_base}/bonus/funannot/annotate_de_results.R ./funannot/
-cd funannot
-Rscript --vanilla annotate_de_results.R
-cd ..
-
-funannot_end_time=`date +%s`
-echo "Functional annotation took $((${funannot_end_time}-${funannot_start_time})) seconds."
-
-## plots -----------------------------------------------------------------------
-
-echo "Running Plots ..."
-plots_start_time=`date +%s`
-
-mkdir plots
-cd plots
-cp ${path_base}/bonus/plots/*.R .
-
-Rscript --vanilla pca.R
-Rscript --vanilla ma.R
-Rscript --vanilla volcano.R
-Rscript --vanilla heatmap.R
+if [ ${compute} == "long" ];
+ then
+  Rscript --vanilla ${path_base}/main/scripts/gse-clusterprofiler.r
+ else
+  cp ${path_base}/main/5_dge/gse-cc.rds .
+  cp ${path_base}/main/5_dge/gse_cc.txt .
+  cp ${path_base}/main/5_dge/gse-bp.rds .
+  cp ${path_base}/main/5_dge/gse_bp.txt .
+  cp ${path_base}/main/5_dge/gse-mf.rds .
+  cp ${path_base}/main/5_dge/gse_mf.txt .
+fi
 
 cd ..
 
-plots_end_time=`date +%s`
-echo "Plots took $((${plots_end_time}-${plots_start_time})) seconds."
+gse_end_time=`date +%s`
+echo "GSE took $((${gse_end_time}-${gse_start_time})) seconds."
 
 # ------------------------------------------------------------------------------
 
@@ -356,8 +347,7 @@ echo "Picard took $((${picard_end_time}-${picard_start_time})) seconds."
 echo "MultiQC took $((${multiqc_end_time}-${multiqc_start_time})) seconds."
 echo "featureCounts took $((${fcount_end_time}-${fcount_start_time})) seconds."
 echo "DGE took $((${dge_end_time}-${dge_start_time})) seconds."
-echo "Functional annotation took $((${funannot_end_time}-${funannot_start_time})) seconds."
-echo "Plots took $((${plots_end_time}-${plots_start_time})) seconds."
+echo "GSE took $((${gse_end_time}-${gse_start_time})) seconds."
 
 end_time=`date +%s`
 echo ""

@@ -32,7 +32,7 @@ if command -v sbatch &> /dev/null
 then
   module load PDC/23.12
   module load bioinfo-tools
-  module load HISAT2/2.2.1
+  module load hisat2/2.2.1
   module load samtools/1.20
 fi
 

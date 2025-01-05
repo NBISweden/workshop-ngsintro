@@ -27,7 +27,7 @@ if command -v sbatch &> /dev/null
 then
   module load PDC/23.12
   module load bioinfo-tools
-  module load FastQC/0.11.9
+  module load fastqc/0.12.1
 fi
 
 fastqc -t $cores -o . "$1"

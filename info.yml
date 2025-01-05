@@ -1,0 +1,219 @@
+# markdown is supported in description but not in popup
+# In popup, semicolon (;) is used as delimiter for new lines
+# For details on icons and icon colors: https://rstudio.github.io/leaflet/reference/awesomeIcons.html
+# fontawesome 4 icons are used: https://fontawesome.com/v4/icons/
+lund:
+  description: |
+    Room Retina D227  
+    Building D  
+    Department of Biology  
+    Sölvegatan 35  
+    223 62 Lund  
+    Sweden  
+
+    For Lund city buses, tram, regional buses and regional trains, use [skanetrafiken.se](https://www.skanetrafiken.se/). You can buy a ticket at the central station in Lund or at the regional bus (card only). You can also use the app [Skånetrafiken](https://www.skanetrafiken.se/biljetter/app2/) From the Lund C the easiest is to take the tram from **Clemens torget** towards **ESS** and get off at  **Lund LTH**. The trip take about 4 minutes and a tram leaves about four times an hour.
+  map:
+    - label: Venue
+      marker_icon: briefcase
+      marker_color: red
+      lat: 55.713394
+      lon: 13.206628
+      popup: "Room Retina D227; Building D; Department of Biology; Sölvegatan 35; 223 62 Lund, Sweden"
+    - label: Centralstation
+      marker_icon: train
+      marker_color: purple
+      lat: 55.705311
+      lon: 13.187432
+      popup: "Centralstation; Bangatan 1; 222 21 Lund; Sweden"
+umea:
+  description: |
+    Room UB341  
+    Universitetsbibioteket plan 3  
+    Umeå University  
+    901 87 Umeå  
+    Sweden  
+
+    [**Umeå city buses**](http://tabussen.nu/ultra/english/): There are several options to pay your bus ticket, including on the bus (credit card only) or in advance either online or using the app, or in the ticket machines at Vasaplan or Umeå Airport. It is cheaper to buy the ticket in advance. More information can be found at [Ultra](https://www.tabussen.nu/ultra/english/where-can-i-buy-tickets/)'s homepage. The bus stop in the city centre is **Vasaplan** and the stops near the course venue are either **Universum** (buses 2, 5, 8 or 9) or **Samhällsvetarhuset** (bus 1). The trip takes about 6-7 min.
+
+    [**Airport bus**](https://www.tabussen.nu/flygbussen/english/): The airport bus (Bus 80) goes from the airport to **Vasaplan** (the city centre), and takes about 8 min. 
+    
+    The [travel planner](https://www.tabussen.nu/ultra/planera-resa/) can be used to plan your trip.
+  map:
+    - label: Venue
+      marker_icon: briefcase
+      marker_color: red
+      lat: 63.820019
+      lon: 20.307814
+      popup: "Room UB341; Universitetsbibioteket plan 3; Umeå University; 901 87 Umeå; Sweden"
+    - label: "Centralstation"
+      marker_icon: train
+      marker_color: purple
+      lat: 63.830098107373445
+      lon: 20.266805019843996
+      popup: "Centralstation; Järnvägstorget; 903 28 Umeå; Sweden"
+    - label: "Airport"
+      marker_icon: plane
+      marker_color: purple
+      lat: 63.79308704716322
+      lon: 20.289333642478027
+      popup: "Flygplatsvägen 32, 904 22 Umeå, Sweden"
+    - label: "Vasaplan Bus station"
+      marker_icon: bus
+      marker_color: purple
+      lat: 63.82620376719613
+      lon: 20.268286563856456
+      popup: "Vasaplan; 903 29 Umeå; Sweden"
+uppsala:
+  description: |
+    Room E10:1309  
+    Entrance C11  
+    Biomedicinskt centrum  
+    Uppsala University / ScilifeLab  
+    Husargatan 3  
+    75237 Uppsala  
+    Sweden  
+
+    Few selected hotels are listed below ranked by distance from the venue.
+    
+    - [Hotel von Kraemer](https://hotelvonkraemer.se/) (900 m, 11 min walk)
+    - [Akademihotellet](https://akademihotellet.se/en/) (1.7 Km, 21 min walk)
+    - [CityStay Hotell](https://citystayuppsala.se/) (1.8 Km, 21 min walk)
+    - [Grand Hotel Hörnan](https://www.grandhotellhornan.com/) (1.9 Km, 23 min walk)
+    - [Hotell Centralstation](http://hotellcentralstation.se/) (2.1 Km, 25 min walk)
+    - [Best Western Svava](https://www.hotelsvava.se/) (2.2 Km, 26 min walk)
+    
+    The venue and hotels are also marked on the map.
+    
+    Use the [UL website](https://www.ul.se) or the [UL app](https://www.ul.se/en/tickets/how-to-buy-a-ticket/the-UL-app/) for bus and train services around Uppsala. For buses from the Centralstation (Train/Bus), take Bus 4 (towards **Gottsunda Centrum**) or 8 (towards **Sunnersta**) and get off at the stop **Uppsala Science Park**. Bus tickets can be purchased in the app or directly from the driver using a credit card.
+  map:
+    - label: Venue
+      marker_icon: briefcase
+      marker_color: red
+      lat: 59.841949
+      lon: 17.637073
+      popup: "Room E10:1309; Entrance C11; Biomedicinskt centrum; Uppsala University / ScilifeLab; Husargatan 3; 752 37 Uppsala; Sweden"
+    - label: "Hotel von Kraemer (900 m, 11 min walk)"
+      marker_icon: bed
+      marker_color: blue
+      lat: 59.84866869
+      lon: 17.63525156
+      popup: "von Kraemers alle 26; 752 37 Uppsala; Sweden "
+    - label: "Grand Hotell Hörnan (1.9 Km, 23 min walk)"
+      marker_icon: bed
+      marker_color: blue
+      lat: 59.85654413
+      lon: 17.64059039
+      popup: "Bangårdsgatan 1; 753 20 Uppsala; Sweden"
+    - label: "Akademihotellet (1.7 Km, 21 min walk)"
+      marker_icon: bed
+      marker_color: blue
+      lat: 59.85659426
+      lon: 17.63056311
+      popup: "Övre Slottsgatan 5; 753 10 Uppsala; Sweden "
+    - label: "Best Western Hotel Svava (2.2 Km, 26 min walk)"
+      marker_icon: bed
+      marker_color: blue
+      lat: 59.85819186
+      lon: 17.64407413
+      popup: "Bangårdsgatan 24; 753 20 Uppsala; Sweden"
+    - label: "Hotell Centralstation (2.1 Km, 25 min walk)"
+      marker_icon: bed
+      marker_color: blue
+      lat: 59.85830099
+      lon: 17.64407784
+      popup: "Bangårdsgatan 13; 753 30 Uppsala; Sweden"
+    - label: "CityStay Hotell (1.8 Km, 21 min walk)"
+      marker_icon: bed
+      marker_color: blue
+      lat: 59.85709171
+      lon: 17.63575342
+      popup: "Trädgårdsgatan 5A; 753 09 Uppsala; Sweden"
+    - label: Centralstation
+      marker_icon: train
+      marker_color: purple
+      lat: 59.85855524
+      lon: 17.64558492
+      popup: "Central Station; 753 21 Uppsala"
+linkoping:
+  description: |
+    LiU Campus Universitetssjukhuset  
+    58225 Linköping  
+    Sweden  
+    
+    Monday-Tuesday: [Room Papaver, Hus 511/001](https://link.mazemap.com/00mnumNU)  
+    Wednesday-Thursday: [Room Dolomit, Hus 440](https://link.mazemap.com/up3GnjPm)  
+    Friday: [Room Antracit, Hus 440](https://link.mazemap.com/wXeFDYNR)
+
+    Use the [östgötatrafiken website](https://www.ostgotatrafiken.se) or the [östgötatrafiken app](https://www.ostgotatrafiken.se/kundservice/hur-kan-vi-hjalpa-dig/nya-appen/) for bus services around Linköping. The easiest way to by tickets is through the app, but you can by a travel card in advance which you can load with tickets.
+  map:
+    - label: "Room Papaver"
+      marker_icon: briefcase
+      marker_color: red
+      lat: 58.4035446
+      lon: 15.62216505
+      popup: "LiU Campus Universitetssjukhuset; 582 25 Linköping; Sweden"
+    - label: "Room Dolomit/Antracit"
+      marker_icon: briefcase
+      marker_color: red
+      lat: 58.40221818
+      lon: 15.62209546
+      popup: "LiU Campus Universitetssjukhuset; 582 25 Linköping; Sweden"
+    - label: "Pappa Grappa restaurant"
+      marker_icon: cutlery
+      marker_color: green
+      lat: 58.40971588
+      lon: 15.62229926
+      popup: "Pappa Grappa restaurant; Hospitalsgränd 1; 582 27 Linköping"
+    - label: Quality Hotel Ekoxen
+      marker_icon: bed
+      marker_color: blue
+      lat: 58.40582653
+      lon: 15.62527182
+      popup: "Quality Hotel Ekoxen; Klostergatan 68; 582 23 Linköping"
+    - label: Central station
+      marker_icon: train
+      marker_color: purple
+      lat: 58.41612804
+      lon: 15.62609887
+      popup: "Centralstation; Järnvägsgatan; 582 22 Linköping"
+stockholm:
+  description: |
+    Room Air & Fire  
+    Ground floor  
+    [Science for Life Laboratory Stockholm](https://www.scilifelab.se/about-us/campus-solna/)  
+    Tomtebodavägen 23A  
+    17165 Solna  
+    Sweden  
+
+    This course round is given on-site in Sweden at [SciLifeLab Stockholm](https://www.scilifelab.se/about-us/campus-solna/). Travel directions are as follows:
+
+    - Transport yourself to Stockholm (see e.g. [SJ's website](https://www.sj.se/) for train travel within Sweden).
+    - Go to SciLifeLab in Solna. The closest bus stop is called Karolinska institutet Biomedicum (search for public transport options here).
+    - Enter the SciLifeLab/Karolinska Institutet Science Park building. There are public transport-style access gates to your left, and the glass door to the left immediately after the gates is where you need to go for the rooms Air & Fire, where the course will be held. You will, however, need an access card in order to pass through the gates, which will be handed to you on the morning of the first day (there is also a reception where you can ask for help if you run into any issues).
+  map:
+    - label: Venue
+      marker_icon: briefcase
+      marker_color: red
+      lat: 59.3504843470136
+      lon: 18.0234314999999
+      popup: "SciLifeLab Stockholm; Tomtebodavägen 23A; 171 65 Solna; Sweden"
+    - label: Centralstation
+      marker_icon: train
+      marker_color: purple
+      lat: 59.330231
+      lon: 18.059196
+      popup: "Centralstation; Vasagatan 1; 111 20 Stockholm; Sweden"
+    - label: Karolinska Institutet Biomedicum Bus stop
+      marker_icon: bus
+      marker_color: purple
+      lat: 59.34998995628685
+      lon: 18.02542771374187
+      popup: "Karolinska Institutet Biomedicum; 171 65 Solna; Sweden"
+    - label: "Karolinkskavägen Bus stop"
+      marker_icon: bus
+      marker_color: purple
+      lat: 59.35098473792899
+      lon: 18.02378243706668
+      popup: "Karolinkskavägen; 171 64 Solna; Sweden"
+online:
+  description: "Online meeting links are sent to participants by email."
