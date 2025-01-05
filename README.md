@@ -25,6 +25,7 @@ as the first thing, so that old rendered files are not overwritten.
 
 :exclamation: Do not push any rendered .html files or intermediates.
 
+## Docker
 ### Local build/preview using Docker
 
 You can preview changes and build the whole website locally without a local installation of R or dependency packages by using the pre-built Docker image.
@@ -47,37 +48,13 @@ docker run --platform linux/amd64 --rm -u 1000:1000 -v ${PWD}:/qmd ghcr.io/nbisw
 
 :exclamation: Output files are for local preview only. Do not push any rendered .html files or intermediates.
 
-## Convert HTML slides to PDF
+### Convert HTML slides to PDF
 
 ```
 docker run --platform=linux/amd64 -v $PWD:/work astefanutti/decktape https://nbisweden.github.io/workshop-ngsintro/2403/topics/rnaseq/slide_rnaseq.html /work/slide_rnaseq.pdf
 ```
 
-## Repo organisation
-
-The source material is located on the *master* branch (default). The rendered material is located on the *gh-pages* branch. One only needs to update source materials in *master*. Changes pushed to the *master* branch is automatically rendered to the *gh-pages* branch using github actions.
-
-:exclamation: Every push rebuilds the whole website using a pre-built docker image.
-
-This repo is loosely based on the quarto template [specky](https://github.com/royfrancis/specky).
-
-## Building docker container
-
-```bash
-# build container
-docker build --platform linux/amd64 -t ghcr.io/nbisweden/workshop-ngsintro:2.3.0 -t ghcr.io/nbisweden/workshop-ngsintro:latest .
-
-# push to ghcr
-# docker login ghcr.io
-docker push ghcr.io/nbisweden/workshop-ngsintro:2.3.0
-docker push ghcr.io/nbisweden/workshop-ngsintro:latest
-
-# run container in the root of the repo
-docker run --rm --platform linux/amd64 -u $(id -u):$(id -g) -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-ngsintro:latest
-docker run --rm --platform linux/amd64 -u $(id -u):$(id -g) -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-ngsintro:latest quarto render index.qmd
-```
-
-## Serving and automatic rendering
+### Serving and automatic rendering
 
 You can use `quarto preview` to serve the site, and handle automatic rebuilding of pages when any `.qmd` file is changed.
 
@@ -87,6 +64,30 @@ docker run --rm -it --platform linux/amd64 -u $(id -u):$(id -g) -v ${PWD}:/qmd -
 ```
 
 Go to [http://localhost:8800/](http://localhost:8800/) or [http://0.0.0.0:8800](http://0.0.0.0:8800) in your browser.
+
+### Building your own docker container
+
+```bash
+# build container
+docker build --platform linux/amd64 -t ghcr.io/nbisweden/workshop-ngsintro:2.4.0 -t ghcr.io/nbisweden/workshop-ngsintro:latest .
+
+# push to ghcr
+# docker login ghcr.io
+docker push ghcr.io/nbisweden/workshop-ngsintro:2.4.0
+docker push ghcr.io/nbisweden/workshop-ngsintro:latest
+
+# run container in the root of the repo
+docker run --rm --platform linux/amd64 -u $(id -u):$(id -g) -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-ngsintro:latest
+docker run --rm --platform linux/amd64 -u $(id -u):$(id -g) -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-ngsintro:latest quarto render index.qmd
+```
+
+## Repo organisation
+
+The source material is located on the *master* branch (default). The rendered material is located on the *gh-pages* branch. One only needs to update source materials in *master*. Changes pushed to the *master* branch is automatically rendered to the *gh-pages* branch using github actions.
+
+:exclamation: Every push rebuilds the whole website using a pre-built docker image.
+
+This repo is loosely based on the quarto template [specky](https://github.com/royfrancis/specky).
 
 ## Test scripts
 
@@ -98,4 +99,4 @@ The contents of these scripts should use identical steps and tools as the studen
 
 ---
 
-**2024** • NBIS • SciLifeLab
+**2025** • NBIS • SciLifeLab
