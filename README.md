@@ -30,7 +30,7 @@ as the first thing, so that old rendered files are not overwritten.
 
 You can preview changes and build the whole website locally without a local installation of R or dependency packages by using the pre-built Docker image.
 
-:exclamation: **Note:** Large image size: 4.68GB.
+:exclamation: **Note:** Image size: 4.86GB.
 
 Clone the repo if not already done. Make sure you are standing in the repo directory.
 
@@ -91,7 +91,7 @@ This repo is loosely based on the quarto template [specky](https://github.com/ro
 
 ## Test scripts
 
-This is regarding the directory **scripts**. This directory contains shell scripts for reseq (variant-calling) and rnaseq parts of the workshop. These are intended to be run on UPPMAX. Further instructions on using them are available within the scripts.
+This is regarding the directory **scripts**. This directory contains shell scripts for vc (variant-calling) and rnaseq parts of the workshop. These are intended to be run on UPPMAX. Further instructions on using them are available within the scripts.
 
 The contents of these scripts should use identical steps and tools as the student would use in the lab. The aim of these scripts is to execute them on UPPMAX before the course. This should provide insight into broken links, broken tools, tool incompatibilities, core usage, ram usage and total space used.
 
