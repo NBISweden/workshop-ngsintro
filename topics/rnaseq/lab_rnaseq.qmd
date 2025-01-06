@@ -1141,40 +1141,40 @@ For every file you open a number of panels are opened that visualise the data in
 
 To see actual reads you have to zoom in until the reads are drawn on screen. If you have a gene of interest you can also use the search box to directly go to that gene.
 
-Here is the list of top 30 differentially expressed genes on Chr19 ordered by absolute fold change. The adjusted p value is shown as padj, the average expression of the gene is shown as baseMean.
+Here is the list of top 20 differentially expressed genes on Chr19 ordered by absolute fold change. The adjusted p value is shown as padj, the average expression of the gene is shown as baseMean.
+
+```{r}
+#| eval: false
+#| echo: false
+readRDS("dge_r#| esults_full.rds") %>%
+  filter(chromosome_name == 19, padj < 0.05) %>%
+  arrange(-abs(log2FoldChange)) %>%
+  head(20) %>%
+  select(external_gene_name, baseMean, log2FoldChange, lfcSE, stat, pvalue, padj)
+```
 
 ```
-      ensembl_gene_id external_gene_name    baseMean log2FoldChange         padj   gene_biotype
-1  ENSMUSG00000117896           AA387883    59.94083     -2.7846887 1.943690e-17         lncRNA
-2  ENSMUSG00000024799             Tm7sf2   947.63388     -2.0385744 1.677171e-44 protein_coding
-3  ENSMUSG00000025172             Ankrd2    59.28633      1.7519899 1.261004e-08 protein_coding
-4  ENSMUSG00000049134               Nrap   220.59983      1.6993887 1.067822e-08 protein_coding
-5  ENSMUSG00000024935             Slc1a1    63.82987      1.6821634 1.652208e-09 protein_coding
-6  ENSMUSG00000037071               Scd1  6678.59981     -1.4473717 2.961722e-14 protein_coding
-7  ENSMUSG00000024665              Fads2  3269.79425     -1.4152150 3.134559e-29 protein_coding
-8  ENSMUSG00000024747            Aldh1a7    65.81205     -1.3544431 1.002599e-06 protein_coding
-9  ENSMUSG00000025216               Lbx1    26.03640      1.3356124 1.328372e-04 protein_coding
-10 ENSMUSG00000056290             Ms4a4b    23.27050      1.3299845 5.015617e-05 protein_coding
-11 ENSMUSG00000025221             Kcnip2    34.13675     -1.3165310 1.463369e-04 protein_coding
-12 ENSMUSG00000032648               Pygm  1129.47092      1.2452572 2.736196e-04 protein_coding
-13 ENSMUSG00000043639              Rbm20    51.36261      1.1816554 7.774718e-04 protein_coding
-14 ENSMUSG00000118032            Gm50147    39.53043     -1.1797580 3.794393e-04         lncRNA
-15 ENSMUSG00000036278            Macrod1   244.02353      1.0824415 4.984802e-07 protein_coding
-16 ENSMUSG00000025203               Scd2 44054.03491     -1.0504733 1.874759e-11 protein_coding
-17 ENSMUSG00000010663              Fads1  4074.38868     -1.0503935 1.470460e-18 protein_coding
-18 ENSMUSG00000060675             Plaat3  5284.36470     -1.0462725 2.114719e-13 protein_coding
-19 ENSMUSG00000016496              Cd274    35.91671      1.0175443 5.632932e-03 protein_coding
-20 ENSMUSG00000024673              Ms4a1    25.80723      1.0130356 6.294275e-03 protein_coding
-21 ENSMUSG00000032773              Chrm1    76.11444      0.9262597 7.665519e-04 protein_coding
-22 ENSMUSG00000067279            Ppp1r3c   162.14777      0.9018589 3.672613e-04 protein_coding
-23 ENSMUSG00000025013               Tll2   108.20333     -0.9012959 1.249858e-03 protein_coding
-24 ENSMUSG00000006457              Actn3  1322.01659      0.8988003 1.352229e-02 protein_coding
-25 ENSMUSG00000075289             Carns1  1003.91026     -0.8819988 4.982949e-10 protein_coding
-26 ENSMUSG00000075010           AW112010    56.94897      0.8128744 4.027595e-02         lncRNA
-27 ENSMUSG00000025227            Mfsd13a   107.55434     -0.8126676 1.107050e-03 protein_coding
-28 ENSMUSG00000067242               Lgi1   506.42577     -0.7842945 2.570293e-06 protein_coding
-29 ENSMUSG00000024812               Tjp2  1478.96029     -0.7627251 9.004722e-07 protein_coding
-30 ENSMUSG00000047368            Abhd17b  1562.07350     -0.7625545 5.750875e-07 protein_coding
+   external_gene_name    baseMean log2FoldChange     lfcSE       stat       pvalue         padj
+1            AA387883    59.94083      -2.784689 0.2706306  -9.076824 1.117894e-19 1.943690e-17
+2              Tm7sf2   947.63388      -2.038574 0.1399445 -14.539498 6.809003e-48 1.677171e-44
+3              Ankrd2    59.28633       1.751990 0.2747018   6.323854 2.551188e-10 1.261004e-08
+4                Nrap   220.59983       1.699389 0.2680529   6.352080 2.124228e-10 1.067822e-08
+5              Slc1a1    63.82987       1.682163 0.2501657   6.651224 2.906652e-11 1.652208e-09
+6                Scd1  6678.59981      -1.447372 0.1767165  -8.190325 2.605209e-16 2.961722e-14
+7               Fads2  3269.79425      -1.415215 0.1201146 -11.779700 4.966970e-32 3.134559e-29
+8             Aldh1a7    65.81205      -1.354443 0.2413361  -5.548387 2.883175e-08 1.002599e-06
+9                Lbx1    26.03640       1.335612 0.2954499   4.503693 6.678261e-06 1.328372e-04
+10             Ms4a4b    23.27050       1.329984 0.2927615   4.729255 2.253447e-06 5.015617e-05
+11             Kcnip2    34.13675      -1.316531 0.2914951  -4.479672 7.475767e-06 1.463369e-04
+12               Pygm  1129.47092       1.245257 0.2912826   4.323631 1.534817e-05 2.736196e-04
+13              Rbm20    51.36261       1.181655 0.2927293   4.051754 5.083520e-05 7.774718e-04
+14            Gm50147    39.53043      -1.179758 0.2754761  -4.239382 2.241359e-05 3.794393e-04
+15            Macrod1   244.02353       1.082442 0.1904105   5.681007 1.339039e-08 4.984802e-07
+16               Scd2 44054.03491      -1.050473 0.1434332  -7.323814 2.410205e-13 1.874759e-11
+17              Fads1  4074.38868      -1.050393 0.1121926  -9.361514 7.860230e-21 1.470460e-18
+18             Plaat3  5284.36470      -1.046273 0.1317594  -7.940261 2.017561e-15 2.114719e-13
+19              Cd274    35.91671       1.017544 0.2938405   3.474263 5.122580e-04 5.632932e-03
+20              Ms4a1    25.80723       1.013036 0.2949268   3.437803 5.864549e-04 6.294275e-03
 ```
 
 Have a look at few of the interesting genes on Chr19 using the `external_gene_name` identifier. Look into gene **Tm7sf2** or **Ankrd2**. You might have to right-click and change option to **Squished** to see more reads.
