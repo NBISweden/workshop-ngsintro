@@ -5,6 +5,7 @@ subtitle: ""
 toc: false
 date: ""
 sidebar: false
+image: "assets/images/seo.webp"
 format:
   html:
     css: "assets/css/home.css"

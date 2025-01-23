@@ -62,7 +62,6 @@ format:
     callout-icon: true
     date:  last-modified
     date-format: "DD-MMM-YYYY"
-    image: "assets/images/featured.webp"
     lightbox: auto
   revealjs:
     quarto-required: ">=1.4.0"
@@ -84,7 +83,6 @@ format:
     fig-align: left
     chalkboard: true
     callout-icon: true
-    image: "/assets/images/featured.webp"
     hero: "/assets/images/slide-hero.webp"
     title-slide-attributes:
       data-background-image: "/assets/images/cover.webp"
@@ -148,6 +146,7 @@ assistants:
  - "BV: Björn Viklund"
  - "CK: Cormac Kinsella"
  - "DA: Dag Ahren"
+ - "DE: Diana Ekman"
  - "EB: Emre Balsever"
  - "FB: Franziska Bonath"
  - "FR: Fariba Roshanzamir"
@@ -180,38 +179,3 @@ schedule_message: "Breaks are planned for approximately 10:00 and 14:30 every da
 colors:
   primary: "#95b540"
   secondary: "#E9F2D1"
-
-# r packages needed for the workshop
-# used in home_precourse.Rmd
-# split into cran and bioc packages
-# if a package is needed by students and repo, add to _student
-# if a package is only needed for repo (build, rendering etc), add to _repo
-# NOT USED FOR GITHUB ACTIONS
-packages:
-  packages_cran_student:
-   - BiocManager
-   - remotes
-   - dplyr
-   - ggplot2
-   - pheatmap
-   - stringr
-   - tidyr
-  packages_bioc_student:
-   - DESeq2
-   - edgeR
-   - goseq
-   - GO.db
-   - org.Mm.eg.db
-   - reactome.db
-  packages_github_student:
-  packages_cran_repo:
-   - here
-   - htmlTable
-   - knitr
-   - leaflet
-   - lubridate
-   - readxl
-   - writexl
-   - yaml
-  packages_bioc_repo:
-  packages_github_repo:
