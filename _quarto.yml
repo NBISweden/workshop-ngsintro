@@ -13,32 +13,40 @@ project:
     - "*.qmd"
 
 website:
-  image: "assets/images/seo.webp"
+  site-url: "https://nbisweden.github.io/workshop-ngsintro/"
   favicon: "assets/favicon.png"
+  open-graph: true
+  image: "assets/images/seo.webp"
+  description: "A five day introductory workshop for beginners in the analysis of illumina short-read next-generation sequencing data which includes lectures and hands-on labs on a remote high-performance cluster. Topics covered include: working on the Linux command line, overview of sequence data formats and QC, DNA variant calling workflow and RNA sequence analyses workflow."
   navbar:
     logo: "assets/logos/nbis-scilifelab.png"
     logo-alt: "logo"
     right:
       - text: "Home"
         href: "index.html"
+        aria-label: "Home"
       - text: "Schedule"
         href: "home_schedule.html"
+        aria-label: "Schedule"
       - text: "Contents"
         href: "home_contents.html"
+        aria-label: "Contents"
       - text: "Precourse"
         href: "home_precourse.html"
+        aria-label: "Precourse"
       - text: "Syllabus"
         href: "home_syllabus.html"
+        aria-label: "Syllabus"
       - text: "Info"
         href: "home_info.html"
+        aria-label: "Info"
       - icon: "github"
         href: "https://github.com/NBISweden/workshop-ngsintro/"
+        aria-label: "GitHub"
   page-footer:
     border: false
     left: "{{< meta current_year >}} [NBIS](https://nbis.se) | [GPL-3 License](https://choosealicense.com/licenses/gpl-3.0/)"
     right: "Published with [Quarto](https://quarto.org/) v{{< meta quarto_version >}}"
-  site-url: "https://nbisweden.github.io/workshop-ngsintro/"
-  open-graph: true
 
 format:
   html:

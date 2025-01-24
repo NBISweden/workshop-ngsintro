@@ -1,5 +1,5 @@
 ---
-pagetitle: "NBIS Workshop | Introduction to Bioinformatics using NGS data"
+pagetitle: "NBIS Workshop • Introduction to Bioinformatics using NGS data"
 title: ""
 subtitle: ""
 toc: false
