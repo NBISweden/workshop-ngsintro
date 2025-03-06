@@ -69,6 +69,10 @@ We have notified PDC who the students for our course is and they will create the
 
 [![](assets/images/precourse/xquartz.webp){.precourse-tool}](https://www.xquartz.org/) [{{< fa brands apple >}}]{.badge} Mac users will need to download and install [XQuartz](https://www.xquartz.org/) for X11 forwarding. *ie*; to forward remotely opened windows to local machine.
 
+### IGV 
+
+[![](assets/images/precourse/igv.webp){.precourse-tool}](https://igv.org/doc/desktop/) [{{< fa brands ubuntu >}} {{< fa brands apple >}} {{< fa brands windows >}}]{.badge} Integrative Genomics Viewer (IGV) is useful in inspecting genomic data in BAM files. IGV is available on the cluster, but it might be very slow over X11. IGV is also available through ThinLinc but it depends on the reliability of ThinLinc and the network connection. Having a local installation of IGV gives you the freedom to download the BAM files and inspect them locally.
+
 ### MobaXterm^\*^
 
 [![](assets/images/precourse/mobaxterm.webp){.precourse-tool}](http://mobaxterm.mobatek.net) [{{< fa brands windows >}}]{.badge} If you are on a Windows system, and you want to open graphical applications from the terminal, we recommend [MobaXterm](http://mobaxterm.mobatek.net). It is recommended that you INSTALL the program and not use the portable version. MobaXterm also has an integrated SFTP file browser.
