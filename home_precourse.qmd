@@ -40,9 +40,9 @@ Checking your request and approving your account requires some manual work, so y
 
 ## Install tools
 
-### Eduroam
+### Zoom
 
-[![](assets/images/precourse/eduroam.webp){.precourse-tool}](https://eduroam.org/) [{{< fa brands ubuntu >}} {{< fa brands apple >}} {{< fa brands windows >}}]{.badge} Please make sure you have a working [Eduroam](https://eduroam.org/) wifi connection setup before the course, since we will only have wifi internet access in the computer room where we have the course. The instructions on how to get it working could differ university to university, so please refere to you home university's instructions on how to do that. Try searching for "eduroam" and your home university, e.g. `eduroam uppsala university`, to find it.
+[![](assets/images/precourse/zoom.webp){.precourse-tool}](https://www.zoom.com) [{{< fa brands ubuntu >}} {{< fa brands apple >}} {{< fa brands windows >}}]{.badge} We will use Zoom for the online sessions. please download and install the latest version for your OS.
 
 ### ThinLinc 
 
@@ -65,3 +65,11 @@ Checking your request and approving your account requires some manual work, so y
 [![](assets/images/precourse/filezilla.webp){.precourse-tool}](https://filezilla-project.org/) [{{< fa brands ubuntu >}} {{< fa brands apple >}} {{< fa brands windows >}}]{.badge} When you need to transfer data between the remote cluster and your computer, you can use the tools SCP or SFTP through the terminal. Windows users can use the SFTP browser available with MobaXterm. If you prefer a GUI to upload and download files from the remote cluster, we recommend installing [FileZilla](https://filezilla-project.org/).
 
 ^\*^ Optional
+
+### Eduroam
+
+::: {.callout-note}
+This is is only relevant for on-site courses.
+:::
+
+[![](assets/images/precourse/eduroam.webp){.precourse-tool}](https://eduroam.org/) [{{< fa brands ubuntu >}} {{< fa brands apple >}} {{< fa brands windows >}}]{.badge} Please make sure you have a working [Eduroam](https://eduroam.org/) wifi connection setup before the course, since we will only have wifi internet access in the computer room where we have the course. The instructions on how to get it working could differ university to university, so please refere to you home university's instructions on how to do that. Try searching for "eduroam" and your home university, e.g. `eduroam uppsala university`, to find it.
