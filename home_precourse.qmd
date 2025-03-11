@@ -50,9 +50,9 @@ You will get one username & password for the account on UPPMAX, and one username
 
 ## Install tools
 
-### Eduroam
+### Zoom
 
-[![](assets/images/precourse/eduroam.webp){.precourse-tool}](https://eduroam.org/) [{{< fa brands ubuntu >}} {{< fa brands apple >}} {{< fa brands windows >}}]{.badge} Please make sure you have a working [Eduroam](https://eduroam.org/) wifi connection setup before the course, since we will only have wifi internet access in the computer room where we have the course. The instructions on how to get it working could differ university to university, so please refere to you home university's instructions on how to do that. Try searching for "eduroam" and your home university, e.g. `eduroam uppsala university`, to find it.
+[![](assets/images/precourse/zoom.webp){.precourse-tool}](https://www.zoom.com) [{{< fa brands ubuntu >}} {{< fa brands apple >}} {{< fa brands windows >}}]{.badge} We will use Zoom for the online sessions. please download and install the latest version for your OS.
 
 ### ThinLinc 
 
@@ -75,6 +75,14 @@ You will get one username & password for the account on UPPMAX, and one username
 [![](assets/images/precourse/filezilla.webp){.precourse-tool}](https://filezilla-project.org/) [{{< fa brands ubuntu >}} {{< fa brands apple >}} {{< fa brands windows >}}]{.badge} When you need to transfer data between the remote cluster and your computer, you can use the tools SCP or SFTP through the terminal. Windows users can use the SFTP browser available with MobaXterm. If you prefer a GUI to upload and download files from the remote cluster, we recommend installing [FileZilla](https://filezilla-project.org/).
 
 ^\*^ Optional
+
+### Eduroam
+
+::: {.callout-note}
+This is is only relevant for on-site courses.
+:::
+
+[![](assets/images/precourse/eduroam.webp){.precourse-tool}](https://eduroam.org/) [{{< fa brands ubuntu >}} {{< fa brands apple >}} {{< fa brands windows >}}]{.badge} Please make sure you have a working [Eduroam](https://eduroam.org/) wifi connection setup before the course, since we will only have wifi internet access in the computer room where we have the course. The instructions on how to get it working could differ university to university, so please refere to you home university's instructions on how to do that. Try searching for "eduroam" and your home university, e.g. `eduroam uppsala university`, to find it.
 
 ::: {.callout-tip}
 If you want to get a primer on using the terminal, you can get started with the following **Tutorial One** at this link [Unix tutorial for beginners](http://www.ee.surrey.ac.uk/Teaching/Unix/). You can use [https://scilifelab.github.io/courses/ngsintro/common/emu/](https://scilifelab.github.io/courses/ngsintro/common/emu/) [(or this mirror)](https://bellard.org/jslinux/vm.html?url=https://bellard.org/jslinux/buildroot-x86.cfg) to try the commands in the tutorial, so that you don't mess up any real world system. If you have any questions regarding this tutorial contact: *martin.dahlo [at] nbis.se*.
