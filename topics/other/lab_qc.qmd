@@ -143,13 +143,23 @@ ls -lrt
 
 ## Check the results
 
-The output from FastQC is a HTML report that should be opened in a web browser. When you have connected to PDC via ThinLinc you can open it on Dardel with this command:
+The output from FastQC is a HTML report that should be opened in a web browser.  
+
+One option is to download the output to your local computer and open the file in your local web browser.  
+To do this, first open a new terminal window on your local computer and navigate to a folder where you want to keep the files.   
+Then download all generated .html files to that folder with this command (replace `username` with your username):  
+```bash
+scp username@dardel.pdc.kth.se:{{< meta path_workspace >}}/qc/*.html .
+```
+The files can now be opened from your local web browser by navigting to the same folder.  
+
+If you have connected to PDC via ThinLinc you can open it on Dardel with this command:
 
 ```bash
 firefox --no-remote filename.html &
 ```
 
-We have made the output files that you just created available through the links below, so that you can look at them via your local web-browser:
+We have also made the output files that you just created available through the links below, so that you can look at them via your local web-browser:
 
 Sample        | Read 1 | Read 2
 ------------- | ---------- | --------
