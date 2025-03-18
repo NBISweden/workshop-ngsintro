@@ -102,16 +102,15 @@ cat(paste0(refdir))
 
 # Preparations {-}
 
-## Laptop {#preparelaptop -}
-This lab will be done completely on Dardel and the instructions assume that you connect via ThinLinc.
-However, if you prefer to connect to Dardel via ssh you can instead copy some of the resulting files to your laptop and work on them there. , install IGV, and run all the IGV steps on your laptop.
-If so, please create a local workspace on your laptop, for example a folder called *vc* on your desktop. You need to have write permission in this folder.
-If you connect to Dardel via ThinLinc you don't have to create a local workspace.
-
+## local workspace {#preparelaptop -}
+This lab can be done completely on Dardel if you connect via ThinLinc. Unfortunately the number of licences for ThinLink on Dardel is limited, so during the workshop when everyone connects at the same time we can not rely on ThinLink.   
+When you connect to Dardel via ssh you can instead copy some of the resulting files to your laptop, install IGV locally, and run all the IGV steps on your laptop. This is the recommended way of working during the workshop.   
+Please start by creating a local workspace on your laptop, for example a folder called *vc* on your desktop. You need to have write permission in this folder. The folder you create here will be referred to as *local workspace* throughout this workshop.    
+  
 ## HPC cluster {-}
 ### Connect to PDC {-}
 
-During this lab it is best to connect to Dardel with ThinLinc, which gives you a graphical remote desktop. Instructions for this is available at [**Connecting to PDC**](../other/lab_connect_pdc.html). Please follow the instructions in section 1.2 Remote desktop connection.
+Please follow the instructions for connecting to PDC at [**Connecting to PDC**](../other/lab_connect_pdc.html) under section 1.2 Connecting to PDC using SSH.
 
 ### Logon to a node {-}
 
@@ -127,13 +126,13 @@ If no jobs are listed you should allocate a job for this lab. If you already hav
 Use this code to allocate a job on Wednesday:
 
 ```bash
-salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_wed >}} -t 04:00:00 -p shared -c 4 --no-shell
+salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_wed >}} -t 04:00:00 -p shared -c 8 --no-shell
 ```
 
 Use this code to allocate a job on Thursday:
 
 ```bash
-salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_thu >}} -t 04:00:00 -p shared -c 4 --no-shell
+salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_thu >}} -t 04:00:00 -p shared -c 8 --no-shell
 ```
 
 Once your job allocation has been granted (should not take long) please check the allocation again using:
@@ -142,7 +141,7 @@ Once your job allocation has been granted (should not take long) please check th
 squeue -u username
 ```
 
-You should now see that you have an active job allocation. The node name for your job is listed under the nodelist header.<br/>
+You should now see that you have an active job allocation. The node name for your job is listed under the node list header.<br/>
 
 **Connect to the node:**
 ```bash
@@ -238,7 +237,7 @@ samtools faidx human_g1k_v37_chr2.fasta
 Check to see what file(s) were created using `ls -lrt`. Then Generate a GATK sequence dictionary:
 
 ```bash
-gatk --java-options -Xmx2g CreateSequenceDictionary -R human_g1k_v37_chr2.fasta -O human_g1k_v37_chr2.dict
+gatk --java-options -Xmx4g CreateSequenceDictionary -R human_g1k_v37_chr2.fasta -O human_g1k_v37_chr2.dict
 ```
 
 Again, check what file(s) were created using `ls -lrt`.
@@ -322,32 +321,23 @@ Please have a look at the [Sequence Alignment/Map Format Specification](https://
 
 ### Check bam in IGV
 
-To use IGV on Dardel we recommend that you are connected via ThinLinc.
-Alternatively you can install IGV on your local computer, download the files using scp, and look at them locally.
-The instructions below assume that you have logged in to Dardel via ThinLinc.\
-IGV uses java, and unfortunately it uses another version of Java than the installed version of GATK. Therefore you will not be able to use IGV and GATK in the same terminal window (this might be different if you work on another compute system later on!). 
-Because of this you need to open a new terminal window on Dardel to run IGV. 
-Open a new terminal window and navigate to your workspace for this lab. Use pwd to confirm that you are standing in the correct directory:
+**Install IGV**  
 
+Integrated Genomics Viewer (IGV) provides an interactive visualisation of the reads in a bam file. Here we will show you how to run IGV on your laptop. If you have not used IGV on your laptop before, then go to the IGV [download page](https://software.broadinstitute.org/software/igv/download), and follow the instructions to download it. It will prompt you to fill in some information and agree to license. Launch the viewer through web start. The 1.2 Gb version should be sufficient for our data.
+  
+**Download the bam file** 
+
+You also need to download the bam file and the corresponding .bai file to your laptop. 
+Navigate to your [local workspace](#preparelaptop), but do not log in to UPPMAX. Copy the .bam and .bam.bai files you just generated with this command:
 ```bash
-pwd
+scp username@dardel.pdc.kth.se:{{< meta path_workspace >}}/vc/HG00097.bam* .
 ```
 
-Should return
-```
-{{< meta path_workspace >}}/vc
-```
-To start IGV please type this in the terminal:
-
-```bash
-module load bioinfo-tools
-module load IGV
-igv.sh &
-```
+Check that the files are now present in your *local workspace* using `ls -lrt`. 
 
 In IGV:\
 In the upper left dropdown menu choose `Human hg19` (which is the same as GRCh37).\
-In the `File` menu, select `Load from File`, navigate to your workspace for the lab, and select `HG00097.bam`. This data should now appear as a track in the tracks window.\
+In the `File` menu, select `Load from File`, navigate to your workspace, and select `HG00097.bam`. This data should now appear as a track in the tracks window.\
 You need to Zoom in to see the reads. You can either select a region by click and drag, or by typing a region or a gene name in the text box at the top. Remember that we have data for the region chr2:136545000-136617000 which covers the *LTC* gene, so you can type this region or the gene name in the search box .\
 IGV can be closed by selecting exit in the `File` menu or by clicking `x` in the upper right corner of the IGV window, but you can keep it open for the rest of the lab.
 
@@ -361,7 +351,7 @@ IGV can be closed by selecting exit in the `File` menu or by clicking `x` in the
 
 ### HaplotypeCaller {#haplotypecaller}
 
-Now we will detect short variants in the bam file using GATK's `HaplotypeCaller`. First use pwd to check if you are standing in the correct directory:
+Now we will detect short variants in the bam file using GATK's `HaplotypeCaller`. Go back to your workspace on Dardel, and use pwd to check if you are standing in the correct directory:
 
 ```bash
 pwd
@@ -374,7 +364,7 @@ Should return
 Then run:
 
 ```bash
-gatk --java-options -Xmx2g HaplotypeCaller \
+gatk --java-options -Xmx4g HaplotypeCaller \
 -R human_g1k_v37_chr2.fasta \
 -I HG00097.bam \
 -O HG00097.vcf
@@ -386,8 +376,8 @@ Check what new files were generated with `ls -lrt`.
 
 Now you have your first vcf file containing the raw variants in the region chr2:136545000-136617000 in sample HG00097. Please look at the vcf file with `less` and try to understand its structure.  
 
-Vcf files contains meta-information lines starting with *##*, a header line starting with *#CHROM*, and then data lines each containing information about one variant position in the genome. The header line defines the columns of the data lines, and to view the header line you can type this command:  
-
+Vcf files contains meta-information lines starting with *##*, a header line starting with *#CHROM*, and then data lines each containing information about one variant position in the genome. The header line defines the columns of the data lines, and to view the header line you can type this command:
+  
 ```bash
 grep '#CHROM' HG00097.vcf
 ```
@@ -440,7 +430,7 @@ For more detailed information about vcf files please have a look at [The Variant
 
 ### Check vcf in IGV {#vcfinigv}
 
-We assume that you have logged in to Dardel via ThinLinc.\
+Download the file HG00097.vcf to your local workspace as described above for the bam and bam.bai files.\
 If you have closed IGV please open it again as described above.\
 Load the file HG00097.vcf into tracks window of IGV as you did with the HG00097.bam file earlier (load the bam file as well if it is not already loaded). You will now see all the variants called in HG00097.\
 You can view variants in the *LCT* gene by typing the gene name in the search box, and you can look specifically at the variant at position chr2:136545844 by typing that position in the search box.\
@@ -514,7 +504,7 @@ Should return
 Then:
 
 ```bash
-gatk --java-options -Xmx2g HaplotypeCaller \
+gatk --java-options -Xmx4g HaplotypeCaller \
 -R human_g1k_v37_chr2.fasta \
 -ERC GVCF \
 -I sample.bam \
@@ -548,7 +538,7 @@ Should return
 Then:
 
 ```bash
-gatk --java-options -Xmx2g CombineGVCFs \
+gatk --java-options -Xmx4g CombineGVCFs \
 -R human_g1k_v37_chr2.fasta \
 -V sample1.g.vcf \
 -V sample2.g.vcf \
@@ -560,7 +550,7 @@ Please replace `sample1`, `sample2`, `sample3` with the real sample names.
 Then run GATK's `GenoteypeGVC` to generate a vcf file:
 
 ```bash
-gatk --java-options -Xmx2g GenotypeGVCFs \
+gatk --java-options -Xmx4g GenotypeGVCFs \
 -R human_g1k_v37_chr2.fasta \
 -V cohort.g.vcf \
 -O cohort.vcf
@@ -583,7 +573,7 @@ cat(paste0(vcfdir,'/cohort.vcf\n'))
 
 ## Check combined vcf file in IGV
 
-Again we assume that you have logged in to Dardel via ThinLinc.\
+Again you have to download the files to your local workspace to look at them in IGV. This time you need to download cohort.vcf, HG00097.bam, HG00100.bam and HG00101.bam and the corresponding index files.\
 If you have closed IGV please open it again as described above.\
 Load the files cohort.vcf, HG00097.bam, HG00100.bam and HG00101.bam into IGV as described earlier.\
 This time lets look closer at the variant rs4988235, located at position chr2:136608646 in the HG19 reference genome. This is the variant that has been shown to lead to lactase persistence.\
@@ -619,13 +609,13 @@ If a duplicated read contains a genetic variant, the ratio of the two alleles mi
 Please read about Picard's `MarkDuplicates` [here](https://gatk.broadinstitute.org/hc/en-us/articles/360037225972-MarkDuplicates-Picard-). Picard's MarkDuplicates has recently been incorporated into the GATK suite, but the usage example in GATKs documentation describes how to call it via the stand alone Picard program. To learn how to use it as part of the GATK module, please call MarkDuplicates without input parameters like this:
 
 ```bash
-gatk --java-options -Xmx2g MarkDuplicates
+gatk --java-options -Xmx4g MarkDuplicates
 ```
 
 Please run MarkDuplicates on all three bam files generated in step 2.1. Here is the code for running MarkDuplicates on the sample HG00097:
 
 ```bash
-gatk --java-options -Xmx2g MarkDuplicates \
+gatk --java-options -Xmx4g MarkDuplicates \
     -I HG00097.bam \
     -O HG00097.md.bam \
     -M HG00097_mdmetrics.txt
@@ -645,7 +635,7 @@ Please recalibrate the base quality scores in all the bam files generated in the
 First run BaseRecalibrator:
 
 ```{r,echo=FALSE,comment="",class.output="sh"}
-cat(paste0('gatk --java-options -Xmx2g BaseRecalibrator \\
+cat(paste0('gatk --java-options -Xmx4g BaseRecalibrator \\
     -R human_g1k_v37_chr2.fasta \\
     -I HG00097.md.bam \\
     --known-sites ',refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf \\
@@ -655,7 +645,7 @@ cat(paste0('gatk --java-options -Xmx2g BaseRecalibrator \\
 Then run ApplyBQSR:
 
 ```bash
-gatk --java-options -Xmx2g ApplyBQSR \
+gatk --java-options -Xmx4g ApplyBQSR \
     -R human_g1k_v37_chr2.fasta \
     -I HG00097.md.bam \
     --bqsr-recal-file HG00097.recal.table \
@@ -683,13 +673,13 @@ An explanation of what the hard filters do can be found [here](https://gatk.broa
 Example solution for filtering SNVs:
 
 ```bash
-gatk --java-options -Xmx2g SelectVariants \
+gatk --java-options -Xmx4g SelectVariants \
   -R human_g1k_v37_chr2.fasta \
   -V cohort.vcf \
   --select-type-to-include SNP \
   -O cohort.snvs.vcf
 
-gatk --java-options -Xmx2g VariantFiltration \
+gatk --java-options -Xmx4g VariantFiltration \
   -R human_g1k_v37_chr2.fasta \
   -V cohort.snvs.vcf \
   -O cohort.snvs.filtered.vcf \
@@ -701,13 +691,13 @@ gatk --java-options -Xmx2g VariantFiltration \
 Example solution for filtering INDELs:
 
 ```bash
-gatk --java-options -Xmx2g SelectVariants \
+gatk --java-options -Xmx4g SelectVariants \
   -R human_g1k_v37_chr2.fasta \
   -V cohort.vcf \
   --select-type-to-include INDEL \
   -O cohort.indels.vcf
 
-gatk --java-options -Xmx2g VariantFiltration \
+gatk --java-options -Xmx4g VariantFiltration \
   -R human_g1k_v37_chr2.fasta \
   -V cohort.indels.vcf \
   -O cohort.indels.filtered.vcf \
@@ -718,7 +708,7 @@ gatk --java-options -Xmx2g VariantFiltration \
 Example solution for merging filtered SNVs and INDELs:
 
 ```bash
-gatk --java-options -Xmx2g MergeVcfs \
+gatk --java-options -Xmx4g MergeVcfs \
     -I cohort.snvs.filtered.vcf \
     -I cohort.indels.filtered.vcf \
     -O cohort.filtered.vcf
@@ -760,7 +750,7 @@ Below is a skeleton script that can be used as a template for running [variant c
 cat(paste0('#!/bin/bash
 #SBATCH -A ',id_project,' 
 #SBATCH -p shared
-#SBATCH -c 4
+#SBATCH -c 8
 #SBATCH -t 1:00:00
 #SBATCH -J JointVariantCalling
 
@@ -808,7 +798,7 @@ If you would like more help with creating the sbatch script, please look at our 
 cat(paste0('#!/bin/bash
 #SBATCH -A ',id_project,'
 #SBATCH -p shared
-#SBATCH -c 4
+#SBATCH -c 8
 #SBATCH -t 2:00:00
 #SBATCH -J JointVariantCalling
 
@@ -826,21 +816,21 @@ do
 
   samtools index "${sample}.bam"
 
-  gatk --java-options -Xmx2g HaplotypeCaller \\
+  gatk --java-options -Xmx4g HaplotypeCaller \\
   -R human_g1k_v37_chr2.fasta \\
   -ERC GVCF -I "${sample}.bam" \\
   -O "${sample}.g.vcf"
 
 done
 
-gatk --java-options -Xmx2g CombineGVCFs \\
+gatk --java-options -Xmx4g CombineGVCFs \\
 -R human_g1k_v37_chr2.fasta \\
 -V HG00097.g.vcf \\
 -V HG00100.g.vcf \\
 -V HG00101.g.vcf \\
 -O cohort.g.vcf
 
-gatk --java-options -Xmx2g GenotypeGVCFs \\
+gatk --java-options -Xmx4g GenotypeGVCFs \\
 -R human_g1k_v37_chr2.fasta \\
 -V cohort.g.vcf \\
 -O cohort.vcf'))
@@ -861,7 +851,7 @@ Now please try to incorporate the additional steps from [GATK's best practices](
 cat(paste0('#!/bin/bash
 #SBATCH -A ',id_project,'
 #SBATCH -p shared
-#SBATCH -c 4
+#SBATCH -c 8
 #SBATCH -t 2:00:00
 #SBATCH -J BestPractise
 
@@ -886,7 +876,7 @@ ln -s /sw/courses/ngsintro/vc/data/fastq/HG00101_2.fq
 # index reference genome
 bwa index -a bwtsw human_g1k_v37_chr2.fasta
 samtools faidx human_g1k_v37_chr2.fasta
-gatk --java-options -Xmx2g CreateSequenceDictionary \\
+gatk --java-options -Xmx4g CreateSequenceDictionary \\
 -R human_g1k_v37_chr2.fasta \\
 -O human_g1k_v37_chr2.dict
 
@@ -902,26 +892,26 @@ do
 
   samtools index $sample".bam"
   # mark duplicates
-  gatk --java-options -Xmx2g MarkDuplicates \\
+  gatk --java-options -Xmx4g MarkDuplicates \\
   -I "${sample}.bam" \\
   -O "${sample}.md.bam" \\
   -M "${sample}_mdmetrics.txt"
 
   # base quality score recalibration
-  gatk --java-options -Xmx2g BaseRecalibrator \\
+  gatk --java-options -Xmx4g BaseRecalibrator \\
   -R human_g1k_v37_chr2.fasta \\
   -I "${sample}.md.bam" \\
   --known-sites "${ref}/1000G_phase1.snps.high_confidence.b37.chr2.vcf" \\
   -O "${sample}.recal.table"
 
-  gatk --java-options -Xmx2g ApplyBQSR \\
+  gatk --java-options -Xmx4g ApplyBQSR \\
   -R human_g1k_v37_chr2.fasta \\
   -I "${sample}.md.bam" \\
   --bqsr-recal-file "${sample}.recal.table" \\
   -O "${sample}.recal.bam"
 
   # haplotypeCaller in -ERC mode
-  gatk --java-options -Xmx2g HaplotypeCaller \\
+  gatk --java-options -Xmx4g HaplotypeCaller \\
   -R human_g1k_v37_chr2.fasta \\
   -ERC GVCF \\
   -I "${sample}.bam" \\
@@ -929,26 +919,26 @@ do
 done
 
 # joint genotyping
-gatk --java-options -Xmx2g CombineGVCFs \\
+gatk --java-options -Xmx4g CombineGVCFs \\
 -R human_g1k_v37_chr2.fasta \\
 -V HG00097.g.vcf \\
 -V HG00100.g.vcf \\
 -V HG00101.g.vcf \\
 -O cohort.g.vcf
 
-gatk --java-options -Xmx2g GenotypeGVCFs \\
+gatk --java-options -Xmx4g GenotypeGVCFs \\
 -R human_g1k_v37_chr2.fasta \\
 -V cohort.g.vcf \\
 -O cohort.vcf
 
 # variant filtration SNPs
-gatk --java-options -Xmx2g SelectVariants \\
+gatk --java-options -Xmx4g SelectVariants \\
 -R human_g1k_v37_chr2.fasta \\
 -V cohort.vcf \\
 --select-type-to-include SNP \\
 -O cohort.snvs.vcf
 
-gatk --java-options -Xmx2g VariantFiltration \\
+gatk --java-options -Xmx4g VariantFiltration \\
 -R human_g1k_v37_chr2.fasta \\
 -V cohort.snvs.vcf \\
 --filter-name QDfilter --filter-expression "QD < 2.0" \\
@@ -957,13 +947,13 @@ gatk --java-options -Xmx2g VariantFiltration \\
 -O cohort.snvs.filtered.vcf
 
 # variant filtration indels
-gatk --java-options -Xmx2g SelectVariants \\
+gatk --java-options -Xmx4g SelectVariants \\
 -R human_g1k_v37_chr2.fasta \\
 -V cohort.vcf \\
 --select-type-to-include INDEL \\
 -O cohort.indels.vcf
 
-gatk --java-options -Xmx2g VariantFiltration \\
+gatk --java-options -Xmx4g VariantFiltration \\
 -R human_g1k_v37_chr2.fasta \\
 -V cohort.indels.vcf \\
 --filter-name QDfilter --filter-expression "QD < 2.0" \\
@@ -971,7 +961,7 @@ gatk --java-options -Xmx2g VariantFiltration \\
 -O cohort.indels.filtered.vcf
 
 # merge filtered SNPs and indels
-gatk --java-options -Xmx2g MergeVcfs \\
+gatk --java-options -Xmx4g MergeVcfs \\
 -I cohort.snvs.filtered.vcf \\
 -I cohort.indels.filtered.vcf \\
 -O cohort.filtered.vcf'))
