@@ -28,7 +28,7 @@ RNA-seq has become a powerful approach to study the continually changing cellula
 
 - Check the quality of the raw reads with **FastQC**
 - Map the reads to the reference genome using **HISAT2**
-- Assess the post-alignment quality using **Qualimap** or **Picard**
+- Assess the post-alignment quality using **Qualimap**
 - Count the reads overlapping with genes using **featureCounts**
 - Find DE genes using **DESeq2** in R
 
@@ -36,7 +36,7 @@ RNA-seq experiment does not necessarily end with a list of DE genes. If you have
 
 **Bonus exercises**
 
-- 01 Functional annotation of DE genes using **GO/Reactome** databases
+- 01 Functional annotation of DE genes using **GO** database
 - 02 RNA-Seq figures and plots using **R**
 - 03 Visualisation of RNA-seq BAM files using **IGV** genome browser
 
@@ -86,11 +86,11 @@ The main exercise covers Differential Gene Expression (DGE) workflow from raw re
 ::: {.callout-tip}
 ## Use ThinLinc
 
-If you have issues opening GUI windows from HPC through the terminal, it is recommended to use ThinLinc.
+If you have issues opening GUI windows from HPC through the terminal, you can use ThinLinc.
 
 :::
 
-If you are not on ThinLinc, connect to HPC first. {{< fa exclamation-circle >}} Remember to replace username.
+If you are not on ThinLinc, connect to HPC first. For instructions, see **Contents > Connecting to HPC**. {{< fa exclamation-circle >}} Remember to replace username.
 
 ```sh
 ssh -XY username@{{< meta url_cluster >}}
@@ -124,9 +124,9 @@ ssh -Y nodename
 
 #### Set-up directory
 
-Setting up the directory structure is an important step as it helps to keep our raw data, intermediate data and results in an organised manner. We suggest a location in your home directory for the whole workshop (`{{< meta path_workspace >}}`) and within that a directory for this lab (`{{< meta path_workspace >}}/rnaseq`).
+Setting up the directory structure is an important step as it helps to keep our raw data, intermediate data and results in an organised manner. We suggest a location for the whole workshop (`{{< meta path_workspace >}}`).
 
-Create a directory named `rnaseq`.
+Within that, create a directory named `rnaseq`.
 
 ```sh
 cd {{< meta path_workspace >}}
@@ -147,21 +147,18 @@ rnaseq/
   +-- reference/
   |   +-- mouse_chr19_hisat2/
   +-- scripts/
-  +-- funannot/
-  +-- plots
 ```
 
 ```sh
 cd rnaseq
-mkdir 1_raw 2_fastqc 3_mapping 4_qualimap 5_dge 6_multiqc reference scripts funannot plots
-cd reference
-mkdir mouse_chr19_hisat2
-cd ..
+mkdir 1_raw 2_fastqc 3_mapping 4_qualimap 5_dge 6_multiqc reference scripts reference/mouse_chr19_hisat2
 ```
 
-The `1_raw` directory will hold the raw fastq files (soft-links). `2_fastqc` will hold FastQC outputs. `3_mapping` will hold the mapping output files. `4_qualimap` will hold the post alignment QC output. `5_dge` will hold the counts from featureCounts and all differential gene expression related files. `6_multiqc` will hold MultiQC outputs. `reference` directory will hold the reference genome, annotations and aligner indices. The `funannot` and `plots` directory are optional for bonus steps.
+The `1_raw` directory will hold the raw fastq files. `2_fastqc` will hold FastQC outputs. `3_mapping` will hold the mapping output files. `4_qualimap` will hold the post alignment QC output. `5_dge` will hold the counts from featureCounts and all differential gene expression related files. `6_multiqc` will hold MultiQC outputs. `reference` directory will hold the reference genome, annotations and aligner indices.
 
-{{< fa lightbulb >}} It might be a good idea to open an additional terminal window. One to navigate through directories and another for scripting in the `scripts` directory.
+::: {.callout-tip}
+It might be a good idea to open an additional terminal window. One to navigate through directories and another for scripting in the `scripts` directory.
+:::
 
 #### Create symbolic links
 
@@ -178,7 +175,7 @@ pwd
 {{< meta path_workspace >}}/rnaseq/1_raw
 ```
 
-Run below to create softlinks. Note that the command ends in a space followed by a period.
+Run below to create softlinks. {{< fa exclamation-circle >}} Note that the command ends in a space followed by a period.
 
 ```sh
 ln -s {{< meta path_resources >}}/rnaseq/dardel/main/1_raw/*.gz .
@@ -472,7 +469,7 @@ Let's break this down a bit. `-p` options denotes that it will use 1 thread. In 
 
 But, we will not run it as above. We will make some more changes to it. We want to make the following changes:
 
-- Rather than writing the output as a SAM file, we want to direct the output to another tool `samtools` to order alignments by coordinate and to export in BAM format
+- Rather than writing the output as a SAM file, we want to 'pipe' the output to another tool `samtools` to order alignments by coordinate and to export in BAM format
 - Generalise the above script to be used as a bash script to read any two input files and to automatically create the output filename.
 
 {{< fa clipboard-list >}} Now create a new bash script file named `hisat2_align.sh` in your `scripts` directory and add the script below to it.
@@ -1252,9 +1249,9 @@ hisat2 \\
  -2 $2 | samtools sort -O BAM > "${prefix}.bam
 ```
 
-The `SBATCH` commands in the above script is specifying the account name to use resources from, the required number of cores, the time required for the job and a job name.
+The `SBATCH` commands in the above script is specifying the account name (`-A`) to use resources from, the partition (`-p`) ie; a core or a node, the required number of partitions (`-c`), the maximum time limit for the job (`-t`) and a job name (`-J`).
 
-{{< fa lightbulb >}} If you run this as a normal bash script like this `./hisat2_align.sh ...` or `bash ./hisat2_align.sh ...`, the `SBATCH` comments have no effect (they are treated as comments) and the contents of the script will immediately start executing. But if you run this as script as `sbatch ./hisat2_align.sh ...`, the script is submitted as a job to the HPC Slurm queue. In this case, the `SBATCH` lines are interpreted and used by Slurm. At some point, your submitted job will reach the top of the queue and then the script will start to be executed.
+{{< fa lightbulb >}} If you run this as a normal bash script like this `./hisat2_align.sh` or `bash ./hisat2_align.sh`, the `SBATCH` comments have no effect (they are treated as comments) and the contents of the script will immediately start executing. But if you run this as script as `sbatch ./hisat2_align.sh ...`, the script is submitted as a job to the HPC Slurm queue. In this case, the `SBATCH` lines are interpreted and used by Slurm. At some point, your submitted job will reach the top of the queue and then the script will start to be executed.
 
 You can check your jobs in the queue by running the following command.
 
@@ -1283,7 +1280,7 @@ cat slurm-XXXX.out
 You are not required to run anything practically in this section. This is just to read and understand.
 :::
 
-Everything you have done today and more is easily done using structured pipelines. [Nextflow](https://www.nextflow.io/) is a popular framework for creating bioinformatic pipelines and [nf-core](https://nf-co.re/) is a collection of curated analyses pipelines. Here, we will discuss the steps for analysing our current dataset using the [nf-core rnaseq](https://nf-co.re/rnaseq) pipeline for bulk RNA-Seq. The nf-core website and pipeline specific pages are good sources of information on what the pipeline does and what parameters can be changed.
+Everything you have done today and more is easily done using structured pipelines. For standard analyses, pipelines are strongly recommended for reproducibility. [Nextflow](https://www.nextflow.io/) is a popular framework for creating bioinformatic pipelines and [nf-core](https://nf-co.re/) is a collection of curated analyses pipelines. Here, we will discuss the steps for analysing our current dataset using the [nf-core rnaseq](https://nf-co.re/rnaseq) pipeline for bulk RNA-Seq. The nf-core website and pipeline specific pages are good sources of information on what the pipeline does and what parameters can be changed.
 
 ![](https://raw.githubusercontent.com/nf-core/rnaseq/3.17.0/docs/images/nf-core-rnaseq_metro_map_grey.png)
 
@@ -1506,7 +1503,7 @@ This pipeline takes you from raw reads to counts including read QC, mapping, map
 
 For standard analyses steps, it is recommended to use a pipeline as the tools are up-to-date and the analyses steps are reproducible using exactly the same versions of tools.
 
-## Simon's analysis
+## A critical reanalysis
 
 We had [Simon Andrews](https://www.babraham.ac.uk/science-services/bioinformatics/simon-andrews) from the Babraham institute with us on one of the workshops and he did his own exploration into the dataset from this paper using his tool [SeqMonk](http://www.bioinformatics.babraham.ac.uk/projects/seqmonk/). It's an excellent read and highly recommended. His report is available [here](simon-report/validating_knockout.html).
 
@@ -1514,4 +1511,4 @@ We had [Simon Andrews](https://www.babraham.ac.uk/science-services/bioinformatic
 
 We hope that you enjoyed getting your hands wet working on some real-ish data. In this tutorial, we have covered the most important data processing steps that may be sufficient when the libraries are of good quality. If not, there are plenty of troubleshooting procedures to try before discarding the data. And once the count table is in place, the biostatistics and data mining begins. There are no well-defined solutions here, all depends on the experiment and questions to be asked, but we strongly advise learning R and/or Python. Not only to use the specifically designed statistical packages to analyse NGS count data, but also to be able to handle the data and results as well as to generate high-quality plots. There are many available tools and well-written tutorials with examples to learn from.
 
-For those interested in RNA-Seq analysis, SciLifeLab offers a more advanced course in RNA-Seq analysis each semester. For more information, see [SciLifeLab events](https://www.scilifelab.se/events/).
+For those interested in RNA-Seq analysis, NBIS offers more advanced courses in bulk RNA-Seq and single-cell RNA-Seq. For more information, see [SciLifeLab training](https://training.scilifelab.se/) and/or [NBIS training](https://nbis.se/training).
