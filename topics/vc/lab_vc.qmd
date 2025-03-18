@@ -328,14 +328,14 @@ Integrated Genomics Viewer (IGV) provides an interactive visualisation of the re
 **Download the bam file** 
 
 You also need to download the bam file and the corresponding .bai file to your laptop. 
-Navigate to your [local workspace](#preparelaptop), but do not log in to UPPMAX. Copy the .bam and .bam.bai files you just generated with this command:
+Navigate to your [local workspace](#preparelaptop), but do not log in to UPPMAX. Copy the .bam and .bam.bai files you just generated with this command  (replace `username` with your username):
 ```bash
 scp username@dardel.pdc.kth.se:{{< meta path_workspace >}}/vc/HG00097.bam* .
 ```
 
 Check that the files are now present in your *local workspace* using `ls -lrt`. 
 
-In IGV:\
+Open IGV on your laptop.\
 In the upper left dropdown menu choose `Human hg19` (which is the same as GRCh37).\
 In the `File` menu, select `Load from File`, navigate to your workspace, and select `HG00097.bam`. This data should now appear as a track in the tracks window.\
 You need to Zoom in to see the reads. You can either select a region by click and drag, or by typing a region or a gene name in the text box at the top. Remember that we have data for the region chr2:136545000-136617000 which covers the *LTC* gene, so you can type this region or the gene name in the search box .\
