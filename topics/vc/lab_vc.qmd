@@ -102,7 +102,7 @@ cat(paste0(refdir))
 
 # Preparations {-}
 
-## local workspace {#preparelaptop -}
+## Local workspace {#preparelaptop -}
 This lab can be done completely on Dardel if you connect via ThinLinc. Unfortunately the number of licences for ThinLink on Dardel is limited, so during the workshop when everyone connects at the same time we can not rely on ThinLink.   
 When you connect to Dardel via ssh you can instead copy some of the resulting files to your laptop, install IGV locally, and run all the IGV steps on your laptop. This is the recommended way of working during the workshop.   
 Please start by creating a local workspace on your laptop, for example a folder called *vc* on your desktop. You need to have write permission in this folder. The folder you create here will be referred to as *local workspace* throughout this workshop.    
