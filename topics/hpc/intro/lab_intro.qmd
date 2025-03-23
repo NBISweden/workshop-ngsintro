@@ -97,9 +97,7 @@ user@login1 intro $ samtools
 That did not work, try it again after loading the module:
 
 ```bash
-user@login1 intro $ module load bioinfo-tools samtools/1.20
-Message: NOTE: The modules made available by loding this module are all PDC legacy, please consider loading PDC installed modules when available, as they are optimized for working on Dardel
-
+user@login1 intro $ module load samtools
 user@login1 intro $ samtools
 
 Program: samtools (Tools for alignments in the SAM format)

@@ -86,10 +86,13 @@ drwxrwxr-x  5 user user    2201600 May 14 14:02 work
 [12:57:36] user@login1 ~ $
 ```
 
-Usually when you are running analysis for real, you would not keep the data or analysis result files in your own home folder. You would store all files belonging to a project in a project folder that is shared among all the project members. Since this is a course project, we have not gotten a project folder so we will be storing all the files in a subfolder in our own home folder. We start off with creating this folder, our workspace, so that we have a place to organize our course files.
+We can start off with moving to this course's project folder. Each project has its own **proj folder** that contains all the files that belong to the project. The **proj** folder is not backed-up, so if a file is deleted by mistake it lost forever. If you have important scripts and other small files, you can keep them in your home folder, since the home folder is backed up.
+
+Since we are many students in this course project it is best to organize the files so that each students has their own subfolder to work in. We start off with creating this folder, your workspace, so that we have a place to organize your course files. We will use the command `mkdir` for this (**M**a**K**e **DIR**ectory)
 
 ```bash
-# create the course folder
+# create the folder where your files will be stored.
+# remember to replace 'username' with your actual username
 mkdir {{< meta path_workspace >}}
 ```
 
@@ -97,18 +100,35 @@ As seen in the lecture, the command for moving around is `cd`. The command stand
 
 To enter the course folder, simply type 
 ```bash
-cd {{< meta path_workspace >}}
+cd `r dirname(path_workspace)`
 ```
 
-We can easily see that this is a relative path, since it does not start with a `/`. That means that this command will only work when you are standing in your home folder. If you are standing somewhere else and say that you want to enter a folder named ``r basename(path_workspace)``, the computer will tell you that there is no folder named ``r basename(path_workspace)`` where you are located at the moment.
+If you type `ls -l` to look around you should see something like this:
+
+```bash
+[22:26:09] user@login1 /cfs/klemming/projects/supr/naiss2022-21-143 $ ls -l
+total 24K
+drwxr-sr-x 3 dinae   pg_naiss2022-21-143 4.0K Mar 18 09:17 dinae
+drwxr-sr-x 4 alina   pg_naiss2022-21-143 4.0K Mar 18 10:29 alina
+drwxr-sr-x 2 dahl    pg_naiss2022-21-143 4.0K Mar 17 11:22 dahl
+drwxr-sr-x 4 rofra   pg_naiss2022-21-143 4.0K Mar 18 16:31 rofra
+drwxr-sr-x 3 sebi    pg_naiss2022-21-143 4.0K Mar 21 14:53 sebi
+drwxr-sr-x 2 dahl    pg_naiss2022-21-143 4.0K Mar 23 22:26 username
+```
+
+There you should see the folder with your `username` you created a minute ago. `cd` into that folder:
+
+```bash
+cd username
+```
+
+We can easily see that this is a relative path, since it does not start with a `/`. That means that this command will only work when you are standing in the course folder. If you are standing somewhere else and say that you want to enter a folder named ``r basename(path_workspace)``, the computer will tell you that there is no folder named ``r basename(path_workspace)`` where you are located at the moment.
 
 The absolute path to the workspace folder would be  
   
 `{{< meta path_workspace >}}`
-or  
-``r paste0("/cfs/klemming/home/u/username/", basename(path_workspace))``  
-  
-if you write out the whole path to your home folder.
+
+as you used when creating the folder.
 
 It is the exact same thing as if you are using a GUI. If you are standing on your desktop, you can double click a folder which is located on your desktop. But if you are standing in another folder, you can't double click on that same folder, because it is just not located there. You have to move to your desktop first, and then double click it.
 
