@@ -5,9 +5,6 @@ author: 'Martin Dahlö'
 format: html
 ---
 
-## Zoom link for help over zoom
-[https://liu-se.zoom.us/j/65307893994](https://liu-se.zoom.us/j/65307893994)
-
 ## Connect to PDC
 
 The first step of this lab is to open a ssh connection to PDC. Please refer to [**Connecting to PDC**](../../other/lab_connect_pdc.html) for instructions. Once connected to PDC, return here and continue reading the instructions below.
