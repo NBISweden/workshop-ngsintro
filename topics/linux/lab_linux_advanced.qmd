@@ -254,7 +254,7 @@ Basic, without bonus points:
 <summary>Solution</summary>
 ```bash
 # load the modules needed for samtools
-module load bioinfo-tools samtools
+module load samtools
 
 # move to the SAM files directory to start with
 cd sam
@@ -274,7 +274,7 @@ Advanced, with bonus points:
 <summary>Solution</summary>
 ```bash
 # load the modules needed for samtools
-module load bioinfo-tools samtools
+module load samtools
 
 # move to the SAM files directory to start with.
 # $1 contains the first argument given to the program
@@ -331,7 +331,7 @@ Basic:
 <summary>Solution</summary>
 ```bash
 # load the modules needed for samtools
-module load bioinfo-tools samtools
+module load samtools
 
 # move to the SAM files directory to start with.
 cd sam
@@ -355,7 +355,7 @@ Advanced:
 <summary>Solution</summary>
 ```bash
 # load the modules needed for samtools
-module load bioinfo-tools samtools
+module load samtools
 
 cd $1
 

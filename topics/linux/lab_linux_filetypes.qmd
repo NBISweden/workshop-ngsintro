@@ -114,7 +114,7 @@ stemdefault/bin:/opt/cray/pe/mpich/8.1.28/ofi/crayclang/17.0/bin:
 Try loading a module, and then look at the `$PATH` variable again. You'll see that there are a few extra directories there now, after the module has been loaded.
 
 ```bash
-user@rackham2 work $ module load bioinfo-tools samtools/1.20
+user@rackham2 work $ module load samtools
 user@rackham2 work $ echo $PATH
 /pdc/software/eb/software/samtools/1.20/bin:/pdc/software/eb/soft
 ware/htslib/1.20/bin:/pdc/software/eb/software/libdeflate/1.19/bi
@@ -308,7 +308,7 @@ Now you have to quit and reinstall [XQuartz](https://www.xquartz.org/), then rec
 {{< fa lightbulb >}} If you are using a Mac you might have to install the program [XQuartz](https://www.xquartz.org/), if you have not already installed that program. By using `-Y` in your ssh command you enable graphical transfer over ssh, but you will also have to have a program able to receive the graphics in order to display it.
 
 ```bash
-module load bioinfo-tools IGV
+module load IGV
 ```
 
 Start it by typing the following command (now we'll find out if you used `-Y` in all your ssh connections!):
@@ -343,7 +343,7 @@ The reference genome, a fasta file containing the DNA sequence of the reference 
 The CRAM format is even more efficient than the BAM format. To create a CRAM file we'll have to use `samtools`, so we will load the module for it.
 
 ```bash
-module load bioinfo-tools samtools
+module load samtools
 ```
 
 {{< fa clipboard-list >}} Tell samtools that you want CRAM output (`-C`) and specify which reference genome it should use to do the CRAM conversion (`-T`)
