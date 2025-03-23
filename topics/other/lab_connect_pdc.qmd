@@ -17,24 +17,24 @@ Let's look at the text-based SSH approach first. This type of connection work ju
 - {{< fa brands apple >}} OSX: Use Terminal (Included by default)
 - {{< fa brands windows >}} Windows: Use Powershell or Command prompt, both should be installed by default
 
-The guide below is based on [PDCs official instructions](https://www.pdc.kth.se/support/documents/login/ssh_login.html#ssh-login).
+The guide below is based on [PDCs official instructions](https://support.pdc.kth.se/doc/support/?sub=login/ssh_login/).
 
 ### Setting up SSH keys
 
 (If you already have done this once, please proceed to the [next section](#connecting-to-pdc-using-ssh) instead.)
 
-Before you can connect to PDC, you will have to create SSH keys and tell PDC which key they should allow you to login with, and which computer it should be allowed to be used from. You will only have to create and register SSH keys once. Start by opening your terminal program (see list above) and follow these steps:
+Before you can connect to PDC, you will have to create SSH keys and tell PDC which key they should allow you to login with, and which computer it should be allowed to be used from. You will only have to create and register SSH keys once. If the program asks you if you want to overwrite an existing key, say no and continue to the next command. Start by opening your terminal program (see list above) and follow these steps:
 
-Generate a key pair.
+Generate a key pair of the type (`-t`) `ed25519`.
 
 ```sh
-ssh-keygen
+ssh-keygen -t ed25519
 ```
 
 and accept the default names it suggests by just pressing enter on the question about `file in which to save the key`. When it asks for a password, provide the password you will use to unlock the key each time you use it. Repeat the password when asked to in the next question. Once that is done it will say something like
 
 ```sh
-user@computerName ~ $ ssh-keygen 
+user@computerName ~ $ ssh-keygen -t ed25519
 Generating public/private ed25519 key pair.
 Enter file in which to save the key (/home/user/.ssh/id_ed25519):
 Enter passphrase (empty for no passphrase): 
@@ -79,7 +79,7 @@ You have now added your public key and told PDC that it should be allowed to log
 
 ![](assets/ssh_keys_pdc_004.png){width="200px"}
 
-Add `*.liu.se` to the field `define one yourself`. This will allow you to use this key as long as you are connecting from anywhere at Linköping university. If you want to use this key from your home university in the future you can add a similar pattern that matches your home university's (or internet provider) hostname (e.g. `*.uu.se`, `*.kth.se` or `*.telia.com`).
+Add whatever is prewritten in the field `define one yourself`, usually something like `*.your.internetprovier.com`. This will allow you to use this key as long as you are connecting from the same location as you are connecing now. If you want to use this key from another in the future you can add a similar pattern that matches e.g. your home university's (or internet provider) hostname (e.g. `*.uu.se`, `*.kth.se` or `*.telia.com`).
 
 ![](assets/ssh_keys_pdc_005.png){width="200px"}
 
@@ -141,4 +141,4 @@ There is a ThinLinc server running at one of the login nodes which allows users 
 
 6. When you are done with working with the remote desktop, press the power icon {{< fa power-off >}} in the top-right corner of the screen and select `Log Out`.
 
-For more detailed instructions, please look here: <a href="https://www.pdc.kth.se/support/documents/login/interactive_hpc.html" target="_blank" rel="noopener noreferrer">https://www.pdc.kth.se/support/documents/login/interactive_hpc.html</a>
+For more detailed instructions, please look here: <a href="https://support.pdc.kth.se/doc/support/?sub=login/interactive_hpc/" target="_blank" rel="noopener noreferrer">https://support.pdc.kth.se/doc/support/?sub=login/interactive_hpc/</a>
