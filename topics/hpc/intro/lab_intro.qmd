@@ -1,4 +1,4 @@
----
+-o--
 title:  'Intro to high-performance computing'
 subtitle: "High-performance computing cluster: Dardel"
 author: 'Martin Dahlö'
@@ -351,7 +351,7 @@ Extra material if you finish too fast.
 
 ## Time and space
 
-Remember the command `projinfo` (shows you how much of your allocated resources you have used) from the lecture? Try running it and see how you are doing. Run `projinfo -h` to see options you can give it.
+Remember the command `projinfo` (shows you how much of your allocated resources you have used) from the lecture? Try running it and see how you are doing. Run `projinfo -h` to see options you can give it. NOTE: `projinfo` is only possible to run when you are on the login node. So open a new terminal and connect it to PDC and run it on the login node.
 
 
 ::: {.callout-tip}
