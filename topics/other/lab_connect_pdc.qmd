@@ -1,21 +1,21 @@
 ---
 title:  "Connecting to PDC"
-subtitle: "Connecting to PDC through SSH and GUI (ThinLinc)"
+subtitle: "Connecting to PDC through SSH (Terminal), SSH (MobaXterm) and GUI (ThinLinc)"
 date: ""
 format: html
 ---
 
-We will teach you two different ways to connect to PDC. From PDC's point of view, it doesn't matter which one you use, and you can change whenever you want to or even use both ways simultaneously. The first one is a text-based SSH connection, and the other one is a graphical remote desktop. The latter one is useful if you need to view images or documents in GUI programs without having to first download the image/document to your own computer first. Since it is using graphics, it will require you to have an internet connection that is good and stable.
+We will demonstrate three different ways to connect to PDC. From PDC's point of view, it doesn't matter which one you use, and you can change anytime or even use multiple ways simultaneously. The first one is a text-based SSH connection (all OS), SSH connection using MobaXterm (Windows) and a completely graphical remote desktop using Thinlinc (all OS). Thinlinc is useful if you need to view images or documents in GUI programs without having to first download the image/document to your own computer first. Since it is using graphics, it will require you to have an internet connection that is good and stable.
 
-The reason we will teach you two ways is that some parts of this course will require you to view plots and images, and adding an additional download step would just unneccesarily complicate things.
+The reason we show you different ways is that some parts of this course will require you to view plots and images, and adding an additional download step would just unneccesarily complicate things.
 
 ## SSH connection
 
-Let's look at the text-based SSH approach first. This type of connection work just fine even on slow internet connections since it only transmitts small amounts of text when you work with it. You will need a terminal and an SSH program to do this, which is fortunately included in most major operating systems:
+Let's look at the text-based SSH approach first. This type of connection work just fine even on slow internet connections since it only transmits small amounts of text when you work with it. You will need a terminal and an SSH program to do this, which is fortunately included in most major operating systems:
 
 - {{< fa brands ubuntu >}} Linux: Use Terminal (Included by default)
 - {{< fa brands apple >}} OSX: Use Terminal (Included by default)
-- {{< fa brands windows >}} Windows: Use Powershell or Command prompt, both should be installed by default
+- {{< fa brands windows >}} Windows: Powershell, DOS prompt, WSL2 etc works but may not support X11. See alternative tutorial below using MobaXterm
 
 The guide below is based on [PDCs official instructions](https://support.pdc.kth.se/doc/support/?sub=login/ssh_login/).
 
@@ -65,23 +65,23 @@ cat ~/.ssh/id_ed25519.pub
 
 To register our public key, we will go to [PDC login portal](https://loginportal.pdc.kth.se/). Following a link from that page, you will login by first logging in to your SUPR account and then validating your identity to PDC through SUPR.
 
-![](assets/ssh_keys_pdc_001.png){width="200px"}
+![](assets/ssh_keys_pdc_001.png){width="300px"}
 
 Press `Add new key`
 
-![](assets/ssh_keys_pdc_002.png){width="200px"}
+![](assets/ssh_keys_pdc_002.png){width="300px"}
 
 Paste the public key content you printed to the terminal with `cat` before into the `SSH public key` field in the form, and give a `Key name` of your choosing, then press `Save`.
 
-![](assets/ssh_keys_pdc_003.png){width="200px"}
+![](assets/ssh_keys_pdc_003.png){width="300px"}
 
 You have now added your public key and told PDC that it should be allowed to login using this key when you are connecting form the IP (`385.142.529.933` in the screenshot above) you have at the moment. Since you might get new IPs for your computer each time you connect to the internet, we will have to add a broader list of allowed IPs for this key. Press `Add address` on the entry for the key you just added.
 
-![](assets/ssh_keys_pdc_004.png){width="200px"}
+![](assets/ssh_keys_pdc_004.png){width="300px"}
 
 Add whatever is prewritten in the field `define one yourself`, usually something like `*.your.internetprovier.com`. This will allow you to use this key as long as you are connecting from the same location as you are connecing now. If you want to use this key from another in the future you can add a similar pattern that matches e.g. your home university's (or internet provider) hostname (e.g. `*.uu.se`, `*.kth.se` or `*.telia.com`).
 
-![](assets/ssh_keys_pdc_005.png){width="200px"}
+![](assets/ssh_keys_pdc_005.png){width="300px"}
 
 
 ### Connecting to PDC using SSH
@@ -116,10 +116,78 @@ username@login1 ~ $
 
 Now you are connected to PDC and can start working.
 
+## MobaXterm
+
+::: {.callout-note}
+This is only relevant for Windows users {{< fa brands windows >}}. MobaXterm gives you a terminal with X11 forwarding and a graphical interface SFTP browser for transferring files between your computer and the remote cluster. This tutorial will show you how to set up MobaXterm to connect to PDC. You can either watch this video tutorial or follow the instructions below:
+
+{{< video https://www.youtube.com/watch?v=RNth6aJyTb0 width="400" height="250">}}
+
+:::
+
+1. Go to the [MobaXterm website](https://mobaxterm.mobatek.net/download.html) and download the free version of MobaXterm Home Edition. 
+
+    ![](assets/mobaxterm/moba-1.png){width="300px"}
+
+2. This will download a zip file. Extract the contents of the zip file first and then double click the installer to install MobaXterm. Start MobaXterm and click on **Tools > MobaKeyGen (SSH key generator)**
+
+    ![](assets/mobaxterm/moba-2.png){width="300px"}
+
+3. Select **EdDSA**, then click **Generate** and move your mouse around in the blank area to generate randomness.
+
+    ![](assets/mobaxterm/moba-3.png){width="300px"}
+
+4. There are two pieces of information to save: the **public key** and the **private key**. Click **Save private key** and save it to a location you will remember. Then copy the public key which is displayed in the window.
+
+    ![](assets/mobaxterm/moba-4.png){width="300px"}
+
+5. Go to the [PDC login portal](https://loginportal.pdc.kth.se/). Following a link from that page, you will login by first logging in to your SUPR account and then validating your identity to PDC through SUPR.
+
+    ![](assets/ssh_keys_pdc_001.png){width="300px"}
+
+6. Press `Add new key`
+
+    ![](assets/ssh_keys_pdc_002.png){width="300px"}
+
+7. Paste the public key into the `SSH public key` field in the form, and give a `Key name` of your choosing, then press `Save`.
+
+    ![](assets/ssh_keys_pdc_003.png){width="300px"}
+
+8. You have now added your public key and told PDC that it should be allowed to login using this key when you are connecting form the IP (`385.142.529.933` in the screenshot above) you have at the moment. Since you might get new IPs for your computer each time you connect to the internet, we will have to add a broader list of allowed IPs for this key. Press `Add address` on the entry for the key you just added.
+
+    ![](assets/ssh_keys_pdc_004.png){width="300px"}
+
+9. Add whatever is prewritten in the field `define one yourself`, usually something like `*.your.internetprovier.com`. This will allow you to use this key as long as you are connecting from the same location as you are connecing now. If you want to use this key from another in the future you can add a similar pattern that matches e.g. your home university's (or internet provider) hostname (e.g. `*.uu.se`, `*.kth.se` or `*.telia.com`).
+
+    ![](assets/ssh_keys_pdc_005.png){width="300px"}
+
+10. Then go back to MobaXterm, click **Session** followed by **SSH** and **OK**.
+
+::: {layout-ncol=2}
+
+  ![](assets/mobaxterm/moba-5.png){width="300px"}
+
+  ![](assets/mobaxterm/moba-6.png){width="300px"}
+
+:::
+ 
+11. Then enter details for **Remote host** and **Specify username**. Click on **Advanced SSH settings**. Make sure **X11-Forwarding** is checked. Then check **Use private key** and select the private key you saved earlier.
+
+    ![](assets/mobaxterm/moba-7.png){width="300px"}
+
+12. Finally, click **OK** and this should log you into Dardel cluster. 
+
+    ![](assets/mobaxterm/moba-8.png){width="300px"}
+
+This is a one-time setup. Next time you can just click on the session you created to log in.
 
 ## Remote desktop
 
-You can work on PDC interactively through a graphical-user-interface (GUI) desktop environment using ThinLinc.
+::: {.callout-note}
+Note that SSH keys need to be setup before you can use ThinLinc on PDC. If you have not done this, please follow the instructions to set up SHH keys either through the terminal or MobaXterm. There are a limited number of ThinLinc licenses, so it's possible that you might not be able to connect if all licenses are in use. If you are unable to connect, simply try again later.
+:::
+
+You can work on PDC interactively through a graphical-user-interface (GUI) desktop environment using ThinLinc. This should work for all OS ({{< fa brands ubuntu >}} {{< fa brands apple >}} {{< fa brands windows >}}).
 
 There is a ThinLinc server running at one of the login nodes which allows users to run a remote desktop. It can be reached using the ThinLink client, following these steps:
 
@@ -127,15 +195,15 @@ There is a ThinLinc server running at one of the login nodes which allows users 
 
 2. Start ThinLinc.  
 
-   ![](assets/thinlinc_pdc_000.png){width="200px"}
+   ![](assets/thinlinc_pdc_000.png){width="300px"}
 
 3. Press `Options`, select the `Security` tab and select authentication method `Public key`.
 
-   ![](assets/thinlinc_pdc_001.png){width="200px"}
+    ![](assets/thinlinc_pdc_001.png){width="300px"}
 
 4. Enter server `dardel-vnc.pdc.kth.se`, your PDC username, and the path to your private SSH key.  
 
-   ![](assets/thinlinc_pdc_002.png){width="200px"}
+    ![](assets/thinlinc_pdc_002.png){width="300px"}
 
 5. Press `Connect`, and enter the password to unlock your SSH key when asked.
 
