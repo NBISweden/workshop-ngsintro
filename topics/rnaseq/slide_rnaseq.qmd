@@ -16,7 +16,7 @@ format: revealjs
 # library(DESeq2)
 ```
 
-## What is RNA?
+## Central Dogma of Biology
 
 ![](assets/rnaseq_transcription.svg){height="100%" width="70%"}
 
@@ -48,7 +48,7 @@ format: revealjs
 
 ## Workflow
 
-::: {.columns}
+:::: {.columns}
 ::: {.column width="60%"}
 
 ![](assets/rnaseq_workflow.svg)
@@ -59,13 +59,13 @@ format: revealjs
 ![](assets/sequence.jpg)
 
 :::
-:::
+::::
 
 @conesa2016survey
 
 ::: {.notes}
 
-## De-Novo assembly
+**De-Novo assembly**
 
 - When no reference genome available
 - To identify novel genes/transcripts/isoforms
@@ -115,9 +115,6 @@ format: revealjs
 
 ![](assets/rnaseq_read_type.svg)  
 
-- polyA selection / Ribosomal RNA depletion
-- Single-end / Paired-end
-
 :::
 ::::
 
@@ -128,27 +125,29 @@ format: revealjs
 - 80% of the RNA in a cell is ribosomal RNA (rRNA)
 - rRNA can be eliminated using polyA selection or rRNA depletion 
   - PolyA selection mostly captures only protein-coding genes / mRNA but gives cleaner results
-  - Depletion of rRNA is the solution if it's important to retain all RNA species
+  - Depletion of rRNA is the solution if it's important to retain non-mRNA species
 - smallRNAs are purified through size selection
 - PCR amplification may be needed for low quantity input (See section PCR duplicates)
 - Use stranded (directional) libraries @zhao2015comparison, @levin2010comprehensive
   - Accurately identify sense/antisense transcript
   - Resolve overlapping genes
+- Libraries should have high complexity / low duplication. @daley2013predicting
 - Exome capture
 - Library normalisation to concentrate specific transcripts
-- Libraries should have high complexity / low duplication. @daley2013predicting
 
 :::
 
 ## Sequencing
 
-- Short reads vs long reads (Illumina/PacBio)
+- Short reads vs long reads (Illumina vs PacBio/Nanopore)
+  - Short reads are cheap and good enough for DGE
+  - Long reads are better for isoforms and structural variation
 - Read length @chhangawala2015impact
   - Greater than 50bp does not improve DGE
   - Longer reads are better for isoforms
 - Pooling samples
 - Sequencing depth (Coverage / Reads per sample)
-- Single-end reads (Cheaper?)
+- Single-end reads (No longer cheaper!)
 - Use paired-end reads
   - Increased mappable reads
   - Increased power in assemblies
@@ -256,7 +255,7 @@ Poor quality
 - Fixed read length may sometimes be more important
 - Expected insert size distribution may be more important for assemblers
 
-[Cutadapt](https://github.com/marcelm/cutadapt/), [fastp](https://github.com/OpenGene/fastp), [Prinseq](http://prinseq.sourceforge.net/)
+[Cutadapt](https://github.com/marcelm/cutadapt/), [fastp](https://github.com/OpenGene/fastp), [Prinseq](http://prinseq.sourceforge.net/), [skewer](https://github.com/relipmoc/skewer), [Trimmomatic](https://github.com/usadellab/Trimmomatic), [TrimGalore](https://github.com/FelixKrueger/TrimGalore)
 
 :::
 ::: {.column}
@@ -614,17 +613,17 @@ temp <- as.matrix(dist(t(cvst)))
 
 df_annot <- mf[, c("patient"), drop = FALSE]
 col_patient <- c(
-    "#A6CEE3", "#1F78B4", "#B2DF8A", "#33A02C", "#FB9A99",
-    "#E31A1C", "#FDBF6F", "#FF7F00"
+  "#A6CEE3", "#1F78B4", "#B2DF8A", "#33A02C", "#FB9A99",
+  "#E31A1C", "#FDBF6F", "#FF7F00"
 )
 ann_col_patient <- col_patient
 names(ann_col_patient) <- levels(factor(df_annot$patient))
 
 p <- pheatmap::pheatmap(temp,
-    border_color = NA, annotation_col = df_annot,
-    annotation_row = df_annot, annotation_legend = T,
-    annotation_colors = list(patient = ann_col_patient),
-    fontsize_row = 7, fontsize_col = 7
+  border_color = NA, annotation_col = df_annot,
+  annotation_row = df_annot, annotation_legend = T,
+  annotation_colors = list(patient = ann_col_patient),
+  fontsize_row = 7, fontsize_col = 7
 )
 ggsave("assets/dge-clustering.png", p, height = 5, width = 7)
 ```
@@ -648,28 +647,28 @@ mat1 <- merge(mat1, mf, by = "nid")
 ```{r,echo=FALSE,eval=FALSE}
 # static plot
 p <- ggplot(mat1, aes(V1, V2, group = patient, colour = patient)) +
-    geom_point() +
-    stat_ellipse() +
-    scale_colour_manual(values = ann_col_patient) +
-    guides(colour = guide_legend(nrow = 3)) +
-    labs(x = "MDS1", y = "MDS2") +
-    theme_bw() +
-    theme(
-        panel.border = element_blank(),
-        legend.position = "top"
-    )
+  geom_point() +
+  stat_ellipse() +
+  scale_colour_manual(values = ann_col_patient) +
+  guides(colour = guide_legend(nrow = 3)) +
+  labs(x = "MDS1", y = "MDS2") +
+  theme_bw() +
+  theme(
+    panel.border = element_blank(),
+    legend.position = "top"
+  )
 ggsave("assets/dge-mds.png", p, height = 5.5, width = 5)
 ```
 
 ```{r,echo=FALSE,eval=FALSE}
 # interactive plot
 mat1$tt <- paste0(
-    "<b>ID: </b>", mat1$id, "\n",
-    "<b>NGS ID: </b>", mat1$nid
+  "<b>ID: </b>", mat1$id, "\n",
+  "<b>NGS ID: </b>", mat1$nid
 )
 p1 <- plot_ly(mat1,
-    x = ~V1, y = ~V2, z = ~V3, text = ~tt, hoverinfo = "text",
-    colors = col_patient, width = 750, height = 500
+  x = ~V1, y = ~V2, z = ~V3, text = ~tt, hoverinfo = "text",
+  colors = col_patient, width = 750, height = 500
 )
 add_markers(p1, color = ~patient)
 ```
@@ -710,17 +709,17 @@ add_markers(p1, color = ~patient)
 #| echo: false
 
 dfr <- data.frame(
-  sample=c(1,2,3,1,2,3,1,2,3,1,2,3,1,2,3,1,2,3),
-  value=c(12,8,13,22,18,25,54,47,48,50,48,41,1,0,0,2,1,1),
-  gene=c("A","A","A","A","A","A","B","B","B","B","B","B","C","C","C","C","C","C"),
-  group=c("Group 1","Group 1","Group 1","Group 2","Group 2","Group 2","Group 1","Group 1","Group 1","Group 2","Group 2","Group 2","Group 1","Group 1","Group 1","Group 2","Group 2","Group 2")
+  sample = c(1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3),
+  value = c(12, 8, 13, 22, 18, 25, 54, 47, 48, 50, 48, 41, 1, 0, 0, 2, 1, 1),
+  gene = c("A", "A", "A", "A", "A", "A", "B", "B", "B", "B", "B", "B", "C", "C", "C", "C", "C", "C"),
+  group = c("Group 1", "Group 1", "Group 1", "Group 2", "Group 2", "Group 2", "Group 1", "Group 1", "Group 1", "Group 2", "Group 2", "Group 2", "Group 1", "Group 1", "Group 1", "Group 2", "Group 2", "Group 2")
 )
 
-ggplot(dfr,aes(gene,value,col=group))+
-  geom_point(position=position_dodge(width=0.8),size = 3)+
-  scale_color_manual(values=c("#8DD3C7","#FB8072"))+
-  theme_minimal(base_size=15)+
-  theme(legend.position="top")
+ggplot(dfr, aes(gene, value, col = group)) +
+  geom_point(position = position_dodge(width = 0.8), size = 3) +
+  scale_color_manual(values = c("#8DD3C7", "#FB8072")) +
+  theme_minimal(base_size = 15) +
+  theme(legend.position = "top")
 ```
 
 ![](assets/dge-scatter.png){width="80%"}
@@ -752,15 +751,15 @@ bads <- c("P8304_123", "P8304_124", "P8304_125", "P8304_126", "P8304_127", "P830
 cf <- cf %>% dplyr::select(-one_of(bads))
 mf <- dplyr::filter(mf, !(nid %in% bads)) %>% droplevels()
 mf$type <- factor(c(
-    rep(c("type1", "type1", "type2", "type2"), each = 4),
-    rep("type2", each = 3), rep("control", each = 4)
+  rep(c("type1", "type1", "type2", "type2"), each = 4),
+  rep("type2", each = 3), rep("control", each = 4)
 ))
 ```
 
 ```{r,echo=FALSE,fig.height=2.9,fig.width=2.9,eval=FALSE}
 {
-    plot(x = log10(rowMeans(as.matrix(cf)) + 1), y = log10(rowVars(as.matrix(cf)) + 1), xlab = bquote(~ -log[10] ~ Mean), ylab = bquote(~ -log[10] ~ Variance), pch = 20, cex = 0.4)
-    abline(a = 0, b = 1, col = "red")
+  plot(x = log10(rowMeans(as.matrix(cf)) + 1), y = log10(rowVars(as.matrix(cf)) + 1), xlab = bquote(~ -log[10] ~ Mean), ylab = bquote(~ -log[10] ~ Variance), pch = 20, cex = 0.4)
+  abline(a = 0, b = 1, col = "red")
 }
 ```
 
@@ -770,10 +769,10 @@ d <- DESeq2::estimateSizeFactors(d, type = "ratio")
 d <- DESeq2::estimateDispersions(d)
 
 {
-    par(mar = c(4, 4, 0.2, 0.5))
-    par(mfrow = c(1, 2))
-    plotDispEsts(d)
-    plotDispEsts(d, xlim = c(600, 700), ylim = c(0.05, 1.2), cex = 1)
+  par(mar = c(4, 4, 0.2, 0.5))
+  par(mfrow = c(1, 2))
+  plotDispEsts(d)
+  plotDispEsts(d, xlim = c(600, 700), ylim = c(0.05, 1.2), cex = 1)
 }
 par(mfrow = c(1, 1))
 ```
@@ -832,8 +831,8 @@ low counts [2]     : 0, 0%
 
 ```{r,echo=FALSE,fig.height=2.5,fig.width=3,dev="svg",eval=FALSE}
 {
-    par(mar = c(4, 4, 0.2, 0.2))
-    plotMA(d1)
+  par(mar = c(4, 4, 0.2, 0.2))
+  plotMA(d1)
 }
 ```
 
