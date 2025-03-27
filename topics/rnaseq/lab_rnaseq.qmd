@@ -860,11 +860,12 @@ Then uncompress the file. `gunzip ../reference/mm-biomart99-genes.txt.gz`
 Move to the `5_dge` directory and load R module for use.  
 
 ```sh
+module unload QualiMap/2.2.1 # if qualimap was loaded before
 module load PDC/23.12
 module load R/4.4.0
 ```
 
-Use `pwd` to check if you are standing in the correct directory. Copy the following file `{{< meta path_resources >}}/rnaseq/dardel/main/5_dge/dge.r` to the `5_dge` directory.
+Use `pwd` to check if you are standing in the correct directory. Copy the following file `{{< meta path_resources >}}/rnaseq/dardel/main/scripts/dge.r` to the `5_dge` directory.
 
 Make sure you have the `counts_full.txt`. If not, you can copy this file too: `{{< meta path_resources >}}/rnaseq/dardel/main/5_dge/counts_full.txt`
 
@@ -872,10 +873,11 @@ Make sure you have the `counts_full.txt`. If not, you can copy this file too: `{
 cp {{< meta path_resources >}}/rnaseq/dardel/main/5_dge/counts_full.txt .
 ```
 
-Now, run the R script from the shell in `5_dge` directory.
+Copy the DGE R script to your scripts directory and run it.
 
 ```sh
-Rscript {{< meta path_resources >}}/rnaseq/dardel/main/5_dge/dge.r
+cp {{< meta path_resources >}}/rnaseq/dardel/main/scripts/dge.r ../scripts/
+Rscript ../scripts/dge.r
 ```
 
 If you are curious what's inside dge.r, you are welcome to explore it using a text editor.
@@ -923,10 +925,11 @@ module load R/4.4.0
 
 A popular way to visualise general patterns of gene expression in your data is to produce either PCA (Principal Component Analysis) or MDS (Multi Dimensional Scaling) plots. These methods aim at summarising the main patterns of expression in the data and display them on a two-dimensional space and still retain as much information as possible. To properly evaluate these kind of results is non-trivial, but in the case of RNA-seq data we often use them to get an idea of the difference in expression between treatments and also to get an idea of the similarity among replicates. If the plots shows clear clusters of samples that corresponds to treatment it is an indication of treatment actually having an effect on gene expression. If the distance between replicates from a single treatment is very large it suggests large variance within the treatment, something that will influence the detection of differentially expressed genes between treatments.
 
-Move to the `5_dge/` directory. Then run the `pca.r` script like below.
+Move to the `5_dge/` directory. Then copy and run the `pca.r` script like below.
 
 ```sh
-Rscript {{< meta path_resources >}}/rnaseq/dardel/main/scripts/pca.r
+cp {{< meta path_resources >}}/rnaseq/dardel/main/scripts/pca.r ../scripts/
+Rscript ../scripts/pca.r
 ```
 
 This generates a file named **pca.png** in the `5_dge` folder. To view it, download it to your local disk.
@@ -939,10 +942,11 @@ This generates a file named **pca.png** in the `5_dge` folder. To view it, downl
 
 An MA-plot plots the mean expression and estimated log-fold-change for all genes in an analysis.
 
-Run the `ma.r` script in the `5_dge` directory.
+Copy and run the `ma.r` script in the `5_dge` directory.
 
 ```sh
-Rscript {{< meta path_resources >}}/rnaseq/dardel/main/scripts/ma.r
+cp {{< meta path_resources >}}/rnaseq/dardel/main/scripts/ma.r ../scripts/
+Rscript ../scripts/ma.r
 ```
 
 This generates a file named **ma.png** in the `5_dge` folder. To view it, download it to your local disk.
@@ -955,10 +959,11 @@ This generates a file named **ma.png** in the `5_dge` folder. To view it, downlo
 
 A related type of figure will instead plot fold change (on log2 scale) on the x-axis and -log10 p-value on the y-axis. Scaling like this means that genes with lowest p-value will be found at the top of the plot.
 
-Run the script named `volcano.r` in the `5_dge` directory.
+Copy and run the script named `volcano.r` in the `5_dge` directory.
 
 ```sh
-Rscript {{< meta path_resources >}}/rnaseq/dardel/main/scripts/volcano.r
+cp {{< meta path_resources >}}/rnaseq/dardel/main/scripts/volcano.r ../scripts/
+Rscript ../scripts/volcano.r
 ```
 
 This generates a file named **volcano.png** in the `5_dge` folder. To view it, download it to your local disk.
@@ -974,7 +979,8 @@ Another popular plots for genome-wide expression patterns is heatmap for a set o
 Run the script named `heatmap.r` in the `5_dge` directory.
 
 ```sh
-Rscript {{< meta path_resources >}}/rnaseq/dardel/main/scripts/heatmap.r
+cp {{< meta path_resources >}}/rnaseq/dardel/main/scripts/heatmap.r ../scripts/
+Rscript ../scripts/heatmap.r
 ```
 
 This generates a file named **heatmap.png** in the `5_dge` folder. To view it, download it to your local disk.
@@ -1015,10 +1021,11 @@ module load PDC/23.12
 module load R/4.4.0
 ```
 
-Run the GSE script from the linux terminal.
+Copy and run the GSE script from the linux terminal.
 
 ```sh
-Rscript {{< meta path_resources >}}/rnaseq/dardel/main/scripts/gse-clusterprofiler.r
+cp {{< meta path_resources >}}/rnaseq/dardel/main/scripts/gse-clusterprofiler.r ../scripts/
+Rscript ../scripts/gse-clusterprofiler.r
 ```
 
 It will read the **dge_results_full.rds** and filter the table to get the differentially expressed genes and perform over-representation analysis. When completed, you should find the following files:
