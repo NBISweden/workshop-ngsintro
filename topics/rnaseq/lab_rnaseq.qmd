@@ -865,15 +865,15 @@ module load PDC/23.12
 module load R/4.4.0
 ```
 
-Use `pwd` to check if you are standing in the correct directory. Copy the following file `{{< meta path_resources >}}/rnaseq/dardel/main/scripts/dge.r` to the `5_dge` directory.
+Use `pwd` to check if you are standing in the correct directory.
 
-Make sure you have the `counts_full.txt`. If not, you can copy this file too: `{{< meta path_resources >}}/rnaseq/dardel/main/5_dge/counts_full.txt`
+Make sure you have the `counts_full.txt`. If not, you can copy this file: `{{< meta path_resources >}}/rnaseq/dardel/main/5_dge/counts_full.txt` to your `5_dge` directory.
 
 ```sh
 cp {{< meta path_resources >}}/rnaseq/dardel/main/5_dge/counts_full.txt .
 ```
 
-Copy the DGE R script to your scripts directory and run it.
+Copy the DGE R script to your **scripts** directory and run it.
 
 ```sh
 cp {{< meta path_resources >}}/rnaseq/dardel/main/scripts/dge.r ../scripts/
@@ -897,7 +897,7 @@ ls -l
 
 Essentially, we have two outputs: **dge_results_full** and **counts_vst_full**. **dge_results_full** is the list of differentially expressed genes. This is available in human readable tab-delimited .txt file and R readable binary .rds file. The **counts_vst_full** is variance-stabilised normalised counts, useful for exploratory analyses.
 
-{{< fa clipboard-list >}}  Copy the results text file (`dge_results_full.txt`) to your computer and inspect the results. What are the columns? How many differentially expressed genes are present after adjusted p-value of 0.05? How many genes are upregulated and how many are down-regulated? How does this change if we set a fold-change cut-off of 1?
+{{< fa clipboard-list >}}  Copy the results text file (`dge_results_full.txt`) to your computer and inspect the results. What are the columns? How many differentially expressed genes are present after adjusted p-value of 0.05? How many genes are upregulated and how many are down-regulated? How does this change if we set a log2 fold-change cut-off of ±1?
 
 {{< fa lightbulb >}} Open in a spreadsheet editor like Microsoft Excel or LibreOffice Calc.
 
