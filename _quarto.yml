@@ -1,7 +1,7 @@
 project:
   type: website
   # output directory used on gh-pages branch. format: YYMM
-  output-dir: "2503"
+  output-dir: "2511"
   render: 
     - "!README.md"
     - "!LICENSE"
@@ -126,11 +126,11 @@ filters:
 
 # used site-wide
 # project id on active cluster (dardel)
-id_project: "naiss2025-22-143"
+id_project: "naiss2025-xx-xxx"
 # project id on fallback cluster (rackham)
-id_project_backup: "naiss2025-22-143"
+id_project_backup: "naiss2025-xx-xxx"
 # path to course working directory
-path_workspace: "/cfs/klemming/projects/supr/naiss2025-22-143/username"
+path_workspace: "/cfs/klemming/projects/supr/naiss2025-xx-xxx/username"
 # path to course resources on cluster
 path_resources: "/sw/courses/ngsintro"
 # url to active cluster (dardel)
@@ -139,11 +139,11 @@ url_cluster: "dardel.pdc.kth.se"
 url_cluster_backup: "rackham.uppmax.uu.se"
 
 # reservation ids
-id_slurm_res_mon: "edu25-03-24"
-id_slurm_res_tue: "edu25-03-25"
-id_slurm_res_wed: "edu25-03-26"
-id_slurm_res_thu: "edu25-03-27"
-id_slurm_res_fri: "edu25-03-28"
+id_slurm_res_mon: "edu25-xx-xx"
+id_slurm_res_tue: "edu25-xx-xx"
+id_slurm_res_wed: "edu25-xx-xx"
+id_slurm_res_thu: "edu25-xx-xx"
+id_slurm_res_fri: "edu25-xx-xx"
 
 # location is used to render the info page
 # location options are linkoping, lund, umea, stockholm, uppsala or online
@@ -184,7 +184,7 @@ assistants:
  - "SS: Snaevar Sigurdsson"
  - "VK: Varsith Konda"
  - "YL: Yuan Li"
-schedule_message: "Breaks are planned for approximately 10:00 and 14:30 every day."
+schedule_message: "Breaks are planned for approximately 10:15 and 15:00 every day."
 colors:
   primary: "#95b540"
   secondary: "#E9F2D1"
