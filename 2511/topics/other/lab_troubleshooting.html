@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Status &amp; Troubleshooting</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../assets/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-2b897086d7323cf94b4a601523d3bf70.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-37af94ad5c0b28754ab53ea902efe612.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<style>
+
+      .quarto-title-block .quarto-title-banner {
+        background-image: url(../../assets/images/banner.webp);
+background-size: cover;
+      }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Mono&amp;family=Nunito:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&amp;display=swap" rel="stylesheet">
+<link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+<meta property="og:title" content="Status &amp; Troubleshooting">
+<meta property="og:description" content="Utility commands/scripts, troubleshooting, tips and suggestions.">
+<meta property="og:image" content="https://nbisweden.github.io/workshop-ngsintro/topics/other/assets/images/seo.webp">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../assets/logos/nbis-scilifelab.png" alt="logo" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_schedule.html"> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_contents.html"> 
+<span class="menu-text">Contents</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_precourse.html"> 
+<span class="menu-text">Precourse</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_syllabus.html"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_info.html"> 
+<span class="menu-text">Info</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/NBISweden/workshop-ngsintro/"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Status &amp; Troubleshooting</h1>
+            <p class="subtitle lead">Utility commands/scripts, troubleshooting, tips and suggestions.</p>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#status" id="toc-status" class="nav-link active" data-scroll-target="#status"><span class="header-section-number">1</span> Status</a>
+  <ul>
+  <li><a href="#list-jobs" id="toc-list-jobs" class="nav-link" data-scroll-target="#list-jobs"><span class="header-section-number">1.1</span> List jobs</a></li>
+  <li><a href="#jobs-per-user" id="toc-jobs-per-user" class="nav-link" data-scroll-target="#jobs-per-user"><span class="header-section-number">1.2</span> Jobs per user</a></li>
+  <li><a href="#core-usage" id="toc-core-usage" class="nav-link" data-scroll-target="#core-usage"><span class="header-section-number">1.3</span> Core usage</a></li>
+  <li><a href="#space-usage" id="toc-space-usage" class="nav-link" data-scroll-target="#space-usage"><span class="header-section-number">1.4</span> Space usage</a></li>
+  <li><a href="#list-project-members" id="toc-list-project-members" class="nav-link" data-scroll-target="#list-project-members"><span class="header-section-number">1.5</span> List project members</a></li>
+  <li><a href="#user-activity" id="toc-user-activity" class="nav-link" data-scroll-target="#user-activity"><span class="header-section-number">1.6</span> User activity</a></li>
+  <li><a href="#list-reservations-for-a-project" id="toc-list-reservations-for-a-project" class="nav-link" data-scroll-target="#list-reservations-for-a-project"><span class="header-section-number">1.7</span> List reservations for a project</a></li>
+  <li><a href="#user-identity-on-rackham" id="toc-user-identity-on-rackham" class="nav-link" data-scroll-target="#user-identity-on-rackham"><span class="header-section-number">1.8</span> User identity on Rackham</a></li>
+  </ul></li>
+  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting"><span class="header-section-number">2</span> Troubleshooting</a>
+  <ul>
+  <li><a href="#x-forwarding" id="toc-x-forwarding" class="nav-link" data-scroll-target="#x-forwarding"><span class="header-section-number">2.1</span> X-forwarding</a>
+  <ul class="collapse">
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup"><span class="header-section-number">2.1.1</span> Setup</a></li>
+  <li><a href="#testing-x-forwarding-on-rackham" id="toc-testing-x-forwarding-on-rackham" class="nav-link" data-scroll-target="#testing-x-forwarding-on-rackham"><span class="header-section-number">2.1.2</span> Testing X-forwarding on Rackham</a></li>
+  </ul></li>
+  <li><a href="#open-.html-documents-on-rackham" id="toc-open-.html-documents-on-rackham" class="nav-link" data-scroll-target="#open-.html-documents-on-rackham"><span class="header-section-number">2.2</span> Open .html documents on Rackham</a></li>
+  <li><a href="#scp-fails-with" id="toc-scp-fails-with" class="nav-link" data-scroll-target="#scp-fails-with"><span class="header-section-number">2.3</span> SCP fails with *</a></li>
+  <li><a href="#thinlinc" id="toc-thinlinc" class="nav-link" data-scroll-target="#thinlinc"><span class="header-section-number">2.4</span> Thinlinc</a>
+  <ul class="collapse">
+  <li><a href="#login" id="toc-login" class="nav-link" data-scroll-target="#login"><span class="header-section-number">2.4.1</span> Login</a></li>
+  <li><a href="#minimize-the-thinlinc-window" id="toc-minimize-the-thinlinc-window" class="nav-link" data-scroll-target="#minimize-the-thinlinc-window"><span class="header-section-number">2.4.2</span> Minimize the ThinLinc window</a></li>
+  <li><a href="#gedit-opening-issues" id="toc-gedit-opening-issues" class="nav-link" data-scroll-target="#gedit-opening-issues"><span class="header-section-number">2.4.3</span> Gedit opening issues</a></li>
+  </ul></li>
+  <li><a href="#set-persistent-home-directory-in-mobaxterm" id="toc-set-persistent-home-directory-in-mobaxterm" class="nav-link" data-scroll-target="#set-persistent-home-directory-in-mobaxterm"><span class="header-section-number">2.5</span> Set persistent home directory in MobaXTerm</a></li>
+  <li><a href="#typing-on-a-swedish-keyboard" id="toc-typing-on-a-swedish-keyboard" class="nav-link" data-scroll-target="#typing-on-a-swedish-keyboard"><span class="header-section-number">2.6</span> Typing <code>$</code> on a Swedish keyboard</a></li>
+  <li><a href="#black-background-for-xquartz-windows-on-m1-mac" id="toc-black-background-for-xquartz-windows-on-m1-mac" class="nav-link" data-scroll-target="#black-background-for-xquartz-windows-on-m1-mac"><span class="header-section-number">2.7</span> Black background for XQuartz windows on M1 Mac</a></li>
+  <li><a href="#thinlinc-client-installs-in-swedish" id="toc-thinlinc-client-installs-in-swedish" class="nav-link" data-scroll-target="#thinlinc-client-installs-in-swedish"><span class="header-section-number">2.8</span> Thinlinc client installs in Swedish</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="status" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="status"><span class="header-section-number">1</span> Status</h2>
+<p>Useful commands for monitoring status and user activity on HPC.</p>
+<section id="list-jobs" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="list-jobs"><span class="header-section-number">1.1</span> List jobs</h3>
+<p>List all jobs running an a project</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">-A</span> naiss2025-xx-xxx <span class="kw">|</span> <span class="fu">tail</span> <span class="at">-n</span> +2 <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-k</span> 4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Sample output</p>
+<pre><code>  23186770      core _interac analopez  R    2:15:00      1 r55
+  23175660      core   (null)   anitav  R    6:52:28      1 r480
+  23188713      core   (null)    annha  R    1:42:59      1 r480
+  23185442      core   (null)    annha  R    2:47:11      1 r480
+  23185433      core   (null) inene424  R    2:47:42      1 r479
+  23185391      core   (null) inene424  R    2:50:04      1 r479
+  23185540      core   (null)  shengyz  R    2:46:20      1 r480
+  23185119      core   (null)    wingf  R    2:53:40      1 r479</code></pre>
+</section>
+<section id="jobs-per-user" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="jobs-per-user"><span class="header-section-number">1.2</span> Jobs per user</h3>
+<p>Sorted list of jobs per user</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">-A</span> naiss2025-xx-xxx <span class="kw">|</span> <span class="fu">tr</span> <span class="at">-s</span> <span class="st">' '</span> <span class="kw">|</span> <span class="fu">tail</span> <span class="at">-n</span> +2 <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-d</span><span class="st">' '</span> <span class="at">-f5</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-k1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Sample output</p>
+<pre><code>      1 tami
+      1 tommal
+      1 valeriia
+      1 vioww
+      1 vishnupk
+      1 ylvafr
+      2 mehran96
+      2 miika
+      3 mariasve
+</code></pre>
+</section>
+<section id="core-usage" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="core-usage"><span class="header-section-number">1.3</span> Core usage</h3>
+<p>Total number of cores used on a project</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">-A</span> naiss2025-xx-xxx <span class="at">-o</span> %C <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'{total += $0} END{print total}'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="space-usage" class="level3" data-number="1.4">
+<h3 data-number="1.4" class="anchored" data-anchor-id="space-usage"><span class="header-section-number">1.4</span> Space usage</h3>
+<p>Amount of storage space used per project</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">projinfo</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Sample output</p>
+<pre><code>Information for compute project: edu24.uppmax (PI: mdahlo)
+UPPMAX intro course
+Active from 2024-09-29 00:00:00 to 2025-02-03 00:00:00
+Members: asmae,ccollins,dianaek,emmers,eswku,heddaja,larsger,laurea,leonco,malina,mariaio,marziar,mdahlo,muyi,peihung,royfranc,rubencw,shaja23,svelo,szczot,theoseri,tudoran,vibe1827,xuji
+dardel: 2000 corehours/month, used 39.51% (790 corehours) during the past 30 days
+Usage by user royfranc: 36.85% (736 corehours)</code></pre>
+</section>
+<section id="list-project-members" class="level3" data-number="1.5">
+<h3 data-number="1.5" class="anchored" data-anchor-id="list-project-members"><span class="header-section-number">1.5</span> List project members</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">projinfo</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Sample output</p>
+<pre><code>Information for compute project: edu24.uppmax (PI: mdahlo)
+UPPMAX intro course
+Active from 2024-09-29 00:00:00 to 2025-02-03 00:00:00
+Members: asmae,ccollins,dianaek,emmers,eswku,heddaja,larsger,laurea,leonco,malina,mariaio,marziar,mdahlo,muyi,peihung,royfranc,rubencw,shaja23,svelo,szczot,theoseri,tudoran,vibe1827,xuji
+dardel: 2000 corehours/month, used 39.51% (790 corehours) during the past 30 days
+Usage by user royfranc: 36.85% (736 corehours)</code></pre>
+</section>
+<section id="user-activity" class="level3" data-number="1.6">
+<h3 data-number="1.6" class="anchored" data-anchor-id="user-activity"><span class="header-section-number">1.6</span> User activity</h3>
+<p>List last activity in a directory for all users in a project (not possible on Dardel, as courses don’t have project directories)</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> /sw/courses/utils/list_modification_times.sh /proj/naiss2025-xx-xxx/nobackup/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Sample output</p>
+<pre><code>hkyle           2021-11-22 13:59:59     (/proj/snic2021-22-644/nobackup/hkyle/uppmax_tutorial/job_template)
+malinh          2021-11-22 14:12:10     (/proj/snic2021-22-644/nobackup/malinh/slurm-23182638.out)
+aliraz          2021-11-22 14:23:16     (/proj/snic2021-22-644/nobackup/aliraz/slurm-23184022.out)
+kristaps        2021-11-22 14:25:08     (/proj/snic2021-22-644/nobackup/kristaps/uppmax_tutorial/jobData.sam)
+anapin          2021-11-22 14:56:14     (/proj/snic2021-22-644/nobackup/anapin/uppmax_tutorial/uppmax_tutorial/jobData.sam)
+analopez        2021-11-22 14:56:16     (/proj/snic2021-22-644/nobackup/analopez/uppmax_tutorial/jobData.sam)
+private         Not available     ()</code></pre>
+</section>
+<section id="list-reservations-for-a-project" class="level3" data-number="1.7">
+<h3 data-number="1.7" class="anchored" data-anchor-id="list-reservations-for-a-project"><span class="header-section-number">1.7</span> List reservations for a project</h3>
+<div class="sourceCode" id="cb12"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">scontrol</span> show res <span class="kw">|</span> <span class="fu">grep</span> naiss2025-xx-xxx</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Sample output</p>
+<pre><code>ReservationName=snic2021-22-644_wed StartTime=2021-11-24T12:00:00 EndTime=2021-11-24T18:00:00 Duration=06:00:00
+   Users=(null) Accounts=snic2021-22-644 Licenses=(null) State=INACTIVE BurstBuffer=(null) Watts=n/a
+ReservationName=snic2021-22-644_thu StartTime=2021-11-25T08:30:00 EndTime=2021-11-25T17:30:00 Duration=09:00:00
+   Users=(null) Accounts=snic2021-22-644 Licenses=(null) State=INACTIVE BurstBuffer=(null) Watts=n/a
+ReservationName=snic2021-22-644_fri StartTime=2021-11-26T08:30:00 EndTime=2021-11-26T13:30:00 Duration=05:00:00
+   Users=(null) Accounts=snic2021-22-644 Licenses=(null) State=INACTIVE BurstBuffer=(null) Watts=n/a</code></pre>
+</section>
+<section id="user-identity-on-rackham" class="level3" data-number="1.8">
+<h3 data-number="1.8" class="anchored" data-anchor-id="user-identity-on-rackham"><span class="header-section-number">1.8</span> User identity on Rackham</h3>
+<p>Fetch user information from username</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">finger</span> username</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="troubleshooting" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="troubleshooting"><span class="header-section-number">2</span> Troubleshooting</h2>
+<section id="x-forwarding" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="x-forwarding"><span class="header-section-number">2.1</span> X-forwarding</h3>
+<section id="setup" class="level4" data-number="2.1.1">
+<h4 data-number="2.1.1" class="anchored" data-anchor-id="setup"><span class="header-section-number">2.1.1</span> Setup</h4>
+<p><strong>Mac users</strong></p>
+<ul>
+<li>Install Xquartz and restart computer</li>
+<li>Open the Xquartz terminal and connect to Uppmax</li>
+<li>In my recent macos (10.xxx) , x-forwarding only works if I explicitly run the Xquartz terminal</li>
+</ul>
+<p><code>ssh -XY username@dardel.pdc.kth.se</code><br>
+<code>ssh -XY username@rackham.uppmax.uu.se</code></p>
+<p>Also use this when logging in to the compute node!</p>
+<p><code>ssh -XY username@node</code></p>
+<p><strong>Windows users</strong></p>
+<p>In MobaXTerm, go to settings and make sure that X-forwarding is checked.</p>
+</section>
+<section id="testing-x-forwarding-on-rackham" class="level4" data-number="2.1.2">
+<h4 data-number="2.1.2" class="anchored" data-anchor-id="testing-x-forwarding-on-rackham"><span class="header-section-number">2.1.2</span> Testing X-forwarding on Rackham</h4>
+<p>Type <code>xeyes</code> in the terminal.</p>
+</section>
+</section>
+<section id="open-.html-documents-on-rackham" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="open-.html-documents-on-rackham"><span class="header-section-number">2.2</span> Open .html documents on Rackham</h3>
+<p>First ensure X-forwarding works, then run <code>firefox --no-remote filename.html</code></p>
+</section>
+<section id="scp-fails-with" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="scp-fails-with"><span class="header-section-number">2.3</span> SCP fails with *</h3>
+<p>Sometimes students have problems to download files with SCP when there is a <code>*</code> in the end of the line. For example; <code>scp user@dardel.pdc.kth.se:~/ngsintro/HG00097.bam* .</code>. It needs to be changed to <code>scp user@dardel.pdc.kth.se:~/ngsintro/HG00097.bam\* .</code>.</p>
+</section>
+<section id="thinlinc" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="thinlinc"><span class="header-section-number">2.4</span> Thinlinc</h3>
+<section id="login" class="level4" data-number="2.4.1">
+<h4 data-number="2.4.1" class="anchored" data-anchor-id="login"><span class="header-section-number">2.4.1</span> Login</h4>
+<p>When logging in through an installed client, <strong>username/password</strong> seems to work. When logging in through the browser, <strong>username/password+2FA</strong> may be required.</p>
+</section>
+<section id="minimize-the-thinlinc-window" class="level4" data-number="2.4.2">
+<h4 data-number="2.4.2" class="anchored" data-anchor-id="minimize-the-thinlinc-window"><span class="header-section-number">2.4.2</span> Minimize the ThinLinc window</h4>
+<p>On a Mac, press <kbd>Fn + F8</kbd>, then select: Minimize window.</p>
+</section>
+<section id="gedit-opening-issues" class="level4" data-number="2.4.3">
+<h4 data-number="2.4.3" class="anchored" data-anchor-id="gedit-opening-issues"><span class="header-section-number">2.4.3</span> Gedit opening issues</h4>
+<p>When opening it from the terminal (<code>gedit &amp;</code>), it was not able to connect to a display to show the graphics. The <code>DISPLAY</code> variable was empty. This was when using ThinLinc, so it should have worked. The issue was solved by opening gedit from the menu. Gedit could be labelled Text Editor.</p>
+</section>
+</section>
+<section id="set-persistent-home-directory-in-mobaxterm" class="level3" data-number="2.5">
+<h3 data-number="2.5" class="anchored" data-anchor-id="set-persistent-home-directory-in-mobaxterm"><span class="header-section-number">2.5</span> Set persistent home directory in MobaXTerm</h3>
+<p>This is to specify where the <strong>home directory</strong> in MobaXTerm is located in the computer’s file system. In <strong>Settings &gt; Configuration</strong>, set the persistent home directory to a suitable folder. Restart MobaXTerm.</p>
+</section>
+<section id="typing-on-a-swedish-keyboard" class="level3" data-number="2.6">
+<h3 data-number="2.6" class="anchored" data-anchor-id="typing-on-a-swedish-keyboard"><span class="header-section-number">2.6</span> Typing <code>$</code> on a Swedish keyboard</h3>
+<p>Press <kbd>AltGr + 4</kbd>.</p>
+</section>
+<section id="black-background-for-xquartz-windows-on-m1-mac" class="level3" data-number="2.7">
+<h3 data-number="2.7" class="anchored" data-anchor-id="black-background-for-xquartz-windows-on-m1-mac"><span class="header-section-number">2.7</span> Black background for XQuartz windows on M1 Mac</h3>
+<p>As documented <a href="https://github.com/XQuartz/XQuartz/issues/31">here</a>, run:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">defaults</span> write org.xquartz.X11 enable_render_extension 0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="thinlinc-client-installs-in-swedish" class="level3" data-number="2.8">
+<h3 data-number="2.8" class="anchored" data-anchor-id="thinlinc-client-installs-in-swedish"><span class="header-section-number">2.8</span> Thinlinc client installs in Swedish</h3>
+<p>There seems to be no option to change language in the app. So one will have to reinstall with some changes. In region settings, if English is set as primary and Swedish as secondary, it still installs in Swedish. The solution is to remove Swedish from the list completely and then reinstall.</p>
+<hr>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/nbisweden\.github\.io\/workshop-ngsintro\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>2025 <a href="https://nbis.se">NBIS</a> | <a href="https://choosealicense.com/licenses/gpl-3.0/">GPL-3 License</a></p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Published with <a href="https://quarto.org/">Quarto</a> v1.6.42
+</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
