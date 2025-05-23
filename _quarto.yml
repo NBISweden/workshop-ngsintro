@@ -151,7 +151,7 @@ id_slurm_res_fri: "edu25-xx-xx"
 # location is used to render the info page
 # location options are linkoping, lund, umea, stockholm, uppsala or online
 # one or more separated by commas or semicolon.
-location: online
+location: uppsala
 assistants:
  - "AJ: Anna Johansson"
  - "BV: Björn Viklund"
