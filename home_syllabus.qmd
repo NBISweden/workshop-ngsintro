@@ -55,17 +55,4 @@ After this workshop you should be able to:
 - Hands-on experience with handling of raw RNA sequencing data, QC and quantification of gene expression.
 - Conceptual understanding of differential gene expression analysis.
 
-## Entry requirements
-
-- This is a national course open to PhD students, postdocs, group leaders and core facility staff.
-
-- A background in genetics, cell biology, biomedicine, biochemistry, bioinformatics or comparable is desirable. To get the maximum benefit from the workshop we would like you to
-
-- Have a research project where you are currently using next generation sequencing or are planning to use next generation sequencing.
-It is beneficial if you are directly performing analyses or if you have a support role and will be able to participate in a wide range of projects and transfer your knowledge to others.
-
-- Selection criteria include correct entry requirements, motivation to attend the workshop as well as gender and geographical balance. Applicants affiliated to a Swedish institution are prioritized. International applicants are considered only if/when seats are available. Further prioritization: PhD scholars > Post-Docs, PIs, Healthcare staff > Master's students).
-
-- Please note that NBIS training events do not provide any formal university credits. The training content is estimated to correspond to a certain number of credits, however the estimated credits are just guidelines. If formal credits are crucial, the student needs to confer with the home department before submitting a course application in order to establish whether the course is valid for formal credits or not.
-
 :::
