@@ -1,6 +1,6 @@
 # workshop-ngsintro  
 
-[![gh-actions-build-status](https://github.com/nbisweden/workshop-ngsintro/workflows/build/badge.svg)](https://github.com/nbisweden/workshop-ngsintro/actions?workflow=build)  [![linkcheck_badge](https://github.com/nbisweden/workshop-ngsintro/workflows/linkcheck/badge.svg)](https://github.com/nbisweden/workshop-ngsintro/actions?workflow=linkcheck)  [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15513843.svg)](https://doi.org/10.5281/zenodo.15513843)
+[![gh-actions-build-status](https://github.com/nbisweden/workshop-ngsintro/workflows/build/badge.svg)](https://github.com/nbisweden/workshop-ngsintro/actions?workflow=build)  [![linkcheck_badge](https://github.com/nbisweden/workshop-ngsintro/workflows/linkcheck/badge.svg)](https://github.com/nbisweden/workshop-ngsintro/actions?workflow=linkcheck)  
 
 This repo contains the course material for NBIS workshop **Introduction to Bioinformatics using NGS data**. The rendered view of this repo is available [here](https://nbisweden.github.io/workshop-ngsintro/).
 
