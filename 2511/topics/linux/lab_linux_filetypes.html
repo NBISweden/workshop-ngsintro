@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Martin Dahlö">
+
+<title>Filetypes</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../assets/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-2b897086d7323cf94b4a601523d3bf70.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-61fa15b2c2ece9409f6bc4c0eb4208a7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<style>
+
+      .quarto-title-block .quarto-title-banner {
+        background-image: url(../../assets/images/banner.webp);
+background-size: cover;
+      }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Mono&amp;family=Nunito:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&amp;display=swap" rel="stylesheet">
+<link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+<meta property="og:title" content="Filetypes">
+<meta property="og:description" content="Common filetypes In bioinformatics">
+<meta property="og:image" content="https://nbisweden.github.io/workshop-ngsintro/topics/linux/assets/images/seo.webp">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../assets/logos/nbis-scilifelab.png" alt="logo" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_schedule.html"> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_contents.html"> 
+<span class="menu-text">Contents</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_precourse.html"> 
+<span class="menu-text">Precourse</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_syllabus.html"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_faq.html"> 
+<span class="menu-text">FAQ</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_info.html"> 
+<span class="menu-text">Info</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/NBISweden/workshop-ngsintro/"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Filetypes</h1>
+            <p class="subtitle lead">Common filetypes In bioinformatics</p>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Martin Dahlö </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">28-Aug-2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#connect-to-pdc" id="toc-connect-to-pdc" class="nav-link active" data-scroll-target="#connect-to-pdc"><span class="header-section-number">1</span> Connect to PDC</a></li>
+  <li><a href="#logon-to-a-node" id="toc-logon-to-a-node" class="nav-link" data-scroll-target="#logon-to-a-node"><span class="header-section-number">2</span> Logon to a node</a></li>
+  <li><a href="#copy-lab-files" id="toc-copy-lab-files" class="nav-link" data-scroll-target="#copy-lab-files"><span class="header-section-number">3</span> Copy lab files</a></li>
+  <li><a href="#run-pipeline" id="toc-run-pipeline" class="nav-link" data-scroll-target="#run-pipeline"><span class="header-section-number">4</span> Run pipeline</a>
+  <ul>
+  <li><a href="#build-index" id="toc-build-index" class="nav-link" data-scroll-target="#build-index"><span class="header-section-number">4.1</span> Build index</a></li>
+  <li><a href="#align-reads" id="toc-align-reads" class="nav-link" data-scroll-target="#align-reads"><span class="header-section-number">4.2</span> Align reads</a></li>
+  <li><a href="#sam-to-bam" id="toc-sam-to-bam" class="nav-link" data-scroll-target="#sam-to-bam"><span class="header-section-number">4.3</span> SAM to BAM</a></li>
+  <li><a href="#sort-index-bam" id="toc-sort-index-bam" class="nav-link" data-scroll-target="#sort-index-bam"><span class="header-section-number">4.4</span> Sort &amp; index BAM</a></li>
+  <li><a href="#view-in-a-genome-viewer" id="toc-view-in-a-genome-viewer" class="nav-link" data-scroll-target="#view-in-a-genome-viewer"><span class="header-section-number">4.5</span> View in a genome viewer</a></li>
+  </ul></li>
+  <li><a href="#create-a-cram-file" id="toc-create-a-cram-file" class="nav-link" data-scroll-target="#create-a-cram-file"><span class="header-section-number">5</span> Create a CRAM file</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="connect-to-pdc" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="connect-to-pdc"><span class="header-section-number">1</span> Connect to PDC</h2>
+<p>The first step of this lab is to open a ssh connection to PDC. Please refer to <a href="../other/lab_connect_pdc.html"><strong>Connecting to PDC</strong></a> for instructions. Once connected to PDC, return here and continue reading the instructions below.</p>
+</section>
+<section id="logon-to-a-node" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="logon-to-a-node"><span class="header-section-number">2</span> Logon to a node</h2>
+<p>Usually you would do most of the work in this lab directly on one of the login nodes, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">salloc</span> <span class="at">-A</span> naiss2025-xx-xxx <span class="at">--reservation</span><span class="op">=</span>edu25-xx-xx <span class="at">-t</span> 08:00:00 <span class="at">-p</span> shared <span class="at">-n</span> 1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>check which node you got (replace <code>username</code> with your username)</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">-u</span> username</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>should look something like this</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">user@login1</span> ~ $ squeue <span class="at">-u</span> username</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>             <span class="ex">JOBID</span> PARTITION     NAME     USER ST       TIME  NODES NODELIST<span class="er">(</span><span class="ex">REASON</span><span class="kw">)</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>           <span class="ex">5583899</span>    shared interact    user  R       2:22      1 nid001009</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">user@login1</span> ~ $</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>where <code>nid001009</code> is the name of the node I got (yours will probably be different). Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested (7 hours in this case) the session will shut down, and you will lose all unsaved data. Connect to this node from the login node.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-Y</span> nid001009</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="copy-lab-files" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="copy-lab-files"><span class="header-section-number">3</span> Copy lab files</h2>
+<p>Now you will need some files. To avoid all the course participants editing the same file all at once, undoing each other’s edits, each participant will get their own copy of the needed files. The files are located in the folder <code>/sw/courses/ngsintro/linux/filetypes</code></p>
+<p>Next, copy the lab files from this folder. <code>-r</code> means recursively, which means all the files including sub-folders of the source folder. Without it, only files directly in the source folder would be copied, NOT sub-folders and files in sub-folders.</p>
+<p><i class="fa-solid fa-lightbulb" aria-label="lightbulb"></i> Remember to use tab-complete to avoid typos and too much writing.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> <span class="op">&lt;</span>source<span class="op">&gt;</span> <span class="op">&lt;</span>destination<span class="op">&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> /sw/courses/ngsintro/linux/filetypes /cfs/klemming/projects/supr/naiss2025-xx-xxx/username</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Have a look in <code>/cfs/klemming/projects/supr/naiss2025-xx-xxx/username/filetypes</code> using the <code>tree</code> command.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># go to the folder</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span>  /cfs/klemming/projects/supr/naiss2025-xx-xxx/username/filetypes</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># load the tree module and run it</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load tree</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="ex">tree</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This will print a file tree, which gives you a nice overview of the folders where you are standing in. As you can see, you have a couple of files and a couple of empty folders. In the <strong>0_ref</strong> folder you have a reference genome in fasta format and annotations for the genome in GTF format. In <strong>0_seq</strong> you have a fastq file containing the reads we will align.</p>
+</section>
+<section id="run-pipeline" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="run-pipeline"><span class="header-section-number">4</span> Run pipeline</h2>
+<p>The best way to see all the different file formats is to run a small pipeline and see which files we encounter along the way. The pipeline is roughly the same steps you’ll do in the variant-calling part of the course, so for now we’ll stick with the dummy pipeline which some of you might have encoutered in the <a href="../hpc/pipeline/lab_hpc_pipeline.html">extra material</a> for the HPC exercise.</p>
+<p>The programs in the dummy pipeline does not actually do any analysis but they work the same way as the real deal, although slightly simplified, to get you familiar with how to work with analysis programs. The data is from a sequencing of the adenovirus genome, which is tiny compared to the human genome (36kb vs 3gb).</p>
+<p>The starting point of the pipeline are fresh reads from the sequencing machine in fastq format, and a reference genome in fasta format. The goal of the exercise is to look at our aligned reads in a genome viewer together with the annotations of the adenovirus genome.</p>
+<p>First, let’s go through the steps of the pipeline:</p>
+<ul>
+<li><strong>Build an index for the reference genome.</strong> This will speed up the alignment process. Not possible to do the analysis without it.</li>
+<li><strong>Align the reads.</strong></li>
+<li><strong>Convert the SAM file to a BAM file.</strong> We want to use the space efficiently.</li>
+<li><strong>Sort the BAM file.</strong> We have to sort it to be able to index it.</li>
+<li><strong>Index the BAM file.</strong> We have to index it to make it fast to access the data in the file.</li>
+<li><strong>View the aligned data together with the annotations.</strong></li>
+</ul>
+<p>The first thing you usually do is to load the modules for the programs you want to run. During this exercise we’ll only run my dummy scripts that don’t actually do any analysis, so they don’t have a module of their own. What we can do instead is to manually do what module loading usually does: to modify the <strong><code>$PATH</code> variable</strong>.</p>
+<p>The <code>$PATH</code> variable specifies directories where the computer should look for programs. For instance, when you type <code>nano</code>, how does the computer know which program to start? You gave it the name <code>nano</code>, but that could refer to any file named nano in the computer, yet it starts the correct one every time. The answer is that it looks in the directories stored in the <code>$PATH</code> variable.</p>
+<p>To see which directories that are available by default, type</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$PATH</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>It should give you something like this, a list of directories, separated by colon signs:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">user@rackham2</span> work $ echo <span class="va">$PATH</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/pdc/software/eb/software/tree/2.1.1/bin:/pdc/software/modules/sy</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">stemdefault/bin:/opt/cray/pe/mpich/8.1.28/ofi/crayclang/17.0/bin:</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">/opt/cray/pe/mpich/8.1.28/bin:/opt/cray/pe/craype/2.7.30/bin:/opt</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Try loading a module, and then look at the <code>$PATH</code> variable again. You’ll see that there are a few extra directories there now, after the module has been loaded.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">user@rackham2</span> work $ module load samtools</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">user@rackham2</span> work $ echo <span class="va">$PATH</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">/pdc/software/eb/software/samtools/1.20/bin:/pdc/software/eb/soft</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">ware/htslib/1.20/bin:/pdc/software/eb/software/libdeflate/1.19/bi</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="ex">n:/pdc/software/eb/software/xz/5.4.5/bin:/pdc/software/eb/softwar</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="ex">e/bzip2/1.0.8/bin:/pdc/software/eb/software/ncurses/6.4/bin:/pdc/</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="ex">software/eb/software/tree/2.1.1/bin:/pdc/software/modules/systemd</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To pretend that we are loading a module, we will just add a the directory containing my dummy scripts to the <code>$PATH</code> variable, and it will be like we loaded the module for them.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="va">$PATH</span>:/sw/courses/ngsintro/hpc/pipeline/dummy_scripts/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This will set the <code>$PATH</code> variable to whatever it is at the moment, and add a directory at the end of it. Note the lack of a dollar sign in front of the variable name directly after <code>export</code>. You don’t use dollar sign when <strong>assigning</strong> values to variables, and you always use dollar signs when <strong>getting</strong> values from variables.</p>
+<div class="alert alert-warning">
+<p><i class="fa-solid fa-exclamation-circle" aria-label="exclamation-circle"></i> <strong>Important</strong></p>
+<p>The export command affects only the terminal you type it in. If you have 2 terminals open, only the terminal you typed it in will have a modified path. If you close that terminal and open a new one, it will not have the modified path.</p>
+</div>
+<section id="build-index" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="build-index"><span class="header-section-number">4.1</span> Build index</h3>
+<ol type="1">
+<li><strong>Build an index for the reference genome.</strong></li>
+<li>Align the reads.</li>
+<li>Convert the SAM file to a BAM file.</li>
+<li>Sort the BAM file.</li>
+<li>Index the BAM file.</li>
+<li>View the aligned data together with the annotations.</li>
+</ol>
+<p>All aligners will have to index the reference genome you are aligning your data against. This is only done once per reference genome, and then you reuse that index whenever you need it. All aligners have their own kind of index unfortunately, so you will have to build one index for each aligner you want to use. In this lab, we will use the dummy aligher called <code>align_reads</code>, and we will build a index using it’s indexing progam, called <code>reference_indexer</code>.</p>
+<p>First, have a look in the <strong>0_ref</strong> folder</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ll</span> 0_ref</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You should see 2 files: the fasta file, the gtf file. Have a look at each of them with <code>less</code>, just to see how they look inside. To do the actual indexing of the genome:</p>
+<p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> Run reference_indexer.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Syntax:</span> reference_indexer <span class="at">-r</span> <span class="op">&lt;</span>name of the fasta file you want to index<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">reference_indexer</span> <span class="at">-r</span> 0_ref/ad2.fa</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Since the genome is so small this should only take a second or so. The human genome will probably take a couple of hours. Look in the <code>0_ref folder</code> again and see if anything has changed.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ll</span> 0_ref</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The new file you see is the index file created by <code>reference_indexer</code>. This index is in the same format as you would get from the real program <strong>samtools</strong>. Try viewing the index file with <code>less</code> and see how it looks. The samtools type of index contains one row per fasta record in the reference file. In this case, there is only one record for the adenovirus genome, and it’s called <code>ad2</code> in the fasta file. The human reference genome typically have one record per chromosome, so a index of the human genome would then have 24 rows.</p>
+<p>The numbers after the record name specifies how many bases the record has, how far into the file (in bytes) the record starts, the number of bases on each line in the record, and how many bytes each line takes up in the file. Using this information the program can quickly jump to the start location of each record, without having to read the file from the first row every time.</p>
+<p>Other aligners might use more complex indexing of the file to speed up the alignment process even further, e.g.&nbsp;creating an index over where it can find all possible “words” that you can form with 5 or so bases, making it easier to find possible matching sites for reads. If the read starts with <code>ATGTT</code> you can quickly look in the index and see all places in the geonome that contains this word and start looking if the rest of the read matches the area around the word.</p>
+<p>This greatly decreases the number of places you have to look when looking for a match. These types of indexes usually take a long time to create (5+ hours maybe), but since you only have to do it once per reference genome it’s easily worth it, seeing how the alignment process probably would take 100s of hours without the index, instead of 6-12 hours.</p>
+<p>We are now ready to align our reads.</p>
+</section>
+<section id="align-reads" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="align-reads"><span class="header-section-number">4.2</span> Align reads</h3>
+<ol type="1">
+<li>Build an index for the reference genome.</li>
+<li><strong>Align the reads.</strong></li>
+<li>Convert the SAM file to a BAM file.</li>
+<li>Sort the BAM file.</li>
+<li>Index the BAM file.</li>
+<li>View the aligned data together with the annotations.</li>
+</ol>
+<p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> Align reads using <code>align_reads</code>, naming the output file <code>ad2.sam</code>, placed in the <code>1_alignment</code> folder.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Syntax:</span> align_reads <span class="at">-r</span> <span class="op">&lt;</span>reference genome<span class="op">&gt;</span> -i <span class="op">&lt;</span>fastq file with reads<span class="op">&gt;</span> -o <span class="op">&lt;</span>name of the output file<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">align_reads</span> <span class="at">-r</span> 0_ref/ad2.fa <span class="at">-i</span> 0_seq/ad2.fq <span class="at">-o</span> 1_alignment/ad2.sam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This will create a SAM file in <code>1_alignment</code> called <code>ad2.sam</code>. Have a look at it with less. If you think the file looks messy, add a <code>-S</code> after less to make it stop wrapping long lines, <code>less -S 1_alignment/ad2.sam</code> and scroll sideways using the arrow keys. As you can see there is one row per aligned read in this file. Each row contains information about the read, like the name of the read, where in the reference genome it aligned, and also a copy of the reads sequence and quality score, among other things.</p>
+</section>
+<section id="sam-to-bam" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="sam-to-bam"><span class="header-section-number">4.3</span> SAM to BAM</h3>
+<ol type="1">
+<li>Build an index for the reference genome.</li>
+<li>Align the reads.</li>
+<li><strong>Convert the SAM file to a BAM file.</strong></li>
+<li>Sort the BAM file.</li>
+<li>Index the BAM file.</li>
+<li>View the aligned data together with the annotations.</li>
+</ol>
+<p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> The next step is to convert the SAM file to a BAM file. This is more or less just compressing the file, like creating a zip file. To do that we will use the dummy program <code>sambam_tools</code>, telling it we want to convert a file to BAM (<code>-f bam</code>), which file we want to convert (<code>-i</code>), where it should save the resulting BAM file (<code>-o</code>). Save the BAM file in the <code>2_bam</code> folder and name it <code>ad2.bam</code>.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Syntax:</span> sambam_tool <span class="at">-f</span> bam <span class="at">-i</span> <span class="op">&lt;</span>sam file<span class="op">&gt;</span> -o <span class="op">&lt;</span>bam<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sambam_tool</span> <span class="at">-f</span> bam <span class="at">-i</span> 1_alignment/ad2.sam <span class="at">-o</span> 2_bam/ad2.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Have a look in the <code>2_bam</code> folder.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ll</span> 2_bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The created BAM file is an exact copy of the SAM file, but stored in a much more efficient format. Aligners usually have an option to output BAM format directly, saving you the trouble to convert it yourself, but not all tools can do this (they really should though). Have a look at the difference in file size, though in this example it’s quite an extreme difference (2.9 MB vs 0.3 MB). The quality score of all reads is the same (<code>BBBBBBBBB..</code>), and files with less differences are easier to compress. Usually the BAM file is about 25% of the size of the SAM file.</p>
+<p>Since the BAM format is a binary format we can’t look at it with <code>less</code>. We would have to use a tool, like <strong>samtools</strong> which you will probably see later in the week, to first convert the file back to a SAM file before we can read it. In that case we can just look at the SAM file before converting it since they will be the same.</p>
+</section>
+<section id="sort-index-bam" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="sort-index-bam"><span class="header-section-number">4.4</span> Sort &amp; index BAM</h3>
+<ol type="1">
+<li>Build an index for the reference genome.</li>
+<li>Align the reads.</li>
+<li>Convert the SAM file to a BAM file.</li>
+<li><strong>Sort the BAM file.</strong></li>
+<li><strong>Index the BAM file.</strong></li>
+<li>View the aligned data together with the annotations.</li>
+</ol>
+<p>A BAM file is taking up much less space than the SAM file, but we can still improve performance. An indexed BAM file is infinitely faster for programs to work with, but before we can index it, we have to sort it since it’s not possible to index an unsorted file in any meaningful way.</p>
+<p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> To sort the BAM file we’ll use the <code>sambam_tool</code> again, but specifying a different function, <code>-f sort</code> instead. Tell it to store the sorted BAM file in the <code>3_sorted</code> folder and name the file <code>ad2.sorted.bam</code></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Syntax:</span> sambam_tool <span class="at">-f</span> sort <span class="at">-i</span> <span class="op">&lt;</span>unsorted bam file<span class="op">&gt;</span> -o <span class="op">&lt;</span>sorted bam file<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sambam_tool</span> <span class="at">-f</span> sort <span class="at">-i</span> 2_bam/ad2.bam <span class="at">-o</span> 3_sorted/ad2.sorted.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This will sort the <code>ad2.bam</code> file and create a new BAM file which is sorted, called <code>ad2.sorted.bam</code></p>
+<p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> Now when we have a sorted BAM file, we can index it. Use the command</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Syntax:</span> sambam_tool <span class="at">-f</span> index <span class="at">-i</span> <span class="op">&lt;</span>sorted bam file<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sambam_tool</span> <span class="at">-f</span> index <span class="at">-i</span> 3_sorted/ad2.sorted.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This will create an index named <code>ad2.sorted.bam.bai</code> in the same folder as the <code>ad2.sorted.bam</code> file is located. It’s nicer to have the <code>.bam</code> and <code>.bai</code> named to the same “prefix”, so rename the <code>.bai</code> file to not have the <code>.bam</code> in its name.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> 3_sorted/ad2.sorted.bam.bai 3_sorted/ad2.sorted.bai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="view-in-a-genome-viewer" class="level3" data-number="4.5">
+<h3 data-number="4.5" class="anchored" data-anchor-id="view-in-a-genome-viewer"><span class="header-section-number">4.5</span> View in a genome viewer</h3>
+<ol type="1">
+<li>Build an index for the reference genome.</li>
+<li>Align the reads.</li>
+<li>Convert the SAM file to a BAM file.</li>
+<li>Sort the BAM file.</li>
+<li>Index the BAM file.</li>
+<li><strong>View the aligned data together with the annotations.</strong></li>
+</ol>
+<p>Now that we have to data aligned and prepared for easy access, we will view it in a genome viewer together with the annotations for the genome. Have a look at the annotations file with <code>less</code>.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">less</span> <span class="at">-S</span> 0_ref/ad2.gtf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <code>-S</code> will tell less to not wrap the lines, and instead show one line per line. If the line is longer than the window, you can user the left and right arrow to scroll to the left and right. Many tabular files are much more readable when using the <code>-S</code> option. Try viewing the file without it and see the difference.</p>
+<p>To view the file, we will use the program <strong>IGV</strong> (Integrated Genome Viewer). Before we can do this, we have to load the module for IGV.</p>
+<p>NOTE: Many Mac users are getting only black background when running IGV using XQuartz. There is a command you can run on your computer to fix this.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># open a terminal on your mac and run this command:</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="ex">defaults</span> write org.xquartz.X11 enable_render_extension 0</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Now</span> you have to quit and reinstall <span class="pp">[</span><span class="ss">XQuartz</span><span class="pp">]</span><span class="er">(</span><span class="ex">https://www.xquartz.org/</span><span class="kw">)</span><span class="ex">,</span> then reconnect to the cluster and it should now look the way it should.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><i class="fa-solid fa-lightbulb" aria-label="lightbulb"></i> If you are using a Mac you might have to install the program <a href="https://www.xquartz.org/">XQuartz</a>, if you have not already installed that program. By using <code>-Y</code> in your ssh command you enable graphical transfer over ssh, but you will also have to have a program able to receive the graphics in order to display it.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load bioinfo-tools IGV</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Start it by typing the following command (now we’ll find out if you used <code>-Y</code> in all your ssh connections!):</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">igv.sh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you notice that IGV over Xforwarding is excruciatingly slow, you can try to use the ThinLinc client instead, <a href="../other/lab_connect_pdc.html#remote-desktop">please read the instrucutions on how to connect here</a>. This will get you a remote desktop on one of the login nodes, and you can open a terminal and run IGV there instead. Once IGV is started, either using Xforwarding or the remote desktop, we are ready to go.</p>
+</div>
+</div>
+<p>There are 3 files we have to load in IGV.</p>
+<p>The first is the reference genome. Press the menu button located at <strong>“Genomes - Load Genome from File…”</strong> and find your reference genome in <code>0_ref/ad2.fa</code>. If you are having trouble finding your files, note that IGV always starts in your home directory. Use the dropdown menu at the top to navigate to <code>/cfs/klemming/projects/supr/naiss2025-xx-xxx/username/filetypes</code></p>
+<p>The second file you have to load is the reads. Press the menu button <strong>“File - Load from File…”</strong> (not the same menu as in the step before) and select your <code>3_sorted/ad2.sorted.bam</code>.</p>
+<p>The last file you have to load is the annotation data. Press <strong>“File - Load from File…”</strong> again and select you annotation file in <code>0_ref/ad2.gtf</code>.</p>
+<p>This will show you the reference genome, how all the reads are aligned to it, and all the annotation data. Try zooming in on an area and have a look at the reads and annotations. The figures you see in the picture are all derived from the data in the files you have given it.</p>
+<p>At the top of the window you have the overview of the current chromosome you are looking at, which tells you the scale you are zoomed at for the moment. When you zoom in you will see a red rectangle apper which shows you which portion of the chromosome you are looking at. Just below the scale you’ll see the coverage graph, which tells you how many reads cover each position along the reference genome. The colored bands you see here and there are SNPs, i.e.&nbsp;positions where the reads of your sample does not match the reference genome.</p>
+<p>All the reads, the larger area in the middle of the window, are drawn from the data in the BAM file using the chromosome name, the starting position and the ending position of each read. When you zoom in more you will be able to see individual reads and how they are aligned. The annotation in GTF format are all plotted using the data in the GTF file, visible just under all the reads, are shown as blue rectangles.</p>
+<p>The reference genome, a fasta file containing the DNA sequence of the reference genome, is visible at the bottom of the window if you zoom to the smallest level so you can see the bases of the genome.</p>
+</section>
+</section>
+<section id="create-a-cram-file" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="create-a-cram-file"><span class="header-section-number">5</span> Create a CRAM file</h2>
+<p>The CRAM format is even more efficient than the BAM format. To create a CRAM file we’ll have to use <code>samtools</code>, so we will load the module for it.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load samtools</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> Tell samtools that you want CRAM output (<code>-C</code>) and specify which reference genome it should use to do the CRAM conversion (<code>-T</code>)</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Syntax:</span> samtools view <span class="at">-C</span> <span class="at">-T</span> <span class="op">&lt;</span>reference genome<span class="op">&gt;</span> -o <span class="op">&lt;</span>name of cram file<span class="op">&gt;</span> <span class="op">&lt;</span>bam file to convert<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> view <span class="at">-C</span> <span class="at">-T</span> 0_ref/ad2.fa <span class="at">-o</span> 4_cram/ad2.cram 3_sorted/ad2.sorted.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Compare the sizes of the convered BAM file and the newly created CRAM file:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ll</span> <span class="at">-h</span> 3_sorted/ad2.sorted.bam 4_cram/ad2.cram</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This will list both the files, and print the file size in a human readable format (<code>-h</code>). The CRAM file is roughly 1/3 of the size of the BAM file. This is probably because all the reads in the simulated data has the same quality value (<code>BBBBBBBBBB</code>). Fewer types of quality values are easier to compress, hence this amazing compression ratio. Real data will have much more diverse quality scores, and the CRAM file would be pethaps 70-80% of the original BAM file.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Optional
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you have been fast to finish this lab and you still have time left (or just can’t get enough of linux stuff), please have a look at the <a href="lab_linux_advanced.html">advanced linux tutorial</a> where you can learn the basics in bash programming using variables, loops and control statements. This is the material we will cover in the afternoon session, but you can get a head start if you want to.</p>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/nbisweden\.github\.io\/workshop-ngsintro\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>2025 <a href="https://nbis.se">NBIS</a> • <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Published with <a href="https://quarto.org/">Quarto</a> v1.6.42
+</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
