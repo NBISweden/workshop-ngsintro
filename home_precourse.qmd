@@ -78,7 +78,7 @@ This is is only relevant for online courses.
 
 ### Filezilla^\*^
 
-[![](assets/images/precourse/filezilla.webp){.precourse-tool}](https://filezilla-project.org/) [{{< fa brands ubuntu >}} {{< fa brands apple >}} {{< fa brands windows >}}]{.badge} When you need to transfer data between the remote cluster and your computer, you can use the tools SCP or SFTP through the terminal. Windows users can use the SFTP browser available with MobaXterm. If you prefer a GUI to upload and download files from the remote cluster, we recommend installing [FileZilla](https://filezilla-project.org/).
+[![](assets/images/precourse/filezilla.webp){.precourse-tool}](https://filezilla-project.org/download.php?show_all=1) [{{< fa brands ubuntu >}} {{< fa brands apple >}} {{< fa brands windows >}}]{.badge} When you need to transfer data between the remote cluster and your computer, you can use the tools SCP or SFTP through the terminal. Windows users can use the SFTP browser available with MobaXterm. If you prefer a GUI to upload and download files from the remote cluster, we recommend installing [FileZilla](https://filezilla-project.org/download.php?show_all=1).
 
 ^\*^ Optional
 
