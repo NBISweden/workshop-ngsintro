@@ -129,11 +129,11 @@ filters:
 
 # used site-wide
 # project id on active cluster (dardel)
-id_project: "naiss2025-xx-xxx"
+id_project: "naiss2025-22-1240"
 # project id on fallback cluster (rackham)
 id_project_backup: "naiss2025-xx-xxx"
 # path to course working directory
-path_workspace: "/cfs/klemming/projects/supr/naiss2025-xx-xxx/username"
+path_workspace: "/cfs/klemming/projects/supr/naiss2025-22-1240/username"
 # path to course resources on cluster
 path_resources: "/sw/courses/ngsintro"
 # url to active cluster (dardel)
