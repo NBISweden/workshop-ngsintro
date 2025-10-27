@@ -6,11 +6,11 @@ sidebar: false
 format: html
 ---
 
-You will have to have 3 different accounts to complete the labs in this course; one in [SUPR](https://supr.naiss.se/) to handle the two other accounts, and one each at the compute centers [PDC](https://www.pdc.kth.se/) in Stockholm and [UPPMAX](https://uppmax.uu.se) in Uppsala.
+You will have to have 2 different accounts to complete the labs in this course. The first one is in [SUPR](https://supr.naiss.se/) which is the portal that handles all your user accounts at NAISS compute centers (umbrella organisation for the academic high-performace centers).  The other one is at the compute center [PDC](https://www.pdc.kth.se/) in Stockholm.
 
 ## SUPR
 
-A SUPR/NAISS account is needed to create the accounts for the computers we will be using during the course. SUPR is also the system that you will handle your own projects in if you want to use this kind of resources in your research after the course.
+A SUPR/NAISS account is needed to create the account for the computers we will be using during the course. SUPR is also the system that you will handle your own projects in if you want to use this kind of resources in your research after the course.
 
 If you do not already have one, create an account at [SUPR/NAISS](https://supr.naiss.se). Then, Log in to [SUPR/NAISS](https://supr.naiss.se/), preferably using the SWAMID (requires that you are within Swedish academia).
 
@@ -38,17 +38,6 @@ Finally you need to request a login account to PDC. This will be the account you
 
 Checking your request and approving your account requires some manual work, so you might have to wait for some time (up to a couple of working days) before the next step. When the account is ready to be created, you will receive an email to your registered email address (shown in your SUPR contact information) with information about your account. Follow the instructions you get from them to complete your account creation. The morning session on the Monday of the course will cover [how to connect to PDC](topics/other/lab_connect_pdc.qmd), a bunch of steps that might not be trivial for novice users.
 
-## UPPMAX
-
-The computing cluster UPPMAX will be use as a fallback cluster, if there should be any problems at PDC. Just with the PDC accout, you need to request a login account to UPPMAX. This will be the account you use to log in to the actual computers, so it is not the same as your SUPR account or your PDC account. This requires you to already be a member of the course project, [**{{< meta id_project >}}**]{.badge}, the same project you became a member of in the [PDC section](#pdc) above.
-
-Login to SUPR and go to the [Accounts page](https://supr.naiss.se/account/). Under the **Possible Resource Account Requests** heading click on **Request Account at UPPMAX** button and confirm it on the next page. If it is missing from this page, it could be because you already have a login account created (only 1 account per person allowed), or that you have not yet gotten your project memberships approved.
-
-Checking your request and approving your account requires some manual work, so you might have to wait for some time (up to a working day) before the next step. When the account is ready to be created, you will receive an email to your registered email address (shown in your SUPR contact information) with information on how to proceed. You will get a one-time URL that you use to get the password (within seven days) to login to the cluster with. The link is only valid for 1 visit, so write down the password you get. When that has been done, the account ready for use within 15 minutes and you can then login using your password. Once you have logged into the cluster you can change your password by typing `passwd` in the terminal and follow the instuctions.
-
-::: {.callout-note}
-You will get one username & password for the account on UPPMAX, and one username and password for the account on PDC. Please keep track of both, we will tell you when to use which account during the workshop.
-:::
 
 ## Install tools
 
