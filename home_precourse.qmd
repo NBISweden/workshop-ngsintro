@@ -47,11 +47,11 @@ Checking your request and approving your account requires some manual work, so y
 This is is only relevant for online courses.
 :::
 
-[![](assets/images/precourse/zoom.webp){.precourse-tool}](https://www.zoom.com) [{{< fa brands ubuntu >}} {{< fa brands apple >}} {{< fa brands windows >}}]{.badge} We will use Zoom for the online sessions. please download and install the latest version for your OS.
+[![](assets/images/precourse/zoom.webp){.precourse-tool}](https://www.zoom.com) [{{< fa brands ubuntu >}} {{< fa brands apple >}} {{< fa brands windows >}}]{.badge} We will use Zoom for the online sessions. Please download and install the latest version for your OS.
 
 ### ThinLinc 
 
-[![](assets/images/precourse/thinlinc.webp){.precourse-tool}](https://www.cendio.com/thinlinc/download) [{{< fa brands ubuntu >}} {{< fa brands apple >}} {{< fa brands windows >}}]{.badge} ThinLinc allows graphical connection to UPPMAX. Download and install from [https://www.cendio.com/thinlinc/download](https://www.cendio.com/thinlinc/download).
+[![](assets/images/precourse/thinlinc.webp){.precourse-tool}](https://www.cendio.com/thinlinc/download) [{{< fa brands ubuntu >}} {{< fa brands apple >}} {{< fa brands windows >}}]{.badge} ThinLinc allows graphical connection to a remote cluster. This means you can work on a cluster like you would on a local computer. This is accessible through the browser or an installed application.  The installed version has a few more features than using the browser version. Download and install from [https://www.cendio.com/thinlinc/download](https://www.cendio.com/thinlinc/download).
 
 ### XQuartz
 
@@ -63,11 +63,11 @@ This is is only relevant for online courses.
 
 ### MobaXterm
 
-[![](assets/images/precourse/mobaxterm.webp){.precourse-tool}](http://mobaxterm.mobatek.net) [{{< fa brands windows >}}]{.badge} If you are on a Windows system, and you want to open graphical applications from the terminal, we recommend [MobaXterm](http://mobaxterm.mobatek.net). It is recommended that you INSTALL the program and not use the portable version. MobaXterm also has an integrated SFTP file browser.
+[![](assets/images/precourse/mobaxterm.webp){.precourse-tool}](http://mobaxterm.mobatek.net) [{{< fa brands windows >}}]{.badge} If you are on a Windows system, and you want to open graphical applications from the terminal, we recommend [MobaXterm](http://mobaxterm.mobatek.net). MobaXterm has a terminal, opens X11 windows and allows browsing remote files graphically. It is recommended that you INSTALL the program and not use the portable version.
 
 ### Filezilla^\*^
 
-[![](assets/images/precourse/filezilla.webp){.precourse-tool}](https://filezilla-project.org/download.php?show_all=1) [{{< fa brands ubuntu >}} {{< fa brands apple >}} {{< fa brands windows >}}]{.badge} When you need to transfer data between the remote cluster and your computer, you can use the tools SCP or SFTP through the terminal. Windows users can use the SFTP browser available with MobaXterm. If you prefer a GUI to upload and download files from the remote cluster, we recommend installing [FileZilla](https://filezilla-project.org/download.php?show_all=1).
+[![](assets/images/precourse/filezilla.webp){.precourse-tool}](https://filezilla-project.org/download.php?show_all=1) [{{< fa brands ubuntu >}} {{< fa brands apple >}} {{< fa brands windows >}}]{.badge} When you need to transfer data between the remote cluster and your computer, you can use the tools SCP or SFTP through the terminal. If you prefer a GUI to upload and download files from the remote cluster, we recommend installing [FileZilla](https://filezilla-project.org/download.php?show_all=1). For Windows users, if you have installed MobaXterm, it already has an SFTP file browser.
 
 ^\*^ Optional
 
