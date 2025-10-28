@@ -219,10 +219,10 @@ pwd
 {{< meta path_workspace >}}/rnaseq/2_fastqc
 ```
 
-Load modules `bioinfo-tools` and FastQC `fastqc/0.12.1`.
+Load module FastQC.
 
 ```sh
-module load bioinfo-tools
+module load PDC/24.11
 module load fastqc/0.12.1
 ```
 
@@ -265,7 +265,7 @@ Then add the lines below and save the file.
 #| eval: false
 #!/bin/bash
 
-module load bioinfo-tools
+module load PDC/24.11
 module load fastqc/0.12.1
 
 for i in ../1_raw/*.gz
@@ -377,10 +377,10 @@ drwxrwsr-x 2 user gXXXXXXX 4.0K Jan 22 21:59 mouse_chr19_hisat2
 
 #### Build index
 
-Move into the `reference` directory if not already there. Load module hisat2. Remember to load `bioinfo-tools` if you haven't done so already.
+Move into the `reference` directory if not already there. Load module hisat2.
 
 ```sh
-module load bioinfo-tools
+module load PDC/24.11
 module load hisat2/2.2.1
 ```
 
@@ -392,7 +392,7 @@ Create a new bash script in your `scripts` directory named `hisat2_index.sh` and
 #!/bin/bash
 
 # load module
-module load bioinfo-tools
+module load PDC/24.11
 module load hisat2/2.2.1
 
 hisat2-build \
@@ -477,7 +477,7 @@ But, we will not run it as above. We will make some more changes to it. We want 
 ```sh
 #!/bin/bash
 
-module load bioinfo-tools
+module load PDC/24.11
 module load hisat2/2.2.1
 module load samtools/1.20
 
@@ -546,7 +546,7 @@ ls -l
 The `.bam` file contains the alignment of all reads to the reference genome in binary format. BAM files are not human readable directly. To view a BAM file in text format, you can use `samtools view` functionality.
 
 ```sh
-module load bioinfo-tools
+module load PDC/24.11
 module load samtools/1.20
 samtools view SRR3222409-19.bam | head
 ```
@@ -568,19 +568,19 @@ cat SRR3222409-19.summary
 ```
 156992 reads; of these:
   156992 (100.00%) were paired; of these:
-    7984 (5.09%) aligned concordantly 0 times
+    7976 (5.08%) aligned concordantly 0 times
     147178 (93.75%) aligned concordantly exactly 1 time
-    1830 (1.17%) aligned concordantly >1 times
+    1838 (1.17%) aligned concordantly >1 times
     ----
-    7984 pairs aligned concordantly 0 times; of these:
-      690 (8.64%) aligned discordantly 1 time
+    7976 pairs aligned concordantly 0 times; of these:
+      693 (8.69%) aligned discordantly 1 time
     ----
-    7294 pairs aligned 0 times concordantly or discordantly; of these:
-      14588 mates make up the pairs; of these:
-        5987 (41.04%) aligned 0 times
-        4085 (28.00%) aligned exactly 1 time
-        4516 (30.96%) aligned >1 times
-98.09% overall alignment rate
+    7283 pairs aligned 0 times concordantly or discordantly; of these:
+      14566 mates make up the pairs; of these:
+        5973 (41.01%) aligned 0 times
+        4078 (28.00%) aligned exactly 1 time
+        4515 (31.00%) aligned >1 times
+98.10% overall alignment rate
 ```
 
 Next, we need to index these BAM files. Indexing creates `.bam.bai` files which are required by many downstream programs to quickly and efficiently locate reads anywhere in the BAM file.
@@ -588,7 +588,7 @@ Next, we need to index these BAM files. Indexing creates `.bam.bai` files which 
 {{< fa clipboard-list >}} Index all BAM files. Write a for-loop to index all BAM files using the command `samtools index file.bam`.
 
 ```sh
-module load bioinfo-tools
+module load PDC/24.11
 module load samtools/1.20
 
 for i in *.bam
@@ -635,9 +635,8 @@ Add the following script to it. Note that we are using the smaller GTF file with
 #!/bin/bash
 
 # load modules
-module load PDC/23.12
-module load bioinfo-tools
-module load QualiMap/2.2.1
+module load PDC/24.11
+module load qualimap/2.3
 
 # get output filename prefix
 prefix=$( basename "$1" .bam)
@@ -728,10 +727,9 @@ Below is the script that we will use:
 #!/bin/bash
 
 # load modules
-module load PDC/23.12
-module load bioinfo-tools
-module load R/4.4.0
-module load subread/2.0.3
+module load PDC/24.11
+module load R/4.4.2-cpeGNU-24.11
+module load subread/2.1.1
 
 featureCounts \
   -a "../reference/Mus_musculus.GRCm38.99.gtf" \
@@ -801,8 +799,8 @@ Move to the `6_multiqc` directory. You should be standing here to run this:
 And run this in the terminal.
 
 ```sh
-module load bioinfo-tools
-module load MultiQC/1.12
+module load PDC/24.11
+module load multiqc/1.30
 
 multiqc --interactive ../
 ```
@@ -860,9 +858,9 @@ Then uncompress the file. `gunzip ../reference/mm-biomart99-genes.txt.gz`
 Move to the `5_dge` directory and load R module for use.  
 
 ```sh
-module unload QualiMap/2.2.1 # if qualimap was loaded before
-module load PDC/23.12
-module load R/4.4.0
+module unload qualimap/2.3 # if qualimap was loaded before
+module load PDC/24.11
+module load R/4.4.2-cpeGNU-24.11
 ```
 
 Use `pwd` to check if you are standing in the correct directory.
@@ -917,8 +915,8 @@ We use R to create exploratory plots and investigate the results of differential
 Load the module R.
 
 ```sh
-module load PDC/23.12
-module load R/4.4.0
+module load PDC/24.11
+module load R/4.4.2-cpeGNU-24.11
 ```
 
 #### PCA plot
@@ -1017,8 +1015,8 @@ cd 5_dge
 Load R module
 
 ```sh
-module load PDC/23.12
-module load R/4.4.0
+module load PDC/24.11
+module load R/4.4.2-cpeGNU-24.11
 ```
 
 Copy and run the GSE script from the linux terminal.
@@ -1129,8 +1127,8 @@ An alternative method is to login through ThinLinc. Once you log into this inter
 Load necessary modules and start IGV
 
 ```sh
-module load bioinfo-tools
-module load IGV/2.16.0
+module load PDC/24.11
+module load igv/2.17.4
 igv-core
 ```
 
@@ -1150,7 +1148,7 @@ Here is the list of top 20 differentially expressed genes on Chr19 ordered by ab
 ```{r}
 #| eval: false
 #| echo: false
-readRDS("dge_r#| esults_full.rds") %>%
+readRDS("dge_results_full.rds") %>%
   filter(chromosome_name == 19, padj < 0.05) %>%
   arrange(-abs(log2FoldChange)) %>%
   head(20) %>%
@@ -1215,7 +1213,7 @@ This is how our standard bash script for mapping looks like:
 #!/bin/bash
 
 # load modules
-module load bioinfo-tools
+module load PDC/24.11
 module load hisat2/2.2.1
 module load samtools/1.20
 
@@ -1241,7 +1239,7 @@ We add `SBATCH` commands to the above script. The new script looks like this:
 #SBATCH -J hisat2-align
 
 # load modules
-module load bioinfo-tools
+module load PDC/24.11
 module load hisat2/2.2.1
 module load samtools/1.20
 
@@ -1323,24 +1321,28 @@ And lastly we have a **nextflow.sh** which will be our bash script for launching
 
 #SBATCH -A {{< meta id_project >}}
 #SBATCH -p shared
-#SBATCH -c 10
+#SBATCH -c 6
 #SBATCH -t 8:00:00
 #SBATCH -J nf-core
 
-module load PDC/23.12
-module load singularity/4.1.1-cpeGNU-23.12
-module load bioinfo-tools
-module load nextflow/24.04.2
+module load PDC/24.11
+module load singularity/4.2.0-cpeGNU-24.11
+module load nextflow/25.04.7
 module load nf-core/2.6
 
 export NXF_HOME=$PWD
 export SINGULARITY_CACHEDIR=${PWD}/SINGULARITY_CACHEDIR
 export SINGULARITY_TMPDIR=${PWD}/SINGULARITY_TMPDIR
 export NXF_SINGULARITY_CACHEDIR=${SINGULARITY_CACHEDIR}
-mkdir -p SINGULARITY_CACHEDIR SINGULARITY_TMPDIR
+mkdir -p ${SINGULARITY_CACHEDIR} ${SINGULARITY_TMPDIR}
 
 # nextflow drop nf-core/rnaseq
-nextflow run nf-core/rnaseq -r 3.17.0 -c params.config -profile pdc_kth --project {{< meta id_project >}} -resume'
+nextflow run nf-core/rnaseq \
+  -r 3.21.0 \
+  -c params.config \
+  -profile pdc_kth \
+  --project {{< meta id_project >}} \
+  -resume
 ```
 
 Notice that we use `-profile pdc_kth` specific to the HPC. The job is then submitted by simply running `sbatch nextflow.sh`.
@@ -1348,13 +1350,9 @@ Notice that we use `-profile pdc_kth` specific to the HPC. The job is then submi
 The slurm output from this job looks like this:
 
 ```
- N E X T F L O W   ~  version 24.04.2
+N E X T F L O W   ~  version 25.04.7
 
-Pulling nf-core/rnaseq ...
- downloaded from https://github.com/nf-core/rnaseq.git
-Launching `https://github.com/nf-core/rnaseq` [suspicious_meucci] DSL2 - revision: 00f924cf92 [3.17.0]
-
-WARN: Nextflow self-contained distribution allows only core plugins -- User config plugins will be ignored: nf-schema@2.1.1
+Launching `https://github.com/nf-core/rnaseq` [curious_lovelace] DSL2 - revision: 9738a2df42 [3.21.0]
 
 ------------------------------------------------------
                                         ,--./,-.
@@ -1362,7 +1360,7 @@ WARN: Nextflow self-contained distribution allows only core plugins -- User conf
   |\ | |__  __ /  ` /  \ |__) |__         }  {
   | \| |       \__, \__/ |  \ |___     \`-._,-`-,
                                         `._,._,'
-  nf-core/rnaseq 3.17.0
+  nf-core/rnaseq 3.21.0
 ------------------------------------------------------
 Input/output options
   input                     : samplesheet.csv
@@ -1372,24 +1370,28 @@ Reference genome options
   fasta                     : /sw/data/igenomes/Mus_musculus/Ensembl/GRCm38/Sequence/WholeGenomeFasta/genome.fa
   gtf                       : /sw/data/igenomes/Mus_musculus/Ensembl/GRCm38/Annotation/Genes/genes.gtf
 
-Alignment options
-  min_mapped_reads          : 5
+UMI options
+  umi_discard_read          : 0
 
 Institutional config options
   config_profile_description: PDC profile.
   config_profile_contact    : Pontus Freyhult (@pontus)
   config_profile_url        : https://www.pdc.kth.se/
 
+Generic options
+  trace_report_suffix       : 2025-10-28_15-07-35
+
 Core Nextflow options
-  revision                  : 3.17.0
-  runName                   : suspicious_meucci
+  revision                  : 3.21.0
+  runName                   : curious_lovelace
   containerEngine           : singularity
-  launchDir                 : /cfs/klemming/projects/supr/snic2022-22-328/user/ngsintro/nextflow
-  workDir                   : /cfs/klemming/projects/supr/snic2022-22-328/user/ngsintro/nextflow/work
-  projectDir                : /cfs/klemming/home/r/user/proj-nbis/ngsintro/nextflow/assets/nf-core/rnaseq
-  userName                  : user
+  launchDir                 : /cfs/klemming/pdc/software/dardel/sw-uppmax/courses/ngsintro/rnaseq/dardel/main_full/nextflow
+  workDir                   : /cfs/klemming/pdc/software/dardel/sw-uppmax/courses/ngsintro/rnaseq/dardel/main_full/nextflow/work
+  projectDir                : /sw/courses/ngsintro/rnaseq/dardel/main_full/nextflow/assets/nf-core/rnaseq
+  userName                  : royfranc
   profile                   : pdc_kth
-  configFiles               :
+  configFiles               : /sw/courses/ngsintro/rnaseq/dardel/main_full/nextflow/assets/nf-core/rnaseq/nextflow.config, /cfs/klemming
+/pdc/software/dardel/sw-uppmax/courses/ngsintro/rnaseq/dardel/main_full/nextflow/params.config
 
 !! Only displaying parameters that differ from the pipeline defaults !!
 ------------------------------------------------------
@@ -1402,34 +1404,22 @@ Core Nextflow options
 * Software dependencies
     https://github.com/nf-core/rnaseq/blob/master/CITATIONS.md
 
-WARN: The following invalid input values have been detected:
-
-* --project: {{< meta id_project >}}
-* --max_memory: 1.7 TB
-* --max_cpus: 256
-* --max_time: 7d
-* --schema_ignore_params: genomes,input_paths,cluster-options,clusterOptions,project,validationSchemaIgnoreParams
-* --validationSchemaIgnoreParams: genomes,input_paths,cluster-options,clusterOptions,project,schema_ignore_params
-* --validation-schema-ignore-params: genomes,input_paths,cluster-options,clusterOptions,project,schema_ignore_params
-
 [-        ] NFC…:PREPARE_GENOME:GTF_FILTER -
 [-        ] NFC…SEQ:PREPARE_GENOME:GTF2BED -
-[-        ] NFC…OME:MAKE_TRANSCRIPTS_FASTA -
-[-        ] NFC…ENOME:CUSTOM_GETCHROMSIZES -
-[-        ] NFC…AR_GENOMEGENERATE_IGENOMES -
 
 ...
 skipping many lines here
 ...
 
-[01/165fc2] NFC…QC_READDISTRIBUTION (wt_2) | 6 of 6 ✔
-[5b/1612c9] NFC…EQC_READDUPLICATION (wt_2) | 6 of 6 ✔
-[df/0115fa] NFC…_RNASEQ:RNASEQ:MULTIQC (1) | 1 of 1 ✔
+[86/c4826f] NFC…_JUNCTIONSATURATION (wt_1) | 6 of 6 ✔
+[66/52a3f9] NFC…QC_READDISTRIBUTION (wt_1) | 6 of 6 ✔
+[83/72ca5f] NFC…EQC_READDUPLICATION (wt_1) | 6 of 6 ✔
+[14/d9eec6] NFC…_RNASEQ:RNASEQ:MULTIQC (1) | 1 of 1 ✔
 -[nf-core/rnaseq] Pipeline completed successfully -
-Completed at: 11-Nov-2024 14:41:08
-Duration    : 1h 38m 43s
-CPU hours   : 57.9
-Succeeded   : 205
+Completed at: 28-Oct-2025 16:25:41
+Duration    : 1h 18m 3s
+CPU hours   : 56.9
+Succeeded   : 215
 ```
 
 The output `results` directory looks like this:
@@ -1437,58 +1427,57 @@ The output `results` directory looks like this:
 ```
 results/
 ├── fastqc
-│   ├── raw
-│   └── trim
+│   ├── raw
+│   └── trim
+├── fq_lint
+│   ├── raw
+│   └── trimmed
 ├── multiqc
-│   └── star_salmon
+│   └── star_salmon
 ├── pipeline_info
-│   ├── nf_core_rnaseq_software_mqc_versions.yml
-│   ├── params_2024-11-08_20-02-55.json
-│   ├── params_2024-11-08_22-29-50.json
-│   ├── params_2024-11-09_12-28-08.json
-│   └── params_2024-11-11_13-02-41.json
+│   ├── nf_core_rnaseq_software_mqc_versions.yml
+│   ├── params_2025-10-28_14-47-59.json
+│   └── params_2025-10-28_15-07-52.json
 ├── star_salmon
-│   ├── bigwig
-│   ├── deseq2_qc
-│   ├── dupradar
-│   ├── featurecounts
-│   ├── ko_1
-│   ├── ko_1.markdup.sorted.bam
-│   ├── ko_1.markdup.sorted.bam.bai
-│   ├── ko_2
-│   ├── ko_2.markdup.sorted.bam
-│   ├── ko_2.markdup.sorted.bam.bai
-│   ├── ko_3
-│   ├── ko_3.markdup.sorted.bam
-│   ├── ko_3.markdup.sorted.bam.bai
-│   ├── log
-│   ├── null.merged.gene_counts_length_scaled.SummarizedExperiment.rds
-│   ├── null.merged.gene_counts_scaled.SummarizedExperiment.rds
-│   ├── null.merged.gene_counts.SummarizedExperiment.rds
-│   ├── null.merged.transcript_counts.SummarizedExperiment.rds
-│   ├── picard_metrics
-│   ├── qualimap
-│   ├── rseqc
-│   ├── salmon.merged.gene_counts_length_scaled.tsv
-│   ├── salmon.merged.gene_counts_scaled.tsv
-│   ├── salmon.merged.gene_counts.tsv
-│   ├── salmon.merged.gene_lengths.tsv
-│   ├── salmon.merged.gene_tpm.tsv
-│   ├── salmon.merged.transcript_counts.tsv
-│   ├── salmon.merged.transcript_lengths.tsv
-│   ├── salmon.merged.transcript_tpm.tsv
-│   ├── samtools_stats
-│   ├── stringtie
-│   ├── tx2gene.tsv
-│   ├── wt_1
-│   ├── wt_1.markdup.sorted.bam
-│   ├── wt_1.markdup.sorted.bam.bai
-│   ├── wt_2
-│   ├── wt_2.markdup.sorted.bam
-│   ├── wt_2.markdup.sorted.bam.bai
-│   ├── wt_3
-│   ├── wt_3.markdup.sorted.bam
-│   └── wt_3.markdup.sorted.bam.bai
+│   ├── bigwig
+│   ├── deseq2_qc
+│   ├── dupradar
+│   ├── featurecounts
+│   ├── ko_1
+│   ├── ko_1.markdup.sorted.bam
+│   ├── ko_1.markdup.sorted.bam.bai
+│   ├── ko_2
+│   ├── ko_2.markdup.sorted.bam
+│   ├── ko_2.markdup.sorted.bam.bai
+│   ├── ko_3
+│   ├── ko_3.markdup.sorted.bam
+│   ├── ko_3.markdup.sorted.bam.bai
+│   ├── log
+│   ├── null.merged.gene.SummarizedExperiment.rds
+│   ├── null.merged.transcript.SummarizedExperiment.rds
+│   ├── picard_metrics
+│   ├── qualimap
+│   ├── rseqc
+│   ├── salmon.merged.gene_counts_length_scaled.tsv
+│   ├── salmon.merged.gene_counts_scaled.tsv
+│   ├── salmon.merged.gene_counts.tsv
+│   ├── salmon.merged.gene_lengths.tsv
+│   ├── salmon.merged.gene_tpm.tsv
+│   ├── salmon.merged.transcript_counts.tsv
+│   ├── salmon.merged.transcript_lengths.tsv
+│   ├── salmon.merged.transcript_tpm.tsv
+│   ├── samtools_stats
+│   ├── stringtie
+│   ├── tx2gene.tsv
+│   ├── wt_1
+│   ├── wt_1.markdup.sorted.bam
+│   ├── wt_1.markdup.sorted.bam.bai
+│   ├── wt_2
+│   ├── wt_2.markdup.sorted.bam
+│   ├── wt_2.markdup.sorted.bam.bai
+│   ├── wt_3
+│   ├── wt_3.markdup.sorted.bam
+│   └── wt_3.markdup.sorted.bam.bai
 └── trimgalore
     ├── ko_1_trimmed_1.fastq.gz_trimming_report.txt
     ├── ko_1_trimmed_2.fastq.gz_trimming_report.txt
