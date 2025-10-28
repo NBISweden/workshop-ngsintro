@@ -1,4 +1,6 @@
 http://localhost
 http://127.0.0.1
 https://p3m.dev*
+http://localhost:8800/
+http://0.0.0.0:8800
 
