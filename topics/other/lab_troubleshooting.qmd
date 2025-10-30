@@ -6,13 +6,6 @@ sidebar: false
 format: html
 ---
 
-```{r}
-#| echo: false
-library(yaml)
-library(here)
-id_project <- yaml::read_yaml(here("_quarto.yml"))$id_project
-```
-
 ## Status
 
 Useful commands for monitoring status and user activity on HPC.
@@ -69,26 +62,9 @@ Total number of cores used on a project
 squeue -A {{< meta id_project >}} -o %C | awk '{total += $0} END{print total}'
 ```
 
-### Space usage
+### Project information
 
-Amount of storage space used per project
-
-```sh
-projinfo
-```
-
-Sample output
-
-```
-Information for compute project: edu24.uppmax (PI: mdahlo)
-UPPMAX intro course
-Active from 2024-09-29 00:00:00 to 2025-02-03 00:00:00
-Members: asmae,ccollins,dianaek,emmers,eswku,heddaja,larsger,laurea,leonco,malina,mariaio,marziar,mdahlo,muyi,peihung,royfranc,rubencw,shaja23,svelo,szczot,theoseri,tudoran,vibe1827,xuji
-dardel: 2000 corehours/month, used 39.51% (790 corehours) during the past 30 days
-Usage by user royfranc: 36.85% (736 corehours)
-```
-
-### List project members
+Get information about a project including quota, usage and members.
 
 ```sh
 projinfo
@@ -97,12 +73,27 @@ projinfo
 Sample output
 
 ```
-Information for compute project: edu24.uppmax (PI: mdahlo)
-UPPMAX intro course
-Active from 2024-09-29 00:00:00 to 2025-02-03 00:00:00
-Members: asmae,ccollins,dianaek,emmers,eswku,heddaja,larsger,laurea,leonco,malina,mariaio,marziar,mdahlo,muyi,peihung,royfranc,rubencw,shaja23,svelo,szczot,theoseri,tudoran,vibe1827,xuji
-dardel: 2000 corehours/month, used 39.51% (790 corehours) during the past 30 days
-Usage by user royfranc: 36.85% (736 corehours)
++===================+==============================================================+
+| Storage project   | naiss2025-22-1240                                            |
++-------------------+--------------------------------------------------------------+
+| Title             | Introduction to bioinformatics using NGS data HT 2025        |
++-------------------+--------------------------------------------------------------+
+| PI                | mdahlo                                                       |
++-------------------+--------------------------------------------------------------+
+| Duration          | 2025-09-16 -> 2026-03-01                                     |
++-------------------+--------------------------------------------------------------+
+| Members           | dianaek jwhelan kribub mdahlo royfranc                       |
++-------------------+--------------------------------------------------------------+
+| Path              | /cfs/klemming/projects/supr/naiss2025-22-1240                |
++-------------------+--------------------------------------------------------------+
+| Quota             | 500.00 GiB                                                   |
++-------------------+--------------------------------------------------------------+
+| File quota        | 1000000                                                      |
++-------------------+--------------------------------------------------------------+
+| Stored            | 2.61 GiB (0.52%)                                             |
++-------------------+--------------------------------------------------------------+
+| Stored files      | 572 (0.06%)                                                  |
++===================+==============================================================+
 ```
 
 ### User activity

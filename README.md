@@ -53,7 +53,7 @@ docker run --platform linux/amd64 --rm -u 1000:1000 -v ${PWD}:/qmd ghcr.io/nbisw
 ### Convert HTML slides to PDF
 
 ```
-docker run --platform=linux/amd64 -v $PWD:/work astefanutti/decktape https://nbisweden.github.io/workshop-ngsintro/2403/topics/rnaseq/slide_rnaseq.html /work/slide_rnaseq.pdf
+docker run --platform=linux/amd64 -v $PWD:/work astefanutti/decktape https://nbisweden.github.io/workshop-ngsintro/2511/topics/rnaseq/slide_rnaseq.html /work/slide_rnaseq.pdf
 ```
 
 ### Serving and automatic rendering
@@ -93,9 +93,9 @@ This repo is loosely based on the quarto template [specky](https://github.com/ro
 
 ## Test scripts
 
-This is regarding the directory **scripts**. This directory contains shell scripts for vc (variant-calling) and rnaseq parts of the workshop. These are intended to be run on UPPMAX. Further instructions on using them are available within the scripts.
+This is regarding the directory **scripts**. This directory contains shell scripts for vc (variant-calling) and rnaseq parts of the workshop. These are intended to be run on HPC. Further instructions on using them are available within the scripts.
 
-The contents of these scripts should use identical steps and tools as the student would use in the lab. The aim of these scripts is to execute them on UPPMAX before the course. This should provide insight into broken links, broken tools, tool incompatibilities, core usage, ram usage and total space used.
+The contents of these scripts should use identical steps and tools as the student would use in the lab. The aim of these scripts is to execute them on HPC before the course. This should provide insight into broken links, broken tools, tool incompatibilities, core usage, ram usage and total space used.
 
 *The scripts directory is not used in this repo, tutorial or the website. It's just here as a backup.*
 

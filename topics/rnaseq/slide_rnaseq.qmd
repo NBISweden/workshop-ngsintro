@@ -921,8 +921,9 @@ plotCounts(d1, "ENSG00000000003", intgroup = "type")
 
 - Griffith lab [RNA-Seq using HiSat & StringTie tutorial](https://github.com/griffithlab/rnaseq_tutorial/wiki)
 - HBC Training [DGE using DeSeq2 tutorial](https://hbctraining.github.io/main/)
+- NBIS Workshop | [Analysis of RNA-Seq data](https://nbisweden.github.io/workshop-RNAseq/)
+- SciLifeLab [training](https://training.scilifelab.se/)
 - [RNA-Seq Blog](https://www.rna-seqblog.com/)
-- SciLifeLab [courses](https://www.scilifelab.se/education/courses%26training)
 
 :::
 ::: {.column width="25%"}
