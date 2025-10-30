@@ -18,9 +18,8 @@ fi
 # load modules
 if command -v sbatch &> /dev/null
 then
-  module load PDC/23.12
-  module load bioinfo-tools
-  module load subread/2.0.3
+  module load PDC/24.11
+  module load subread/2.1.1
 fi
 
 featureCounts \

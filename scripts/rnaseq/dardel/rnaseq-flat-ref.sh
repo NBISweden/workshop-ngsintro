@@ -9,8 +9,7 @@
 #SBATCH -t 1:00:00
 #SBATCH -J flatref
 
-module load PDC/23.12
-module load bioinfo-tools
+module load PDC/24.11
 module load ucsc-utilities/v421
 
 annot="Mus_musculus.GRCm38.99-19.gtf"

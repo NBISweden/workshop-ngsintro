@@ -2,6 +2,8 @@
 
 ## R script to create pca plot
 
+message("Creating PCA plot ...")
+
 # set custom library path
 .libPaths("/sw/courses/ngsintro/rnaseq/dardel/r")
 

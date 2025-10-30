@@ -24,9 +24,8 @@ fi
 # load modules
 if command -v sbatch &> /dev/null
 then
-  module load PDC/23.12
-  module load bioinfo-tools
-  module load QualiMap/2.2.1
+  module load PDC/24.11
+  module load qualimap/2.3
 fi
 
 # available memory in GB

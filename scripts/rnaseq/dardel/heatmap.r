@@ -2,7 +2,9 @@
 
 ## R script to create heatmap plot
 
-Sys.setenv(R_REMOTES_NO_X11 = "true")
+message("Creating heatmap plot ...")
+
+options(bitmapType = "cairo")
 
 # set custom library path
 .libPaths("/sw/courses/ngsintro/rnaseq/dardel/r")
@@ -24,7 +26,7 @@ table_res <- table_res[order(-abs(table_res$log2FoldChange)), ]
 table_res <- table_res[1:50, ]
 
 # load vst count data
-table_vst <- readRDS(file.path(path_input, "counts_vst_full.Rds"))
+table_vst <- readRDS(file.path(path_input, "counts_vst_full.rds"))
 table_vst <- table_vst[table_res$ensembl_gene_id, ]
 mt1 <- match(rownames(table_vst), table_res$ensembl_gene_id)
 table_vst <- table_vst[mt1, ]

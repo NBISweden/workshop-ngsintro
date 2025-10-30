@@ -26,8 +26,7 @@ fi
 # load modules
 if command -v sbatch &> /dev/null
 then
-  module load PDC/23.12
-  module load bioinfo-tools
+  module load PDC/24.11
   module load QoRTs/1.3.6
 fi
 

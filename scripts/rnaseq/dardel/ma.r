@@ -2,6 +2,8 @@
 
 ## R script to create ma plot
 
+message("Creating MA plot ...")
+
 # set custom library path
 .libPaths("/sw/courses/ngsintro/rnaseq/dardel/r")
 

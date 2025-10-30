@@ -1,8 +1,7 @@
 #!/bin/bash
 ## 2024 Roy Francis
 
-##SBATCH -A naiss2023-22-1027
-#SBATCH -A edu24.uppmax
+#SBATCH -A naiss2025-22-1240
 #SBATCH -p shared
 #SBATCH -c 4
 #SBATCH -t 2:00:00
@@ -31,7 +30,7 @@
 ## Update UPPMAX project ID
 ## Update variables below as needed. Set path_base as source rnaseq directory. Set compute as 'short' or 'long'. 'short' takes 4 mins and only creates directories and links. 'long' runs full computation.
 ## Run the script in an empty directory anywhere on Rackham as shown below
-## sbatch /sw/courses/ngsintro/rnaseq/main/scripts/rnaseq-master.sh
+## sbatch /sw/courses/ngsintro/rnaseq/dardel/main/scripts/rnaseq-master.sh
 
 ## VARIABLES --------------------------------------------------------------------
 
@@ -39,19 +38,16 @@
 set -e
 
 ## path to base directory (with trailing slash)
-# path_base="/sw/courses/ngsintro/rnaseq"
 path_base="/sw/courses/ngsintro/rnaseq/dardel"
 
-## if compute is set to short, long computations are not run, takes ~1 min on 4 core (8 GB RAM), final directory size: 424MB
-## if compute is set to long, all steps are run, takes ~7 mins on 4 cores (8 GB RAM), final directory size: 1.5GB
-## takes ~7 mins on 3 cores (6 GB RAM), picard fails
-## takes ~8 mins on 2 cores (4 GB RAM), picard fails
-## compute="short"
+## if compute is set to short, long computations are not run, takes ~13s on 4 core (~4 GB RAM), final directory size: 430MB
+## if compute is set to long, all steps are run, takes ~7 mins on 4 cores (~4 GB RAM), final directory size: 1.5GB
 compute="long"
 
 ## number of cores to use taken from SBATCH
 ## cores=${SLURM_NTASKS}
 cores=${SLURM_CPUS_PER_TASK}
+echo "Number of available cores: ${cores}"
 
 echo ""
 echo "============================================"
@@ -68,26 +64,22 @@ echo ""
 ## start date time
 start_time=`date +%s`
 
-echo "Loading modules ..."
+# :<<'comment'
+# comment
 
 ## load modules
-if command -v sbatch &> /dev/null
-then
-  module load PDC/23.12
-  module load bioinfo-tools
-  module load fastqc/0.12.1
-  module load hisat2/2.2.1
-  module load samtools/1.20
-  module load MultiQC/1.12
-  ## module load QoRTs/1.3.6
-  module load QualiMap/2.2.1
-  module load gatk/4.5.0.0
-  module load subread/2.0.3
-  module load R/4.4.0
-fi
-
-##:<<'comment'
-## comment
+# if command -v sbatch &> /dev/null
+# then
+#   module load PDC/24.11
+#   module load fastqc/0.12.1
+#   module load hisat2/2.2.1
+#   module load samtools/1.20
+#   module load multiqc/1.30
+#   module load qualimap/2.3
+#   module load gatk/4.5.0.0
+#   module load subread/2.1.1
+#   module load R/4.4.2-cpeGNU-24.11
+# fi
 
 # copy scripts directory
 if [ -d "rnaseq" ]; then
@@ -171,6 +163,8 @@ if [ ${compute} == "long" ];
  then
   bash ../scripts/rnaseq-hisat2_align-pe_batch.sh ${cores}
 
+  module load PDC/24.11
+  module load samtools/1.20
   echo "Indexing BAM files ..."
 
   for i in *.bam
@@ -180,6 +174,8 @@ if [ ${compute} == "long" ];
    done
 fi
 
+  module unload PDC/24.11
+  module unload samtools/1.20
 cd ..
 
 mapping_end_time=`date +%s`
@@ -188,6 +184,8 @@ echo "Mapping took $((${mapping_end_time}-${mapping_start_time})) seconds."
 ## qualimap --------------------------------------------------------------------
 
 echo "Running QualiMap ..."
+module load PDC/24.11
+module load qualimap/2.3
 qualimap_start_time=`date +%s`
 
 cd 4_qualimap
@@ -201,12 +199,13 @@ cd ..
 
 qualimap_end_time=`date +%s`
 echo "QualiMap took $((${qualimap_end_time}-${qualimap_start_time})) seconds."
-module unload QualiMap/2.2.1
-module load R/4.4.0
+
+module unload qualimap/2.3
+module unload PDC/24.11
 
 ## qorts --------------------------------------------------------------------
 
-: <<'END'
+: <<'comment'
 echo "Running QoRTs ..."
 qorts_start_time=`date +%s`
 
@@ -221,25 +220,25 @@ cd ..
 
 qorts_end_time=`date +%s`
 echo "QoRTs took $((${qorts_end_time}-${qorts_start_time})) seconds."
-END
+comment
 
 ## picard collectrnaseqmetrics -------------------------------------------------
 
-echo "Running Picard ..."
-picard_start_time=`date +%s`
+# echo "Running Picard ..."
+#  picard_start_time=`date +%s`
 
-cd 4_picard
+# cd 4_picard
 
-if [ ${compute} == "long" ];
- then
-  bash ../scripts/rnaseq-picard_batch.sh ${cores}
-  multiqc --interactive ../ -m picard
-fi
+# if [ ${compute} == "long" ];
+#  then
+#   bash ../scripts/rnaseq-picard_batch.sh ${cores}
+#   multiqc --interactive ../ -m picard
+# fi
 
-cd ..
+# cd ..
 
-picard_end_time=`date +%s`
-echo "Picard took $((${picard_end_time}-${picard_start_time})) seconds."
+# picard_end_time=`date +%s`
+# echo "Picard took $((${picard_end_time}-${picard_start_time})) seconds."
 
 ## featurecounts ---------------------------------------------------------------
 
@@ -261,6 +260,8 @@ echo "featureCounts took $((${fcount_end_time}-${fcount_start_time})) seconds."
 ## multiqc ---------------------------------------------------------------------
 
 echo "Running MultiQC ..."
+module load PDC/24.11
+module load multiqc/1.30
 multiqc_start_time=`date +%s`
 
 cd 6_multiqc
@@ -274,10 +275,14 @@ cd ..
 
 multiqc_end_time=`date +%s`
 echo "MultiQC took $((${multiqc_end_time}-${multiqc_start_time})) seconds."
+module unload multiqc/1.30
+module unload PDC/24.11
 
 ## dge -------------------------------------------------------------------------
 
 echo "Running DGE ..."
+module load PDC/24.11
+module load R/4.4.2-cpeGNU-24.11
 dge_start_time=`date +%s`
 
 cp ${path_base}/main/reference/mm*gz ./reference
@@ -303,10 +308,14 @@ cd ..
 
 dge_end_time=`date +%s`
 echo "DGE took $((${dge_end_time}-${dge_start_time})) seconds."
+module unload R/4.4.2-cpeGNU-24.11
+module unload PDC/24.11
 
 ## GSE -------------------------------------------------------------------------
 
 echo "Running GSE ..."
+module load PDC/24.11
+module load R/4.4.2-cpeGNU-24.11
 gse_start_time=`date +%s`
 
 cd 5_dge
@@ -316,17 +325,19 @@ if [ ${compute} == "long" ];
   Rscript --vanilla ${path_base}/main/scripts/gse-clusterprofiler.r
  else
   cp ${path_base}/main/5_dge/gse-cc.rds .
-  cp ${path_base}/main/5_dge/gse_cc.txt .
+  cp ${path_base}/main/5_dge/gse-cc.txt .
   cp ${path_base}/main/5_dge/gse-bp.rds .
-  cp ${path_base}/main/5_dge/gse_bp.txt .
+  cp ${path_base}/main/5_dge/gse-bp.txt .
   cp ${path_base}/main/5_dge/gse-mf.rds .
-  cp ${path_base}/main/5_dge/gse_mf.txt .
+  cp ${path_base}/main/5_dge/gse-mf.txt .
 fi
 
 cd ..
 
 gse_end_time=`date +%s`
 echo "GSE took $((${gse_end_time}-${gse_start_time})) seconds."
+module unload R/4.4.2-cpeGNU-24.11
+module unload PDC/24.11
 
 # ------------------------------------------------------------------------------
 
@@ -342,8 +353,8 @@ echo "FastQC took $((${fastqc_end_time}-${fastqc_start_time})) seconds."
 echo "Mapper indexing took $((${mappingindex_end_time}-${mappingindex_start_time})) seconds."
 echo "Mapping took $((${mapping_end_time}-${mapping_start_time})) seconds."
 echo "QualiMap took $((${qualimap_end_time}-${qualimap_start_time})) seconds."
-#echo "QoRTs took $((${qorts_end_time}-${qorts_start_time})) seconds."
-echo "Picard took $((${picard_end_time}-${picard_start_time})) seconds."
+# echo "QoRTs took $((${qorts_end_time}-${qorts_start_time})) seconds."
+# echo "Picard took $((${picard_end_time}-${picard_start_time})) seconds."
 echo "MultiQC took $((${multiqc_end_time}-${multiqc_start_time})) seconds."
 echo "featureCounts took $((${fcount_end_time}-${fcount_start_time})) seconds."
 echo "DGE took $((${dge_end_time}-${dge_start_time})) seconds."

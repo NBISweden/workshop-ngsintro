@@ -2,6 +2,8 @@
 
 ## R script to create volcano plot
 
+message("Creating volcano plot ...")
+
 # set custom library path
 .libPaths("/sw/courses/ngsintro/rnaseq/dardel/r")
 

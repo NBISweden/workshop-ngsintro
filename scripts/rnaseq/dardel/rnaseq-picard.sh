@@ -24,8 +24,7 @@ fi
 # load modules
 if command -v sbatch &> /dev/null
 then
-  module load PDC/23.12
-  module load bioinfo-tools
+  module load PDC/24.11
   module load gatk/4.5.0.0
 fi
 
