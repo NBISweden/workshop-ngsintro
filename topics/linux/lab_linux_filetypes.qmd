@@ -75,7 +75,7 @@ This will print a file tree, which gives you a nice overview of the folders wher
 
 ## Run pipeline
 
-The best way to see all the different file formats is to run a small pipeline and see which files we encounter along the way. The pipeline is roughly the same steps you'll do in the variant-calling part of the course, so for now we'll stick with the dummy pipeline which some of you might have encoutered in the [extra material](../hpc/pipeline/lab_hpc_pipeline.html) for the HPC exercise.
+The best way to see all the different file formats is to run a small pipeline and see which files we encounter along the way. The pipeline is roughly the same steps you'll do in the variant-calling part of the course, so for now we'll stick with the dummy pipeline which some of you might have encountered in the [extra material](../hpc/pipeline/lab_hpc_pipeline.html) for the HPC exercise.
 
 The programs in the dummy pipeline does not actually do any analysis but they work the same way as the real deal, although slightly simplified, to get you familiar with how to work with analysis programs. The data is from a sequencing of the adenovirus genome, which is tiny compared to the human genome (36kb vs 3gb).
 
@@ -150,7 +150,7 @@ The export command affects only the terminal you type it in. If you have 2 termi
 5. Index the BAM file.
 6. View the aligned data together with the annotations.
 
-All aligners will have to index the reference genome you are aligning your data against. This is only done once per reference genome, and then you reuse that index whenever you need it. All aligners have their own kind of index unfortunately, so you will have to build one index for each aligner you want to use. In this lab, we will use the dummy aligher called `align_reads`, and we will build a index using it's indexing progam, called `reference_indexer`.
+All aligners will have to index the reference genome you are aligning your data against. This is only done once per reference genome, and then you reuse that index whenever you need it. All aligners have their own kind of index unfortunately, so you will have to build one index for each aligner you want to use. In this lab, we will use the dummy aligner called `align_reads`, and we will build a index using it's indexing program, called `reference_indexer`.
 
 First, have a look in the **0_ref** folder
 
@@ -181,7 +181,7 @@ The new file you see is the index file created by `reference_indexer`. This inde
 The numbers after the record name specifies how many bases the record has, how far into the file (in bytes) the record starts, the number of bases on each line in the record, and how many bytes each line takes up in the file.
 Using this information the program can quickly jump to the start location of each record, without having to read the file from the first row every time.
 
-Other aligners might use more complex indexing of the file to speed up the alignment process even further, e.g. creating an index over where it can find all possible "words" that you can form with 5 or so bases, making it easier to find possible matching sites for reads. If the read starts with `ATGTT` you can quickly look in the index and see all places in the geonome that contains this word and start looking if the rest of the read matches the area around the word.
+Other aligners might use more complex indexing of the file to speed up the alignment process even further, e.g. creating an index over where it can find all possible "words" that you can form with 5 or so bases, making it easier to find possible matching sites for reads. If the read starts with `ATGTT` you can quickly look in the index and see all places in the genome that contains this word and start looking if the rest of the read matches the area around the word.
 
 This greatly decreases the number of places you have to look when looking for a match. These types of indexes usually take a long time to create (5+ hours maybe), but since you only have to do it once per reference genome it's easily worth it, seeing how the alignment process probably would take 100s of hours without the index, instead of 6-12 hours.
 
@@ -319,7 +319,7 @@ igv.sh
 
 ::: {.callout-tip}
 
-If you notice that IGV over Xforwarding is excruciatingly slow, you can try to use the ThinLinc client instead, [please read the instrucutions on how to connect here](../other/lab_connect_pdc.html#remote-desktop). This will get you a remote desktop on one of the login nodes, and you can open a terminal and run IGV there instead. Once IGV is started, either using Xforwarding or the remote desktop, we are ready to go.
+If you notice that IGV over Xforwarding is excruciatingly slow, you can try to use the ThinLinc client instead, [please read the instructions on how to connect here](../other/lab_connect_pdc.html#remote-desktop). This will get you a remote desktop on one of the login nodes, and you can open a terminal and run IGV there instead. Once IGV is started, either using Xforwarding or the remote desktop, we are ready to go.
 :::
 
 There are 3 files we have to load in IGV.
@@ -332,7 +332,7 @@ The last file you have to load is the annotation data. Press **"File - Load from
 
 This will show you the reference genome, how all the reads are aligned to it, and all the annotation data. Try zooming in on an area and have a look at the reads and annotations. The figures you see in the picture are all derived from the data in the files you have given it.
 
-At the top of the window you have the overview of the current chromosome you are looking at, which tells you the scale you are zoomed at for the moment. When you zoom in you will see a red rectangle apper which shows you which portion of the chromosome you are looking at. Just below the scale you'll see the coverage graph, which tells you how many reads cover each position along the reference genome. The colored bands you see here and there are SNPs, i.e. positions where the reads of your sample does not match the reference genome.
+At the top of the window you have the overview of the current chromosome you are looking at, which tells you the scale you are zoomed at for the moment. When you zoom in you will see a red rectangle appear which shows you which portion of the chromosome you are looking at. Just below the scale you'll see the coverage graph, which tells you how many reads cover each position along the reference genome. The colored bands you see here and there are SNPs, i.e. positions where the reads of your sample does not match the reference genome.
 
 All the reads, the larger area in the middle of the window, are drawn from the data in the BAM file using the chromosome name, the starting position and the ending position of each read. When you zoom in more you will be able to see individual reads and how they are aligned. The annotation in GTF format are all plotted using the data in the GTF file, visible just under all the reads, are shown as blue rectangles.
 
@@ -356,13 +356,13 @@ Syntax: samtools view -C -T <reference genome> -o <name of cram file> <bam file 
 samtools view -C -T 0_ref/ad2.fa -o 4_cram/ad2.cram 3_sorted/ad2.sorted.bam
 ```
 
-Compare the sizes of the convered BAM file and the newly created CRAM file:
+Compare the sizes of the converted BAM file and the newly created CRAM file:
 
 ```bash
 ll -h 3_sorted/ad2.sorted.bam 4_cram/ad2.cram
 ```
 
-This will list both the files, and print the file size in a human readable format (`-h`). The CRAM file is roughly 1/3 of the size of the BAM file. This is probably because all the reads in the simulated data has the same quality value (`BBBBBBBBBB`). Fewer types of quality values are easier to compress, hence this amazing compression ratio. Real data will have much more diverse quality scores, and the CRAM file would be pethaps 70-80% of the original BAM file.
+This will list both the files, and print the file size in a human readable format (`-h`). The CRAM file is roughly 1/3 of the size of the BAM file. This is probably because all the reads in the simulated data has the same quality value (`BBBBBBBBBB`). Fewer types of quality values are easier to compress, hence this amazing compression ratio. Real data will have much more diverse quality scores, and the CRAM file would be perhaps 70-80% of the original BAM file.
 
 ::: {.callout-note}
 

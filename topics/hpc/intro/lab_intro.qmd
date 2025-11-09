@@ -262,7 +262,7 @@ To change which samtools module you have loaded, you have to unload the the modu
 module unload <module name>
 ```
 
-Look in the list from `module list` to see the name of the module you want to unload. When the old module is unloaded, load antoher version of `samtools`. 
+Look in the list from `module list` to see the name of the module you want to unload. When the old module is unloaded, load another version of `samtools`. 
 
 # Submitting a job
 

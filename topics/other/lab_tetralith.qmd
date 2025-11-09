@@ -22,7 +22,7 @@ To use ThinLinc to connect to Tetralith:
 1. If you haven't already done so, download the ThinLinc client matching your local computer (i.e Windows, Linux, MacOS X or Solaris) and install it.
 2. Start the client.
 3. Change the "Server" setting to "tetralith.nsc.liu.se".
-4. Change the "Name" setting to your Tetralith username (e.g x_abcde).
+4. Change the "Name" setting to your Tetralith username (e.g `x_abcde`).
 5. You do not need to change any other settings.
 6. Enter your cluster Tetralith password in the "Password" box.
 7. Press the "Connect" button.

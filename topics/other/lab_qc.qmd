@@ -26,7 +26,7 @@ fastqdir <- "/sw/courses/ngsintro/vc/data/fastq"
 
 ## FastQC
 
-FastQC performes a series of quality control analyses, called modules. The output is a HTML report with one section for each module, and a summary evaluation of the results in the top. Entirely normal results are marked with a green tick, slightly abnormal results raise warnings (orange exclamation mark), and very unusual results raise failures (red cross).
+FastQC performs a series of quality control analyses, called modules. The output is a HTML report with one section for each module, and a summary evaluation of the results in the top. Entirely normal results are marked with a green tick, slightly abnormal results raise warnings (orange exclamation mark), and very unusual results raise failures (red cross).
 
 It is important to stress that although the analyses appear to give a pass/fail result, these evaluations must be taken in the context of what you expect from your library. A 'normal' sample as far as FastQC is concerned is random and diverse. Some experiments may be expected to produce libraries which are biased in particular ways. You should treat the summary evaluations therefore as pointers to where you should concentrate your attention and understand why your library may not look random and diverse.
 
@@ -151,7 +151,7 @@ Then download all generated .html files to that folder with this command (replac
 ```bash
 scp username@dardel.pdc.kth.se:{{< meta path_workspace >}}/qc/*.html .
 ```
-The files can now be opened from your local web browser by navigting to the same folder.  
+The files can now be opened from your local web browser by navigating to the same folder.  
 
 If you have connected to PDC via ThinLinc you can open it on Dardel with this command:
 

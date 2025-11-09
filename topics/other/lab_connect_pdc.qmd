@@ -7,7 +7,7 @@ format: html
 
 We will demonstrate three different ways to connect to PDC. From PDC's point of view, it doesn't matter which one you use, and you can change anytime or even use multiple ways simultaneously. The first one is a text-based SSH connection (all OS), SSH connection using MobaXterm (Windows) and a completely graphical remote desktop using Thinlinc (all OS). Thinlinc is useful if you need to view images or documents in GUI programs without having to first download the image/document to your own computer first. Since it is using graphics, it will require you to have an internet connection that is good and stable.
 
-The reason we show you different ways is that some parts of this course will require you to view plots and images, and adding an additional download step would just unneccesarily complicate things.
+The reason we show you different ways is that some parts of this course will require you to view plots and images, and adding an additional download step would just unnecessarily complicate things.
 
 ## SSH connection
 
@@ -79,7 +79,7 @@ You have now added your public key and told PDC that it should be allowed to log
 
 ![](assets/ssh_keys_pdc_004.png){width="300px"}
 
-Add whatever is prewritten in the field `define one yourself`, usually something like `*.your.internetprovier.com`. This will allow you to use this key as long as you are connecting from the same location as you are connecing now. If you want to use this key from another in the future you can add a similar pattern that matches e.g. your home university's (or internet provider) hostname (e.g. `*.uu.se`, `*.kth.se` or `*.telia.com`).
+Add whatever is prewritten in the field `define one yourself`, usually something like `*.your.internetprovier.com`. This will allow you to use this key as long as you are connecting from the same location as you are connecting now. If you want to use this key from another in the future you can add a similar pattern that matches e.g. your home university's (or internet provider) hostname (e.g. `*.uu.se`, `*.kth.se` or `*.telia.com`).
 
 ![](assets/ssh_keys_pdc_005.png){width="300px"}
 
@@ -157,7 +157,7 @@ This is only relevant for Windows users {{< fa brands windows >}}. MobaXterm giv
 
     ![](assets/ssh_keys_pdc_004.png){width="300px"}
 
-9. Add whatever is prewritten in the field `define one yourself`, usually something like `*.your.internetprovier.com`. This will allow you to use this key as long as you are connecting from the same location as you are connecing now. If you want to use this key from another in the future you can add a similar pattern that matches e.g. your home university's (or internet provider) hostname (e.g. `*.uu.se`, `*.kth.se` or `*.telia.com`).
+9. Add whatever is prewritten in the field `define one yourself`, usually something like `*.your.internetprovier.com`. This will allow you to use this key as long as you are connecting from the same location as you are connecting now. If you want to use this key from another in the future you can add a similar pattern that matches e.g. your home university's (or internet provider) hostname (e.g. `*.uu.se`, `*.kth.se` or `*.telia.com`).
 
     ![](assets/ssh_keys_pdc_005.png){width="300px"}
 

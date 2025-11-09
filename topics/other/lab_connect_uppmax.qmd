@@ -5,13 +5,13 @@ date: ""
 format: html
 ---
 
-We will teach you two different ways to connect to UPPMAX. From UPPMAX point of view it doesn't matter which one you use, and you can change whenever you want to or even use both ways simultaiously. The first one is a text-based SSH connection, and the other one is a graphical remote desktop. The latter one is useful if you need to view images or documents in GUI programs without having to first download the image/document to your own computer first. Since it is using graphics, it will require you to have an internet connection that is good and stable.
+We will teach you two different ways to connect to UPPMAX. From UPPMAX point of view it doesn't matter which one you use, and you can change whenever you want to or even use both ways simultaneously. The first one is a text-based SSH connection, and the other one is a graphical remote desktop. The latter one is useful if you need to view images or documents in GUI programs without having to first download the image/document to your own computer first. Since it is using graphics, it will require you to have an internet connection that is good and stable.
 
-The reason we will teach you two ways is that some parts of this course will require you to view plots and images, and adding an additional download step would just unneccesarily complicate things.
+The reason we will teach you two ways is that some parts of this course will require you to view plots and images, and adding an additional download step would just unnecessarily complicate things.
 
 ## SSH connection
 
-Let's look at the text-based SSH approach first. This type of connection work just fine even on slow internet connections since it only transmitts small amounts of text when you work with it. You will need an SSH program to do this, which fortunately is included in most major operating systems:
+Let's look at the text-based SSH approach first. This type of connection work just fine even on slow internet connections since it only transmits small amounts of text when you work with it. You will need an SSH program to do this, which fortunately is included in most major operating systems:
 
 - {{< fa brands ubuntu >}} Linux: Use Terminal (Included by default)
 - {{< fa brands apple >}} OSX: Use Terminal (Included by default)

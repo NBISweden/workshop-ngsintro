@@ -6,7 +6,7 @@ sidebar: false
 format: html
 ---
 
-You will have to have 2 different accounts to complete the labs in this course. The first one is in [SUPR](https://supr.naiss.se/) which is the portal that handles all your user accounts at NAISS compute centers (umbrella organisation for the academic high-performace centers).  The other one is at the compute center [PDC](https://www.pdc.kth.se/) in Stockholm.
+You will have to have 2 different accounts to complete the labs in this course. The first one is in [SUPR](https://supr.naiss.se/) which is the portal that handles all your user accounts at NAISS compute centers (umbrella organisation for the academic high-performance centers).  The other one is at the compute center [PDC](https://www.pdc.kth.se/) in Stockholm.
 
 ## SUPR
 

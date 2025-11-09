@@ -387,7 +387,7 @@ For more detailed information about vcf files please have a look at [The Variant
 9. What does *GT* in the *FORMAT* column of the data lines mean?
 10. What genotype does the sample HG00097 have at position 2:136545844?
 11. What does *AD* in the *FORMAT* column of the data lines mean? 
-12. What are the allelic depths for the reference and alternative alles in sample HG00097 at position 2:136545844?
+12. What are the allelic depths for the reference and alternative alleles in sample HG00097 at position 2:136545844?
 13. How many genetic variants was detected in the sample? The linux command `grep -v "#" HG00097.vcf | wc -l ` extracts all lines in HG00097.vcf that *don't* start with "#", and counts these lines.  
 
 ### Check vcf in IGV {#vcfinigv}

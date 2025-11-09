@@ -676,7 +676,7 @@ Make a soft link to this file:
 cat(paste0('ln -s ',refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf'))
 ```
 
-First, run BaseRecailbrator for the bam file generated in the previous step:
+First, run BaseRecalibrator for the bam file generated in the previous step:
 
 ``` bash
 gatk --java-options -Xmx4g BaseRecalibrator -R human_g1k_v37_chr2.fasta \
