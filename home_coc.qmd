@@ -19,7 +19,7 @@ We are dedicated to providing a welcoming and supportive environment for all peo
 - Focus on what is best for the community
 - Show courtesy and respect towards other community members
 
-If you believe someone is violating the Code of Conduct, we ask that you report it to the NBIS Training coordinator (education[@]nbis.se), who will take the appropriate action to address the situation.
+If you believe someone is violating the Code of Conduct, we ask that you report it to the NBIS Training coordinator (education[at]nbis.se), who will take the appropriate action to address the situation.
 
 ## Detailed
 ### Part 1. Introduction
@@ -28,7 +28,7 @@ Training is one of the core values of NBIS, and benefits from the contributions 
 
 To make clear what is expected, everyone participating in NBIS/ELIXIR courses is required to conform to the Code of Conduct. This Code of Conduct applies to all spaces managed by NBIS including, but not limited to courses, email lists, and online forums such as Studium, GitHub, Slack, Twitter and LinkedIn. Course organizers and teachers are expected to assist with the enforcement of the Code of Conduct.
 
-The NBIS Training Coordinator is responsible for enforcing the Code of Conduct. It can be contacted by emailing education[@]nbis.se. All reports will be reviewed and will be kept confidential.
+The NBIS Training Coordinator is responsible for enforcing the Code of Conduct. It can be contacted by emailing education[at]nbis.se. All reports will be reviewed and will be kept confidential.
 
 ### Part 2. The NBIS Code of Conduct
 
