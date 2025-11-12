@@ -142,11 +142,11 @@ url_cluster: "dardel.pdc.kth.se"
 url_cluster_backup: "rackham.uppmax.uu.se"
 
 # reservation ids
-id_slurm_res_mon: "edu25-xx-xx"
-id_slurm_res_tue: "edu25-xx-xx"
-id_slurm_res_wed: "edu25-xx-xx"
-id_slurm_res_thu: "edu25-xx-xx"
-id_slurm_res_fri: "edu25-xx-xx"
+id_slurm_res_mon: "edu25-11-17"
+id_slurm_res_tue: "edu25-11-18"
+id_slurm_res_wed: "edu25-11-19"
+id_slurm_res_thu: "edu25-11-20"
+id_slurm_res_fri: "edu25-11-21"
 
 # location is used to render the info page
 # location options are linkoping, lund, umea, stockholm, uppsala or online
@@ -176,6 +176,7 @@ assistants:
  - "MG: Maxime Garcia"
  - "ML: Malin Larsson"
  - "MM: Markus Mayrhofer"
+ - "MX: Marcel Martin"
  - "MP: Martin Pippel"
  - "MR: Miguel Redondo"
  - "MV: Massimiliano Volpe"
