@@ -26,7 +26,7 @@ fastqdir <- "/sw/courses/ngsintro/vc/data/fastq"
 
 ## FastQC
 
-FastQC performs a series of quality control analyses, called modules. The output is a HTML report with one section for each module, and a summary evaluation of the results in the top. Entirely normal results are marked with a green tick, slightly abnormal results raise warnings (orange exclamation mark), and very unusual results raise failures (red cross).
+FastQC performs a series of quality control analyses, called modules. The output is an HTML report with one section for each module, and a summary evaluation of the results in the top. Entirely normal results are marked with a green tick, slightly abnormal results raise warnings (orange exclamation mark), and very unusual results raise failures (red cross).
 
 It is important to stress that although the analyses appear to give a pass/fail result, these evaluations must be taken in the context of what you expect from your library. A 'normal' sample as far as FastQC is concerned is random and diverse. Some experiments may be expected to produce libraries which are biased in particular ways. You should treat the summary evaluations therefore as pointers to where you should concentrate your attention and understand why your library may not look random and diverse.
 
@@ -63,9 +63,9 @@ user@login1 ~ $ squeue -u user
 user@login1 ~ $
 ```
 
-where `nid001009` is the name of the node (yours will probably be different). Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested the session will shut down, and you will lose all unsaved data.  
+where `nid001009` is the name of the node (yours will probably be different). Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested, the session will shut down, and you will lose all unsaved data.
 
-If the list is empty you can run the allocation command again and it should be in the list:
+If the list is empty, you can run the allocation command again, and it should be in the list:
 
 ```bash
 salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_tue >}} -t 04:00:00 -p shared -c 1
@@ -101,7 +101,7 @@ The raw data files are located in
  cat(paste0(fastqdir))
 ```
 
-Instead of copying the files to your workspace you should create symbolic links (soft-links) to them. Soft-linking files and folders allows you to work with them as if they were in your current directory, but without multiplying them. Create symbolic links to the fastq files in your workspace:
+Instead of copying the files to your workspace, you should create symbolic links (soft-links) to them. Soft-linking files and folders allows you to work with them as if they were in your current directory, but without creating actual copies.  Create symbolic links to the FASTQ files in your workspace:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('ln -s ',fastqdir,'/HG00097_1.fq\n'))
@@ -111,6 +111,21 @@ cat(paste0('ln -s ',fastqdir,'/HG00100_2.fq\n'))
 cat(paste0('ln -s ',fastqdir,'/HG00101_1.fq\n'))
 cat(paste0('ln -s ',fastqdir,'/HG00101_2.fq\n'))
 ```
+
+### Inspecting the raw reads
+
+The files come from paired-end sequencing, where each fragment is
+sequenced from two ends.
+The two reads are sometimes called R1 and R2,
+and are typically stored in two different files with file names
+that have a `1` and a `2` in their names.
+Use the program `less` to look at the contents of the FASTQ file containing the
+R2 reads of the `HG00101` sample:
+```bash
+less HG00101_2.fq
+```
+While `less` is running, use the arrow keys to scroll up and down.
+Use the `Q` to quit the program when you are done.
 
 ### Accessing FastQC
 
@@ -129,13 +144,13 @@ module load fastqc/0.12.1
 
 ### Run FastQC
 
-Run FastQC on all fastq files:
+Run FastQC on all FASTQ files:
 
 ```bash
 fastqc -q *.fq
 ```
 
-The output is .html documents that shows quality scores along the reads, and other information. Please check what new files were generated with the command:
+The output is one `.html` document for each input FASTQ file, which shows quality scores along the reads and other information. Please check what new files were generated with the command:
 
 ```bash
 ls -lrt
@@ -143,23 +158,23 @@ ls -lrt
 
 ## Check the results
 
-The output from FastQC is a HTML report that should be opened in a web browser.  
+The output from FastQC is an HTML report that should be opened in a web browser.
 
 One option is to download the output to your local computer and open the file in your local web browser.  
 To do this, first open a new terminal window on your local computer and navigate to a folder where you want to keep the files.   
-Then download all generated .html files to that folder with this command (replace `username` with your username):  
+Then download all generated `.html` files to that folder with this command (replace `username` with your username):
 ```bash
 scp username@dardel.pdc.kth.se:{{< meta path_workspace >}}/qc/*.html .
 ```
 The files can now be opened from your local web browser by navigating to the same folder.  
 
-If you have connected to PDC via ThinLinc you can open it on Dardel with this command:
+If you have connected to PDC via ThinLinc, you can open HTML files on Dardel with this command:
 
 ```bash
 firefox --no-remote filename.html &
 ```
 
-We have also made the output files that you just created available through the links below, so that you can look at them via your local web-browser:
+We have also made the output files that you just created available through the links below so that you can look at them via your local web-browser:
 
 Sample        | Read 1 | Read 2
 ------------- | ---------- | --------
@@ -178,11 +193,37 @@ This module shows the distribution of the quality scores at each position in the
 
 The background of the graph divides the y axis into very good quality calls (green), calls of reasonable quality (orange), and calls of poor quality (red).
 
+### Trim qualities
+
+Use the quality-trimming functionality of Cutadapt to remove low-quality 3' read ends of the HG00101 sample.
+
+First, load the appropriate module:
+
+```bash
+module load cutadapt
+```
+
+Then run this Cutadapt with the `-q` option:
+```bash
+cutadapt -q 20 -o HG00101_trimmed_1.fq -p HG00101_trimmed_2.fq HG00101_1.fq HG00101_2.fq
+```
+
+Generate new FastQC reports for the trimmed reads:
+```bash
+fastqc -q HG00101_trimmed_*.fq
+```
+
+Finally, inspect the `HG00101_trimmed_2.fq` file using `less`:
+```bash
+less HG00101_trimmed_2.fq
+```
+
 #### Questions
 
 1. Which positions in the reads have a median phred-score above 28 (very good quality calls) in each sample?  
 2. Do any of the samples have warnings or failures in the Per Base Sequence Quality module?
 3. Why? Please look in the [documentation of this module](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/2%20Per%20Base%20Sequence%20Quality.html).  
+4. How do quality scores change for HG00101 after quality trimming?
 
 ### Sequence Length Distribution
 
@@ -190,9 +231,11 @@ This module shows the length distribution of the reads in the file.
 
 #### Questions
 
-4. How long are the reads?
-5. Do any of the samples have warnings or failures in the Sequence Length Distribution module?
-6. Why? Please look in the [documentation of this module](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/7%20Sequence%20Length%20Distribution.html)
+5. How long are the reads?
+6. Do any of the samples have warnings or failures in the Sequence Length Distribution module?
+7. Why? Please look in the [documentation of this module](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/7%20Sequence%20Length%20Distribution.html)
+8. How does the length distribution change for HG00101 after quality trimming?
+9. What is the first read whose quality was trimmed in the `HG00101_trimmed_2.fq` file?
 
 ## Answers  
 
