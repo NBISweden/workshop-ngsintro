@@ -26,7 +26,7 @@ echo "Starting script 4"
 bash 4_linux_filetypes.sh $projid
 echo "Ended script 4"
 
-echo """
+echo -e "\033[0;32m
   ____  _   _  ____ ____ _____ ____ ____  
  / ___|| | | |/ ___/ ___| ____/ ___/ ___| 
  \___ \| | | | |  | |   |  _| \___ \___ \ 
@@ -34,4 +34,4 @@ echo """
  |____/ \___/ \____\____|_____|____/____/ 
                                           
 All test ran without errors.
-"""
+\033[0m"

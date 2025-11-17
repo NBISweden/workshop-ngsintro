@@ -13,17 +13,16 @@ squeue -u $user
 
 echo "3 Navigation"
 ls -l
-cd /proj/$projid
-cd nobackup
-ls -l /home/$user
+cd /cfs/klemming/projects/supr/$projid
+ls -l /cfs/klemming/home/${USER:0:1}/${USER}
 
 echo "4 Copy lab files"
-mkdir -p /proj/$projid/nobackup/$user
-mkdir -p /proj/$projid/nobackup/$user/linux_tutorial
-cp -r /sw/courses/ngsintro/linux/linux_tutorial/* /proj/$projid/nobackup/$user/linux_tutorial
+mkdir -p /cfs/klemming/projects/supr/$projid/$user
+mkdir -p /cfs/klemming/projects/supr/$projid/$user/linux_tutorial
+cp -r /sw/courses/ngsintro/linux/linux_tutorial/* /cfs/klemming/projects/supr/$projid/$user/linux_tutorial
 
 echo "5 Unpack files"
-cd /proj/$projid/nobackup/$user/linux_tutorial
+cd /cfs/klemming/projects/supr/$projid/$user/linux_tutorial
 tar -xzvf files.tar.gz
 
 echo "6 Copying and moving files"
@@ -50,8 +49,13 @@ mv part_2/*.txt part_1/
 ls -l many_files/*.docx
 ls -l many_files/*.txt
 
-
-
+echo -e "\033[0;32m
+ ____   ___  _   _ _____
+|  _ \ / _ \| \ | | ____|
+| | | | | | |  \| |  _|
+| |_| | |_| | |\  | |___
+|____/ \___/|_| \_|_____|
+\033[0m"
 
 
 

@@ -8,8 +8,8 @@ projid=${1:?No projid specified (required).}
 user=${2:-$USER}
 
 # copy files for lab
-cp -r /sw/courses/ngsintro/linux/filetypes /proj/$projid/nobackup/$user/
-cd /proj/$projid/nobackup/$user/filetypes
+cp -r /sw/courses/ngsintro/linux/filetypes /cfs/klemming/projects/supr/$projid/$user/
+cd /cfs/klemming/projects/supr/$projid/$user/filetypes
 tree
 
 # load module
@@ -24,9 +24,15 @@ sambam_tool -d -f index -i 3_sorted/ad2.sorted.bam
 mv 3_sorted/ad2.sorted.bam.bai 3_sorted/ad2.sorted.bai
 
 # cram
-module load bioinfo-tools samtools/1.10
+module load bioinfo-tools samtools
 samtools view -C -T 0_ref/ad2.fa -o 4_cram/ad2.cram 3_sorted/ad2.sorted.bam
 
 
 
-
+echo -e "\033[0;32m 
+ ____   ___  _   _ _____ 
+|  _ \ / _ \| \ | | ____| 
+| | | | | | |  \| |  _| 
+| |_| | |_| | |\  | |___ 
+|____/ \___/|_| \_|_____| 
+\033[0m" 

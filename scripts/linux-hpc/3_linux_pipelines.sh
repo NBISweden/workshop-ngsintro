@@ -8,9 +8,9 @@ projid=${1:?No projid specified (required).}
 user=${2:-$USER}
 
 # copy files for lab
-mkdir -p /proj/$projid/nobackup/$user/uppmax_pipeline_exercise
-cp -r /sw/courses/ngsintro/linux/uppmax_pipeline_exercise/data/* /proj/$projid/nobackup/$user/uppmax_pipeline_exercise
-cd /proj/$projid/nobackup/$user/uppmax_pipeline_exercise
+mkdir -p /cfs/klemming/projects/supr/$projid/$user/uppmax_pipeline_exercise
+cp -r /sw/courses/ngsintro/linux/uppmax_pipeline_exercise/data/* /cfs/klemming/projects/supr/$projid/$user/uppmax_pipeline_exercise
+cd /cfs/klemming/projects/supr/$projid/$user/uppmax_pipeline_exercise
 
 # load module
 export PATH=$PATH:/sw/courses/ngsintro/linux/uppmax_pipeline_exercise/dummy_scripts
@@ -18,7 +18,7 @@ export PATH=$PATH:/sw/courses/ngsintro/linux/uppmax_pipeline_exercise/dummy_scri
 # run programs
 filter_reads -h
 
-cd /proj/$projid/nobackup/$user/uppmax_pipeline_exercise/exomeSeq
+cd /cfs/klemming/projects/supr/$projid/$user/uppmax_pipeline_exercise/exomeSeq
 filter_reads -d -i raw_data/my_reads.rawdata.fastq -o raw_data/my_reads.filtered.fastq
 align_reads -d -i raw_data/my_reads.filtered.fastq -o my_reads.filtered.sam -r /sw/data/uppnex/reference/Homo_sapiens/hg19/concat_rm/Homo_sapiens.GRCh37.57.dna_rm.concat.fa
 find_snps -d -i raw_data/my_reads.filtered.fastq -o my_reads.filtered.vcf -r /sw/data/uppnex/reference/Homo_sapiens/hg19/concat_rm/Homo_sapiens.GRCh37.57.dna_rm.concat.fa
@@ -28,4 +28,10 @@ find_snps -d -i raw_data/my_reads.filtered.fastq -o my_reads.filtered.vcf -r /sw
 
 
 
-
+echo -e "\033[0;32m 
+ ____   ___  _   _ _____ 
+|  _ \ / _ \| \ | | ____| 
+| | | | | | |  \| |  _| 
+| |_| | |_| | |\  | |___ 
+|____/ \___/|_| \_|_____| 
+\033[0m" 
