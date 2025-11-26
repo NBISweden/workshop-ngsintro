@@ -253,3 +253,24 @@ div.callout-important .callout-icon::before {
   margin-right: 15px;
   float: left;
 }
+
+/* profile gallery */
+
+.profile-parent {
+  display: -ms-grid;
+  display: grid;
+  gap: 1em;
+  grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
+}
+
+.profile-child {
+  text-align: center;
+}
+
+.profile-child img {
+  height: 180px;
+  width: 180px;
+  -o-object-fit: cover;
+  object-fit: cover;
+  border-radius: 50%;
+}
