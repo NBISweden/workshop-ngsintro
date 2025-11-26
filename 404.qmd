@@ -12,7 +12,7 @@ execute:
 
 ::: {style="text-align: center;"}
 
-[404]{.fourofour}
+![](assets/images/404.webp)
 
 # 404: Page not found
 
