@@ -1,7 +1,7 @@
 project:
   type: website
   # output directory used on gh-pages branch. format: YYMM
-  output-dir: "2511"
+  output-dir: "2603"
   render: 
     - "!README.md"
     - "!LICENSE"
@@ -101,10 +101,10 @@ format:
       data-background-opacity: "1"
     header-logo-left: /assets/logos/nbis.png
     header-logo-left-height: 25px
-    header-logo-left-url: "https://nbisweden.github.io/workshop-ngsintro/2511/home_contents.html"
+    header-logo-left-url: "https://nbisweden.github.io/workshop-ngsintro/2603/home_contents.html"
     header-logo-right: /assets/logos/scilifelab.png
     header-logo-right-height: 25px
-    header-logo-right-url: "https://nbisweden.github.io/workshop-ngsintro/2511/home_schedule.html"
+    header-logo-right-url: "https://nbisweden.github.io/workshop-ngsintro/2603/home_schedule.html"
     template-partials:
       - "assets/title-slide.html"
       
@@ -129,11 +129,11 @@ filters:
 
 # used site-wide
 # project id on active cluster (dardel)
-id_project: "naiss2025-22-1240"
+id_project: "naiss2026-xx-xxx"
 # project id on fallback cluster (rackham)
-id_project_backup: "naiss2025-xx-xxx"
+id_project_backup: "naiss2026-xx-xxx"
 # path to course working directory
-path_workspace: "/cfs/klemming/projects/supr/naiss2025-22-1240/username"
+path_workspace: "/cfs/klemming/projects/supr/naiss2026-xx-xxxx/username"
 # path to course resources on cluster
 path_resources: "/sw/courses/ngsintro"
 # url to active cluster (dardel)
@@ -142,16 +142,16 @@ url_cluster: "dardel.pdc.kth.se"
 url_cluster_backup: "rackham.uppmax.uu.se"
 
 # reservation ids
-id_slurm_res_mon: "edu25-11-17"
-id_slurm_res_tue: "edu25-11-18"
-id_slurm_res_wed: "edu25-11-19"
-id_slurm_res_thu: "edu25-11-20"
-id_slurm_res_fri: "edu25-11-21"
+id_slurm_res_mon: "edu26-03-02"
+id_slurm_res_tue: "edu26-03-03"
+id_slurm_res_wed: "edu26-03-04"
+id_slurm_res_thu: "edu26-03-05"
+id_slurm_res_fri: "edu26-03-06"
 
 # location is used to render the info page
 # location options are linkoping, lund, umea, stockholm, uppsala or online
 # one or more separated by commas or semicolon.
-location: uppsala
+location: online
 assistants:
  - "AJ: Anna Johansson"
  - "BV: Björn Viklund"
