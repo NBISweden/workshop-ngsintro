@@ -10,3 +10,4 @@ to-do.md
 [0-9]*/
 _freeze
 site_libs
+**/*.quarto_ipynb
