@@ -85,12 +85,46 @@ for (i in seq_along(loc)) {
 cat(":::\n")
 ```
 
+## Organizers
+
+::: {.profile-parent}
+::: {.profile-child}
+
+![](assets/images/profile/diana-ekman.webp){.nolightbox}
+
+**Diana Ekman**  
+Bioinformatician, NBIS  
+Stockholm University
+
+:::
+::: {.profile-child}
+
+![](assets/images/profile/roy-francis.webp){.nolightbox}
+
+**Roy Francis**  
+Bioinformatician, NBIS  
+Uppsala University
+
+:::
+::: {.profile-child}
+
+![](assets/images/profile/martin-dahlo.webp){.nolightbox}
+
+**Martin Dahlö**  
+Deputy CTO, NBIS  
+Uppsala university
+
+:::
+:::
+
 ## Contact
 
-This workshop is run by the **National Bioinformatics Infrastructure Sweden (NBIS)** in collaboration with **National Genomics Infrastructure (NGI)**. Both, NGI and NBIS are platforms at SciLifeLab.
+This event is organized by [NBIS](https://nbis.se) in co-operation with National Genomics Infrastructure ([NGI](https://ngisweden.scilifelab.se/)). NBIS and NGI are platforms at the Science for Life Laboratory ([SciLifeLab](https://www.scilifelab.se/)). NBIS is the Swedish node of [Elixir](https://elixir-europe.org/). 
 
-If you would like to get in touch with us regarding this workshop, please contact us at **edu.intro-ngs [at] nbis.se**.
+For queries, write to us at **edu.intro-ngs[at]nbis.se**.  
 
-***
+---
+
+<p class="small"><a href="https://nbisweden.github.io/workshop-ngsintro">Introduction to Bioinformatics using NGS data</a>, a workshop created by <a href="https://nbis.se/">NBIS</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"></p>
 
 ![](assets/logos/nbis-scilifelab-ngi.svg){height="26px"}
