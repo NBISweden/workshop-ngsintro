@@ -184,7 +184,7 @@ Remember that these modules must be loaded **every time you login to Dardel,** o
 Load the bioinfo-tools module first to make it possible to load the other modules:
 
 ``` bash
-module load bioinfo-tools
+module load PDC
 module load bwa/0.7.17
 module load samtools/1.20
 module load gatk/4.5.0.0
@@ -367,7 +367,7 @@ Check that the files are now present in your *local workspace* using `ls -lrt`.
 
 ### Bam files in IGV
 
-Open IGV. In the upper left dropdown menu choose `Human hg19` (which is the same as GRCh37).\
+Open IGV. In the upper left dropdown menu choose `Human hg19` (which is the same as GRCh37). If these genome is not available you first need to go to Genomes -> select hosted genome. \
 In the `File` menu, select `Load from File`, navigate to your workspace, and select `HG00097.bam`.
 This data should now appear as a track in the tracks window.
 
@@ -406,16 +406,16 @@ The workflow below shows how the three samples are processed and combined.
 ### Alignment {#bwa_joint}
 
 We will run bwa a bit differently this time: mapping, sorting and conversion to bam will be performed in a single line.
-You will also add the *read group* information already in this step.
+You will also add the *read group* information already in this step. The pipe ("|") means that the output from the first step (bwa mem) is used as input in the next step (samtools sort).
 
 In addition, you can specify how many *threads* the program should use, which should be the same as the number of cores that you have access to. As we have asked for 8 cores we can specify `-t 8` below.
 
-Remember to replace *sample* with the sample name, both in the read group and in file names.
+Remember to replace *<sample>* with the sample name (i.e. HG00097, HG00100 or HG00101), *both* in the read group and in file names.
 
 ``` bash
 bwa mem -t 8 \
--R "@RG\tID:rg_sample\tSM:sample\tPU:XXX\tLB:libx\tPL:illumina" \
-human_g1k_v37_chr2.fasta sample_1.fq sample_2.fq | samtools sort > sample.bam
+-R "@RG\tID:rg_<sample>\tSM:<sample>\tPU:XXX\tLB:libx\tPL:illumina" \
+human_g1k_v37_chr2.fasta <sample>_1.fq <sample>_2.fq | samtools sort > <sample>.bam
 
 ```
 <details>
@@ -557,8 +557,8 @@ for sample in HG00097 HG00100 HG00101;
 do
   echo "Now analyzing: "${sample}
   #Fill in the code for running bwa-mem for each sample here
-  #Fill in the code for samtools index for each sample here
   #Fill in the code for MarkDuplicates here
+  #Fill in the code for samtools index for each sample here
   #Fill in the code for HaplotypeCaller for each sample here
 done
 #Fill in the code for CombineGVCFs for all samples here
@@ -569,8 +569,15 @@ done
 Save the template in your workspace and call it "joint_genotyping.sbatch" .
 Make the script executable by this command:
 
+
+In this lab you have an active node reservation so you can also run the script as a normal bash script:
+
 ``` bash
 chmod u+x joint_genotyping.sbatch
+```
+
+``` bash
+./joint_genotyping.sbatch
 ```
 
 To run the sbatch script in the SLURM queue, use this command:
@@ -579,11 +586,7 @@ To run the sbatch script in the SLURM queue, use this command:
 sbatch joint_genotyping.sbatch
 ```
 
-In this lab you have an active node reservation so you can also run the script as a normal bash script:
 
-``` bash
-./joint_genotyping.sbatch
-```
 
 If you would like more help with creating the sbatch script, please look at our example solution below (click on the link):
 
@@ -674,6 +677,7 @@ Make a soft link to this file:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('ln -s ',refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf'))
+cat(paste0('ln -s ',refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf.idx'))
 ```
 
 First, run BaseRecalibrator for the bam file generated in the previous step:
