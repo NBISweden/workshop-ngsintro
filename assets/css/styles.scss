@@ -4,7 +4,7 @@
 
 /* colours, fonts, size ---------------------------------------------------------------------- */
 
-@import url('https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&family=Nunito:ital,wght@0,200..700;1,200..700&display=swap');
 
 $primary: #95b540;
 $secondary: #BDD775;
@@ -201,7 +201,7 @@ div.callout-important .callout-icon::before {
 /* table schedule */
 
 .table-schedule {
-  font-size: 0.85em;
+  font-size: 0.98rem;
   line-height: 1.8;
 }
 
@@ -215,7 +215,7 @@ div.callout-important .callout-icon::before {
 
 .table-schedule .topic {
   color: white;
-  font-weight: bold;
+  font-weight: 700;
   border-radius: 4px;
   padding: 1px 4px;
   background: #BDBDBD;
@@ -223,10 +223,26 @@ div.callout-important .callout-icon::before {
 
 .table-schedule .topic-dinner {
   color: white;
-  font-weight: bold;
+  font-weight: 700;
   border-radius: 4px;
   padding: 1px 4px;
   background: #95b540;
+}
+
+.table-schedule .day-parent {
+  font-size: 110%;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  font-weight: 600;
+}
+
+.table-schedule .day {
+  color: white;
+  border-radius: 4px;
+  padding-right: 4px;
+  padding-left: 4px;
+  margin-left: 9px;
+  margin-right: 7px;
 }
 
 .table-schedule .marker {
