@@ -676,8 +676,8 @@ This file is available in the data folder on Dardel.
 Make a soft link to this file:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('ln -s ',refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf'))
-cat(paste0('ln -s ',refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf.idx'))
+cat(paste0('ln -s ',refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf\n'))
+cat(paste0('ln -s ',refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf.idx\n'))
 ```
 
 First, run BaseRecalibrator for the bam file generated in the previous step:
