@@ -1,0 +1,63 @@
+---
+title: "Pre-course supplementary information"
+subtitle: "More details about various steps"
+date: ""
+sidebar: false
+format: html
+---
+
+This page contains more detailed information about various steps in the precourse material. The sections on this page will be linked to from the precourse page, and not intended to be read from top to bottom.
+
+## Windows and X11
+
+Windows users are recommended to install [VcXsrv](https://github.com/marchaesen/vcxsrv/releases) to open graphical programs from PowerShell. This approach should work even if you don't have administrator permissions on your computer.
+
+### Installing VcXsrv
+
+These steps you only have to follow once, and after that the VcXsrv will be installed and you will only have to do the steps in the [Running section](#running-vcxsrv) to use it.
+
+
+1. Download the correct file (version will most likely have changed since this screenshot):
+   ![](assets/images/precourse_supplementary/vcxsrv_download.png)
+
+1. Run the installer. Windows will most likely complain that you are tryting to run a program not condoned by Bill Gates himself. If you press the `More info` link you will get an option to run it anyway.  
+   ![](assets/images/precourse_supplementary/vcxsrv_installer_00.png)  
+   
+   If you press the `More info` link you will get an option
+to run it anyway.  
+
+   ![](assets/images/precourse_supplementary/vcxsrv_installer_01.png)  
+
+1. Go through the installer steps.
+
+   ![](assets/images/precourse_supplementary/vcxsrv_installer_02.png)  
+   
+   ![](assets/images/precourse_supplementary/vcxsrv_installer_03.png)  
+   
+   ![](assets/images/precourse_supplementary/vcxsrv_installer_04.png)  
+
+
+### Running VcXsrv
+
+Once it is installed you can start VcXsrv using the desktop shortcut that was created. Now the program is installed and you will never do the steps above again. If you exit VcXsrv or reboot your computer, you will have to follow the steps below to start it again.
+
+1. Start VcXsrv using the desktop shortcut.  
+
+   ![](assets/images/precourse_supplementary/vcxsrv_desktop_shortcut.png)  
+
+1. Click through the configuration options without changing anything.
+
+
+   ![](assets/images/precourse_supplementary/vcxsrv_run_00.png)  
+   
+   ![](assets/images/precourse_supplementary/vcxsrv_run_01.png)  
+   
+   ![](assets/images/precourse_supplementary/vcxsrv_run_02.png)  
+   
+   ![](assets/images/precourse_supplementary/vcxsrv_run_03.png)  
+   
+1. Now VcXsrv will just be visible as an icon in the systray. It will just sit there and handle any graphics that gets sent to your terminal, no need to do anything else. If you right click it you can tell it to exit once you are done with using it, and just start it again when you need to use it.
+
+   ![](assets/images/precourse_supplementary/vcxsrv_systray.png)  
+  
+
