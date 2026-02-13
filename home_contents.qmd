@@ -52,6 +52,7 @@ format: html
 - Connecting to HPC PDC [{{< fa file-lines >}}](topics/other/lab_connect_pdc.html)
 - Connecting to HPC UPPMAX [{{< fa file-lines >}}](topics/other/lab_connect_uppmax.html)
 - Uploading & downloading files from HPC [{{< fa file-lines >}}](topics/other/lab_download_files.html)
+- Using X11 on Windows with VcXsrv [{{< fa file-lines >}}](topics/other/lab_vcxsrv.html)
 - Working on Tetralith: The backup cluster [{{< fa file-lines >}}](topics/other/lab_tetralith.html)
 - Linux cheatsheet [{{< fa file-pdf >}}](topics/linux/assets/linux_cheat_sheet.pdf)
 - Bash cheat sheet 1 [{{< fa file-pdf >}}](topics/linux/assets/bash_cheat_sheet_1.pdf)
