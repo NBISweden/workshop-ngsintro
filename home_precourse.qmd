@@ -56,10 +56,12 @@ Checking your request and approving your account requires some manual work, so y
 X11 is required to open graphical programs from a terminal.
 
 ##### Mac
+
 [{{< fa brands apple >}}]{.badge} Mac users will need to download and install [XQuartz](https://www.xquartz.org/) if not already installed. You can check if it's installed by running `which Xquartz` in the terminal.
 
 ##### Windows
-[{{< fa brands windows >}}]{.badge} Windows users are recommended to install [VcXsrv](https://github.com/marchaesen/vcxsrv/releases) to open graphical programs from PowerShell. This approach should work even if you don't have administrator permissions on your computer. Download the latest release (named something like `vcxsrv-64.XX.YY.ZZ.installer.noadmin.exe`) and install it. Once it is installed you can start the program from the desktop shortcut and it will run in the background and handle any graphics that arrives through PowerShell. [More detailed install instructions here if needed](home_precourse_supplementary.qmd#windows-and-x11).
+
+[{{< fa brands windows >}}]{.badge} Windows users are recommended to install [VcXsrv](https://github.com/marchaesen/vcxsrv/releases) to open graphical programs from PowerShell. This approach should work even if you don't have administrator permissions on your computer. Download the latest release (named something like `vcxsrv-64.XX.YY.ZZ.installer.noadmin.exe`) and install it. Once it is installed you can start the program from the desktop shortcut and it will run in the background and handle any graphics that arrives through PowerShell. More detailed install instructions are [available here](topics/other/lab_vcxsrv.qmd) if needed.
 
 Another alternative for Windows users is [MobaXterm](http://mobaxterm.mobatek.net), i.e. don't install MobaXterm if you managed to get VcXsrv in the previous paragraph installed. It is a all-in-one terminal solution that contains its own X11 server. It has a terminal, opens X11 windows and allows browsing remote files graphically through SFTP. It is recommended that you INSTALL the program and not use the portable version. The downside is that it has some non-standard keyboard shortcuts from things like copy/paste etc.
 
