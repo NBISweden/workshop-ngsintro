@@ -410,12 +410,12 @@ You will also add the *read group* information already in this step. The pipe ("
 
 In addition, you can specify how many *threads* the program should use, which should be the same as the number of cores that you have access to. As we have asked for 8 cores we can specify `-t 8` below.
 
-Remember to replace *<sample>* with the sample name (i.e. HG00097, HG00100 or HG00101), *both* in the read group and in file names.
+Remember to replace *sample* with the sample name (i.e. HG00097, HG00100 or HG00101), *both* in the read group and in file names.
 
 ``` bash
 bwa mem -t 8 \
--R "@RG\tID:rg_<sample>\tSM:<sample>\tPU:XXX\tLB:libx\tPL:illumina" \
-human_g1k_v37_chr2.fasta <sample>_1.fq <sample>_2.fq | samtools sort > <sample>.bam
+-R "@RG\tID:rg_sample\tSM:sample\tPU:XXX\tLB:libx\tPL:illumina" \
+human_g1k_v37_chr2.fasta sample_1.fq sample_2.fq | samtools sort > sample.bam
 
 ```
 <details>
