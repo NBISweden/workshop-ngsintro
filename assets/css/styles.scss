@@ -99,9 +99,8 @@ table, .Reactable {
 }
 
 .btn-primary:hover {
-  background-color: $secondary;
+  background-color: darken($primary, 5%);
   color: whitesmoke;
-
 }
 
 .btn-secondary {
@@ -110,17 +109,23 @@ table, .Reactable {
 }
 
 .btn-secondary:hover {
-  background-color: $tertiary;
+  background-color: darken($secondary, 5%);
   color: whitesmoke;
-}
-
-.observablehq .btn {
-  @extend .btn-sm;
 }
 
 .btn a {
   color: whitesmoke;
   text-decoration: none;
+}
+
+/* observablehq */
+
+.observablehq .btn {
+  @extend .btn-sm;
+}
+
+.observablehq select {
+  @extend .form-select;
 }
 
 /* alert */
@@ -196,6 +201,27 @@ div.callout-caution .callout-icon::before {
 
 div.callout-important .callout-icon::before {
   background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMTYiIHdpZHRoPSIxNiIgZmlsbD0iIzFjMjgzMyIgdmlld0JveD0iMCAwIDUxMiA1MTIiPjwhLS0hRm9udCBBd2Vzb21lIEZyZWUgNi41LjEgYnkgQGZvbnRhd2Vzb21lIC0gaHR0cHM6Ly9mb250YXdlc29tZS5jb20gTGljZW5zZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tL2xpY2Vuc2UvZnJlZSBDb3B5cmlnaHQgMjAyMyBGb250aWNvbnMsIEluYy4tLT48cGF0aCBkPSJNNDE2IDM5OC45YzU4LjUtNDEuMSA5Ni0xMDQuMSA5Ni0xNzQuOUM1MTIgMTAwLjMgMzk3LjQgMCAyNTYgMFMwIDEwMC4zIDAgMjI0YzAgNzAuNyAzNy41IDEzMy44IDk2IDE3NC45YzAgLjQgMCAuNyAwIDEuMXY2NGMwIDI2LjUgMjEuNSA0OCA0OCA0OGg0OFY0NjRjMC04LjggNy4yLTE2IDE2LTE2czE2IDcuMiAxNiAxNnY0OGg2NFY0NjRjMC04LjggNy4yLTE2IDE2LTE2czE2IDcuMiAxNiAxNnY0OGg0OGMyNi41IDAgNDgtMjEuNSA0OC00OFY0MDBjMC0uNCAwLS43IDAtMS4xek05NiAyNTZhNjQgNjQgMCAxIDEgMTI4IDBBNjQgNjQgMCAxIDEgOTYgMjU2em0yNTYtNjRhNjQgNjQgMCAxIDEgMCAxMjggNjQgNjQgMCAxIDEgMC0xMjh6Ii8+PC9zdmc+') !important;
+}
+
+/* profile gallery */
+
+.profile-parent {
+  display: -ms-grid;
+  display: grid;
+  gap: 1em;
+  grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
+}
+
+.profile-child {
+  text-align: center;
+}
+
+.profile-child img {
+  height: 180px;
+  width: 180px;
+  -o-object-fit: cover;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 /* table schedule */
@@ -293,23 +319,3 @@ div.callout-important .callout-icon::before {
   float: left;
 }
 
-/* profile gallery */
-
-.profile-parent {
-  display: -ms-grid;
-  display: grid;
-  gap: 1em;
-  grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
-}
-
-.profile-child {
-  text-align: center;
-}
-
-.profile-child img {
-  height: 180px;
-  width: 180px;
-  -o-object-fit: cover;
-  object-fit: cover;
-  border-radius: 50%;
-}
