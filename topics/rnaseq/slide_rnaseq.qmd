@@ -1,7 +1,9 @@
 ---
 title: "Bulk RNASeq Analysis"
 description: "Analysis of bulk RNA-Seq data to determine genome-wide gene expression"
-author: "Roy Francis / Dag Ahrén"
+author:
+  - name: "Roy Francis"
+  - name: "Dag Ahrén"
 format: revealjs
 ---
 
