@@ -320,6 +320,61 @@ You can optionally use an SFTP browser like [Filezilla](https://filezilla-projec
 
 {{< fa comments >}} Discuss based on your reports, whether your data is of good enough quality and/or what steps are needed to fix it.
 
+#### {{< fa question-circle >}} Questions
+
+1. Why would the per-base sequence quality decrease towards the 3' end of reads?
+
+    ![](assets/pbsq.jpg){ width="400px" }
+
+    <details>
+    <summary>Answer</summary>
+
+    This is due to the chemistry of sequencing-by-synthesis. As the sequencing reaction progresses, nucleotide incorporation becomes less efficient, polymerase fidelity decreases, and phasing/pre-phasing errors accumulate. Signal decay and cross-talk between clusters also increase over longer run times. This used to be a normal characteristic of Illumina sequencing and is one of the reasons why the 3' ends of reads are often quality trimmed before downstream analysis.
+
+    </details>
+
+1. What does a bimodal distribution in the "Per sequence GC content" plot indicate, and what could cause it?
+
+    ![](assets/psgc.jpg){ width="400px" }
+
+    <details>
+    <summary>Answer</summary>
+
+    A bimodal GC distribution suggests contamination with sequences from a different organism or source with a distinct GC content. Common causes include: (1) rRNA contamination (rRNA has different GC content than mRNA), (2) adapter dimers, (3) sample contamination from another species, or (4) contamination with spike-in controls. In RNA-seq, this might also indicate incomplete rRNA depletion or poly-A selection issues.
+
+    </details>
+
+1. Why might you see overrepresented sequences in your FastQC report, and when should you be concerned?
+
+    ![](assets/ac.jpg){ width="400px" }
+
+    <details>
+    <summary>Answer</summary>
+
+    Overrepresented sequences can arise from: (1) rRNA contamination (common in RNA-seq), (2) adapter sequences that weren't properly trimmed, (3) highly expressed genes (expected in RNA-seq), (4) PCR duplicates from low complexity libraries, or (5) technical artifacts. You should be concerned if overrepresented sequences are adapters (indicates trimming issues) or if they constitute a very large fraction of reads. However, seeing some highly expressed housekeeping genes or tissue-specific genes as overrepresented is normal in RNA-seq experiments.
+
+    </details>
+
+1. In RNA-seq, why is it normal to see high sequence duplication levels?
+
+    ![](assets/sdl.jpg){ width="400px" }
+
+    <details>
+    <summary>Answer</summary>
+
+    Unlike DNA sequencing where each fragment should be unique, RNA-seq inherently has duplication due to biological variation in gene expression levels. Highly expressed genes will naturally generate many identical reads. FastQC was originally designed for genomic DNA sequencing where high duplication indicates PCR bias. In RNA-seq, high duplication levels are expected and reflect the transcriptome's dynamic range. However, extremely high duplication (>90%) combined with low library complexity might still indicate problematic library preparation.
+
+    </details>
+
+1. How would you determine if your RNA-seq library preparation included an rRNA depletion step or poly-A selection based on FastQC results?
+
+    <details>
+    <summary>Answer</summary>
+
+    You can look for: (1) Overrepresented sequences - check if ribosomal RNA sequences appear (indicates incomplete rRNA depletion), (2) GC content distribution - rRNA has a specific GC profile that would cause deviations, (3) After mapping, check the percentage of reads mapping to rRNA genes. Poly-A selection libraries typically show lower rRNA contamination but may miss non-polyadenylated transcripts. rRNA depletion maintains non-polyadenylated RNAs but may have higher rRNA background.
+
+    </details>
+
 ### Mapping
 
 **Mapping reads using HISAT2**  
@@ -609,6 +664,53 @@ ls -l
 -rw-rw-r-- 1 user gXXXXXXX 43K Sep 19 12:32 SRR3222409-19.bam.bai
 ```
 
+#### {{< fa question-circle >}} Questions
+
+1. Why do we need a splice-aware aligner like HISAT2 for RNA-seq data instead of a regular genomic aligner like BWA?
+
+    <details>
+    <summary>Answer</summary>
+
+    RNA-seq reads are derived from mature mRNA transcripts where introns have been spliced out. When these reads are aligned to the genomic reference, reads that span exon-exon junctions will not align contiguously to the genome because the intronic sequence is present in the reference but absent in the read. Splice-aware aligners like HISAT2, STAR, or TopHat2 are designed to identify these split alignments and correctly map junction-spanning reads. Using a non-splice-aware aligner would result in many unmapped or incorrectly mapped reads, particularly for genes with short exons or many introns.
+
+    </details>
+
+1. What is the purpose of building an aligner index, when you can directly search the reference genome?
+
+    <details>
+    <summary>Answer</summary>
+
+    An aligner index is a pre-computed data structure (like a Burrows-Wheeler Transform with FM-index in HISAT2) that enables rapid substring searches. Without an index, each read would require scanning the entire genome (~3 billion bp for humans), which is computationally expensive. The index compresses and reorganizes the reference sequence to find matches efficiently. Building an index is a one-time cost that dramatically speeds up all subsequent alignments. The same index can be reused for multiple samples from the same reference genome.
+
+    </details>
+
+1. What does the mapping summary statistic "concordantly aligned exactly 1 time" mean, and why is it preferable to have high rates of uniquely mapped reads?
+
+    <details>
+    <summary>Answer</summary>
+
+    "Concordantly aligned exactly 1 time" means both reads of a paired-end fragment mapped to the same chromosome in the expected orientation (forward-reverse) and within a reasonable insert size, with only one such location in the genome. High unique mapping rates are preferable because: (1) uniquely mapped reads can be unambiguously assigned to specific genomic locations for accurate quantification, (2) multi-mapped reads introduce uncertainty in gene expression estimates, especially for gene families or repetitive regions, and (3) low unique mapping rates may indicate sample quality issues, contamination, or mismatched reference genome.
+
+    </details>
+
+1. Why do we convert SAM files to BAM format and sort the alignments by coordinate?
+
+    <details>
+    <summary>Answer</summary>
+
+    BAM is a binary, compressed version of SAM that typically reduces file size by 3-4 fold, saving storage space and speeding up file read/write operations. Coordinate sorting organizes reads by their genomic position, which is essential for: (1) indexing the BAM file to enable random access to specific genomic regions, (2) efficient visualization in genome browsers like IGV, (3) many downstream tools (variant callers, coverage calculators) that assume coordinate-sorted input for efficiency, and (4) duplicate marking algorithms that identify PCR duplicates based on alignment coordinates.
+
+    </details>
+
+1. If you observe a very low overall alignment rate (e.g., <50%), what could be potential causes and how would you troubleshoot?
+
+    <details>
+    <summary>Answer</summary>
+
+    Low alignment rates could indicate: (1) Wrong reference genome (e.g., human reads aligned to mouse), (2) Significant sample contamination from another species, (3) Poor quality reads that should have been trimmed, (4) Adapter sequences not removed, (5) Reference genome version mismatch (different assembly versions), (6) High rRNA contamination (if rRNA genes aren't in the reference). Troubleshooting steps: check FastQC reports for contamination signals, BLAST a sample of unmapped reads to identify their origin, verify the correct reference genome is being used, and ensure adapter trimming was performed correctly. You can also use tools like FastQ Screen to check for contamination from common sources.
+
+    </details>
+
 {{< fa exclamation-circle >}} If you are running short of time or unable to run the mapping, you can copy over results for all samples that have been prepared for you before class. They are available at this location: `{{< meta path_resources >}}/rnaseq/dardel/main/3_mapping/`.
 
 ```sh
@@ -707,6 +809,61 @@ scp -r username@{{< meta url_cluster >}}:{{< meta path_workspace >}}/rnaseq/4_qu
 cp -r {{< meta path_resources >}}/rnaseq/dardel/main/4_qualimap/* {{< meta path_workspace >}}/rnaseq/4_qualimap/"))
 ```
 
+#### {{< fa question-circle >}} Questions
+
+1. What does the "5'-3' bias" metric in QualiMap tell you, and what biological factors affect it?
+
+    ![](assets/qualimap-transcript-coverage-profile.jpg){ width="400px" }
+
+    <details>
+    <summary>Answer</summary>
+
+    The 5'-3' bias measures the ratio of read coverage at the 5' end versus the 3' end of transcripts. In an ideal library, coverage should be uniform across the transcript body (ratio ~1). Significant 3' bias (ratio <1) often indicates: (1) RNA degradation before library preparation (degraded RNA loses 5' ends first), (2) Poly-A selection bias (primers start from 3' poly-A tail), or (3) Oligo-dT priming issues. Significant 5' bias is less common but can occur with certain library preparation methods. This metric is crucial for assessing RNA quality and whether samples are comparable.
+
+    </details>
+
+1. Why is it important to check the percentage of reads mapping to exonic, intronic, and intergenic regions in RNA-seq?
+
+    ![](assets/qualimap-reads-genomic-origin.jpg){ width="400px" }
+
+    <details>
+    <summary>Answer</summary>
+
+    The distribution of reads across genomic features provides quality insights: (1) High exonic percentage (>70-80%) indicates successful mRNA enrichment, (2) High intronic percentage may indicate genomic DNA contamination, incomplete splicing (nascent transcripts), or nuclear RNA, (3) High intergenic percentage suggests DNA contamination, poor annotation, or novel transcripts. The expected distribution depends on the library type - poly-A selection should show high exonic rates, while total RNA libraries will have more intronic reads. Significant deviations from expected patterns may indicate sample or library preparation issues.
+
+    </details>
+
+1. How would you interpret a QualiMap report showing highly variable gene body coverage (non-uniform coverage across transcript length)?
+
+    ![](assets/qualimap-gene-body-coverage.jpg){ width="400px" }
+
+    <details>
+    <summary>Answer</summary>
+
+    Non-uniform gene body coverage can indicate: (1) RNA degradation - typically shows 3' bias with dropout at 5' ends, (2) Fragmentation bias - certain fragmentation methods have sequence preferences, (3) GC bias - extreme GC regions may have different coverage, (4) Library complexity issues - low complexity libraries may show uneven coverage, (5) Amplification bias - PCR can preferentially amplify certain fragments. To address this: check RNA Integrity Number (RIN) from original QC, compare across samples for systematic effects, and consider using tools that model coverage bias during quantification (like Salmon or RSEM).
+
+    </details>
+
+1. What does the QualiMap "junction analysis" section report, and how can it help assess the quality of a splice-aware alignment?
+
+    ![](assets/qualimap-junction-analysis.jpg){ width="400px" }
+
+    <details>
+    <summary>Answer</summary>
+
+    The junction analysis section reports statistics on reads that span splice junctions, including: (1) Known junctions - reads whose splice sites match annotated exon-exon junctions in the GTF/GFF file, (2) Novel junctions - reads spanning splice sites not present in the annotation, which may represent novel isoforms or mis-splicing events, (3) Partial novel junctions - one splice site is known but the other is not. For a high-quality alignment: a large fraction of junction reads should map to known junctions (typically >80-90% for well-annotated organisms), a very high rate of novel junctions can indicate misalignment, incorrect annotation, or genuine alternative splicing in the sample. This section also helps verify that a splice-aware aligner (e.g., STAR, HISAT2) was used correctly, as an unsplice-aware aligner would produce very few junction-spanning reads.
+
+    </details>
+
+1. QualiMap shows your sample has 95% of reads within exons but very low "reads mapped to genes". What could explain this discrepancy?
+
+    <details>
+    <summary>Answer</summary>
+
+    This discrepancy could arise from: (1) Annotation mismatch - using a GTF file from a different genome version or source than the reference FASTA, causing coordinate misalignment, (2) Chromosome naming inconsistency - the BAM file uses "chr1" while GTF uses "1" or vice versa, (3) Feature type specification - the tool may be counting only specific feature types (e.g., protein-coding genes) while reads map to other annotated exons (pseudogenes, lncRNAs), (4) Strand specificity settings - if strand-specific counting is specified but the library is unstranded, many reads may be discarded. Always verify that reference genome, annotation, and counting parameters are consistent.
+
+    </details>
+
 <br>
 
 ### Quantification
@@ -769,6 +926,53 @@ ls -l
 ```
 
 {{< fa comments >}} Inspect the files and try to make sense of them.
+
+{{< fa question-circle >}} What is the difference between counting at the exon level versus the gene level, and when might you choose one over the other?
+
+<details>
+<summary>Answer</summary>
+
+Gene-level counting sums all reads mapping to any exon of a gene, providing a single expression value per gene. This is simpler and most common for standard DGE analysis. Exon-level counting provides separate counts for each exon, which is useful for: (1) Differential exon usage analysis (detecting alternative splicing), (2) Identifying transcript isoform changes, (3) Detecting exon-skipping events. Gene-level counting is preferred when you're interested in overall gene expression changes, while exon-level counting is necessary when investigating splicing regulation or isoform-specific expression. Tools like DEXSeq use exon-level counts to identify differential exon usage.
+
+</details>
+
+#### {{< fa question-circle >}} Questions
+
+1. Why does featureCounts need to know if the library is stranded, and what happens if you specify the wrong strandedness?
+
+    <details>
+    <summary>Answer</summary>
+
+    Library strandedness indicates whether the sequenced reads preserve the original RNA strand orientation. With `-s 0` (unstranded), reads are counted regardless of which strand they map to. With `-s 1` (stranded) or `-s 2` (reverse-stranded), only reads matching the expected strand orientation are counted. If you specify stranded counting on an unstranded library: ~50% of reads will be discarded, reducing counts dramatically. If you specify unstranded on a stranded library: you'll lose strand information and may incorrectly count reads from overlapping genes on opposite strands, creating spurious expression signals. Always verify strandedness using tools like RSeQC's `infer_experiment.py` before counting.
+
+    </details>
+
+1. What does the featureCounts summary file tell you about "Unassigned_Ambiguity" and why might high ambiguity be problematic?
+
+    <details>
+    <summary>Answer</summary>
+
+    "Unassigned_Ambiguity" indicates reads that overlap multiple features (genes) and cannot be uniquely assigned. High ambiguity (>10-15%) may indicate: (1) Overlapping gene annotations (common in compact genomes or with comprehensive annotations including antisense transcripts), (2) Using inappropriate counting parameters for your annotation, (3) High rate of multi-gene read-through transcription. This is problematic because ambiguous reads are typically discarded, reducing effective library size and potentially biasing results against genes in crowded genomic regions. Solutions include using different overlap resolution modes (e.g., fractional counting) or annotation filtering.
+
+    </details>
+
+1. How does paired-end counting differ from single-end, and what does the `-p` flag do in featureCounts?
+
+    <details>
+    <summary>Answer</summary>
+
+    With the `-p` flag, featureCounts counts fragments (the original RNA molecule) rather than individual reads. Both reads of a pair are considered together, and only one count is added if both reads map to the same gene. This is important because: (1) It avoids double-counting the same RNA fragment, (2) It can use the pairing information to resolve ambiguous assignments (if one read is ambiguous but its mate is unique), (3) Fragment counts better represent the number of original RNA molecules. Without `-p`, each read is counted independently, potentially inflating counts. Additional flags like `--countReadPairs` and `-C` (don't count discordant pairs) refine paired-end behavior.
+
+    </details>
+
+1. Why might you choose alignment-free quantification methods (Salmon, kallisto) over traditional alignment-based counting (HISAT2 + featureCounts)?
+
+    <details>
+    <summary>Answer</summary>
+
+    Alignment-free (pseudoalignment) methods offer several advantages: (1) Speed - 10-100x faster as they don't compute full alignments, (2) Lower memory requirements, (3) Direct transcript-level quantification with proper handling of multi-mapping reads using expectation-maximization, (4) Better handling of reads from gene families and duplicated regions, (5) Built-in bias correction models (GC bias, sequence bias, positional bias). However, alignment-based methods are preferred when: (1) You need BAM files for visualization or variant calling, (2) You're working with novel/unannotated transcripts, (3) You're studying splicing using reads spanning junctions. Many modern pipelines (like nf-core/rnaseq) use STAR for alignment (providing BAMs) and Salmon for quantification.
+
+    </details>
 
 ::: {.callout-important}
 
@@ -895,6 +1099,13 @@ ls -l
 
 Essentially, we have two outputs: **dge_results_full** and **counts_vst_full**. **dge_results_full** is the list of differentially expressed genes. This is available in human readable tab-delimited .txt file and R readable binary .rds file. The **counts_vst_full** is variance-stabilised normalised counts, useful for exploratory analyses.
 
+```
+ensembl_gene_id	baseMean	log2FoldChange	lfcSE	stat	pvalue	padj
+ENSMUSG00000000001	4759.98141172752	-0.22313384713415	0.0980746249168413	-2.27512354454562	0.0228985196324456	0.119582057119404
+ENSMUSG00000000028	301.589906387388	0.165180329556362	0.189505963839622	0.871635496115001	0.383407259765523	0.697400109793806
+ENSMUSG00000000031	67354.9059955111	0.485425313069624	0.117601047180511	4.12773347973738	3.66356379521764e-05	0.000585338479238071
+```
+
 {{< fa clipboard-list >}}  Copy the results text file (`dge_results_full.txt`) to your computer and inspect the results. What are the columns? How many differentially expressed genes are present after adjusted p-value of 0.05? How many genes are upregulated and how many are down-regulated? How does this change if we set a log2 fold-change cut-off of ±1?
 
 {{< fa lightbulb >}} Open in a spreadsheet editor like Microsoft Excel or LibreOffice Calc.
@@ -907,6 +1118,54 @@ cp {{< meta path_resources >}}/rnaseq/dardel/main/5_dge/dge_results_full.rds .
 cp {{< meta path_resources >}}/rnaseq/dardel/main/5_dge/counts_vst_full.txt .
 cp {{< meta path_resources >}}/rnaseq/dardel/main/5_dge/counts_vst_full.rds .
 ```
+
+#### {{< fa question-circle >}} Questions
+
+1. Why does DESeq2 use raw counts instead of normalized counts (like TPM or FPKM) as input?
+
+    <details>
+    <summary>Answer</summary>
+
+    DESeq2 uses raw counts because it needs the integer count data to model the variance structure using a negative binomial distribution. Pre-normalized values (TPM, FPKM) have already had variance-altering transformations applied, which would violate the statistical model's assumptions. DESeq2 performs its own normalization internally using size factors that account for library size and composition differences. Using raw counts allows DESeq2 to properly estimate dispersion parameters and perform accurate statistical tests.
+
+    </details>
+
+1. What is the purpose of the adjusted p-value (padj) in DESeq2 results, and why is it different from the raw p-value?
+
+    <details>
+    <summary>Answer</summary>
+
+    The adjusted p-value corrects for multiple hypothesis testing. When testing thousands of genes, even with a significance threshold of 0.05, we'd expect ~5% false positives by chance alone (e.g., 500 false positives when testing 10,000 genes). DESeq2 uses the Benjamini-Hochberg procedure to control the False Discovery Rate (FDR). The adjusted p-value represents the expected proportion of false positives among all genes called significant at that threshold. For example, padj < 0.05 means we expect fewer than 5% of the significant calls to be false positives, making it a more reliable measure for identifying truly differentially expressed genes.
+
+    </details>
+
+1. Why might some genes have NA values for padj in DESeq2 results?
+
+    <details>
+    <summary>Answer</summary>
+
+    DESeq2 assigns NA to padj for several reasons: (1) Genes with zero counts across all samples - no data to analyze, (2) Genes with only a single sample having a nonzero count - insufficient data for statistical testing, (3) Genes with extreme count outliers that fail DESeq2's outlier detection (Cook's distance), (4) Genes automatically filtered due to low counts (independent filtering) to increase power for remaining tests. These NAs are intentional and help focus analysis on genes with sufficient evidence for reliable statistical testing. You can use `results(dds, cooksCutoff=FALSE)` to disable outlier filtering if needed.
+
+    </details>
+
+1. What biological interpretation can you draw from a gene with high baseMean but low log2FoldChange versus a gene with low baseMean but high log2FoldChange?
+
+    <details>
+    <summary>Answer</summary>
+
+    A gene with high baseMean but low log2FoldChange is highly expressed but changes only slightly between conditions - potentially a constitutively expressed gene with minor condition-specific modulation (e.g., a housekeeping gene responding to stress). A gene with low baseMean but high log2FoldChange shows dramatic expression changes but at low absolute levels - this could be a regulatory gene (transcription factors often have low expression but large fold changes) or a condition-specific marker. However, lowly expressed genes with high fold changes should be interpreted with caution, as they may be more susceptible to noise and have less reliable statistical estimates. Always consider both fold change and expression level when interpreting biological significance.
+
+    </details>
+
+1. In the context of this experiment (YAP/TAZ knockout in Schwann cells), what would you expect to see in terms of direction of change for myelination-related genes?
+
+    <details>
+    <summary>Answer</summary>
+
+    Since YAP and TAZ are transcriptional co-activators that promote cell proliferation and are essential for myelination, their knockout would be expected to: (1) Downregulate genes involved in myelin sheath formation (e.g., Mbp, Mpz, Pmp22), (2) Downregulate lipid biosynthesis genes essential for myelin membrane (myelin is ~70% lipid), (3) Potentially upregulate apoptosis-related genes (Hippo pathway normally inhibits apoptosis), (4) Alter cell cycle genes since YAP/TAZ promote proliferation, (5) Change expression of laminin receptor genes as mentioned in the paper title. Comparing your DE gene list to known myelination pathways would validate the experimental system.
+
+    </details>
+
 
 ### RNA-Seq plots
 
@@ -987,6 +1246,53 @@ This generates a file named **heatmap.png** in the `5_dge` folder. To view it, d
 
 {{< fa clipboard-list >}} Compare this plot to a similar plot in the paper behind the data.
 
+#### {{< fa question-circle >}} Questions
+
+1. In a PCA plot, what does it mean biologically if PC1 explains 80% of the variance and separates your treatment groups perfectly?
+
+    <details>
+    <summary>Answer</summary>
+
+    This indicates that the experimental treatment (e.g., gene knockout) is the dominant source of variation in the dataset, which is ideal. It means: (1) The treatment has a strong, consistent effect on gene expression, (2) Technical variation and batch effects are relatively minor compared to the biological effect, (3) Replicates within each group are similar to each other, (4) You should have good statistical power to detect DE genes. However, if PC1 doesn't separate treatment groups but PC2 or PC3 does, there may be unwanted technical variation (batch effects) that should be addressed. If treatment groups don't separate on any major PC, the effect may be subtle or absent.
+
+    </details>
+
+1. Why does the MA plot show a funnel shape, with more spread at lower expression levels?
+
+    <details>
+    <summary>Answer</summary>
+
+    This pattern reflects the statistical properties of count data. At low expression levels: (1) Poisson counting noise is relatively large compared to the signal (coefficient of variation is higher), (2) A difference of a few counts represents a large fold-change but may not be statistically reliable, (3) Biological variation is harder to estimate accurately. At high expression levels, the relative noise decreases, and fold-change estimates become more precise. This is why DESeq2 and other tools apply shrinkage to log2FoldChange estimates - to reduce the artificially inflated fold-changes for lowly expressed genes. The MA plot helps visualize whether appropriate shrinkage has been applied.
+
+    </details>
+
+1. What does it mean if your volcano plot shows more significantly underexpressed genes than overexpressed genes?
+
+    <details>
+    <summary>Answer</summary>
+
+    An asymmetric volcano plot suggests a directional effect of the experimental treatment. In the context of YAP/TAZ knockout: since YAP/TAZ are transcriptional co-activators, knocking them out should predominantly reduce the expression of their target genes, leading to more underexpressed genes. However, indirect effects through regulatory cascades can cause upregulation of other genes (e.g., genes normally repressed by YAP/TAZ targets). The asymmetry can provide biological insight about whether your perturbation mainly activates or represses transcription. You should verify this pattern is reproducible and not due to technical artifacts like RNA quality differences between conditions.
+
+    </details>
+
+1. In a heatmap of DE genes, why might samples from the same treatment group not cluster perfectly together?
+
+    <details>
+    <summary>Answer</summary>
+
+    Imperfect clustering within treatment groups can occur due to: (1) Biological variability between replicates (individual animals, genetic background variation), (2) Batch effects if samples were processed on different days, (3) Sample quality differences (RNA integrity, library complexity), (4) Outlier samples that should potentially be removed, (5) The subset of genes shown may not fully represent the treatment effect (only top 50 genes shown). This is why it's important to look at PCA first (uses all genes) before interpreting heatmaps of selected genes. If one replicate consistently appears as an outlier across multiple analyses, consider investigating sample quality or potential mislabeling.
+
+    </details>
+
+1. How would you decide whether to use z-score normalization (row scaling) versus showing absolute expression values in a heatmap?
+
+    <details>
+    <summary>Answer</summary>
+
+    Z-score normalization (scaling each gene to mean=0, SD=1) is preferred when: (1) You want to compare relative changes across genes with very different expression levels, (2) The focus is on expression patterns rather than absolute levels, (3) Genes with high expression would otherwise dominate the color scale. Absolute values are better when: (1) You want to see which genes are highly versus lowly expressed, (2) Comparing magnitude of expression between genes is meaningful, (3) You're interested in co-expression of genes at similar absolute levels. Most differential expression heatmaps use z-scores because DE genes span a wide expression range, and the biological question is usually about patterns of change rather than absolute expression.
+
+    </details>
+
 ## Bonus exercises
 
 ::: {.callout-warning}
@@ -1043,6 +1349,12 @@ ls -l
 
 The results are GO terms from three different gene ontology databases: Biological process (BP), cellular component (CC) and molecular function (MF). They are written as text files and RDS files which is an R specific format.
 
+```
+ID	Description	GeneRatio	BgRatio	RichFactor	FoldEnrichment	zScore	pvalue	p.adjust	qvalue	geneID	Count
+GO:0051146	striated muscle cell differentiation	108/1845	284/11989	0.380281690140845	2.47110958433528	10.7000404150557	4.12598986480192e-21	1.94178291659553e-17	1.60695883528152e-17	Ccnd2/Rpl3l...	108
+GO:0003012	muscle system process	124/1845	351/11989	0.353276353276353	2.29562612435241	10.5065712553733	7.18912594074615e-21	1.94178291659553e-17	1.60695883528152e-17	Tbx2/Scn4a...	124
+```
+
 {{< fa clipboard-list >}} Take a quick look at some of these files.
 
 ```sh
@@ -1080,6 +1392,53 @@ synaptic membrane
 ```
 
 {{< fa comments >}} Explore the output files and figure out what the columns mean. Do you think the terms reflects the biology of the experiment we have just analysed?
+
+#### {{< fa question-circle >}} Questions
+
+1. What is the difference between gene set over-representation analysis (ORA) and gene set enrichment analysis (GSEA)?
+
+    <details>
+    <summary>Answer</summary>
+
+    Over-representation analysis (ORA) takes a pre-defined list of DE genes (based on p-value and fold-change cutoffs) and tests whether certain pathways have more genes than expected by chance using a hypergeometric test. GSEA, in contrast, uses the entire ranked gene list (typically by fold-change or a combined statistic) without applying arbitrary cutoffs, and tests whether genes in a pathway tend to cluster toward the top or bottom of the ranked list. GSEA can detect coordinated changes in a pathway even when individual genes don't pass significance thresholds. ORA is simpler and faster but can miss subtle, coordinated pathway changes; GSEA is more sensitive to pathway-level effects but requires a meaningful ranking metric.
+
+    </details>
+
+1. What does the "GeneRatio" column in enrichment results tell you, and why might two terms with the same p-value have different biological significance?
+
+    <details>
+    <summary>Answer</summary>
+
+    Gene ratio represents the proportion of genes in a GO term that are differentially expressed (e.g., 15/100 means 15 of 100 genes in that term are DE). Two terms with similar p-values might differ in: (1) Effect size - a term with 50% of genes affected vs. 10% suggests different levels of pathway perturbation, (2) Total term size - enrichment in a large general term (e.g., "metabolic process" with 5000 genes) is less specific than enrichment in a small focused term (e.g., "myelin sheath" with 50 genes), (3) Biological interpretability - some terms are more informative for your specific question. Always consider gene ratio, term size, and biological context together rather than just p-values.
+
+    </details>
+
+1. Why is it important to specify an appropriate "background" or "universe" for enrichment analysis?
+
+    <details>
+    <summary>Answer</summary>
+
+    The background set defines what genes could have been detected as DE in your experiment. Using the wrong background biases results: (1) If you use all genes in the genome but only measured a subset (e.g., genes on a microarray or genes with detectable expression), you underestimate enrichment, (2) If you use all expressed genes but many have zero counts, you may include genes that could never be detected as DE. The correct background is typically all genes that had sufficient expression to be tested for DE (i.e., genes that passed low-count filtering in DESeq2). Tissue-specific expression patterns also matter - brain-expressed genes are pre-enriched for neural functions, so using whole-genome background inflates neural term enrichment.
+
+    </details>
+
+1. How would you interpret enrichment results that show highly redundant GO terms (e.g., "muscle contraction", "muscle system process", "striated muscle contraction")?
+
+    <details>
+    <summary>Answer</summary>
+
+    Redundant GO terms arise because: (1) GO is hierarchical - child terms (specific) inherit genes from parent terms (general), (2) The same genes contribute to multiple overlapping terms. To address redundancy: (1) Use semantic similarity methods to cluster related terms (e.g., REVIGO, simplifyEnrichment), (2) Look at the "leading edge" genes - if the same genes drive multiple terms, they represent one biological signal, (3) Focus on the most specific terms that are significant, (4) Use pathway databases with less redundancy (e.g., KEGG, Reactome) alongside GO. ClusterProfiler's enrichplot functions help visualize term relationships. Reporting cleaned/simplified term lists is better than listing all redundant significant terms.
+
+    </details>
+
+1. Why do the GO enrichment results show muscle-related terms when the experiment studies myelination in Schwann cells?
+
+    <details>
+    <summary>Answer</summary>
+
+    Read the section 'A critical reanalysis' further down.
+
+    </details>
 
 ### IGV browser
 
@@ -1122,7 +1481,7 @@ ssh -Y username@{{< meta url_cluster >}}
 ssh -Y computenode
 ```
 
-An alternative method is to login through ThinLinc. Once you log into this interface you will have a linux desktop interface in a browser window. This interface is running on the login node, so if you want to do any heavy lifting you need to login to your reserved compute node also here. This is done by opening a terminal in the running linux environment and log on to your compute node as before. NB! If you have no active reservation you have to do that first.
+An alternative method is to login through Remote Desktop application: ThinLinc. Once you log into this interface you will have a linux desktop interface in a browser window. This interface is running on the login node, so if you want to do any heavy lifting you need to login to your reserved compute node also here. This is done by opening a terminal in the running linux environment and log on to your compute node as before. NB! If you have no active reservation you have to do that first.
 
 Load necessary modules and start IGV
 
@@ -1132,7 +1491,7 @@ module load igv/2.17.4
 igv-core
 ```
 
-This should start the IGV so that it is visible on your screen. If not please try to reconnect to HPC or consider running IGV locally as that is often the fastest and most convenient solution.
+This should start the IGV so that it is visible on your screen. If not please try to reconnect to HPC or consider running IGV locally as provides a better experience.
 :::
 
 Once we have the program running, you select the genome that you would like to load. Choose `Mouse mm10`. Note that if you are working with a genome that are not part of the available genomes in IGV, one can create genome files from within IGV. Please check the manual of IGV for more information on that.
@@ -1196,6 +1555,53 @@ For more detailed information on the splice reads you can instead of just lookin
 {{< fa clipboard-list >}} Do you think the reads are from a stranded or unstranded library?
 
 {{< fa clipboard-list >}} One can visualise all genes in a given pathway using the gene list option under **Regions** in the menu. If you need hints for how to proceed, see [Gene List tutorial](https://software.broadinstitute.org/software/igv/multilocus_view#GeneLists) at Broad. But, we only have data from one chromosome, so this is not that useful now.
+
+#### {{< fa question-circle >}} Questions
+
+1. How can you determine from the IGV visualization whether a gene shows differential expression between conditions?
+
+    <details>
+    <summary>Answer</summary>
+
+    In IGV, you can visually assess differential expression by: (1) Comparing the coverage track height between samples from different conditions - higher peaks indicate more reads/expression, (2) Looking at the read density in the read alignment panel, (3) Using IGV's "Group Autoscale" feature to normalize tracks for fair comparison. However, visual assessment has limitations: it doesn't account for library size differences, biological variability between replicates, or provide statistical significance. For genes like Tm7sf2 (downregulated in KO), you should see consistently lower coverage across all KO samples compared to Wt samples. IGV is best for qualitative validation of DE results, not for discovering DE genes.
+
+    </details>
+
+1. What information can Sashimi plots provide that regular read alignments cannot?
+
+    <details>
+    <summary>Answer</summary>
+
+    Sashimi plots specifically visualize splice junctions by showing: (1) Arcs connecting exons that are joined by spliced reads, with numbers indicating how many reads support each junction, (2) Different splice junction usage between samples, revealing alternative splicing, (3) Exon skipping events where reads connect non-adjacent exons, (4) Alternative 5' or 3' splice site usage, (5) Novel splice junctions not in the annotation. Regular read alignments show individual reads but make it difficult to quantify junction usage. Sashimi plots aggregate this information, making it easy to compare splicing patterns between conditions and identify isoform switching that might not be detected by gene-level DE analysis.
+
+    </details>
+
+1. Why is it important to have a BAM index file (.bai) for visualization in IGV, and what would happen without it?
+
+    <details>
+    <summary>Answer</summary>
+
+    BAM index files enable random access to specific genomic regions without reading the entire file. BAM files store reads in coordinate-sorted order, and the index maps genomic positions to file locations. Without an index: (1) IGV cannot quickly jump to a specific gene or region, (2) It would need to scan the entire file sequentially, making navigation extremely slow for large files, (3) Many genome browsers will simply refuse to load unindexed BAM files. The index file contains offset positions at regular intervals, allowing IGV to quickly locate and load only the reads within the current view window. This is essential for interactive visualization of the multi-gigabyte BAM files typical of RNA-seq experiments.
+
+    </details>
+
+1. Looking at the read alignments for a gene in IGV, how can you identify potential problems with the sequencing or alignment?
+
+    <details>
+    <summary>Answer</summary>
+
+    IGV can reveal several issues: (1) PCR duplicates - many reads with identical start positions, visible as vertical "stacks" (consider using read coloring by duplicate flag), (2) Mapping quality issues - reads colored gray have low mapping quality, indicating multi-mapping, (3) Mismatches - colored bases indicate SNPs, sequencing errors, or misalignment (useful for QC and variant detection), (4) Unusual insert sizes - paired reads too far apart or in wrong orientation indicate structural variants or mapping artifacts, (5) Coverage dropouts within exons - may indicate problematic regions or deletions, (6) High intronic coverage - suggests DNA contamination or unspliced RNA. Color reads by various attributes (strand, pair orientation, insert size) to identify different issues.
+
+    </details>
+
+1. How would you use IGV to determine whether the RNA-seq library is stranded, and why does this matter for downstream analysis?
+
+    <details>
+    <summary>Answer</summary>
+
+    To check strandedness in IGV: (1) Color reads by "first-of-pair strand" or "read strand", (2) For a gene on the positive strand, if the library is stranded: reads should predominantly map to one strand (depending on protocol - dUTP gives antisense reads), (3) For an unstranded library: reads will map equally to both strands on genes (approximately 50/50 split). You can also look at genes on opposite strands that overlap - in stranded libraries, reads should assign clearly to one gene; in unstranded, they'll be ambiguous.
+
+    </details>
 
 ## sbatch
 
