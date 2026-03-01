@@ -28,19 +28,19 @@ RNA-seq has become a powerful approach to study the continually changing cellula
 
 **Main exercise**
 
-- Check the quality of the raw reads with **FastQC**
-- Map the reads to the reference genome using **HISAT2**
-- Assess the post-alignment quality using **Qualimap**
-- Count the reads overlapping with genes using **featureCounts**
-- Find DE genes using **DESeq2** in R
+- 1. Check the quality of the raw reads with **FastQC**
+- 2. Map the reads to the reference genome using **HISAT2**
+- 3. Assess the post-alignment quality using **Qualimap**
+- 4. Count the reads overlapping with genes using **featureCounts**
+- 5. Find DE genes using **DESeq2** in R
+- 6. RNA-Seq figures and plots using **R**
 
 RNA-seq experiment does not necessarily end with a list of DE genes. If you have time after completing the **main** exercise, try one (or more) of the **bonus** exercises. The **bonus** exercises can be run independently of each other, so choose the one that matches your interest. Bonus sections are listed below.
 
 **Bonus exercises**
 
-- 01 Functional annotation of DE genes using **GO** database
-- 02 RNA-Seq figures and plots using **R**
-- 03 Visualisation of RNA-seq BAM files using **IGV** genome browser
+- 1. Functional annotation of DE genes using **GO** database
+- 2. Visualisation of RNA-seq BAM files using **IGV** genome browser
 
 ::: {.callout-note}
 
@@ -236,21 +236,11 @@ Once the module is loaded, FastQC program is available through the command `fast
 fastqc -o . ../1_raw/filename.fq.gz
 ```
 
-Based on the above command, we will write a bash loop script to process all fastq files in the directory. Writing multi-line commands through the terminal can be a pain. Therefore, we will run larger scripts from a bash script file. Move to your `scripts` directory and create a new file named `fastqc.sh`.
+Based on the above command, we will write a bash loop script to process all fastq files in the directory. Writing multi-line commands through the terminal can be a pain. Therefore, we will run larger scripts from a bash script file. Create a new file named `fastqc.sh` in your `scripts` directory.
 
 ```sh
-cd ../scripts
-pwd
-```
-
-```
-{{< meta path_workspace >}}/rnaseq/scripts
-```
-
-The command below creates a new file in the current directory.
-
-```sh
-touch fastqc.sh
+touch ../scripts/fastqc.sh
+ls -l ../scripts/
 ```
 
 Use a text editor (`nano`,`Emacs`, `gedit` etc.) to edit `fastqc.sh`.
@@ -258,7 +248,7 @@ Use a text editor (`nano`,`Emacs`, `gedit` etc.) to edit `fastqc.sh`.
 {{< fa lightbulb >}} `gedit` behaves like a regular text editor with a standard graphical interface.
 
 ```{sh,eval=FALSE}
-gedit fastqc.sh &
+gedit ../scripts/fastqc.sh &
 ```
 
 Then add the lines below and save the file.
@@ -275,21 +265,11 @@ do
 	echo "Running $i ..."
 	fastqc -o . "$i"
 done
-
 ```
 
 This script loops through all files ending in .gz. In each iteration of the loop, it executes fastqc on the file. The `-o .` flag to fastqc indicates that the output must be exported in this current directory (ie; the directory where this script is run).
 
-Change to the `2_fastqc` directory.  Use `pwd` to check if you are standing in the correct directory. Run the script file `fastqc.sh`
-
-```sh
-cd ../2_fastqc
-pwd
-```
-
-```
-{{< meta path_workspace >}}/rnaseq/2_fastqc
-```
+In the `2_fastqc` directory, run the script file `fastqc.sh`.  Use `pwd` to check if you are standing in the correct directory.
 
 ```sh
 bash ../scripts/fastqc.sh
@@ -434,7 +414,7 @@ drwxrwsr-x 2 user gXXXXXXX 4.0K Jan 22 21:59 mouse_chr19_hisat2
 
 #### Build index
 
-Move into the `reference` directory if not already there. Load module hisat2.
+Load module hisat2.
 
 ```sh
 module load PDC/24.11
@@ -466,7 +446,7 @@ Use `pwd` to check if you are standing in the correct directory. Then, run the s
 bash ../scripts/hisat2_index.sh
 ```
 
-Once the indexing is complete, move into the `mouse_chr19_hisat2` directory and make sure you have all the files.
+Once the indexing is complete, inspect the `mouse_chr19_hisat2` directory and make sure you have all the files.
 
 ```sh
 ls -l mouse_chr19_hisat2/
@@ -495,7 +475,7 @@ You should be standing here to run this:
 {{< meta path_workspace >}}/rnaseq/3_mapping
 ```
 
-We will create softlinks to the fastq files from here to make things easier.
+We will create softlinks to the fastq files from here to make things easier. You could have also simply specified the path the fastq files.
 
 ```sh
 cd 3_mapping
@@ -516,10 +496,10 @@ HISAT2 aligner arguments can be obtained by running `hisat2 --help`. We should e
 hisat2 \
   -p 1 \
   -x ../reference/mouse_chr19_hisat2/mouse_chr19_hisat2 \
-  --summary-file "SRR3222409-19.summary" \
-  -1 SRR3222409-19_1.fq.gz \
-  -2 SRR3222409-19_2.fq.gz \
-  -S SRR3222409-19.sam
+  --summary-file "sample.summary" \
+  -1 sample_1.fq.gz \
+  -2 sample_2.fq.gz \
+  -S sample.sam
 ```
 
 Let's break this down a bit. `-p` options denotes that it will use 1 thread. In a real world scenario, we might want to use 8 to 12 threads. `-x` denotes the full path (with prefix) to the aligner index we built in the previous step. `--summary-file` specifies a summary file to write alignments metrics such as mapping rate etc. `-1` and `-2` specifies the input fastq files. Both are used here because this is a paired-end sequencing. `-S` denotes the output SAM file.
@@ -808,7 +788,7 @@ scp -r username@{{< meta url_cluster >}}:{{< meta path_workspace >}}/rnaseq/4_qu
 {{< fa exclamation-circle >}} If you are running out of time or were unable to run QualiMap, you can also copy pre-run QualiMap output from this location: `{{< meta path_resources >}}/rnaseq/dardel/main/4_qualimap/`.
 
 ```sh
-cp -r {{< meta path_resources >}}/rnaseq/dardel/main/4_qualimap/* {{< meta path_workspace >}}/rnaseq/4_qualimap/"))
+cp -r {{< meta path_resources >}}/rnaseq/dardel/main/4_qualimap/* {{< meta path_workspace >}}/rnaseq/4_qualimap/
 ```
 
 #### {{< fa question-circle >}} Questions
@@ -929,16 +909,16 @@ ls -l
 
 {{< fa comments >}} Inspect the files and try to make sense of them.
 
-{{< fa question-circle >}} What is the difference between counting at the exon level versus the gene level, and when might you choose one over the other?
-
-<details>
-<summary>Answer</summary>
-
-Gene-level counting sums all reads mapping to any exon of a gene, providing a single expression value per gene. This is simpler and most common for standard DGE analysis. Exon-level counting provides separate counts for each exon, which is useful for: (1) Differential exon usage analysis (detecting alternative splicing), (2) Identifying transcript isoform changes, (3) Detecting exon-skipping events. Gene-level counting is preferred when you're interested in overall gene expression changes, while exon-level counting is necessary when investigating splicing regulation or isoform-specific expression. Tools like DEXSeq use exon-level counts to identify differential exon usage.
-
-</details>
-
 #### {{< fa question-circle >}} Questions
+
+1. What is the difference between counting at the exon level versus the gene level, and when might you choose one over the other?
+
+  <details>
+  <summary>Answer</summary>
+
+  Gene-level counting sums all reads mapping to any exon of a gene, providing a single expression value per gene. This is simpler and most common for standard DGE analysis. Exon-level counting provides separate counts for each exon, which is useful for: (1) Differential exon usage analysis (detecting alternative splicing), (2) Identifying transcript isoform changes, (3) Detecting exon-skipping events. Gene-level counting is preferred when you're interested in overall gene expression changes, while exon-level counting is necessary when investigating splicing regulation or isoform-specific expression. Tools like DEXSeq use exon-level counts to identify differential exon usage.
+
+  </details>
 
 1. Why does featureCounts need to know if the library is stranded, and what happens if you specify the wrong strandedness?
 
@@ -980,7 +960,9 @@ Gene-level counting sums all reads mapping to any exon of a gene, providing a si
 
 ### Important
 
-For downstream steps, we will NOT use this `counts.txt` file. Instead we will use **counts_full.txt** from the back-up folder. This contains counts across all chromosomes. This is located here: `{{< meta path_resources >}}/rnaseq/dardel/main/5_dge/`. Copy this file to your `5_dge` directory.
+For downstream steps, we will NOT use this `counts.txt` file. Instead we will use **counts_full.txt** from the back-up folder. This contains counts across all chromosomes which will be a better representation of the data for downstream analysis.
+
+The **counts_full.txt** file is located here: `{{< meta path_resources >}}/rnaseq/dardel/main/5_dge/`. Copy this file to your `5_dge` directory. {{< fa exclamation-circle >}} Remember to replace username.
 
 ```sh
 cp {{< meta path_resources >}}/rnaseq/dardel/main/5_dge/counts_full.txt {{< meta path_workspace >}}/rnaseq/5_dge/
@@ -1037,6 +1019,8 @@ drwxrwsr-x 2 user gXXXXXXX 4.0K Sep  6 22:33 multiqc_data
 -rw-rw-r-- 1 user gXXXXXXX 1.3M Sep  6 22:33 multiqc_report.html
 ```
 
+![](assets/multiqc.png){ width="400px" }
+
 {{< fa comments >}} Download the MultiQC HTML report to your computer and inspect the report.
 
 {{< fa exclamation-circle >}} Run this step in a **LOCAL** terminal and **NOT** on HPC. Remember to replace username.
@@ -1053,13 +1037,13 @@ scp username@{{< meta url_cluster >}}:{{< meta path_workspace >}}/rnaseq/6_multi
 
 The easiest way to perform differential expression is to use one of the statistical packages, within R environment, that were specifically designed for analyses of read counts arising from RNA-seq, SAGE and similar technologies. Here, we will use one such package called **DESeq2**. Learning R is beyond the scope of this course so we prepared basic ready to run R scripts to find DE genes between conditions **KO** and **Wt**.
 
-We need some annotation information, so we will copy this file `{{< meta path_resources >}}/rnaseq/dardel/main/reference/mm-biomart99-genes.txt.gz` to your `rnaseq/reference` directory.
+We need some annotation information, so we will copy this file `{{< meta path_resources >}}/rnaseq/dardel/main/reference/mm-biomart99-genes.txt.gz` to your `rnaseq/reference` directory. {{< fa exclamation-circle >}} Remember to replace username.
 
 ```sh
 cp {{< meta path_resources >}}/rnaseq/dardel/main/reference/mm-biomart99-genes.txt.gz {{< meta path_workspace >}}/rnaseq/reference/
 ```
 
-Then uncompress the file. `gunzip ../reference/mm-biomart99-genes.txt.gz`
+Then decompress the file. `gunzip ../reference/mm-biomart99-genes.txt.gz`
 
 Move to the `5_dge` directory and load R module for use.  
 
@@ -1084,7 +1068,21 @@ cp {{< meta path_resources >}}/rnaseq/dardel/main/scripts/dge.r ../scripts/
 Rscript ../scripts/dge.r
 ```
 
-If you are curious what's inside dge.r, you are welcome to explore it using a text editor.
+If you are curious what's inside `dge.r`, you are welcome to explore it using a text editor. Very briefly, the steps are as follows:
+
+1. Prepare the metadata table which contains sample information (sample name, condition, batch etc). This is required for DESeq2 to perform the analysis. In this case, we have two conditions (KO and Wt) and three replicates for each condition.
+2. Read in the counts file and prepare the count matrix. The count matrix should have genes as rows and samples as columns. Make sure that the order of samples in the count matrix matches the order of samples in the metadata table.
+3. Filter out lowly expressed genes. This step can help improve the power of the analysis by removing genes that are not expressed or have very low counts across all samples. A common threshold is to keep genes that have at least n counts in at least 3 samples (in at least one condition).
+4. Create a DESeqDataSet object using the count matrix and metadata table. Size factors are estimated to account for differences in sequencing depth between samples. Dispersions are estimated to model the variance in the data, which is crucial for accurate DGE testing. Wald test is performed to identify differentially expressed genes between the conditions. Contrasts are specified to compare KO vs Wt.
+
+    We have the following line:
+
+    `res <- results(dg, contrast = c("condition", "KO", "Wt"), alpha = 0.05)`
+
+    which is the line that performs the actual DGE testing. The `contrast` argument specifies the comparison we want to make (KO vs Wt) and `alpha` specifies the significance threshold for adjusted p-value. The order of the conditions in the contrast matters. In this case, positive log2 fold-change values will indicate genes overexpressed in KO compared to Wt, while negative values are vice versa.
+
+5. Gene annotation information is added to the results using the biomart file we downloaded earlier. This step is optional but can help with interpretation of results.
+6. Variance stabilising transformation (VST) is applied to the count data to produce a matrix of normalised counts that can be used for exploratory analyses like PCA and clustering. VST helps to stabilise the variance across the range of mean values, making it easier to visualize and interpret patterns in the data.
 
 This should have produced the following output files:
 
@@ -1211,8 +1209,6 @@ Rscript ../scripts/ma.r
 This generates a file named **ma.png** in the `5_dge` folder. To view it, download it to your local disk.
 
 ![](assets/ma.png){width="500px"}
-
-{{< fa comments >}} What do you think the blue dots represent?
 
 #### Volcano plot
 
@@ -1450,7 +1446,7 @@ If you are already familiar with IGV you can load the mouse genome and at least 
 
 Integrated genomics viewer from Broad Institute is a nice graphical interface to view bam files and genome annotations. It also has tools to export data and some functionality to look at splicing patterns in RNA-seq data sets. Even though it allows for some basic types of analysis it should be used more as a nice way to look at your mapped data. Looking at data in this way might seem like a daunting approach as you can not check more than a few regions, but in in many cases it can reveal mapping patterns that are hard to catch with just summary statistics.
 
-For this tutorial you can chose to run IGV directly on your own computer {{< fa desktop >}} or on HPC {{< fa cloud >}}. If you chose to run it on your own computer you will have to download some of the BAM files (and the corresponding index files) from HPC. If you have not yet installed IGV you also have to [download](http://software.broadinstitute.org/software/igv/download) the program.
+For this tutorial you can chose to run IGV directly on your own computer {{< fa desktop >}} or on HPC {{< fa cloud >}}. If you chose to run it on your own computer you will have to download some of the BAM files (and the corresponding index files) from HPC. If you have not yet installed IGV, refer to the pre-course instructions to install it.
 
 ::: {.callout-note}
 
@@ -1483,17 +1479,17 @@ ssh -Y username@{{< meta url_cluster >}}
 ssh -Y computenode
 ```
 
-An alternative method is to login through Remote Desktop application: ThinLinc. Once you log into this interface you will have a linux desktop interface in a browser window. This interface is running on the login node, so if you want to do any heavy lifting you need to login to your reserved compute node also here. This is done by opening a terminal in the running linux environment and log on to your compute node as before. NB! If you have no active reservation you have to do that first.
+An alternative method is to login through Remote Desktop application: ThinLinc. Once you log into this interface you will have a linux desktop interface in a browser window. This interface is running on the login node, so if you want to do any heavy lifting you need to login to your reserved compute node also here. This is done by opening a terminal in the running linux environment and log on to your compute node as before. {{< fa exclamation-circle >}} If you have no active reservation you have to do that first.
 
 Load necessary modules and start IGV
 
 ```sh
 module load PDC/24.11
 module load igv/2.17.4
-igv-core
+igv.sh&
 ```
 
-This should start the IGV so that it is visible on your screen. If not please try to reconnect to HPC or consider running IGV locally as provides a better experience.
+This should start the IGV so that it is visible on your screen. If not please try to reconnect to HPC or consider running IGV locally as it provides a better experience.
 :::
 
 Once we have the program running, you select the genome that you would like to load. Choose `Mouse mm10`. Note that if you are working with a genome that are not part of the available genomes in IGV, one can create genome files from within IGV. Please check the manual of IGV for more information on that.
@@ -1659,7 +1655,7 @@ hisat2 \\
  -x ../reference/mouse_chr19_hisat2/mouse_chr19_hisat2 \\
  --summary-file "${prefix}-summary.txt" \\
  -1 $1 \\
- -2 $2 | samtools sort -O BAM > "${prefix}.bam
+ -2 $2 | samtools sort -O BAM > "${prefix}.bam"
 ```
 
 The `SBATCH` commands in the above script is specifying the account name (`-A`) to use resources from, the partition (`-p`) ie; a core or a node, the required number of partitions (`-c`), the maximum time limit for the job (`-t`) and a job name (`-J`).
