@@ -98,10 +98,10 @@ Sample output
 
 ### User activity
 
-List last activity in a directory for all users in a project (not possible on Dardel, as courses don't have project directories)
+List last activity in a directory for all users in a project.
 
 ```sh
-bash /sw/courses/utils/list_modification_times.sh /proj/{{< meta id_project >}}/nobackup/
+bash /sw/courses/utils/list_modification_times.sh /cfs/klemming/projects/supr/{{< meta id_project >}}/
 ```
 
 Sample output
