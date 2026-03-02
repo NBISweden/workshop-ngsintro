@@ -42,9 +42,11 @@ HG00101       | Low coverage WGS
 
 ## Run FastQC
 
+<!--
 ### Connect to PDC
 
 During this lab it is best to connect to Dardel via a remote desktop (ThinLinc). Please refer to [**Connecting to PDC**](../other/lab_connect_pdc.html), section 2 Remote desktop, for instructions.
+-->
 
 ### Log on to a node
 
@@ -63,7 +65,8 @@ user@login1 ~ $ squeue -u user
 user@login1 ~ $
 ```
 
-where `nid001009` is the name of the node (yours will probably be different). Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested, the session will shut down, and you will lose all unsaved data.
+where `nid001009` is the name of the node (yours will probably be different). Note the numbers in the `Time` column.
+They show for how long the job has been running. When it reaches the time limit you requested, the session will shut down, and you will lose all unsaved data.
 
 If the list is empty, you can run the allocation command again, and it should be in the list:
 
@@ -86,7 +89,7 @@ Start by going to your course folder using this command:
 cat(paste0('cd ', path_workspace))
 ```
 
-Create a folder for this exercise and move into it:
+Create a folder for this exercise and change into it:
 
 ```bash
 mkdir qc
@@ -98,10 +101,12 @@ cd qc
 The raw data files are located in
 
 ```{r,echo=FALSE,comment="",class.output="bash"}		
- cat(paste0(fastqdir))
+cat(paste0(fastqdir))
 ```
 
-Instead of copying the files to your workspace, you should create symbolic links (soft-links) to them. Soft-linking files and folders allows you to work with them as if they were in your current directory, but without creating actual copies.  Create symbolic links to the FASTQ files in your workspace:
+Instead of copying the files to your workspace, you should create *symbolic links* (also called *soft links*) to them.
+Soft-linking files and folders allows you to work with them as if they were in your current directory, but without creating actual copies.
+Create symbolic links to the FASTQ files in your workspace:
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
 cat(paste0('ln -s ',fastqdir,'/HG00097_1.fq\n'))
@@ -125,7 +130,7 @@ R2 reads of the `HG00101` sample:
 less HG00101_2.fq
 ```
 While `less` is running, use the arrow keys to scroll up and down.
-Use the `Q` to quit the program when you are done.
+Use the `Q` key to quit the program when you are done.
 
 ### Accessing FastQC
 
@@ -139,7 +144,7 @@ module load bioinfo-tools
 This makes it possible to load FastQC:
 
 ```bash
-module load fastqc/0.12.1
+module load fastqc
 ```
 
 ### Run FastQC
@@ -150,7 +155,7 @@ Run FastQC on all FASTQ files:
 fastqc -q *.fq
 ```
 
-The output is one `.html` document for each input FASTQ file, which shows quality scores along the reads and other information. Please check what new files were generated with the command:
+The output is one `.html` document for each input FASTQ file, which shows quality scores along the reads and other information. Please check which files were generated with this command:
 
 ```bash
 ls -lrt
@@ -160,19 +165,21 @@ ls -lrt
 
 The output from FastQC is an HTML report that should be opened in a web browser.
 
-One option is to download the output to your local computer and open the file in your local web browser.  
+One option is to download the output to your local computer and open the file in your local web browser.
 To do this, first open a new terminal window on your local computer and navigate to a folder where you want to keep the files.   
 Then download all generated `.html` files to that folder with this command (replace `username` with your username):
 ```bash
-scp username@dardel.pdc.kth.se:{{< meta path_workspace >}}/qc/*.html .
+scp "username@dardel.pdc.kth.se:{{< meta path_workspace >}}/qc/*.html" .
 ```
 The files can now be opened from your local web browser by navigating to the same folder.  
 
+<!--
 If you have connected to PDC via ThinLinc, you can open HTML files on Dardel with this command:
 
 ```bash
 firefox --no-remote filename.html &
 ```
+-->
 
 We have also made the output files that you just created available through the links below so that you can look at them via your local web-browser:
 
@@ -184,7 +191,7 @@ HG00101       | [HG00101_1.fq](assets/HG00101_1_fastqc.html) | [HG00101_2.fq](as
 
 ### Per Base Sequence Quality
 
-This module shows the distribution of the quality scores at each position in the reads. The quality scores are represented by a Box and Whisker plot with the following elements:
+This module shows the distribution of the quality scores at each position in the reads. The quality scores are represented by a box-and-whisker plot with the following elements:
 
 - The central red line is the median value.
 - The yellow box represents the inter-quartile range (25-75%).
@@ -203,7 +210,7 @@ First, load the appropriate module:
 module load cutadapt
 ```
 
-Then run this Cutadapt with the `-q` option:
+Then run this Cutadapt command, using the `-q` option to specify a quality trimming threshold:
 ```bash
 cutadapt -q 20 -o HG00101_trimmed_1.fq -p HG00101_trimmed_2.fq HG00101_1.fq HG00101_2.fq
 ```
@@ -244,4 +251,4 @@ When you have finished the exercise, please have a look at this document with [a
 ## Documentation
 
 - [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc)
-- If you want to learn more details about FastQC please have a look at this video by the [Babraham Bioinformatics Institute]( http://www.youtube.com/watch?v=bz93ReOv87Y).
+- If you want to learn more details about FastQC, please have a look at this video by the [Babraham Bioinformatics Institute](http://www.youtube.com/watch?v=bz93ReOv87Y).
