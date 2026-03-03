@@ -209,4 +209,4 @@ There is a ThinLinc server running at one of the login nodes which allows users 
 
 6. When you are done with working with the remote desktop, press the power icon {{< fa power-off >}} in the top-right corner of the screen and select `Log Out`.
 
-For more detailed instructions, please look here: <a href="https://support.pdc.kth.se/doc/support/?sub=login/interactive_hpc/" target="_blank" rel="noopener noreferrer">https://support.pdc.kth.se/doc/support/?sub=login/interactive_hpc/</a>
+For more information, take a look at PDC's website: <a href="https://support.pdc.kth.se/doc/login/interactive_hpc/" target="_blank" rel="noopener noreferrer">https://support.pdc.kth.se/doc/login/interactive_hpc/</a>
