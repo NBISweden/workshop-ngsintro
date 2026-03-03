@@ -101,9 +101,9 @@ cat(paste0(datadir))
 
 Please follow the instructions for connecting to PDC at [**Connecting to PDC**](../other/lab_connect_pdc.html) under section 1.2 Connecting to PDC using SSH.
 
-### Workspace on Dardel {.unnumbered}
+### Workspace {.unnumbered}
 
-You should work in a subfolder of the course folder on Dardel, like you have done during the previous labs.
+You should work in a subfolder of the course folder on the HPC, like you have done during the previous labs.
 Start by going to your course folder using this command (replace `username` with your actual username):
 
 ```{r,echo=FALSE,comment="",class.output="bash"}
@@ -139,7 +139,7 @@ cat(paste0('ln -s ',fastqdir,'/HG00101_1.fq\n'))
 cat(paste0('ln -s ',fastqdir,'/HG00101_2.fq\n'))
 ```
 
-## Login to a node {.unnumbered}
+## Logon to a node {.unnumbered}
 
 This lab should be done on a compute node (not the login node).
 First check if you already have an active allocation using this command, where *username* should be replaced with your username
@@ -155,9 +155,9 @@ Use this code to allocate a job (note that the reservation changes each day):
 
 ``` bash
 #Wednesday
-salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_wed >}} -t 04:00:00 -p shared -c 8 --no-shell
+salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_wed >}} -t 04:00:00 -p shared -c 6 --no-shell
 #Thursday
-salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_thu >}} -t 04:00:00 -p shared -c 8 --no-shell
+salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_thu >}} -t 04:00:00 -p shared -c 6 --no-shell
 ```
 
 Once your job allocation has been granted (should not take long) please check the allocation again:
@@ -180,7 +180,7 @@ cd {{< meta path_workspace >}}/vc
 ### Accessing programs {.unnumbered}
 
 Load the tool modules that are needed during this workshop.
-Remember that these modules must be loaded **every time you login to Dardel,** or when you connect to a new compute node.
+Remember that these modules must be loaded **every time you login to the HPC,** or when you connect to a new compute node.
 Load the bioinfo-tools module first to make it possible to load the other modules:
 
 ``` bash
@@ -388,7 +388,7 @@ You can view variants in the *LCT* gene by typing the gene name in the search bo
 2.  Approximately how many reads cover an arbitrary position in the genomic region we are looking at?\
 3.  Which genes are located within the region chr2:136545000-136617000?\
 4.  Hover the mouse over (or click) the upper row of the vcf track. What is the reference and alternative alleles of the variant at position chr2:136545844?\
-5.  Hover the mouse over the lower row of the vcf track and look under "Genotype Information". What genotype does HG00097 have at position chr2:136545844? Is this the same as you found by looking directly in the vcf file in question 10?\
+5.  Hover the mouse over the lower row of the vcf track and look under "Genotype Information". What genotype does HG00097 have at position chr2:136545844? Is this the same as you found by looking directly in the vcf file in question 1B:5?\
 6.  Look at the bam track and count the number of reads that have "G" and "C", respectively, at position chr2:136545844. How is this information captured under "Genotype Attributes"? (Again, hover the mouse over the lower row of the vcf track.)
 
 # Part2: Variant calling in cohort {#jointvc}
