@@ -152,7 +152,7 @@ module load fastqc
 Run FastQC on all FASTQ files:
 
 ```bash
-fastqc -q *.fq
+fastqc *.fq
 ```
 
 The output is one `.html` document for each input FASTQ file, which shows quality scores along the reads and other information. Please check which files were generated with this command:
