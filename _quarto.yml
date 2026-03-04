@@ -191,7 +191,7 @@ assistants:
  - "SS: Snaevar Sigurdsson"
  - "VK: Varsith Konda"
  - "YL: Yuan Li"
-schedule_message: "Breaks are planned for approximately 10:15 and 15:00 every day."
+schedule_message: "Breaks are planned for approximately 10:15 and 15:00 every day. Note that the presentations and videos may not be in sync because the presentations were updated while the videos are from previous workshops."
 colors:
   primary: "#95b540"
   secondary: "#E9F2D1"

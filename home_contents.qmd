@@ -8,6 +8,10 @@ sidebar: false
 format: html
 ---
 
+::: {.callout-note}
+Note that the presentations and videos may not be in sync because the presentations were updated while the videos are from previous workshops.
+:::
+
 ### Introduction to Linux
 
 - Introduction to Linux [{{< fa brands youtube >}}](https://youtu.be/qYp8shSMJ-0) [{{< fa file-pdf >}}](topics/linux/slide_linux_intro.pdf) [{{< fa file-lines >}}](topics/linux/lab_linux_intro.html)
@@ -39,8 +43,8 @@ format: html
 
 ### NGS technologies
 
-- NGS technologies and challenges [{{< fa brands youtube >}}](https://youtu.be/5sUzkrucL1E) [{{< fa file-pdf >}}](topics/other/slide_sequencing.pdf)
-- NGS Pipelines [{{< fa brands youtube >}}](https://youtu.be/6RBhfMvDkSI) [{{< fa file-pdf >}}](topics/other/slide_ngs_pipelines.pdf)
+- NGS technologies and challenges [{{< fa brands youtube >}}](https://youtu.be/5sUzkrucL1E) [{{< fa file-pdf >}}](https://drive.google.com/file/d/14kfPifL52eMTZs2jsr2ykPehFBVpAxWr/view?usp=sharing)
+- NGS Long Reads and Pipelines [{{< fa brands youtube >}}](https://youtu.be/6RBhfMvDkSI) [{{< fa file-pdf >}}](https://drive.google.com/file/d/1U_oVEuTTKwk7zxVP_CGR5zgHP6Jd_1Oi/view?usp=sharing)
 
 ### Other
 
