@@ -151,13 +151,13 @@ squeue -u username
 If no jobs are listed you should allocate one for this lab.
 If you already have an active job allocation please proceed to **Connect to the node** below.<br/>
 
-Use this code to allocate a job (note that the reservation changes each day):
+Use this code to allocate a job (note that the reservation changes each day). It is important that you allocate a new job with -c 8 to get enough resources for some of the steps.
 
 ``` bash
 #Wednesday
-salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_wed >}} -t 04:00:00 -p shared -c 6 --no-shell
+salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_wed >}} -t 04:00:00 -p shared -c 8 --no-shell
 #Thursday
-salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_thu >}} -t 04:00:00 -p shared -c 6 --no-shell
+salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_thu >}} -t 04:00:00 -p shared -c 8 --no-shell
 ```
 
 Once your job allocation has been granted (should not take long) please check the allocation again:
@@ -428,6 +428,12 @@ bwa mem -t 8 -R "@RG\tID:rg_HG00097\tSM:HG00097\tPU:XXX\tLB:libx\tPL:illumina" h
 </details>
 
 Please check what output files were generated this time.
+Also check that the sample name (SM) is correct in the bam header (replace sample with the sample id):
+
+```bash
+samtools view -H sample.bam
+```
+
 What could the advantage be of running it in one line?
 
 ### Mark Duplicates
@@ -476,6 +482,8 @@ Then run `GenoteypeGVC` to generate a vcf file:
 gatk --java-options -Xmx4g GenotypeGVCFs -R human_g1k_v37_chr2.fasta \
 -V cohort.g.vcf -O cohort.vcf
 ```
+
+You can check that your file contains 3 samples using e.g. "grep CHROM cohort.vcf"
 
 ## Questions 2A {.unnumbered}
 1. How many data lines does the cohort.g.vcf file have? You can use the Linux command `grep -v "#" cohort.g.vcf | wc -l` to extract and count lines in "cohort.g.vcf" that don't start with "\#".\
