@@ -20,11 +20,33 @@ format: revealjs
 
 ## Central Dogma of Biology
 
-![](assets/rnaseq_transcription.svg){height="100%" width="70%"}
+::: {.columns}
+::: {.column width="60%"}
+
+![](assets/rnaseq_transcription.svg)
 
 - The transcriptome is spatially and temporally dynamic
 - Data comes from functional units (coding regions)
 - Only a tiny fraction of the genome
+
+:::
+
+::: {.column width="40%"}
+::: {.fragment}
+
+**Applications**
+
+- Identify gene sequences in genomes (annotation)
+- Learn about gene function
+- Differential gene expression
+- Explore isoform and allelic expression
+- Understand co-expression, pathways and networks
+- Gene fusion
+- RNA editing
+
+:::
+:::
+:::
 
 ::: {.notes}
 
@@ -37,16 +59,6 @@ format: revealjs
 - When we say RNA sequencing, we are not sequencing RNA molecules directly. RNA is first converted to DNA through reverse transcription followed by regular DNA sequencing.
 
 :::
-
-## Applications
-
-- Identify gene sequences in genomes (annotation)
-- Learn about gene function
-- Differential gene expression
-- Explore isoform and allelic expression
-- Understand co-expression, pathways and networks
-- Gene fusion
-- RNA editing
 
 ## Workflow
 
@@ -141,6 +153,9 @@ format: revealjs
 
 ## Sequencing
 
+::: {.columns}
+::: {.column width="60%"}
+
 - Short reads vs long reads (Illumina vs PacBio/Nanopore)
   - Short reads are cheap and good enough for DGE
   - Long reads are better for isoforms and structural variation
@@ -159,38 +174,22 @@ format: revealjs
 
 @corley2017differentially
 
+:::
+
+::: {.column width="40%"}
+::: {.fragment}
+
+![](assets/lui-2014-1.webp)
+
+@liu2014rna
+
+:::
+:::
+:::
+
 ## Workflow • DGE
 
 ![](assets/rnaseq_workflow_dge.svg){height="100%" width="70%"}
-
-## Read QC
-
-::: {.columns}
-::: {.column width="65%"}
-
-- Number of reads
-- Per base sequence quality
-- Per sequence quality score
-- Per base sequence content
-- Per sequence GC content
-- Per base N content
-- Sequence length distribution
-- Sequence duplication levels
-- Overrepresented sequences
-- Adapter content
-- Kmer content
-
-[FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/), [MultiQC](http://multiqc.info/), <https://sequencing.qcfail.com/>
-
-![](assets/qcfail.jpg){width="60%"}
-
-:::
-::: {.column width="35%"}
-
-![](assets/qc.jpg)
-
-:::
-:::
 
 ## FastQC
 
@@ -211,6 +210,12 @@ Poor quality
 :::
 ::::
 
+[FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/), [MultiQC](http://multiqc.info/), <https://sequencing.qcfail.com/>
+
+![](assets/qcfail.jpg){width="40%"}
+
+::: {.notes}
+
 ## Read QC • PBSQ, PSQS
 
 **Per base sequence quality**  
@@ -218,8 +223,6 @@ Poor quality
 
 **Per sequence quality scores**  
 ![](assets/psqs.jpg){width="50%"}
-
-::: {.notes}
 
 ## Read QC • PBSC, PSGC
 
@@ -275,7 +278,7 @@ Poor quality
 - Mapping to genome vs transcriptome
 - Splice-aware alignment (genome) (STAR, HISAT2 etc)
 
-[STAR](https://github.com/alexdobin/STAR), [HiSat2](https://ccb.jhu.edu/software/hisat2/index.shtml), @baruzzo2017simulation
+[STAR](https://github.com/alexdobin/STAR), [HISAT2](https://ccb.jhu.edu/software/hisat2/index.shtml), @baruzzo2017simulation
 
 ## Aligners • Metrics
 
@@ -298,7 +301,7 @@ Poor quality
 
 ::: {.notes}
 
-## Aligners time and RAM
+## Aligners • Time and RAM
 
 |Program|Time_Min|Memory_GB|
 |-------|--------|---------|
@@ -312,7 +315,7 @@ Poor quality
 
 :::
 
-##
+## Aligner • Input formats
 
 - Reads (FASTQ)
 
@@ -363,37 +366,35 @@ ST-E00274:188:H3JWNCCXY:4:1102:32431:49900      163     1       1       60      
 |CRAM 8 bins Q|0.8|
 |CRAM no Q|0.26|
 
+::: {.notes}
+
+- QNAME ST-E00274:188:H3JWNCCXY:4:1102:32431:49900: Read name encoding instrument, run, flowcell, lane, tile, and x/y coordinates
+- FLAG 163: Bitwise flag — read is paired, properly paired, mate on reverse strand, read 2
+- RNAME 1: Reference chromosome (chr1)
+- POS 1: 1-based start position of alignment on the reference
+- MAPQ 60: Mapping quality — high confidence alignment
+- CIGAR 8S139M4S: 8 bases soft-clipped, 139 bases aligned, 4 bases soft-clipped
+- RNEXT =: Mate maps to the same chromosome
+- PNEXT 385: Mate's start position on the reference
+- TLEN 535: Inferred insert size spanning both reads
+- SEQ TATTTAGAGATCTT...: Read sequence (151 bases)
+- QUAL AAAFAFFAFFFFJ7...: Per-base Phred quality scores
+- NM:i 4: Edit distance — 4 mismatches/indels in the alignment
+- MD:Z 12T0T40C58T25: Mismatch positions and bases relative to the reference
+- AS:i 119: Alignment score for the best alignment
+- XS:i 102: Alignment score for the second-best alignment
+- XA:Z 17,-53287490,4S33M4D114M,11: Alternative alignment on chr17 at position 53287490 on the minus strand
+- MQ:i 60: Mate's mapping quality
+- MC:Z 151M: Mate's CIGAR string — 151 bases fully aligned
+- RG:Z ST-E00274_188_H3JWNCCXY_4: Read group identifying the sequencing library and lane
+
+:::
+
 ## Visualisation • IGV
 
 ![](assets/igv.png)
 
-[IGV](http://software.broadinstitute.org/software/igv/), [UCSC Genome Browser](https://genome.ucsc.edu/), [SeqMonk](https://www.bioinformatics.babraham.ac.uk/projects/seqmonk/), [More](https://cmdcolin.github.io/awesome-genome-visualization/?latest=true)
-
-## Visualisation • `tview`
-
-`samtools tview alignment.bam genome.fasta`
-
-![](assets/tview.png)
-
-## Visualisation • SeqMonk
-
-![](assets/seqmonk.jpg)
-
-[SeqMonk](https://www.bioinformatics.babraham.ac.uk/projects/seqmonk/)
-
-## Alignment QC
-
-- Number of reads mapped/unmapped/paired etc
-- Uniquely mapped
-- Insert size distribution
-- Coverage
-- Gene body coverage
-- Biotype counts / Chromosome counts
-- Counts by region: gene/intron/non-genic
-- Sequencing saturation
-- Strand specificity
-
-STAR (final log file), samtools stats, bamtools stats, [QoRTs](https://hartleys.github.io/QoRTs/), [RSeQC](http://rseqc.sourceforge.net/), [Qualimap](http://qualimap.bioinfo.cipf.es/)
+[IGV](http://software.broadinstitute.org/software/igv/), [UCSC Genome Browser](https://genome.ucsc.edu/), [SeqMonk](https://www.bioinformatics.babraham.ac.uk/projects/seqmonk/), [samtools tview](https://www.htslib.org/doc/samtools-tview.html), [More](https://cmdcolin.github.io/awesome-genome-visualization/?latest=true)
 
 ## Alignment QC • STAR Log
 
@@ -401,15 +402,13 @@ MultiQC can be used to summarise and plot STAR log files.
 
 ![](assets/star_alignment_plot.svg){width="95%"}
 
+STAR (final log file), samtools stats, bamtools stats, [QoRTs](https://hartleys.github.io/QoRTs/), [RSeQC](http://rseqc.sourceforge.net/), [Qualimap](http://qualimap.bioinfo.cipf.es/)
+
 ## Alignment QC • Features
 
 QoRTs was run on all samples and summarised using MultiQC.
 
 ![](assets/qorts_alignments.svg){width="95%"}
-
-## Alignment QC • QoRTs
-
-![](assets/qorts.png){width="95%"}
 
 ## Alignment QC • Examples
 
@@ -517,6 +516,10 @@ Conserved genes in the mouse transcriptome. Saturation curves of discovery of ge
 ::: {.notes}
 
 Tools that detect duplicate reads (like Picard MarkDuplicates) is looking for reads that start and end at the same coordinates. Such reads are expected to be PCR derived and can be collapsed down to 1 read. This makes sense in whole genome sequencing, but in RNA-Seq, this is naturally expected since highly expressed genes create huge number of identical transcripts which may fragment at hotspots leading to fragmentation bias @roberts2011improving. Therefore, removing PCR duplicates may remove real duplicates as well.
+
+In featureCounts and HTSeq, ambiguous reads (overlapping >1 gene) are by default discarded and counted in a separate "ambiguous" bin
+
+RSEM works at transcript-level and uses an expectation-maximisation (EM) algorithm to probabilistically assign multi-mapping reads to transcripts based on the number of uniquely mapping reads to each transcript. This is a more accurate way to deal with multi-mapping reads than discarding them or assigning them randomly.
 
 :::
 
@@ -730,8 +733,6 @@ ggplot(dfr, aes(gene, value, col = group)) +
 :::
 :::
 
-::: {.notes}
-
 ## Differential expression
 
 - DESeq2, edgeR (Neg-binom > GLM > Test)
@@ -783,6 +784,68 @@ par(mfrow = c(1, 1))
 
 [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html), [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html), [limma](https://bioconductor.org/packages/release/bioc/html/limma.html), @seyednasrollah2015comparison
 
+::: {.notes}
+
+1. Estimation of Size Factors (Normalization)
+
+- Different samples are sequenced to different depths, so DESeq2 normalizes using the median-of-ratios method:
+  - Compute a pseudo-reference sample by taking the geometric mean of each gene's counts across all samples.
+  - For each sample, divide each gene's count by the corresponding geometric mean → this gives a ratio.
+  - The median of all these ratios for a sample becomes its size factor.
+  - Counts are divided by the size factor to normalize.
+
+2. Estimation of Dispersions
+
+RNA-seq data is overdispersed — variance exceeds the mean. DESeq2 uses a Negative Binomial (NB) distribution, which has two parameters: mean (μ) and dispersion (α), where:
+
+Var = μ + α·μ²
+
+Dispersion estimation proceeds in three stages:
+
+- Gene-wise dispersion estimates: Each gene gets its own MLE dispersion estimate from its counts across samples.
+- Fitted dispersion trend: A curve is fit through all gene-wise estimates as a function of mean expression (genes with low counts tend to have high dispersion).
+- Empirical Bayes shrinkage: Each gene's estimate is shrunk toward the fitted trend. Genes with low information (low counts, few replicates) are pulled strongly toward the trend; well-estimated genes stay closer to their own estimate. The final value is called the Maximum A Posteriori (MAP) estimate.
+
+Black dots — gene-est (gene-wise estimates)  
+These are the raw, per-gene MLE dispersion estimates. Notice they form a wide cloud, especially at low counts (left side). Many of these estimates are unreliable because low-count genes have little statistical information to estimate dispersion accurately.
+
+Red line — fitted (trend curve)  
+This is the dispersion trend fitted across all genes as a function of mean expression. It captures the global relationship: dispersion decreases as mean count increases (high-count genes are more precisely measured). This curve is the "prior" that individual gene estimates get shrunk toward.
+
+Blue dots — final (MAP estimates after shrinkage)  
+These are the final dispersion values used in the model, after empirical Bayes shrinkage toward the red trend. Most blue dots sit above their corresponding black dots, meaning they were pulled upward toward the trend — this is intentional and conservative, as it prevents false positives.
+
+The Circled Blue Points  
+The genes with large open circles are dispersion outliers — their gene-wise estimate is so far above the trend that DESeq2 does not shrink them. Instead, their raw estimate is kept as-is. This protects genuinely high-dispersion genes from being over-shrunk.
+
+  This sharing of information across genes is what makes DESeq2 powerful even with few replicates.
+
+3. DESeq2 fits a Negative Binomial GLM. This allows modeling of complex experimental designs (multiple conditions, covariates, interactions).
+
+4. Hypothesis Testing (Wald Test or LRT)
+ 
+  - Wald Test (default for pairwise comparisons):
+      - The estimated coefficient β is divided by its standard error → a Wald statistic.
+    - This is compared to a standard normal distribution to get a p-value.
+    - Tests: is this LFC significantly different from zero?
+
+  - Likelihood Ratio Test (LRT) (for multi-factor or time-course designs):
+    - Compares a full model to a reduced model.
+    - Better suited for testing the overall effect of a factor with multiple levels.
+
+5. Multiple Testing Correction
+
+Since thousands of genes are tested simultaneously, p-values are adjusted for multiple comparisons using the Benjamini-Hochberg (BH) procedure to control the False Discovery Rate (FDR). This yields adjusted p-values (padj).
+DESeq2 also uses independent filtering — it automatically filters out genes with very low mean counts (which have little power) before correction, boosting the number of discoveries at a given FDR threshold.
+
+6. Shrinkage of Log2 Fold Changes (LFC)
+
+Raw LFC estimates from the GLM can be noisy, especially for lowly expressed genes. DESeq2 applies apeglm / normal / ashr shrinkage (via lfcShrink()) to:
+
+- Pull unreliable LFC estimates toward zero.
+- Preserve large, well-supported fold changes.
+- Make LFC estimates more stable for ranking and visualization.
+
 :::
 
 ## DGE
@@ -823,6 +886,47 @@ outliers [1]       : 25, 0.14%
 low counts [2]     : 0, 0%
 (mean count < 3)
 ```
+
+::: {.notes}
+
+**Wald statistic**
+
+The Wald statistic is simply:
+
+`W = β / SE(β)`
+
+Where:
+
+`β` = the estimated log2 fold change (LFC) for a gene between conditions
+`SE(β)` = the standard error of that estimate
+
+It measures the signal-to-noise ratio of the fold change for each gene.
+
+| Scenario | LFC | SE | Wald stat | Interpretation |
+|---|---|---|---|---|
+| Large, precise effect | 3.0 | 0.3 | 10.0 | Strong evidence of DE |
+| Large, imprecise effect | 3.0 | 2.0 | 1.5 | Noisy — probably not significant |
+| Small, precise effect | 0.2 | 0.05 | 4.0 | Significant but small effect |
+| Small, imprecise effect | 0.2 | 0.5 | 0.4 | No evidence of DE |
+
+**P-value vs FDR**
+
+P-value: The probability of observing a result this extreme assuming the null hypothesis is true. This is a statement about a single test in isolation. When testing thousands of genes, many will have low p-values just by chance.
+
+FDR: The expected proportion of your "significant" results that are false positives. This is a statement about the entire set of results after correction. An FDR of 0.05 means that among all genes you call "significant", you expect 5% to be false positives.
+
+**How Benjamini-Hochberg FDR Works**
+
+- Rank all genes by raw p-value (smallest to largest)
+- For each gene at rank k out of m total genes, the BH threshold is:
+
+`p ≤ (k/m) × FDR threshold`
+
+Find the largest k where this holds — all genes up to that rank are called significant
+
+Bonferroni is the stricter alternative — it divides the pvalue by the number of tests. This controls the probability of even one false positive anywhere. It's so conservative in genomics that most real signals are missed. 
+
+:::
 
 ##
 
@@ -921,10 +1025,10 @@ plotCounts(d1, "ENSG00000000003", intgroup = "type")
 ::: {.columns}
 ::: {.column width="75%"}
 
-- Griffith lab [RNA-Seq using HiSat & StringTie tutorial](https://github.com/griffithlab/rnaseq_tutorial/wiki)
-- HBC Training [DGE using DeSeq2 tutorial](https://hbctraining.github.io/main/)
+- Griffith Lab [RNA-Seq using HISAT & StringTie tutorial](https://rnabio.org/)
+- HBC Training [DGE using DESeq2 tutorial](https://hbctraining.github.io/main/)
 - NBIS Workshop | [Analysis of RNA-Seq data](https://nbisweden.github.io/workshop-RNAseq/)
-- SciLifeLab [training](https://training.scilifelab.se/)
+- SciLifeLab [Training](https://training.scilifelab.se/)
 - [RNA-Seq Blog](https://www.rna-seqblog.com/)
 
 :::
@@ -933,12 +1037,6 @@ plotCounts(d1, "ENSG00000000003", intgroup = "type")
 ![](assets/help.png)
 
 :::
-:::
-
-## {background-image="/assets/images/cover.jpg"}
-
-::: {.bottom-align}
-### Thank you. Questions?
 :::
 
 ## References
@@ -965,7 +1063,7 @@ plotCounts(d1, "ENSG00000000003", intgroup = "type")
 [**Data:** `{{< meta path_resources >}}/rnaseq/dardel`]{.large}  
 [**Work:** `{{< meta path_workspace >}}/rnaseq/`]{.large}
 
-## Hands-On tutorial
+## Directory structure
 
 :::: {.columns}
 ::: {.column width="40%"}
@@ -1010,6 +1108,7 @@ rnaseq/
 ├── 5_dge
 ├── 6_multiqc
 ├── reference
+│   └── mouse_chr19_hisat2
 └── scripts
 ```
 
