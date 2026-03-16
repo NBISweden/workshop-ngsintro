@@ -181,7 +181,7 @@ cd {{< meta path_workspace >}}/vc
 
 Load the tool modules that are needed during this workshop.
 Remember that these modules must be loaded **every time you login to the HPC,** or when you connect to a new compute node.
-Load the bioinfo-tools module first to make it possible to load the other modules:
+Load the PDC module first to make it possible to load the other modules:
 
 ``` bash
 module load PDC
@@ -555,7 +555,7 @@ cat(paste0('#!/bin/bash
 #SBATCH -t 1:00:00
 #SBATCH -J JointVariantCalling
 
-module load bioinfo-tools
+module load PDC
 module load bwa/0.7.17
 module load samtools/1.20
 module load gatk/4.5.0.0
@@ -610,7 +610,7 @@ cat(paste0('#!/bin/bash
 #SBATCH -t 2:00:00
 #SBATCH -J JointVariantCalling
 
-module load bioinfo-tools
+module load PDC
 module load bwa/0.7.17
 module load samtools/1.20
 module load gatk/4.5.0.0

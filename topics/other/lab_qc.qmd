@@ -135,10 +135,10 @@ Use the `Q` key to quit the program when you are done.
 ### Accessing FastQC
 
 FastQC is installed in the module system on PDC. Modules must be loaded *every time* you login to Dardel, or when you connect to a new compute node.  
-First load the bioinfo-tools module:
+First load the PDC module:
 
 ```bash
-module load bioinfo-tools
+module load PDC
 ```
 
 This makes it possible to load FastQC:
