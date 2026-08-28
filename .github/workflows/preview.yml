@@ -1,0 +1,47 @@
+# https://github.com/rossjrw/pr-preview-action
+name: Deploy PR previews
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, closed]
+
+concurrency:
+  group: preview-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy-preview:
+    # only run if PR is from the same repo
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        if: github.event.action != 'closed'
+        uses: actions/checkout@v5
+
+      - name: Read Quarto output directory
+        if: github.event.action != 'closed'
+        id: quarto-config
+        run: |
+          output_dir=$(grep -m1 '^  output-dir:' _quarto.yml | cut -d '"' -f2)
+          echo "output_dir=$output_dir" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Quarto
+        if: github.event.action != 'closed'
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          tinytex: true
+          version: 1.10.18
+
+      - name: Render Quarto Project
+        if: github.event.action != 'closed'
+        uses: quarto-dev/quarto-actions/render@v2
+
+      - name: Deploy preview
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: ./${{ steps.quarto-config.outputs.output_dir }}/
+          wait-for-pages-deployment: true
