@@ -13,13 +13,13 @@ The first step of this lab is to open a ssh connection to PDC. Please refer to [
 
 Check which node you got when you booked resources this morning (replace `username` with your username)
 
-```bash
+```sh
 squeue -u username
 ```
 
 should look something like this
 
-```bash
+```sh
 user@login1 ~ $ squeue -u user
              JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
            5583899    shared interact    user  R       2:22      1 nid001009
@@ -29,13 +29,13 @@ user@login1 ~ $
 where `nid001009` is the name of the node I got (yours will probably be different).
 Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested the session will shut down, and you will lose all unsaved data. Connect to this node from the login node.
 
-```bash
+```sh
 ssh -Y nid001009
 ```
 
 If the list is empty you can run the allocation command again and it should be in the list:
 
-```bash
+```sh
 salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_mon >}} -t 04:00:00 -p shared -c 1
 ```
 
@@ -43,13 +43,13 @@ salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_mon >}} -t
 
 Now, you will need some files. To avoid all the course participants editing the same file all at once, undoing each other's edits, each participant will get their own copy of the needed files. The files for the HPC part of the course are located in the folder 
 
-```bash
+```sh
 {{< meta path_resources >}}/hpc
 ```
 
 First, we will create a folder for the HPC part of the course in your workspace,
 
-```bash
+```sh
 mkdir {{< meta path_workspace >}}/hpc
 ```
 
@@ -57,7 +57,7 @@ Next, copy the lab files to this folder. `-r` means recursively, which means all
 
 {{< fa lightbulb >}} Remember to use tab-complete to avoid typos and too much writing.
 
-```bash
+```sh
 # syntax
 cp -r <source> <destination>
 
@@ -65,7 +65,7 @@ cp -r {{< meta path_resources >}}/hpc/intro {{< meta path_workspace >}}/hpc
 ```
 
 Have a look in the folder you just copied
-```bash
+```sh
 user@login1 ~ $ cd {{< meta path_workspace >}}/hpc/intro
 
 user@login1 intro $ ll
@@ -81,7 +81,7 @@ user@login1 intro $
 
 Among the files that were copied is `data.bam`. BAM is a popular format to store aligned sequence data, but since it is a, so called, binary format it doesn't look that good if you are human. Try it using less:
 
-```bash
+```sh
 less data.bam
 ```
 
@@ -89,14 +89,14 @@ less data.bam
 
 Not so pretty.. Luckily for us, there is a program called [samtools](http://www.htslib.org/) that is made for reading BAM files. To use it we must first load the module for `samtools`. Try starting samtools before loading the module.
 
-```bash
+```sh
 user@login1 intro $ samtools
 -bash: samtools: command not found
 ```
 
 That did not work, try it again after loading the module:
 
-```bash
+```sh
 user@login1 intro $ module load samtools
 user@login1 intro $ samtools
 
@@ -165,7 +165,7 @@ Commands:
 
 To use samtools to view a BAM file, use the following line.
 
-```bash
+```sh
 user@login1 intro $ samtools view -h data.bam
 
 @HD	VN:1.0	SO:coordinate
@@ -185,7 +185,7 @@ user@login1 intro $ samtools view -h data.bam
 
 The not-binary version (ASCII, or text version) of a BAM file is called a **SAM file**, which was just printed directly into the terminal window. The SAM file is not to much use for us printed in the terminal window, aesthetics aside. It is probably much better to have the SAM file saved as an actual file, something that is very easy to do. Any text that is printed to the terminal can be saved to a file instead of the terminal window using a 'crocodile mouth', `>`
 
-```bash
+```sh
 # syntax
 program arguments > outfile
 ```
@@ -194,25 +194,25 @@ which will launch a program named `program`, supply it with the argument `argume
 
 To use this on samtools,
 
-```bash
+```sh
 samtools view -h data.bam > data.sam
 ```
 
 Look at the created file:
 
-```bash
+```sh
 ll
 ```
 
 The SAM file is now human readable. Try viewing it with `less`:
 
-```bash
+```sh
 less data.sam
 ```
 
 You can also edit the file with `nano`:
 
-```bash
+```sh
 # load the nano module
 module load nano
 
@@ -226,7 +226,7 @@ Try deleting the whole last line in the file, save it, and exit `nano`.
 
 To view which module you have loaded at the moment, type
 
-```bash
+```sh
 user@login1 intro $ module list
 
 Currently Loaded Modules:
@@ -250,7 +250,7 @@ Let's say that you want to make sure you are using the latest version samtools. 
 
 Now type
 
-```bash
+```sh
 module avail
 ```
 
@@ -258,7 +258,7 @@ to see which programs are available to load. Can you find `samtools` in the list
 
 To change which samtools module you have loaded, you have to unload the the module you have loaded and then load the other module. To unload a module, use
 
-```bash
+```sh
 module unload <module name>
 ```
 
@@ -270,7 +270,7 @@ Not all jobs are as small as converting this tiny BAM file to a SAM file. Usuall
 
 Have a look at `job_template` in your `intro` folder.
 
-```bash
+```sh
 less job_template
 
 #! /bin/bash -l
@@ -296,7 +296,7 @@ Remember, just write the command you would run if you were sitting by the comput
 
 {{< fa clipboard-list >}} Submit your job using `sbatch`:
 
-```bash
+```sh
 sbatch job_template
 ```
 
@@ -306,7 +306,7 @@ If you want to know how your jobs are doing in the queue, you can check their st
 
 Rewrite the previous sbatch file so that you book 3 days of time, and to use a whole node instead of a single core, i.e. change the partition to `main` instead of `shared`. This will cause your job to stand in the queue for a bit longer, so that we can have a look at it while it is queuing. Submit it to the queue and run `squeue`.
 
-```bash
+```sh
 squeue -u username
 
   JOBID PARTITION     NAME     USER   ST       TIME  NODES NODELIST(REASON)
@@ -317,13 +317,13 @@ Here we can see in the status column (`ST`)that the job is pending (`PD`) and ha
 
 In our case, we are not really interested in running this job at all. Let's cancel it instead. This can be done with the command `scancel`. Syntax:
 
-```bash
+```sh
 scancel <job id>
 ```
 
 You see the job id number in the output from `squeue`.
 
-```bash
+```sh
 scancel 5104668
 ```
 
@@ -333,13 +333,13 @@ If you have a lot of jobs running, you can cancel all of them by using the comma
 
 Sometimes it is more convenient to work interactively on a node instead of submitting your work as a job. You have tried this during these labs, but you will not have the reservations we have during the course so your jobs might take a little while to start. You will have to book your jobs using the `salloc` command. Syntax:
 
-```bash
+```sh
 salloc -A <project id> -t <time> -c <number of cores> -p shared
 ```
 
 Try closing down your current session on the reserved node you connected to in the beginning of the lab by typing `exit`. Then make a new booking using `salloc` but without the reservation id,
 
-```bash
+```sh
 salloc -A {{< meta id_project >}} -t 3:00:00 -c 1 -p shared
 ```
 

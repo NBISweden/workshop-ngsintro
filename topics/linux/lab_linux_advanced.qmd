@@ -5,13 +5,6 @@ author: 'Martin Dahlö'
 format: html
 ---
 
-```{r,eval=TRUE,include=FALSE}
-library(yaml)
-library(here)
-site_url       <- yaml::read_yaml(here("_quarto.yml"))$website$`site-url`
-output_dir     <- yaml::read_yaml(here("_quarto.yml"))$project$`output-dir`
-```
-
 ## Connect to PDC
 
 The first step of this lab is to open a ssh connection to PDC. Please refer to [**Connecting to PDC**](../../other/lab_connect_pdc.html) for instructions. Once connected to PDC, return here and continue reading the instructions below.
@@ -20,13 +13,13 @@ The first step of this lab is to open a ssh connection to PDC. Please refer to [
 
 Check which node you got when you booked resources this morning (replace `username` with your username)
 
-```bash
+```sh
 squeue -u username
 ```
 
 should look something like this
 
-```bash
+```sh
 user@login1 ~ $ squeue -u user
              JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
            5583899    shared interact    user  R       2:22      1 nid001009
@@ -36,13 +29,13 @@ user@login1 ~ $
 where `nid001009` is the name of the node I got (yours will probably be different).
 Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested the session will shut down, and you will lose all unsaved data. Connect to this node from the login node.
 
-```bash
+```sh
 ssh -Y nid001009
 ```
 
 If the list is empty you can run the allocation command again and it should be in the list:
 
-```bash
+```sh
 salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_tue >}} -t 04:00:00 -p shared -c 1
 ```
 
@@ -50,25 +43,25 @@ salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_tue >}} -t
 
 We will have to load the module for `nano` before we can start editing files.
 
-```bash
+```sh
 module load nano
 ```
 
 Let's make sure nano has **syntax highlighting** enabled. What that will do is to paint the boring code in pretty colors, making it much easier to read it. See the difference for yourself by first looking at this file before you enable it:
 
-```bash
+```sh
 nano {{< meta path_resources >}}/linux/qol/generate_random_protein.py
 ```
 
 Close down nano when you have seen how doing it looks without colors by pressing `ctrl+x`. Now, let's enable syntax highlighting. To do this, we will simply tell nano to include the syntax highlighting instructions from a bunch of files that are already installed on the computer. Run this command to do just that:
 
-```bash
+```sh
 find /pdc/software/eb/software/nano/7.2/share/nano/ -iname "*.nanorc" -exec echo include {} \; >> ~/.nanorc
 ```
 
 This command will put one line per language instructions (~30 of them, located in `/pdc/software/eb/software/nano/7.2/share/nano/`), into the nano autostart file (`~/.nanorc`) and put the word 'include' infront of each file name. That will make nano include the instructions from each of those files whenever it starts. Now have a look at the same file as before and enjoy the colors:
 
-```bash
+```sh
 nano {{< meta path_resources >}}/linux/qol/generate_random_protein.py
 ```
 
@@ -82,18 +75,18 @@ Next, copy the lab files from this folder. `-r` means recursively, which means a
 
 {{< fa lightbulb >}} Remember to use tab-complete to avoid typos and too much writing.
 
-```bash
+```sh
 cp -r <source> <destination>
 cp -r {{< meta path_resources >}}/linux/linux_advanced {{< meta path_workspace >}}/linux_advanced
 ```
 
 Have a look in `{{< meta path_workspace >}}/linux_advanced`
 
-```bash
+```sh
 cd {{< meta path_workspace >}}/linux_advanced
 ```
 
-```bash
+```sh
 ll
 ```
 
@@ -102,8 +95,8 @@ If you see files, the copying was successful.
 ::: {.callout-tip}
 If you for some reason have problems copying the files, or if you are not on the cluster when running this lab, you can download these files [here](assets/linux_advanced.tar.gz). You can download and unpack the file using the commands below: 
 
-```bash
-wget `r site_url``r output_dir`/topics/linux/assets/linux_advanced.tar.gz
+```sh
+wget {{< meta website.site-url >}}{{< meta output-dir >}}/topics/linux/assets/linux_advanced.tar.gz
 mkdir -p {{< meta path_workspace >}}
 tar -C {{< meta path_workspace >}} -xzvf linux_advanced.tar.gz
 ```
@@ -116,26 +109,26 @@ After unpacking, continue the lab from [the "Using variables" section](#using-va
 
 Variables are like small notes you write stuff on. If you want to save the value of something to be able to use it later, variables is the way to go. Let's try assigning values to some variables and see how we use them.
 
-```bash
+```sh
 a=5
 ```
 
 Now the values 5 is stored in the variable named `a`. To use the variable we have to put a `$` sign in front of it so that bash knows we are referring to the variable `a` and not just typing the letter `a`. To see the result of using the variable, we can use the program `echo`, which prints whatever you give it to the terminal.
 
-```bash
+```sh
 echo print this text to the terminal
 echo "you can use quotes if you want to"
 ```
 
 As you see, all the words you give it are printed just the way they are. Try putting the variable somewhere in the text.
 
-```bash
+```sh
 echo Most international flights leave from terminal $a at Arlanda airport
 ```
 
 Bash will see that you have a variable there and will replace the variable name with the value the variable have before sending the text to echo. If you change the value of `a` and run the exact command again you will see that it changes.
 
-```bash
+```sh
 a="five"
 echo Most international flights leave from terminal $a at Arlanda airport
 ```
@@ -144,7 +137,7 @@ So without changing anything in the echo statement, we can make it output differ
 
 You can also do mathematics with variables, but we have to tell bash that we want to do calculations first. We do this by wrapping the calculations inside a dollar sign (telling bash it's a variable) and double parentheses, i.e. `$((5+5))`.
 
-```bash
+```sh
 a=4
 echo $a squared is $(($a*$a))
 ```
@@ -153,7 +146,7 @@ echo $a squared is $(($a*$a))
 
 <details>
 <summary>Solution</summary>
-```bash
+```sh
 x=4
 y=5
 z=10
@@ -173,7 +166,7 @@ If you get error messages like this when you run `gedit`, `(gedit:27463): dconf-
 
 The most simple loops are the ones that loop over a predefined list. You saw examples of this in the lecture slides, for example:
 
-```bash
+```sh
 for i in "Print these words" one by one;
 do
     echo $i
@@ -182,13 +175,13 @@ done
 
 which will print the value of `$i` in each iteration of the loop. Write this loop in the file you are editing with `gedit`/`nano`, save the file, and then run it in the other terminal you have open.
 
-```bash
+```sh
 bash loop_01.sh
 ```
 
 As you see, the words inside the quotation marks are treated as a single unit, unlike the words after. You can also iterate over numbers, so erase the previous loop you wrote and try this instead:
 
-```bash
+```sh
 for number in 1 2 3;
 do
     echo $number
@@ -197,7 +190,7 @@ done
 
 If everything worked correctly you should have gotten the numbers `1 2 3` printed to the screen. As you might guess, this way of writing the list of numbers to iterate over will not be usable once you have more than 10 or so numbers you want to loop over. Fortunately, the creators of bash (and most other computer languages) saw this problem coming a mile away and did something about it. To quickly create a list of numbers in bash, you can use something called a sequence expression to create the list for you.
 
-```bash
+```sh
 for whatevernameyouwant in {12..72};  
 do  
     echo $whatevernameyouwant  
@@ -212,7 +205,7 @@ Start off with getting a loop to count down from 10 to 0 first. Notice how fast 
 
 <details>
 <summary>Solution</summary>
-```bash
+```sh
 # declare the values the loop will loop over
 for secondsToGo in {10..0};
 do
@@ -239,7 +232,7 @@ In real life you will never do this, instead you will most likely always do it t
 ::: {.callout-tip}
 Remember that you have to load the `samtools` module to be able to run it. The way you get `samtools` to convert a SAM file to a BAM file is by typing the following command:
 
-```bash
+```sh
 samtools view -bS sample_1.sam > sample_1.bam
 ```
 
@@ -252,7 +245,7 @@ Basic, without bonus points:
 
 <details>
 <summary>Solution</summary>
-```bash
+```sh
 # load the modules needed for samtools
 module load samtools
 
@@ -272,7 +265,7 @@ Advanced, with bonus points:
 
 <details>
 <summary>Solution</summary>
-```bash
+```sh
 # load the modules needed for samtools
 module load samtools
 
@@ -301,7 +294,7 @@ Let's add a small thing to the exercise we just did. If there already exists a B
 
 The following `if` statement will check if a given filename exists, and prints a message depending on if it exists or not.
 
-```bash
+```sh
 FILE=$1
 
 if [ -f $FILE ];
@@ -314,7 +307,7 @@ fi
 
 What we want to do is to check if the file **doesn't** exists. The way to do that is to invert the answer of the check if the file does exist. To do that in bash, and many other languages, is to use the exclamation mark, `!`, which in these kinds of logical situations means **NOT** or **the opposite of**.
 
-```bash
+```sh
 FILE=$1
 
 if [ ! -f $FILE ];
@@ -329,7 +322,7 @@ Basic:
 
 <details>
 <summary>Solution</summary>
-```bash
+```sh
 # load the modules needed for samtools
 module load samtools
 
@@ -353,7 +346,7 @@ Advanced:
 
 <details>
 <summary>Solution</summary>
-```bash
+```sh
 # load the modules needed for samtools
 module load samtools
 
@@ -403,7 +396,7 @@ To get around this we can use a different way of generating sequences (there are
 
 The `$()` tells bash to run something in a subshell, which pretty much means it will run the command within the parentheses and then take whatever that command printed to the screen and replace the parentheses expression:
 
-```bash
+```sh
 echo $(seq 1 5)
 ```
 
@@ -417,7 +410,7 @@ echo 1 2 3 4 5
 
 <details>
 <summary>Solution</summary>
-```bash
+```sh
 # set the number you want to calculate the factorial of
 n=10
 
@@ -458,7 +451,7 @@ Basic solution:
 
 <details>
 <summary>Solution</summary>
-```bash
+```sh
 # make the dummy pipeline available
 export PATH=$PATH:{{< meta path_resources >}}/hpc/pipeline/dummy_scripts
 
@@ -492,7 +485,7 @@ Advanced solution:
 
 <details>
 <summary>Solution</summary>
-```bash
+```sh
 # make the dummy pipeline available in this script
 export PATH=$PATH:{{< meta path_resources >}}/hpc/pipeline/dummy_scripts
 

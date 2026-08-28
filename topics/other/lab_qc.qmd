@@ -2,27 +2,9 @@
 title: "Read quality"
 author: "Malin Larsson"
 description: "Quality control of short reads with FastQC"
+path_fastq: "{{< meta path_resources >}}/vc/data/fastq"
 format: html
 ---
-
-```{r,eval=TRUE,include=FALSE}
-library(yaml)
-library(here)
-id_project <- yaml::read_yaml(here("_quarto.yml"))$id_project
-path_workspace <- yaml::read_yaml(here("_quarto.yml"))$path_workspace
-```
-
-```{css,include=FALSE}
-.workLocally{
-background-color: red;
-}
-```
-
-```{r,include=FALSE}
-## VARIABLES
-#colours
-fastqdir <- "/sw/courses/ngsintro/vc/data/fastq"
-```
 
 ## FastQC
 
@@ -52,31 +34,30 @@ During this lab it is best to connect to Dardel via a remote desktop (ThinLinc).
 
 Check which node you got when you booked resources this morning (replace `username` with your username)
 
-```bash
+```sh
 squeue -u username
 ```
 
 should look something like this
 
-```bash
+```sh
 user@login1 ~ $ squeue -u user
              JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
            5583899    shared interact    user  R       2:22      1 nid001009
 user@login1 ~ $
 ```
 
-where `nid001009` is the name of the node (yours will probably be different). Note the numbers in the `Time` column.
-They show for how long the job has been running. When it reaches the time limit you requested, the session will shut down, and you will lose all unsaved data.
+where `nid001009` is the name of the node (yours will probably be different). Note the numbers in the `Time` column. They show for how long the job has been running. When it reaches the time limit you requested, the session will shut down, and you will lose all unsaved data.
 
 If the list is empty, you can run the allocation command again, and it should be in the list:
 
-```bash
+```sh
 salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_tue >}} -t 04:00:00 -p shared -c 1
 ```
 
 Connect to this node from the login node.
 
-```bash
+```sh
 ssh -Y nid001009
 ```
 
@@ -85,13 +66,13 @@ ssh -Y nid001009
 You should work in a subfolder in your home folder on Dardel, just like you have done during the previous labs. 
 Start by going to your course folder using this command:
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('cd ', path_workspace))
+```sh
+cd {{< meta path_workspace >}}
 ```
 
 Create a folder for this exercise and change into it:
 
-```bash
+```sh
 mkdir qc
 cd qc
 ```
@@ -100,50 +81,49 @@ cd qc
 
 The raw data files are located in
 
-```{r,echo=FALSE,comment="",class.output="bash"}		
-cat(paste0(fastqdir))
+```sh
+{{< meta path_fastq >}}
 ```
 
 Instead of copying the files to your workspace, you should create *symbolic links* (also called *soft links*) to them.
 Soft-linking files and folders allows you to work with them as if they were in your current directory, but without creating actual copies.
 Create symbolic links to the FASTQ files in your workspace:
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('ln -s ',fastqdir,'/HG00097_1.fq\n'))
-cat(paste0('ln -s ',fastqdir,'/HG00097_2.fq\n'))  
-cat(paste0('ln -s ',fastqdir,'/HG00100_1.fq\n'))
-cat(paste0('ln -s ',fastqdir,'/HG00100_2.fq\n'))
-cat(paste0('ln -s ',fastqdir,'/HG00101_1.fq\n'))
-cat(paste0('ln -s ',fastqdir,'/HG00101_2.fq\n'))
+```sh
+ln -s {{< meta path_fastq >}}/HG00097_1.fq
+ln -s {{< meta path_fastq >}}/HG00097_2.fq
+ln -s {{< meta path_fastq >}}/HG00100_1.fq
+ln -s {{< meta path_fastq >}}/HG00100_2.fq
+ln -s {{< meta path_fastq >}}/HG00101_1.fq
+ln -s {{< meta path_fastq >}}/HG00101_2.fq
 ```
 
 ### Inspecting the raw reads
 
-The files come from paired-end sequencing, where each fragment is
-sequenced from two ends.
-The two reads are sometimes called R1 and R2,
-and are typically stored in two different files with file names
+The files come from paired-end sequencing, where each fragment is sequenced from two ends.
+The two reads are sometimes called R1 and R2, and are typically stored in two different files with file names
 that have a `1` and a `2` in their names.
-Use the program `less` to look at the contents of the FASTQ file containing the
-R2 reads of the `HG00101` sample:
-```bash
+
+Use the program `less` to look at the contents of the FASTQ file containing the R2 reads of the `HG00101` sample:
+
+```sh
 less HG00101_2.fq
 ```
-While `less` is running, use the arrow keys to scroll up and down.
-Use the `Q` key to quit the program when you are done.
+
+While `less` is running, use the arrow keys to scroll up and down. Use the `Q` key to quit the program when you are done.
 
 ### Accessing FastQC
 
 FastQC is installed in the module system on PDC. Modules must be loaded *every time* you login to Dardel, or when you connect to a new compute node.  
 First load the PDC module:
 
-```bash
+```sh
 module load PDC
 ```
 
 This makes it possible to load FastQC:
 
-```bash
+```sh
 module load fastqc
 ```
 
@@ -151,13 +131,13 @@ module load fastqc
 
 Run FastQC on all FASTQ files:
 
-```bash
+```sh
 fastqc *.fq
 ```
 
 The output is one `.html` document for each input FASTQ file, which shows quality scores along the reads and other information. Please check which files were generated with this command:
 
-```bash
+```sh
 ls -lrt
 ```
 
@@ -168,15 +148,17 @@ The output from FastQC is an HTML report that should be opened in a web browser.
 One option is to download the output to your local computer and open the file in your local web browser.
 To do this, first open a new terminal window on your local computer and navigate to a folder where you want to keep the files.   
 Then download all generated `.html` files to that folder with this command (replace `username` with your username):
-```bash
+
+```sh
 scp "username@dardel.pdc.kth.se:{{< meta path_workspace >}}/qc/*.html" .
 ```
+
 The files can now be opened from your local web browser by navigating to the same folder.  
 
 <!--
 If you have connected to PDC via ThinLinc, you can open HTML files on Dardel with this command:
 
-```bash
+```sh
 firefox --no-remote filename.html &
 ```
 -->
@@ -206,22 +188,25 @@ Use the quality-trimming functionality of Cutadapt to remove low-quality 3' read
 
 First, load the appropriate module:
 
-```bash
+```sh
 module load cutadapt
 ```
 
 Then run this Cutadapt command, using the `-q` option to specify a quality trimming threshold:
-```bash
+
+```sh
 cutadapt -q 20 -o HG00101_trimmed_1.fq -p HG00101_trimmed_2.fq HG00101_1.fq HG00101_2.fq
 ```
 
 Generate new FastQC reports for the trimmed reads:
-```bash
+
+```sh
 fastqc -q HG00101_trimmed_*.fq
 ```
 
 Finally, inspect the `HG00101_trimmed_2.fq` file using `less`:
-```bash
+
+```sh
 less HG00101_trimmed_2.fq
 ```
 
