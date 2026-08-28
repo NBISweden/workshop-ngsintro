@@ -32,8 +32,6 @@ as the first thing, so that old rendered files are not overwritten.
 
 You can preview changes and build the whole website locally without a local installation of R or dependency packages by using the pre-built Docker image.
 
-:exclamation: **Note:** Image size: 5.4GB.
-
 Clone the repo if not already done. Make sure you are standing in the repo directory.
 
 To render the complete site,
