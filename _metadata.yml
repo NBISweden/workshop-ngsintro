@@ -1,0 +1,227 @@
+# metadata used site-wide
+
+# project id on active cluster (dardel)
+id_project: "naiss2026-xx-xx"
+# project id on fallback cluster (rackham)
+id_project_backup: "naiss2026-xx-xx"
+# path to course working directory
+path_workspace: "/cfs/klemming/projects/supr/naiss2026-xx-xx/username"
+# path to course resources on cluster
+path_resources: "/sw/courses/ngsintro"
+# url to active cluster (dardel)
+url_cluster: "dardel.pdc.kth.se"
+# url to backup cluster (rackham)
+url_cluster_backup: "rackham.uppmax.uu.se"
+
+# reservation ids
+id_slurm_res_mon: "edu26-xx-xx"
+id_slurm_res_tue: "edu26-xx-xx"
+id_slurm_res_wed: "edu26-xx-xx"
+id_slurm_res_thu: "edu26-xx-xx"
+id_slurm_res_fri: "edu26-xx-xx"
+
+# location is used to render the info page
+# location options are linkoping, lund, umea, stockholm, uppsala or online
+# one or more separated by commas or semicolon.
+location: uppsala
+assistants:
+ - "AJ: Anna Johansson"
+ - "BV: Björn Viklund"
+ - "CK: Cormac Kinsella"
+ - "DA: Dag Ahren"
+ - "DE: Diana Ekman"
+ - "EB: Emre Balsever"
+ - "FB: Franziska Bonath"
+ - "FR: Fariba Roshanzamir"
+ - "GD: Guilherme Dias"
+ - "JD: Jyotirmoy Das"
+ - "JH: Jason Hill"
+ - "JB: Joakim Bygdell"
+ - "JT: Jeanette Tångrot"
+ - "KG: Karl Grönberg"
+ - "KL: Katarina Lejonlid"
+ - "KB: Kristina Benevides"
+ - "LE: Leslie Solorzano"
+ - "LK: Linda Köhn"
+ - "LA: Lore Ament"
+ - "LV: Louella Vasquez"
+ - "LS: Lucile Soler"
+ - "MD: Martin Dahlö"
+ - "MG: Maxime Garcia"
+ - "ML: Malin Larsson"
+ - "MM: Markus Mayrhofer"
+ - "MX: Marcel Martin"
+ - "MP: Martin Pippel"
+ - "MR: Miguel Redondo"
+ - "MV: Massimiliano Volpe"
+ - "NN: Nina Norgren"
+ - "OP: Olga Vinnere Pettersson"
+ - "PA: Prasoon Agarwal"
+ - "PP: Paul Pyl"
+ - "RF: Roy Francis"
+ - "SD: Sebastian DiLorenzo"
+ - "SS: Snaevar Sigurdsson"
+ - "VK: Varsith Konda"
+ - "YL: Yuan Li"
+schedule_message: "Breaks are planned for approximately 10:15 and 15:00 every day. Note that the presentations and videos may not be in sync because the presentations were updated while the videos are from previous workshops."
+colors:
+  primary: "#95b540"
+  secondary: "#E9F2D1"
+
+# map markers information
+# markdown is supported in tooltip and popup, use <br> for new lines
+# leaflet map is enabled through quarto extension https://github.com/royfrancis/quarto-leaflet which supports fontawesome icons
+# use fontawesome v6 icons: https://fontawesome.com/v6/search
+leaflet:
+  lund:
+    zoom: 14
+    markers:
+      - tooltip: Venue
+        icon: "fa-solid fa-briefcase"
+        icon-color: "#E74856"
+        lat: 55.713394
+        lon: 13.206628
+        popup: "Room Retina D227<br> Building D<br> Department of Biology<br> Sölvegatan 35<br> 223 62 Lund<br> Sweden"
+      - tooltip: Centralstation
+        icon: "fa-solid fa-train"
+        icon-color: "#8E8CD8"
+        lat: 55.705311
+        lon: 13.187432
+        popup: "Centralstation<br> Bangatan 1<br> 222 21 Lund<br> Sweden"
+  umea:
+    zoom: 12
+    markers:
+      - tooltip: Venue
+        icon: "fa-solid fa-briefcase"
+        icon-color: "#E74856"
+        lat: 63.820019
+        lon: 20.307814
+        popup: "Room UB341<br> Universitetsbibioteket plan 3<br> Umeå University<br> 901 87 Umeå<br> Sweden"
+      - tooltip: "Centralstation"
+        icon: "fa-solid fa-train"
+        icon-color: "#8E8CD8"
+        lat: 63.830098107373445
+        lon: 20.266805019843996
+        popup: "Centralstation<br> Järnvägstorget<br> 903 28 Umeå<br> Sweden"
+      - tooltip: "Airport"
+        icon: "fa-solid fa-plane"
+        icon-color: "#8E8CD8"
+        lat: 63.79308704716322
+        lon: 20.289333642478027
+        popup: "Flygplatsvägen 32<br> 904 22 Umeå<br> Sweden"
+      - tooltip: "Vasaplan bus stop"
+        icon: "fa-solid fa-bus"
+        icon-color: "#8E8CD8"
+        lat: 63.82620376719613
+        lon: 20.268286563856456
+        popup: "Vasaplan; 903 29 Umeå; Sweden"
+  uppsala:
+    zoom: 14
+    markers:
+      - tooltip: "Venue"
+        icon: "fa-solid fa-briefcase"
+        icon-color: "#E74856"
+        lat: 59.841949
+        lon: 17.637073
+        popup: "**Room E10:1309**<br> Entrance C11<br> Biomedicinskt centrum<br> Uppsala University / ScilifeLab<br> Husargatan 3<br> 752 37 Uppsala<br> Sweden"
+      - tooltip: "Hotel von Kraemer (900 m, 11 min walk)"
+        icon: "fa-solid fa-bed"
+        icon-color: "#0078D7"
+        lat: 59.84866869
+        lon: 17.63525156
+        popup: "von Kraemers alle 26<br> 752 37 Uppsala<br> Sweden "
+      - tooltip: "Grand Hotell Hörnan (1.9 Km, 23 min walk)"
+        icon: "fa-solid fa-bed"
+        icon-color: "#0078D7"
+        lat: 59.85654413
+        lon: 17.64059039
+        popup: "Bangårdsgatan 1<br> 753 20 Uppsala<br> Sweden"
+      - tooltip: "Akademihotellet (1.7 Km, 21 min walk)"
+        icon: "fa-solid fa-bed"
+        icon-color: "#0078D7"
+        lat: 59.85659426
+        lon: 17.63056311
+        popup: "Övre Slottsgatan 5<br> 753 10 Uppsala<br> Sweden"
+      - tooltip: "Best Western Hotel Svava (2.2 Km, 26 min walk)"
+        icon: "fa-solid fa-bed"
+        icon-color: "#0078D7"
+        lat: 59.85819186
+        lon: 17.64407413
+        popup: "Bangårdsgatan 24<br> 753 20 Uppsala<br> Sweden"
+      - tooltip: "Hotell Centralstation (2.1 Km, 25 min walk)"
+        icon: "fa-solid fa-bed"
+        icon-color: "#0078D7"
+        lat: 59.85830099
+        lon: 17.64407784
+        popup: "Bangårdsgatan 13<br> 753 30 Uppsala<br> Sweden"
+      - tooltip: "CityStay Hotell (1.8 Km, 21 min walk)"
+        icon: "fa-solid fa-bed"
+        icon-color: "#0078D7"
+        lat: 59.85709171
+        lon: 17.63575342
+        popup: "Trädgårdsgatan 5A<br> 753 09 Uppsala<br> Sweden"
+      - tooltip: Centralstation
+        icon: "fa-solid fa-train"
+        icon-color: "#8E8CD8"
+        lat: 59.85855524
+        lon: 17.64558492
+        popup: "Central Station<br> 753 21 Uppsala<br> Sweden"
+  linkoping:
+    zoom: 14
+    markers:
+      - tooltip: "Room Papaver"
+        icon: "fa-solid fa-briefcase"
+        icon-color: "#E74856"
+        lat: 58.4035446
+        lon: 15.62216505
+        popup: "LiU Campus Universitetssjukhuset<br> 582 25 Linköping<br> Sweden"
+      - tooltip: "Room Dolomit/Antracit"
+        icon: "fa-solid fa-briefcase"
+        icon-color: "#E74856"
+        lat: 58.40221818
+        lon: 15.62209546
+        popup: "LiU Campus Universitetssjukhuset<br> 582 25 Linköping<br> Sweden"
+      - tooltip: "Pappa Grappa restaurant"
+        icon: "fa-solid fa-utensils"
+        icon-color: "#79AE6F"
+        lat: 58.40971588
+        lon: 15.62229926
+        popup: "Pappa Grappa restaurant<br> Hospitalsgränd 1<br> 582 27 Linköping<br> Sweden"
+      - tooltip: Quality Hotel Ekoxen
+        icon: "fa-solid fa-bed"
+        icon-color: "#0078D7"
+        lat: 58.40582653
+        lon: 15.62527182
+        popup: "Quality Hotel Ekoxen<br> Klostergatan 68<br> 582 23 Linköping<br> Sweden"
+      - tooltip: Central station
+        icon: "fa-solid fa-train"
+        icon-color: "#8E8CD8"
+        lat: 58.41612804
+        lon: 15.62609887
+        popup: "Centralstation<br> Järnvägsgatan<br> 582 22 Linköping<br> Sweden"
+  stockholm:
+    markers:
+      - tooltip: Venue
+        icon: "fa-solid fa-briefcase"
+        icon-color: "#E74856"
+        lat: 59.3504843470136
+        lon: 18.0234314999999
+        popup: "SciLifeLab Stockholm<br> Tomtebodavägen 23A<br> 171 65 Solna<br> Sweden"
+      - tooltip: Centralstation
+        icon: "fa-solid fa-train"
+        icon-color: "#8E8CD8"
+        lat: 59.330231
+        lon: 18.059196
+        popup: "Centralstation<br> Vasagatan 1<br> 111 20 Stockholm<br> Sweden"
+      - tooltip: "Karolinska Institutet Biomedicum bus stop"
+        icon: "fa-solid fa-bus"
+        icon-color: "#8E8CD8"
+        lat: 59.34998995628685
+        lon: 18.02542771374187
+        popup: "Karolinska Institutet Biomedicum<br> 171 65 Solna<br> Sweden"
+      - tooltip: "Karolinkskavägen bus stop"
+        icon: "fa-solid fa-bus"
+        icon-color: "#8E8CD8"
+        lat: 59.35098473792899
+        lon: 18.02378243706668
+        popup: "Karolinkskavägen<br> 171 64 Solna<br> Sweden"
