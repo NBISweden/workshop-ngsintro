@@ -39,13 +39,13 @@ Clone the repo if not already done. Make sure you are standing in the repo direc
 To render the complete site,
 
 ```
-docker run --platform linux/amd64 --rm -u 1000:1000 -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-ngsintro:latest
+docker run --rm -v ${PWD}:/work ghcr.io/quarto-dev/quarto:latest quarto render /work
 ```
 
 To render a single file (for example `index.qmd`),
 
 ```
-docker run --platform linux/amd64 --rm -u 1000:1000 -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-ngsintro:latest quarto render index.qmd
+docker run --rm -v ${PWD}:/work ghcr.io/quarto-dev/quarto:latest quarto render /work/index.qmd
 ```
 
 :exclamation: Output files are for local preview only. Do not push any rendered .html files or intermediates.
@@ -62,26 +62,10 @@ You can use `quarto preview` to serve the site, and handle automatic rebuilding 
 
 ```bash
 # serve the site
-docker run --rm -it --platform linux/amd64 -u $(id -u):$(id -g) -v ${PWD}:/qmd -p 8800:8800  ghcr.io/nbisweden/workshop-ngsintro:latest quarto preview --port 8800 --host 0.0.0.0
+docker run --rm -it -v ${PWD}:/work -p 8800:8800  ghcr.io/quarto-dev/quarto:latest quarto preview /work --port 8800 --host 0.0.0.0
 ```
 
 Go to [http://localhost:8800/](http://localhost:8800/) or [http://0.0.0.0:8800](http://0.0.0.0:8800) in your browser.
-
-### Building your own docker container
-
-```bash
-# build container
-docker build --platform linux/amd64 -t ghcr.io/nbisweden/workshop-ngsintro:2.5.0 -t ghcr.io/nbisweden/workshop-ngsintro:latest .
-
-# push to ghcr
-# docker login ghcr.io
-docker push ghcr.io/nbisweden/workshop-ngsintro:2.5.0
-docker push ghcr.io/nbisweden/workshop-ngsintro:latest
-
-# run container in the root of the repo
-docker run --rm --platform linux/amd64 -u $(id -u):$(id -g) -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-ngsintro:latest
-docker run --rm --platform linux/amd64 -u $(id -u):$(id -g) -v ${PWD}:/qmd ghcr.io/nbisweden/workshop-ngsintro:latest quarto render index.qmd
-```
 
 ## Repo organisation
 
