@@ -1,0 +1,17 @@
+::: {.callout-note}
+
+## Address
+
+{{< fa location-dot >}} Room UB341  
+Universitetsbibioteket plan 3  
+Umeå University  
+901 87 Umeå  
+Sweden  
+
+:::
+
+[**Umeå city buses**](http://tabussen.nu/ultra/english/): There are several options to pay your bus ticket, including on the bus (credit card only) or in advance either online or using the app, or in the ticket machines at Vasaplan or Umeå Airport. It is cheaper to buy the ticket in advance. More information can be found at [Ultra](https://www.tabussen.nu/ultra/english/where-can-i-buy-tickets/)'s homepage. The bus stop in the city centre is **Vasaplan** and the stops near the course venue are either **Universum** (buses 2, 5, 8 or 9) or **Samhällsvetarhuset** (bus 1). The trip takes about 6-7 min.
+
+[**Airport bus**](https://www.tabussen.nu/flygbussen/english/): The airport bus (Bus 80) goes from the airport to **Vasaplan** (the city centre), and takes about 8 min. 
+
+The [travel planner](https://www.tabussen.nu/ultra/planera-resa/) can be used to plan your trip.
