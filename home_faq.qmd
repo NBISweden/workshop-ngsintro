@@ -24,9 +24,9 @@ accordion:
     - header: 7. I woke up feeling sick. What should I do?
       body: Please inform us immediately and for on-site workshops, stay home until you feel better. We prioritize the well-being of all participants and staff. Further details will be handled on a case-by-case basis.
       id: feelingsick
+    - header: 8. What if I experience discrimination/harassment during the course?
+      body: We follow the NBIS Training Code of Conduct. If you experience or witness harassment, discrimination, or any other inappropriate behaviour, please inform the organizers or any staff member immediately so we can act. You can review the full policy [here](home_coc.qmd).
 format: html
-filters:
-  - accordion
 ---
 
 {{< accordion faq >}}
