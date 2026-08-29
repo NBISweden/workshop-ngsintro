@@ -69,9 +69,30 @@ a:hover, a:focus {
  background-color: #dadddb;
 }
 
+/* workshop list */
+
 .workshop-list {
- line-height: 0.4;
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+ gap: 1rem;
  margin-top: 2em;
+}
+
+.workshop-list h3 {
+ margin: 0;
+}
+
+.workshop-item {
+ padding: 0.2rem;
+ border: 1px solid #BDD775;
+ border-radius: 6px;
+ background-color: #E9F2D1;
+}
+
+.workshop-item a {
+ display: block;
+ padding: 1rem;
+ text-align: center;
 }
 
 /* logo */
