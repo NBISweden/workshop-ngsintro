@@ -81,7 +81,7 @@ jobs:
             printf -v date_spec '2000-01-01 +%s years +%s months -1 day' "${directory:0:2}" "${directory:2}"
             formatted_date=$(date -d "${date_spec}" +'%Y %b')
             echo "${formatted_date}"
-            printf "<h3><a href='https://${GITHUB_REPOSITORY_OWNER}.github.io/${REPO}/${directory}/'>%s</a></h3>\n" "${formatted_date}" >> index.md
+            printf "<div class='workshop-item'><h3><a href='https://${GITHUB_REPOSITORY_OWNER}.github.io/${REPO}/${directory}/'>%s</a></h3></div>\n" "${formatted_date}" >> index.md
           done
           printf '</div>\n' >> index.md
 
