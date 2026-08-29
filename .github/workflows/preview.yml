@@ -20,11 +20,11 @@ jobs:
 
     steps:
       - name: Checkout
-        if: github.event.action != 'closed'
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
       - name: Read Quarto output directory
-        if: github.event.action != 'closed'
         id: quarto-config
         run: |
           output_dir=$(grep -m1 '^  output-dir:' _quarto.yml | cut -d '"' -f2)
