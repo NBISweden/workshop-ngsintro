@@ -51,7 +51,7 @@ jobs:
           # Render website
           echo "Rendering qmd files ..."
           echo "PWD: ${PWD}"
-          docker run --rm -u "$(id -u):$(id -g)" -v "/usr/share/zoneinfo/${TZ}:/etc/localtime:ro" -v "${PWD}:/work" "${{ env.IMAGE }}" quarto render /work
+          docker run --rm -u "$(id -u):$(id -g)" -e HOME=/work -v "/usr/share/zoneinfo/${TZ}:/etc/localtime:ro" -v "${PWD}:/work" "${{ env.IMAGE }}" quarto render /work
 
           # Clone gh-pages branch and remove old directories with same name
           git clone --depth 1 --single-branch --branch gh-pages "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" tmprepo
