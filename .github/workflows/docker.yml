@@ -6,6 +6,7 @@ on:
       - main
 
 concurrency:
+  # Serialize every workflow that writes to gh-pages.
   group: pages-${{ github.repository }}
   cancel-in-progress: false
 

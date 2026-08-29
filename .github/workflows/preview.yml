@@ -5,8 +5,9 @@ on:
     types: [opened, reopened, synchronize, closed]
 
 concurrency:
-  group: preview-${{ github.ref }}
-  cancel-in-progress: true
+  # Serialize every workflow that writes to gh-pages.
+  group: pages-${{ github.repository }}
+  cancel-in-progress: false
 
 jobs:
   deploy-preview:
