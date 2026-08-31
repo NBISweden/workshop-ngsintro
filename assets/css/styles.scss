@@ -92,6 +92,11 @@ table, .Reactable {
   background-color: $secondary;
 }
 
+.btn a {
+  color: whitesmoke;
+  text-decoration: none;
+}
+
 .btn-primary {
   background-color: $primary;
   color: whitesmoke;
@@ -107,14 +112,18 @@ table, .Reactable {
   color: whitesmoke;
 }
 
+.btn-tertiary {
+  background-color: $tertiary;
+  color: $body-color;
+}
+
 .btn-secondary:hover {
   background-color: darken($secondary, 5%);
   color: whitesmoke;
 }
 
-.btn a {
-  color: whitesmoke;
-  text-decoration: none;
+.btn-tertiary:hover {
+  background-color: lighten($tertiary, 5%);
 }
 
 /* observablehq */
@@ -200,93 +209,6 @@ div.callout-caution .callout-icon::before {
 
 div.callout-important .callout-icon::before {
   background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMTYiIHdpZHRoPSIxNiIgZmlsbD0iIzFjMjgzMyIgdmlld0JveD0iMCAwIDUxMiA1MTIiPjwhLS0hRm9udCBBd2Vzb21lIEZyZWUgNi41LjEgYnkgQGZvbnRhd2Vzb21lIC0gaHR0cHM6Ly9mb250YXdlc29tZS5jb20gTGljZW5zZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tL2xpY2Vuc2UvZnJlZSBDb3B5cmlnaHQgMjAyMyBGb250aWNvbnMsIEluYy4tLT48cGF0aCBkPSJNNDE2IDM5OC45YzU4LjUtNDEuMSA5Ni0xMDQuMSA5Ni0xNzQuOUM1MTIgMTAwLjMgMzk3LjQgMCAyNTYgMFMwIDEwMC4zIDAgMjI0YzAgNzAuNyAzNy41IDEzMy44IDk2IDE3NC45YzAgLjQgMCAuNyAwIDEuMXY2NGMwIDI2LjUgMjEuNSA0OCA0OCA0OGg0OFY0NjRjMC04LjggNy4yLTE2IDE2LTE2czE2IDcuMiAxNiAxNnY0OGg2NFY0NjRjMC04LjggNy4yLTE2IDE2LTE2czE2IDcuMiAxNiAxNnY0OGg0OGMyNi41IDAgNDgtMjEuNSA0OC00OFY0MDBjMC0uNCAwLS43IDAtMS4xek05NiAyNTZhNjQgNjQgMCAxIDEgMTI4IDBBNjQgNjQgMCAxIDEgOTYgMjU2em0yNTYtNjRhNjQgNjQgMCAxIDEgMCAxMjggNjQgNjQgMCAxIDEgMC0xMjh6Ii8+PC9zdmc+') !important;
-}
-
-/* table schedule */
-
-.table-schedule {
-  font-size: 0.98rem;
-  line-height: 1.8;
-}
-
-.table-schedule tr:hover {
-  background-color: whitesmoke;
-}
-
-.table-schedule table {
-  margin: 1em auto;
-}
-
-.table-schedule .topic {
-  color: white;
-  font-weight: 700;
-  border-radius: 4px;
-  padding: 1px 4px;
-  background: #BDBDBD;
-}
-
-.table-schedule .topic-dinner {
-  color: white;
-  font-weight: 700;
-  border-radius: 4px;
-  padding: 1px 4px;
-  background: #95b540;
-}
-
-.table-schedule .day-parent {
-  font-size: 110%;
-  padding-top: 10px;
-  padding-bottom: 5px;
-  font-weight: 600;
-}
-
-.table-schedule .day {
-  color: white;
-  border-radius: 4px;
-  padding-right: 4px;
-  padding-left: 4px;
-  margin-left: 9px;
-  margin-right: 7px;
-}
-
-.table-schedule .marker {
-  color: $primary;
-  margin-left: 2px;
-  margin-right: 3px;
-}
-
-.table-schedule td p {
-  margin-bottom: 0;
-  padding: 5px 0px;
-}
-
-/* tooltip */
-
-.tooltip-text {
-  visibility: hidden;
-  position: absolute;
-  z-index: 1;
-  width: fit-content;
-  color: white;
-  background-color: $primary;
-  padding: 5px;
-  border-radius: 4px;
-  line-height: 1.2em;
-}
-
-.hover-text:hover .tooltip-text {
-  visibility: visible;
-}
-
-.top {
-  top: -55px;
-  left: -60%;
-}
-
-.hover-text {
-  position: relative;
-  display: inline-block;
-  text-align: center;
 }
 
 /* precourse tool images */
