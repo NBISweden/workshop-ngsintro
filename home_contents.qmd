@@ -1,6 +1,6 @@
 ---
 title: "Contents"
-description: "Course materials organised by topic.<br>Slides: {{< fa file-powerpoint >}} / {{< fa file-pdf >}}, Labs: {{< fa file-lines >}}, Videos: {{< fa brands youtube >}}"
+description: "Workshop learning materials. Slides: {{< fa file-powerpoint >}} / {{< fa file-pdf >}}, Labs: {{< fa file-lines >}}, Videos: {{< fa brands youtube >}}"
 date: ""
 toc: false
 number-sections: false
@@ -9,47 +9,24 @@ format: html
 ---
 
 ::: {.callout-note}
-Note that the presentations and videos may not be in sync because the presentations were updated while the videos are from previous workshops.
+Note that the Slidess and videos may not be in sync because the Slidess were updated while the videos are from previous workshops.
 :::
 
-### Introduction to Linux
-
-- Introduction to Linux [{{< fa brands youtube >}}](https://youtu.be/qYp8shSMJ-0) [{{< fa file-pdf >}}](topics/linux/slide_linux_intro.pdf) [{{< fa file-lines >}}](topics/linux/lab_linux_intro.html)
-- Linux file permissions [{{< fa file-lines >}}](topics/linux/lab_linux_permissions.html)
-
-### High-Performance Computing cluster
-
-- Introduction to HPC [{{< fa brands youtube >}}](https://youtu.be/cxEtfKN91q4) [{{< fa file-pdf >}}](topics/hpc/intro/slide_hpc_intro.pdf) [{{< fa file-lines >}}](topics/hpc/intro/lab_intro.html)  
-- HPC Pipelines [{{< fa file-lines >}}](topics/hpc/pipeline/lab_pipeline.html)
-
-### File types in Linux
-
-- File types in Bioinformatics [{{< fa brands youtube >}}](https://youtu.be/7MR1qUZQ94w) [{{< fa file-pdf >}}](topics/linux/slide_linux_filetypes.pdf) [{{< fa file-lines >}}](topics/linux/lab_linux_filetypes.html)  
-
-### Advanced Linux
-
-- Better terminal experience [{{< fa brands youtube >}}](https://youtu.be/RGbONVWOaDo) [{{< fa file-pdf >}}](topics/linux/slide_qol_termexp.pdf)
-- Advanced Linux [{{< fa brands youtube >}}](https://youtu.be/n3IpUHIodM8) [{{< fa file-pdf >}}](topics/linux/slide_linux_advanced.pdf) [{{< fa file-lines >}}](topics/linux/lab_linux_advanced.html)
-
-### Variant-calling workflow
-
-- Variant-calling [{{< fa brands youtube >}}](https://youtu.be/NxRECdxKP40) [{{< fa file-powerpoint >}}](topics/vc/slide_vc.pptx) [{{< fa file-lines >}}](topics/vc/lab_vc.html)
-<!-- [Variant-calling Lab answers](lab_vc_answers.pdf)-->
-
-### RNA-Seq workflow
-
-- RNA-Seq workflow [{{< fa brands youtube >}}](https://youtu.be/gC_nslHgSa8) [{{< fa brands html5 >}}](topics/rnaseq/slide_rnaseq.html) [{{< fa file-lines >}}](topics/rnaseq/lab_rnaseq.html)
-- Simon's report [{{< fa file-lines >}}](topics/rnaseq/simon-report/validating_knockout.html)
-
-### NGS technologies
-
-- NGS technologies and challenges [{{< fa brands youtube >}}](https://youtu.be/5sUzkrucL1E) [{{< fa file-pdf >}}](https://drive.google.com/file/d/14kfPifL52eMTZs2jsr2ykPehFBVpAxWr/view?usp=sharing)
-- NGS Long Reads and Pipelines [{{< fa brands youtube >}}](https://youtu.be/6RBhfMvDkSI) [{{< fa file-pdf >}}](https://drive.google.com/file/d/1U_oVEuTTKwk7zxVP_CGR5zgHP6Jd_1Oi/view?usp=sharing)
-
-### Other
-
-- QC of FastQ reads [{{< fa file-pdf >}}](topics/other/slide_qc.pdf) [{{< fa file-lines >}}](topics/other/lab_qc.html)
-- Data management [{{< fa brands youtube >}}](https://youtu.be/PfcrDlhY1zE)  [{{< fa file-powerpoint >}}](topics/other/slide_data_management.pdf)
+|Topic|Presenter|Links|
+|---|---|---|
+|Introduction to Linux|Martin Dahlö|[[{{< fa brands youtube >}} Video](https://youtu.be/qYp8shSMJ-0)]{.badge} [[{{< fa file-pdf >}} Slides](topics/linux/slide_linux_intro.pdf)]{.badge} [[{{< fa file-lines >}} Lab](topics/linux/lab_linux_intro.html)]{.badge}|
+|Linux file permissions|Martin Dahlö|[[{{< fa file-lines >}} Lab](topics/linux/lab_linux_permissions.html)]{.badge}|
+|Introduction to HPC|Martin Dahlö|[[{{< fa brands youtube >}} Video](https://youtu.be/cxEtfKN91q4)]{.badge} [[{{< fa file-pdf >}} Slides](topics/hpc/intro/slide_hpc_intro.pdf)]{.badge} [[{{< fa file-lines >}} Lab](topics/hpc/intro/lab_intro.html)]{.badge}|
+|HPC pipelines|Martin Dahlö|[[{{< fa file-lines >}} Lab](topics/hpc/pipeline/lab_pipeline.html)]{.badge}|
+|File types in Linux|Martin Dahlö|[[{{< fa brands youtube >}} Video](https://youtu.be/7MR1qUZQ94w)]{.badge} [[{{< fa file-pdf >}} Slides](topics/linux/slide_linux_filetypes.pdf)]{.badge} [[{{< fa file-lines >}} Lab](topics/linux/lab_linux_filetypes.html)]{.badge}|
+|Better terminal experience|Martin Dahlö|[[{{< fa brands youtube >}} Video](https://youtu.be/RGbONVWOaDo)]{.badge} [[{{< fa file-pdf >}} Slides](topics/linux/slide_qol_termexp.pdf)]{.badge}|
+|QC of FastQ reads|Marcel Martin|[[{{< fa file-pdf >}} Slides](topics/other/slide_qc.pdf)]{.badge} [[{{< fa file-lines >}} Lab](topics/other/lab_qc.html)]{.badge}|
+|Advanced Linux|Martin Dahlö|[[{{< fa brands youtube >}} Video](https://youtu.be/n3IpUHIodM8)]{.badge} [[{{< fa file-pdf >}} Slides](topics/linux/slide_linux_advanced.pdf)]{.badge} [[{{< fa file-lines >}} Lab](topics/linux/lab_linux_advanced.html)]{.badge}|
+|NGS technologies and challenges|NGI|[[{{< fa brands youtube >}} Video](https://youtu.be/5sUzkrucL1E)]{.badge} [[{{< fa file-pdf >}} Slides](https://drive.google.com/file/d/14kfPifL52eMTZs2jsrykPehFBVpAxWr/view?usp=sharing)]{.badge}|
+|NGS long reads and pipelines|NGI|[[{{< fa brands youtube >}} Video](https://youtu.be/6RBhfMvDkSI)]{.badge} [[{{< fa file-pdf >}} Slides](https://drive.google.com/file/d/1U_oVEuTTKwk7zxVP_CGR5zgHP6Jd_1Oi/view?usp=sharing)]{.badge}|
+|Variant-calling workflow|Diana Ekman|[[{{< fa brands youtube >}} Video](https://youtu.be/NxRECdxKP40)]{.badge} [[{{< fa file-powerpoint >}} Slides](topics/vc/slide_vc.pptx)]{.badge} [[{{< fa file-lines >}} Lab](topics/vc/lab_vc.html)]{.badge}|
+|RNA-Seq workflow|Roy Francis / Dag Ahrén|[[{{< fa brands youtube >}} Video](https://youtu.be/gC_nslHgSa8)]{.badge} [[{{< fa brands html5 >}} Slides](topics/rnaseq/slide_rnaseq.html)]{.badge} [[{{< fa file-lines >}} Lab](topics/rnaseq/lab_rnaseq.html)]{.badge} [[{{< fa file >}} Simon's report](topics/rnaseq/simon-report/validating_knockout.html)]{.badge}|
+|Data management|NBIS DM|[[{{< fa brands youtube >}} Video](https://youtu.be/PfcrDlhY1zE)]{.badge} [[{{< fa file-powerpoint >}} Slides](topics/other/slide_data_management.pdf)]{.badge}|
 
 ---
 
