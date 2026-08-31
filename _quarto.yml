@@ -1,0 +1,37 @@
+project:
+  type: website
+  output-dir: "."
+  render: 
+    - "index.qmd"
+
+website:
+  favicon: "assets/favicon.png"
+  open-graph: true
+  image: "assets/images/seo.webp"
+  description: "A five day introductory workshop for beginners in the analysis of illumina short-read next-generation sequencing data which includes lectures and hands-on labs on a remote high-performance cluster. Topics covered include: working on the Linux command line, overview of sequence data formats and QC, DNA variant calling workflow and RNA sequence analyses workflow."
+  navbar:
+    logo: "assets/images/logos/nbis-scilifelab.png"
+    logo-alt: "logo"
+    search: false
+  page-footer:
+    border: false
+    left: "{{< meta current_year >}} [NBIS](https://nbis.se) • [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)"
+    right: "Published with [Quarto](https://quarto.org/) v{{< meta quarto_version >}}"
+
+format:
+  html:
+    quarto-required: ">=1.9.38"
+    include-in-header: "assets/include_head.html"
+    theme: "assets/css/styles.scss"
+    title-block-banner: "assets/images/banner.webp"
+    number-sections: false
+    anchor-sections: false
+    pagetitle: "NBIS Workshop • Introduction to Bioinformatics using NGS data"
+    title: "Introduction to Bioinformatics using NGS data"
+    subtitle: "NBIS Workshop"
+    toc: false
+    date: ""
+    sidebar: false
+
+filters:
+  - assets/custom.lua

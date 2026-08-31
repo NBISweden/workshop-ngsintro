@@ -2,3 +2,4 @@
 /.quarto/
 .DS_Store
 .Rhistory
+**/*.quarto_ipynb
