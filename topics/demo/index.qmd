@@ -1,0 +1,1116 @@
+---
+title: "Demo Lab"
+author: "Roy Francis"
+description: "This is a demo quarto lab document to showcase the theme, style and usage."
+format: html
+accordion:
+  - ac-1:
+    - header: "**This is a header**"
+      body: "This is **bold** and *italic* text"
+---
+
+This is a [quarto](https://quarto.org/) document
+
+## Text formatting
+
+### Headings
+
+```
+## Level 2 heading  
+### Level 3 heading  
+#### Level 4 heading  
+##### Level 5 heading  
+###### Level 6 heading
+```
+
+### Character sizes
+
+Custom character sizes. This is an enchanced feature.
+
+|Markdown|Rendered|
+|---|---|
+|`[Largest text]{.largest}`|[Largest text]{.largest}|
+|`[Larger text]{.larger}`|[Larger text]{.larger}|
+|`[Large text]{.large}`|[Large text]{.large}|
+|Normal text |Normal text|
+|`[Small text]{.small}`|[Small text]{.small}|
+|`[Smaller text]{.smaller}`|[Smaller text]{.smaller}|
+|`[Smallest text]{.smallest}`|[Smallest text]{.smallest}|
+
+### Character styles
+
+|Markdown|Rendered|
+|---|---|
+|`__Bold text__`|__Bold text__|
+|`_Italic text_`|_Italic text_|
+|`~~Strikethrough~~`|~~Strikethrough~~|
+|`H~2~O`|H~2~O|
+|`x^2`|x^2^|
+|`--`|--|
+|`---`|---|
+|`[link](r-project.org)`|[link](r-project.org)|
+|`{{{< kbd Shift-Ctrl-P >}}}`|{{< kbd Shift-Ctrl-P >}}|
+
+### Blockquote
+
+```         
+> This is a block quote. This
+> paragraph has two lines.
+>
+> 1. This is a list inside a block quote.
+> 2. Second item.
+```
+
+> This is a block quote. This paragraph has two lines.
+>
+> 1.  This is a list inside a block quote.
+> 2.  Second item.
+
+### Line block
+
+Line block preserves spaces and new lines.
+
+```
+| This
+|     block
+|          preserves
+|                   formatting
+```
+
+| This
+|     block
+|          preserves
+|                   formatting
+
+### Rule
+
+A horizontal line can be created using three or more `*` or `-`.
+
+`***`
+
+------------------------------------------------------------------------
+
+### Footnote
+
+An example of footnote reference [^1]
+
+[^1]: That reference refers to this footnote.
+
+### Aside
+
+`[This content lives in the right margin]{.aside}`
+
+[This content lives in the right margin]{.aside}
+
+### Buttons
+
+Here is how buttons are defined:
+
+`[button]{.btn}`  [button]{.btn}  
+`[button]{.btn .btn-primary}`  [button]{.btn .btn-primary}  
+`[button]{.btn .btn-secondary}`  [button]{.btn .btn-secondary}  
+`[button]{.btn .btn-tertiary}`  [button]{.btn .btn-tertiary}  
+
+Button sizes
+
+`[button]{.btn .btn-sm}`  [button]{.btn .btn-sm}  
+`[button]{.btn}`  [button]{.btn}  
+`[button]{.btn .btn-lg}`  [button]{.btn .btn-lg}  
+
+Links inside buttons
+
+`[[link](url)]{.btn}`  [[link](url)]{.btn}  
+`[[link](url)]{.btn .btn-primary}`  [[link](url)]{.btn .btn-primary}  
+`[[link](url)]{.btn .btn-secondary}`  [[link](url)]{.btn .btn-secondary}  
+`[[link](url)]{.btn .btn-tertiary}`  [[link](url)]{.btn .btn-tertiary}  
+
+### Badge
+
+Here is how badges are defined:
+
+`[badge]{.badge}`  [badge]{.badge}  
+`[badge]{.badge .badge-primary}`  [badge]{.badge .badge-primary}  
+`[badge]{.badge .badge-secondary}`  [badge]{.badge .badge-secondary}  
+`[badge]{.badge .badge-tertiary}`  [badge]{.badge .badge-tertiary}
+
+Links inside badges.
+
+`[[link](url)]{.badge .badge-primary}`  [[link](url)]{.badge .badge-primary}  
+`[[link](url)]{.badge .badge-secondary}`  [[link](url)]{.badge .badge-secondary}  
+`[[link](url)]{.badge .badge-tertiary}`  [[link](url)]{.badge .badge-tertiary}
+
+## Code formatting
+
+Verbatim code is text formatted using monospaced font intended as code. Verbatim code can be defined inline where `` `date()` `` looks like `date()`.
+
+Code can also be defined inside code blocks.
+
+````
+```
+date()
+```
+````
+
+```
+date()
+```
+
+Source code, ie; code that is highlighted or executed in a quarto document is not covered here.
+
+## Code execution
+
+Code can be defined inline where `` `r "\u0060r Sys.Date()\u0060"` `` renders `r Sys.Date()`. 
+
+Code can be defined inside code blocks.
+
+````
+```{{r}}
+Sys.Date()
+```
+````
+
+which shows the source code and output.
+
+## Code sizing
+
+**Sizing code output**
+
+```{{r}}
+#| classes: small
+Sys.Date()
+```
+
+## Chunk attributes
+
+Properties and behaviour of code chunks can be controlled using chunk attributes. This is specified as comment sign of the language and pipe followed by key: value. So for example, in R: `#| eval: false`.
+
+In this example, the R source code and results are hidden but the code is evaluated.
+
+````
+```{{r}}
+#| eval: true
+#| echo: false
+#| results: hide
+Sys.Date()
+```
+````
+
+A code chunk can be given a code filename using the chunk attribute `filename`.
+
+````
+```{{r}}
+#| filename: R code
+Sys.Date()
+```
+````
+
+Enable line numbers using `code-line-numbers: true`.
+
+````
+```{{r}}
+#| code-line-numbers: true
+Sys.Date()
+sessionInfo()
+```
+````
+
+An advanced example showing bash code generated from R.
+
+````
+```{{r}}
+#| attr-output: "filename='bash'"
+#| class-output: bash
+#| echo: false
+d <- "custom"
+cat(paste("mkdir​", d))
+```
+````
+
+Code chunk attributes are documented [here](https://quarto.org/docs/output-formats/html-code.html).
+
+## Lists
+
+### Unordered
+
+Unordered lists are created using dashes.
+
+::: {.grid}
+::: {.g-col-6}
+
+```
+- Bullet 1
+- Bullet 2
+  - Sub-bullet 2.1
+  - Sub-bullet 2.2
+- Bullet 3
+```
+
+:::
+::: {.g-col-6}
+
+- Bullet 1
+- Bullet 2
+  - Sub-bullet 2.1
+  - Sub-bullet 2.2
+- Bullet 3
+
+:::
+:::
+
+### Ordered
+
+Ordered lists are created using numbers.
+
+::: {.grid}
+::: {.g-col-6}
+
+```
+1. Point 1
+2. Point 2
+3. Point 3
+```
+
+:::
+::: {.g-col-6}
+
+1. Point 1
+2. Point 2
+3. Point 3
+
+:::
+:::
+
+### Multiple Lists
+
+::: {.grid}
+::: {.g-col-6}
+
+```
+::: {}
+1. Point 1
+2. Point 2
+:::
+
+:::{}
+1. Point 1
+2. Point 2
+:::
+```
+
+:::
+::: {.g-col-6}
+
+::: {}
+1. Point 1
+2. Point 2
+:::
+
+::: {}
+1. Point 1
+2. Point 2
+:::
+
+:::
+:::
+
+## Images
+
+Images can be inserted using plain markdown or HTML directly. Plain markdown can be embellished with custom quarto adjustments to modify aspects of the image. Clicking the image opens the image in a lightbox. This is made possible using the [lightbox](https://github.com/quarto-ext/lightbox) extension.
+
+### Using Markdown
+
+Using regular markdown.
+
+```         
+![](assets/featured.webp)
+```
+
+![](assets/featured.webp)
+
+The dimensions are based on image and/or fill up the entire available space. You can control the dimension as shown below.
+
+```         
+![This is a caption](assets/featured.webp){width=30%}  
+```
+
+![This is a caption](assets/featured.webp){width="30%"}
+
+This image above is now 30% of it's original width.
+
+#### Figure layout
+
+```         
+::: {#fig-mylabel layout-ncol=2}
+![Caption for figure 1](assets/featured.webp){width="40%"}
+
+![Caption for figure 2](assets/featured.webp){width="40%"}
+
+These figures are interesting.
+:::
+```
+
+::: {#fig-mylabel layout-ncol="2"}
+![Caption for figure 1](assets/featured.webp){width="40%"}
+
+![Caption for figure 2](assets/featured.webp){width="40%"}
+
+These figures are interesting.
+:::
+
+More figure options and layouts are described [here](https://quarto.org/docs/authoring/figures.html). Cross referencing described [here](https://quarto.org/docs/authoring/cross-references.html).
+
+### Using HTML
+
+This image below is 30% size.\
+`<img src="assets/featured.webp" style="width:30%;"/>`
+
+<img src="assets/featured.webp" style="width:30%;"/>
+
+For more information on figures, see [here](https://quarto.org/docs/authoring/figures.html). Images generated through code is not covered here.
+
+### Static images using R
+
+Quarto chunks can be used to control image display size using the argument `out.width`.
+
+This image below is displayed at a size of 300 pixels.
+
+````         
+```{{r}}
+#| out-width: 300px
+knitr::include_graphics("assets/featured.webp")
+```
+````
+
+This image below is displayed at a size of 75 pixels and a caption added.
+
+````         
+```{{r}}
+#| out-width: 75px
+#| fig-cap: This is a caption
+knitr::include_graphics("assets/featured.webp")
+```
+````
+
+For more information on figures, see [here](https://quarto.org/docs/authoring/figures.html). For plots generated through R, see section further below.
+
+
+## Math expressions
+
+Some examples of rendering equations.
+
+::: {.grid}
+::: {.g-col-6}
+
+```         
+$e^{i\pi} + 1 = 0$
+```
+
+:::
+::: {.g-col-6}
+
+$e^{i\pi} + 1 = 0$
+
+:::
+:::
+
+::: {.grid}
+::: {.g-col-6}
+
+```         
+$$\frac{E \times X^2 \prod I}{2+7} = 432$$
+```
+
+:::
+::: {.g-col-6}
+
+$$\frac{E \times X^2 \prod I}{2+7} = 432$$
+
+:::
+:::
+
+::: {.grid}
+::: {.g-col-6}
+
+```         
+$$\sum_{i=1}^n X_i$$
+```
+
+:::
+::: {.g-col-6}
+
+$$\sum_{i=1}^n X_i$$
+
+:::
+:::
+
+::: {.grid}
+::: {.g-col-6}
+
+```         
+$$\int_0^{2\pi} \sin x~dx$$
+```
+
+:::
+::: {.g-col-6}
+
+$$\int_0^{2\pi} \sin x~dx$$
+
+:::
+:::
+
+::: {.grid}
+::: {.g-col-6}
+
+```         
+$\left( \sum_{i=1}^{n}{i} \right)^2 = \left( \frac{n(n-1)}{2}\right)^2 = \frac{n^2(n-1)^2}{4}$
+```
+
+:::
+::: {.g-col-6}
+
+$\left( \sum_{i=1}^{n}{i} \right)^2 = \left( \frac{n(n-1)}{2}\right)^2 = \frac{n^2(n-1)^2}{4}$
+
+:::
+:::
+
+::: {.grid}
+::: {.g-col-6}
+
+```         
+$\begin{eqnarray} X & \sim & \mathrm{N}(0,1)\\ Y & \sim & \chi^2_{n-p}\\ R & \equiv & X/Y \sim t_{n-p} \end{eqnarray}$
+```
+
+:::
+::: {.g-col-6}
+
+$\begin{eqnarray} X & \sim & \mathrm{N}(0,1)\\ Y & \sim & \chi^2_{n-p}\\ R & \equiv & X/Y \sim t_{n-p} \end{eqnarray}$
+
+:::
+:::
+
+::: {.grid}
+::: {.g-col-6}
+
+```         
+$\begin{eqnarray} P(|X-\mu| > k) & = & P(|X-\mu|^2 > k^2)\\ & \leq & \frac{\mathbb{E}\left[|X-\mu|^2\right]}{k^2}\\ & \leq & \frac{\mathrm{Var}[X]}{k^2} \end{eqnarray}$
+```
+
+:::
+::: {.g-col-6}
+
+$\begin{eqnarray} P(|X-\mu| > k) & = & P(|X-\mu|^2 > k^2)\\ & \leq & \frac{\mathbb{E}\left[|X-\mu|^2\right]}{k^2}\\ & \leq & \frac{\mathrm{Var}[X]}{k^2} \end{eqnarray}$
+
+:::
+:::
+
+## Icons
+
+### Bootstrap icons
+
+[Bootstrap icons](https://icons.getbootstrap.com) are directly available since quarto uses bootstrap for styling. Optionally, one could also use the quarto extension [bsicons](https://github.com/shafayetShafee/bsicons) for more control.
+
+
+`<i class="bi bi-lightbulb-fill"></i>`  <i class="bi bi-lightbulb-fill"></i>  
+`<i class="bi bi-exclamation-circle-fill"></i>`  <i class="bi bi-exclamation-circle-fill"></i>  
+`<i class="bi bi-clipboard2-check-fill"></i>`  <i class="bi bi-clipboard2-check-fill"></i>  
+`<i class="bi bi-chat-fill"></i>`  <i class="bi bi-chat-fill"></i>  
+`<i class="bi bi-laptop-fill"></i>`  <i class="bi bi-laptop-fill"></i>  
+`<i class="bi bi-cloud-fill"></i>`  <i class="bi bi-cloud-fill"></i>  
+`<i class="bi bi-github"></i>`  <i class="bi bi-github"></i>  
+
+### Fontawesome
+
+To use [fontawesome](https://fontawesome.com/search?m=free) icons as shortcodes, quarto extension [fontawesome](https://github.com/quarto-ext/fontawesome) needs to be installed.
+
+Icons can be placed using shortcodes.
+
+`{{{< fa lightbulb >}}}`      {{< fa lightbulb >}}     
+`{{{< fa exclamation >}}}`    {{< fa exclamation >}}   
+`{{{< fa clipboard-list >}}}` {{< fa clipboard-list >}}  
+`{{{< fa comments >}}}`       {{< fa comments >}}      
+`{{{< fa desktop >}}}`        {{< fa desktop >}}       
+`{{{< fa cloud >}}}`          {{< fa cloud >}}         
+`{{{< fa check >}}}`          {{< fa check >}}         
+`{{{< fa times >}}}`          {{< fa times >}}         
+`{{{< fa skull >}}}`          {{< fa skull >}}         
+`{{{< fa skull size=2x >}}}`  {{< fa skull size=2x >}}   
+`{{{< fa brands github >}}}`  {{< fa brands github >}}
+
+Icons can be displayed using the HTML `<i>` tag. Note that not all icons may work.
+
+`Here is a <i class='fa fa-calendar'></i> calendar and a <i class='fa fa-couch'></i> couch.`
+
+Here is a <i class='fa fa-calendar'></i> calendar and a <i class='fa fa-couch'></i> couch.
+
+There are many other quarto extensions for icons such as [academicons](https://github.com/schochastics/academicons), [iconify](https://github.com/mcanouil/quarto-iconify) and [lordicons](https://github.com/jmgirard/lordicon). 
+
+For full list of icons check out [FontAwesome](https://fontawesome.com/search?m=free).
+
+## Call-Outs
+
+Call-Out blocks are explained [here](https://quarto.org/docs/authoring/callouts.html).
+
+```         
+::: {.callout-note}
+This is a call-out.
+:::
+
+::: {.callout-warning}
+This is a call-out.
+:::
+
+::: {.callout-important}
+This is a call-out.
+:::
+
+::: {.callout-tip}
+This is a call-out.
+:::
+
+::: {.callout-caution}
+This is a call-out.
+:::
+
+::: {.callout-tip collapse="true"}
+## Call-out with collapse
+
+This content is behind an accordion.
+:::
+```
+
+::: callout-note
+This is a call-out.
+:::
+
+::: callout-warning
+This is a call-out.
+:::
+
+::: callout-important
+This is a call-out.
+:::
+
+::: callout-tip
+This is a call-out.
+:::
+
+::: callout-caution
+This is a call-out.
+:::
+
+::: {.callout-tip collapse="true"}
+## Call-out with collapse
+
+This content is behind an accordion.
+:::
+
+```         
+::: {.callout-note appearance="simple"}
+This is a call-out.
+:::
+```
+
+::: {.callout-note appearance="simple"}
+This is a call-out.
+:::
+
+```         
+::: {.callout-note appearance="minimal"}
+This is a call-out.
+:::
+```
+
+::: {.callout-note appearance="minimal"}
+This is a call-out.
+:::
+
+## Accordions
+
+Accordion support is provided through the [accordion](https://github.com/royfrancis/quarto-accordion) extension.
+
+Accordion contents can be defined in the YAML header as shown below.
+
+```yaml
+accordion:
+  - ac-1:
+    - header: "**This is a header**"
+      body: "This is **bold** and *italic* text"
+```
+
+and then called in the body using the shortcode.
+
+```lua
+{{{< accordion ac-1 >}}}
+```
+
+{{< accordion ac-1 >}}
+
+Alternatively, an accordion can be defined inline as shown below.
+
+```lua
+{{{< accordion label="my-accordion" header="Click to expand" body="This is the content of the accordion." >}}}
+```
+
+{{< accordion label="my-accordion" header="Click to expand" body="This is the content of the accordion." >}}
+
+Multiple inline items are defined using JSON.
+
+```
+{{{< accordion label="inline-multi" items='[
+  { "header": "Inline Item 1", "body": "Content for inline item 1." },
+  { "header": "Inline Item 2", "body": "Content for inline item 2." }
+]' >}}}
+```
+
+{{< accordion label="inline-multi" items='[
+  { "header": "Inline Item 1", "body": "Content for inline item 1." },
+  { "header": "Inline Item 2", "body": "Content for inline item 2." }
+]' >}}
+
+## Alerts
+
+```         
+::: {.alert .alert-primary}
+**Note:** This is an alert!
+:::
+::: {.alert .alert-secondary}
+**Note:** This is an alert!
+:::
+::: {.alert .alert-success}
+**Note:** This is a success alert!
+:::
+::: {.alert .alert-danger}
+**Note:** This is a danger alert!
+:::
+::: {.alert .alert-warning}
+**Note:** This is a warning alert!
+:::
+::: {.alert .alert-info}
+**Note:** This is an info alert!
+:::
+```
+
+::: {.alert .alert-primary}
+**Note:** This is an alert!
+:::
+
+::: {.alert .alert-secondary}
+**Note:** This is an alert!
+:::
+
+::: {.alert .alert-success}
+**Note:** This is a success alert!
+:::
+
+::: {.alert .alert-danger}
+**Note:** This is a danger alert!
+:::
+
+::: {.alert .alert-warning}
+**Note:** This is a warning alert!
+:::
+
+::: {.alert .alert-info}
+**Note:** This is an info alert!
+:::
+
+## Layout
+
+### Span
+
+`[Content inside span]{style="background-color: gray"}`
+
+[Content inside span]{style="background-color: gray"}
+
+### Div
+
+```
+::: {style="background-color: gray"}
+Content inside div
+:::
+```
+
+::: {style="background-color: gray"}
+Content inside div
+:::
+
+Divs can be nested like this:
+
+```
+:::: {.class}
+::: {.class}
+:::
+::::
+```
+
+Both spans and divs support attributes in this specific order: identifiers, classes, and then key-value attributes. 
+
+`[Content inside span]{#id .class key1="val1" key2="val2"}`
+
+### Hidden div
+
+```
+::: {.hidden}
+Hidden content
+:::
+```
+
+### Conditional content
+
+````
+::: {{.content-visible when-format="html"}}
+Will only appear in HTML.
+:::
+````
+
+````
+::: {{.content-hidden when-format="html"}}
+Will not appear in HTML.
+:::
+````
+
+Conditional content is documented [here](https://quarto.org/docs/authoring/conditional.html).
+
+### Inner columns
+
+Organisation of content into columns within the body container.
+
+```         
+:::: {.columns}
+::: {.column style="background-color: aliceblue"}
+Content is left.
+:::
+::: {.column style="background-color:  #f5b7b1"}
+Content is right.
+:::
+::::
+```
+
+::: columns
+::: {.column style="background-color: aliceblue"}
+Content in left column.
+:::
+
+::: {.column style="background-color:  #f5b7b1"}
+Content in right column.
+:::
+:::
+
+<br>
+
+This is an example of nested columns.
+
+```         
+:::: {.columns}
+
+::: {.column style="background-color: aliceblue"}
+Content in left column.
+:::
+
+::: {.column}
+Content in right column.
+
+:::: {.columns}
+::: {.column style="background-color: #d0ece7"}
+Nested left.
+:::
+::: {.column style="background-color: #f2d7d5"}
+Nested right.
+:::
+::::
+
+:::
+
+::::
+```
+
+::: columns
+::: {.column style="background-color: aliceblue"}
+Content in left column.
+:::
+
+::: column
+Content in right column.
+
+::: columns
+::: {.column style="background-color: #d0ece7"}
+Nested left.
+:::
+
+::: {.column style="background-color: #f2d7d5"}
+Nested right.
+:::
+:::
+:::
+:::
+
+### Outer columns
+
+Extending content outside the body container.
+
+```         
+::: {.column-body style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-body
+:::
+
+::: {.column-body-outset style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-body-outset
+:::
+
+::: {.column-page-inset style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-page-inset
+:::
+
+::: {.column-page style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-page
+:::
+
+::: {.column-screen-inset style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-screen-inset
+:::
+
+::: {.column-screen style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-screen
+:::
+
+::: {.column-body-outset-right style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-body-outset-right
+:::
+
+::: {.column-page-inset-right style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-page-inset-right
+:::
+
+::: {.column-page-right style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-page-right
+:::
+
+::: {.column-screen-inset-right style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-screen-inset-right
+:::
+
+::: {.column-screen-right style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-screen-right
+:::
+
+::: {.column-body-outset-left style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-body-outset-left
+:::
+
+::: {.column-page-inset-left style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-page-inset-left
+:::
+
+::: {.column-page-left style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-page-left
+:::
+
+::: {.column-screen-inset-left style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-screen-inset-left
+:::
+
+::: {.column-screen-left style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-screen-left
+:::
+
+::: {.column-margin style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-margin
+:::
+```
+
+::: {.column-body style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-body
+:::
+
+::: {.column-body-outset style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-body-outset
+:::
+
+::: {.column-page-inset style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-page-inset
+:::
+
+::: {.column-page style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-page
+:::
+
+::: {.column-screen-inset style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-screen-inset
+:::
+
+::: {.column-screen style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-screen
+:::
+
+::: {.column-body-outset-right style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-body-outset-right
+:::
+
+::: {.column-page-inset-right style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-page-inset-right
+:::
+
+::: {.column-page-right style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-page-right
+:::
+
+::: {.column-screen-inset-right style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-screen-inset-right
+:::
+
+::: {.column-screen-right style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-screen-right
+:::
+
+::: {.column-body-outset-left style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-body-outset-left
+:::
+
+::: {.column-page-inset-left style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-page-inset-left
+:::
+
+::: {.column-page-left style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-page-left
+:::
+
+::: {.column-screen-inset-left style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-screen-inset-left
+:::
+
+::: {.column-screen-left style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-screen-left
+:::
+
+::: {.column-margin style="background-color: lightgray; margin-bottom:0.5em;"}
+.column-margin
+:::
+
+### Panel layout
+
+```         
+::: {.panel-tabset}
+#### Sub topic 1
+
+This is some material for topic 1.
+
+#### Sub topic 2
+
+This is some material for topic 2.
+
+:::
+```
+
+::: panel-tabset
+#### Sub topic 1
+
+This is some material for topic 1.
+
+#### Sub topic 2
+
+This is some material for topic 2.
+:::
+
+More layout settings are described [here](https://quarto.org/docs/authoring/article-layout.html) and [here](https://quarto.org/docs/output-formats/page-layout.html).
+
+## Tables
+
+### Manual
+
+For simple cases, tables can be manually created in markdown.
+
+::: {.grid}
+::: {.g-col-7}
+
+```         
+|speed|dist|
+|-----|----|
+|4    |   2|
+|4    |  10|
+|7    |   4|
+```
+
+:::
+::: {.g-col-5}
+
+| speed | dist |
+|-------|------|
+| 4     | 2    |
+| 4     | 10   |
+| 7     | 4    |
+
+:::
+:::
+
+Table caption and numbering can be added as such:
+
+::: {.grid}
+::: {.g-col-7}
+
+```         
+|speed|dist|
+|-----|----|
+|4    |   2|
+|4    |  10|
+|7    |   4|
+
+: These are exciting results. {#tbl-mylabel}
+```
+
+:::
+::: {.g-col-5}
+
+| speed | dist |
+|-------|------|
+| 4     | 2    |
+| 4     | 10   |
+| 7     | 4    |
+
+: These are exciting results. {#tbl-mylabel}
+
+:::
+:::
+
+More information about [tables](https://quarto.org/docs/authoring/tables.html).
+
+### Margin table
+
+A table placed in the margin.
+
+```
+::: {.column-margin}
+
+| speed | dist |
+|-------|------|
+| 4     | 2    |
+| 4     | 10   |
+| 7     | 4    |
+
+:::
+```
+
+::: {.column-margin}
+
+| speed | dist |
+|-------|------|
+| 4     | 2    |
+| 4     | 10   |
+| 7     | 4    |
+
+:::
+
+#### Cross referencing
+
+Images and tables can be automatically numbered by using `label` attribute. Image label must start with `fig-` and tables with `tbl-`. Tables and images can also be cross-referenced when using the `label` attribute. For example, the table above can be referenced like `@tbl-mylabel` which renders as @tbl-mylabel.
+
+## General tips
+
+-   Use level 2 heading as the highest level
+
+```
+## Section A
+```
+
+-   Add custom css under YAML if needed `css: "my-theme.css"`
+-   Check out the [Quarto](https://quarto.org/) website
+
