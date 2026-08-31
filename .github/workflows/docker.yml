@@ -64,8 +64,17 @@ jobs:
 
           # Create index file
           cat > index.qmd <<'EOF'
-          Browse the latest and previous instances of the workshop below.
+          An introductory workshop on applied bioinformatic next-generation sequence analyses covering the followings major topics:
+
+          - Working on the UNIX/LINUX command line
+          - Bioinformatic/NGS data formats and QC
+          - DNA variant calling workflow essentials
+          - RNA sequence analysis workflow essentials
+
           <hr>
+
+          Select a workshop instance below for more information.
+          
           <div class='workshop-list'>
           EOF
           mapfile -t dirs < <(find . -maxdepth 1 -type d -regextype posix-extended -regex './[0-9]{4}' -printf '%f\n' | sort -r)
