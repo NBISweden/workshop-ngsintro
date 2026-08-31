@@ -251,6 +251,11 @@ $presentation-h6-font-size: 1em;
   margin: 0;
 }
 
+.reveal table th,
+.reveal table td {
+  vertical-align: middle;
+}
+
 /* datatable components */
 
 .reveal .dataTables_wrapper .dataTables_length, 
