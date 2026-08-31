@@ -57,6 +57,8 @@ h1,h2,h3,h4,h5,h6 {
   color: $secondary;
 }
 
+/* navbar  and footer */
+
 .navbar-nav {
   font-size: 0.85em;
   letter-spacing: 0.1em;
@@ -66,19 +68,28 @@ h1,h2,h3,h4,h5,h6 {
   max-height: 20px;
 }
 
-table, .Reactable {
-  font-size: 0.85em;
-}
-
-.contents-table table {
-  line-height: 1;
-}
+/* listing */
 
 .listing-image img {
   height: 40px;
   width: 60px;
   -o-object-fit: cover;
   object-fit: cover;
+}
+
+/* table */
+
+table th,
+table td {
+  vertical-align: middle;
+}
+
+table, .Reactable {
+  font-size: 0.85em;
+}
+
+.contents-table table {
+  line-height: 1;
 }
 
 /* buttons */
@@ -175,6 +186,43 @@ table, .Reactable {
 
 .observablehq select {
   @extend .form-select;
+}
+
+.observablehq input:not([type]),
+.observablehq input[type="text"],
+.observablehq input[type="email"],
+.observablehq input[type="password"],
+.observablehq input[type="search"],
+.observablehq input[type="tel"],
+.observablehq input[type="url"],
+.observablehq input[type="number"],
+.observablehq input[type="file"],
+.observablehq input[type="date"],
+.observablehq input[type="datetime-local"],
+.observablehq input[type="month"],
+.observablehq input[type="time"],
+.observablehq input[type="week"],
+.observablehq textarea {
+  @extend .form-control;
+}
+
+.observablehq input[type="button"],
+.observablehq input[type="submit"],
+.observablehq input[type="reset"] {
+  @extend .btn;
+}
+
+.observablehq input[type="checkbox"],
+.observablehq input[type="radio"] {
+  @extend .form-check-input;
+}
+
+.observablehq input[type="range"] {
+  @extend .form-range;
+}
+
+.observablehq input[type="color"] {
+  @extend .form-control-color;
 }
 
 /* alert */
