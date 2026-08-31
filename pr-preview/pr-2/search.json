@@ -578,14 +578,14 @@
     "href": "index.html",
     "title": "",
     "section": "",
-    "text": "Working on the Linux command line\nSequence data formats and QC\nDNA variant calling workflow\nRNA sequence analyses workflow\n\n\nUpdated: 31-08-2026 at 15:35:17."
+    "text": "Working on the Linux command line\nSequence data formats and QC\nDNA variant calling workflow\nRNA sequence analyses workflow\n\n\nUpdated: 31-08-2026 at 15:48:11."
   },
   {
     "objectID": "index.html#introduction-to-bioinformatics-using-ngs-data",
     "href": "index.html#introduction-to-bioinformatics-using-ngs-data",
     "title": "",
     "section": "",
-    "text": "Working on the Linux command line\nSequence data formats and QC\nDNA variant calling workflow\nRNA sequence analyses workflow\n\n\nUpdated: 31-08-2026 at 15:35:17."
+    "text": "Working on the Linux command line\nSequence data formats and QC\nDNA variant calling workflow\nRNA sequence analyses workflow\n\n\nUpdated: 31-08-2026 at 15:48:11."
   },
   {
     "objectID": "home_schedule.html",
@@ -627,7 +627,7 @@
     "href": "home_contents.html",
     "title": "Contents",
     "section": "",
-    "text": "Note\n\n\n\nNote that the Slidess and videos may not be in sync because the Slidess were updated while the videos are from previous workshops.\n\n\n\n\n\nTopic\nPresenter\nLinks\n\n\n\n\nIntroduction to Linux\nMartin Dahlö\n Video  Slides  Lab\n\n\nLinux file permissions\nMartin Dahlö\n Lab\n\n\nIntroduction to HPC\nMartin Dahlö\n Video  Slides  Lab\n\n\nHPC pipelines\nMartin Dahlö\n Lab\n\n\nFile types in Linux\nMartin Dahlö\n Video  Slides  Lab\n\n\nBetter terminal experience\nMartin Dahlö\n Video  Slides\n\n\nQC of FastQ reads\nMarcel Martin\n Slides  Lab\n\n\nAdvanced Linux\nMartin Dahlö\n Video  Slides  Lab\n\n\nNGS technologies and challenges\nNGI\n Video  Slides\n\n\nNGS long reads and pipelines\nNGI\n Video  Slides\n\n\nVariant-calling workflow\nDiana Ekman\n Video  Slides  Lab\n\n\nRNA-Seq workflow\nRoy Francis / Dag Ahrén\n Video  Slides  Lab  Simon’s report\n\n\nData management\nNBIS DM\n Video  Slides\n\n\n\n\n\nUseful resources\n\nConnecting to HPC PDC \nConnecting to HPC UPPMAX \nUploading & downloading files from HPC \nUsing X11 on Windows with VcXsrv \nLinux cheatsheet \nBash cheat sheet 1 \nBash cheat sheet 2 \nBash cheat sheet 3 \nUppmax cheatsheet \nMac keyboard"
+    "text": "Note\n\n\n\nNote that the slides and videos may not be in sync because the slides were updated while the videos are from previous workshops.\n\n\n\n\n\nTopic\nPresenter\nLinks\n\n\n\n\nIntroduction to Linux\nMartin Dahlö\n Video  Slides  Lab\n\n\nLinux file permissions\nMartin Dahlö\n Lab\n\n\nIntroduction to HPC\nMartin Dahlö\n Video  Slides  Lab\n\n\nHPC pipelines\nMartin Dahlö\n Lab\n\n\nFile types in Linux\nMartin Dahlö\n Video  Slides  Lab\n\n\nBetter terminal experience\nMartin Dahlö\n Video  Slides\n\n\nQC of FastQ reads\nMarcel Martin\n Slides  Lab\n\n\nAdvanced Linux\nMartin Dahlö\n Video  Slides  Lab\n\n\nNGS technologies and challenges\nNGI\n Video  Slides\n\n\nNGS long reads and pipelines\nNGI\n Video  Slides\n\n\nVariant-calling workflow\nDiana Ekman\n Video  Slides  Lab\n\n\nRNA-Seq workflow\nRoy Francis / Dag Ahrén\n Video  Slides  Lab\n\n\nData management\nNBIS DM\n Video  Slides\n\n\n\n\nUseful resources\n\nConnecting to HPC PDC \nConnecting to HPC UPPMAX \nUploading & downloading files from HPC \nUsing X11 on Windows with VcXsrv \nSimon’s RNASeq analysis \nLinux cheatsheet \nBash cheat sheet 1 \nBash cheat sheet 2 \nBash cheat sheet 3 \nUppmax cheatsheet \nMac keyboard"
   },
   {
     "objectID": "home_coc.html",
@@ -802,7 +802,7 @@
     "href": "topics/demo/index.html#shortcodes",
     "title": "Demo Lab",
     "section": "15 Shortcodes",
-    "text": "15 Shortcodes\nShortcodes are sort of like quarto functions.\nTwo important shortcodes are meta and var. meta allows to read metadata from the yaml block in the current page or from _quarto.yml. Here are a few examples:\n{{&lt; meta title &gt;}} Demo Lab\n{{&lt; meta description &gt;}} This is a demo quarto lab document to showcase the theme, style and usage.\nSimilarly, var allows to read variables from _variables.yml if it has been defined. The include shortcode allows to add a child qmd document into a specific position in a qmd file. The kbd shortcode allows keyboard notations:\nPress {{&lt; kbd Shift-Ctrl-P &gt;}} Press Shift-Ctrl-PShift-Ctrl-P\nThe video shortcode allows to embed a video.\n{{&lt; video https://www.youtube.com/watch?v=_f3latmOhew &gt;}}\n\nSome of the custom shortcodes added with this template are:\n{{&lt; meta quarto_version &gt;}} 1.10.18\n{{&lt; meta current_date &gt;}} 31-08-2026\n{{&lt; meta current_year &gt;}} 2026\n{{&lt; meta current_time &gt;}} 15:35:18\nShortcodes are documented here."
+    "text": "15 Shortcodes\nShortcodes are sort of like quarto functions.\nTwo important shortcodes are meta and var. meta allows to read metadata from the yaml block in the current page or from _quarto.yml. Here are a few examples:\n{{&lt; meta title &gt;}} Demo Lab\n{{&lt; meta description &gt;}} This is a demo quarto lab document to showcase the theme, style and usage.\nSimilarly, var allows to read variables from _variables.yml if it has been defined. The include shortcode allows to add a child qmd document into a specific position in a qmd file. The kbd shortcode allows keyboard notations:\nPress {{&lt; kbd Shift-Ctrl-P &gt;}} Press Shift-Ctrl-PShift-Ctrl-P\nThe video shortcode allows to embed a video.\n{{&lt; video https://www.youtube.com/watch?v=_f3latmOhew &gt;}}\n\nSome of the custom shortcodes added with this template are:\n{{&lt; meta quarto_version &gt;}} 1.10.18\n{{&lt; meta current_date &gt;}} 31-08-2026\n{{&lt; meta current_year &gt;}} 2026\n{{&lt; meta current_time &gt;}} 15:48:12\nShortcodes are documented here."
   },
   {
     "objectID": "topics/demo/index.html#accordions",
