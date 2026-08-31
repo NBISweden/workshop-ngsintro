@@ -81,15 +81,52 @@ table, .Reactable {
   object-fit: cover;
 }
 
-/* buttons and badges */
+/* buttons */
 
-.badge,
-.badge-primary {
-  background-color: $primary;
+.btn,
+.btn-primary {
+  --bs-btn-color: whitesmoke;
+  --bs-btn-bg: #{$primary};
+  --bs-btn-border-color: #{$primary};
+  --bs-btn-hover-color: whitesmoke;
+  --bs-btn-hover-bg: #{darken($primary, 5%)};
+  --bs-btn-hover-border-color: #{darken($primary, 5%)};
+  --bs-btn-active-color: whitesmoke;
+  --bs-btn-active-bg: #{darken($primary, 10%)};
+  --bs-btn-active-border-color: #{darken($primary, 10%)};
+  --bs-btn-disabled-color: whitesmoke;
+  --bs-btn-disabled-bg: #{$primary};
+  --bs-btn-disabled-border-color: #{$primary};
 }
 
-.badge-secondary {
-  background-color: $secondary;
+.btn-secondary {
+  --bs-btn-color: whitesmoke;
+  --bs-btn-bg: #{$secondary};
+  --bs-btn-border-color: #{$secondary};
+  --bs-btn-hover-color: whitesmoke;
+  --bs-btn-hover-bg: #{darken($secondary, 5%)};
+  --bs-btn-hover-border-color: #{darken($secondary, 5%)};
+  --bs-btn-active-color: whitesmoke;
+  --bs-btn-active-bg: #{darken($secondary, 10%)};
+  --bs-btn-active-border-color: #{darken($secondary, 10%)};
+  --bs-btn-disabled-color: whitesmoke;
+  --bs-btn-disabled-bg: #{$secondary};
+  --bs-btn-disabled-border-color: #{$secondary};
+}
+
+.btn-tertiary {
+  --bs-btn-color: #{$body-color};
+  --bs-btn-bg: #{$tertiary};
+  --bs-btn-border-color: #{$tertiary};
+  --bs-btn-hover-color: #{$body-color};
+  --bs-btn-hover-bg: #{darken($tertiary, 5%)};
+  --bs-btn-hover-border-color: #{darken($tertiary, 5%)};
+  --bs-btn-active-color: #{$body-color};
+  --bs-btn-active-bg: #{darken($tertiary, 10%)};
+  --bs-btn-active-border-color: #{darken($tertiary, 10%)};
+  --bs-btn-disabled-color: #{$body-color};
+  --bs-btn-disabled-bg: #{$tertiary};
+  --bs-btn-disabled-border-color: #{$tertiary};
 }
 
 .btn a {
@@ -97,33 +134,37 @@ table, .Reactable {
   text-decoration: none;
 }
 
-.btn-primary {
+.btn-tertiary a, .btn-tertiary a:hover {
+  color: $body-color;
+}
+
+/* badges */
+
+.badge,
+.badge.badge-primary {
   background-color: $primary;
   color: whitesmoke;
 }
 
-.btn-primary:hover {
-  background-color: darken($primary, 5%);
-  color: whitesmoke;
-}
-
-.btn-secondary {
+.badge.badge-secondary {
   background-color: $secondary;
   color: whitesmoke;
 }
 
-.btn-tertiary {
+.badge.badge-tertiary {
   background-color: $tertiary;
   color: $body-color;
 }
 
-.btn-secondary:hover {
-  background-color: darken($secondary, 5%);
+.badge a,
+.badge a:hover {
   color: whitesmoke;
+  text-decoration: none;
 }
 
-.btn-tertiary:hover {
-  background-color: lighten($tertiary, 5%);
+.badge.badge-tertiary a,
+.badge.badge-tertiary a:hover {
+  color: $body-color;
 }
 
 /* observablehq */
