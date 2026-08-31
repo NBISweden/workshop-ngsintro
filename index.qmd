@@ -1,5 +1,14 @@
-Browse the latest and previous instances of the workshop below.
+An introductory workshop on applied bioinformatic next-generation sequence analyses covering the followings major topics:
+
+- Working on the UNIX/LINUX command line
+- Bioinformatic/NGS data formats and QC
+- DNA variant calling workflow essentials
+- RNA sequence analysis workflow essentials
+
 <hr>
+
+Select a workshop instance below for more information.
+
 <div class='workshop-list'>
 <div class='workshop-item'><span class='btn btn-tertiary'><a href='https://NBISweden.github.io/workshop-ngsintro/2611/'>2026 Nov</a></span></div>
 <div class='workshop-item'><span class='btn btn-tertiary'><a href='https://NBISweden.github.io/workshop-ngsintro/2603/'>2026 Mar</a></span></div>
