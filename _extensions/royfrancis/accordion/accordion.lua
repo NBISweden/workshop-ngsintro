@@ -1,120 +1,139 @@
--- Author: Roy Francis
+--- @module accordion
+--- @license MIT
+--- @author Roy Francis
+--- Quarto shortcode extension entrypoint for accordion content.
 
--- Add html dependencies
-local function addHTMLDeps()
-  -- add the HTML requirements for the Bootstrap accordion
-  quarto.doc.add_html_dependency({
-    name = 'accordion',
-    stylesheets = {'accordion.css'}
-  })
+local function load_module(path)
+  return require(quarto.utils.resolve_path(path):gsub("%.lua$", ""))
 end
 
--- Check if empty or nil
-local function isEmpty(s)
-  return s == '' or s == nil
-end
+local deps = load_module("_modules/dependencies.lua")
+local items_mod = load_module("_modules/items.lua")
+local render_mod = load_module("_modules/render.lua")
+local utils = load_module("_modules/utils.lua")
 
--- Sanitize and get strings
-local function sanitizeStrings(headerContent, bodyContent)
-   -- checking if headerContent and bodyContent are not nil
-  if headerContent == nil or bodyContent == nil then
-    return nil
+--- Determine the current output mode and register required dependencies.
+--- @return string
+local function detect_output_mode()
+  if quarto.doc.is_format("revealjs") then
+    deps.add_revealjs_once()
+    return "html"
   end
 
-  -- sanitize the last 10 characters of the headerContent and bodyContent
-  local id_hc = string.gsub(string.lower(string.sub(headerContent, -10)), "[^%w]", "")
-  local id_bc = string.gsub(string.lower(string.sub(bodyContent, -10)), "[^%w]", "")
-  local id = id_hc .. id_bc
-  return id
-end
-
--- Create unique accordion Id
-local function generateId(accordionId, headerContent, bodyContent, item)
-  -- check if id is provided in yaml
-  if item.id ~= nil then
-    return "-" .. accordionId .. "-" .. pandoc.utils.stringify(item.id)
-  else
-    local id = sanitizeStrings(headerContent, bodyContent)
-    
-    -- if the id is empty or nil, generate a random id
-    if id == nil or id == "" then
-      id = ""
-      local charset = {}  do -- [0-9a-z]
-        for c = 48, 57  do table.insert(charset, string.char(c)) end
-        for c = 97, 122 do table.insert(charset, string.char(c)) end
-      end
-      for i = 1, 10 do
-        id = id .. charset[math.random(1, #charset)]
-      end
-    end
-    
-    -- return the id prefixed with the accordion id and a hyphen
-    return "-" .. accordionId .. "-" .. id
-  end
-end
-
-
--- Main Accordion Function Shortcode
-return {
-
-["accordion"] = function(args, kwargs, meta)
-  
   if quarto.doc.is_format("html:js") then
-    addHTMLDeps()
-
-    local accordionId = args[1]
-    local accordion_items = meta["accordion"]
-
-    for i = 1, #accordion_items do
-        if next(accordion_items[i]) == accordionId then
-            accordion_items = accordion_items[i][accordionId]
-            break
-        end
-    end
-
-    local accordion_start = "<div id = \"" .. accordionId .. "\" class = \"accordion quarto-accordion\">\n"
-    local accordion_end = "</div>\n"
-  
-    for i = 1, #accordion_items do
-      
-      local item = accordion_items[i]
-
-      local headerContent = pandoc.utils.stringify(item.header)
-      local bodyContent = pandoc.utils.stringify(item.body)
-      local collapseId = generateId(accordionId, headerContent, bodyContent, item)
-      
-      local collapsed = item.collapsed
-      if collapsed == nil then
-        collapsed = true
-      end
-
-      local collapseClass = collapsed and "collapsed" or ""
-      local collapseAria = collapsed and "false" or "true"
-      local collapseShow = collapsed and "" or " show"
-
-      accordion_start = accordion_start .. "<div class=\"accordion-item\">\n"
-      accordion_start = accordion_start .. "<div class=\"accordion-header\" id=\"heading" .. collapseId .. "\">\n"
-      accordion_start = accordion_start .. "<button class=\"accordion-button " .. collapseClass .. "\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#collapse" .. collapseId .. "\" aria-expanded=\"" .. collapseAria .. "\" aria-controls=\"collapse" .. collapseId .. "\">\n"
-      accordion_start = accordion_start .. "<div class=\"accordion-header-content\"\n>"
-      accordion_start = accordion_start .. headerContent
-      accordion_start = accordion_start .. "</div>"
-      accordion_start = accordion_start .. "</button>\n</div>\n"
-      accordion_start = accordion_start .. "<div id=\"collapse" .. collapseId .. "\" class=\"accordion-collapse collapse" .. collapseShow .. "\" aria-labelledby=\"heading" .. collapseId .. "\" data-bs-parent=\"" .. accordionId .. "\">\n"
-      accordion_start = accordion_start .. "<div class=\"accordion-body\">\n"
-      accordion_start = accordion_start .. "<div class=\"accordion-body-content\"\n>"
-      accordion_start = accordion_start .. bodyContent
-      accordion_start = accordion_start .. "</div>"
-      accordion_start = accordion_start .. "</div>\n</div>\n</div>\n"
-      
-    end
-
-    accordion_start = accordion_start .. accordion_end
-    return pandoc.RawInline("html", accordion_start)
-
-  else
-    print("Warning: Accordions are disabled because output format is not HTML.")
-    return pandoc.Null()
+    deps.add_html_once()
+    return "html"
   end
 
+  if quarto.doc.is_format("pdf") then
+    deps.add_latex_once()
+    return "pdf"
+  end
+
+  if quarto.doc.is_format("typst") then
+    return "typst"
+  end
+
+  return "fallback"
 end
+
+--- Resolve shortcode label from positional or named arguments.
+--- @param args table
+--- @param kwargs table
+--- @param format string
+--- @return string|nil, pandoc.RawInline|pandoc.Strong|nil
+local function resolve_label(args, kwargs, format)
+  local label = utils.get_kwarg(kwargs, "label")
+  local has_label = label ~= ""
+  local has_args = #args > 0
+
+  if has_label and has_args then
+    return nil, render_mod.error_inline(
+      "Use either a positional argument or named arguments (label), not both.",
+      format
+    )
+  end
+
+  if not has_label and not has_args then
+    return nil, render_mod.error_inline(
+      "No arguments provided. Provide contents either as yaml metadata (positional argument) or inline (label kwarg).",
+      format
+    )
+  end
+
+  local accordion_id = has_label and label or pandoc.utils.stringify(args[1])
+  if not utils.is_valid_label(accordion_id) then
+    return nil, render_mod.error_inline(
+      string.format(
+        "'%s': Label contains invalid characters. Only letters, numbers, dashes (-) and underscores (_) are allowed.",
+        accordion_id
+      ),
+      format
+    )
+  end
+
+  return accordion_id, nil
+end
+
+--- Extract items for the resolved label from kwargs or metadata.
+--- @param args table
+--- @param kwargs table
+--- @param meta table
+--- @param accordion_id string
+--- @param format string
+--- @return table|nil, pandoc.RawInline|pandoc.Strong|nil
+local function resolve_items(args, kwargs, meta, accordion_id, format)
+  local has_label_kwarg = utils.get_kwarg(kwargs, "label") ~= ""
+
+  local accordion_items, err
+  if has_label_kwarg then
+    accordion_items, err = items_mod.from_kwargs(kwargs, accordion_id)
+  else
+    accordion_items, err = items_mod.from_meta(meta, accordion_id)
+  end
+
+  if err ~= nil then
+    return nil, render_mod.error_inline(err, format)
+  end
+
+  if accordion_items == nil or #accordion_items == 0 then
+    return nil, render_mod.error_inline(
+      string.format("'%s': Missing 'header' and 'body'.", accordion_id),
+      format
+    )
+  end
+
+  return accordion_items, nil
+end
+
+--- Render a single accordion shortcode instance.
+--- @param args table
+--- @param kwargs table
+--- @param meta table
+--- @return pandoc.Blocks|pandoc.RawInline|pandoc.Strong
+local function render_accordion(args, kwargs, meta)
+  local format = detect_output_mode()
+
+  local user_label, label_error = resolve_label(args, kwargs, format)
+  if label_error then return label_error end
+
+  local accordion_items, items_error = resolve_items(args, kwargs, meta, user_label, format)
+  if items_error then return items_error end
+
+  local dom_id = "quarto-accordion-" .. user_label
+
+  if format == "html" then
+    return render_mod.html(dom_id, accordion_items, user_label)
+  end
+  if format == "pdf" then
+    return render_mod.pdf(accordion_items, user_label)
+  end
+  if format == "typst" then
+    return render_mod.typst(accordion_items, user_label)
+  end
+  return render_mod.fallback(accordion_items, user_label)
+end
+
+return {
+  accordion = render_accordion,
 }

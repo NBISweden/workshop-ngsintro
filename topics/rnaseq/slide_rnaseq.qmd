@@ -9,7 +9,7 @@ format: revealjs
 
 ## Setup {visibility="hidden"}
 
-```{r}
+```
 #| include: false
 
 # library(dplyr)
@@ -601,11 +601,15 @@ Pairwise correlation between samples must be high (>0.9)
 
 ## Exploratory
 
-```{r,echo=FALSE,eval=FALSE}
+::: {.content-hidden}
+
+```
 # read vst data
 cvst <- readRDS("assets/counts-filtered-vst.Rds")
 mf <- readRDS("assets/metadata-filtered.Rds")
 ```
+
+:::
 
 :::: {.columns}
 ::: {.column width="60%"}
@@ -613,7 +617,9 @@ mf <- readRDS("assets/metadata-filtered.Rds")
 - Remove lowly expressed genes
 - Heatmaps, MDS, PCA etc.
 
-```{r,echo=FALSE,fig.height=4.9,fig.width=6.8,dev="svg",eval=FALSE}
+::: {.content-hidden}
+
+```
 temp <- as.matrix(dist(t(cvst)))
 
 df_annot <- mf[, c("patient"), drop = FALSE]
@@ -633,6 +639,8 @@ p <- pheatmap::pheatmap(temp,
 ggsave("assets/dge-clustering.png", p, height = 5, width = 7)
 ```
 
+:::
+
 ![](assets/dge-clustering.png)
 
 [pheatmap](https://github.com/raivokolde/pheatmap)
@@ -642,14 +650,16 @@ ggsave("assets/dge-clustering.png", p, height = 5, width = 7)
 
 - Transform raw counts to VST, VOOM, RLOG, TPM etc
 
-```{r,echo=FALSE,eval=FALSE}
+::: {.content-hidden}
+
+```
 # MDS
 mat1 <- as.data.frame(cmdscale(dist(t(cvst), method = "euclidean"), eig = F, k = 3))
 mat1$nid <- row.names(mat1)
 mat1 <- merge(mat1, mf, by = "nid")
 ```
 
-```{r,echo=FALSE,eval=FALSE}
+```
 # static plot
 p <- ggplot(mat1, aes(V1, V2, group = patient, colour = patient)) +
   geom_point() +
@@ -665,7 +675,7 @@ p <- ggplot(mat1, aes(V1, V2, group = patient, colour = patient)) +
 ggsave("assets/dge-mds.png", p, height = 5.5, width = 5)
 ```
 
-```{r,echo=FALSE,eval=FALSE}
+```
 # interactive plot
 mat1$tt <- paste0(
   "<b>ID: </b>", mat1$id, "\n",
@@ -677,6 +687,8 @@ p1 <- plot_ly(mat1,
 )
 add_markers(p1, color = ~patient)
 ```
+
+:::
 
 ![](assets/dge-mds.png)
 
@@ -709,10 +721,9 @@ add_markers(p1, color = ~patient)
 
 ::: {.fragment}
 
-```{r}
-#| eval: false
-#| echo: false
+::: {.content-hidden}
 
+```
 dfr <- data.frame(
   sample = c(1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3),
   value = c(12, 8, 13, 22, 18, 25, 54, 47, 48, 50, 48, 41, 1, 0, 0, 2, 1, 1),
@@ -726,6 +737,8 @@ ggplot(dfr, aes(gene, value, col = group)) +
   theme_minimal(base_size = 15) +
   theme(legend.position = "top")
 ```
+
+:::
 
 ![](assets/dge-scatter.png){width="80%"}
 
@@ -745,28 +758,30 @@ ggplot(dfr, aes(gene, value, col = group)) +
   - GLM fit for each gene
   - Wald test `nbinomWaldTest()`
 
-```{r,echo=FALSE,fig.height=3.9,fig.width=3.9,eval=FALSE}
+::: {.content-hidden}
+
+```
 cf <- read.delim("assets/counts-filtered.txt", header = T, stringsAsFactors = F)
 mf <- readRDS("assets/metadata-filtered.Rds")
 
 # filtering
 bads <- c("P8304_123", "P8304_124", "P8304_125", "P8304_126", "P8304_127", "P8304_128")
-cf <- cf %>% dplyr::select(-one_of(bads))
-mf <- dplyr::filter(mf, !(nid %in% bads)) %>% droplevels()
+cf <- cf |> dplyr::select(-one_of(bads))
+mf <- dplyr::filter(mf, !(nid %in% bads)) |> droplevels()
 mf$type <- factor(c(
   rep(c("type1", "type1", "type2", "type2"), each = 4),
   rep("type2", each = 3), rep("control", each = 4)
 ))
 ```
 
-```{r,echo=FALSE,fig.height=2.9,fig.width=2.9,eval=FALSE}
+```
 {
   plot(x = log10(rowMeans(as.matrix(cf)) + 1), y = log10(rowVars(as.matrix(cf)) + 1), xlab = bquote(~ -log[10] ~ Mean), ylab = bquote(~ -log[10] ~ Variance), pch = 20, cex = 0.4)
   abline(a = 0, b = 1, col = "red")
 }
 ```
 
-```{r,echo=FALSE,fig.height=2.5,fig.width=5,dev="svg",eval=FALSE}
+```
 d <- DESeqDataSetFromMatrix(countData = cf, colData = mf, design = as.formula(~type))
 d <- DESeq2::estimateSizeFactors(d, type = "ratio")
 d <- DESeq2::estimateDispersions(d)
@@ -779,6 +794,8 @@ d <- DESeq2::estimateDispersions(d)
 }
 par(mfrow = c(1, 1))
 ```
+
+:::
 
 ![](assets/dge-dispersion.png){width="50%"}
 
@@ -852,11 +869,15 @@ Raw LFC estimates from the GLM can be noisy, especially for lowly expressed gene
 
 - Results `results()`
 
-```{r,echo=FALSE,eval=FALSE}
+::: {.content-hidden}
+
+```
 d1 <- nbinomWaldTest(d)
 d1r1 <- results(d1)
 head(d1r1, n = 1)
 ```
+
+:::
 
 ```
 log2 fold change (MLE): type type2 vs control
@@ -873,9 +894,13 @@ ENSG00000000003 -8.16314356729037 3.26416150242775e-16 1.36240609998527e-14
 
 - Summary `summary()`
 
-```{r,echo=FALSE,eval=FALSE}
+::: {.content-hidden}
+
+```
 summary(d1r1)
 ```
+
+:::
 
 ```
 out of 17889 with nonzero total read count
@@ -935,18 +960,24 @@ Bonferroni is the stricter alternative — it divides the pvalue by the number o
 
 - MA plot `plotMA()`
 
-```{r,echo=FALSE,fig.height=2.5,fig.width=3,dev="svg",eval=FALSE}
+::: {.content-hidden}
+
+```
 {
   par(mar = c(4, 4, 0.2, 0.2))
   plotMA(d1)
 }
 ```
 
+:::
+
 ![](assets/dge-ma.png)
 
 - Volcano plot
 
-```{r,echo=FALSE,fig.height=2.5,fig.width=3,dev="svg",eval=FALSE}
+::: {.content-hidden}
+
+```
 par(mar = c(4, 4, 0.2, 0.2))
 topT <- as.data.frame(d1r1)
 
@@ -962,6 +993,8 @@ abline(v = 2, col = "black", lty = 3, lwd = 1.0)
 abline(h = -log10(max(topT$pvalue[topT$padj < 0.05], na.rm = TRUE)), col = "black", lty = 3, lwd = 1.0)
 ```
 
+:::
+
 ![](assets/dge-volcano.png)
 
 :::
@@ -969,10 +1002,14 @@ abline(h = -log10(max(topT$pvalue[topT$padj < 0.05], na.rm = TRUE)), col = "blac
 
 - Normalised counts `plotCounts()`
 
-```{r,echo=FALSE,fig.height=3,fig.width=3,dev="svg",eval=FALSE}
+::: {.content-hidden}
+
+```
 par(mar = c(4.5, 4.5, 1, 0.2))
 plotCounts(d1, "ENSG00000000003", intgroup = "type")
 ```
+
+:::
 
 ![](assets/dge-counts.png)
 

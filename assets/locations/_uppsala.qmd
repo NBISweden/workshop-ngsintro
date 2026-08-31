@@ -1,0 +1,26 @@
+::: {.callout-note}
+
+## Address
+
+[{{< fa location-dot >}} Room C6:323a (Linnérummet)](https://link.mazemap.com/bQ2JnzOW)  
+Entrance C11  
+Biomedicinskt centrum  
+Uppsala University / ScilifeLab  
+Husargatan 3  
+75237 Uppsala  
+Sweden  
+
+:::
+
+Few selected hotels are listed below ranked by distance from the venue.
+
+- [Hotel von Kraemer](https://hotelvonkraemer.se/) (900 m, 11 min walk)
+- [Akademihotellet](https://akademihotellet.se/en/) (1.7 Km, 21 min walk)
+- [CityStay Hotell](https://citystayuppsala.se/) (1.8 Km, 21 min walk)
+- [Grand Hotel Hörnan](https://www.grandhotellhornan.com/) (1.9 Km, 23 min walk)
+- [Hotell Centralstation](http://hotellcentralstation.se/) (2.1 Km, 25 min walk)
+- [Best Western Svava](https://www.hotelsvava.se/) (2.2 Km, 26 min walk)
+
+The venue and hotels are also marked on the map.
+
+Use the [UL website](https://www.ul.se) or the [UL app](https://www.ul.se/en/tickets/how-to-buy-a-ticket/the-UL-app/) for bus and train services around Uppsala. For buses from the Centralstation (Train/Bus), take Bus 4 (towards **Gottsunda Centrum**) or 8 (towards **Sunnersta**) and get off at the stop **Uppsala Science Park**. Bus tickets can be purchased in the app or directly from the driver using a credit card.

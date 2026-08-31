@@ -5,14 +5,6 @@ author: 'Martin Dahlö'
 format: html
 ---
 
-```{r,eval=TRUE,include=FALSE}
-library(yaml)
-library(here)
-id_project <- yaml::read_yaml(here("_quarto.yml"))$id_project
-path_resources <- file.path(yaml::read_yaml(here("_quarto.yml"))$path_resources, "linux")
-path_linux <- file.path(yaml::read_yaml(here("_quarto.yml"))$path_workspace, "linux")
-```
-
 ## Connect to PDC
 
 The first step of this lab is to open a ssh connection to PDC. Please refer to [**Connecting to PDC**](../other/lab_connect_pdc.html) for instructions. Once connected to PDC, return here and continue reading the instructions below.
@@ -21,19 +13,19 @@ The first step of this lab is to open a ssh connection to PDC. Please refer to [
 
 Usually you would do most of the work in this lab directly on one of the login nodes, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
 
-```bash
+```sh
 salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_tue >}} -t 08:00:00 -p shared -n 1
 ```
 
 check which node you got (replace `username` with your username)
 
-```bash
+```sh
 squeue -u username
 ```
 
 should look something like this
 
-```bash
+```sh
 user@login1 ~ $ squeue -u username
              JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
            5583899    shared interact    user  R       2:22      1 nid001009
@@ -43,7 +35,7 @@ user@login1 ~ $
 where `nid001009` is the name of the node I got (yours will probably be different).
 Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested (7 hours in this case) the session will shut down, and you will lose all unsaved data. Connect to this node from the login node.
 
-```bash
+```sh
 ssh -Y nid001009
 ```
 
@@ -55,14 +47,14 @@ Next, copy the lab files from this folder. `-r` means recursively, which means a
 
 {{< fa lightbulb >}} Remember to use tab-complete to avoid typos and too much writing.
 
-```bash
+```sh
 cp -r <source> <destination>
 cp -r {{< meta path_resources >}}/linux/filetypes {{< meta path_workspace >}}
 ```
 
 Have a look in `{{< meta path_workspace >}}/filetypes` using the `tree` command.
 
-```bash
+```sh
 # go to the folder
 cd  {{< meta path_workspace >}}/filetypes
 
@@ -96,13 +88,13 @@ The `$PATH` variable specifies directories where the computer should look for pr
 
 To see which directories that are available by default, type
 
-```bash
+```sh
 echo $PATH
 ```
 
 It should give you something like this, a list of directories, separated by colon signs:
 
-```bash
+```sh
 user@rackham2 work $ echo $PATH
 /pdc/software/eb/software/tree/2.1.1/bin:/pdc/software/modules/sy
 stemdefault/bin:/opt/cray/pe/mpich/8.1.28/ofi/crayclang/17.0/bin:
@@ -113,7 +105,7 @@ stemdefault/bin:/opt/cray/pe/mpich/8.1.28/ofi/crayclang/17.0/bin:
 
 Try loading a module, and then look at the `$PATH` variable again. You'll see that there are a few extra directories there now, after the module has been loaded.
 
-```bash
+```sh
 user@rackham2 work $ module load samtools
 user@rackham2 work $ echo $PATH
 /pdc/software/eb/software/samtools/1.20/bin:/pdc/software/eb/soft
@@ -127,7 +119,7 @@ software/eb/software/tree/2.1.1/bin:/pdc/software/modules/systemd
 
 To pretend that we are loading a module, we will just add a the directory containing my dummy scripts to the `$PATH` variable, and it will be like we loaded the module for them.
 
-```bash
+```sh
 export PATH=$PATH:{{< meta path_resources >}}/hpc/pipeline/dummy_scripts/
 ```
 
@@ -154,7 +146,7 @@ All aligners will have to index the reference genome you are aligning your data 
 
 First, have a look in the **0_ref** folder
 
-```bash
+```sh
 ll 0_ref
 ```
 
@@ -162,17 +154,17 @@ You should see 2 files: the fasta file, the gtf file. Have a look at each of the
 
 {{< fa clipboard-list >}} Run reference_indexer.
 
-```bash
+```sh
 Syntax: reference_indexer -r <name of the fasta file you want to index>
 ```
 
-```bash
+```sh
 reference_indexer -r 0_ref/ad2.fa
 ```
 
 Since the genome is so small this should only take a second or so. The human genome will probably take a couple of hours. Look in the `0_ref folder` again and see if anything has changed.
 
-```bash
+```sh
 ll 0_ref
 ```
 
@@ -198,11 +190,11 @@ We are now ready to align our reads.
 
 {{< fa clipboard-list >}} Align reads using `align_reads`, naming the output file `ad2.sam`, placed in the `1_alignment` folder.
 
-```bash
+```sh
 Syntax: align_reads -r <reference genome> -i <fastq file with reads> -o <name of the output file>
 ```
 
-```bash
+```sh
 align_reads -r 0_ref/ad2.fa -i 0_seq/ad2.fq -o 1_alignment/ad2.sam
 ```
 
@@ -219,17 +211,17 @@ This will create a SAM file in `1_alignment` called `ad2.sam`. Have a look at it
 
 {{< fa clipboard-list >}} The next step is to convert the SAM file to a BAM file. This is more or less just compressing the file, like creating a zip file. To do that we will use the dummy program `sambam_tools`, telling it we want to convert a file to BAM (`-f bam`), which file we want to convert (`-i`), where it should save the resulting BAM file (`-o`). Save the BAM file in the `2_bam` folder and name it `ad2.bam`.
 
-```bash
+```sh
 Syntax: sambam_tool -f bam -i <sam file> -o <bam>
 ```
 
-```bash
+```sh
 sambam_tool -f bam -i 1_alignment/ad2.sam -o 2_bam/ad2.bam
 ```
 
 Have a look in the `2_bam` folder.
 
-```bash
+```sh
 ll 2_bam
 ```
 
@@ -250,11 +242,11 @@ A BAM file is taking up much less space than the SAM file, but we can still impr
 
 {{< fa clipboard-list >}} To sort the BAM file we'll use the `sambam_tool` again, but specifying a different function, `-f sort` instead. Tell it to store the sorted BAM file in the `3_sorted` folder and name the file `ad2.sorted.bam`
 
-```bash
+```sh
 Syntax: sambam_tool -f sort -i <unsorted bam file> -o <sorted bam file>
 ```
 
-```bash
+```sh
 sambam_tool -f sort -i 2_bam/ad2.bam -o 3_sorted/ad2.sorted.bam
 ```
 
@@ -262,17 +254,17 @@ This will sort the `ad2.bam` file and create a new BAM file which is sorted, cal
 
 {{< fa clipboard-list >}} Now when we have a sorted BAM file, we can index it. Use the command
 
-```bash
+```sh
 Syntax: sambam_tool -f index -i <sorted bam file>
 ```
 
-```bash
+```sh
 sambam_tool -f index -i 3_sorted/ad2.sorted.bam
 ```
 
 This will create an index named `ad2.sorted.bam.bai` in the same folder as the `ad2.sorted.bam` file is located. It's nicer to have the `.bam` and `.bai` named to the same "prefix", so rename the `.bai` file to not have the `.bam` in its name.
 
-```bash
+```sh
 mv 3_sorted/ad2.sorted.bam.bai 3_sorted/ad2.sorted.bai
 ```
 
@@ -287,7 +279,7 @@ mv 3_sorted/ad2.sorted.bam.bai 3_sorted/ad2.sorted.bai
 
 Now that we have to data aligned and prepared for easy access, we will view it in a genome viewer together with the annotations for the genome. Have a look at the annotations file with `less`.
 
-```bash
+```sh
 less -S 0_ref/ad2.gtf
 ```
 
@@ -297,7 +289,7 @@ To view the file, we will use the program **IGV** (Integrated Genome Viewer). Be
 
 NOTE: Many Mac users are getting only black background when running IGV using XQuartz. There is a command you can run on your computer to fix this.
 
-```bash
+```sh
 # open a terminal on your mac and run this command:
 defaults write org.xquartz.X11 enable_render_extension 0
 
@@ -307,13 +299,13 @@ Now you have to quit and reinstall [XQuartz](https://www.xquartz.org/), then rec
 
 {{< fa lightbulb >}} If you are using a Mac you might have to install the program [XQuartz](https://www.xquartz.org/), if you have not already installed that program. By using `-Y` in your ssh command you enable graphical transfer over ssh, but you will also have to have a program able to receive the graphics in order to display it.
 
-```bash
+```sh
 module load bioinfo-tools IGV
 ```
 
 Start it by typing the following command (now we'll find out if you used `-Y` in all your ssh connections!):
 
-```bash
+```sh
 igv.sh
 ```
 
@@ -342,23 +334,23 @@ The reference genome, a fasta file containing the DNA sequence of the reference 
 
 The CRAM format is even more efficient than the BAM format. To create a CRAM file we'll have to use `samtools`, so we will load the module for it.
 
-```bash
+```sh
 module load samtools
 ```
 
 {{< fa clipboard-list >}} Tell samtools that you want CRAM output (`-C`) and specify which reference genome it should use to do the CRAM conversion (`-T`)
 
-```bash
+```sh
 Syntax: samtools view -C -T <reference genome> -o <name of cram file> <bam file to convert>
 ```
 
-```bash
+```sh
 samtools view -C -T 0_ref/ad2.fa -o 4_cram/ad2.cram 3_sorted/ad2.sorted.bam
 ```
 
 Compare the sizes of the converted BAM file and the newly created CRAM file:
 
-```bash
+```sh
 ll -h 3_sorted/ad2.sorted.bam 4_cram/ad2.cram
 ```
 

@@ -42,7 +42,7 @@ Directory: Whether the directory can be entered using `cd`.
 
 Make an empty directory we can work in and make a file.
 
-```bash
+```sh
 user@login1 ~ $ cd {{< meta path_workspace >}}
 user@login1 ngsintro $ mkdir advlinux
 user@login1 ngsintro $ cd advlinux
@@ -56,7 +56,7 @@ total 0
 
 This shows us a cryptic line for each file/folder, where the columns are as following:
 
-```bash
+```sh
 -rw-r--r--   : permissions
 1            : number of linked hard-links
 user         : owner of the file
@@ -95,7 +95,7 @@ This translates our files permissions to say this `-rw-r--r--`:
 
 As another example, lets create a directory.
 
-```bash
+```sh
 user@login1 advlinux $ mkdir directoryname
 user@login1 advlinux $ ls -lh
 
@@ -116,7 +116,7 @@ The command to set file permission is `chmod` which means **CH**ange **MOD**e. O
 
 Lets revisit our example file and directory to test this.
 
-```bash
+```sh
 user@login1 advlinux $ ls -lh
 
 total 0
@@ -135,7 +135,7 @@ As you can see this affected all three, **`a`**, it wiped the previous permissio
 
 Try some others both on the file and directory to get the hang of it.
 
-```bash
+```sh
 chmod g+r   filename
 chmod u-x   filename
 chmod ug=rx filename
@@ -145,19 +145,19 @@ chmod a+w   directoryname
 
 {{< fa clipboard-list >}} In no more than two commands, change the file permissions from
 
-```bash
+```sh
 ----------
 ```
 
 to
 
-```bash
+```sh
 -rw-rw--wx
 ```
 
 Notice also that we here gave everyone writing permission to the file, that means that ANYONE can write to the file. Not very safe.
 
-```bash
+```sh
 chmod ug+rw filename
 chmod o=wx filename
 ```
@@ -175,25 +175,25 @@ Make sure you are standing in the directory `{{< meta path_workspace >}}/advlinu
 `rm -r *` permanently removes all folder and subfolders from where you are standing. Be extremely careful when using this. Always double check current working directory or path.
 :::
 
-```bash
+```sh
 rm -r *
 ```
 
 Now that the directory is empty, let's make a new folder and a new file in that folder.
 
-```bash
+```sh
 mkdir stuff
 touch stuff/linkfile
 ```
 
 Lets put some information into the file, just put some text, anything, like "slartibartfast" or something.
 
-```bash
+```sh
 nano stuff/linkfile
 ```
 Now let's create a link to this file in our original folder. **`ln`** stands for link and **`-s`** makes it symbolic. The other options are not in the scope of this course, but feel free to read about them on your own, [https://stackoverflow.com/a/29786294](https://stackoverflow.com/a/29786294).
 
-```bash
+```sh
 user@login1 advlinux $ ln -s stuff/linkfile
 user@login1 advlinux $ ls -l
 
@@ -217,19 +217,19 @@ If want you to change the information in the file using the link file, then you 
 
 Now let's create a link to a directory. Lets clean our workspace.
 
-```bash
+```sh
 rm -r *
 ```
 
 And create a directory three, arbitrarily, two directories away. The `-p` option to mkdir will make it create all 3 directories as needed. Without it, it would crash saying it can't create `three` because the directory `two` does not exist. 
 
-```bash
+```sh
 mkdir -p one/two/three
 ```
 
 Now let's enter the directory and create some files there.
 
-```bash
+```sh
 user@login1 advlinux $ cd one/two/three
 user@login1 advlinux $ touch a b c d e
 user@login1 advlinux $ ls -lh
@@ -244,7 +244,7 @@ total 0
 
 Return to our starting folder and create a symbolic link to folder `three`.
 
-```bash
+```sh
 user@login1 advlinux $ cd ../../..
 user@login1 advlinux $ ln -s one/two/three
 user@login1 advlinux $ ls -lh
@@ -270,13 +270,13 @@ Some files can be so large that opening it in a program would be very hard on yo
 
 Let's start, as always, by cleaning our directory.
 
-```bash
+```sh
 rm -r *
 ```
 
 Then let's create a file with some text in it that we can work with. I have supplied some great text below.
 
-```bash
+```sh
 user@login1 advlinux $ nano textfile
 
 Cats sleep anywhere, any table, any chair.
@@ -288,26 +288,26 @@ Anywhere! They don't care! Cats sleep anywhere.
 
 Now let's see how the grep command works. The syntax is:
 
-```bash
+```sh
 grep "string" filename/filepattern
 ```
 
 Some examples for you to try and think about:
 
-```bash
+```sh
 grep "Cat" textfile
 grep "cat" textfile
 ```
 
 As you can see the last one did not return any results. Add a `-i` for case insensitive search.
 
-```bash
+```sh
 grep -i "cat" textfile
 ```
 
 Now let's copy the file and check both of them together by matching a pattern for the filenames.
 
-```bash
+```sh
 cp textfile textcopy
 grep "Cat" text*
 ```
@@ -316,13 +316,13 @@ The `*` will ensure that any file starting with **text** and then anything follo
 
 Copy the file `sample_1.sam` to your folder using the command below
 
-```bash
+```sh
 cp /sw/courses/ngsintro/linux/linux_additional-files/sample_1.sam .
 ```
 
 {{< fa clipboard-list >}} Use `grep` to search in the file for a specific string of nucleotides, for example:
 
-```bash
+```sh
 grep "TACCACCGAAATCTGTGCAGAGGAGAACGCAGCTCCGCCCTCGCGGTGCTCTCCGGGTCTGTGCTGAGGAG" sample_1.sam
 ```
 
@@ -338,7 +338,7 @@ This is often used in jobs and other analysis as there are three major benefits.
 
 The pipe command has this syntax
 
-```bash
+```sh
 command 1 | command 2
 ```
 
@@ -348,7 +348,7 @@ In a hypothetical situation you have a folder with hundreds of files and you kno
 
 Let's do a `ls -l` in the `/etc` directory and pipe the output to be sorted by file size.
 
-```bash
+```sh
 ls -l /etc | sort -n -k 5
 ```
 `-n` means we are sorting numerically and not alphabetically, `-k 5` says *look at the fifth column of output*, which happens to be the file size of `ls` command.
@@ -357,13 +357,13 @@ An example use would be to align a file and directly send the now aligned file t
 
 The next step requires us to use a bioinformatics software called **samtools**. To be able to use this program we first have to load the module for it. We will cover this in the HPC lectures, so if you are a bit too fast for you own good, you will just have to type this command:
 
-```bash
+```sh
 module load bioinfo-tools samtools
 ```
 
 Here is an example where we convert the samfile to a bamfile:
 
-```bash
+```sh
 samtools view -bS sample_1.sam | samtools sort -o outbam -
 ```
 
@@ -377,7 +377,7 @@ This should have generated a file called `outbam.bam` in your current folder. We
 
 Let's return to our `sample_1.sam`.
 
-```bash
+```sh
 user@login1 advlinux $ wc sample_1.sam
 233288 3666760 58105794 sample_1.sam
 ```
@@ -392,7 +392,7 @@ Number of characters = 58105794
 
 To make this more meaningful, let's use the pipes and `grep` command seen previously to see how many lines and how many times the string of nucleotides `CATCATCAT` exist in this file.
 
-```bash
+```sh
 user@login1 advlinux $ grep "CATCATCAT" sample_1.sam | wc
 60  957 15074
 ```
@@ -403,7 +403,7 @@ To see only the line count you can add `-l` after `wc`. To count only characters
 
 <details>
 <summary>Solution</summary>
-```bash
+```sh
 grep "chr1" sample_1.sam | wc -l
 ```
 </details>
@@ -413,7 +413,7 @@ grep "chr1" sample_1.sam | wc -l
 
 <details>
 <summary>Solution</summary>
-```bash
+```sh
 samtools view outbam.bam | grep "CATCATCAT" | wc -l
 ```
 </details>
@@ -429,7 +429,7 @@ Lets look at `grep` and use some regular expressions [http://www.cheatography.co
 
 <details>
 <summary>Solution</summary>
-```bash
+```sh
 grep "^@" sample_1.sam > at.txt
 ```
 </details>
@@ -439,7 +439,7 @@ grep "^@" sample_1.sam > at.txt
 
 <details>
 <summary>Solution</summary>
-```bash
+```sh
 grep "[0-9]\\{3\\}$" sample_1.sam
 ```
 </details>
@@ -454,7 +454,7 @@ grep "[0-9]\\{3\\}$" sample_1.sam
 
 <details>
 <summary>Solution</summary>
-```bash
+```sh
 sed "s/chr1/chr2/" sample_1.sam > sample_2.sam
 ```
 </details>
@@ -465,7 +465,7 @@ Bash loops are great for moving or renaming multiple files as well as many many 
 
 Create a couple of files as seen below
 
-```bash
+```sh
 touch one.bam two.sam three.bam four.sam five.bam six.sam
 ```
 
@@ -473,7 +473,7 @@ touch one.bam two.sam three.bam four.sam five.bam six.sam
 
 {{< fa lightbulb >}} The bash loop syntax is this:
 
-```bash
+```sh
 for _variable_ in _pattern_
 do 
     _command with $variable_
@@ -482,20 +482,20 @@ done
 
 {{< fa lightbulb >}} To rename `file1` to `file2` you write this:
 
-```bash
+```sh
 mv file1 file2
 ```
 
 which effectively is the same thing as
 
-```bash
+```sh
 cp file1 file2
 rm file1
 ```
 
 {{< fa lightbulb >}} Ponder how this can be used to your advantage:
 
-```bash
+```sh
 i=filename
 echo ${i/name}stuff
 filestuff
@@ -503,7 +503,7 @@ filestuff
 
 <details>
 <summary>Solution</summary>
-```bash
+```sh
 for f in *.sam
 do
     mv $f ${f/.sam}.bam

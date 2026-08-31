@@ -7,20 +7,22 @@ author:
 format: html
 ---
 
-```{r}
-#| include: false
+::: {.content-hidden}
 
+```
 ## LIBRARIES AND VARIABLES
-## load libraries
-# library(ggplot2) # plotting
-# library(stringr) # text processing
-# library(tidyr) # data wrangling
+
+library(ggplot2) # plotting
+library(stringr) # text processing
+library(tidyr) # data wrangling
 library(dplyr) # data handling
 library(htmlTable)
 
 col_condition <- c("#fb8072", "#8dd3c7")
 col_rep <- c("#80b1d3", "#fdb462", "#bebada")
 ```
+
+:::
 
 ## Introduction
 
@@ -52,8 +54,7 @@ You are welcome to try your own solutions to the problems, before checking the s
 
 Input code blocks are displayed like shown below.
 
-```{sh}
-#| eval: false
+```sh
 command
 ```
 
@@ -67,13 +68,28 @@ Myelination is essential for nervous system function. Schwann cells are a type o
 
 The material for RNA-seq was collected from 2 conditions (**Wt** and **KO**), each with 3 biological replicates.
 
-```{r}
-#| column: margin
-#| echo: false
-data.frame(Accession = c("SRR3222409", "SRR3222410", "SRR3222411", "SRR3222412", "SRR3222413", "SRR3222414"), Condition = c(rep(c("KO", "Wt"), each = 3)), Replicate = rep(1:3, 2)) %>%
-  addHtmlTableStyle(align = "c") %>%
+::: {.content-hidden}
+
+```
+data.frame(Accession = c("SRR3222409", "SRR3222410", "SRR3222411", "SRR3222412", "SRR3222413", "SRR3222414"), Condition = c(rep(c("KO", "Wt"), each = 3)), Replicate = rep(1:3, 2)) |>
+  addHtmlTableStyle(align = "c") |>
   htmlTable(rnames = FALSE)
 ```
+
+:::
+
+::: {.column-margin}
+
+|Accession|Condition|Replicate|
+|-|-|-|
+|SRR3222409|KO|1
+|SRR3222410|KO|2
+|SRR3222411|KO|3
+|SRR3222412|Wt|1
+|SRR3222413|Wt|2
+|SRR3222414|Wt|3
+
+:::
 
 ::: {.callout-note}
 For the purpose of this tutorial, to shorten the time needed to run various bioinformatics steps, we have picked reads for a single chromosome (Chr 19) and downsampled the reads. We randomly sampled, without replacement, 25% reads from each sample, using `fastq-sample` from the toolset [fastq-tools](https://github.com/dcjones/fastq-tools).
@@ -247,14 +263,13 @@ Use a text editor (`nano`,`Emacs`, `gedit` etc.) to edit `fastqc.sh`.
 
 {{< fa lightbulb >}} `gedit` behaves like a regular text editor with a standard graphical interface.
 
-```{sh,eval=FALSE}
+```sh
 gedit ../scripts/fastqc.sh &
 ```
 
 Then add the lines below and save the file.
 
-```{sh}
-#| eval: false
+```sh
 #!/bin/bash
 
 module load PDC/24.11
@@ -888,7 +903,7 @@ Run the featurecounts bash script in the directory `5_dge`.  Use `pwd` to check 
 
 You should be standing here to run this:
 
-```
+```sh
 {{< meta path_workspace >}}/rnaseq/5_dge
 ```
 
@@ -1502,13 +1517,11 @@ To see actual reads you have to zoom in until the reads are drawn on screen. If 
 
 Here is the list of top 20 differentially expressed genes on Chr19 ordered by absolute fold change. The adjusted p value is shown as padj, the average expression of the gene is shown as baseMean.
 
-```{r}
-#| eval: false
-#| echo: false
-readRDS("dge_results_full.rds") %>%
-  filter(chromosome_name == 19, padj < 0.05) %>%
-  arrange(-abs(log2FoldChange)) %>%
-  head(20) %>%
+```
+readRDS("dge_results_full.rds") |>
+  filter(chromosome_name == 19, padj < 0.05) |>
+  arrange(-abs(log2FoldChange)) |>
+  head(20) |>
   select(external_gene_name, baseMean, log2FoldChange, lfcSE, stat, pvalue, padj)
 ```
 

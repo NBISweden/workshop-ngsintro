@@ -8,11 +8,8 @@ on:
 jobs:
   check_links:
     runs-on: ubuntu-latest
-    env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v5
-
       - name: Link Checker
         id: lychee
         uses: lycheeverse/lychee-action@v2

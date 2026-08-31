@@ -5,117 +5,44 @@ date: ""
 toc: false
 number-sections: false
 sidebar: false
+team:
+  profiles:
+    - name: Diana Ekman
+      image: assets/images/profile/diana-ekman.webp
+      description: |
+        Bioinformatician,  
+        NBIS,  
+        Stockholm University
+    - name: Roy Francis
+      image: assets/images/profile/roy-francis.webp
+      description: |
+        Bioinformatician,  
+        NBIS,  
+        Uppsala University
+    - name: Martin Dahlö
+      image: assets/images/profile/martin-dahlo.webp
+      description: |
+        Deputy CTO,  
+        NBIS,  
+        Uppsala University
 format: html
+filters:
+  - leaflet
+  - team
 ---
-
-```{r,eval=TRUE,include=FALSE}
-library(yaml)
-library(here)
-library(leaflet)
-
-#' Get location data from YAML into a list and data.frame
-#' @param y YAML data
-#' @param loc Name of location
-#' @return List with description and data.frame with map data
-#'
-get_info <- function(y, loc) {
-  loc <- tolower(loc)
-
-  if (loc %in% names(y)) {
-    info <- y[[loc]]
-    if (!is.null(info$description)) {
-      d <- info$description
-    } else {
-      d <- NULL
-    }
-    if (!is.null(info$map)) {
-      m <- do.call(rbind, lapply(info$map, function(x){
-        required_fields <- c("label", "marker_icon", "marker_color", "lat", "lon", "popup")
-        missing_fields <- setdiff(required_fields, names(x))
-        
-        if (length(missing_fields) > 0) {
-          stop(paste("Missing fields:", paste(missing_fields, collapse = ", ")))
-        }
-        as.data.frame(x)
-      }))
-    } else {
-      m <- NULL
-    }
-    return(list(description = d, map = m))
-  } else {
-    message(paste0("Location ", loc, " not found in the data"))
-    return(NULL)
-  }
-}
-
-# set location in _quarto.yml
-loc <- sapply(unlist(strsplit(yaml::read_yaml(here("_quarto.yml"))$location, ";|,")), trimws)
-l <- yaml::yaml.load_file(here("info.yml"))
-```
 
 ## Location
 
-```{r,echo=FALSE,eval=TRUE,results="asis"}
-cat("\n::: {.panel-tabset}\n")
+<!-- update map markers in _metadata.yml -->
+{{< leaflet uppsala >}}
 
-for (i in seq_along(loc)) {
-  p <- loc[i]
-  cat(paste0("\n### ", tools::toTitleCase(p), "\n"))
-
-  idata <- get_info(l, p)
-  if (!is.null(idata)) {
-    if (!is.null(idata$map)) {
-      dfr1 <- idata$map
-      dfr1$popup <- gsub(";|; ", "<br>", dfr1$popup)
-      dfr2 <- dfr1[complete.cases(dfr1$lat, dfr1$lon), ]
-      
-      cat(knitr::knit_child(input = "assets/_child-info.qmd", envir = environment(), quiet = TRUE))
-      cat("\n")
-    }
-
-    if (!is.null(idata$description)) {
-      cat("\n", idata$description)
-    }
-  } else {
-    cat("No additional information is provided.")
-  }
-  cat("\n")
-}
-
-cat(":::\n")
-```
+<!-- additional practical information -->
+{{< include assets/locations/_uppsala.qmd >}}
 
 ## Organizers
 
-::: {.profile-parent}
-::: {.profile-child}
-
-![](assets/images/profile/diana-ekman.webp){.nolightbox}
-
-**Diana Ekman**  
-Bioinformatician, NBIS  
-Stockholm University
-
-:::
-::: {.profile-child}
-
-![](assets/images/profile/roy-francis.webp){.nolightbox}
-
-**Roy Francis**  
-Bioinformatician, NBIS  
-Uppsala University
-
-:::
-::: {.profile-child}
-
-![](assets/images/profile/martin-dahlo.webp){.nolightbox}
-
-**Martin Dahlö**  
-Deputy CTO, NBIS  
-Uppsala university
-
-:::
-:::
+<!-- organizers info up in the yaml matter -->
+{{< team profiles >}}
 
 ## Contact
 

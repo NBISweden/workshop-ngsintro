@@ -1,0 +1,14 @@
+::: {.callout-note}
+
+## Address
+
+{{< fa location-dot >}} Room Retina D227  
+Building D  
+Department of Biology  
+Sölvegatan 35  
+223 62 Lund  
+Sweden  
+
+:::
+
+For Lund city buses, tram, regional buses and regional trains, use [skanetrafiken.se](https://www.skanetrafiken.se/). You can buy a ticket at the central station in Lund or at the regional bus (card only). You can also use the app [Skånetrafiken](https://www.skanetrafiken.se/biljetter/app2/) From the Lund C the easiest is to take the tram from **Clemens torget** towards **ESS** and get off at  **Lund LTH**. The trip take about 4 minutes and a tram leaves about four times an hour.

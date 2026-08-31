@@ -5,14 +5,6 @@ author: 'Martin Dahlö'
 format: html
 ---
 
-```{r,eval=TRUE,include=FALSE}
-library(yaml)
-library(here)
-path_workspace <- yaml::read_yaml(here("_quarto.yml"))$path_workspace
-site_url       <- yaml::read_yaml(here("_quarto.yml"))$website$`site-url`
-output_dir     <- yaml::read_yaml(here("_quarto.yml"))$project$`output-dir`
-```
-
 ## Connect to PDC
 
 The first step of this lab is to open a ssh connection to PDC. Please refer to [**Connecting to PDC**](../other/lab_connect_pdc.html) for instructions. Once connected to PDC, return here and continue reading the instructions below.
@@ -21,19 +13,19 @@ The first step of this lab is to open a ssh connection to PDC. Please refer to [
 
 Usually you would do most of the work in this lab directly on one of the login nodes, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
 
-```bash
+```sh
 salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_mon >}} -t 07:00:00 -p shared -n 1
 ```
 
 check which node you got (replace `username` with your username)
 
-```bash
+```sh
 squeue -u username
 ```
 
 should look something like this
 
-```bash
+```sh
 user@login1 ~ $ squeue -u username
              JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
            5583899    shared interact    user  R       2:22      1 nid001009
@@ -43,7 +35,7 @@ user@login1 ~ $
 where `nid001009` is the name of the node I got (yours will probably be different).
 Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested (7 hours in this case) the session will shut down, and you will lose all unsaved data. Connect to this node from the login node.
 
-```bash
+```sh
 ssh -Y nid001009
 ```
 
@@ -53,7 +45,7 @@ It is good to know how to move around in the file system. I'm sure you all have 
 
 When you connect to PDC, you will start out in your home folder. The absolute path to your home folder is 
 
-```bash
+```sh
 # structure
 /cfs/klemming/home/<first letter of username>/<username>
 
@@ -65,13 +57,13 @@ When you connect to PDC, you will start out in your home folder. The absolute pa
 
 Start with looking at what you have in your home folder. The command for this `ls`, and it stand for **L**i**S**t (list).
 
-```bash
+```sh
 ls -l
 ```
 
 This is how my home folder looks like, and yours should look somewhat similar:
 
-```bash
+```sh
 [12:56:32] user@login1 ~ $ ls -l
 total 4384
 drwxr-xr-x  3 user g20XXXXX   2048 Apr 27  2017 archive
@@ -90,7 +82,7 @@ We can start off with moving to this course's project folder. Each project has i
 
 Since we are many students in this course project it is best to organize the files so that each students has their own subfolder to work in. We start off with creating this folder, your workspace, so that we have a place to organize your course files. We will use the command `mkdir` for this (**M**a**K**e **DIR**ectory)
 
-```bash
+```sh
 # create the folder where your files will be stored.
 # remember to replace 'username' with your actual username
 mkdir {{< meta path_workspace >}}
@@ -98,14 +90,15 @@ mkdir {{< meta path_workspace >}}
 
 As seen in the lecture, the command for moving around is `cd`. The command stands for **C**hange **D**irectory and does exactly that. It is the equivalent of double clicking a folder in a GUI.
 
-To enter the course folder, simply type 
-```bash
-cd `r dirname(path_workspace)`
+To enter the course folder, simply type
+
+```sh
+cd {{< meta path_workspace >}}
 ```
 
 If you type `ls -l` to look around you should see something like this:
 
-```bash
+```sh
 [22:26:09] user@login1 /cfs/klemming/projects/supr/naiss2022-21-143 $ ls -l
 total 24K
 drwxr-sr-x 3 dinae   pg_naiss2022-21-143 4.0K Mar 18 09:17 dinae
@@ -118,11 +111,11 @@ drwxr-sr-x 2 dahl    pg_naiss2022-21-143 4.0K Mar 23 22:26 username
 
 There you should see the folder with your `username` you created a minute ago. `cd` into that folder:
 
-```bash
+```sh
 cd username
 ```
 
-We can easily see that this is a relative path, since it does not start with a `/`. That means that this command will only work when you are standing in the course folder. If you are standing somewhere else and say that you want to enter a folder named ``r basename(path_workspace)``, the computer will tell you that there is no folder named ``r basename(path_workspace)`` where you are located at the moment.
+We can easily see that this is a relative path, since it does not start with a `/`. That means that this command will only work when you are standing in the course folder. If you are standing somewhere else and say that you want to enter a folder named `username`, the computer will tell you that there is no folder named `username` where you are located at the moment.
 
 The absolute path to the workspace folder would be  
   
@@ -137,13 +130,13 @@ Typing `ls -l` all the time is.. more annoying than one would think, so someone 
 ::: {.callout-note}
 If `ll` does not work (you get `bash: ll: command not found`), it means that you do not have that shortcut (alias) defined. You can do it yourself by defining the alias:
 
-```bash
+```sh
 alias ll="ls -lah --color --group-directories-first"
 ```
 
 This alias will only work in the terminal you ran it in, and as soon as you close that terminal it will be forgotten forever. If you want to have this alias available in all your future terminals, you can append the `alias` command to your autostart file (`~/.bash_profile`) by running this command:
 
-```bash
+```sh
 echo -e '\nalias ll="ls -lah --color --group-directories-first"' >> ~/.bash_profile
 ```
 
@@ -154,24 +147,24 @@ Now we have practised moving around and looking at what we have in folders. The 
 
 If we want to look at what we have in our home folder, while standing in the course's workspace folder, we type
 
-```bash
+```sh
 ll /cfs/klemming/home/<first letter>/<username>/
 ```
 and remember to substitute `<first letter>` with the first letter of your username, and `<username>` with your own user name.
 
-```bash
+```sh
 ll /cfs/klemming/home/u/username/
 ```
 
 Since most programmers are lazy (efficient), there is a shortcut to your home folder so that you don't have to write it all the time. If you write `~/` it means the same as if you would write 
 
-```bash
+```sh
 /cfs/klemming/home/u/username/
 ```
 
 Try using it with `ls`:
 
-```bash
+```sh
 ll ~/
 ```
 
@@ -179,7 +172,7 @@ ll ~/
 
 Now you will need some files. The files are located in the folder 
 
-```bash 
+```sh 
 {{< meta path_resources >}}/linux/linux_tutorial
 ```
 
@@ -187,13 +180,13 @@ or they can be downloaded if you are not logged on the cluster at the moment, [f
 
 For structures sake, first create a folder called `linux_tutorial` inside the workspace folder, where you can put all your files belonging to this lab.
 
-```bash
+```sh
 mkdir {{< meta path_workspace >}}/linux_tutorial
 ```
 
 Next, copy the lab files to this folder.
 
-```bash
+```sh
 # syntax
 cp -r <source-folder> <destination-folder>
 
@@ -208,12 +201,12 @@ If you are unable to copy the files on PDC, you can [download the files from thi
 
 *i.e*; if you want to download the file `http://somewhere.com/my.file` and you give it the prefix `~/analysis/`, the downloaded file will be saved as `~/analysis/my.file`.
 
-```bash
+```sh
 # Ex:
 wget -P ~/analysis/ http://somewhere.com/my.file
 
 # or download the file to where you are standing by not specifying a prefix
-wget `r site_url``r output_dir`/topics/linux/assets/files.tar.gz
+wget {{< meta website.site-url >}}{{< meta output-dir >}}/topics/linux/assets/files.tar.gz
 ```
 
 ## Unpack files
@@ -222,7 +215,7 @@ Go to the folder you just copied and see what is in it.
 
 {{< fa lightbulb >}} Remember to tab-complete to avoid typos and too much writing.
 
-```bash
+```sh
 cd {{< meta path_workspace >}}/linux_tutorial
 ll
 ```
@@ -231,7 +224,7 @@ ll
 
 To unpack the `files.tar.gz` file use the following line while standing in the newly copied `linux_tutorial` folder.
 
-```bash
+```sh
 tar -xzvf files.tar.gz
 ```
 
@@ -239,7 +232,7 @@ The command will always be the same for all `tar.gz` files you want to unpack. `
 
 Look in the folder again and see what we just unpacked:
 
-```bash
+```sh
 [user@login1 linux_tutorial]$ ll
 total 512
 drwxrwsr-x  2 user g20XXXXX   2048 Sep 19  2012 a_strange_name
@@ -268,13 +261,13 @@ In this example, we want to move the result files only, located in the folder `i
 
 The syntax for the move command is:
 
-```bash
+```sh
 mv <source> <destination>
 ```
 
 First, take a look inside the `important_results` folder:
 
-```bash
+```sh
 [user@login1 linux_tutorial]$ ll important_results/
 total 0
 -rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 dna_data_analysis_result_file_that_is_important-you_should_really_use_tab_completion_for_file_names.bam
@@ -284,7 +277,7 @@ total 0
 
 You see that there are some unimportant temporary files that you have no interest in. Just to demonstrate the move command, I will show you how to move one of these temporary files to your backed-up project folder:
 
-```bash
+```sh
 mv important_results/temp_file-1 backed_up_proj_folder/
 ```
 
@@ -292,7 +285,7 @@ mv important_results/temp_file-1 backed_up_proj_folder/
 
 Look in the backed-up project folder to make sure you moved the file correctly.
 
-```bash
+```sh
 [user@login1 linux_tutorial]$ ll backed_up_proj_folder/
 total 0
 -rwxrwxr-x 1 user g20XXXXX 0 Sep 19  2012 dna_data_analysis_result_file_that_is_important-you_should_really_use_tab_completion_for_file_names.bam
@@ -302,13 +295,13 @@ total 0
 
 Another use for the `move` command is to rename things. When you think of it, renaming is just a special case of moving. You move the file to a location and give the file a new name in the process. The location you move the file **to** can very well be the same folder the file already is in. To give this a try, we will rename the folder `a_strange_name` to a better name.
 
-```bash
+```sh
 mv a_strange_name a_better_name
 ```
 
 Look around to see that the name change worked.
 
-```bash
+```sh
 [user@login1 linux_tutorial]$ mv a_strange_name a_better_name
 [user@login1 linux_tutorial]$ ll
 total 448
@@ -331,14 +324,14 @@ Sometimes you don't want to move things, you want to copy them. Moving a file wi
 
 As with the move command, the syntax is
 
-```bash
+```sh
 cp <source> <destination>
 cp backed_up_proj_folder/last_years_data external_hdd/
 ```
 
 Take a look in the `external_hdd` to make sure the file got copied.
 
-```bash
+```sh
 [user@login1 linux_tutorial]$ cp backed_up_proj_folder/last_years_data external_hdd/
 [user@login1 linux_tutorial]$ ll external_hdd/
 total 0
@@ -352,14 +345,14 @@ Sometimes you will delete files. Usually this is when you know that the file or 
 To delete a file, we use the **R**e**M**ove command, `rm`.
 Syntax:
 
-```bash
+```sh
 # syntax
 rm <file to remove>
 ```
 
 If you want, you can also specify multiple files at once, as many as you want!
 
-```bash
+```sh
 rm <file to remove> <file to remove> <file to remove> <file to remove> <file to remove>
 ```
 
@@ -371,7 +364,7 @@ There is no trash bin in Linux. If you delete a file, it is gone. So be careful 
 
 Try it out by deleting the useless file in the folder you are standing in. First, look around in the folder to see the file.
 
-```bash
+```sh
 [user@login1 linux_tutorial]$ ll
 total 448
 drwxrwsr-x 2 user g20XXXXX   2048 Sep 19  2012 a_better_name
@@ -391,13 +384,13 @@ drwxrwsr-x 2 user g20XXXXX   2048 Jan 28  2012 this_is_empty
 
 Now remove it.
 
-```bash
+```sh
 rm useless_file
 ```
 
 Similarly, folders can be removed too. There is even a special command for removing folders, `rmdir`. They work similar to `rm`, except that they can't remove files. There are two folders, `this_is_empty` and `this_has_a_file`, that we now will delete.
 
-```bash
+```sh
 rmdir this_is_empty
 rmdir this_has_a_file
 ```
@@ -412,14 +405,14 @@ total 0
 
 you see that there is a file in there! Only directories that are completely empty can be deleted using `rmdir`. To be able to delete `this_has_a_file`, either delete the file manually and then remove the folder
 
-```bash
+```sh
 rm this_has_a_file/file
 rmdir this_has_a_file
 ```
 
 or delete the directory recursively, which will remove `this_has_a_file` and everything inside:
 
-```bash
+```sh
 rm -r this_has_a_file
 ```
 
@@ -431,7 +424,7 @@ Of course, this never happens because you **ALWAYS** name your files so that you
 
 {{< fa clipboard-list >}} Now, we are looking for that really good script we wrote a couple of months ago in that other project. Look in the project's folder, `old_project` and find the script.
 
-```bash
+```sh
 [user@login1 linux_tutorial]$ ll old_project/
 total 96
 -rwxrwxr-x 1 user g20XXXXX 39904 Sep 19  2012 a
@@ -441,7 +434,7 @@ total 96
 
 Not so easy with those names.. We will have to use `less` to look at the files and figure out which is which.
 
-```bash
+```sh
 # syntax
 less <filename>
 ```
@@ -450,7 +443,7 @@ less <filename>
 
 Have a look at `the_best`, that must be our script, right?
 
-```bash
+```sh
 less old_project/the_best
 ```
 
@@ -466,7 +459,7 @@ So, why care about how the program works? I'll show you why. This time we will b
 
 First, open the file with `nano`.
 
-```bash
+```sh
 # load the nano module if you have not done so already
 module load nano
 
@@ -484,7 +477,7 @@ Is the file loaded yet? Now take that waiting time and multiply it with 100-1000
 
 To view the first rows of the large file, use `head`.
 
-```bash
+```sh
 # syntax
 head <filename>
 
@@ -493,7 +486,7 @@ head {{< meta path_resources >}}/linux/linux_additional-files/large_file
 
 Remember how to view an arbitrary number of first rows in a file?
 
-```bash
+```sh
 # syntax
 head -n <number of rows to view> <filename>
 
@@ -502,7 +495,7 @@ head -n 23 {{< meta path_resources >}}/linux/linux_additional-files/large_file
 
 The same syntax for viewing the last rows of a file with tail:
 
-```bash
+```sh
 # syntax
 tail <filename>
 
@@ -521,7 +514,7 @@ Sometimes (most of the time really) you have many files. So many that it would t
 
 {{< fa exclamation-circle >}} **DO NOT** run this command, it's just an example.
 
-```bash
+```sh
 mv  sample_1_*  my_other_folder
 ```
 
@@ -542,7 +535,7 @@ total 0
 
 We see that `part_1` only contains `.txt` files, and that `part_2` contains some other files as well. The best option seems to be to move all `.txt` files from `part_2` info `part_1`.
 
-```bash
+```sh
 mv part_2/*.txt part_1/
 ```
 
@@ -550,7 +543,7 @@ The wildcard works with most, if not all, Linux commands. We can try using wildc
 
 {{< fa clipboard-list >}} Try to figure out the solution on your own. Then check the answer below.
 
-```bash
+```sh
 ll many_files/*.docx
 ll many_files/*.txt
 ```
@@ -561,7 +554,7 @@ Ok, the last 2 commands for now are `top` and `man`.
 
 `top` can be useful when you want to look at which programs are being run on the computer, and how hard the computer is working. Type `top` and have a look.
 
-```bash
+```sh
 top
 ```
 
@@ -612,7 +605,7 @@ You might wonder how the heck am I supposed to be able to remember all these com
 
 Good news everyone, there is a manual! To get all the nitty-gritty details about `ls`, you use the `man` command.
 
-```bash
+```sh
 # syntax
 man <command you want to look at>
 

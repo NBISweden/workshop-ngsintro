@@ -1,7 +1,7 @@
 project:
   type: website
   # output directory used on gh-pages branch. format: YYMM
-  output-dir: "2603"
+  output-dir: "2611"
   render: 
     - "!README.md"
     - "!LICENSE"
@@ -53,7 +53,7 @@ website:
 
 format:
   html:
-    quarto-required: ">=1.4.0"
+    quarto-required: ">=1.9.38"
     include-in-header: "assets/include_head.html"
     theme: "assets/css/styles.scss"
     smooth-scroll: true
@@ -66,7 +66,7 @@ format:
     code-tools: false
     code-copy: true
     code-overflow: wrap
-    df-print: paged
+    df-print: kable
     standalone: false
     fig-align: left
     title-block-banner: "assets/images/banner.webp"
@@ -75,10 +75,10 @@ format:
     date-format: "DD-MMM-YYYY"
     lightbox: auto
   revealjs:
-    quarto-required: ">=1.4.0"
+    quarto-required: ">=1.9.38"
     include-in-header: "assets/include_head.html"
     theme: ["default","assets/css/slides.scss"]
-    df-print: paged
+    df-print: kable
     width: 1280
     height: 720
     transition: "fade"
@@ -107,13 +107,14 @@ format:
     header-logo-right-url: "https://nbisweden.github.io/workshop-ngsintro/2603/home_schedule.html"
     template-partials:
       - "assets/title-slide.html"
+    pointer:
+      color: "#95b540"
+      pointerSize: 12
+      trail: true
+      trailDuration: 250
 
 bibliography: references.bib
 csl: apa.csl
-
-knitr:
-  opts_chunk:
-    results: hold
 
 execute:
   eval: true
@@ -122,76 +123,15 @@ execute:
   message: false
   freeze: true
 
+metadata-files: 
+  - "_metadata.yml"
+
 filters:
   - assets/custom.lua
-  - assets/fold-results.lua
-  - reveal-logo
+  - collapse-output
+  - revealjs-header
+  - accordion
 
-# used site-wide
-# project id on active cluster (dardel)
-id_project: "naiss2026-4-45"
-# project id on fallback cluster (rackham)
-id_project_backup: "naiss2026-xx-xxx"
-# path to course working directory
-path_workspace: "/cfs/klemming/projects/supr/naiss2026-4-45/username"
-# path to course resources on cluster
-path_resources: "/sw/courses/ngsintro"
-# url to active cluster (dardel)
-url_cluster: "dardel.pdc.kth.se"
-# url to backup cluster (rackham)
-url_cluster_backup: "rackham.uppmax.uu.se"
+revealjs-plugins:
+  - pointer
 
-# reservation ids
-id_slurm_res_mon: "edu26-03-02"
-id_slurm_res_tue: "edu26-03-03"
-id_slurm_res_wed: "edu26-03-04"
-id_slurm_res_thu: "edu26-03-05"
-id_slurm_res_fri: "edu26-03-06"
-
-# location is used to render the info page
-# location options are linkoping, lund, umea, stockholm, uppsala or online
-# one or more separated by commas or semicolon.
-location: online
-assistants:
- - "AJ: Anna Johansson"
- - "BV: Björn Viklund"
- - "CK: Cormac Kinsella"
- - "DA: Dag Ahren"
- - "DE: Diana Ekman"
- - "EB: Emre Balsever"
- - "FB: Franziska Bonath"
- - "FR: Fariba Roshanzamir"
- - "GD: Guilherme Dias"
- - "JD: Jyotirmoy Das"
- - "JH: Jason Hill"
- - "JB: Joakim Bygdell"
- - "JT: Jeanette Tångrot"
- - "KG: Karl Grönberg"
- - "KL: Katarina Lejonlid"
- - "KB: Kristina Benevides"
- - "LE: Leslie Solorzano"
- - "LK: Linda Köhn"
- - "LA: Lore Ament"
- - "LV: Louella Vasquez"
- - "LS: Lucile Soler"
- - "MD: Martin Dahlö"
- - "MG: Maxime Garcia"
- - "ML: Malin Larsson"
- - "MM: Markus Mayrhofer"
- - "MX: Marcel Martin"
- - "MP: Martin Pippel"
- - "MR: Miguel Redondo"
- - "MV: Massimiliano Volpe"
- - "NN: Nina Norgren"
- - "OP: Olga Vinnere Pettersson"
- - "PA: Prasoon Agarwal"
- - "PP: Paul Pyl"
- - "RF: Roy Francis"
- - "SD: Sebastian DiLorenzo"
- - "SS: Snaevar Sigurdsson"
- - "VK: Varsith Konda"
- - "YL: Yuan Li"
-schedule_message: "Breaks are planned for approximately 10:15 and 15:00 every day. Note that the presentations and videos may not be in sync because the presentations were updated while the videos are from previous workshops."
-colors:
-  primary: "#95b540"
-  secondary: "#E9F2D1"

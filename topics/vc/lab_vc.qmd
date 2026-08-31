@@ -2,39 +2,19 @@
 title: "Variant Calling"
 subtitle: "From reads to short variants"
 author: "Malin Larsson/Diana Ekman"
+path_vc: "{{< meta path_resources >}}/vc"
+path_data: "{{< meta path_resources >}}/vc/data"
+path_fastq: "{{< meta path_resources >}}/vc/data/fastq"
+path_ref: "{{< meta path_resources >}}/vc/data/ref"
+path_bam: "{{< meta path_resources >}}/vc/data/bam"
+path_vcf: "{{< meta path_resources >}}/vc/data/vcf"
+path_bpbam: "{{< meta path_resources >}}/vc/data/best_practise_bam"
+path_bpvcf: "{{< meta path_resources >}}/vc/data/best_practise_vcf"
 format: html
-editor: 
+editor:
   markdown: 
     wrap: sentence
 ---
-
-```{r,eval=TRUE,include=FALSE}
-library(yaml)
-library(here)
-
-id_project <- yaml::read_yaml(here("_quarto.yml"))$id_project
-path_resources <- yaml::read_yaml(here("_quarto.yml"))$path_resources
-path_workspace <- yaml::read_yaml(here("_quarto.yml"))$path_workspace
-```
-
-```{css,include=FALSE}
-.workLocally{
-background-color: red;
-}
-```
-
-```{r,include=FALSE}
-## VARIABLES
-path_vc <- file.path(path_resources,"vc")
-
-datadir <- file.path(path_vc, "data")
-fastqdir <- file.path(path_vc, "data/fastq")
-refdir <- file.path(path_vc, "data/ref")
-bamdir <- file.path(path_vc, "data/bam")
-vcfdir <- file.path(path_vc, "data/vcf")
-bpbamdir <- file.path(path_vc, "data/best_practise_bam")
-bpvcfdir <- file.path(path_vc, "data/best_practise_vcf")
-```
 
 # Introduction {.unnumbered}
 
@@ -75,8 +55,8 @@ We will use low coverage whole genome sequence data from three British individua
 
 All input data for this exercise is located in this folder:
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0(datadir))
+```
+{{< meta path_data >}}
 ```
 
 ::: callout-note
@@ -106,20 +86,20 @@ Please follow the instructions for connecting to PDC at [**Connecting to PDC**](
 You should work in a subfolder of the course folder on the HPC, like you have done during the previous labs.
 Start by going to your course folder using this command (replace `username` with your actual username):
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('cd ', path_workspace))
+```sh
+cd  {{< meta path_workspace >}}
 ```
 
 Create a folder for this exercise and move into it:
 
-``` bash
+```sh
 mkdir vc
 cd vc
 ```
 
 Make sure you are located in this folder for the rest of this lab (use pwd to check).
 
-```         
+```
 {{< meta path_workspace >}}/vc
 ```
 
@@ -128,15 +108,14 @@ Make sure you are located in this folder for the rest of this lab (use pwd to ch
 The raw data files are located in the course data folder.
 Create a symbolic link in your workspace to the reference fasta file and the fastq files:
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('ln -s ',refdir,'/human_g1k_v37_chr2.fasta\n'))  
-
-cat(paste0('ln -s ',fastqdir,'/HG00097_1.fq\n'))
-cat(paste0('ln -s ',fastqdir,'/HG00097_2.fq\n'))  
-cat(paste0('ln -s ',fastqdir,'/HG00100_1.fq\n'))
-cat(paste0('ln -s ',fastqdir,'/HG00100_2.fq\n'))
-cat(paste0('ln -s ',fastqdir,'/HG00101_1.fq\n'))
-cat(paste0('ln -s ',fastqdir,'/HG00101_2.fq\n'))
+```sh
+ln -s {{< meta path_ref >}}/human_g1k_v37_chr2.fasta
+ln -s {{< meta path_fastq >}}/HG00097_1.fq
+ln -s {{< meta path_fastq >}}/HG00097_2.fq
+ln -s {{< meta path_fastq >}}/HG00100_1.fq
+ln -s {{< meta path_fastq >}}/HG00100_2.fq
+ln -s {{< meta path_fastq >}}/HG00101_1.fq
+ln -s {{< meta path_fastq >}}/HG00101_2.fq
 ```
 
 ## Logon to a node {.unnumbered}
@@ -144,7 +123,7 @@ cat(paste0('ln -s ',fastqdir,'/HG00101_2.fq\n'))
 This lab should be done on a compute node (not the login node).
 First check if you already have an active allocation using this command, where *username* should be replaced with your username
 
-``` bash
+```sh
 squeue -u username
 ```
 
@@ -153,26 +132,26 @@ If you already have an active job allocation please proceed to **Connect to the 
 
 Use this code to allocate a job (note that the reservation changes each day). It is important that you allocate a new job with -c 8 to get enough resources for some of the steps.
 
-``` bash
-#Wednesday
+```sh
+# Wednesday
 salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_wed >}} -t 04:00:00 -p shared -c 8 --no-shell
-#Thursday
+# Thursday
 salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_thu >}} -t 04:00:00 -p shared -c 8 --no-shell
 ```
 
 Once your job allocation has been granted (should not take long) please check the allocation again:
 
-``` bash
+```sh
 squeue -u username
 ```
 
 You should now see that you have an active job allocation.
 The node name for your job is listed under the node list header.
-Replace *nodename* with that name.<br/>
+Replace *nodename* with that name.
 
 **Connect to the node and move to your folder:**
 
-``` bash
+```sh
 ssh -Y nodename
 cd {{< meta path_workspace >}}/vc
 ```
@@ -183,7 +162,7 @@ Load the tool modules that are needed during this workshop.
 Remember that these modules must be loaded **every time you login to the HPC,** or when you connect to a new compute node.
 Load the PDC module first to make it possible to load the other modules:
 
-``` bash
+```sh
 module load PDC
 module load bwa/0.7.17
 module load samtools/1.20
@@ -193,7 +172,7 @@ module load vcftools/0.1.16
 #It is recommended to specify the tool version for reproducibility, although not required
 ```
 
-# Part1: Variant calling in one sample
+# Part 1: Variant calling in one sample
 
 Now let's start the first part of the exercise, which is variant calling in one sample.
 The workflow consists of aligning the reads with [BWA](http://bio-bwa.sourceforge.net) and detecting variants with [HaplotypeCaller](https://gatk.broadinstitute.org/hc/en-us/articles/360037225632-HaplotypeCaller) as illustrated below.
@@ -209,7 +188,7 @@ You therefore need to create index files for each tool first.<br/>
 
 Generate a BWA index, fasta index and a sequence dictionary:
 
-``` bash
+```sh
 bwa index -a bwtsw human_g1k_v37_chr2.fasta
 
 samtools faidx human_g1k_v37_chr2.fasta
@@ -224,19 +203,19 @@ Check what files were created using `ls -lrt`.
 You will use `BWA mem` to align the reads to the reference genome.
 You need to provide the reference fasta file and two fastq files (for paired reads).
 
-``` bash
+```sh
 bwa mem human_g1k_v37_chr2.fasta HG00097_1.fq HG00097_2.fq > HG00097.sam
 ```
 
 Sort the aligned reads by chromosome position and convert the sam file to bam format.
 
-``` bash
+```sh
 samtools sort HG00097.sam > HG00097.bam
 ```
 
 Next, you need to index the generated bam file so that programs can access the sorted data without reading the whole file.
 
-``` bash
+```sh
 samtools index HG00097.bam
 ```
 
@@ -248,7 +227,7 @@ Is there a size difference between the sam and the bam file?
 You can look at the sam file using "less".
 The bam file, on the other hand, is binary so we need to use `samtools view`.
 
-``` bash
+```sh
 less HG00097.sam
 
 #View the first 5 lines of the bam file
@@ -275,9 +254,15 @@ Read groups are required by HaplotypeCaller.
 We will use toy information here, but the RGSM tag should contain the sample name, and the RGID should be unique for each sample and sequencing run.
 To learn more about read groups please read [this article](https://gatk.broadinstitute.org/hc/en-us/articles/360035890671-Read-groups).
 
-``` bash
-gatk AddOrReplaceReadGroups -I HG00097.bam -O HG00097.rg.bam \
---RGID rg_HG00097 --RGSM HG00097 --RGPL illumina --RGLB libx --RGPU XXX
+```sh
+gatk AddOrReplaceReadGroups  \
+  -I HG00097.bam  \
+  -O HG00097.rg.bam \
+  --RGID rg_HG00097  \
+  --RGSM HG00097  \
+  --RGPL illumina  \
+  --RGLB libx  \
+  --RGPU XXX
 
 #Index the resulting bam file
 samtools index HG00097.rg.bam
@@ -285,9 +270,11 @@ samtools index HG00097.rg.bam
 
 Now you can run the variant calling:
 
-``` bash
+```sh
 gatk --java-options -Xmx4g HaplotypeCaller \
--R human_g1k_v37_chr2.fasta -I HG00097.rg.bam -O HG00097.vcf
+  -R human_g1k_v37_chr2.fasta  \
+  -I HG00097.rg.bam  \
+  -O HG00097.vcf
 ```
 Check what new files were generated using `ls -lrt`.
 
@@ -302,7 +289,7 @@ The meta-information lines starting with *##INFO* define how the data in the *IN
 
 To view the different parts of the header you can try these commands:
 
-``` bash
+```sh
 grep '#CHROM' HG00097.vcf
 grep '##INFO' HG00097.vcf
 grep '##FORMAT' HG00097.vcf
@@ -310,7 +297,7 @@ grep '##FORMAT' HG00097.vcf
 
 To see only the variants you can use
 
-``` bash
+```sh
 grep -v "#" HG00097.vcf | head -n 5
 ```
 
@@ -347,11 +334,12 @@ You need to have write permission in this folder.
 The folder you created will be referred to as *local workspace* in this lab.
 
 #### Download the bam file
+
 You need to download the bam file and the corresponding .bai file to your laptop.
 Navigate to your [local workspace](#preparelaptop) (do not log in to Dardel).
 Copy the .bam and .bam.bai files you just generated with this command (replace `username` with your username):
 
-``` bash
+```sh
 scp username@dardel.pdc.kth.se:{{< meta path_workspace >}}/vc/HG00097.bam* .
 ```
 
@@ -368,8 +356,7 @@ Check that the files are now present in your *local workspace* using `ls -lrt`.
 ### Bam files in IGV
 
 Open IGV. In the upper left dropdown menu choose `Human hg19` (which is the same as GRCh37). If these genome is not available you first need to go to Genomes -> select hosted genome. \
-In the `File` menu, select `Load from File`, navigate to your workspace, and select `HG00097.bam`.
-This data should now appear as a track in the tracks window.
+In the `File` menu, select `Load from File`, navigate to your workspace, and select `HG00097.bam`. This data should now appear as a track in the tracks window.
 
 You need to zoom in to see the reads.
 You can either select a region by click and drag, or by typing a region or a gene name in the text box at the top.
@@ -391,7 +378,7 @@ You can view variants in the *LCT* gene by typing the gene name in the search bo
 5.  Hover the mouse over the lower row of the vcf track and look under "Genotype Information". What genotype does HG00097 have at position chr2:136545844? Is this the same as you found by looking directly in the vcf file in question 1B:5?\
 6.  Look at the bam track and count the number of reads that have "G" and "C", respectively, at position chr2:136545844. How is this information captured under "Genotype Attributes"? (Again, hover the mouse over the lower row of the vcf track.)
 
-# Part2: Variant calling in cohort {#jointvc}
+# Part 2: Variant calling in cohort {#jointvc}
 
 You will now try joint variant calling in three samples.
 Each sample will again be processed with `BWA mem` and `HaplotypeCaller`.
@@ -412,7 +399,7 @@ In addition, you can specify how many *threads* the program should use, which sh
 
 Remember to replace *sample* with the sample name (i.e. HG00097, HG00100 or HG00101), *both* in the read group and in file names.
 
-``` bash
+```sh
 bwa mem -t 8 \
 -R "@RG\tID:rg_sample\tSM:sample\tPU:XXX\tLB:libx\tPL:illumina" \
 human_g1k_v37_chr2.fasta sample_1.fq sample_2.fq | samtools sort > sample.bam
@@ -421,7 +408,7 @@ human_g1k_v37_chr2.fasta sample_1.fq sample_2.fq | samtools sort > sample.bam
 <details>
 <summary>Exact command for the first sample</summary>
 
-```bash
+```sh
 bwa mem -t 8 -R "@RG\tID:rg_HG00097\tSM:HG00097\tPU:XXX\tLB:libx\tPL:illumina" human_g1k_v37_chr2.fasta HG00097_1.fq HG00097_2.fq | samtools sort > HG00097.bam
 
 ```
@@ -430,7 +417,7 @@ bwa mem -t 8 -R "@RG\tID:rg_HG00097\tSM:HG00097\tPU:XXX\tLB:libx\tPL:illumina" h
 Please check what output files were generated this time.
 Also check that the sample name (SM) is correct in the bam header (replace sample with the sample id):
 
-```bash
+```sh
 samtools view -H sample.bam
 ```
 
@@ -446,10 +433,10 @@ Please read about Picard's `MarkDuplicates` [here](https://gatk.broadinstitute.o
 Run MarkDuplicates on all three bam files generated in the previous step.
 <br/>
 
-``` bash
+```sh
 gatk --java-options -Xmx4g MarkDuplicates \
-    -I sample.bam -O sample.md.bam -M sample_mdmetrics.txt
-    
+  -I sample.bam -O sample.md.bam -M sample_mdmetrics.txt
+
 samtools index sample.md.bam
 ```
 
@@ -460,7 +447,7 @@ samtools index sample.md.bam
 `HaplotypeCaller` should also be run for all three samples, but this time the output for each sample needs to be in g.vcf format.
 This is accomplished by adding the `-ERC GVCF` flag.<br/>
 
-``` bash
+```sh
 gatk --java-options -Xmx4g HaplotypeCaller -R human_g1k_v37_chr2.fasta \
 -ERC GVCF -I sample.md.bam -O sample.g.vcf
 ```
@@ -471,21 +458,22 @@ Once you have the g.vcf files for all samples you should perform joint genotype 
 To do this you first need to combine all individual .g.vcf files to one file using `CombineGVCFs`.
 Remember to replace *sample1*, *sample2*, *sample3* with the real sample names.<br/>
 
-``` bash
+```sh
 gatk --java-options -Xmx4g CombineGVCFs -R human_g1k_v37_chr2.fasta \
--V sample1.g.vcf -V sample2.g.vcf -V sample3.g.vcf -O cohort.g.vcf
+ -V sample1.g.vcf -V sample2.g.vcf -V sample3.g.vcf -O cohort.g.vcf
 ```
 
 Then run `GenoteypeGVC` to generate a vcf file:
 
-``` bash
+```sh
 gatk --java-options -Xmx4g GenotypeGVCFs -R human_g1k_v37_chr2.fasta \
--V cohort.g.vcf -O cohort.vcf
+ -V cohort.g.vcf -O cohort.vcf
 ```
 
 You can check that your file contains 3 samples using e.g. "grep CHROM cohort.vcf"
 
 ## Questions 2A {.unnumbered}
+
 1. How many data lines does the cohort.g.vcf file have? You can use the Linux command `grep -v "#" cohort.g.vcf | wc -l` to extract and count lines in "cohort.g.vcf" that don't start with "\#".\
 2. How many data lines does the cohort.vcf file have? Explain the difference in number of lines.\
 3. What is encoded in the last three columns of the data lines?
@@ -495,17 +483,20 @@ You can check that your file contains 3 samples using e.g. "grep CHROM cohort.vc
 HaplotypeCaller is designed to be very sensitive, which minimizes the risk of missing real variants.
 However, it means that the number of false positives can be quite large, so we need to filter the raw variant set. There are more sophisticated tools in the GATK suite for this, but we will use a simple filter, based on the quality value.
 
-``` bash
+```sh
 gatk --java-options -Xmx4g VariantFiltration -R human_g1k_v37_chr2.fasta \
   -V cohort.vcf -O cohort.filtered.vcf \
   --filter-name QUALfilt --filter-expression "QUAL < 100" 
 ```
+
 Note that the FILTER column is now filled. 
 
 `vcftools` is another tool that can be used to filter and manipulate the vcf file. For example, variants that did not pass the filters can be removed, and we can add other filters, for example mean sequencing depth. 
-``` bash
+
+```sh
 vcftools --vcf cohort.filtered.vcf --remove-filtered-all --min-meanDP 5 --recode --recode-INFO-all --out cohort.PASS
 ```
+
 See the vcftools [manual](https://vcftools.sourceforge.net/man_latest.html) for more options.
 
 ## Questions 2B {.unnumbered}
@@ -536,7 +527,7 @@ Please use IGV to answer the questions below.
 
 When you have finished the exercises, you can have a look at this document with [answers to all questions](lab_vc_answers.pdf), and compare them with your answers.
 
-# Part3: SBATCH scripts
+# Part 3: SBATCH scripts
 
 This section is optional and intended for those who want to learn how to run all steps automatically in a bash script.
 Please make sure that you have understood all the individual steps before you start with this.
@@ -547,9 +538,9 @@ To learn more about SLURM and SBATCH scripts please look at the [How to Run Jobs
 Below is a skeleton script that can be used as a template for running [variant calling in a cohort](#jointvc).
 Modify it to run all the steps in part two of this workshop.
 
-```{r,accordion=TRUE,echo=FALSE,comment="",class.output="sh"}
-cat(paste0('#!/bin/bash
-#SBATCH -A ',id_project,' 
+```sh
+#!/bin/bash
+#SBATCH -A {{< meta id_project >}} 
 #SBATCH -p shared
 #SBATCH -c 8
 #SBATCH -t 1:00:00
@@ -564,14 +555,13 @@ module load gatk/4.5.0.0
 for sample in HG00097 HG00100 HG00101;
 do
   echo "Now analyzing: "${sample}
-  #Fill in the code for running bwa-mem for each sample here
-  #Fill in the code for MarkDuplicates here
-  #Fill in the code for samtools index for each sample here
-  #Fill in the code for HaplotypeCaller for each sample here
+  # Fill in the code for running bwa-mem for each sample here
+  # Fill in the code for MarkDuplicates here
+  # Fill in the code for samtools index for each sample here
+  # Fill in the code for HaplotypeCaller for each sample here
 done
-#Fill in the code for CombineGVCFs for all samples here
-#Fill in the code for GenotypeGVCFs here
-'))
+# Fill in the code for CombineGVCFs for all samples here
+# Fill in the code for GenotypeGVCFs here
 ```
 
 Save the template in your workspace and call it "joint_genotyping.sbatch" .
@@ -580,21 +570,19 @@ Make the script executable by this command:
 
 In this lab you have an active node reservation so you can also run the script as a normal bash script:
 
-``` bash
+```sh
 chmod u+x joint_genotyping.sbatch
 ```
 
-``` bash
+```sh
 ./joint_genotyping.sbatch
 ```
 
 To run the sbatch script in the SLURM queue, use this command:
 
-``` bash
+```sh
 sbatch joint_genotyping.sbatch
 ```
-
-
 
 If you would like more help with creating the sbatch script, please look at our example solution below (click on the link):
 
@@ -602,9 +590,9 @@ If you would like more help with creating the sbatch script, please look at our 
 
 <summary>Example solution</summary>
 
-```{r,accordion=TRUE,echo=FALSE,comment="",class.output="sh"}
-cat(paste0('#!/bin/bash
-#SBATCH -A ',id_project,'
+```sh
+#!/bin/bash
+#SBATCH -A {{< meta id_project >}}
 #SBATCH -p shared
 #SBATCH -c 8
 #SBATCH -t 2:00:00
@@ -617,38 +605,40 @@ module load gatk/4.5.0.0
 
 for sample in HG00097 HG00100 HG00101;
 do
-  echo "Now analyzing: "${sample}
-  bwa mem -R \\
-  "@RG\\tID:${sample}\\tPU:flowcellx_lanex\\tSM:${sample}\\tLB:libraryx\\tPL:illumina" \\
-  -t 8 human_g1k_v37_chr2.fasta "${sample}_1.fq" "${sample}_2.fq" | samtools sort > "${sample}.bam"
+  echo "Now analyzing: ${sample}"
+  bwa mem -R \
+  "@RG\\tID:${sample}\\tPU:flowcellx_lanex\\tSM:${sample}\\tLB:libraryx\\tPL:illumina" \
+  -t 8 human_g1k_v37_chr2.fasta \
+  "${sample}_1.fq" \
+  "${sample}_2.fq" | samtools sort > "${sample}.bam"
 
   samtools index "${sample}.bam"
 
-  gatk --java-options -Xmx4g MarkDuplicates \\
-  -R human_g1k_v37_chr2.fasta \\
-  -I "${sample}.bam" \\
-  -O "${sample}.md.bam" \\
-  -M "${sample}_mdmetrics.txt"
+  gatk --java-options -Xmx4g MarkDuplicates \
+    -R human_g1k_v37_chr2.fasta \
+    -I "${sample}.bam" \
+    -O "${sample}.md.bam" \
+    -M "${sample}_mdmetrics.txt"
 
 
-  gatk --java-options -Xmx4g HaplotypeCaller \\
-  -R human_g1k_v37_chr2.fasta \\
-  -ERC GVCF -I "${sample}.bam" \\
-  -O "${sample}.g.vcf"
+  gatk --java-options -Xmx4g HaplotypeCaller \
+    -R human_g1k_v37_chr2.fasta \
+    -ERC GVCF -I "${sample}.bam" \
+    -O "${sample}.g.vcf"
 
 done
 
-gatk --java-options -Xmx4g CombineGVCFs \\
--R human_g1k_v37_chr2.fasta \\
--V HG00097.g.vcf \\
--V HG00100.g.vcf \\
--V HG00101.g.vcf \\
--O cohort.g.vcf
+gatk --java-options -Xmx4g CombineGVCFs \
+  -R human_g1k_v37_chr2.fasta \
+  -V HG00097.g.vcf \
+  -V HG00100.g.vcf \
+  -V HG00101.g.vcf \
+  -O cohort.g.vcf
 
-gatk --java-options -Xmx4g GenotypeGVCFs \\
--R human_g1k_v37_chr2.fasta \\
--V cohort.g.vcf \\
--O cohort.vcf'))
+gatk --java-options -Xmx4g GenotypeGVCFs \
+  -R human_g1k_v37_chr2.fasta \
+  -V cohort.g.vcf \
+  -O cohort.vcf
 ```
 
 </details>
@@ -683,14 +673,14 @@ In short, you first use [BaseRecalibrator](https://gatk.broadinstitute.org/hc/en
 This file is available in the data folder on Dardel.
 Make a soft link to this file:
 
-```{r,echo=FALSE,comment="",class.output="bash"}
-cat(paste0('ln -s ',refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf\n'))
-cat(paste0('ln -s ',refdir,'/1000G_phase1.snps.high_confidence.b37.chr2.vcf.idx\n'))
+```sh
+ln -s {{< meta path_ref >}}/1000G_phase1.snps.high_confidence.b37.chr2.vcf
+ln -s {{< meta path_ref >}}/1000G_phase1.snps.high_confidence.b37.chr2.vcf.idx
 ```
 
 First, run BaseRecalibrator for the bam file generated in the previous step:
 
-``` bash
+```sh
 gatk --java-options -Xmx4g BaseRecalibrator -R human_g1k_v37_chr2.fasta \
       --known-sites 1000G_phase1.snps.high_confidence.b37.chr2.vcf \
       -I HG00097.md.bam -O HG00097.recal.table
@@ -698,7 +688,7 @@ gatk --java-options -Xmx4g BaseRecalibrator -R human_g1k_v37_chr2.fasta \
 
 Then run ApplyBQSR:
 
-``` bash
+```sh
 gatk --java-options -Xmx4g ApplyBQSR -R human_g1k_v37_chr2.fasta \
     -bqsr-recal-file HG00097.recal.table \
     -I HG00097.md.bam -O HG00097.recal.bam
@@ -710,8 +700,7 @@ Repeat for all three samples
 
 ### Generate g.vcf files {.unnumbered}
 
-Next, `HaplotypeCaller` should be run for all three samples, and the output should be in g.vcf, as described [above](#generategvcf).
-This time use the recalibrated bam files as input.
+Next, `HaplotypeCaller` should be run for all three samples, and the output should be in g.vcf, as described [above](#generategvcf). This time use the recalibrated bam files as input.
 
 ### Joint genotyping {.unnumbered}
 
@@ -736,7 +725,7 @@ Read about hard filters [here](https://gatk.broadinstitute.org/hc/en-us/articles
 
 Example solution for filtering SNVs:
 
-``` bash
+```sh
 gatk --java-options -Xmx4g SelectVariants \
   -R human_g1k_v37_chr2.fasta \
   --select-type-to-include SNP \
@@ -752,7 +741,7 @@ gatk --java-options -Xmx4g VariantFiltration \
 
 Example filters for INDELs:
 
-``` bash
+```sh
 gatk --java-options -Xmx4g SelectVariants \
   -R human_g1k_v37_chr2.fasta \
   -V cohort.vcf -O cohort.indels.vcf \
@@ -768,7 +757,7 @@ gatk --java-options -Xmx4g VariantFiltration \
 
 Merge filtered SNPs and INDELs:
 
-``` bash
+```sh
 gatk --java-options -Xmx4g MergeVcfs \
     -I cohort.snvs.filtered.vcf -I cohort.indels.filtered.vcf -O cohort.filtered.vcf
 ```
@@ -801,25 +790,25 @@ If you run out of time you can click below to get paths to precomputed bam files
 
 <details>
 <summary>Precomputed files</summary>
-```{r,accordion=TRUE,echo=FALSE,comment="",class.output="sh"}
-cat(paste0(bamdir,'/HG00097.bam\n'))
-cat(paste0(bamdir,'/HG00100.bam\n'))
-cat(paste0(bamdir,'/HG00101.bam\n'))
+
+```
+{{< meta path_bam >}}/HG00097.bam
+{{< meta path_bam >}}/HG00100.bam
+{{< meta path_bam >}}/HG00101.bam
 ```
 
 If you run out of time you can click below to get paths to the precomputed cohort.g.vcf and cohort.vcf files.
 
-```{r,accordion=TRUE,echo=FALSE,comment="",class.output="sh"}
-cat(paste0(vcfdir,'/cohort.g.vcf\n'))
-cat(paste0(vcfdir,'/cohort.vcf\n'))
+```
+{{< meta path_vcf >}}/cohort.g.vcf
+{{< meta path_vcf >}}/cohort.vcf
 ```
 
 If you run out of time, please click below to get the path to precomputed bam and vcf files for the GATK's best practices section.
 
-```{r,accordion=TRUE,echo=FALSE,comment="",class.output="sh"}
-cat(paste0('Path to intermediary and final bam files: ',bpbamdir,'\n'))
-cat(paste0('Path to intermediary and final vcf files: ',bpvcfdir,'\n'))
-```
+- Path to intermediary and final bam files: `{{< meta path_bpbam >}}`
+- Path to intermediary and final vcf files:  `{{< meta path_bpvcf>}}`
+
 </details>
 
 #  {.unnumbered}

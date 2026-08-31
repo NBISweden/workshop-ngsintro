@@ -1,0 +1,15 @@
+::: {.callout-note}
+
+## Address
+
+{{< fa location-dot >}} LiU Campus Universitetssjukhuset  
+58225 Linköping  
+Sweden  
+
+:::
+
+Monday-Tuesday: [Room Papaver, Hus 511/001](https://link.mazemap.com/00mnumNU)  
+Wednesday-Thursday: [Room Dolomit, Hus 440](https://link.mazemap.com/up3GnjPm)  
+Friday: [Room Antracit, Hus 440](https://link.mazemap.com/wXeFDYNR)
+
+Use the [Östgötatrafiken website](https://www.ostgotatrafiken.se) or the [Östgötatrafiken app](https://www.ostgotatrafiken.se/kundservice/hur-kan-vi-hjalpa-dig/nya-appen/) for bus services around Linköping. The easiest way to by tickets is through the app, but you can by a travel card in advance which you can load with tickets.

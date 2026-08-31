@@ -1,6 +1,6 @@
 ---
 title: "Contents"
-description: "Course materials organised by topic. When following a live workshop, use **Schedule**.<br>Slides: {{< fa file-powerpoint >}} / {{< fa file-pdf >}}, Labs: {{< fa file-lines >}}, Videos: {{< fa brands youtube >}}"
+description: "Course materials organised by topic.<br>Slides: {{< fa file-powerpoint >}} / {{< fa file-pdf >}}, Labs: {{< fa file-lines >}}, Videos: {{< fa brands youtube >}}"
 date: ""
 toc: false
 number-sections: false
@@ -51,13 +51,14 @@ Note that the presentations and videos may not be in sync because the presentati
 - QC of FastQ reads [{{< fa file-pdf >}}](topics/other/slide_qc.pdf) [{{< fa file-lines >}}](topics/other/lab_qc.html)
 - Data management [{{< fa brands youtube >}}](https://youtu.be/PfcrDlhY1zE)  [{{< fa file-powerpoint >}}](topics/other/slide_data_management.pdf)
 
+---
+
 ### Useful resources
 
 - Connecting to HPC PDC [{{< fa file-lines >}}](topics/other/lab_connect_pdc.html)
 - Connecting to HPC UPPMAX [{{< fa file-lines >}}](topics/other/lab_connect_uppmax.html)
 - Uploading & downloading files from HPC [{{< fa file-lines >}}](topics/other/lab_download_files.html)
 - Using X11 on Windows with VcXsrv [{{< fa file-lines >}}](topics/other/lab_vcxsrv.html)
-- Working on Tetralith: The backup cluster [{{< fa file-lines >}}](topics/other/lab_tetralith.html)
 - Linux cheatsheet [{{< fa file-pdf >}}](topics/linux/assets/linux_cheat_sheet.pdf)
 - Bash cheat sheet 1 [{{< fa file-pdf >}}](topics/linux/assets/bash_cheat_sheet_1.pdf)
 - Bash cheat sheet 2 [{{< fa file-pdf >}}](topics/linux/assets/bash_cheat_sheet_2.pdf)

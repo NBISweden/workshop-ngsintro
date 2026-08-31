@@ -13,13 +13,13 @@ The first step of this lab is to open a ssh connection to PDC. Please refer to [
 
 Check which node you got when you booked resources this morning (replace `username` with your username)
 
-```bash
+```sh
 squeue -u username
 ```
 
 should look something like this
 
-```bash
+```sh
 user@login1 ~ $ squeue -u user
              JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
            5583899    shared interact    user  R       2:22      1 nid001009
@@ -29,13 +29,13 @@ user@login1 ~ $
 where `nid001009` is the name of the node I got (yours will probably be different).
 Note the numbers in the Time column. They show for how long the job has been running. When it reaches the time limit you requested the session will shut down, and you will lose all unsaved data. Connect to this node from the login node.
 
-```bash
+```sh
 ssh -Y nid001009
 ```
 
 If the list is empty you can run the allocation command again and it should be in the list:
 
-```bash
+```sh
 salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_mon >}} -t 04:00:00 -p shared -c 1 
 ```
 
@@ -47,7 +47,7 @@ Next, copy the lab files from this folder. `-r` means recursively, which means a
 
 {{< fa lightbulb >}} Remember to use tab-complete to avoid typos and too much writing.
 
-```bash
+```sh
 # syntax
 cp -r <source> <destination>
 
@@ -56,7 +56,7 @@ cp -r {{< meta path_resources >}}/hpc/pipeline/data {{< meta path_workspace >}}/
 
 Have a look in `{{< meta path_workspace >}}/hpc/pipeline`
 
-```bash
+```sh
 cd {{< meta path_workspace >}}/hpc/pipeline
 ll
 ```
@@ -78,13 +78,13 @@ The first thing you usually do is to load the modules for the programs you want 
 The `$PATH` variable specifies directories where the computer should look for programs whenever you type a command.
 For instance, when you type
 
-```bash
+```sh
 less
 ```
 
 how does the computer know which program to start? You gave it the name `less`, but that could refer to any file named `less` in the computer, yet it starts the correct one every time. The answer is that it looks in the directories stored in the `$PATH` variable and start the first program it finds that is named `less`. You can check exactly which program it starts by typing `which less`. It will give you something like the following:
 
-```bash
+```sh
 which less
 /usr/bin/less
 ```
@@ -93,13 +93,13 @@ telling you that the program `less` is located in the directory `/usr/bin`.
 
 To see which directories that are checked by default, type
 
-```bash
+```sh
 echo $PATH
 ```
 
 It should give you something like this, a long list of directories (abbreviated below), separated by colon signs:
 
-```bash
+```sh
 echo $PATH
 /pdc/software/modules/systemdefault/bin:/opt/cray/pe/mpich/8.1.28/of
 i/crayclang/17.0/bin: ...
@@ -108,7 +108,7 @@ i/crayclang/17.0/bin: ...
 
 Try loading a module, and then look at the `$PATH` variable again. You'll see that there are a few extra directories there now, after the module has been loaded.
 
-```bash
+```sh
 module load bioinfo-tools samtools
 echo $PATH
 /pdc/software/eb/software/samtools/1.20/bin:/pdc/software/eb/softwar
@@ -122,7 +122,7 @@ bin: ...
 
 To pretend that we are loading a module, instead of actually loading a module, we'll manually do what the module system would have done. We will just add a the directory containing my dummy scripts to the `$PATH` variable, and it will be like we loaded the module for them. Now, when we type the name of one of my scripts, the computer will look in all the directories specified in the `$PATH` variable, which now includes the location where i keep my scripts. The computer will now find programs named as my scripts are and it will run them.
 
-```bash
+```sh
 export PATH=$PATH:{{< meta path_resources >}}/hpc/pipeline/dummy_scripts
 ```
 
@@ -154,7 +154,7 @@ To simulate this, I have written 3 programs:
 
 To find out how to run the programs type
 
-```bash
+```sh
 <program name> -h
 
 # or
@@ -163,7 +163,7 @@ To find out how to run the programs type
 
 This is useful to remember, since most programs has this function. If you do this for the filter program, you get
 
-```bash
+```sh
 Usage: filter_reads -i <input file> -o <output file> [-c <cutoff>]
 
 Example runs:
@@ -199,7 +199,7 @@ Right, so now you know how to figure out how to run programs (just type the prog
 
 First, go to the exome directory in the lab directory that you copied to your folder in step 2 in this lab:
 
-```bash
+```sh
 cd {{< meta path_workspace >}}/hpc/pipeline/exomeSeq
 ```
 In there, you will find a folder called `raw_data`, containing a fastq file: `my_reads.rawdata.fastq`. This file contains the raw data that you will analyse.
@@ -207,7 +207,7 @@ In there, you will find a folder called `raw_data`, containing a fastq file: `my
 * Filter the raw data using the program `filter_reads`, to get rid of low quality reads.
 * Align the filtered reads with the program `align_reads`, to the human reference genome located here:
 
-```bash
+```sh
 /sw/data/reference/Homo_sapiens/hg19/concat_rm/Homo_sapiens.GRCh37.57.dna_rm.concat.fa
 ```
 
@@ -226,7 +226,7 @@ The simplest way to work with scripts is to have 2 terminals open. One will have
 
 Start writing you script with `nano`:
 
-```bash
+```sh
 # if you have not already done so, load the nano module
 module load nano
 
@@ -242,7 +242,7 @@ Since our memory is far from perfect, try to **always comment your scripts**. Th
 
 When you are finished with your script, you can test run it. To do that, use the program `sh`:
 
-```bash
+```sh
 sh exome_analysis_script.sh
 ```
 
@@ -262,7 +262,7 @@ The options needed by the queue are, as we learned previously:
 
 **SLURM** is also a bit strict when it comes formalities. It requires that you specify which program should be used to run the submitted script file. The standard program for this is bash, but we have to specify it on the first line of the script non the less. This is done by having the first line in the script looking link this:
 
-```bash
+```sh
 #!/bin/bash -l
 ```
 
@@ -272,7 +272,7 @@ The `-l` after bash is a flag that tells bash that the script should be treated 
 
 The next couple of rows will contain all the options you want to give SLURM:
 
-```bash
+```sh
 #!/bin/bash -l
 #SBATCH -A {{< meta id_project >}}
 #SBATCH -t 00:05:00
@@ -286,7 +286,7 @@ SLURM options always start with `#SBATCH` followed by a flag (`-A` for account, 
 
 To submit this script to the queue:
 
-```bash
+```sh
 sbatch exome_analysis_script.sh
 ```
 
