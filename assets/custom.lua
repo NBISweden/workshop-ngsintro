@@ -5,7 +5,8 @@ function Meta(meta)
   meta['current_time'] = os.date("%H:%M:%S")
   meta["output-dir"] = quarto.project.output_directory
 
-  local quarto_config = io.open(quarto.project.directory .. "/_quarto.yml", "r")
+  local project_directory = quarto.project.directory or "."
+  local quarto_config = io.open(project_directory .. "/_quarto.yml", "r")
   local website = {}
   local stack = {{indent = -1, value = website}}
   local in_website = false
