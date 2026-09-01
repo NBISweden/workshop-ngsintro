@@ -130,7 +130,6 @@ filters:
   - assets/custom.lua
   - collapse-output
   - revealjs-header
-  - accordion
 
 revealjs-plugins:
   - pointer

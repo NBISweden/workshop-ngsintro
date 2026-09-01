@@ -123,7 +123,7 @@ leaflet:
         icon-color: "#E74856"
         lat: 59.841949
         lon: 17.637073
-        popup: "**Room E10:1309**<br> Entrance C11<br> Biomedicinskt centrum<br> Uppsala University / ScilifeLab<br> Husargatan 3<br> 752 37 Uppsala<br> Sweden"
+        popup: "****Room C6:323a (Linnérummet)**<br> Biomedicinskt centrum<br> Uppsala University / ScilifeLab<br> Husargatan 3<br> 752 37 Uppsala<br> Sweden"
       - tooltip: "Hotel von Kraemer (900 m, 11 min walk)"
         icon: "fa-solid fa-bed"
         icon-color: "#0078D7"
