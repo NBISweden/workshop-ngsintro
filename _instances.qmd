@@ -1,0 +1,14 @@
+<div class='workshop-list'>
+<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://NBISweden.github.io/workshop-ngsintro/2611/'>2026 Nov</a></span></div>
+<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://NBISweden.github.io/workshop-ngsintro/2603/'>2026 Mar</a></span></div>
+<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://NBISweden.github.io/workshop-ngsintro/2511/'>2025 Nov</a></span></div>
+<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://NBISweden.github.io/workshop-ngsintro/2503/'>2025 Mar</a></span></div>
+<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://NBISweden.github.io/workshop-ngsintro/2411/'>2024 Nov</a></span></div>
+<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://NBISweden.github.io/workshop-ngsintro/2403/'>2024 Mar</a></span></div>
+<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://NBISweden.github.io/workshop-ngsintro/2311/'>2023 Nov</a></span></div>
+<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://NBISweden.github.io/workshop-ngsintro/2302/'>2023 Feb</a></span></div>
+<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://NBISweden.github.io/workshop-ngsintro/2209/'>2022 Sep</a></span></div>
+<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://NBISweden.github.io/workshop-ngsintro/2203/'>2022 Mar</a></span></div>
+<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://NBISweden.github.io/workshop-ngsintro/2111/'>2021 Nov</a></span></div>
+<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://NBISweden.github.io/workshop-ngsintro/2105/'>2021 May</a></span></div>
+</div>

@@ -1,25 +1,94 @@
-An introductory workshop on applied bioinformatic next-generation sequence analyses covering the followings major topics:
+---
+title: "Introduction to Bioinformatics using NGS data"
+pagetitle: "NBIS Workshop • Introduction to Bioinformatics using NGS data"
+subtitle: "NBIS Workshop"
+description: "A practical, hands-on introduction to NGS analysis on a high-performance computing cluster"
+toc: false
+date: ""
+number-sections: false
+anchor-sections: false
+---
 
-- Working on the UNIX/LINUX command line
-- Bioinformatic/NGS data formats and QC
-- DNA variant calling workflow essentials
-- RNA sequence analysis workflow essentials
+## Topics
 
-<hr>
+::: {.topic-grid}
+::: {.topic-item}
+### Command line and HPC
 
-Select a workshop instance below for more information.
+Use the UNIX/Linux command line on a high-performance computing cluster.
+:::
 
-<div class='workshop-list'>
-<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://NBISweden.github.io/workshop-ngsintro/2611/'>2026 Nov</a></span></div>
-<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://NBISweden.github.io/workshop-ngsintro/2603/'>2026 Mar</a></span></div>
-<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://NBISweden.github.io/workshop-ngsintro/2511/'>2025 Nov</a></span></div>
-<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://NBISweden.github.io/workshop-ngsintro/2503/'>2025 Mar</a></span></div>
-<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://NBISweden.github.io/workshop-ngsintro/2411/'>2024 Nov</a></span></div>
-<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://NBISweden.github.io/workshop-ngsintro/2403/'>2024 Mar</a></span></div>
-<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://NBISweden.github.io/workshop-ngsintro/2311/'>2023 Nov</a></span></div>
-<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://NBISweden.github.io/workshop-ngsintro/2302/'>2023 Feb</a></span></div>
-<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://NBISweden.github.io/workshop-ngsintro/2209/'>2022 Sep</a></span></div>
-<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://NBISweden.github.io/workshop-ngsintro/2203/'>2022 Mar</a></span></div>
-<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://NBISweden.github.io/workshop-ngsintro/2111/'>2021 Nov</a></span></div>
-<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://NBISweden.github.io/workshop-ngsintro/2105/'>2021 May</a></span></div>
-</div>
+::: {.topic-item}
+### NGS data and quality control
+
+Understand common file formats and assess sequencing data quality.
+:::
+
+::: {.topic-item}
+### DNA variant calling
+
+Follow the essential steps in a DNA variant calling workflow.
+:::
+
+::: {.topic-item}
+### RNA sequencing
+
+Explore bulk RNA-seq and differential gene expression.
+:::
+:::
+
+::: {.workshop-facts}
+::: {.workshop-fact}
+**Twice a year**
+
+Spring and autumn
+:::
+
+::: {.workshop-fact}
+**Online or on-site**
+
+Online in Spring; Uppsala in Autumn
+:::
+
+::: {.workshop-fact}
+**About 30 seats**
+
+Registration is required
+:::
+
+::: {.workshop-fact}
+**Taught in English**
+
+Lectures and hands-on exercises
+:::
+:::
+
+::: {.details-grid}
+::: {.details-section}
+## Audience
+
+::: {.detail-list}
+- **Audience:** PhD students, postdocs and researchers in life sciences, healthcare and related fields
+- **Background:** Basic molecular biology and genetics; no prior bioinformatics experience needed
+- **Eligibility:** Swedish applicants are prioritized; international applicants are welcome
+:::
+:::
+
+::: {.details-section}
+## Registration and fees
+
+::: {.detail-list}
+- **Announcements:** Published on [SciLifeLab Training](https://training.scilifelab.se/) a few months in advance
+- **Online:** Free for academia; industry participants pay a fee
+- **On-site:** Fees apply to all and include lunch, coffee breaks and a course dinner
+- **Logistics:** Arrange your own travel and accommodation; bring a laptop
+- **Billing:** An institutional reference is required; NBIS cannot invoice individuals
+:::
+:::
+:::
+
+## Instances
+
+Choose an instance below for course materials and more information.
+
+{{< include _instances.qmd >}}

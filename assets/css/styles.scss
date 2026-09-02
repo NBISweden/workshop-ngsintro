@@ -190,8 +190,8 @@ div.callout-important .callout-icon::before {
 .workshop-list {
  display: grid;
  grid-template-columns: repeat(2, 1fr);
- gap: 1rem;
- margin-top: 2em;
+ gap: 0.65rem;
+ margin-top: 1.25rem;
 }
 
 @media (min-width: 42em) {
@@ -213,8 +213,212 @@ div.callout-important .callout-icon::before {
 
 .workshop-item a {
  display: block;
- padding: 1rem;
+ padding: 0.7rem;
  text-align: center;
+}
+
+/* landing page */
+
+.workshop-intro {
+ max-width: 46rem;
+ margin: 0 0 2rem;
+ padding-left: 1.25rem;
+ border-left: 0.25rem solid $primary;
+ font-size: 1.15rem;
+ line-height: 1.55;
+ color: #344554;
+}
+
+.topic-grid {
+ display: grid;
+ grid-template-columns: repeat(4, minmax(0, 1fr));
+ gap: 0.75rem;
+ margin: 1rem 0 2rem;
+ counter-reset: topic;
+}
+
+.topic-item {
+ padding: 1.1rem;
+ border: 1px solid #dce3e7;
+ border-top: 0.3rem solid $primary;
+ border-radius: 0.25rem;
+ background: #fff;
+ box-shadow: 0 0.2rem 0.8rem rgba(28, 40, 51, 0.06);
+ counter-increment: topic;
+}
+
+.topic-item::before {
+ content: "0" counter(topic);
+ display: block;
+ margin-bottom: 0.7rem;
+ font-size: 0.75rem;
+ font-weight: 700;
+ color: #6a7780;
+}
+
+.topic-item h3 {
+ margin: 0 0 0.5rem;
+ font-size: 1rem;
+}
+
+.topic-item p {
+ margin: 0;
+ font-size: 0.9rem;
+ color: #53616b;
+ line-height: 1.45;
+}
+
+.workshop-facts {
+ display: grid;
+ grid-template-columns: repeat(4, minmax(0, 1fr));
+ margin: 0 0 2.5rem;
+ padding: 1.1rem 0;
+ border-top: 1px solid $secondary;
+ border-bottom: 1px solid $secondary;
+ background: linear-gradient(90deg, rgba($tertiary, 0.75), rgba(#edf2f5, 0.65));
+}
+
+.workshop-fact {
+ padding: 0 1.25rem;
+ border-right: 1px solid $secondary;
+ font-size: 0.9rem;
+ color: #53616b;
+}
+
+.workshop-fact:last-child {
+ border-right: 0;
+}
+
+.workshop-fact p {
+ margin: 0;
+}
+
+.workshop-fact strong {
+ display: block;
+ margin-bottom: 0.25rem;
+ font-size: 1rem;
+ color: #344f22;
+}
+
+.details-grid {
+ display: grid;
+ grid-template-columns: repeat(2, minmax(0, 1fr));
+ gap: 2.5rem;
+ margin-bottom: 2.5rem;
+}
+
+.details-section p {
+ font-size: 0.95rem;
+ line-height: 1.55;
+}
+
+.detail-list ul {
+ margin: 0;
+ padding: 0;
+ list-style: none;
+}
+
+.detail-list li {
+ position: relative;
+ margin: 0;
+ padding: 0.35rem 0 0.35rem 1rem;
+ border-bottom: 1px solid #e3e8eb;
+ font-size: 0.85rem;
+ line-height: 1.35;
+}
+
+.detail-list li::before {
+ content: "";
+ position: absolute;
+ top: 0.78rem;
+ left: 0;
+ width: 0.35rem;
+ height: 0.35rem;
+ background: $primary;
+}
+
+.detail-list li:last-child {
+ border-bottom: 0;
+}
+
+.detail-list strong {
+ color: #344f22;
+}
+
+.details-section > p:last-child {
+ margin: 0.45rem 0 0;
+ font-size: 0.85rem;
+ color: #53616b;
+}
+
+.workshop-item .btn {
+ border: 1px solid transparent;
+}
+
+.workshop-item .btn:hover {
+ border-color: $secondary;
+ background-color: lighten($tertiary, 4%);
+}
+
+.workshop-item a {
+ font-weight: 700;
+}
+
+@media (max-width: 48em) {
+ .details-grid {
+  grid-template-columns: 1fr;
+ }
+
+ .topic-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+ }
+
+ .topic-item {
+  min-height: auto;
+ }
+
+ .workshop-facts {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+ }
+
+ .workshop-fact {
+  padding: 1rem;
+ }
+
+ .workshop-fact:nth-child(2) {
+  border-right: 0;
+ }
+
+ .workshop-fact:nth-child(-n + 2) {
+  border-bottom: 1px solid $secondary;
+ }
+}
+
+@media (max-width: 30em) {
+ .workshop-intro {
+  margin-bottom: 2.25rem;
+  font-size: 1rem;
+  line-height: 1.5;
+ }
+
+ .topic-grid {
+  display: flex;
+  gap: 0.65rem;
+  margin-right: -1rem;
+  padding-right: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+ }
+
+ .topic-item {
+  flex: 0 0 82%;
+  scroll-snap-align: start;
+ }
+
+ .workshop-fact {
+  font-size: 0.8rem;
+ }
 }
 
 /* logo */

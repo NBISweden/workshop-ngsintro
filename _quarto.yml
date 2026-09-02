@@ -24,13 +24,6 @@ format:
     include-in-header: "assets/include_head.html"
     theme: "assets/css/styles.scss"
     title-block-banner: "assets/images/banner.webp"
-    number-sections: false
-    anchor-sections: false
-    pagetitle: "NBIS Workshop • Introduction to Bioinformatics using NGS data"
-    title: "Introduction to Bioinformatics using NGS data"
-    subtitle: "NBIS Workshop"
-    toc: false
-    date: ""
     sidebar: false
 
 filters:
