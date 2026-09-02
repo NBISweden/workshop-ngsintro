@@ -578,14 +578,14 @@
     "href": "index.html",
     "title": "",
     "section": "",
-    "text": "Working on the Linux command line\nSequence data formats and QC\nDNA variant calling workflow\nRNA sequence analyses workflow\n\n\nUpdated: 31-08-2026 at 20:33:28."
+    "text": "Working on the Linux command line\nSequence data formats and QC\nDNA variant calling workflow\nRNA sequence analyses workflow\n\n\nUpdated: 02-09-2026 at 18:05:20."
   },
   {
     "objectID": "index.html#introduction-to-bioinformatics-using-ngs-data",
     "href": "index.html#introduction-to-bioinformatics-using-ngs-data",
     "title": "",
     "section": "",
-    "text": "Working on the Linux command line\nSequence data formats and QC\nDNA variant calling workflow\nRNA sequence analyses workflow\n\n\nUpdated: 31-08-2026 at 20:33:28."
+    "text": "Working on the Linux command line\nSequence data formats and QC\nDNA variant calling workflow\nRNA sequence analyses workflow\n\n\nUpdated: 02-09-2026 at 18:05:20."
   },
   {
     "objectID": "home_schedule.html",
@@ -802,7 +802,7 @@
     "href": "topics/demo/index.html#shortcodes",
     "title": "Demo Lab",
     "section": "15 Shortcodes",
-    "text": "15 Shortcodes\nShortcodes are sort of like quarto functions.\nTwo important shortcodes are meta and var. meta allows to read metadata from the yaml block in the current page or from _quarto.yml. Here are a few examples:\n{{&lt; meta title &gt;}} Demo Lab\n{{&lt; meta description &gt;}} This is a demo quarto lab document to showcase the theme, style and usage.\nSimilarly, var allows to read variables from _variables.yml if it has been defined. The include shortcode allows to add a child qmd document into a specific position in a qmd file. The kbd shortcode allows keyboard notations:\nPress {{&lt; kbd Shift-Ctrl-P &gt;}} Press Shift-Ctrl-PShift-Ctrl-P\nThe video shortcode allows to embed a video.\n{{&lt; video https://www.youtube.com/watch?v=_f3latmOhew &gt;}}\n\nSome of the custom shortcodes added with this template are:\n{{&lt; meta quarto_version &gt;}} 1.10.18\n{{&lt; meta current_date &gt;}} 31-08-2026\n{{&lt; meta current_year &gt;}} 2026\n{{&lt; meta current_time &gt;}} 20:33:29\nShortcodes are documented here."
+    "text": "15 Shortcodes\nShortcodes are sort of like quarto functions.\nTwo important shortcodes are meta and var. meta allows to read metadata from the yaml block in the current page or from _quarto.yml. Here are a few examples:\n{{&lt; meta title &gt;}} Demo Lab\n{{&lt; meta description &gt;}} This is a demo quarto lab document to showcase the theme, style and usage.\nSimilarly, var allows to read variables from _variables.yml if it has been defined. The include shortcode allows to add a child qmd document into a specific position in a qmd file. The kbd shortcode allows keyboard notations:\nPress {{&lt; kbd Shift-Ctrl-P &gt;}} Press Shift-Ctrl-PShift-Ctrl-P\nThe video shortcode allows to embed a video.\n{{&lt; video https://www.youtube.com/watch?v=_f3latmOhew &gt;}}\n\nSome of the custom shortcodes added with this template are:\n{{&lt; meta quarto_version &gt;}} 1.10.18\n{{&lt; meta current_date &gt;}} 02-09-2026\n{{&lt; meta current_year &gt;}} 2026\n{{&lt; meta current_time &gt;}} 18:05:21\n{{&lt; meta output-dir &gt;}} /work/2611\nAdditional functionality was added to read metadata from website, project and format blocks in _quarto.yml.\n{{&lt; meta website.site-url &gt;}} https://nbisweden.github.io/workshop-ngsintro/\n{{&lt; meta project.type &gt;}} website\n{{&lt; meta format.html.quarto-required &gt;}} &gt;=1.9.38\nShortcodes are documented here."
   },
   {
     "objectID": "topics/demo/index.html#accordions",
