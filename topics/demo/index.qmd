@@ -1111,6 +1111,13 @@ Some of the custom shortcodes added with this template are:
 `{{{< meta current_date >}}}` {{< meta current_date >}}  
 `{{{< meta current_year >}}}` {{< meta current_year >}}  
 `{{{< meta current_time >}}}` {{< meta current_time >}}  
+`{{{< meta output-dir >}}}` {{< meta output-dir >}}  
+
+Additional functionality was added to read metadata from **website**, **project** and **format** blocks in `_quarto.yml`.
+
+`{{{< meta website.site-url >}}}` {{< meta website.site-url >}}  
+`{{{< meta project.type >}}}` {{< meta project.type >}}  
+`{{{< meta format.html.quarto-required >}}}` {{< meta format.html.quarto-required >}}  
 
 Shortcodes are documented [here](https://quarto.org/docs/authoring/shortcodes.html).
 

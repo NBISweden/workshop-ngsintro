@@ -63,18 +63,7 @@ jobs:
           cd tmprepo
 
           # Create index file
-          cat > index.qmd <<'EOF'
-          An introductory workshop on applied bioinformatic next-generation sequence analyses covering the followings major topics:
-
-          - Working on the UNIX/LINUX command line
-          - Bioinformatic/NGS data formats and QC
-          - DNA variant calling workflow essentials
-          - RNA sequence analysis workflow essentials
-
-          <hr>
-
-          Select a workshop instance below for more information.
-          
+          cat > _instances.qmd <<'EOF'
           <div class='workshop-list'>
           EOF
           mapfile -t dirs < <(find . -maxdepth 1 -type d -regextype posix-extended -regex './[0-9]{4}' -printf '%f\n' | sort -r)
@@ -88,9 +77,9 @@ jobs:
             # This date calculation supports workshop directories from 2000 onward.
             printf -v date_spec '2000-01-01 +%s years +%s months -1 day' "${directory:0:2}" "${directory:2}"
             formatted_date=$(date -d "${date_spec}" +'%Y %b')
-            printf "<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://${GITHUB_REPOSITORY_OWNER}.github.io/${REPO}/${directory}/'>%s</a></span></div>\n" "${formatted_date}" >> index.qmd
+            printf "<div class='workshop-item'><span class='btn btn-tertiary'><a href='https://${GITHUB_REPOSITORY_OWNER}.github.io/${REPO}/${directory}/'>%s</a></span></div>\n" "${formatted_date}" >> _instances.qmd
           done
-          printf '</div>\n' >> index.qmd
+          printf '</div>\n' >> _instances.qmd
 
           # Render
           docker run --rm -u "$(id -u):$(id -g)" -e HOME=/work -v "/usr/share/zoneinfo/${TZ}:/etc/localtime:ro" -v "${PWD}:/work" "${{ env.IMAGE }}" quarto render /work/index.qmd
