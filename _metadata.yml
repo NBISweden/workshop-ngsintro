@@ -20,54 +20,6 @@ id_slurm_res_wed: "edu26-xx-xx"
 id_slurm_res_thu: "edu26-xx-xx"
 id_slurm_res_fri: "edu26-xx-xx"
 
-# location is used to render the info page
-# location options are linkoping, lund, umea, stockholm, uppsala or online
-# one or more separated by commas or semicolon.
-location: uppsala
-assistants:
- - "AJ: Anna Johansson"
- - "BV: Björn Viklund"
- - "CK: Cormac Kinsella"
- - "DA: Dag Ahren"
- - "DE: Diana Ekman"
- - "EB: Emre Balsever"
- - "FB: Franziska Bonath"
- - "FR: Fariba Roshanzamir"
- - "GD: Guilherme Dias"
- - "JD: Jyotirmoy Das"
- - "JH: Jason Hill"
- - "JB: Joakim Bygdell"
- - "JT: Jeanette Tångrot"
- - "KG: Karl Grönberg"
- - "KL: Katarina Lejonlid"
- - "KB: Kristina Benevides"
- - "LE: Leslie Solorzano"
- - "LK: Linda Köhn"
- - "LA: Lore Ament"
- - "LV: Louella Vasquez"
- - "LS: Lucile Soler"
- - "MD: Martin Dahlö"
- - "MG: Maxime Garcia"
- - "ML: Malin Larsson"
- - "MM: Markus Mayrhofer"
- - "MX: Marcel Martin"
- - "MP: Martin Pippel"
- - "MR: Miguel Redondo"
- - "MV: Massimiliano Volpe"
- - "NN: Nina Norgren"
- - "OP: Olga Vinnere Pettersson"
- - "PA: Prasoon Agarwal"
- - "PP: Paul Pyl"
- - "RF: Roy Francis"
- - "SD: Sebastian DiLorenzo"
- - "SS: Snaevar Sigurdsson"
- - "VK: Varsith Konda"
- - "YL: Yuan Li"
-schedule_message: "Breaks are planned for approximately 10:15 and 15:00 every day. Note that the presentations and videos may not be in sync because the presentations were updated while the videos are from previous workshops."
-colors:
-  primary: "#95b540"
-  secondary: "#E9F2D1"
-
 # map markers information
 # markdown is supported in tooltip and popup, use <br> for new lines
 # leaflet map is enabled through quarto extension https://github.com/royfrancis/quarto-leaflet which supports fontawesome icons
