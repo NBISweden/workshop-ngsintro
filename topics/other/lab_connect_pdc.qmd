@@ -184,7 +184,7 @@ This is a one-time setup. Next time you can just click on the session you create
 ## Remote desktop
 
 ::: {.callout-note}
-Note that SSH keys need to be setup before you can use ThinLinc on PDC. If you have not done this, please follow the instructions to set up SHH keys either through the terminal or MobaXterm. There are a limited number of ThinLinc licenses, so it's possible that you might not be able to connect if all licenses are in use. If you are unable to connect, simply try again later.
+Note that SSH keys need to be setup before you can use ThinLinc on PDC. If you have not done this, please follow the instructions to set up SSH keys either through the terminal or MobaXterm. There are a limited number of ThinLinc licenses, so it's possible that you might not be able to connect if all licenses are in use. If you are unable to connect, simply try again later.
 :::
 
 You can work on PDC interactively through a graphical-user-interface (GUI) desktop environment using ThinLinc. This should work for all OS ({{< fa brands ubuntu >}} {{< fa brands apple >}} {{< fa brands windows >}}).

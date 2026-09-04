@@ -14,7 +14,7 @@ The first step of this lab is to open a ssh connection to PDC. Please refer to [
 Usually you would do most of the work in this lab directly on one of the login nodes, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
 
 ```sh
-salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_tue >}} -t 08:00:00 -p shared -n 1
+salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_tue >}} -t 07:00:00 -p shared -n 1
 ```
 
 check which node you got (replace `username` with your username)
@@ -67,7 +67,7 @@ This will print a file tree, which gives you a nice overview of the folders wher
 
 ## Run pipeline
 
-The best way to see all the different file formats is to run a small pipeline and see which files we encounter along the way. The pipeline is roughly the same steps you'll do in the variant-calling part of the course, so for now we'll stick with the dummy pipeline which some of you might have encountered in the [extra material](../hpc/pipeline/lab_hpc_pipeline.html) for the HPC exercise.
+The best way to see all the different file formats is to run a small pipeline and see which files we encounter along the way. The pipeline is roughly the same steps you'll do in the variant-calling part of the course, so for now we'll stick with the dummy pipeline which some of you might have encountered in the [extra material](../hpc/pipeline/lab_pipeline.html) for the HPC exercise.
 
 The programs in the dummy pipeline does not actually do any analysis but they work the same way as the real deal, although slightly simplified, to get you familiar with how to work with analysis programs. The data is from a sequencing of the adenovirus genome, which is tiny compared to the human genome (36kb vs 3gb).
 

@@ -94,17 +94,17 @@ format:
     fig-align: left
     chalkboard: true
     callout-icon: true
-    hero: "/assets/images/slide-hero.webp"
+    hero: "assets/images/slide-hero.webp"
     title-slide-attributes:
-      data-background-image: "/assets/images/cover.webp"
+      data-background-image: "assets/images/cover.webp"
       data-background-size: "cover"
       data-background-opacity: "1"
-    header-logo-left: /assets/logos/nbis.png
+    header-logo-left: assets/logos/nbis.png
     header-logo-left-height: 25px
-    header-logo-left-url: "https://nbisweden.github.io/workshop-ngsintro/2603/home_contents.html"
-    header-logo-right: /assets/logos/scilifelab.png
+    header-logo-left-url: "https://nbisweden.github.io/workshop-ngsintro/2611/home_contents.html"
+    header-logo-right: assets/logos/scilifelab.png
     header-logo-right-height: 25px
-    header-logo-right-url: "https://nbisweden.github.io/workshop-ngsintro/2603/home_schedule.html"
+    header-logo-right-url: "https://nbisweden.github.io/workshop-ngsintro/2611/home_schedule.html"
     template-partials:
       - "assets/title-slide.html"
     pointer:

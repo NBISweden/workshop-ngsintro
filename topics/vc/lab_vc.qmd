@@ -336,7 +336,7 @@ The folder you created will be referred to as *local workspace* in this lab.
 #### Download the bam file
 
 You need to download the bam file and the corresponding .bai file to your laptop.
-Navigate to your [local workspace](#preparelaptop) (do not log in to Dardel).
+Navigate to your local workspace (do not log in to Dardel).
 Copy the .bam and .bam.bai files you just generated with this command (replace `username` with your username):
 
 ```sh

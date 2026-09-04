@@ -51,7 +51,7 @@ docker run --rm -v ${PWD}:/work ghcr.io/quarto-dev/quarto:latest quarto render /
 ### Convert HTML slides to PDF
 
 ```
-docker run --platform=linux/amd64 -v $PWD:/work astefanutti/decktape https://nbisweden.github.io/workshop-ngsintro/2511/topics/rnaseq/slide_rnaseq.html /work/slide_rnaseq.pdf
+docker run --platform=linux/amd64 -v $PWD:/work astefanutti/decktape https://nbisweden.github.io/workshop-ngsintro/2611/topics/rnaseq/slide_rnaseq.html /work/slide_rnaseq.pdf
 ```
 
 ### Serving and automatic rendering
