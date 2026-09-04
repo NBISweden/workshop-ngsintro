@@ -10,6 +10,7 @@ project:
     - "!tmprepo"
     - "!*.Rmd"
     - "!*.md"
+    - "404.md"
     - "*.qmd"
 
 website:
