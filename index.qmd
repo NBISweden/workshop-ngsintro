@@ -2,7 +2,8 @@
 title: "Introduction to Bioinformatics using NGS data"
 pagetitle: "NBIS Workshop • Introduction to Bioinformatics using NGS data"
 subtitle: "NBIS Workshop"
-description: "A practical, hands-on introduction to NGS analysis on a high-performance computing cluster"
+description: "A five day introductory workshop for beginners in the analysis of illumina short-read next-generation sequencing data which includes lectures and hands-on labs on a remote high-performance cluster. Topics covered include: working on the Linux command line, overview of sequence data formats and QC, DNA variant calling workflow and bulk RNA-seq analyses workflow."
+image: "assets/images/seo.webp"
 toc: false
 date: ""
 number-sections: false
@@ -45,9 +46,9 @@ Spring and autumn
 :::
 
 ::: {.workshop-fact}
-**Online or on-site**
+**Venue**
 
-Online in Spring; Uppsala in Autumn
+Online in Spring, Uppsala in Autumn
 :::
 
 ::: {.workshop-fact}
