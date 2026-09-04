@@ -211,7 +211,7 @@ background-size: cover;
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">02-Sep-2026</p>
+        <p class="date">04-Sep-2026</p>
       </div>
     </div>
     
@@ -256,7 +256,7 @@ background-size: cover;
 <section id="logon-to-a-node" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="logon-to-a-node"><span class="header-section-number">2</span> Logon to a node</h2>
 <p>Usually you would do most of the work in this lab directly on one of the login nodes, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">salloc</span> <span class="at">-A</span> naiss2026-xx-xx <span class="at">--reservation</span><span class="op">=</span>edu26-xx-xx <span class="at">-t</span> 08:00:00 <span class="at">-p</span> shared <span class="at">-n</span> 1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">salloc</span> <span class="at">-A</span> naiss2026-xx-xx <span class="at">--reservation</span><span class="op">=</span>edu26-xx-xx <span class="at">-t</span> 07:00:00 <span class="at">-p</span> shared <span class="at">-n</span> 1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>check which node you got (replace <code>username</code> with your username)</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">-u</span> username</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>should look something like this</p>
@@ -285,7 +285,7 @@ background-size: cover;
 </section>
 <section id="run-pipeline" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="run-pipeline"><span class="header-section-number">4</span> Run pipeline</h2>
-<p>The best way to see all the different file formats is to run a small pipeline and see which files we encounter along the way. The pipeline is roughly the same steps you’ll do in the variant-calling part of the course, so for now we’ll stick with the dummy pipeline which some of you might have encountered in the <a href="../hpc/pipeline/lab_hpc_pipeline.html">extra material</a> for the HPC exercise.</p>
+<p>The best way to see all the different file formats is to run a small pipeline and see which files we encounter along the way. The pipeline is roughly the same steps you’ll do in the variant-calling part of the course, so for now we’ll stick with the dummy pipeline which some of you might have encountered in the <a href="../hpc/pipeline/lab_pipeline.html">extra material</a> for the HPC exercise.</p>
 <p>The programs in the dummy pipeline does not actually do any analysis but they work the same way as the real deal, although slightly simplified, to get you familiar with how to work with analysis programs. The data is from a sequencing of the adenovirus genome, which is tiny compared to the human genome (36kb vs 3gb).</p>
 <p>The starting point of the pipeline are fresh reads from the sequencing machine in fastq format, and a reference genome in fasta format. The goal of the exercise is to look at our aligned reads in a genome viewer together with the annotations of the adenovirus genome.</p>
 <p>First, let’s go through the steps of the pipeline:</p>
