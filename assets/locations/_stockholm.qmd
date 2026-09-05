@@ -2,7 +2,7 @@
 
 ## Address
 
-{{< fa location-dot >}} Room Air & Fire  
+Room Air & Fire  
 Ground floor  
 [Science for Life Laboratory Stockholm](https://www.scilifelab.se/about-us/campus-solna/)  
 Tomtebodavägen 23A  
