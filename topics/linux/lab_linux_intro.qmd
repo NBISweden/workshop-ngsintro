@@ -206,7 +206,7 @@ If you are unable to copy the files on PDC, you can [download the files from thi
 wget -P ~/analysis/ http://somewhere.com/my.file
 
 # or download the file to where you are standing by not specifying a prefix
-wget {{< meta website.site-url >}}{{< meta output-dir >}}/topics/linux/assets/files.tar.gz
+wget {{< meta custom.website.site-url >}}{{< meta output-dir >}}/topics/linux/assets/files.tar.gz
 ```
 
 ## Unpack files

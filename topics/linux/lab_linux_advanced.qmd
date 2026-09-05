@@ -96,7 +96,7 @@ If you see files, the copying was successful.
 If you for some reason have problems copying the files, or if you are not on the cluster when running this lab, you can download these files [here](assets/linux_advanced.tar.gz). You can download and unpack the file using the commands below: 
 
 ```sh
-wget {{< meta website.site-url >}}{{< meta output-dir >}}/topics/linux/assets/linux_advanced.tar.gz
+wget {{< meta custom.website.site-url >}}{{< meta output-dir >}}/topics/linux/assets/linux_advanced.tar.gz
 mkdir -p {{< meta path_workspace >}}
 tar -C {{< meta path_workspace >}} -xzvf linux_advanced.tar.gz
 ```
