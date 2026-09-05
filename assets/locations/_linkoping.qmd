@@ -2,7 +2,7 @@
 
 ## Address
 
-{{< fa location-dot >}} LiU Campus Universitetssjukhuset  
+LiU Campus Universitetssjukhuset  
 58225 Linköping  
 Sweden  
 

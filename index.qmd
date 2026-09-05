@@ -33,6 +33,8 @@ RNA sequence analyses workflow
 
 :::
 
+---
+
 ::: small
 Updated: {{< meta current_date >}} at {{< meta current_time >}}.
 :::

@@ -64,7 +64,7 @@ Custom character sizes. This is an enhanced feature.
 |`x^2^`|x^2^|
 |`--`|--|
 |`---`|---|
-|`[link](r-project.org)`|[link](r-project.org)|
+|`[link](https://example.com/)`|[link](https://example.com/)|
 |`{{{< kbd Shift-Ctrl-P >}}}`|{{< kbd Shift-Ctrl-P >}}|
 
 ### Blockquote
@@ -147,13 +147,13 @@ Here is how badges are defined:
 `[badge]{.badge}`  [badge]{.badge}  
 `[badge]{.badge .badge-primary}`  [badge]{.badge .badge-primary}  
 `[badge]{.badge .badge-secondary}`  [badge]{.badge .badge-secondary}  
-`[badge]{.badge .badge-tertiary}`  [badge]{.badge .badge-tertiary}
+`[badge]{.badge .badge-tertiary}`  [badge]{.badge .badge-tertiary}  
 
 Links inside badges.
 
 `[[link](url)]{.badge .badge-primary}`  [[link](url)]{.badge .badge-primary}  
 `[[link](url)]{.badge .badge-secondary}`  [[link](url)]{.badge .badge-secondary}  
-`[[link](url)]{.badge .badge-tertiary}`  [[link](url)]{.badge .badge-tertiary}
+`[[link](url)]{.badge .badge-tertiary}`  [[link](url)]{.badge .badge-tertiary}  
 
 ## Code formatting
 
@@ -363,7 +363,7 @@ Using regular markdown.
 The dimensions are based on image and/or fill up the entire available space. You can control the dimension as shown below.
 
 ```
-![This is a caption](assets/featured.webp){width=30%}  
+![This is a caption](assets/featured.webp){width=30%}
 ```
 
 ![This is a caption](assets/featured.webp){width="30%"}
@@ -483,13 +483,13 @@ $$\int_0^{2\pi} \sin x~dx$$
 ::: {.g-col-6}
 
 ```
-$\left( \sum_{i=1}^{n}{i} \right)^2 = \left( \frac{n(n-1)}{2}\right)^2 = \frac{n^2(n-1)^2}{4}$
+$\left( \sum_{i=1}^{n}{i} \right)^2 = \left( \frac{n(n+1)}{2}\right)^2 = \frac{n^2(n+1)^2}{4}$
 ```
 
 :::
 ::: {.g-col-6}
 
-$\left( \sum_{i=1}^{n}{i} \right)^2 = \left( \frac{n(n-1)}{2}\right)^2 = \frac{n^2(n-1)^2}{4}$
+$\left( \sum_{i=1}^{n}{i} \right)^2 = \left( \frac{n(n+1)}{2}\right)^2 = \frac{n^2(n+1)^2}{4}$
 
 :::
 :::
@@ -1112,12 +1112,13 @@ Some of the custom shortcodes added with this template are:
 `{{{< meta current_year >}}}` {{< meta current_year >}}  
 `{{{< meta current_time >}}}` {{< meta current_time >}}  
 `{{{< meta output-dir >}}}` {{< meta output-dir >}}  
+`{{{< meta output-dir-path >}}}` {{< meta output-dir-path >}}  
 
-Additional functionality was added to read metadata from **website**, **project** and **format** blocks in `_quarto.yml`.
+Additional functionality was added to read **website**, **project** and **format** blocks from `_quarto.yml` under the **custom** metadata key.
 
-`{{{< meta website.site-url >}}}` {{< meta website.site-url >}}  
-`{{{< meta project.type >}}}` {{< meta project.type >}}  
-`{{{< meta format.html.quarto-required >}}}` {{< meta format.html.quarto-required >}}  
+`{{{< meta custom.website.site-url >}}}` {{< meta custom.website.site-url >}}  
+`{{{< meta custom.project.type >}}}` {{< meta custom.project.type >}}  
+`{{{< meta custom.format.html.quarto-required >}}}` {{< meta custom.format.html.quarto-required >}}  
 
 Shortcodes are documented [here](https://quarto.org/docs/authoring/shortcodes.html).
 

@@ -2,7 +2,7 @@
 
 ## Address
 
-{{< fa location-dot >}} Room UB341  
+Room UB341  
 Universitetsbibioteket plan 3  
 Umeå University  
 901 87 Umeå  
