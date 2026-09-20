@@ -71,7 +71,7 @@ format:
     fig-align: left
     title-block-banner: "assets/images/banner.webp"
     callout-icon: true
-    date:  last-modified
+    date: last-modified
     date-format: "DD-MMM-YYYY"
     lightbox: auto
   revealjs:
@@ -124,7 +124,7 @@ execute:
   freeze: true
 
 metadata-files:
-  - "_metadata.yml"
+  - _metadata.yml
 
 filters:
   - assets/custom.lua

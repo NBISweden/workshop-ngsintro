@@ -691,23 +691,23 @@ This content is behind an accordion.
 :::
 ```
 
-::: callout-note
+::: {.callout-note}
 This is a call-out.
 :::
 
-::: callout-warning
+::: {.callout-warning}
 This is a call-out.
 :::
 
-::: callout-important
+::: {.callout-important}
 This is a call-out.
 :::
 
-::: callout-tip
+::: {.callout-tip}
 This is a call-out.
 :::
 
-::: callout-caution
+::: {.callout-caution}
 This is a call-out.
 :::
 
