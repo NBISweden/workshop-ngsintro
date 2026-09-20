@@ -15,6 +15,11 @@ toastui:
     isReadOnly: true
     height: 980px
     timegridHeight: 900px
+    eventDetailItems:
+      - attendees
+    popupDetailItems:
+      - attendees
+      - calendar
     week:
       workweek: true
       taskView: false
@@ -48,4 +53,5 @@ format:
   html
 ---
 
+<!-- Remember to set first schedule date in the YAML above -->
 {{< toastui schedule >}}
