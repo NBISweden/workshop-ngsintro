@@ -80,10 +80,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-5cb467f805ac08d84b40d2cabe0cf67d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-1d7419975391f8d34029e70c3403f21d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-c27f74b90f810c982149e71658b5a0b6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-935da73e274fe844855681cea63cbb44.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="../../site_libs/quarto-contrib/kbd/kbd.js"></script>
 <link href="../../site_libs/quarto-contrib/kbd/kbd.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/accordion/accordion.css" rel="stylesheet">
@@ -179,8 +179,8 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../assets/logos/nbis-scilifelab.png" alt="logo" class="navbar-logo light-content">
-    <img src="../../assets/logos/nbis-scilifelab.png" alt="logo" class="navbar-logo dark-content">
+    <img src="../../assets/logos/nbis-scilifelab.png" alt="nbis scilifelab logo" class="navbar-logo light-content">
+    <img src="../../assets/logos/nbis-scilifelab.png" alt="nbis scilifelab logo" class="navbar-logo dark-content">
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -211,7 +211,7 @@ window.Quarto = {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../home_faq.html"> 
-<span class="menu-text">FAQ</span></a>
+<span class="menu-text">FAQs</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../home_info.html"> 
@@ -255,7 +255,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">04-Sep-2026</p>
+        <p class="date">20-Sep-2026</p>
       </div>
     </div>
     
@@ -434,8 +434,8 @@ window.Quarto = {
 <td>—</td>
 </tr>
 <tr class="even">
-<td><code>[link](r-project.org)</code></td>
-<td><a href="r-project.org">link</a></td>
+<td><code>[link](https://example.com/)</code></td>
+<td><a href="https://example.com/">link</a></td>
 </tr>
 <tr class="odd">
 <td><code>{{&lt; kbd Shift-Ctrl-P &gt;}}</code></td>
@@ -674,7 +674,7 @@ date()
 <pre><code>![](assets/featured.webp)</code></pre>
 <p><a href="assets/featured.webp" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="assets/featured.webp" class="img-fluid"></a></p>
 <p>The dimensions are based on image and/or fill up the entire available space. You can control the dimension as shown below.</p>
-<pre><code>![This is a caption](assets/featured.webp){width=30%}  </code></pre>
+<pre><code>![This is a caption](assets/featured.webp){width=30%}</code></pre>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><a href="assets/featured.webp" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="This is a caption"><img src="assets/featured.webp" class="img-fluid figure-img" style="width:30.0%" alt="This is a caption"></a></p>
@@ -773,10 +773,10 @@ Figure&nbsp;1: These figures are interesting.
 </div>
 <div class="grid">
 <div class="g-col-6">
-<pre><code>$\left( \sum_{i=1}^{n}{i} \right)^2 = \left( \frac{n(n-1)}{2}\right)^2 = \frac{n^2(n-1)^2}{4}$</code></pre>
+<pre><code>$\left( \sum_{i=1}^{n}{i} \right)^2 = \left( \frac{n(n+1)}{2}\right)^2 = \frac{n^2(n+1)^2}{4}$</code></pre>
 </div>
 <div class="g-col-6">
-<p><span class="math inline">\(\left( \sum_{i=1}^{n}{i} \right)^2 = \left( \frac{n(n-1)}{2}\right)^2 = \frac{n^2(n-1)^2}{4}\)</span></p>
+<p><span class="math inline">\(\left( \sum_{i=1}^{n}{i} \right)^2 = \left( \frac{n(n+1)}{2}\right)^2 = \frac{n^2(n+1)^2}{4}\)</span></p>
 </div>
 </div>
 <div class="grid">
@@ -1389,14 +1389,15 @@ This is some material for topic 2.
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/_f3latmOhew" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 <p>Some of the custom shortcodes added with this template are:</p>
 <p><code>{{&lt; meta quarto_version &gt;}}</code> 1.10.18<br>
-<code>{{&lt; meta current_date &gt;}}</code> 04-09-2026<br>
+<code>{{&lt; meta current_date &gt;}}</code> 20-09-2026<br>
 <code>{{&lt; meta current_year &gt;}}</code> 2026<br>
-<code>{{&lt; meta current_time &gt;}}</code> 23:21:57<br>
-<code>{{&lt; meta output-dir &gt;}}</code> /work/2611</p>
-<p>Additional functionality was added to read metadata from <strong>website</strong>, <strong>project</strong> and <strong>format</strong> blocks in <code>_quarto.yml</code>.</p>
-<p><code>{{&lt; meta website.site-url &gt;}}</code> https://nbisweden.github.io/workshop-ngsintro/<br>
-<code>{{&lt; meta project.type &gt;}}</code> website<br>
-<code>{{&lt; meta format.html.quarto-required &gt;}}</code> &gt;=1.9.38</p>
+<code>{{&lt; meta current_time &gt;}}</code> 21:31:59<br>
+<code>{{&lt; meta output-dir &gt;}}</code> 2611<br>
+<code>{{&lt; meta output-dir-path &gt;}}</code> /work/2611</p>
+<p>Additional functionality was added to read <strong>website</strong>, <strong>project</strong> and <strong>format</strong> blocks from <code>_quarto.yml</code> under the <strong>custom</strong> metadata key.</p>
+<p><code>{{&lt; meta custom.website.site-url &gt;}}</code> https://nbisweden.github.io/workshop-ngsintro/<br>
+<code>{{&lt; meta custom.project.type &gt;}}</code> website<br>
+<code>{{&lt; meta custom.format.html.quarto-required &gt;}}</code> &gt;=1.9.38</p>
 <p>Shortcodes are documented <a href="https://quarto.org/docs/authoring/shortcodes.html">here</a>.</p>
 </section>
 <section id="accordions" class="level2" data-number="16">

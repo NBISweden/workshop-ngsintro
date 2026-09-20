@@ -44,10 +44,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-5cb467f805ac08d84b40d2cabe0cf67d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-1d7419975391f8d34029e70c3403f21d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-c27f74b90f810c982149e71658b5a0b6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-935da73e274fe844855681cea63cbb44.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/toastui-calendar-2.1.3/toastui-calendar.min.js"></script>
 <link href="site_libs/quarto-contrib/toastui-calendar-2.1.3/toastui-calendar.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/toastui-calendar-2.1.3/toastui.css" rel="stylesheet">
@@ -105,8 +105,8 @@ background-size: cover;
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./assets/logos/nbis-scilifelab.png" alt="logo" class="navbar-logo light-content">
-    <img src="./assets/logos/nbis-scilifelab.png" alt="logo" class="navbar-logo dark-content">
+    <img src="./assets/logos/nbis-scilifelab.png" alt="nbis scilifelab logo" class="navbar-logo light-content">
+    <img src="./assets/logos/nbis-scilifelab.png" alt="nbis scilifelab logo" class="navbar-logo dark-content">
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -137,7 +137,7 @@ background-size: cover;
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./home_faq.html"> 
-<span class="menu-text">FAQ</span></a>
+<span class="menu-text">FAQs</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./home_info.html"> 
@@ -188,6 +188,7 @@ background-size: cover;
 
 
 
+<!-- Remember to set first schedule date in the YAML above -->
 <style>#toastui-calendar-1 .toastui-calendar-timegrid { height: 900px; min-height: unset; }</style>
 <div class="toastui-calendar-wrapper">
 <div class="toastui-nav" id="toastui-calendar-1-nav">
@@ -201,15 +202,166 @@ background-size: cover;
     <button class="toastui-nav-btn toastui-view-btn" data-view="day">Day</button>
   </span>
 </div>
-<div id="toastui-calendar-1" class=" toastui-calendar-detail-popup-enabled" style="height: 980px;"></div>
+<div id="toastui-calendar-1" class="toastui-calendar-detail-popup-enabled toastui-calendar-detail-exclude-location toastui-calendar-detail-exclude-recurrence-rule toastui-calendar-detail-exclude-state toastui-calendar-detail-exclude-body" style="height: 980px;"></div>
 </div>
 <script>
 (function() {
   var opts = {"defaultView":"week","isReadOnly":true,"timezone":{"zones":[{"timezoneName":"Europe/Stockholm"}]},"usageStatistics":false,"useDetailPopup":true,"week":{"eventView":["time"],"hourEnd":21,"hourStart":9,"showNowIndicator":true,"taskView":false,"workweek":true}};
   opts.calendars = [{"backgroundColor":"#D6EAF8","borderColor":"#85C1E9","color":"inherit","dragBackgroundColor":"#D6EAF8","id":"session","name":"Session"},{"backgroundColor":"#FCF3CF","borderColor":"#F7DC6F","color":"inherit","dragBackgroundColor":"#FCF3CF","id":"free","name":"Free"},{"backgroundColor":"#E8DAEF","borderColor":"#BB8FCE","color":"inherit","dragBackgroundColor":"#E8DAEF","id":"extra","name":"Extra"}];
-  var cal = new tui.Calendar(document.getElementById("toastui-calendar-1"), opts);
+  var timeFormat = "24h";
+  var eventDetailItems = ["attendees"];
+  var popupDetailItems = ["attendees","calendar"];
+  opts.template = opts.template || {};
+  var detailItemIcons = {
+    location: 'toastui-calendar-ic-location-b',
+    recurrenceRule: 'toastui-calendar-ic-repeat-b',
+    attendees: 'toastui-calendar-ic-user-b',
+    state: 'toastui-calendar-ic-state-b',
+    calendar: 'toastui-calendar-calendar-dot'
+  };
+  var nativeDetailItems = {
+    location: true,
+    recurrenceRule: true,
+    attendees: true,
+    state: true,
+    calendar: true,
+    body: true
+  };
+  function pad(value) {
+    return String(value).padStart(2, '0');
+  }
+  function formatTime(value) {
+    var hours = value.getHours();
+    var minutes = pad(value.getMinutes());
+    if (timeFormat === '24h') {
+      return pad(hours) + ':' + minutes;
+    }
+    return (hours % 12 || 12) + ':' + minutes + (hours < 12 ? ' am' : ' pm');
+  }
+  function formatDate(value) {
+    return value.getFullYear() + '.' + pad(value.getMonth() + 1) + '.' + pad(value.getDate());
+  }
+  function isSameDate(left, right) {
+    return left.getFullYear() === right.getFullYear() &&
+      left.getMonth() === right.getMonth() &&
+      left.getDate() === right.getDate();
+  }
+  function escapeHtml(value) {
+    var replacements = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+    return String(value == null ? '' : value).replace(/[&<>"']/g, function(character) {
+      return replacements[character];
+    });
+  }
+  function eventDetailValue(event, item) {
+    if (item === 'calendar') {
+      var calendars = opts.calendars || [];
+      for (var index = 0; index < calendars.length; index++) {
+        if (calendars[index].id === event.calendarId) return calendars[index].name || '';
+      }
+      return '';
+    }
+
+    var value = event[item];
+    if (value == null && event.raw) value = event.raw[item];
+    if (Array.isArray(value)) return value.join(', ');
+    return value == null ? '' : value;
+  }
+  function renderEventDetails(event) {
+    var details = eventDetailItems.map(function(item) {
+      var value = eventDetailValue(event, item);
+      if (value === '') return '';
+      var iconClass = Object.prototype.hasOwnProperty.call(detailItemIcons, item) ? detailItemIcons[item] : '';
+      var iconStyle = item === 'calendar' && event.backgroundColor ? ' style="background-color:' + escapeHtml(event.backgroundColor) + '"' : '';
+      var icon = iconClass ? '<span class="toastui-calendar-icon toastui-calendar-event-detail-icon ' + iconClass + '"' + iconStyle + '></span>' : '';
+      var label = Object.prototype.hasOwnProperty.call(nativeDetailItems, item) ? '' : '<strong>' + escapeHtml(item) + ':</strong> ';
+      return '<span class="toastui-calendar-event-detail-item">' + icon + label + escapeHtml(value) + '</span>';
+    }).join('');
+    return details ? '<span class="toastui-calendar-event-detail-items">' + details + '</span>' : '';
+  }
+  function renderCustomPopupDetails(event) {
+    var customItems = popupDetailItems.filter(function(item) {
+      return !Object.prototype.hasOwnProperty.call(nativeDetailItems, item);
+    });
+    if (customItems.length === 0) return true;
+
+    var section = container.querySelector('.toastui-calendar-section-detail');
+    if (!section) return false;
+    section.querySelectorAll('.toastui-calendar-custom-detail-item').forEach(function(element) {
+      element.remove();
+    });
+    customItems.forEach(function(item) {
+      var value = eventDetailValue(event, item);
+      if (value === '') return;
+      var row = document.createElement('div');
+      row.className = 'toastui-calendar-detail-item toastui-calendar-custom-detail-item';
+      var label = document.createElement('strong');
+      label.textContent = item + ': ';
+      row.appendChild(label);
+      row.appendChild(document.createTextNode(String(value)));
+      section.appendChild(row);
+    });
+    return true;
+  }
+
+  opts.template.time = function(event) {
+    var title = escapeHtml(event.title);
+    var titleAndTime = event.start ? '<strong>' + formatTime(event.start) + '</strong>&nbsp;' + title : title;
+    return titleAndTime + renderEventDetails(event);
+  };
+  opts.template.timegridDisplayPrimaryTime = function(model) {
+    return formatTime(model.time);
+  };
+  opts.template.timegridDisplayTime = function(model) {
+    return formatTime(model.time);
+  };
+  opts.template.timegridNowIndicatorLabel = function(model) {
+    return formatTime(model.time);
+  };
+  opts.template.popupDetailDate = function(event) {
+    var sameDate = isSameDate(event.start, event.end);
+    if (event.isAllday) {
+      return formatDate(event.start) + (sameDate ? '' : ' - ' + formatDate(event.end));
+    }
+
+    var end = (sameDate ? '' : formatDate(event.end) + ' ') + formatTime(event.end);
+    return formatDate(event.start) + ' ' + formatTime(event.start) + ' - ' + end;
+  };
+  var container = document.getElementById("toastui-calendar-1");
+  var cal = new tui.Calendar(container, opts);
+  function fitShortTimedEvent(event) {
+    if (!event.start || !event.end || event.isAllday || event.category === 'allday') return;
+
+    var duration = event.end.getTime() - event.start.getTime();
+    var minimumDuration = 30 * 60 * 1000;
+    if (duration <= 0 || duration >= minimumDuration) return;
+
+    var weekOptions = opts.week || {};
+    var hourStart = weekOptions.hourStart == null ? 0 : Number(weekOptions.hourStart);
+    var hourEnd = weekOptions.hourEnd == null ? 24 : Number(weekOptions.hourEnd);
+    var visibleDuration = (hourEnd - hourStart) * 60 * 60 * 1000;
+    if (visibleDuration <= 0) return;
+
+    var height = duration / visibleDuration * 100;
+    if (event.id == null || event.id === '') return;
+    var eventId = String(event.id);
+    container.querySelectorAll('.toastui-calendar-event-time').forEach(function(element) {
+      if (element.getAttribute('data-event-id') !== eventId) return;
+      element.style.height = 'max(1px, calc(' + height + '% - 2px))';
+      element.style.minHeight = '0';
+      element.style.overflow = 'hidden';
+      var content = element.querySelector('.toastui-calendar-event-time-content');
+      if (content) {
+        content.style.minHeight = '0';
+        content.style.overflow = 'hidden';
+      }
+    });
+  }
+  cal.on('afterRenderEvent', fitShortTimedEvent);
   var __ev = [{"attendees":["Martin Dahlö"],"calendarId":"extra","end":"2026-11-16T09:30:00","start":"2026-11-16T09:00:00","title":"Welcome"},{"attendees":["Martin Dahlö"],"calendarId":"session","end":"2026-11-16T10:00:00","start":"2026-11-16T09:30:00","title":"Intro to Linux"},{"attendees":[],"calendarId":"free","end":"2026-11-16T10:30:00","start":"2026-11-16T10:00:00","title":"Break"},{"attendees":["Martin Dahlö"],"calendarId":"session","end":"2026-11-16T12:00:00","start":"2026-11-16T10:30:00","title":"Intro to Linux"},{"attendees":[],"calendarId":"free","end":"2026-11-16T13:00:00","start":"2026-11-16T12:00:00","title":"Lunch"},{"attendees":["Martin Dahlö"],"calendarId":"session","end":"2026-11-16T15:00:00","start":"2026-11-16T13:00:00","title":"Intro to HPC cluster"},{"attendees":[],"calendarId":"free","end":"2026-11-16T15:30:00","start":"2026-11-16T15:00:00","title":"Break"},{"attendees":["Martin Dahlö"],"calendarId":"session","end":"2026-11-16T17:00:00","start":"2026-11-16T15:30:00","title":"Intro to HPC cluster"},{"attendees":["Martin Dahlö"],"calendarId":"session","end":"2026-11-17T10:00:00","start":"2026-11-17T09:00:00","title":"File types in Bioinformatics"},{"attendees":[],"calendarId":"free","end":"2026-11-17T10:30:00","start":"2026-11-17T10:00:00","title":"Break"},{"attendees":["Martin Dahlö"],"calendarId":"session","end":"2026-11-17T11:00:00","start":"2026-11-17T10:30:00","title":"File types in Bioinformatics"},{"attendees":["Martin Dahlö"],"calendarId":"session","end":"2026-11-17T12:00:00","start":"2026-11-17T11:00:00","title":"Better terminal experience"},{"attendees":[],"calendarId":"free","end":"2026-11-17T13:00:00","start":"2026-11-17T12:00:00","title":"Lunch"},{"attendees":["Marcel Martin"],"calendarId":"session","end":"2026-11-17T14:00:00","start":"2026-11-17T13:00:00","title":"Quality control"},{"attendees":["Martin Dahlö"],"calendarId":"session","end":"2026-11-17T15:00:00","start":"2026-11-17T14:00:00","title":"Advanced Bash"},{"attendees":[],"calendarId":"free","end":"2026-11-17T15:30:00","start":"2026-11-17T15:00:00","title":"Break"},{"attendees":["Martin Dahlö"],"calendarId":"session","end":"2026-11-17T17:00:00","start":"2026-11-17T15:30:00","title":"Advanced Bash"},{"attendees":["NGI"],"calendarId":"session","end":"2026-11-18T10:00:00","start":"2026-11-18T09:00:00","title":"NGS technologies"},{"attendees":[],"calendarId":"free","end":"2026-11-18T10:30:00","start":"2026-11-18T10:00:00","title":"Break"},{"attendees":["NGI"],"calendarId":"session","end":"2026-11-18T11:30:00","start":"2026-11-18T10:30:00","title":"NGS long reads & pipelines"},{"attendees":["NGI"],"calendarId":"extra","end":"2026-11-18T12:00:00","start":"2026-11-18T11:30:00","title":"Lab tour"},{"attendees":[],"calendarId":"free","end":"2026-11-18T13:00:00","start":"2026-11-18T12:00:00","title":"Lunch"},{"attendees":["Diana Ekman"],"calendarId":"session","end":"2026-11-18T15:00:00","start":"2026-11-18T13:00:00","title":"Variant-calling workflow"},{"attendees":[],"calendarId":"free","end":"2026-11-18T15:30:00","start":"2026-11-18T15:00:00","title":"Break"},{"attendees":["Diana Ekman"],"calendarId":"session","end":"2026-11-18T17:00:00","start":"2026-11-18T15:30:00","title":"Variant-calling workflow"},{"attendees":["Martin Dahlö"],"calendarId":"extra","end":"2026-11-18T21:00:00","start":"2026-11-18T18:00:00","title":"Course dinner"},{"attendees":["Diana Ekman"],"calendarId":"session","end":"2026-11-19T10:00:00","start":"2026-11-19T09:00:00","title":"Variant-calling workflow"},{"attendees":[],"calendarId":"free","end":"2026-11-19T10:30:00","start":"2026-11-19T10:00:00","title":"Break"},{"attendees":["Diana Ekman"],"calendarId":"session","end":"2026-11-19T12:00:00","start":"2026-11-19T10:30:00","title":"Variant-calling workflow"},{"attendees":[],"calendarId":"free","end":"2026-11-19T13:00:00","start":"2026-11-19T12:00:00","title":"Lunch"},{"attendees":["Roy Francis"],"calendarId":"session","end":"2026-11-19T15:00:00","start":"2026-11-19T13:00:00","title":"RNA-Seq workflow"},{"attendees":[],"calendarId":"free","end":"2026-11-19T15:30:00","start":"2026-11-19T15:00:00","title":"Break"},{"attendees":["Roy Francis"],"calendarId":"session","end":"2026-11-19T17:00:00","start":"2026-11-19T15:30:00","title":"RNA-Seq workflow"},{"attendees":["Roy Francis"],"calendarId":"session","end":"2026-11-20T10:00:00","start":"2026-11-20T09:00:00","title":"RNA-Seq workflow"},{"attendees":[],"calendarId":"free","end":"2026-11-20T10:30:00","start":"2026-11-20T10:00:00","title":"Break"},{"attendees":["Roy Francis"],"calendarId":"session","end":"2026-11-20T12:00:00","start":"2026-11-20T10:30:00","title":"RNA-Seq workflow"},{"attendees":[],"calendarId":"free","end":"2026-11-20T13:00:00","start":"2026-11-20T12:00:00","title":"Lunch"},{"attendees":["DM"],"calendarId":"session","end":"2026-11-20T14:00:00","start":"2026-11-20T13:00:00","title":"Data management practices"},{"attendees":["Dag Ahrén"],"calendarId":"session","end":"2026-11-20T14:15:00","start":"2026-11-20T14:00:00","title":"NBIS Presentation"},{"attendees":["Roy Francis"],"calendarId":"extra","end":"2026-11-20T14:30:00","start":"2026-11-20T14:15:00","title":"Feedback"}];
-  __ev.forEach(function(e) {
+  __ev.forEach(function(e, index) {
+    if (e.id == null || e.id === '') e.id = 'toastui-calendar-1-event-' + index;
+    var source = Object.assign({}, e, e.raw && typeof e.raw === 'object' ? e.raw : {});
+    e.raw = source;
     if (!e.state) e.state = '';
     if (!e.attendees || (Array.isArray(e.attendees) && e.attendees.length === 0)) e.attendees = null;
   });
