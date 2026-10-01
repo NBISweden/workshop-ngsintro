@@ -21,7 +21,7 @@ website:
   favicon: "assets/favicon.png"
   navbar:
     logo: "assets/logos/nbis-scilifelab.png"
-    logo-alt: "nbis scilifelab logo"
+    logo-alt: "logo"
     right:
       - text: "Home"
         href: "index.html"
@@ -101,10 +101,10 @@ format:
       data-background-opacity: "1"
     header-logo-left: assets/logos/nbis.png
     header-logo-left-height: 25px
-    header-logo-left-url: "https://nbisweden.github.io/workshop-ngsintro/2611/home_contents.html"
+    header-logo-left-url: "../../home_contents.html"
     header-logo-right: assets/logos/scilifelab.png
     header-logo-right-height: 25px
-    header-logo-right-url: "https://nbisweden.github.io/workshop-ngsintro/2611/home_schedule.html"
+    header-logo-right-url: "../../home_schedule.html"
     template-partials:
       - "assets/title-slide.html"
     pointer:
