@@ -53,5 +53,5 @@ format:
   html
 ---
 
-<!-- Remember to set first schedule date in the YAML above -->
+<!-- Remember to set first day of schedule and file path in the YAML above -->
 {{< toastui schedule >}}
