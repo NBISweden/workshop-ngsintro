@@ -305,7 +305,7 @@
     "href": "topics/other/lab_vcxsrv.html#installing-vcxsrv",
     "title": "X11 on Windows with VcXsrv",
     "section": "1 Installing VcXsrv",
-    "text": "1 Installing VcXsrv\nThese steps you only have to follow once, and after that the VcXsrv will be installed and you will only have to do the steps in the Running section to use it.\n\nDownload the correct file (version will most likely have changed since this screenshot):\n\nRun the installer. Windows will most likely complain that you are tryting to run a program not condoned by Bill Gates himself. If you press the More info link you will get an option to run it anyway.\n\nIf you press the More info link you will get an option to run it anyway.\n\nGo through the installer steps."
+    "text": "1 Installing VcXsrv\nThese steps you only have to follow once, and after that the VcXsrv will be installed and you will only have to do the steps in the Running section to use it.\n\nDownload the correct file (version will most likely have changed since this screenshot):\n\nRun the installer. Windows will most likely complain that you are trying to run a program not endorsed by Bill Gates himself. If you press the More info link you will get an option to run it anyway.\n\nIf you press the More info link you will get an option to run it anyway.\n\nGo through the installer steps."
   },
   {
     "objectID": "topics/other/lab_vcxsrv.html#running-vcxsrv",
@@ -683,14 +683,14 @@
     "href": "index.html",
     "title": "",
     "section": "",
-    "text": "Working on the Linux command line\nSequence data formats and QC\nDNA variant calling workflow\nRNA sequence analyses workflow\n\n\n\nUpdated: 01-10-2026 at 21:11:45."
+    "text": "Working on the Linux command line\nSequence data formats and QC\nDNA variant calling workflow\nRNA sequence analyses workflow\n\n\n\nUpdated: 01-10-2026 at 21:32:18."
   },
   {
     "objectID": "index.html#introduction-to-bioinformatics-using-ngs-data",
     "href": "index.html#introduction-to-bioinformatics-using-ngs-data",
     "title": "",
     "section": "",
-    "text": "Working on the Linux command line\nSequence data formats and QC\nDNA variant calling workflow\nRNA sequence analyses workflow\n\n\n\nUpdated: 01-10-2026 at 21:11:45."
+    "text": "Working on the Linux command line\nSequence data formats and QC\nDNA variant calling workflow\nRNA sequence analyses workflow\n\n\n\nUpdated: 01-10-2026 at 21:32:18."
   },
   {
     "objectID": "topics/hpc/pipeline/lab_pipeline.html",
