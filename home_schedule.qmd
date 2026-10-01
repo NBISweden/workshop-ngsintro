@@ -8,8 +8,8 @@ sidebar: false
 toastui:
   schedule:
     defaultView: week
-    file: "schedule.csv"
-    file-sep: ","
+    file: "schedule.tsv"
+    file-sep: "\t"
     date: "2026-11-16"
     useDetailPopup: true
     isReadOnly: true
