@@ -16,7 +16,7 @@ These steps you only have to follow once, and after that the VcXsrv will be inst
 
    ![](assets/vcxsrv/vcxsrv_download.png)
 
-1. Run the installer. Windows will most likely complain that you are tryting to run a program not condoned by Bill Gates himself. If you press the `More info` link you will get an option to run it anyway.  
+1. Run the installer. Windows will most likely complain that you are trying to run a program not endorsed by Bill Gates himself. If you press the `More info` link you will get an option to run it anyway.
 
    ![](assets/vcxsrv/vcxsrv_installer_00.png)  
    

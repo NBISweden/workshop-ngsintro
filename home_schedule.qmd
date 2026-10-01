@@ -8,8 +8,8 @@ sidebar: false
 toastui:
   schedule:
     defaultView: week
-    file: "schedule.csv"
-    file-sep: ","
+    file: "schedule.tsv"
+    file-sep: "\t"
     date: "2026-11-16"
     useDetailPopup: true
     isReadOnly: true
@@ -53,5 +53,5 @@ format:
   html
 ---
 
-<!-- Remember to set first schedule date in the YAML above -->
+<!-- Remember to set first day of schedule and file path in the YAML above -->
 {{< toastui schedule >}}
