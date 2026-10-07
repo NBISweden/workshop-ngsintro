@@ -433,12 +433,22 @@ function M.render_calendar_block(opts, calendars, events, initial_date, show_nav
     var hasHourEnd = weekOpts.hourEnd != null;
     if (hasHourStart && hasHourEnd) return;
     var minHour = null, maxHour = null;
+    // Shifts an instant by the delta between __sourceTz's offset and this
+    // browser's own offset, so the native getters below read __sourceTz's
+    // wall-clock digits (matching how TOAST UI actually draws the event)
+    // instead of the viewer's local digits.
+    function __zonedForDigits(d) {
+      if (!__sourceTz) return d;
+      return new Date(d.getTime() + (__tzOffsetMinutes(d, __sourceTz) + d.getTimezoneOffset()) * 60000);
+    }
     __ev.forEach(function(e) {
       if (e.isAllday || e.category === 'allday') return;
       if (e.start == null || e.end == null) return;
       var start = new Date(e.start);
       var end = new Date(e.end);
       if (isNaN(start.getTime()) || isNaN(end.getTime())) return;
+      start = __zonedForDigits(start);
+      end = __zonedForDigits(end);
       var sameDay = start.getFullYear() === end.getFullYear() &&
         start.getMonth() === end.getMonth() &&
         start.getDate() === end.getDate();
