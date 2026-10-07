@@ -52,7 +52,7 @@ where `nid001009` is the name of the node (yours will probably be different). No
 If the list is empty, you can run the allocation command again, and it should be in the list:
 
 ```sh
-salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_tue >}} -t 04:00:00 -p shared -c 1
+salloc -A {{< meta id_project_cpu >}} --reservation={{< meta id_slurm_res_tue >}} -t 04:00:00 -p cpu -c 1
 ```
 
 Connect to this node from the login node.

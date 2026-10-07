@@ -134,9 +134,9 @@ Use this code to allocate a job (note that the reservation changes each day). It
 
 ```sh
 # Wednesday
-salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_wed >}} -t 04:00:00 -p shared -c 8 --no-shell
+salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_wed >}} -t 04:00:00 -p cpu -c 8 --no-shell
 # Thursday
-salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_thu >}} -t 04:00:00 -p shared -c 8 --no-shell
+salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_thu >}} -t 04:00:00 -p cpu -c 8 --no-shell
 ```
 
 Once your job allocation has been granted (should not take long) please check the allocation again:
@@ -540,9 +540,9 @@ Modify it to run all the steps in part two of this workshop.
 
 ```sh
 #!/bin/bash
-#SBATCH -A {{< meta id_project >}} 
-#SBATCH -p shared
-#SBATCH -c 8
+#SBATCH -A {{< meta id_project_cpu >}} 
+#SBATCH -p cpu
+#SBATCH -c 4
 #SBATCH -t 1:00:00
 #SBATCH -J JointVariantCalling
 
@@ -592,9 +592,9 @@ If you would like more help with creating the sbatch script, please look at our 
 
 ```sh
 #!/bin/bash
-#SBATCH -A {{< meta id_project >}}
-#SBATCH -p shared
-#SBATCH -c 8
+#SBATCH -A {{< meta id_project_cpu >}}
+#SBATCH -p cpu
+#SBATCH -c 4
 #SBATCH -t 2:00:00
 #SBATCH -J JointVariantCalling
 

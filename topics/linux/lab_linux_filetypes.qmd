@@ -14,7 +14,7 @@ The first step of this lab is to open a ssh connection to PDC. Please refer to [
 Usually you would do most of the work in this lab directly on one of the login nodes, but we have arranged for you to have one core each for better performance. This was covered briefly in the lecture notes.
 
 ```sh
-salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_tue >}} -t 07:00:00 -p shared -n 1
+salloc -A {{< meta id_project_cpu >}} --reservation={{< meta id_slurm_res_tue >}} -t 07:00:00 -p cpu -c 1
 ```
 
 check which node you got (replace `username` with your username)

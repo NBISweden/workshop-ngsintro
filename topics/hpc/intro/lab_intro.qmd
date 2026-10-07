@@ -36,7 +36,7 @@ ssh -Y nid001009
 If the list is empty you can run the allocation command again and it should be in the list:
 
 ```sh
-salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_mon >}} -t 04:00:00 -p shared -c 1
+salloc -A {{< meta id_project_cpu >}} --reservation={{< meta id_slurm_res_mon >}} -t 04:00:00 -p cpu -c 1
 ```
 
 # Copy files for lab
@@ -275,7 +275,7 @@ less job_template
 
 #! /bin/bash -l
 #SBATCH -A XXXXXXX
-#SBATCH -p shared
+#SBATCH -p cpu
 #SBATCH -J Template_script
 #SBATCH -t 01:00:00
 #SBATCH -c 1
@@ -334,13 +334,13 @@ If you have a lot of jobs running, you can cancel all of them by using the comma
 Sometimes it is more convenient to work interactively on a node instead of submitting your work as a job. You have tried this during these labs, but you will not have the reservations we have during the course so your jobs might take a little while to start. You will have to book your jobs using the `salloc` command. Syntax:
 
 ```sh
-salloc -A <project id> -t <time> -c <number of cores> -p shared
+salloc -A <project id> -t <time> -c <number of cores> -p cpu
 ```
 
 Try closing down your current session on the reserved node you connected to in the beginning of the lab by typing `exit`. Then make a new booking using `salloc` but without the reservation id,
 
 ```sh
-salloc -A {{< meta id_project >}} -t 3:00:00 -c 1 -p shared
+salloc -A {{< meta id_project_cpu >}} -t 3:00:00 -c 1 -p cpu
 ```
 
 Congratulations, you are now ready to be let loose on the cluster!

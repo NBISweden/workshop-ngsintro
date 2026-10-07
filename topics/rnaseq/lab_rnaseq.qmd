@@ -125,7 +125,7 @@ The `--reservation` is only used during the workshop and not needed when working
 :::
 
 ```sh
-salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_thu >}} -t 03:00:00 -p shared -c 4 --no-shell
+salloc -A {{< meta id_project_cpu >}} --reservation={{< meta id_slurm_res_thu >}} -t 03:00:00 -p cpu -c 4 --no-shell
 ```
 
 Check allocation. {{< fa exclamation-circle >}} Remember to replace **username**.
@@ -180,7 +180,7 @@ It might be a good idea to open an additional terminal window. One to navigate t
 
 #### Create symbolic links
 
-We have the raw fastq files in this remote directory: `{{< meta path_resources >}}/rnaseq/dardel/main/1_raw/`. We are going to create symbolic links (soft-links) for these files from our `1_raw` directory to the remote directory. We do this because fastq files tend to be large files and simply copying them would use up a lot of storage space. Soft-linking files and folders allows us to work with those files as if they were actually there.
+We have the raw fastq files in this remote directory: `{{< meta path_resources >}}/rnaseq/main/1_raw/`. We are going to create symbolic links (soft-links) for these files from our `1_raw` directory to the remote directory. We do this because fastq files tend to be large files and simply copying them would use up a lot of storage space. Soft-linking files and folders allows us to work with those files as if they were actually there.
 
 Change to `1_raw` directory. Use `pwd` to check if you are standing in the correct directory.
 
@@ -196,7 +196,7 @@ pwd
 Run below to create softlinks. {{< fa exclamation-circle >}} Note that the command ends in a space followed by a period.
 
 ```sh
-ln -s {{< meta path_resources >}}/rnaseq/dardel/main/1_raw/*.gz .
+ln -s {{< meta path_resources >}}/rnaseq/main/1_raw/*.gz .
 ```
 
 Check if your files have linked correctly. You should be able to see as below.
@@ -206,18 +206,18 @@ ls -l
 ```
 
 ```
-SRR3222409-19_1.fq.gz -> /sw/courses/ngsintro/rnaseq/main/1_raw/SRR3222409-19_1.fq.gz
-SRR3222409-19_2.fq.gz -> /sw/courses/ngsintro/rnaseq/main/1_raw/SRR3222409-19_2.fq.gz
-SRR3222410-19_1.fq.gz -> /sw/courses/ngsintro/rnaseq/main/1_raw/SRR3222410-19_1.fq.gz
-SRR3222410-19_2.fq.gz -> /sw/courses/ngsintro/rnaseq/main/1_raw/SRR3222410-19_2.fq.gz
-SRR3222411-19_1.fq.gz -> /sw/courses/ngsintro/rnaseq/main/1_raw/SRR3222411-19_1.fq.gz
-SRR3222411-19_2.fq.gz -> /sw/courses/ngsintro/rnaseq/main/1_raw/SRR3222411-19_2.fq.gz
-SRR3222412-19_1.fq.gz -> /sw/courses/ngsintro/rnaseq/main/1_raw/SRR3222412-19_1.fq.gz
-SRR3222412-19_2.fq.gz -> /sw/courses/ngsintro/rnaseq/main/1_raw/SRR3222412-19_2.fq.gz
-SRR3222413-19_1.fq.gz -> /sw/courses/ngsintro/rnaseq/main/1_raw/SRR3222413-19_1.fq.gz
-SRR3222413-19_2.fq.gz -> /sw/courses/ngsintro/rnaseq/main/1_raw/SRR3222413-19_2.fq.gz
-SRR3222414-19_1.fq.gz -> /sw/courses/ngsintro/rnaseq/main/1_raw/SRR3222414-19_1.fq.gz
-SRR3222414-19_2.fq.gz -> /sw/courses/ngsintro/rnaseq/main/1_raw/SRR3222414-19_2.fq.gz
+SRR3222409-19_1.fq.gz -> /nobackup/proj/disk/naiss2026-4-1504/shared/ngsintro/rnaseq/main/1_raw/SRR3222409-19_1.fq.gz
+SRR3222409-19_2.fq.gz -> /nobackup/proj/disk/naiss2026-4-1504/shared/ngsintro/rnaseq/main/1_raw/SRR3222409-19_2.fq.gz
+SRR3222410-19_1.fq.gz -> /nobackup/proj/disk/naiss2026-4-1504/shared/ngsintro/rnaseq/main/1_raw/SRR3222410-19_1.fq.gz
+SRR3222410-19_2.fq.gz -> /nobackup/proj/disk/naiss2026-4-1504/shared/ngsintro/rnaseq/main/1_raw/SRR3222410-19_2.fq.gz
+SRR3222411-19_1.fq.gz -> /nobackup/proj/disk/naiss2026-4-1504/shared/ngsintro/rnaseq/main/1_raw/SRR3222411-19_1.fq.gz
+SRR3222411-19_2.fq.gz -> /nobackup/proj/disk/naiss2026-4-1504/shared/ngsintro/rnaseq/main/1_raw/SRR3222411-19_2.fq.gz
+SRR3222412-19_1.fq.gz -> /nobackup/proj/disk/naiss2026-4-1504/shared/ngsintro/rnaseq/main/1_raw/SRR3222412-19_1.fq.gz
+SRR3222412-19_2.fq.gz -> /nobackup/proj/disk/naiss2026-4-1504/shared/ngsintro/rnaseq/main/1_raw/SRR3222412-19_2.fq.gz
+SRR3222413-19_1.fq.gz -> /nobackup/proj/disk/naiss2026-4-1504/shared/ngsintro/rnaseq/main/1_raw/SRR3222413-19_1.fq.gz
+SRR3222413-19_2.fq.gz -> /nobackup/proj/disk/naiss2026-4-1504/shared/ngsintro/rnaseq/main/1_raw/SRR3222413-19_2.fq.gz
+SRR3222414-19_1.fq.gz -> /nobackup/proj/disk/naiss2026-4-1504/shared/ngsintro/rnaseq/main/1_raw/SRR3222414-19_1.fq.gz
+SRR3222414-19_2.fq.gz -> /nobackup/proj/disk/naiss2026-4-1504/shared/ngsintro/rnaseq/main/1_raw/SRR3222414-19_2.fq.gz
 ```
 
 ### Read QC
@@ -708,10 +708,10 @@ ls -l
 
     </details>
 
-{{< fa exclamation-circle >}} If you are running short of time or unable to run the mapping, you can copy over results for all samples that have been prepared for you before class. They are available at this location: `{{< meta path_resources >}}/rnaseq/dardel/main/3_mapping/`.
+{{< fa exclamation-circle >}} If you are running short of time or unable to run the mapping, you can copy over results for all samples that have been prepared for you before class. They are available at this location: `{{< meta path_resources >}}/rnaseq/main/3_mapping/`.
 
 ```sh
-cp -r {{< meta path_resources >}}/rnaseq/dardel/main/3_mapping/* {{< meta path_workspace >}}/rnaseq/3_mapping/
+cp -r {{< meta path_resources >}}/rnaseq/main/3_mapping/* {{< meta path_workspace >}}/rnaseq/3_mapping/
 ```
 
 <br>
@@ -800,10 +800,10 @@ scp -r username@{{< meta url_cluster >}}:{{< meta path_workspace >}}/rnaseq/4_qu
 
 {{< fa comments >}} Check the QualiMap report for one sample and discuss if the sample is of good quality. You only need to do this for one file now. We will do a comparison with all samples when using the MultiQC tool.
 
-{{< fa exclamation-circle >}} If you are running out of time or were unable to run QualiMap, you can also copy pre-run QualiMap output from this location: `{{< meta path_resources >}}/rnaseq/dardel/main/4_qualimap/`.
+{{< fa exclamation-circle >}} If you are running out of time or were unable to run QualiMap, you can also copy pre-run QualiMap output from this location: `{{< meta path_resources >}}/rnaseq/main/4_qualimap/`.
 
 ```sh
-cp -r {{< meta path_resources >}}/rnaseq/dardel/main/4_qualimap/* {{< meta path_workspace >}}/rnaseq/4_qualimap/
+cp -r {{< meta path_resources >}}/rnaseq/main/4_qualimap/* {{< meta path_workspace >}}/rnaseq/4_qualimap/
 ```
 
 #### {{< fa question-circle >}} Questions
@@ -977,10 +977,10 @@ ls -l
 
 For downstream steps, we will NOT use this `counts.txt` file. Instead we will use **counts_full.txt** from the back-up folder. This contains counts across all chromosomes which will be a better representation of the data for downstream analysis.
 
-The **counts_full.txt** file is located here: `{{< meta path_resources >}}/rnaseq/dardel/main/5_dge/`. Copy this file to your `5_dge` directory. {{< fa exclamation-circle >}} Remember to replace username.
+The **counts_full.txt** file is located here: `{{< meta path_resources >}}/rnaseq/main/5_dge/`. Copy this file to your `5_dge` directory. {{< fa exclamation-circle >}} Remember to replace username.
 
 ```sh
-cp {{< meta path_resources >}}/rnaseq/dardel/main/5_dge/counts_full.txt {{< meta path_workspace >}}/rnaseq/5_dge/
+cp {{< meta path_resources >}}/rnaseq/main/5_dge/counts_full.txt {{< meta path_workspace >}}/rnaseq/5_dge/
 ```
 
 :::
@@ -1052,10 +1052,10 @@ scp username@{{< meta url_cluster >}}:{{< meta path_workspace >}}/rnaseq/6_multi
 
 The easiest way to perform differential expression is to use one of the statistical packages, within R environment, that were specifically designed for analyses of read counts arising from RNA-seq, SAGE and similar technologies. Here, we will use one such package called **DESeq2**. Learning R is beyond the scope of this course so we prepared basic ready to run R scripts to find DE genes between conditions **KO** and **Wt**.
 
-We need some annotation information, so we will copy this file `{{< meta path_resources >}}/rnaseq/dardel/main/reference/mm-biomart99-genes.txt.gz` to your `rnaseq/reference` directory. {{< fa exclamation-circle >}} Remember to replace username.
+We need some annotation information, so we will copy this file `{{< meta path_resources >}}/rnaseq/main/reference/mm-biomart99-genes.txt.gz` to your `rnaseq/reference` directory. {{< fa exclamation-circle >}} Remember to replace username.
 
 ```sh
-cp {{< meta path_resources >}}/rnaseq/dardel/main/reference/mm-biomart99-genes.txt.gz {{< meta path_workspace >}}/rnaseq/reference/
+cp {{< meta path_resources >}}/rnaseq/main/reference/mm-biomart99-genes.txt.gz {{< meta path_workspace >}}/rnaseq/reference/
 ```
 
 Then decompress the file. `gunzip ../reference/mm-biomart99-genes.txt.gz`
@@ -1070,16 +1070,16 @@ module load R/4.4.2-cpeGNU-24.11
 
 Use `pwd` to check if you are standing in the correct directory.
 
-Make sure you have the `counts_full.txt`. If not, you can copy this file: `{{< meta path_resources >}}/rnaseq/dardel/main/5_dge/counts_full.txt` to your `5_dge` directory.
+Make sure you have the `counts_full.txt`. If not, you can copy this file: `{{< meta path_resources >}}/rnaseq/main/5_dge/counts_full.txt` to your `5_dge` directory.
 
 ```sh
-cp {{< meta path_resources >}}/rnaseq/dardel/main/5_dge/counts_full.txt .
+cp {{< meta path_resources >}}/rnaseq/main/5_dge/counts_full.txt .
 ```
 
 Copy the DGE R script to your **scripts** directory and run it.
 
 ```sh
-cp {{< meta path_resources >}}/rnaseq/dardel/main/scripts/dge.r ../scripts/
+cp {{< meta path_resources >}}/rnaseq/main/scripts/dge.r ../scripts/
 Rscript ../scripts/dge.r
 ```
 
@@ -1128,10 +1128,10 @@ ENSMUSG00000000031	67354.9059955111	0.485425313069624	0.117601047180511	4.127733
 {{< fa lightbulb >}} If you do not have the results or were unable to run the DGE step, you can copy these two here which will be required for functional annotation (optional).
 
 ```sh
-cp {{< meta path_resources >}}/rnaseq/dardel/main/5_dge/dge_results_full.txt .
-cp {{< meta path_resources >}}/rnaseq/dardel/main/5_dge/dge_results_full.rds .
-cp {{< meta path_resources >}}/rnaseq/dardel/main/5_dge/counts_vst_full.txt .
-cp {{< meta path_resources >}}/rnaseq/dardel/main/5_dge/counts_vst_full.rds .
+cp {{< meta path_resources >}}/rnaseq/main/5_dge/dge_results_full.txt .
+cp {{< meta path_resources >}}/rnaseq/main/5_dge/dge_results_full.rds .
+cp {{< meta path_resources >}}/rnaseq/main/5_dge/counts_vst_full.txt .
+cp {{< meta path_resources >}}/rnaseq/main/5_dge/counts_vst_full.rds .
 ```
 
 #### {{< fa question-circle >}} Questions
@@ -1200,7 +1200,7 @@ A popular way to visualise general patterns of gene expression in your data is t
 Move to the `5_dge/` directory. Then copy and run the `pca.r` script like below.
 
 ```sh
-cp {{< meta path_resources >}}/rnaseq/dardel/main/scripts/pca.r ../scripts/
+cp {{< meta path_resources >}}/rnaseq/main/scripts/pca.r ../scripts/
 Rscript ../scripts/pca.r
 ```
 
@@ -1217,7 +1217,7 @@ An MA-plot plots the mean expression and estimated log-fold-change for all genes
 Copy and run the `ma.r` script in the `5_dge` directory.
 
 ```sh
-cp {{< meta path_resources >}}/rnaseq/dardel/main/scripts/ma.r ../scripts/
+cp {{< meta path_resources >}}/rnaseq/main/scripts/ma.r ../scripts/
 Rscript ../scripts/ma.r
 ```
 
@@ -1232,7 +1232,7 @@ A related type of figure will instead plot fold change (on log2 scale) on the x-
 Copy and run the script named `volcano.r` in the `5_dge` directory.
 
 ```sh
-cp {{< meta path_resources >}}/rnaseq/dardel/main/scripts/volcano.r ../scripts/
+cp {{< meta path_resources >}}/rnaseq/main/scripts/volcano.r ../scripts/
 Rscript ../scripts/volcano.r
 ```
 
@@ -1249,7 +1249,7 @@ Another popular plots for genome-wide expression patterns is heatmap for a set o
 Run the script named `heatmap.r` in the `5_dge` directory.
 
 ```sh
-cp {{< meta path_resources >}}/rnaseq/dardel/main/scripts/heatmap.r ../scripts/
+cp {{< meta path_resources >}}/rnaseq/main/scripts/heatmap.r ../scripts/
 Rscript ../scripts/heatmap.r
 ```
 
@@ -1341,7 +1341,7 @@ module load R/4.4.2-cpeGNU-24.11
 Copy and run the GSE script from the linux terminal.
 
 ```sh
-cp {{< meta path_resources >}}/rnaseq/dardel/main/scripts/gse-clusterprofiler.r ../scripts/
+cp {{< meta path_resources >}}/rnaseq/main/scripts/gse-clusterprofiler.r ../scripts/
 Rscript ../scripts/gse-clusterprofiler.r
 ```
 
@@ -1649,9 +1649,9 @@ We add `SBATCH` commands to the above script. The new script looks like this:
 
 ```sh
 #!/bin/bash
-#SBATCH -A {{< meta id_project >}}
-#SBATCH -p shared
-#SBATCH -c 8
+#SBATCH -A {{< meta id_project_cpu >}}
+#SBATCH -p cpu
+#SBATCH -c 2
 #SBATCH -t 3:00:00
 #SBATCH -J hisat2-align
 
@@ -1664,7 +1664,7 @@ module load samtools/1.20
 prefix=$( basename "$1" | sed -E "s/_.+$//" )
 
 hisat2 \\
- -p 8 \\
+ -p 2 \\
  -x ../reference/mouse_chr19_hisat2/mouse_chr19_hisat2 \\
  --summary-file "${prefix}-summary.txt" \\
  -1 $1 \\
@@ -1725,10 +1725,10 @@ params.input = "samplesheet.csv"
 params.outdir = "results"
 params.aligner = "star_salmon"
 
-params.fasta = "/sw/data/igenomes/Mus_musculus/Ensembl/GRCm38/Sequence/WholeGenomeFasta/genome.fa"
-params.gtf = "/sw/data/igenomes/Mus_musculus/Ensembl/GRCm38/Annotation/Genes/genes.gtf"
-gene_bed = "/sw/data/igenomes/Mus_musculus/Ensembl/GRCm38/Annotation/Genes/genes.bed"
-star_index = "/sw/data/igenomes/Mus_musculus/Ensembl/GRCm38/Sequence/STARIndex/version2.7.x/"
+params.fasta = "/nobackup/proj/disk/naiss2026-4-1504/shared/ngsintro/rnaseq/main_full/reference/genome.fa"
+params.gtf = "/nobackup/proj/disk/naiss2026-4-1504/shared/ngsintro/rnaseq/main_full/reference/genes.gtf"
+gene_bed = "/nobackup/proj/disk/naiss2026-4-1504/shared/ngsintro/rnaseq/main_full/reference/genes.bed"
+star_index = "/nobackup/proj/disk/naiss2026-4-1504/shared/ngsintro/rnaseq/main_full/reference/STARIndex/version2.7.x/"
 ```
 
 And lastly we have a **nextflow.sh** which will be our bash script for launching the job.
@@ -1736,16 +1736,11 @@ And lastly we have a **nextflow.sh** which will be our bash script for launching
 ```sh
 #!/bin/bash
 
-#SBATCH -A {{< meta id_project >}}
-#SBATCH -p shared
-#SBATCH -c 6
+#SBATCH -A {{< meta id_project_cpu >}}
+#SBATCH -p cpu
+#SBATCH -c 2
 #SBATCH -t 8:00:00
 #SBATCH -J nf-core
-
-module load PDC/24.11
-module load singularity/4.2.0-cpeGNU-24.11
-module load nextflow/25.04.7
-module load nf-core/2.6
 
 export NXF_HOME=$PWD
 export SINGULARITY_CACHEDIR=${PWD}/SINGULARITY_CACHEDIR
@@ -1753,23 +1748,32 @@ export SINGULARITY_TMPDIR=${PWD}/SINGULARITY_TMPDIR
 export NXF_SINGULARITY_CACHEDIR=${SINGULARITY_CACHEDIR}
 mkdir -p ${SINGULARITY_CACHEDIR} ${SINGULARITY_TMPDIR}
 
+module load buildtool-easybuild/5.2.1-hpca3ef7d197
+module load Java/25.0.3
+module load Nextflow/25.10.6
+
 # nextflow drop nf-core/rnaseq
 nextflow run nf-core/rnaseq \
-  -r 3.21.0 \
+  -r 3.27.0 \
   -c params.config \
-  -profile pdc_kth \
-  --project {{< meta id_project >}} \
+  -profile naiss \
+  --project {{< meta id_project_cpu >}} \
   -resume
 ```
 
-Notice that we use `-profile pdc_kth` specific to the HPC. The job is then submitted by simply running `sbatch nextflow.sh`.
+Notice that we use `-profile naiss` specific to the HPC. The job is then submitted by simply running `sbatch nextflow.sh`.
 
 The slurm output from this job looks like this:
 
 ```
-N E X T F L O W   ~  version 25.04.7
+ N E X T F L O W   ~  version 25.10.6
 
-Launching `https://github.com/nf-core/rnaseq` [curious_lovelace] DSL2 - revision: 9738a2df42 [3.21.0]
+Pulling nf-core/rnaseq ...
+ downloaded from https://github.com/nf-core/rnaseq.git
+WARN: It appears you have never run this project before -- Option `-resume` is ignored
+Downloading plugin nf-schema@2.7.2
+Launching `https://github.com/nf-core/rnaseq` [agitated_kay] DSL2 - revision: a1fcdddd3b [3.27.0]
+
 
 ------------------------------------------------------
                                         ,--./,-.
@@ -1777,41 +1781,45 @@ Launching `https://github.com/nf-core/rnaseq` [curious_lovelace] DSL2 - revision
   |\ | |__  __ /  ` /  \ |__) |__         }  {
   | \| |       \__, \__/ |  \ |___     \`-._,-`-,
                                         `._,._,'
-  nf-core/rnaseq 3.21.0
+  nf-core/rnaseq 3.27.0
 ------------------------------------------------------
+
 Input/output options
   input                     : samplesheet.csv
   outdir                    : results
 
 Reference genome options
-  fasta                     : /sw/data/igenomes/Mus_musculus/Ensembl/GRCm38/Sequence/WholeGenomeFasta/genome.fa
-  gtf                       : /sw/data/igenomes/Mus_musculus/Ensembl/GRCm38/Annotation/Genes/genes.gtf
+  fasta                     : /nobackup/proj/disk/naiss2026-4-1504/shared/ngsintro/rnaseq/main_full/reference/genome.fa
+  gtf                       : /nobackup/proj/disk/naiss2026-4-1504/shared/ngsintro/rnaseq/main_full/reference/genes.gtf
 
 UMI options
   umi_discard_read          : 0
 
+Optional outputs
+  save_reference            : true
+
 Institutional config options
-  config_profile_description: PDC profile.
+  config_profile_description: NAISS Arrhenius cluster profile provided by nf-core/configs.
   config_profile_contact    : Pontus Freyhult (@pontus)
-  config_profile_url        : https://www.pdc.kth.se/
+  config_profile_url        : https://www.naiss.se/
 
 Generic options
-  trace_report_suffix       : 2025-10-28_15-07-35
+  trace_report_suffix       : 2026-10-07_13-55-46
 
 Core Nextflow options
-  revision                  : 3.21.0
-  runName                   : curious_lovelace
-  containerEngine           : singularity
-  launchDir                 : /cfs/klemming/pdc/software/dardel/sw-uppmax/courses/ngsintro/rnaseq/dardel/main_full/nextflow
-  workDir                   : /cfs/klemming/pdc/software/dardel/sw-uppmax/courses/ngsintro/rnaseq/dardel/main_full/nextflow/work
-  projectDir                : /sw/courses/ngsintro/rnaseq/dardel/main_full/nextflow/assets/nf-core/rnaseq
+  revision                  : 3.27.0
+  runName                   : agitated_kay
+  containerEngine           : apptainer
+  launchDir                 : /nobackup/proj/disk/naiss2026-4-1504/shared/ngsintro/rnaseq/main_full/nextflow-1
+  workDir                   : /nobackup/proj/disk/naiss2026-4-1504/shared/ngsintro/rnaseq/main_full/nextflow-1/work
+  projectDir                : /home/royfranc/ngsintro-2611/shared/ngsintro/rnaseq/main_full/nextflow-1/assets/nf-core/rnaseq
   userName                  : royfranc
-  profile                   : pdc_kth
-  configFiles               : /sw/courses/ngsintro/rnaseq/dardel/main_full/nextflow/assets/nf-core/rnaseq/nextflow.config, /cfs/klemming
-/pdc/software/dardel/sw-uppmax/courses/ngsintro/rnaseq/dardel/main_full/nextflow/params.config
+  profile                   : naiss
+  configFiles               : /home/royfranc/ngsintro-2611/shared/ngsintro/rnaseq/main_full/nextflow-1/assets/nf-core/rnaseq/nextflow.config, /nobackup/proj/disk/naiss2026-4-1504/shared/ngsintro/rnaseq/main_full/nextflow-1/params.config
 
 !! Only displaying parameters that differ from the pipeline defaults !!
 ------------------------------------------------------
+
 * The pipeline
     https://doi.org/10.5281/zenodo.1400710
 
@@ -1821,22 +1829,24 @@ Core Nextflow options
 * Software dependencies
     https://github.com/nf-core/rnaseq/blob/master/CITATIONS.md
 
-[-        ] NFC…:PREPARE_GENOME:GTF_FILTER -
-[-        ] NFC…SEQ:PREPARE_GENOME:GTF2BED -
+[-        ] NFC…EFERENCES:CUSTOM_GTFFILTER -
+[-        ] NFC…REFERENCES:EAUTILS_GTF2BED -
 
 ...
+
 skipping many lines here
+
 ...
 
-[86/c4826f] NFC…_JUNCTIONSATURATION (wt_1) | 6 of 6 ✔
-[66/52a3f9] NFC…QC_READDISTRIBUTION (wt_1) | 6 of 6 ✔
-[83/72ca5f] NFC…EQC_READDUPLICATION (wt_1) | 6 of 6 ✔
-[14/d9eec6] NFC…_RNASEQ:RNASEQ:MULTIQC (1) | 1 of 1 ✔
+[9b/ba98d9] NFC…MBINED:UCSC_BEDCLIP (wt_1) | 6 of 6 ✔
+[4f/e18104] NFC…SC_BEDGRAPHTOBIGWIG (wt_3) | 6 of 6 ✔
+[c4/9a67cc] NFC…Q:MULTIQC (multiqc_report) | 1 of 1 ✔
+Plus 7 more processes waiting for tasks…
 -[nf-core/rnaseq] Pipeline completed successfully -
-Completed at: 28-Oct-2025 16:25:41
-Duration    : 1h 18m 3s
-CPU hours   : 56.9
-Succeeded   : 215
+Completed at: 07-Oct-2026 14:23:43
+Duration    : 27m 52s
+CPU hours   : 11.2
+Succeeded   : 203
 ```
 
 The output `results` directory looks like this:
@@ -1849,12 +1859,19 @@ results/
 ├── fq_lint
 │   ├── raw
 │   └── trimmed
+├── genome
+│   ├── genes.filtered.bed
+│   ├── genes.filtered.gtf
+│   ├── genome.fa.fai
+│   ├── genome.fa.sizes
+│   ├── genome.transcripts.fa
+│   ├── index
+│   └── rsem
 ├── multiqc
 │   └── star_salmon
 ├── pipeline_info
 │   ├── nf_core_rnaseq_software_mqc_versions.yml
-│   ├── params_2025-10-28_14-47-59.json
-│   └── params_2025-10-28_15-07-52.json
+│   └── params_2026-10-07_13-56-10.json
 ├── star_salmon
 │   ├── bigwig
 │   ├── deseq2_qc
@@ -1870,8 +1887,6 @@ results/
 │   ├── ko_3.markdup.sorted.bam
 │   ├── ko_3.markdup.sorted.bam.bai
 │   ├── log
-│   ├── null.merged.gene.SummarizedExperiment.rds
-│   ├── null.merged.transcript.SummarizedExperiment.rds
 │   ├── picard_metrics
 │   ├── qualimap
 │   ├── rseqc
@@ -1879,13 +1894,16 @@ results/
 │   ├── salmon.merged.gene_counts_scaled.tsv
 │   ├── salmon.merged.gene_counts.tsv
 │   ├── salmon.merged.gene_lengths.tsv
+│   ├── salmon.merged.gene.SummarizedExperiment.rds
 │   ├── salmon.merged.gene_tpm.tsv
 │   ├── salmon.merged.transcript_counts.tsv
 │   ├── salmon.merged.transcript_lengths.tsv
+│   ├── salmon.merged.transcript.SummarizedExperiment.rds
 │   ├── salmon.merged.transcript_tpm.tsv
+│   ├── salmon.merged.tx2gene_augmented.tsv
+│   ├── salmon.merged.tx2gene.tsv
 │   ├── samtools_stats
 │   ├── stringtie
-│   ├── tx2gene.tsv
 │   ├── wt_1
 │   ├── wt_1.markdup.sorted.bam
 │   ├── wt_1.markdup.sorted.bam.bai
@@ -1910,7 +1928,7 @@ results/
     └── wt_3_trimmed_2.fastq.gz_trimming_report.txt
 ```
 
-If you want to look into the nextflow results yourself, you can check them out here: `{{< meta path_resources >}}/rnaseq/dardel/main_full/nextflow`. You can view the multiqc report [here](nextflow/multiqc_report.html).
+If you want to look into the nextflow results yourself, you can check them out here: `{{< meta path_resources >}}/rnaseq/main_full/nextflow`. You can view the multiqc report [here](nextflow/multiqc_report.html).
 
 This pipeline takes you from raw reads to counts including read QC, mapping, mapping QC and quantification as well as a complete collated overview of all steps as a MultiQC report (`multiqc/star_salmon/multiqc_report.html`). The `star_salmon/salmon.merged.gene_counts.tsv` is the counts file that you would use for downstream differential gene expression using DESeq2.
 

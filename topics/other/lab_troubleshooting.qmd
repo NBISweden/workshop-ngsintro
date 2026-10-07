@@ -15,7 +15,7 @@ Useful commands for monitoring status and user activity on HPC.
 List all jobs running an a project
 
 ```sh
-squeue -A {{< meta id_project >}} | tail -n +2 | sort -k 4
+squeue -A {{< meta id_project_cpu >}} | tail -n +2 | sort -k 4
 ```
 
 Sample output
@@ -36,7 +36,7 @@ Sample output
 Sorted list of jobs per user
 
 ```sh
-squeue -A {{< meta id_project >}} | tr -s ' ' | tail -n +2 | cut -d' ' -f5 | sort | uniq -c | sort -k1
+squeue -A {{< meta id_project_cpu >}} | tr -s ' ' | tail -n +2 | cut -d' ' -f5 | sort | uniq -c | sort -k1
 ```
 
 Sample output
@@ -59,7 +59,7 @@ Sample output
 Total number of cores used on a project
 
 ```sh
-squeue -A {{< meta id_project >}} -o %C | awk '{total += $0} END{print total}'
+squeue -A {{< meta id_project_cpu >}} -o %C | awk '{total += $0} END{print total}'
 ```
 
 ### Project information
@@ -101,7 +101,7 @@ Sample output
 List last activity in a directory for all users in a project.
 
 ```sh
-bash /sw/courses/utils/list_modification_times.sh /cfs/klemming/projects/supr/{{< meta id_project >}}/
+bash /sw/courses/utils/list_modification_times.sh {{< meta path_project >}}/shared
 ```
 
 Sample output
@@ -119,7 +119,7 @@ private         Not available     ()
 ### List reservations for a project
 
 ```sh
-scontrol show res | grep {{< meta id_project >}}
+scontrol show res | grep {{< meta id_project_cpu >}}
 ```
 
 Sample output

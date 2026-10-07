@@ -36,7 +36,7 @@ ssh -Y nid001009
 If the list is empty you can run the allocation command again and it should be in the list:
 
 ```sh
-salloc -A {{< meta id_project >}} --reservation={{< meta id_slurm_res_mon >}} -t 04:00:00 -p shared -c 1 
+salloc -A {{< meta id_project_cpu >}} --reservation={{< meta id_slurm_res_mon >}} -t 04:00:00 -p cpu -c 1 
 ```
 
 # Copy files for lab
@@ -274,9 +274,10 @@ The next couple of rows will contain all the options you want to give SLURM:
 
 ```sh
 #!/bin/bash -l
-#SBATCH -A {{< meta id_project >}}
+#SBATCH -A {{< meta id_project_cpu >}}
+#SBATCH -c 1
 #SBATCH -t 00:05:00
-#SBATCH -p shared
+#SBATCH -p cpu
 #SBATCH -J exome_analysis
 ```
 

@@ -1,17 +1,21 @@
 # metadata used site-wide
 
-# project id on active cluster (dardel)
-id_project: "naiss2026-xx-xx"
-# project id on fallback cluster (rackham)
+# project id on active cluster (arrhenius)
+id_project: "naiss2026-4-1504"
+# project id for slurm on active cluster (arrhenius)
+id_project_cpu: "naiss2026-4-1504-cpu"
+# project id on fallback cluster (none)
 id_project_backup: "naiss2026-xx-xx"
+# path to project
+path_project: "/nobackup/proj/disk/naiss2026-4-1504"
 # path to course working directory
-path_workspace: "/cfs/klemming/projects/supr/naiss2026-xx-xx/username"
+path_workspace: "/nobackup/proj/disk/naiss2026-4-1504/shared/username"
 # path to course resources on cluster
-path_resources: "/sw/courses/ngsintro"
-# url to active cluster (dardel)
-url_cluster: "dardel.pdc.kth.se"
-# url to backup cluster (rackham)
-url_cluster_backup: "rackham.uppmax.uu.se"
+path_resources: "/nobackup/proj/disk/naiss2026-4-1504/shared/ngsintro"
+# url to active cluster (arrhenius)
+url_cluster: "login.hpc.arrhenius.naiss.se"
+# url to backup cluster (none)
+url_cluster_backup: "none"
 
 # reservation ids
 id_slurm_res_mon: "edu26-xx-xx"

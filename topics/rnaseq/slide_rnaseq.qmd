@@ -1097,7 +1097,7 @@ plotCounts(d1, "ENSG00000000003", intgroup = "type")
 - 01 Functional annotation of DE genes using **GO** database
 - 02 Visualisation of RNA-seq BAM files using **IGV** genome browser
 
-[**Data:** `{{< meta path_resources >}}/rnaseq/dardel`]{.large}  
+[**Data:** `{{< meta path_resources >}}/rnaseq/`]{.large}  
 [**Work:** `{{< meta path_workspace >}}/rnaseq/`]{.large}
 
 ## Directory structure
@@ -1107,16 +1107,14 @@ plotCounts(d1, "ENSG00000000003", intgroup = "type")
 
 - Course data directory
 
-`{{< meta path_resources >}}/rnaseq/dardel`
+`{{< meta path_resources >}}/rnaseq/`
 
 ```
-dardel/
-├── extras
+ngsintro/
 ├── main
 │   ├── 1_raw
 │   ├── 2_fastqc
 │   ├── 3_mapping
-│   ├── 4_qorts
 │   ├── 4_qualimap
 │   ├── 5_dge
 │   ├── 6_multiqc
