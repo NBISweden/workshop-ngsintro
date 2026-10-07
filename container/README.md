@@ -28,7 +28,7 @@ docker run --rm \
 	--platform linux/amd64 \
 	--volume "$PWD:/work" \
 	ghcr.io/nbisweden/workshop-ngsintro:2.5.1 \
-	quarto render /work
+	quarto render
 ```
 
 Start a Quarto preview server at <http://localhost:8800>:
@@ -39,7 +39,7 @@ docker run --rm -it \
 	--volume "$PWD:/work" \
 	--publish 8800:8800 \
 	ghcr.io/nbisweden/workshop-ngsintro:2.5.1 \
-	quarto preview /work --host 0.0.0.0 --port 8800
+	quarto preview --host 0.0.0.0 --port 8800
 ```
 
 Build the image locally from the repository root, optionally selecting another Quarto version:
@@ -78,7 +78,7 @@ apptainer exec \
 	--bind "$PWD:/work" \
 	--pwd /work \
 	workshop-ngsintro.sif \
-	quarto render /work
+	quarto render
 ```
 
 Start a Quarto preview server at <http://localhost:8800>:
@@ -88,7 +88,7 @@ apptainer exec \
 	--bind "$PWD:/work" \
 	--pwd /work \
 	workshop-ngsintro.sif \
-	quarto preview /work --host 0.0.0.0 --port 8800
+	quarto preview --host 0.0.0.0 --port 8800
 ```
 
 Build the SIF image locally from the `container` directory, optionally selecting another Quarto version:
