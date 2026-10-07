@@ -190,6 +190,7 @@ background-size: cover;
 
 <!-- Remember to set first day of schedule and file path in the YAML above -->
 <style>#toastui-calendar-1 .toastui-calendar-timegrid { height: 900px; min-height: unset; }</style>
+<style>#toastui-calendar-1 .toastui-calendar-layout { background-color: white !important; }</style>
 <div class="toastui-calendar-wrapper">
 <div class="toastui-nav" id="toastui-calendar-1-nav">
   <button class="toastui-nav-btn" data-action="prev">◀</button>
@@ -326,6 +327,59 @@ background-size: cover;
     var end = (sameDate ? '' : formatDate(event.end) + ' ') + formatTime(event.end);
     return formatDate(event.start) + ' ' + formatTime(event.start) + ' - ' + end;
   };
+  Object.keys(opts.template).forEach(function(key) {
+    if (typeof opts.template[key] !== 'string') return;
+    var source = opts.template[key];
+    opts.template[key] = function(model) {
+      return source.replace(/\$\{\s*([\w.]+)\s*\}/g, function(_, path) {
+        var value = path.split('.').reduce(function(acc, part) {
+          return acc == null ? acc : acc[part];
+        }, model);
+        return value == null ? '' : escapeHtml(value);
+      });
+    };
+  });
+  var __ev = [{"attendees":["Martin Dahlö"],"calendarId":"extra","end":"2026-11-16T09:30:00","start":"2026-11-16T09:00:00","title":"Welcome"},{"attendees":["Martin Dahlö"],"calendarId":"session","end":"2026-11-16T10:00:00","start":"2026-11-16T09:30:00","title":"Intro to Linux"},{"attendees":[],"calendarId":"free","end":"2026-11-16T10:30:00","start":"2026-11-16T10:00:00","title":"Break"},{"attendees":["Martin Dahlö"],"calendarId":"session","end":"2026-11-16T12:00:00","start":"2026-11-16T10:30:00","title":"Intro to Linux"},{"attendees":[],"calendarId":"free","end":"2026-11-16T13:00:00","start":"2026-11-16T12:00:00","title":"Lunch"},{"attendees":["Martin Dahlö"],"calendarId":"session","end":"2026-11-16T15:00:00","start":"2026-11-16T13:00:00","title":"Intro to HPC cluster"},{"attendees":[],"calendarId":"free","end":"2026-11-16T15:30:00","start":"2026-11-16T15:00:00","title":"Break"},{"attendees":["Martin Dahlö"],"calendarId":"session","end":"2026-11-16T17:00:00","start":"2026-11-16T15:30:00","title":"Intro to HPC cluster"},{"attendees":["Martin Dahlö"],"calendarId":"session","end":"2026-11-17T10:00:00","start":"2026-11-17T09:00:00","title":"File types in Bioinformatics"},{"attendees":[],"calendarId":"free","end":"2026-11-17T10:30:00","start":"2026-11-17T10:00:00","title":"Break"},{"attendees":["Martin Dahlö"],"calendarId":"session","end":"2026-11-17T11:00:00","start":"2026-11-17T10:30:00","title":"File types in Bioinformatics"},{"attendees":["Martin Dahlö"],"calendarId":"session","end":"2026-11-17T12:00:00","start":"2026-11-17T11:00:00","title":"Better terminal experience"},{"attendees":[],"calendarId":"free","end":"2026-11-17T13:00:00","start":"2026-11-17T12:00:00","title":"Lunch"},{"attendees":["Marcel Martin"],"calendarId":"session","end":"2026-11-17T14:00:00","start":"2026-11-17T13:00:00","title":"Quality control"},{"attendees":["Martin Dahlö"],"calendarId":"session","end":"2026-11-17T15:00:00","start":"2026-11-17T14:00:00","title":"Advanced Bash"},{"attendees":[],"calendarId":"free","end":"2026-11-17T15:30:00","start":"2026-11-17T15:00:00","title":"Break"},{"attendees":["Martin Dahlö"],"calendarId":"session","end":"2026-11-17T17:00:00","start":"2026-11-17T15:30:00","title":"Advanced Bash"},{"attendees":["NGI"],"calendarId":"session","end":"2026-11-18T10:00:00","start":"2026-11-18T09:00:00","title":"NGS technologies"},{"attendees":[],"calendarId":"free","end":"2026-11-18T10:30:00","start":"2026-11-18T10:00:00","title":"Break"},{"attendees":["NGI"],"calendarId":"session","end":"2026-11-18T11:30:00","start":"2026-11-18T10:30:00","title":"NGS long reads & pipelines"},{"attendees":["NGI"],"calendarId":"extra","end":"2026-11-18T12:00:00","start":"2026-11-18T11:30:00","title":"Lab tour"},{"attendees":[],"calendarId":"free","end":"2026-11-18T13:00:00","start":"2026-11-18T12:00:00","title":"Lunch"},{"attendees":["Diana Ekman"],"calendarId":"session","end":"2026-11-18T15:00:00","start":"2026-11-18T13:00:00","title":"Variant-calling workflow"},{"attendees":[],"calendarId":"free","end":"2026-11-18T15:30:00","start":"2026-11-18T15:00:00","title":"Break"},{"attendees":["Diana Ekman"],"calendarId":"session","end":"2026-11-18T17:00:00","start":"2026-11-18T15:30:00","title":"Variant-calling workflow"},{"attendees":["Martin Dahlö"],"calendarId":"extra","end":"2026-11-18T21:00:00","start":"2026-11-18T18:00:00","title":"Course dinner"},{"attendees":["Diana Ekman"],"calendarId":"session","end":"2026-11-19T10:00:00","start":"2026-11-19T09:00:00","title":"Variant-calling workflow"},{"attendees":[],"calendarId":"free","end":"2026-11-19T10:30:00","start":"2026-11-19T10:00:00","title":"Break"},{"attendees":["Diana Ekman"],"calendarId":"session","end":"2026-11-19T12:00:00","start":"2026-11-19T10:30:00","title":"Variant-calling workflow"},{"attendees":[],"calendarId":"free","end":"2026-11-19T13:00:00","start":"2026-11-19T12:00:00","title":"Lunch"},{"attendees":["Roy Francis"],"calendarId":"session","end":"2026-11-19T15:00:00","start":"2026-11-19T13:00:00","title":"RNA-Seq workflow"},{"attendees":[],"calendarId":"free","end":"2026-11-19T15:30:00","start":"2026-11-19T15:00:00","title":"Break"},{"attendees":["Roy Francis"],"calendarId":"session","end":"2026-11-19T17:00:00","start":"2026-11-19T15:30:00","title":"RNA-Seq workflow"},{"attendees":["Roy Francis"],"calendarId":"session","end":"2026-11-20T10:00:00","start":"2026-11-20T09:00:00","title":"RNA-Seq workflow"},{"attendees":[],"calendarId":"free","end":"2026-11-20T10:30:00","start":"2026-11-20T10:00:00","title":"Break"},{"attendees":["Roy Francis"],"calendarId":"session","end":"2026-11-20T12:00:00","start":"2026-11-20T10:30:00","title":"RNA-Seq workflow"},{"attendees":[],"calendarId":"free","end":"2026-11-20T13:00:00","start":"2026-11-20T12:00:00","title":"Lunch"},{"attendees":["DM"],"calendarId":"session","end":"2026-11-20T14:00:00","start":"2026-11-20T13:00:00","title":"Data management practices"},{"attendees":["Dag Ahrén"],"calendarId":"session","end":"2026-11-20T14:15:00","start":"2026-11-20T14:00:00","title":"NBIS Presentation"},{"attendees":["Roy Francis"],"calendarId":"extra","end":"2026-11-20T14:30:00","start":"2026-11-20T14:15:00","title":"Feedback"}];
+  var __sourceTz = (opts.timezone && opts.timezone.zones && opts.timezone.zones[0] && opts.timezone.zones[0].timezoneName) || null;
+  var __naiveDateTime = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2}))?$/;
+  function __tzOffsetMinutes(date, timeZone) {
+    var parts = {};
+    new Intl.DateTimeFormat('en-US', {
+      timeZone: timeZone, hourCycle: 'h23',
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', second: '2-digit'
+    }).formatToParts(date).forEach(function(p) { parts[p.type] = p.value; });
+    var asUTC = Date.UTC(parts.year, parts.month - 1, parts.day, parts.hour, parts.minute, parts.second);
+    return (asUTC - date.getTime()) / 60000;
+  }
+  function __wallTimeToUtcIso(value, timeZone) {
+    var match = __naiveDateTime.exec(value);
+    if (!match) return null;
+    var guess = Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]), Number(match[4]), Number(match[5]), match[6] ? Number(match[6]) : 0);
+    var offset = __tzOffsetMinutes(new Date(guess), timeZone);
+    var utcMs = guess - offset * 60000;
+    var refined = __tzOffsetMinutes(new Date(utcMs), timeZone);
+    if (refined !== offset) utcMs = guess - refined * 60000;
+    return new Date(utcMs).toISOString();
+  }
+  function __resolveEventTime(value) {
+    if (__sourceTz && typeof value === 'string') {
+      var converted = __wallTimeToUtcIso(value, __sourceTz);
+      if (converted) return converted;
+    }
+    return value;
+  }
+  __ev.forEach(function(e, index) {
+    if (e.id == null || e.id === '') e.id = 'toastui-calendar-1-event-' + index;
+    var source = Object.assign({}, e, e.raw && typeof e.raw === 'object' ? e.raw : {});
+    e.raw = source;
+    if (!e.state) e.state = '';
+    if (!e.attendees || (Array.isArray(e.attendees) && e.attendees.length === 0)) e.attendees = null;
+    if (!e.isAllday && e.category !== 'allday') {
+      if (e.start != null) e.start = __resolveEventTime(e.start);
+      if (e.end != null) e.end = __resolveEventTime(e.end);
+    }
+  });
   var container = document.getElementById("toastui-calendar-1");
   var cal = new tui.Calendar(container, opts);
   function fitShortTimedEvent(event) {
@@ -357,14 +411,6 @@ background-size: cover;
     });
   }
   cal.on('afterRenderEvent', fitShortTimedEvent);
-  var __ev = [{"attendees":["Martin Dahlö"],"calendarId":"extra","end":"2026-11-16T09:30:00","start":"2026-11-16T09:00:00","title":"Welcome"},{"attendees":["Martin Dahlö"],"calendarId":"session","end":"2026-11-16T10:00:00","start":"2026-11-16T09:30:00","title":"Intro to Linux"},{"attendees":[],"calendarId":"free","end":"2026-11-16T10:30:00","start":"2026-11-16T10:00:00","title":"Break"},{"attendees":["Martin Dahlö"],"calendarId":"session","end":"2026-11-16T12:00:00","start":"2026-11-16T10:30:00","title":"Intro to Linux"},{"attendees":[],"calendarId":"free","end":"2026-11-16T13:00:00","start":"2026-11-16T12:00:00","title":"Lunch"},{"attendees":["Martin Dahlö"],"calendarId":"session","end":"2026-11-16T15:00:00","start":"2026-11-16T13:00:00","title":"Intro to HPC cluster"},{"attendees":[],"calendarId":"free","end":"2026-11-16T15:30:00","start":"2026-11-16T15:00:00","title":"Break"},{"attendees":["Martin Dahlö"],"calendarId":"session","end":"2026-11-16T17:00:00","start":"2026-11-16T15:30:00","title":"Intro to HPC cluster"},{"attendees":["Martin Dahlö"],"calendarId":"session","end":"2026-11-17T10:00:00","start":"2026-11-17T09:00:00","title":"File types in Bioinformatics"},{"attendees":[],"calendarId":"free","end":"2026-11-17T10:30:00","start":"2026-11-17T10:00:00","title":"Break"},{"attendees":["Martin Dahlö"],"calendarId":"session","end":"2026-11-17T11:00:00","start":"2026-11-17T10:30:00","title":"File types in Bioinformatics"},{"attendees":["Martin Dahlö"],"calendarId":"session","end":"2026-11-17T12:00:00","start":"2026-11-17T11:00:00","title":"Better terminal experience"},{"attendees":[],"calendarId":"free","end":"2026-11-17T13:00:00","start":"2026-11-17T12:00:00","title":"Lunch"},{"attendees":["Marcel Martin"],"calendarId":"session","end":"2026-11-17T14:00:00","start":"2026-11-17T13:00:00","title":"Quality control"},{"attendees":["Martin Dahlö"],"calendarId":"session","end":"2026-11-17T15:00:00","start":"2026-11-17T14:00:00","title":"Advanced Bash"},{"attendees":[],"calendarId":"free","end":"2026-11-17T15:30:00","start":"2026-11-17T15:00:00","title":"Break"},{"attendees":["Martin Dahlö"],"calendarId":"session","end":"2026-11-17T17:00:00","start":"2026-11-17T15:30:00","title":"Advanced Bash"},{"attendees":["NGI"],"calendarId":"session","end":"2026-11-18T10:00:00","start":"2026-11-18T09:00:00","title":"NGS technologies"},{"attendees":[],"calendarId":"free","end":"2026-11-18T10:30:00","start":"2026-11-18T10:00:00","title":"Break"},{"attendees":["NGI"],"calendarId":"session","end":"2026-11-18T11:30:00","start":"2026-11-18T10:30:00","title":"NGS long reads & pipelines"},{"attendees":["NGI"],"calendarId":"extra","end":"2026-11-18T12:00:00","start":"2026-11-18T11:30:00","title":"Lab tour"},{"attendees":[],"calendarId":"free","end":"2026-11-18T13:00:00","start":"2026-11-18T12:00:00","title":"Lunch"},{"attendees":["Diana Ekman"],"calendarId":"session","end":"2026-11-18T15:00:00","start":"2026-11-18T13:00:00","title":"Variant-calling workflow"},{"attendees":[],"calendarId":"free","end":"2026-11-18T15:30:00","start":"2026-11-18T15:00:00","title":"Break"},{"attendees":["Diana Ekman"],"calendarId":"session","end":"2026-11-18T17:00:00","start":"2026-11-18T15:30:00","title":"Variant-calling workflow"},{"attendees":["Martin Dahlö"],"calendarId":"extra","end":"2026-11-18T21:00:00","start":"2026-11-18T18:00:00","title":"Course dinner"},{"attendees":["Diana Ekman"],"calendarId":"session","end":"2026-11-19T10:00:00","start":"2026-11-19T09:00:00","title":"Variant-calling workflow"},{"attendees":[],"calendarId":"free","end":"2026-11-19T10:30:00","start":"2026-11-19T10:00:00","title":"Break"},{"attendees":["Diana Ekman"],"calendarId":"session","end":"2026-11-19T12:00:00","start":"2026-11-19T10:30:00","title":"Variant-calling workflow"},{"attendees":[],"calendarId":"free","end":"2026-11-19T13:00:00","start":"2026-11-19T12:00:00","title":"Lunch"},{"attendees":["Roy Francis"],"calendarId":"session","end":"2026-11-19T15:00:00","start":"2026-11-19T13:00:00","title":"RNA-Seq workflow"},{"attendees":[],"calendarId":"free","end":"2026-11-19T15:30:00","start":"2026-11-19T15:00:00","title":"Break"},{"attendees":["Roy Francis"],"calendarId":"session","end":"2026-11-19T17:00:00","start":"2026-11-19T15:30:00","title":"RNA-Seq workflow"},{"attendees":["Roy Francis"],"calendarId":"session","end":"2026-11-20T10:00:00","start":"2026-11-20T09:00:00","title":"RNA-Seq workflow"},{"attendees":[],"calendarId":"free","end":"2026-11-20T10:30:00","start":"2026-11-20T10:00:00","title":"Break"},{"attendees":["Roy Francis"],"calendarId":"session","end":"2026-11-20T12:00:00","start":"2026-11-20T10:30:00","title":"RNA-Seq workflow"},{"attendees":[],"calendarId":"free","end":"2026-11-20T13:00:00","start":"2026-11-20T12:00:00","title":"Lunch"},{"attendees":["DM"],"calendarId":"session","end":"2026-11-20T14:00:00","start":"2026-11-20T13:00:00","title":"Data management practices"},{"attendees":["Dag Ahrén"],"calendarId":"session","end":"2026-11-20T14:15:00","start":"2026-11-20T14:00:00","title":"NBIS Presentation"},{"attendees":["Roy Francis"],"calendarId":"extra","end":"2026-11-20T14:30:00","start":"2026-11-20T14:15:00","title":"Feedback"}];
-  __ev.forEach(function(e, index) {
-    if (e.id == null || e.id === '') e.id = 'toastui-calendar-1-event-' + index;
-    var source = Object.assign({}, e, e.raw && typeof e.raw === 'object' ? e.raw : {});
-    e.raw = source;
-    if (!e.state) e.state = '';
-    if (!e.attendees || (Array.isArray(e.attendees) && e.attendees.length === 0)) e.attendees = null;
-  });
   cal.createEvents(__ev);
   cal.setDate(new Date("2026-11-16"));
   window.__quartoToastuiCalendars = window.__quartoToastuiCalendars || {};
