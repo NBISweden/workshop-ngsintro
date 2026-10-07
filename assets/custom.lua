@@ -1,38 +1,80 @@
+local function meta_inlines(value)
+  return pandoc.MetaInlines({pandoc.Str(tostring(value))})
+end
+
+local UNSUPPORTED_VALUE = "[unsupported yaml]"
+
 function Meta(meta)
-  meta['quarto_version'] = tostring(quarto.version)
-  meta['current_year'] = os.date("%Y")
-  meta['current_date'] = os.date("%d-%m-%Y")
-  meta['current_time'] = os.date("%H:%M:%S")
-  meta["output-dir"] = quarto.project.output_directory
+  meta['quarto_version'] = meta_inlines(quarto.version)
+  meta['current_year'] = meta_inlines(os.date("%Y"))
+  meta['current_date'] = meta_inlines(os.date("%d-%m-%Y"))
+  meta['current_time'] = meta_inlines(os.date("%H:%M:%S"))
+
+  local output_directory = quarto.project.output_directory
+  if not output_directory and quarto.doc.output_file then
+    output_directory = pandoc.path.directory(quarto.doc.output_file)
+  end
+  if output_directory then
+    meta['output-dir-path'] = meta_inlines(output_directory)
+    meta['output-dir'] = meta_inlines(output_directory:match("([^/\\]+)[/\\]*$"))
+  end
 
   local project_directory = quarto.project.directory or "."
   local quarto_config = io.open(project_directory .. "/_quarto.yml", "r")
-  local website = {}
-  local stack = {{indent = -1, value = website}}
-  local in_website = false
+  local blocks = {project = {}, website = {}, format = {}}
+  local current_block = nil
+  local stack = nil
+  local skip_until = nil
 
   if quarto_config then
     for line in quarto_config:lines() do
-      if line:match("^website:%s*$") then
-        in_website = true
-      elseif in_website and line:match("^%S") then
-        in_website = false
-      elseif in_website then
-        local indentation = #(line:match("^(%s*)") or "")
-        local key, value = line:match("^%s*([%w%-]+):%s*(.-)%s*$")
+      local content = line:match("^%s*(.-)%s*$")
 
-        if key then
-          while stack[#stack].indent >= indentation do
-            table.remove(stack)
-          end
+      if content ~= "" and content:sub(1, 1) ~= "#" then
+        local block_name = line:match("^([%w%-]+):%s*$")
 
-          local parent = stack[#stack].value
-          if value == "" then
-            parent[key] = {}
-            table.insert(stack, {indent = indentation, value = parent[key]})
-          elseif not value:match("^[{|]") then
-            value = value:gsub('^[\"\']', ""):gsub('[\"\']$', "")
-            parent[key] = value
+        if block_name and blocks[block_name] then
+          current_block = block_name
+          stack = {{indent = -1, value = blocks[current_block]}}
+          skip_until = nil
+        elseif current_block and line:match("^%S") then
+          current_block = nil
+          stack = nil
+          skip_until = nil
+        elseif current_block then
+          local indentation = #(line:match("^(%s*)") or "")
+
+          if not (skip_until ~= nil and indentation > skip_until) then
+            skip_until = nil
+
+            if content:sub(1, 1) == "-" then
+              -- block-style YAML list: unsupported, mark parent and skip its items
+              skip_until = indentation
+              local top = stack[#stack]
+              if top.parent then
+                top.parent[top.key] = meta_inlines(UNSUPPORTED_VALUE)
+              end
+            else
+              local key, value = line:match("^%s*([%w%-]+):%s*(.-)%s*$")
+
+              if key then
+                while stack[#stack].indent >= indentation do
+                  table.remove(stack)
+                end
+
+                local parent = stack[#stack].value
+                if value == "" then
+                  parent[key] = {}
+                  table.insert(stack, {indent = indentation, value = parent[key], key = key, parent = parent})
+                elseif value:match("^[%[{|>]") then
+                  -- flow-style list/map or block scalar: unsupported
+                  parent[key] = meta_inlines(UNSUPPORTED_VALUE)
+                else
+                  value = value:gsub('^[\"\']', ""):gsub('[\"\']$', "")
+                  parent[key] = meta_inlines(value)
+                end
+              end
+            end
           end
         end
       end
@@ -40,7 +82,7 @@ function Meta(meta)
     quarto_config:close()
   end
 
-  meta.website = website
+  meta.custom = blocks
 
   return meta
 end
