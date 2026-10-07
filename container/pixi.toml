@@ -1,0 +1,28 @@
+[workspace]
+name = "ngsintro"
+channels = ["conda-forge", "bioconda", "r"]
+platforms = ["linux-64"]
+
+[dependencies]
+fastqc = "*"
+samtools = "*"
+multiqc = "*"
+bwa = "*"
+gatk4 = "4.6.2*"
+vcftools = "*"
+hisat2 = "2.2.3*"
+qualimap = "*"
+subread = "*"
+r-base = "4.5.3*"
+r-pheatmap = "*"
+r-ggplot2 = "*"
+r-ggrepel = "*"
+bioconductor-deseq2 = "*"
+bioconductor-edger = "*"
+bioconductor-genomeinfodb = "*"
+bioconductor-genomicranges = "*"
+bioconductor-gviz = "*"
+bioconductor-clusterprofiler = "*"
+"bioconductor-go.db" = "*"
+"bioconductor-reactome.db" = "*"
+"bioconductor-org.mm.eg.db" = "*"
