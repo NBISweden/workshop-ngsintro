@@ -10,7 +10,6 @@ on:
         type: string
 
 env:
-  IMAGE_NAME: ghcr.io/${{ github.repository }}-apptainer
   VERSION: "2.5.1"
   QUARTO_VERSION: ${{ inputs.quarto_version }}
 
@@ -23,6 +22,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
+
+      - name: Set image name
+        run: echo "IMAGE_NAME=ghcr.io/$(printf '%s' "${GITHUB_REPOSITORY}" | tr '[:upper:]' '[:lower:]')-apptainer" >> "${GITHUB_ENV}"
 
       - name: Set up Apptainer
         uses: eWaterCycle/setup-apptainer@v2
