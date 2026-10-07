@@ -1,4 +1,4 @@
-name: ghcr
+name: docker
 
 on:
   workflow_dispatch:
@@ -15,7 +15,7 @@ env:
   QUARTO_VERSION: ${{ inputs.quarto_version }}
 
 jobs:
-  ghcr:
+  docker:
     runs-on: ubuntu-latest
     permissions:
       contents: read
