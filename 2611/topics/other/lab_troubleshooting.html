@@ -258,7 +258,7 @@ background-size: cover;
 <section id="list-jobs" class="level3" data-number="1.1">
 <h3 data-number="1.1" class="anchored" data-anchor-id="list-jobs"><span class="header-section-number">1.1</span> List jobs</h3>
 <p>List all jobs running an a project</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">-A</span> naiss2026-xx-xx <span class="kw">|</span> <span class="fu">tail</span> <span class="at">-n</span> +2 <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-k</span> 4</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">-A</span> naiss2026-4-1504-cpu <span class="kw">|</span> <span class="fu">tail</span> <span class="at">-n</span> +2 <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-k</span> 4</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Sample output</p>
 <pre><code>  23186770      core _interac analopez  R    2:15:00      1 r55
   23175660      core   (null)   anitav  R    6:52:28      1 r480
@@ -272,7 +272,7 @@ background-size: cover;
 <section id="jobs-per-user" class="level3" data-number="1.2">
 <h3 data-number="1.2" class="anchored" data-anchor-id="jobs-per-user"><span class="header-section-number">1.2</span> Jobs per user</h3>
 <p>Sorted list of jobs per user</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">-A</span> naiss2026-xx-xx <span class="kw">|</span> <span class="fu">tr</span> <span class="at">-s</span> <span class="st">' '</span> <span class="kw">|</span> <span class="fu">tail</span> <span class="at">-n</span> +2 <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-d</span><span class="st">' '</span> <span class="at">-f5</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-k1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">-A</span> naiss2026-4-1504-cpu <span class="kw">|</span> <span class="fu">tr</span> <span class="at">-s</span> <span class="st">' '</span> <span class="kw">|</span> <span class="fu">tail</span> <span class="at">-n</span> +2 <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-d</span><span class="st">' '</span> <span class="at">-f5</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-k1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Sample output</p>
 <pre><code>      1 tami
       1 tommal
@@ -288,7 +288,7 @@ background-size: cover;
 <section id="core-usage" class="level3" data-number="1.3">
 <h3 data-number="1.3" class="anchored" data-anchor-id="core-usage"><span class="header-section-number">1.3</span> Core usage</h3>
 <p>Total number of cores used on a project</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">-A</span> naiss2026-xx-xx <span class="at">-o</span> %C <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'{total += $0} END{print total}'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">-A</span> naiss2026-4-1504-cpu <span class="at">-o</span> %C <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'{total += $0} END{print total}'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="project-information" class="level3" data-number="1.4">
 <h3 data-number="1.4" class="anchored" data-anchor-id="project-information"><span class="header-section-number">1.4</span> Project information</h3>
@@ -320,7 +320,7 @@ background-size: cover;
 <section id="user-activity" class="level3" data-number="1.5">
 <h3 data-number="1.5" class="anchored" data-anchor-id="user-activity"><span class="header-section-number">1.5</span> User activity</h3>
 <p>List last activity in a directory for all users in a project.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> /sw/courses/utils/list_modification_times.sh /cfs/klemming/projects/supr/naiss2026-xx-xx/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> /sw/courses/utils/list_modification_times.sh /nobackup/proj/disk/naiss2026-4-1504/shared</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Sample output</p>
 <pre><code>hkyle           2021-11-22 13:59:59     (/proj/snic2021-22-644/nobackup/hkyle/uppmax_tutorial/job_template)
 malinh          2021-11-22 14:12:10     (/proj/snic2021-22-644/nobackup/malinh/slurm-23182638.out)
@@ -332,7 +332,7 @@ private         Not available     ()</code></pre>
 </section>
 <section id="list-reservations-for-a-project" class="level3" data-number="1.6">
 <h3 data-number="1.6" class="anchored" data-anchor-id="list-reservations-for-a-project"><span class="header-section-number">1.6</span> List reservations for a project</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">scontrol</span> show res <span class="kw">|</span> <span class="fu">grep</span> naiss2026-xx-xx</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">scontrol</span> show res <span class="kw">|</span> <span class="fu">grep</span> naiss2026-4-1504-cpu</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Sample output</p>
 <pre><code>ReservationName=snic2021-22-644_wed StartTime=2021-11-24T12:00:00 EndTime=2021-11-24T18:00:00 Duration=06:00:00
    Users=(null) Accounts=snic2021-22-644 Licenses=(null) State=INACTIVE BurstBuffer=(null) Watts=n/a
@@ -359,8 +359,8 @@ ReservationName=snic2021-22-644_fri StartTime=2021-11-26T08:30:00 EndTime=2021-1
 <li>Open the Xquartz terminal and connect to Uppmax</li>
 <li>In my recent macos (10.xxx) , x-forwarding only works if I explicitly run the Xquartz terminal</li>
 </ul>
-<p><code>ssh -XY username@dardel.pdc.kth.se</code><br>
-<code>ssh -XY username@rackham.uppmax.uu.se</code></p>
+<p><code>ssh -XY username@login.hpc.arrhenius.naiss.se</code><br>
+<code>ssh -XY username@none</code></p>
 <p>Also use this when logging in to the compute node!</p>
 <p><code>ssh -XY username@node</code></p>
 <p><strong>Windows users</strong></p>
@@ -377,7 +377,7 @@ ReservationName=snic2021-22-644_fri StartTime=2021-11-26T08:30:00 EndTime=2021-1
 </section>
 <section id="scp-fails-with" class="level3" data-number="2.3">
 <h3 data-number="2.3" class="anchored" data-anchor-id="scp-fails-with"><span class="header-section-number">2.3</span> SCP fails with *</h3>
-<p>Sometimes students have problems to download files with SCP when there is a <code>*</code> in the end of the line. For example; <code>scp user@dardel.pdc.kth.se:~/ngsintro/HG00097.bam* .</code>. It needs to be changed to <code>scp user@dardel.pdc.kth.se:~/ngsintro/HG00097.bam\* .</code>.</p>
+<p>Sometimes students have problems to download files with SCP when there is a <code>*</code> in the end of the line. For example; <code>scp user@login.hpc.arrhenius.naiss.se:~/ngsintro/HG00097.bam* .</code>. It needs to be changed to <code>scp user@login.hpc.arrhenius.naiss.se:~/ngsintro/HG00097.bam\* .</code>.</p>
 </section>
 <section id="thinlinc" class="level3" data-number="2.4">
 <h3 data-number="2.4" class="anchored" data-anchor-id="thinlinc"><span class="header-section-number">2.4</span> Thinlinc</h3>

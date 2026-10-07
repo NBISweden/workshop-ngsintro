@@ -282,7 +282,7 @@ Directory: Whether the directory can be entered using <code>cd</code>.</p>
 <section id="interpreting-permissions" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="interpreting-permissions"><span class="header-section-number">2</span> Interpreting permissions</h2>
 <p>Make an empty directory we can work in and make a file.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">user@login1</span> ~ $ cd /cfs/klemming/projects/supr/naiss2026-xx-xx/username</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">user@login1</span> ~ $ cd /nobackup/proj/disk/naiss2026-4-1504/shared/username</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">user@login1</span> ngsintro $ mkdir advlinux</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">user@login1</span> ngsintro $ cd advlinux</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">user@login1</span> advlinux $ touch  filename</span>
@@ -365,7 +365,7 @@ Directory: Whether the directory can be entered using <code>cd</code>.</p>
 <section id="files" class="level3" data-number="4.1">
 <h3 data-number="4.1" class="anchored" data-anchor-id="files"><span class="header-section-number">4.1</span> Files</h3>
 <p>Much like a windows user has a shortcut on his desktop to <em>WorldOfWarcraft.exe</em>, being able to create links to files or directories is good to know in Linux. An important thing to remember about symbolic links is that they are not updated, so if you or someone else moves or removes the original file/directory the link will stop working.</p>
-<p>Make sure you are standing in the directory <code>/cfs/klemming/projects/supr/naiss2026-xx-xx/username/advlinux</code>. Then remove our old file and directory.</p>
+<p>Make sure you are standing in the directory <code>/nobackup/proj/disk/naiss2026-4-1504/shared/username/advlinux</code>. Then remove our old file and directory.</p>
 <div class="alert alert-danger">
 <p><strong><i class="fa-solid fa-skull-crossbones" aria-label="skull-crossbones"></i> Danger</strong></p>
 <p><code>rm -r *</code> permanently removes all folder and subfolders from where you are standing. Be extremely careful when using this. Always double check current working directory or path.</p>
@@ -446,7 +446,7 @@ Directory: Whether the directory can be entered using <code>cd</code>.</p>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">"Cat"</span> text<span class="pp">*</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <code>*</code> will ensure that any file starting with <strong>text</strong> and then anything following will be searched. This example would perhaps be more real if we had several text files with different texts and we were looking for a specific string in any of them.</p>
 <p>Copy the file <code>sample_1.sam</code> to your folder using the command below</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /sw/courses/ngsintro/linux/linux_additional-files/sample_1.sam .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /nobackup/proj/disk/naiss2026-4-1504/shared/ngsintro/linux/linux_additional-files/sample_1.sam .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> Use <code>grep</code> to search in the file for a specific string of nucleotides, for example:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">"TACCACCGAAATCTGTGCAGAGGAGAACGCAGCTCCGCCCTCGCGGTGCTCTCCGGGTCTGTGCTGAGGAG"</span> sample_1.sam</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> Try with shorter sequences. When do you start getting lots of hits? This file is only a fraction of a genome, you would have gotten many times more hits doing this to a complete many GB large sam file.</p>

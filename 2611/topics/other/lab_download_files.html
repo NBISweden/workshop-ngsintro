@@ -233,7 +233,7 @@ background-size: cover;
 <section id="download-a-file-from-hpc" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="download-a-file-from-hpc"><span class="header-section-number">2</span> Download a file from HPC</h2>
 <p>Lets assume that you have a file “results.txt” in the following folder on HPC:</p>
-<pre><code>/cfs/klemming/projects/supr/naiss2026-xx-xx/username/somefolder/</code></pre>
+<pre><code>/nobackup/proj/disk/naiss2026-4-1504/shared/username/somefolder/</code></pre>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -248,7 +248,7 @@ Note
 </div>
 </div>
 <p>To download the file to your local workspace type:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> username@dardel.pdc.kth.se:/cfs/klemming/projects/supr/naiss2026-xx-xx/username/somefolder/results.txt .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> username@login.hpc.arrhenius.naiss.se:/nobackup/proj/disk/naiss2026-4-1504/shared/username/somefolder/results.txt .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Note that the last <code>.</code> means that the file will keep the original name.</p>
 </section>
 <section id="upload-a-file-to-hpc" class="level2" data-number="3">
@@ -267,7 +267,7 @@ Note
 <p><code>username</code> and <code>somefolder</code> should be replaced with your real username and a real folder name. Run this on HPC.</p>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> script.sh username@dardel.pdc.kth.se:/cfs/klemming/projects/supr/naiss2026-xx-xx/username/somefolder/.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> script.sh username@login.hpc.arrhenius.naiss.se:/nobackup/proj/disk/naiss2026-4-1504/shared/username/somefolder/.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
 </section>
