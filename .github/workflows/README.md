@@ -8,4 +8,3 @@
 ### Triggered manually
 
 - docker.yml: This workflow builds a docker container with all tools needs for the labs and pushes it to NBISweden GHCR repository.
-- apptainer.yml: This workflow builds an Apptainer container with all tools needed for the labs and pushes it to NBISweden GHCR repository.

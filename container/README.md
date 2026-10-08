@@ -1,8 +1,8 @@
 # Workshop containers
 
-The Docker and Apptainer images contain Quarto, Pixi, and the environment defined by `pixi.toml` and `pixi.lock`. The Pixi environment is activated automatically when a shell starts, and its commands are also available when a command is executed directly.
+The Docker image contains Quarto, Pixi, and the environment defined by `pixi.toml` and `pixi.lock`. The Pixi environment is activated automatically when a shell starts, and its commands are also available when a command is executed directly.
 
-The images currently target `linux/amd64` because the Pixi lockfile contains only the `linux-64` platform.
+The image currently targets `linux/amd64` because the Pixi lockfile contains only the `linux-64` platform.
 
 ## Docker
 
@@ -55,14 +55,14 @@ docker build \
 
 ## Apptainer
 
-Pull the versioned SIF image from GHCR:
+Convert the versioned Docker image from GHCR to a local SIF image.
 
 ```bash
-apptainer pull workshop-ngsintro.sif \
-	oras://ghcr.io/nbisweden/workshop-ngsintro-apptainer:2.5.1
+apptainer build workshop-ngsintro.sif \
+	docker://ghcr.io/nbisweden/workshop-ngsintro:2.5.1
 ```
 
-Start a shell with the current directory mounted at `/work`:
+Run an interactive shell with the current directory mounted at `/work`:
 
 ```bash
 apptainer shell \
@@ -71,7 +71,7 @@ apptainer shell \
 	workshop-ngsintro.sif
 ```
 
-Render the complete website:
+Alternatively, run a command directly, for example:
 
 ```bash
 apptainer exec \
@@ -81,23 +81,6 @@ apptainer exec \
 	quarto render
 ```
 
-Start a Quarto preview server at <http://localhost:8800>:
+## GitHub Codespaces
 
-```bash
-apptainer exec \
-	--bind "$PWD:/work" \
-	--pwd /work \
-	workshop-ngsintro.sif \
-	quarto preview --host 0.0.0.0 --port 8800
-```
-
-Build the SIF image locally from the `container` directory, optionally selecting another Quarto version:
-
-```bash
-cd container
-apptainer build --fakeroot \
-	--build-arg QUARTO_VERSION=1.10.18 \
-	workshop-ngsintro.sif apptainer.def
-```
-
-Use `sudo apptainer build` instead when unprivileged builds are not enabled on the host.
+The repository includes a dev container (`.devcontainer/`) built from `container/dockerfile`, so all tools from `pixi.toml` are available in the Codespace terminal. On first creation, `.devcontainer/setup-data.sh` downloads the workshop data from OSF to `data/workshop-data.zip` and unzips it into `data/`. This folder lives in the persistent workspace volume and is git-ignored, so it survives Codespace restarts and is only downloaded once. To fetch it again, delete `data/.extracted` and run `bash .devcontainer/setup-data.sh`.
