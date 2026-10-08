@@ -13,12 +13,21 @@ From: ubuntu:24.04
     export PIXI_HOME=/opt/pixi
     export PATH="${PIXI_HOME}/bin:${PATH}"
 
+    rm -f /etc/dpkg/dpkg.cfg.d/excludes
     apt-get update
     apt-get install --no-install-recommends --yes \
         bash \
         ca-certificates \
         curl \
-        git
+        git \
+        less \
+        man-db \
+        manpages \
+        nano \
+        procps \
+        tree \
+        unzip \
+        wget
 
     architecture="$(dpkg --print-architecture)"
     curl --fail --location --show-error \

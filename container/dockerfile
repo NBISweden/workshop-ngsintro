@@ -7,12 +7,21 @@ ENV DEBIAN_FRONTEND=noninteractive \
     PIXI_PROJECT_MANIFEST=/opt/ngsintro/pixi.toml \
     PATH=/opt/ngsintro/.pixi/envs/default/bin:/opt/pixi/bin:${PATH}
 
-RUN apt-get update \
+RUN rm -f /etc/dpkg/dpkg.cfg.d/excludes \
+    && apt-get update \
     && apt-get install --no-install-recommends --yes \
         bash \
         ca-certificates \
         curl \
         git \
+        less \
+        man-db \
+        manpages \
+        nano \
+        procps \
+        tree \
+        unzip \
+        wget \
     && architecture="$(dpkg --print-architecture)" \
     && curl --fail --location --show-error \
         --output /tmp/quarto.deb \
