@@ -35,7 +35,7 @@ WORKDIR /opt/ngsintro
 
 COPY container/pixi.toml container/pixi.lock ./
 
-RUN pixi install --locked \
+RUN pixi install --locked --run-post-link-scripts \
     && pixi shell-hook --shell bash \
         --manifest-path /opt/ngsintro/pixi.toml \
         --locked > /etc/profile.d/pixi.sh \
