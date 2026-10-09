@@ -1,0 +1,57 @@
+---
+title:  "Pixi"
+subtitle: "Installing and using Pixi on the Arrhenius cluster"
+author: "Roy Francis"
+format: html
+---
+
+![](assets/pixi.webp){width="500px"}
+
+[Pixi](https://pixi.sh) is a package management tool for managing software environments and dependencies, similar to tools like Conda. We will use it to set up and manage the software environment needed for this workshop.
+
+## Installation
+
+To install Pixi on the Arrhenius cluster for you as a user, run the following command from any directory:
+
+```sh
+curl -fsSL https://pixi.sh/install.sh | sh
+```
+
+This installs Pixi in the `.pixi` directory in your home directory.
+
+Add the following lines to your `~/.bashrc` file to make Pixi available from any new shell session:
+
+```sh
+export PATH="$HOME/.pixi/bin:$PATH"
+export PIXI_CACHE_DIR="${TMPDIR:-/tmp}/pixi-cache-$USER"
+```
+
+Start a new shell, or run `source ~/.bashrc`, and then verify the installation:
+
+```sh
+pixi --version
+```
+
+## Usage
+
+The workshop environment has already been created, so you do not need to build it yourself.
+
+### Interactive usage
+
+To activate the workshop environment in an interactive session, run this command from any directory:
+
+```sh
+pixi shell --manifest-path {{< meta path_project >}}/apps/pixi.toml
+```
+
+This starts a new shell with access to the tools needed for the workshop. Run `exit` when you are finished to leave the Pixi shell.
+
+### SLURM script usage
+
+To activate the Pixi environment in a SLURM script, add the following lines before any analysis commands:
+
+```sh
+export PATH="$HOME/.pixi/bin:$PATH"
+export PIXI_CACHE_DIR="${TMPDIR:-/tmp}/pixi-cache-$USER"
+eval "$(pixi shell-hook --manifest-path {{< meta path_project >}}/apps/pixi.toml)"
+```

@@ -29,16 +29,30 @@ To download the file to your local workspace type:
 scp username@{{< meta url_cluster >}}:{{< meta path_workspace >}}/somefolder/results.txt .
 ```
 
-Note that the last `.` means that the file will keep the original name.
+Note that the last `.` means that the file will be downloaded to the current directory on your local machine.
+
+If you want to download an entire folder from HPC to your local workspace, you can use the `-r` option with `scp`:
+
+```sh
+scp -r username@{{< meta url_cluster >}}:{{< meta path_workspace >}}/somefolder .
+```
+
+If you want to use wildcards to download multiple files at once, you can use patterns like `*.txt` to match all text files:
+
+```sh
+scp 'username@{{< meta url_cluster >}}:{{< meta path_workspace >}}/somefolder/*.txt' .
+```
+
+Note the use of single quotes around the remote path when using wildcards. This prevents the local shell from expanding the wildcard before it is sent to the remote server.
 
 ## Upload a file to HPC
 
-Now lets imagine that you have developed a script on your laptop and want to upload it to HPC. The script is stored in your local workspace and is called "script.sh". Type this in your local workspace to upload the file to HPC:
+Now lets imagine that you have developed a script on your laptop and want to upload it to HPC. The script is stored on your local machine and is called "script.sh". Type this in your local workspace to upload the file to HPC:
 
 ::: {.callout-note}
-`username` and `somefolder` should be replaced with your real username and a real folder name. Run this on HPC.
+`username` and `somefolder` should be replaced with your real username and a real folder name. Run this in a LOCAL terminal.
 :::
 
 ```sh
-scp script.sh username@{{< meta url_cluster >}}:{{< meta path_workspace >}}/somefolder/.
+scp script.sh username@{{< meta url_cluster >}}:{{< meta path_workspace >}}/somefolder/
 ```

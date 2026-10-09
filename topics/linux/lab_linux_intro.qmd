@@ -439,7 +439,7 @@ Not so easy with those names.. We will have to use `less` to look at the files a
 less <filename>
 ```
 
-{{< fa lightbulb >}} Press `q` to close it down, use arrows keys to scroll up/down.
+{{< fa lightbulb >}} Press <kbd>q</kbd> to close it down, use arrows keys to scroll up/down.
 
 Have a look at `the_best`, that must be our script, right?
 
@@ -469,7 +469,7 @@ nano <filename>
 nano {{< meta path_resources >}}/linux/linux_additional-files/large_file
 ```
 
-{{< fa lightbulb >}} Press `Ctrl+X` to close it down, use arrows to scroll up/down).
+{{< fa lightbulb >}} Press <kbd>Ctrl+X</kbd> to close it down, use arrows to scroll up/down).
 
 Is the file loaded yet? Now take that waiting time and multiply it with 100-1000. Now open the file with less. Notice the difference?
 
@@ -558,7 +558,7 @@ Ok, the last 2 commands for now are `top` and `man`.
 top
 ```
 
-{{< fa lightbulb >}} Press `q` to exit.
+{{< fa lightbulb >}} Press <kbd>q</kbd> to exit.
 
 ```
 Tasks: 376 total,   2 running, 290 sleeping,   0 stopped,   0 zombie
