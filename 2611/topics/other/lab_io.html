@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>HPC IO</title>
+<title>HPC I/O</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -123,8 +123,8 @@ background-size: cover;
   
 
 
-<meta property="og:title" content="HPC IO">
-<meta property="og:description" content="Downloading and uploading files from HPC cluster">
+<meta property="og:title" content="HPC I/O">
+<meta property="og:description" content="Downloading files from and uploading files to the HPC cluster">
 <meta property="og:image" content="https://nbisweden.github.io/workshop-ngsintro/topics/other/assets/images/seo.webp">
 </head>
 
@@ -190,8 +190,8 @@ background-size: cover;
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">HPC IO</h1>
-            <p class="subtitle lead">Downloading and uploading files from HPC cluster</p>
+      <h1 class="title">HPC I/O</h1>
+            <p class="subtitle lead">Downloading files from and uploading files to the HPC cluster</p>
                       </div>
   </div>
     
@@ -213,8 +213,16 @@ background-size: cover;
    
   <ul>
   <li><a href="#local-workspace" id="toc-local-workspace" class="nav-link active" data-scroll-target="#local-workspace"><span class="header-section-number">1</span> Local workspace</a></li>
-  <li><a href="#download-a-file-from-hpc" id="toc-download-a-file-from-hpc" class="nav-link" data-scroll-target="#download-a-file-from-hpc"><span class="header-section-number">2</span> Download a file from HPC</a></li>
-  <li><a href="#upload-a-file-to-hpc" id="toc-upload-a-file-to-hpc" class="nav-link" data-scroll-target="#upload-a-file-to-hpc"><span class="header-section-number">3</span> Upload a file to HPC</a></li>
+  <li><a href="#scp" id="toc-scp" class="nav-link" data-scroll-target="#scp"><span class="header-section-number">2</span> SCP</a>
+  <ul>
+  <li><a href="#download-from-hpc" id="toc-download-from-hpc" class="nav-link" data-scroll-target="#download-from-hpc"><span class="header-section-number">2.1</span> Download from HPC</a></li>
+  <li><a href="#upload-to-hpc" id="toc-upload-to-hpc" class="nav-link" data-scroll-target="#upload-to-hpc"><span class="header-section-number">2.2</span> Upload to HPC</a></li>
+  </ul></li>
+  <li><a href="#rsync" id="toc-rsync" class="nav-link" data-scroll-target="#rsync"><span class="header-section-number">3</span> Rsync</a>
+  <ul>
+  <li><a href="#download-from-hpc-1" id="toc-download-from-hpc-1" class="nav-link" data-scroll-target="#download-from-hpc-1"><span class="header-section-number">3.1</span> Download from HPC</a></li>
+  <li><a href="#upload-to-hpc-1" id="toc-upload-to-hpc-1" class="nav-link" data-scroll-target="#upload-to-hpc-1"><span class="header-section-number">3.2</span> Upload to HPC</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -227,13 +235,16 @@ background-size: cover;
 
 <section id="local-workspace" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="local-workspace"><span class="header-section-number">1</span> Local workspace</h2>
-<p>Start by creating a folder on your laptop where the files that you will download should end up. You need to have write permission in this folder. This folder will be referred to as your <em>local workspace</em> throughout these instructions.</p>
-<p>Open a terminal window on your laptop and move into your local workspace.</p>
+<p>Start by creating a folder on your local machine for the files that you download. You must have permission to write to this folder. It will be referred to as your <em>local workspace</em> throughout these instructions.</p>
+<p>Open a terminal window on your laptop and change to your local workspace.</p>
 </section>
-<section id="download-a-file-from-hpc" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="download-a-file-from-hpc"><span class="header-section-number">2</span> Download a file from HPC</h2>
-<p>Lets assume that you have a file “results.txt” in the following folder on HPC:</p>
-<pre><code>/nobackup/proj/disk/naiss2026-4-1504/shared/username/somefolder/</code></pre>
+<section id="scp" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="scp"><span class="header-section-number">2</span> SCP</h2>
+<p>SCP (Secure Copy) is a command-line utility that allows you to securely transfer files between your local machine and a remote server, such as an HPC cluster.</p>
+<section id="download-from-hpc" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="download-from-hpc"><span class="header-section-number">2.1</span> Download from HPC</h3>
+<p>Let’s assume that you have a file named <code>results.txt</code> in the following folder on the HPC cluster:</p>
+<pre class="text"><code>/nobackup/proj/disk/naiss2026-4-1504/shared/username/somefolder/</code></pre>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -244,21 +255,21 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><code>username</code> and <code>somefolder</code> should be replaced with your real username and a real folder name. Run this in a LOCAL terminal.</p>
+<p>Replace <code>username</code> and <code>somefolder</code> with your real username and folder name. Run this command in a <strong>local</strong> terminal.</p>
 </div>
 </div>
-<p>To download the file to your local workspace type:</p>
+<p>To download the file to your local workspace, type:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> username@login.hpc.arrhenius.naiss.se:/nobackup/proj/disk/naiss2026-4-1504/shared/username/somefolder/results.txt .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Note that the last <code>.</code> means that the file will be downloaded to the current directory on your local machine.</p>
+<p>The final <code>.</code> specifies the current directory on your local machine as the destination.</p>
 <p>If you want to download an entire folder from HPC to your local workspace, you can use the <code>-r</code> option with <code>scp</code>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> <span class="at">-r</span> username@login.hpc.arrhenius.naiss.se:/nobackup/proj/disk/naiss2026-4-1504/shared/username/somefolder .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If you want to use wildcards to download multiple files at once, you can use patterns like <code>*.txt</code> to match all text files:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> <span class="st">'username@login.hpc.arrhenius.naiss.se:/nobackup/proj/disk/naiss2026-4-1504/shared/username/somefolder/*.txt'</span> .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Note the use of single quotes around the remote path when using wildcards. This prevents the local shell from expanding the wildcard before it is sent to the remote server.</p>
 </section>
-<section id="upload-a-file-to-hpc" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="upload-a-file-to-hpc"><span class="header-section-number">3</span> Upload a file to HPC</h2>
-<p>Now lets imagine that you have developed a script on your laptop and want to upload it to HPC. The script is stored on your local machine and is called “script.sh”. Type this in your local workspace to upload the file to HPC:</p>
+<section id="upload-to-hpc" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="upload-to-hpc"><span class="header-section-number">2.2</span> Upload to HPC</h3>
+<p>Now let’s imagine that you have developed a script named <code>script.sh</code> on your laptop and want to upload it to the HPC cluster. From your local workspace, run:</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -269,12 +280,46 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><code>username</code> and <code>somefolder</code> should be replaced with your real username and a real folder name. Run this in a LOCAL terminal.</p>
+<p>Replace <code>username</code> and <code>somefolder</code> with your real username and folder name. Run this command in a <strong>local</strong> terminal. The destination folder must already exist on the HPC cluster.</p>
 </div>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> script.sh username@login.hpc.arrhenius.naiss.se:/nobackup/proj/disk/naiss2026-4-1504/shared/username/somefolder/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="rsync" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="rsync"><span class="header-section-number">3</span> Rsync</h2>
+<p>Rsync is a command-line utility that allows you to efficiently transfer and synchronize files between your local machine and a remote server, such as an HPC cluster.</p>
+<p>The <code>rsync</code> command is useful for large or repeated transfers because it transfers only changed data. The <code>-a</code> option copies directories recursively and preserves file attributes, <code>-v</code> shows what is being transferred, and <code>-P</code> displays progress and keeps partially transferred files so that interrupted transfers can resume.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>rsync</code> is normally available on Linux and macOS. On Windows, run it through WSL or another environment that provides <code>rsync</code>. Run all commands below in a <strong>local</strong> terminal, and replace <code>username</code> and folder names as described above.</p>
+</div>
+</div>
+<section id="download-from-hpc-1" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="download-from-hpc-1"><span class="header-section-number">3.1</span> Download from HPC</h3>
+<p>To download a single file to your local workspace, run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-avP</span> username@login.hpc.arrhenius.naiss.se:/nobackup/proj/disk/naiss2026-4-1504/shared/username/somefolder/results.txt .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>To download the contents of an entire folder, run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-avP</span> username@login.hpc.arrhenius.naiss.se:/nobackup/proj/disk/naiss2026-4-1504/shared/username/somefolder/ ./somefolder/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The trailing <code>/</code> on the source path means that <code>rsync</code> copies the contents of <code>somefolder</code>. Without the trailing slash, it copies the folder itself.</p>
+</section>
+<section id="upload-to-hpc-1" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="upload-to-hpc-1"><span class="header-section-number">3.2</span> Upload to HPC</h3>
+<p>To upload a single file, run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-avP</span> script.sh username@login.hpc.arrhenius.naiss.se:/nobackup/proj/disk/naiss2026-4-1504/shared/username/somefolder/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>To upload the contents of a local folder, run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-avP</span> localfolder/ username@login.hpc.arrhenius.naiss.se:/nobackup/proj/disk/naiss2026-4-1504/shared/username/somefolder/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
