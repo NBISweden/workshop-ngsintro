@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Roy Francis">
 
-<title>NBIS Workshop • Introduction to Bioinformatics using NGS data</title>
+<title>Pixi</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -26,26 +27,65 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./assets/favicon.png" rel="icon" type="image/png">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-1d7419975391f8d34029e70c3403f21d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-73710a6121453aa7cf83fcf2ebcb161f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../assets/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-1d7419975391f8d34029e70c3403f21d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-73710a6121453aa7cf83fcf2ebcb161f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -74,28 +114,34 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<style>
+
+      .quarto-title-block .quarto-title-banner {
+        background-image: url(../../assets/images/banner.webp);
+background-size: cover;
+      }
+</style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&amp;family=Nunito:ital,wght@0,200..700;1,200..700&amp;display=swap" rel="stylesheet">
   
 
 
-<link rel="stylesheet" href="assets/css/home.css">
-<meta property="og:title" content="NBIS Workshop • Introduction to Bioinformatics using NGS data">
-<meta property="og:description" content="A five day introductory workshop for beginners in the analysis of illumina short-read next-generation sequencing data which includes lectures and hands-on labs on a remote high-performance cluster. Topics covered include: working on the Linux command line, overview of sequence data formats and QC, DNA variant calling workflow and RNA sequence analyses workflow.">
-<meta property="og:image" content="https://nbisweden.github.io/workshop-ngsintro/assets/images/seo.webp">
+<meta property="og:title" content="Pixi">
+<meta property="og:description" content="Installing and using Pixi on the Arrhenius cluster">
+<meta property="og:image" content="https://nbisweden.github.io/workshop-ngsintro/topics/other/assets/pixi.webp">
 </head>
 
 <body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./assets/logos/nbis-scilifelab.png" alt="logo" class="navbar-logo light-content">
-    <img src="./assets/logos/nbis-scilifelab.png" alt="logo" class="navbar-logo dark-content">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../assets/logos/nbis-scilifelab.png" alt="logo" class="navbar-logo light-content">
+    <img src="../../assets/logos/nbis-scilifelab.png" alt="logo" class="navbar-logo dark-content">
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -105,31 +151,31 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./home_schedule.html"> 
+    <a class="nav-link" href="../../home_schedule.html"> 
 <span class="menu-text">Schedule</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./home_contents.html"> 
+    <a class="nav-link" href="../../home_contents.html"> 
 <span class="menu-text">Contents</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./home_precourse.html"> 
+    <a class="nav-link" href="../../home_precourse.html"> 
 <span class="menu-text">Precourse</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./home_syllabus.html"> 
+    <a class="nav-link" href="../../home_syllabus.html"> 
 <span class="menu-text">Syllabus</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./home_faq.html"> 
+    <a class="nav-link" href="../../home_faq.html"> 
 <span class="menu-text">FAQs</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./home_info.html"> 
+    <a class="nav-link" href="../../home_info.html"> 
 <span class="menu-text">Info</span></a>
   </li>  
   <li class="nav-item compact">
@@ -145,47 +191,102 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Pixi</h1>
+            <p class="subtitle lead">Installing and using Pixi on the Arrhenius cluster</p>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Roy Francis </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">09-Oct-2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#installation" id="toc-installation" class="nav-link active" data-scroll-target="#installation"><span class="header-section-number">1</span> Installation</a></li>
+  <li><a href="#usage" id="toc-usage" class="nav-link" data-scroll-target="#usage"><span class="header-section-number">2</span> Usage</a>
+  <ul>
+  <li><a href="#interactive-usage" id="toc-interactive-usage" class="nav-link" data-scroll-target="#interactive-usage"><span class="header-section-number">2.1</span> Interactive usage</a></li>
+  <li><a href="#slurm-script-usage" id="toc-slurm-script-usage" class="nav-link" data-scroll-target="#slurm-script-usage"><span class="header-section-number">2.2</span> SLURM script usage</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
-<div class="home-container">
-<div class="home-grid-parent">
-<div class="home-grid-child-left">
-<section id="nbis-workshop" class="level3">
-<h3 data-anchor-id="nbis-workshop">NBIS Workshop</h3>
+
+<p><a href="assets/pixi.webp" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="assets/pixi.webp" class="img-fluid" width="500"></a></p>
+<p><a href="https://pixi.sh">Pixi</a> is a package management tool for managing software environments and dependencies, similar to tools like Conda. We will use it to set up and manage the software environment needed for this workshop.</p>
+<section id="installation" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="installation"><span class="header-section-number">1</span> Installation</h2>
+<p>To install Pixi on the Arrhenius cluster for you as a user, run the following command from any directory:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://pixi.sh/install.sh <span class="kw">|</span> <span class="fu">sh</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This installs Pixi in the <code>.pixi</code> directory in your home directory.</p>
+<p>Add the following lines to your <code>~/.bashrc</code> file to make Pixi available from any new shell session:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">"</span><span class="va">$HOME</span><span class="st">/.pixi/bin:</span><span class="va">$PATH</span><span class="st">"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PIXI_CACHE_DIR</span><span class="op">=</span><span class="st">"</span><span class="va">${TMPDIR</span><span class="op">:-</span>/tmp<span class="va">}</span><span class="st">/pixi-cache-</span><span class="va">$USER</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Start a new shell, or run <code>source ~/.bashrc</code>, and then verify the installation:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pixi</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="introduction-to-bioinformatics-using-ngs-data" class="level2">
-<h2 data-anchor-id="introduction-to-bioinformatics-using-ngs-data">Introduction To Bioinformatics Using NGS Data</h2>
-<div class="large">
-<p>Working on the Linux command line<br>
-Sequence data formats and QC<br>
-DNA variant calling workflow<br>
-RNA sequence analyses workflow</p>
-</div>
-<hr>
-<div class="small">
-<p>Updated: 09-10-2026 at 23:26:10.</p>
-</div>
+<section id="usage" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="usage"><span class="header-section-number">2</span> Usage</h2>
+<p>The workshop environment has already been created, so you do not need to build it yourself.</p>
+<section id="interactive-usage" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="interactive-usage"><span class="header-section-number">2.1</span> Interactive usage</h3>
+<p>To activate the workshop environment in an interactive session, run this command from any directory:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pixi</span> shell <span class="at">--manifest-path</span> /nobackup/proj/disk/naiss2026-4-1504/apps/pixi.toml</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This starts a new shell with access to the tools needed for the workshop. Run <code>exit</code> when you are finished to leave the Pixi shell.</p>
 </section>
-</div>
-<div class="home-grid-child-right">
-<p><img src="assets/images/hero.webp" class="nolightbox img-fluid"></p>
-</div>
-</div>
-</div>
+<section id="slurm-script-usage" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="slurm-script-usage"><span class="header-section-number">2.2</span> SLURM script usage</h3>
+<p>To activate the Pixi environment in a SLURM script, add the following lines before any analysis commands:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">"</span><span class="va">$HOME</span><span class="st">/.pixi/bin:</span><span class="va">$PATH</span><span class="st">"</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PIXI_CACHE_DIR</span><span class="op">=</span><span class="st">"</span><span class="va">${TMPDIR</span><span class="op">:-</span>/tmp<span class="va">}</span><span class="st">/pixi-cache-</span><span class="va">$USER</span><span class="st">"</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span> <span class="st">"</span><span class="va">$(</span><span class="ex">pixi</span> shell-hook <span class="at">--manifest-path</span> /nobackup/proj/disk/naiss2026-4-1504/apps/pixi.toml<span class="va">)</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
         if (clz.startsWith('code-annotation-')) {                     
@@ -591,9 +692,41 @@ RNA sequence analyses workflow</p>
 </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 
 
-<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

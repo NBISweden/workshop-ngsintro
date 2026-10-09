@@ -249,11 +249,16 @@ Note
 </div>
 <p>To download the file to your local workspace type:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> username@login.hpc.arrhenius.naiss.se:/nobackup/proj/disk/naiss2026-4-1504/shared/username/somefolder/results.txt .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Note that the last <code>.</code> means that the file will keep the original name.</p>
+<p>Note that the last <code>.</code> means that the file will be downloaded to the current directory on your local machine.</p>
+<p>If you want to download an entire folder from HPC to your local workspace, you can use the <code>-r</code> option with <code>scp</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> <span class="at">-r</span> username@login.hpc.arrhenius.naiss.se:/nobackup/proj/disk/naiss2026-4-1504/shared/username/somefolder .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If you want to use wildcards to download multiple files at once, you can use patterns like <code>*.txt</code> to match all text files:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> <span class="st">'username@login.hpc.arrhenius.naiss.se:/nobackup/proj/disk/naiss2026-4-1504/shared/username/somefolder/*.txt'</span> .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Note the use of single quotes around the remote path when using wildcards. This prevents the local shell from expanding the wildcard before it is sent to the remote server.</p>
 </section>
 <section id="upload-a-file-to-hpc" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="upload-a-file-to-hpc"><span class="header-section-number">3</span> Upload a file to HPC</h2>
-<p>Now lets imagine that you have developed a script on your laptop and want to upload it to HPC. The script is stored in your local workspace and is called “script.sh”. Type this in your local workspace to upload the file to HPC:</p>
+<p>Now lets imagine that you have developed a script on your laptop and want to upload it to HPC. The script is stored on your local machine and is called “script.sh”. Type this in your local workspace to upload the file to HPC:</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -264,10 +269,10 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><code>username</code> and <code>somefolder</code> should be replaced with your real username and a real folder name. Run this on HPC.</p>
+<p><code>username</code> and <code>somefolder</code> should be replaced with your real username and a real folder name. Run this in a LOCAL terminal.</p>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> script.sh username@login.hpc.arrhenius.naiss.se:/nobackup/proj/disk/naiss2026-4-1504/shared/username/somefolder/.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> script.sh username@login.hpc.arrhenius.naiss.se:/nobackup/proj/disk/naiss2026-4-1504/shared/username/somefolder/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
 </section>

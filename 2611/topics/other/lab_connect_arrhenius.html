@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>NBIS Workshop • Introduction to Bioinformatics using NGS data</title>
+<title>Connecting to Arrhenius HPC</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -26,26 +26,67 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./assets/favicon.png" rel="icon" type="image/png">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-1d7419975391f8d34029e70c3403f21d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-73710a6121453aa7cf83fcf2ebcb161f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../assets/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-1d7419975391f8d34029e70c3403f21d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-73710a6121453aa7cf83fcf2ebcb161f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/quarto-contrib/fontawesome6-6.7.2/all.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-6.7.2/latex-fontsize.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -74,28 +115,34 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<style>
+
+      .quarto-title-block .quarto-title-banner {
+        background-image: url(../../assets/images/banner.webp);
+background-size: cover;
+      }
+</style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&amp;family=Nunito:ital,wght@0,200..700;1,200..700&amp;display=swap" rel="stylesheet">
   
 
 
-<link rel="stylesheet" href="assets/css/home.css">
-<meta property="og:title" content="NBIS Workshop • Introduction to Bioinformatics using NGS data">
-<meta property="og:description" content="A five day introductory workshop for beginners in the analysis of illumina short-read next-generation sequencing data which includes lectures and hands-on labs on a remote high-performance cluster. Topics covered include: working on the Linux command line, overview of sequence data formats and QC, DNA variant calling workflow and RNA sequence analyses workflow.">
-<meta property="og:image" content="https://nbisweden.github.io/workshop-ngsintro/assets/images/seo.webp">
+<meta property="og:title" content="Connecting to Arrhenius HPC">
+<meta property="og:description" content="Connecting to Arrhenius HPC through SSH (terminal) and GUI (ThinLinc)">
+<meta property="og:image" content="https://nbisweden.github.io/workshop-ngsintro/topics/other/assets/thinlinc_arrhenius_1.webp">
 </head>
 
 <body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./assets/logos/nbis-scilifelab.png" alt="logo" class="navbar-logo light-content">
-    <img src="./assets/logos/nbis-scilifelab.png" alt="logo" class="navbar-logo dark-content">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../assets/logos/nbis-scilifelab.png" alt="logo" class="navbar-logo light-content">
+    <img src="../../assets/logos/nbis-scilifelab.png" alt="logo" class="navbar-logo dark-content">
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -105,31 +152,31 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./home_schedule.html"> 
+    <a class="nav-link" href="../../home_schedule.html"> 
 <span class="menu-text">Schedule</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./home_contents.html"> 
+    <a class="nav-link" href="../../home_contents.html"> 
 <span class="menu-text">Contents</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./home_precourse.html"> 
+    <a class="nav-link" href="../../home_precourse.html"> 
 <span class="menu-text">Precourse</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./home_syllabus.html"> 
+    <a class="nav-link" href="../../home_syllabus.html"> 
 <span class="menu-text">Syllabus</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./home_faq.html"> 
+    <a class="nav-link" href="../../home_faq.html"> 
 <span class="menu-text">FAQs</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./home_info.html"> 
+    <a class="nav-link" href="../../home_info.html"> 
 <span class="menu-text">Info</span></a>
   </li>  
   <li class="nav-item compact">
@@ -145,47 +192,135 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Connecting to Arrhenius HPC</h1>
+            <p class="subtitle lead">Connecting to Arrhenius HPC through SSH (terminal) and GUI (ThinLinc)</p>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#ssh-connection" id="toc-ssh-connection" class="nav-link active" data-scroll-target="#ssh-connection"><span class="header-section-number">1</span> SSH connection</a>
+  <ul>
+  <li><a href="#connecting-to-hpc-using-ssh" id="toc-connecting-to-hpc-using-ssh" class="nav-link" data-scroll-target="#connecting-to-hpc-using-ssh"><span class="header-section-number">1.1</span> Connecting to HPC using SSH</a></li>
+  </ul></li>
+  <li><a href="#remote-desktop" id="toc-remote-desktop" class="nav-link" data-scroll-target="#remote-desktop"><span class="header-section-number">2</span> Remote desktop</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
-<div class="home-container">
-<div class="home-grid-parent">
-<div class="home-grid-child-left">
-<section id="nbis-workshop" class="level3">
-<h3 data-anchor-id="nbis-workshop">NBIS Workshop</h3>
+
+<p>We will demonstrate different ways to connect to the NAISS Arrhenius high-performance cluster. From the cluster’s point of view, it doesn’t matter which method you use, and you can switch at any time or even use multiple methods simultaneously.</p>
+<p>The options are a text-based SSH connection and a graphical remote desktop using ThinLinc, both of which are available on all major operating systems. ThinLinc is useful if you need to view images or documents in GUI programs without first downloading them to your own computer. Because it transfers graphics, it requires a good, stable internet connection.</p>
+<p>We show you different methods because some parts of this course require you to view plots and images, and an additional download step would unnecessarily complicate the workflow.</p>
+<section id="ssh-connection" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="ssh-connection"><span class="header-section-number">1</span> SSH connection</h2>
+<p>Let’s look at the text-based SSH approach first. This type of connection works well even on slow internet connections because it transmits only small amounts of text. You will need a terminal and an SSH client, which are included in most major operating systems:</p>
+<ul>
+<li><i class="fa-brands fa-ubuntu" aria-label="ubuntu"></i> Linux: use a terminal</li>
+<li><i class="fa-brands fa-apple" aria-label="apple"></i> macOS: use Terminal</li>
+<li><i class="fa-brands fa-windows" aria-label="windows"></i> Windows: use PowerShell, Command Prompt, or WSL2</li>
+</ul>
+<p>The guide below is based on <a href="https://hpc.pages.naiss.se/user-documentation/support-docs/arrhenius_hpc/login/login/">Arrhenius official instructions</a>.</p>
+<section id="connecting-to-hpc-using-ssh" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="connecting-to-hpc-using-ssh"><span class="header-section-number">1.1</span> Connecting to HPC using SSH</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Where <code>username</code> is mentioned, replace it with your cluster username.</p>
+</div>
+</div>
+<ol type="1">
+<li><p>Open a terminal and enter the following command:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> username@login.hpc.arrhenius.naiss.se</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>Enter your password when prompted. As you type, nothing will appear on the screen: no stars and no dots. This is expected. Type the password, press <kbd>Enter</kbd>, and then enter your 2FA code.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> username@login.hpc.arrhenius.naiss.se</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">username@login.hpc.arrhenius.naiss.se</span><span class="kw">)</span> <span class="ex">Password:</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">username@login.hpc.arrhenius.naiss.se</span><span class="kw">)</span> <span class="ex">Verification</span> code:</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>Your screen should display a login message and end with a terminal prompt:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Last</span> failed login: Thu Oct  8 20:23:16 CEST 2026 from hxx-xx-xxx-xx.cust.bredband2.com on ssh:notty</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">There</span> were 2 failed login attempts since the last successful login.</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Last</span> login: Thu Oct  8 18:10:47 2026 from hxx-xx-xxx-xx.cust.bredband2.com</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Welcome</span> to Arrhenius!</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="ex">[username@arrhenius1</span> ~]$</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>Now you are connected to the HPC and can start working.</p></li>
+</ol>
 </section>
-<section id="introduction-to-bioinformatics-using-ngs-data" class="level2">
-<h2 data-anchor-id="introduction-to-bioinformatics-using-ngs-data">Introduction To Bioinformatics Using NGS Data</h2>
-<div class="large">
-<p>Working on the Linux command line<br>
-Sequence data formats and QC<br>
-DNA variant calling workflow<br>
-RNA sequence analyses workflow</p>
-</div>
-<hr>
-<div class="small">
-<p>Updated: 09-10-2026 at 23:26:10.</p>
-</div>
 </section>
+<section id="remote-desktop" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="remote-desktop"><span class="header-section-number">2</span> Remote desktop</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<div class="home-grid-child-right">
-<p><img src="assets/images/hero.webp" class="nolightbox img-fluid"></p>
+<div class="callout-title-container flex-fill">
+Note
 </div>
 </div>
+<div class="callout-body-container callout-body">
+<p>There are a limited number of ThinLinc licenses, so it’s possible that you might not be able to connect if all licenses are in use. If you are unable to connect, simply try again later.</p>
 </div>
+</div>
+<p>You can work on the HPC interactively through a graphical user interface (GUI) desktop environment using ThinLinc. This works on all major operating systems (<i class="fa-brands fa-ubuntu" aria-label="ubuntu"></i> <i class="fa-brands fa-apple" aria-label="apple"></i> <i class="fa-brands fa-windows" aria-label="windows"></i>).</p>
+<p>The Arrhenius ThinLinc server provides a remote desktop on the login nodes. Connect to it using the ThinLinc client by following these steps:</p>
+<ol type="1">
+<li><p><a href="https://www.cendio.com/thinlinc/download/"><i class="fa-solid fa-download" aria-label="download"></i> Download</a> and install the ThinLinc client.</p></li>
+<li><p>Start ThinLinc and enter <code>tl.hpc.arrhenius.naiss.se</code> in the <strong>Server</strong> field, followed by your username and password. If the client asks for a key instead of a password, click <strong>Advanced</strong> if necessary, open <strong>Options</strong>, select the <strong>Security</strong> tab, and choose <strong>Password</strong> as the authentication method. Click <strong>Connect</strong>.</p>
+<p><a href="assets/thinlinc_arrhenius_1.webp" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="assets/thinlinc_arrhenius_1.webp" class="img-fluid" width="500"></a></p></li>
+<li><p>Enter your 2FA code when prompted.</p>
+<p><a href="assets/thinlinc_arrhenius_2.webp" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="assets/thinlinc_arrhenius_2.webp" class="img-fluid" width="500"></a></p></li>
+<li><p>You should now be connected to the remote desktop.</p>
+<p><a href="assets/thinlinc_arrhenius_3.webp" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="assets/thinlinc_arrhenius_3.webp" class="img-fluid" width="700"></a></p></li>
+<li><p>When you have finished using the remote desktop, click your name in the top-right corner of the screen and select <strong>Log Out</strong>.</p></li>
+</ol>
+<p>For more information, take a look at the official documentation: <a href="https://hpc.pages.naiss.se/user-documentation/support-docs/arrhenius_hpc/login/thinlinc/" target="_blank" rel="noopener noreferrer">Arrhenius ThinLinc Guide</a></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
         if (clz.startsWith('code-annotation-')) {                     
@@ -591,9 +726,41 @@ RNA sequence analyses workflow</p>
 </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 
 
-<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
