@@ -30,11 +30,9 @@ Note that the slides and videos may not be in sync because the slides were updat
 
 ### Useful resources
 
-- Connecting to HPC PDC [{{< fa file-lines >}}](topics/other/lab_connect_pdc.html)
-- Connecting to HPC UPPMAX [{{< fa file-lines >}}](topics/other/lab_connect_uppmax.html)
 - Connecting to HPC Arrhenius [{{< fa file-lines >}}](topics/other/lab_connect_arrhenius.html)
 - Installing and using Pixi on HPC Arrhenius [{{< fa file-lines >}}](topics/other/lab_pixi.html)
-- Uploading & downloading files from HPC [{{< fa file-lines >}}](topics/other/lab_download_files.html)
+- Uploading & downloading files from HPC [{{< fa file-lines >}}](topics/other/lab_io.html)
 - Using X11 on Windows with VcXsrv [{{< fa file-lines >}}](topics/other/lab_vcxsrv.html)
 - Simon's RNASeq analysis [{{< fa file-lines >}}](topics/rnaseq/simon-report/validating_knockout.html)
 - Linux cheatsheet [{{< fa file-pdf >}}](topics/linux/assets/linux_cheat_sheet.pdf)
@@ -43,3 +41,5 @@ Note that the slides and videos may not be in sync because the slides were updat
 - Bash cheat sheet 3 [{{< fa file-pdf >}}](topics/linux/assets/bash_cheat_sheet_3.pdf)
 - Uppmax cheatsheet [{{< fa file-image >}}](topics/linux/assets/uppmax_cheat_sheet.png)
 - Mac keyboard [{{< fa file-lines >}}](topics/other/lab_mac_keyboard.html)
+- Connecting to HPC PDC [{{< fa file-lines >}}](topics/other/lab_connect_pdc.html)
+- Connecting to HPC UPPMAX [{{< fa file-lines >}}](topics/other/lab_connect_uppmax.html)

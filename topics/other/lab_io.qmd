@@ -1,0 +1,102 @@
+---
+title: "HPC I/O"
+subtitle: "Downloading files from and uploading files to the HPC cluster"
+date: ""
+format: html
+---
+
+## Local workspace
+
+Start by creating a folder on your local machine for the files that you download. You must have permission to write to this folder. It will be referred to as your *local workspace* throughout these instructions.
+
+Open a terminal window on your laptop and change to your local workspace.
+
+## SCP
+
+SCP (Secure Copy) is a command-line utility that allows you to securely transfer files between your local machine and a remote server, such as an HPC cluster.
+
+### Download from HPC
+
+Let's assume that you have a file named `results.txt` in the following folder on the HPC cluster:
+
+```text
+{{< meta path_workspace >}}/somefolder/
+```
+
+::: {.callout-note}
+Replace `username` and `somefolder` with your real username and folder name. Run this command in a **local** terminal.
+:::
+
+To download the file to your local workspace, type:
+
+```sh
+scp username@{{< meta url_cluster >}}:{{< meta path_workspace >}}/somefolder/results.txt .
+```
+
+The final `.` specifies the current directory on your local machine as the destination.
+
+If you want to download an entire folder from HPC to your local workspace, you can use the `-r` option with `scp`:
+
+```sh
+scp -r username@{{< meta url_cluster >}}:{{< meta path_workspace >}}/somefolder .
+```
+
+If you want to use wildcards to download multiple files at once, you can use patterns like `*.txt` to match all text files:
+
+```sh
+scp 'username@{{< meta url_cluster >}}:{{< meta path_workspace >}}/somefolder/*.txt' .
+```
+
+Note the use of single quotes around the remote path when using wildcards. This prevents the local shell from expanding the wildcard before it is sent to the remote server.
+
+### Upload to HPC
+
+Now let's imagine that you have developed a script named `script.sh` on your laptop and want to upload it to the HPC cluster. From your local workspace, run:
+
+::: {.callout-note}
+Replace `username` and `somefolder` with your real username and folder name. Run this command in a **local** terminal. The destination folder must already exist on the HPC cluster.
+:::
+
+```sh
+scp script.sh username@{{< meta url_cluster >}}:{{< meta path_workspace >}}/somefolder/
+```
+
+## Rsync
+
+Rsync is a command-line utility that allows you to efficiently transfer and synchronize files between your local machine and a remote server, such as an HPC cluster.
+
+The `rsync` command is useful for large or repeated transfers because it transfers only changed data. The `-a` option copies directories recursively and preserves file attributes, `-v` shows what is being transferred, and `-P` displays progress and keeps partially transferred files so that interrupted transfers can resume.
+
+::: {.callout-note}
+`rsync` is normally available on Linux and macOS. On Windows, run it through WSL or another environment that provides `rsync`. Run all commands below in a **local** terminal, and replace `username` and folder names as described above.
+:::
+
+### Download from HPC
+
+To download a single file to your local workspace, run:
+
+```sh
+rsync -avP username@{{< meta url_cluster >}}:{{< meta path_workspace >}}/somefolder/results.txt .
+```
+
+To download the contents of an entire folder, run:
+
+```sh
+rsync -avP username@{{< meta url_cluster >}}:{{< meta path_workspace >}}/somefolder/ ./somefolder/
+```
+
+The trailing `/` on the source path means that `rsync` copies the contents of `somefolder`. Without the trailing slash, it copies the folder itself.
+
+### Upload to HPC
+
+To upload a single file, run:
+
+```sh
+rsync -avP script.sh username@{{< meta url_cluster >}}:{{< meta path_workspace >}}/somefolder/
+```
+
+To upload the contents of a local folder, run:
+
+```sh
+rsync -avP localfolder/ username@{{< meta url_cluster >}}:{{< meta path_workspace >}}/somefolder/
+```
