@@ -44,7 +44,8 @@ RUN pixi install --locked --run-post-link-scripts \
         >> /etc/bash.bashrc \
     && quarto --version \
     && pixi --version \
-    && samtools --version
+    && samtools --version \
+    && pixi clean cache --yes
 
 WORKDIR /work
 
