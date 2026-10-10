@@ -1,7 +1,7 @@
 [workspace]
 name = "ngsintro"
 channels = ["conda-forge", "bioconda", "r"]
-platforms = ["linux-64"]
+platforms = ["linux-64", "linux-aarch64", "osx-arm64"]
 
 [dependencies]
 fastqc = "*"

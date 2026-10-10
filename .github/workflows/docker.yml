@@ -56,7 +56,7 @@ jobs:
         with:
           context: .
           file: container/dockerfile
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           push: true
           build-args: |
             QUARTO_VERSION=${{ env.QUARTO_VERSION }}

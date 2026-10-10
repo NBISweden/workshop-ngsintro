@@ -2,21 +2,20 @@
 
 The Docker image contains Quarto, Pixi, and the environment defined by `pixi.toml` and `pixi.lock`. The Pixi environment is activated automatically when a shell starts, and its commands are also available when a command is executed directly.
 
-The image currently targets `linux/amd64` because the Pixi lockfile contains only the `linux-64` platform.
+The image supports `linux/amd64` and `linux/arm64`. Docker automatically selects the native image for Intel/AMD or Apple Silicon hosts.
 
 ## Docker
 
 Pull the versioned image:
 
 ```bash
-docker pull --platform linux/amd64 ghcr.io/nbisweden/workshop-ngsintro:2.5.1
+docker pull ghcr.io/nbisweden/workshop-ngsintro:2.5.1
 ```
 
 Start a shell with the current directory mounted at `/work`:
 
 ```bash
 docker run --rm -it \
-	--platform linux/amd64 \
 	--volume "$PWD:/work" \
 	ghcr.io/nbisweden/workshop-ngsintro:2.5.1
 ```
@@ -25,7 +24,6 @@ Render the complete website:
 
 ```bash
 docker run --rm \
-	--platform linux/amd64 \
 	--volume "$PWD:/work" \
 	ghcr.io/nbisweden/workshop-ngsintro:2.5.1 \
 	quarto render
@@ -35,7 +33,6 @@ Start a Quarto preview server at <http://localhost:8800>:
 
 ```bash
 docker run --rm -it \
-	--platform linux/amd64 \
 	--volume "$PWD:/work" \
 	--publish 8800:8800 \
 	ghcr.io/nbisweden/workshop-ngsintro:2.5.1 \
@@ -46,7 +43,6 @@ Build the image locally from the repository root, optionally selecting another Q
 
 ```bash
 docker build \
-	--platform linux/amd64 \
 	--build-arg QUARTO_VERSION=1.10.18 \
 	--file container/dockerfile \
 	--tag workshop-ngsintro:local \
