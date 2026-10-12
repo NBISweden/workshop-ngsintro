@@ -683,14 +683,14 @@
     "href": "index.html",
     "title": "",
     "section": "",
-    "text": "Working on the Linux command line\nSequence data formats and QC\nDNA variant calling workflow\nRNA sequence analyses workflow\n\n\n\nUpdated: 10-10-2026 at 17:41:32."
+    "text": "Working on the Linux command line\nSequence data formats and QC\nDNA variant calling workflow\nRNA sequence analyses workflow\n\n\n\nUpdated: 12-10-2026 at 19:00:38."
   },
   {
     "objectID": "index.html#introduction-to-bioinformatics-using-ngs-data",
     "href": "index.html#introduction-to-bioinformatics-using-ngs-data",
     "title": "",
     "section": "",
-    "text": "Working on the Linux command line\nSequence data formats and QC\nDNA variant calling workflow\nRNA sequence analyses workflow\n\n\n\nUpdated: 10-10-2026 at 17:41:32."
+    "text": "Working on the Linux command line\nSequence data formats and QC\nDNA variant calling workflow\nRNA sequence analyses workflow\n\n\n\nUpdated: 12-10-2026 at 19:00:38."
   },
   {
     "objectID": "topics/hpc/pipeline/lab_pipeline.html",
@@ -907,7 +907,7 @@
     "href": "topics/other/lab_pixi.html#installation",
     "title": "Pixi",
     "section": "1 Installation",
-    "text": "1 Installation\nTo install Pixi on the Arrhenius cluster for you as a user, run the following command from any directory:\ncurl -fsSL https://pixi.sh/install.sh | sh\nThis installs Pixi in the .pixi directory in your home directory.\nAdd the following lines to your ~/.bashrc file to make Pixi available from any new shell session:\nexport PATH=\"$HOME/.pixi/bin:$PATH\"\nexport PIXI_CACHE_DIR=\"${TMPDIR:-/tmp}/pixi-cache-$USER\"\nStart a new shell, or run source ~/.bashrc, and then verify the installation:\npixi --version"
+    "text": "1 Installation\nTo install Pixi on the Arrhenius cluster for you as a user, run the following command from any directory:\ncurl -fsSL https://pixi.sh/install.sh | sh\nThis installs Pixi in the .pixi directory in your home directory.\nAdd the following lines to your ~/.bashrc file to make Pixi available from any new shell session:\nexport PATH=\"$HOME/.pixi/bin:$PATH\"\nStart a new shell, or run source ~/.bashrc, and then verify the installation:\npixi --version"
   },
   {
     "objectID": "topics/other/lab_pixi.html#usage",
