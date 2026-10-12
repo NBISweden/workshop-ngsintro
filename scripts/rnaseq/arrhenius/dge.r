@@ -1,5 +1,3 @@
-#!/usr/bin/env Rscript
-
 ## R script to run differential gene expression
 
 library(edgeR)
@@ -28,10 +26,12 @@ row.names(table_counts) <- data_counts$Geneid
 colnames(table_counts) <- sub(".*?(SRR[0-9]+).*", "\\1", colnames(table_counts))
 
 # match order of counts and metadata
-mth <- match(colnames(table_counts), rownames(table_meta))
-table_counts <- table_counts[, mth]
-# check if metadata and counts match
-all.equal(rownames(table_meta), colnames(table_counts))
+mth <- match(rownames(table_meta), colnames(table_counts))
+if (anyNA(mth)) {
+  stop("Missing count columns for: ", paste(rownames(table_meta)[is.na(mth)], collapse = ", "))
+}
+table_counts <- table_counts[, mth, drop = FALSE]
+stopifnot(identical(rownames(table_meta), colnames(table_counts)))
 
 # remove genes with low counts
 # keep genes that have minimum 1 CPM across 3 samples (since group has three replicates)

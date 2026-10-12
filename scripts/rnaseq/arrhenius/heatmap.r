@@ -1,5 +1,3 @@
-#!/usr/bin/env Rscript
-
 ## R script to create heatmap plot
 
 message("Creating heatmap plot ...")
@@ -20,14 +18,20 @@ table_res <- table_res[table_res$padj < 0.05, ]
 # order by padj or lfc and pick top 50 genes
 # table_res <- table_res[order(table_res$padj),]
 table_res <- table_res[order(-abs(table_res$log2FoldChange)), ]
-table_res <- table_res[1:50, ]
+table_res <- head(table_res, 50)
+
+if (nrow(table_res) == 0) {
+  stop("No significant genes are available for the heatmap.", call. = FALSE)
+}
 
 # load vst count data
 table_vst <- readRDS(file.path(path_input, "counts_vst_full.rds"))
-table_vst <- table_vst[table_res$ensembl_gene_id, ]
-mt1 <- match(rownames(table_vst), table_res$ensembl_gene_id)
-table_vst <- table_vst[mt1, ]
-all.equal(rownames(table_vst), table_res$ensembl_gene_id)
+gene_match <- match(table_res$ensembl_gene_id, rownames(table_vst))
+if (anyNA(gene_match)) {
+  stop("Some significant genes are missing from the VST count matrix.", call. = FALSE)
+}
+table_vst <- table_vst[gene_match, , drop = FALSE]
+stopifnot(identical(rownames(table_vst), table_res$ensembl_gene_id))
 rownames(table_vst) <- table_res$external_gene_name
 
 # create metadata
@@ -40,15 +44,16 @@ table_meta$replicate <- as.factor(table_meta$replicate)
 rownames(table_meta) <- table_meta$accession
 
 # match order of counts and metadata
-mth <- match(colnames(table_vst), rownames(table_meta))
-table_vst <- table_vst[, mth]
-all.equal(rownames(table_meta), colnames(table_vst))
+mth <- match(rownames(table_meta), colnames(table_vst))
+if (anyNA(mth)) {
+  stop("Some metadata samples are missing from the VST count matrix.", call. = FALSE)
+}
+table_vst <- table_vst[, mth, drop = FALSE]
+stopifnot(identical(rownames(table_meta), colnames(table_vst)))
 
-col_cond <- c("#fb8072", "#8dd3c7")[table_meta$condition]
-names(col_cond) <- table_meta$condition
+col_cond <- c(Wt = "#fb8072", KO = "#8dd3c7")
 
-col_rep <- c("#80b1d3", "#fdb462", "#bebada")[table_meta$replicate]
-names(col_rep) <- table_meta$replicate
+col_rep <- c("1" = "#80b1d3", "2" = "#fdb462", "3" = "#bebada")
 
 message("Saving plot ...")
 png(file.path(path_output, "heatmap.png"), height = 24, width = 12, units = "cm", res = 300)

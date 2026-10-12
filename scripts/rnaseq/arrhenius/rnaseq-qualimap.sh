@@ -3,23 +3,21 @@
 
 #SBATCH -A naiss2026-4-1504-cpu
 #SBATCH -p shared
-#SBATCH -n 4
+#SBATCH -c 4
 #SBATCH -t 1:00:00
 #SBATCH -J qualimap
+
+set -euo pipefail
 
 # run from directory /4_qualimap/
 # $1 is a bam file
 
-if [ -z "$1" ]; then
+if [[ -z "${1:-}" ]]; then
     echo "bam-file not provided."
     exit 1
 fi
 
-if [ -z "$2" ]; then
-    cores="1"
-else
-    cores="$2"
-fi
+cores="${2:-${SLURM_CPUS_PER_TASK:-1}}"
 
 # available memory in GB
 mem=$((cores * 2))
@@ -32,7 +30,7 @@ unset DISPLAY
 #export DISPLAY=:0
 
 qualimap rnaseq -pe \
--bam $1 \
+-bam "$1" \
 -gtf "../reference/Mus_musculus.GRCm38.99-19.gtf" \
 -outdir "../4_qualimap/${prefix}/" \
 -outfile "${prefix}" \

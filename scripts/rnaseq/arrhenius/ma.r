@@ -1,5 +1,3 @@
-# usr/bin/env Rscript
-
 ## R script to create ma plot
 
 message("Creating MA plot ...")

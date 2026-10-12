@@ -1,4 +1,4 @@
-#!/usr/bin/env Rscript
+## R script to generate coverage and sashimi plots for a specific genomic region using BAM files and a GTF annotation file
 
 path_input <- "."
 path_output <- "."
@@ -19,13 +19,21 @@ library(GenomicRanges)
 
 gen <- "mm10"
 chr <- sub("^chr", "", args[1]) # match the Ensembl chromosome names in the GTF and BAM files
-start <- as.integer(args[2]) # parse the second argument after the r-script to start
-stop <- as.integer(args[3]) # parse the second argument after the r-script to stop
+start_position <- suppressWarnings(as.integer(args[2]))
+end_position <- suppressWarnings(as.integer(args[3]))
+
+if (is.na(start_position) || is.na(end_position) || start_position < 1 || end_position <= start_position) {
+  stop("Start and stop must be positive integers with stop greater than start.", call. = FALSE)
+}
 
 message("Reading BAM files ...")
 
 # Collect bam filenames from bam folder
-bams <- list.files(path_input, pattern = "*.bam$", full.names = TRUE, recursive = TRUE)
+bams <- list.files(path_input, pattern = "\\.bam$", full.names = TRUE, recursive = TRUE)
+
+if (length(bams) == 0) {
+  stop("No BAM files found in the current directory.", call. = FALSE)
+}
 
 # Allow for using different chromosome names than ucsc
 options(ucscChromosomeNames = FALSE)
@@ -41,7 +49,7 @@ grtrack <- GeneRegionTrack(
   transcriptAnnotation = "symbol"
 )
 atrack <- lapply(bams, function(bam) {
-  AlignmentsTrack(bam = bam, isPaired = TRUE, start = start, end = stop, genome = gen, chromosome = chr, name = basename(bam))
+  AlignmentsTrack(bam = bam, isPaired = TRUE, start = start_position, end = end_position, genome = gen, chromosome = chr, name = basename(bam))
 })
 
 # merge all tracks
@@ -52,11 +60,11 @@ height <- 14
 
 # plot
 message("Exporting coverage plot ...")
-png(file.path(path_output, paste0("coverage-", chr, "-", start, "-", stop, ".png")), width = width, height = height, units = "cm", res = 300)
-plotTracks(toplot, type = c("coverage"), from = start, to = stop)
+png(file.path(path_output, paste0("coverage-", chr, "-", start_position, "-", end_position, ".png")), width = width, height = height, units = "cm", res = 300)
+plotTracks(toplot, type = "coverage", from = start_position, to = end_position)
 dev.off()
 
 message("Exporting sashimi plot ...")
-png(file.path(path_output, paste0("sashimi-", chr, "-", start, "-", stop, ".png")), width = width, height = height, units = "cm", res = 300)
-plotTracks(toplot, type = c("sashimi"), from = start, to = stop)
+png(file.path(path_output, paste0("sashimi-", chr, "-", start_position, "-", end_position, ".png")), width = width, height = height, units = "cm", res = 300)
+plotTracks(toplot, type = "sashimi", from = start_position, to = end_position)
 dev.off()

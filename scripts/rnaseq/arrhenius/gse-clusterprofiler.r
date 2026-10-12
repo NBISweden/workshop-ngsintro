@@ -1,5 +1,3 @@
-#!/usr/local/bin/Rscript
-
 ## R script to run gene set enrichment (over-enrichment analysis) on DE genes
 
 library(clusterProfiler)
@@ -11,13 +9,17 @@ path_output <- "."
 message("Reading data ...")
 
 table_res <- read.table(file.path(path_input, "dge_results_full.txt"), sep = "\t", header = TRUE, stringsAsFactors = FALSE, quote = "")
-table_res <- table_res[!is.na(table_res$padj), ]
 table_res <- table_res[!is.na(table_res$entrezgene_id), ]
 table_res <- table_res[!duplicated(table_res$entrezgene_id), ]
 
 universe <- unique(table_res$entrezgene_id)
+table_res <- table_res[!is.na(table_res$padj), ]
 table_res <- table_res[table_res$padj < 0.05, ]
 degs <- unique(table_res$entrezgene_id)
+
+if (length(degs) == 0) {
+  stop("No significantly differentially expressed genes were found.", call. = FALSE)
+}
 
 message("Running GSE on CC ...")
 gse_cc <- enrichGO(
@@ -32,8 +34,8 @@ gse_cc <- enrichGO(
 )
 
 message("Saving CC results ...")
-saveRDS(gse_cc, "gse-clusterprofiler-cc.rds")
-write.table(gse_cc, file.path(path_output, "gse-cc.txt"), col.names = TRUE, row.names = FALSE, sep = "\t", quote = FALSE)
+saveRDS(gse_cc, file.path(path_output, "gse-cc.rds"))
+write.table(as.data.frame(gse_cc), file.path(path_output, "gse-cc.txt"), col.names = TRUE, row.names = FALSE, sep = "\t", quote = FALSE)
 
 message("Running GSE on MF ...")
 gse_mf <- enrichGO(
@@ -48,8 +50,8 @@ gse_mf <- enrichGO(
 )
 
 message("Saving MF results ...")
-saveRDS(gse_mf, "gse-clusterprofiler-mf.rds")
-write.table(gse_mf, file.path(path_output, "gse-mf.txt"), col.names = TRUE, row.names = FALSE, sep = "\t", quote = FALSE)
+saveRDS(gse_mf, file.path(path_output, "gse-mf.rds"))
+write.table(as.data.frame(gse_mf), file.path(path_output, "gse-mf.txt"), col.names = TRUE, row.names = FALSE, sep = "\t", quote = FALSE)
 
 message("Running GSE on BP ...")
 gse_bp <- enrichGO(
@@ -64,7 +66,7 @@ gse_bp <- enrichGO(
 )
 
 message("Saving BP results ...")
-saveRDS(gse_bp, "gse-clusterprofiler-bp.rds")
-write.table(gse_bp, file.path(path_output, "gse-bp.txt"), col.names = TRUE, row.names = FALSE, sep = "\t", quote = FALSE)
+saveRDS(gse_bp, file.path(path_output, "gse-bp.rds"))
+write.table(as.data.frame(gse_bp), file.path(path_output, "gse-bp.txt"), col.names = TRUE, row.names = FALSE, sep = "\t", quote = FALSE)
 
 message("Completed.")

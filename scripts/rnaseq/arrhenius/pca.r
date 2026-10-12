@@ -1,5 +1,3 @@
-#!/usr/bin/env Rscript
-
 ## R script to create pca plot
 
 message("Creating PCA plot ...")
@@ -22,9 +20,12 @@ table_meta$replicate <- as.factor(table_meta$replicate)
 rownames(table_meta) <- table_meta$accession
 
 # match order of counts and metadata
-mth <- match(colnames(table_vst), rownames(table_meta))
-table_vst <- table_vst[, mth]
-all.equal(rownames(table_meta), colnames(table_vst))
+mth <- match(rownames(table_meta), colnames(table_vst))
+if (anyNA(mth)) {
+  stop("Some metadata samples are missing from the VST count matrix.", call. = FALSE)
+}
+table_vst <- table_vst[, mth, drop = FALSE]
+stopifnot(identical(rownames(table_meta), colnames(table_vst)))
 
 # pca
 pcaobj <- prcomp(x = t(table_vst))

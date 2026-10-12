@@ -3,23 +3,28 @@
 
 #SBATCH -A naiss2026-4-1504-cpu
 #SBATCH -p shared
-#SBATCH -n 4
+#SBATCH -c 4
 #SBATCH -t 2:00:00
 #SBATCH -J qualimap
 
-start_time=`date +%s`
+set -euo pipefail
 
-if [ -z "$1" ]; then
-    cores="1"
-else
-    cores="$1"
+start_time=$(date +%s)
+cores="${1:-${SLURM_CPUS_PER_TASK:-1}}"
+
+shopt -s nullglob
+bam_files=(../3_mapping/*.bam)
+
+if (( ${#bam_files[@]} == 0 )); then
+    echo "No BAM files found in ../3_mapping/."
+    exit 1
 fi
 
-for i in ../3_mapping/*.bam
+for bam_file in "${bam_files[@]}"
 do
-    echo "Running QualiMap on $i ..."
-    bash ../scripts/rnaseq-qualimap.sh $i ${cores}
+    echo "Running QualiMap on ${bam_file} ..."
+    bash ../scripts/rnaseq-qualimap.sh "${bam_file}" "${cores}"
 done
 
-end_time=`date +%s`
-echo "Qualimap took $((${end_time}-${start_time})) seconds."
+end_time=$(date +%s)
+echo "Qualimap took $((end_time - start_time)) seconds."

@@ -3,7 +3,7 @@
 
 #SBATCH -A naiss2026-4-1504-cpu
 #SBATCH -p shared
-#SBATCH -n 1
+#SBATCH -c 1
 #SBATCH -t 2:00:00
 #SBATCH -J hisat2-align
 
@@ -23,19 +23,15 @@ if [[ -z "${2:-}" ]]; then
     exit 1
 fi
 
-if [[ -z "${3:-}" ]]; then
-    cores="1"
-else
-    cores="$3"
-fi
+cores="${3:-${SLURM_CPUS_PER_TASK:-1}}"
 
 # create output file name
 prefix="${1##*/}"
-prefix="${prefix/_*/}"
+prefix="${prefix%_1.fq.gz}"
 
 hisat2 \
 -p "${cores}" \
 -x ../reference/mouse_chr19_hisat2/mouse_chr19_hisat2 \
 --summary-file "${prefix}.summary" \
 -1 "$1" \
--2 "$2" | samtools sort -O BAM > "${prefix}.bam"
+-2 "$2" | samtools sort -O BAM -o "${prefix}.bam"
