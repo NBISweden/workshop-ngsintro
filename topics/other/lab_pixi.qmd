@@ -23,7 +23,6 @@ Add the following lines to your `~/.bashrc` file to make Pixi available from any
 
 ```sh
 export PATH="$HOME/.pixi/bin:$PATH"
-export PIXI_CACHE_DIR="${TMPDIR:-/tmp}/pixi-cache-$USER"
 ```
 
 Start a new shell, or run `source ~/.bashrc`, and then verify the installation:
