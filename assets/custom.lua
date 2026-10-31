@@ -7,8 +7,9 @@ local UNSUPPORTED_VALUE = "[unsupported yaml]"
 function Meta(meta)
   meta['quarto_version'] = meta_inlines(quarto.version)
   meta['current_year'] = meta_inlines(os.date("%Y"))
-  meta['current_date'] = meta_inlines(os.date("%d-%m-%Y"))
-  meta['current_time'] = meta_inlines(os.date("%H:%M:%S"))
+  -- local time of the machine rendering the site, with its timezone name (%Z)
+  meta['current_date'] = meta_inlines(os.date("%d-%b-%Y"))
+  meta['current_time'] = meta_inlines(os.date("%H:%M %Z"))
 
   local output_directory = quarto.project.output_directory
   if not output_directory and quarto.doc.output_file then

@@ -24,9 +24,8 @@ toastui:
       workweek: true
       taskView: false
       eventView: ['time']
-      hourStart: 9
-      hourEnd: 21
       showNowIndicator: true
+    autoHourRange: true
     timezone:
       zones:
         - timezoneName: Europe/Stockholm
@@ -49,8 +48,13 @@ toastui:
         backgroundColor: "#E8DAEF"
         dragBackgroundColor: "#E8DAEF"
         borderColor: "#BB8FCE"
-format:
-  html
+      - id: "unused"
+        name: "Unused"
+        color: inherit
+        backgroundColor: "#D5F5E3"
+        dragBackgroundColor: "#D5F5E3"
+        borderColor: "#82E0AA"
+format: html
 ---
 
 <!-- Remember to set first day of schedule and file path in the YAML above -->

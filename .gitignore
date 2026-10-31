@@ -11,3 +11,4 @@ to-do.md
 _freeze
 site_libs
 **/*.quarto_ipynb
+/data/

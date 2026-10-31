@@ -2,21 +2,26 @@
 
 /*-- scss:defaults --*/
 
-/* colours, fonts, size ---------------------------------------------------------------------- */
-
-@import url('https://fonts.googleapis.com/css2?family=Fira+Mono&family=Nunito:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap');
+/* colors, fonts, size ---------------------------------------------------------------------- */
 
 $primary: #95b540;
+$primary-strong: #567318; /* darker accent */
 $secondary: #BDD775;
 $tertiary: #E9F2D1;
+$tertiary-light: #F4F8E8;
 $link-color: $primary;
 $body-color: #1c2833;
-$code-color: #3b4819;
+$code-color: #496985;
 $code-block-bg: WhiteSmoke;
 $font-family-sans-serif: 'Nunito', 'Source Sans Pro', 'Helvetica', sans-serif;
-$font-family-monospace: 'Fira Mono','Ubuntu Mono', 'Lucida Console', 'Courier', monospace;
+$font-family-monospace: 'Fira Mono', 'Ubuntu Mono', 'Liberation Mono', 'Lucida Console', 'Courier', monospace;
+$headings-font-family: $font-family-sans-serif;
+$mermaid-font-family: 'Nunito', 'Source Sans Pro', 'Helvetica', sans-serif;
 $code-block-border-color: none;
 $code-bg: $code-block-bg; /* inline code */
+$border-radius: 6px;
+$callout-color-note: $primary;
+$callout-border-width: 1px;
 
 /* presentation */
 $presentation-font-size-root: 27px;
@@ -29,6 +34,15 @@ $presentation-h5-font-size: 1.125em;
 $presentation-h6-font-size: 1em;
 
 /*-- scss:rules --*/
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  font-weight: 600;
+}
 
 /* font */
 /* major third scale */
@@ -70,7 +84,7 @@ $presentation-h6-font-size: 1em;
 
 .reveal pre,
 .reveal code {
-  border-radius: 6px;
+  border-radius: $border-radius;
   border: 0 !important;
 }
 
@@ -81,27 +95,33 @@ $presentation-h6-font-size: 1em;
 
 .reveal div.sourceCode {
   border: 0 !important;
-  border-radius: 6px;
+  border-radius: $border-radius;
   margin-bottom: 0.6em !important;
 }
 
 .reveal pre code {
-  background-color: #F5F5F5 !important;
-  border-radius: 6px;
+  background-color: $code-block-bg !important;
+  border-radius: $border-radius;
 }
 
 .reveal .slide-number {
   font-family: $font-family-sans-serif;
 }
 
+.reveal blockquote,
 .reveal .blockquote {
-    font-size: inherit;
-    padding-left: 1rem;
-    padding-right: 1.5rem;
-    color: #5a6570;
-    padding: 0 1rem;
-    border-left: 0.25rem solid #ecf0f1;
-    margin-bottom: 1rem;
+  display: block;
+  position: relative;
+  width: unset;
+  margin: var(--r-block-margin) auto;
+  padding: 0.5rem 1.25rem;
+  border-left: 0.25rem solid $primary;
+  border-radius: $border-radius;
+  background: $tertiary-light;
+  box-shadow: none;
+  color: $body-color;
+  font-size: inherit;
+  font-style: normal;
 }
 
 /* text alignment */
@@ -184,7 +204,7 @@ $presentation-h6-font-size: 1em;
   display: inline-block;
   padding: 0.2em 0.6em;
   border: 1px solid $primary;
-  border-radius: 4px;
+  border-radius: $border-radius;
   color: whitesmoke;
   background-color: $primary;
   line-height: 1.2;
@@ -210,20 +230,20 @@ $presentation-h6-font-size: 1em;
 
 .reveal .btn.btn-secondary {
   border-color: $secondary;
-  color: whitesmoke;
+  color: $body-color;
   background-color: $secondary;
 }
 
 .reveal .btn.btn-secondary:hover {
   border-color: darken($secondary, 5%);
-  color: whitesmoke;
+  color: $body-color;
   background-color: darken($secondary, 5%);
 }
 
 .reveal .btn.btn-secondary:active,
 .reveal .btn.btn-secondary.active {
   border-color: darken($secondary, 10%);
-  color: whitesmoke;
+  color: $body-color;
   background-color: darken($secondary, 10%);
 }
 
@@ -266,12 +286,13 @@ $presentation-h6-font-size: 1em;
   background-color: $primary;
   color: whitesmoke;
   padding: 0.05em 0.3em;
-  border-radius: 4px;
+  border-radius: $border-radius;
   vertical-align: baseline;
 }
 
 .reveal .badge.badge-secondary {
   background-color: $secondary;
+  color: $body-color;
 }
 
 .reveal .badge.badge-tertiary {
@@ -285,21 +306,14 @@ $presentation-h6-font-size: 1em;
   text-decoration: none;
 }
 
+.reveal .badge.badge-secondary a,
+.reveal .badge.badge-secondary a:hover,
 .reveal .badge.badge-tertiary a,
 .reveal .badge.badge-tertiary a:hover {
   color: $body-color;
 }
 
-/* callout */
-
-.reveal .callout {
-  border-radius: 0 !important;
-}
-
-.reveal .callout-style-default,
-.reveal .callout-style-simple {
-  border: solid silver 1px !important;
-}
+/* callout: type colors and icons come from Quarto, only sizes are adjusted here */
 
 .reveal .callout.callout-style-simple .callout-title,
 .reveal .callout.callout-style-default .callout-title {
@@ -328,32 +342,32 @@ $presentation-h6-font-size: 1em;
   margin-top: 0.55rem;
 }
 
-.reveal div.callout.callout-note.callout-style-default .callout-title {
-  background-color: $tertiary;
-}
+/* callout icons: Font Awesome Free 6.5.1 (CC BY 4.0, https://fontawesome.com/license/free), the important icon is custom; all use the text color */
 
-.reveal div.callout-note .callout-icon::before {
-  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMTYiIHdpZHRoPSIxNiIgZmlsbD0iIzFjMjgzMyIgdmlld0JveD0iMCAwIDUxMiA1MTIiPjwhLS0hRm9udCBBd2Vzb21lIEZyZWUgNi41LjEgYnkgQGZvbnRhd2Vzb21lIC0gaHR0cHM6Ly9mb250YXdlc29tZS5jb20gTGljZW5zZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tL2xpY2Vuc2UvZnJlZSBDb3B5cmlnaHQgMjAyMyBGb250aWNvbnMsIEluYy4tLT48cGF0aCBkPSJNMjU2IDUxMkEyNTYgMjU2IDAgMSAwIDI1NiAwYTI1NiAyNTYgMCAxIDAgMCA1MTJ6TTIxNiAzMzZoMjRWMjcySDIxNmMtMTMuMyAwLTI0LTEwLjctMjQtMjRzMTAuNy0yNCAyNC0yNGg0OGMxMy4zIDAgMjQgMTAuNyAyNCAyNHY4OGg4YzEzLjMgMCAyNCAxMC43IDI0IDI0cy0xMC43IDI0LTI0IDI0SDIxNmMtMTMuMyAwLTI0LTEwLjctMjQtMjRzMTAuNy0yNCAyNC0yNHptNDAtMjA4YTMyIDMyIDAgMSAxIDAgNjQgMzIgMzIgMCAxIDEgMC02NHoiLz48L3N2Zz4=') !important;
-}
+$callout-icons: (
+  "note": '<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" fill="currentColor" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg>',
+  "tip": '<svg xmlns="http://www.w3.org/2000/svg" height="16" width="12" fill="currentColor" viewBox="0 0 384 512"><path d="M272 384c9.6-31.9 29.5-59.1 49.2-86.2l0 0c5.2-7.1 10.4-14.2 15.4-21.4c19.8-28.5 31.4-63 31.4-100.3C368 78.8 289.2 0 192 0S16 78.8 16 176c0 37.3 11.6 71.9 31.4 100.3c5 7.2 10.2 14.3 15.4 21.4l0 0c19.8 27.1 39.7 54.4 49.2 86.2H272zM192 512c44.2 0 80-35.8 80-80V416H112v16c0 44.2 35.8 80 80 80zM112 176c0 8.8-7.2 16-16 16s-16-7.2-16-16c0-61.9 50.1-112 112-112c8.8 0 16 7.2 16 16s-7.2 16-16 16c-44.2 0-80 35.8-80 80z"/></svg>',
+  "warning": '<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" fill="currentColor" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-384c13.3 0 24 10.7 24 24V264c0 13.3-10.7 24-24 24s-24-10.7-24-24V152c0-13.3 10.7-24 24-24zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"/></svg>',
+  "caution": '<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" fill="currentColor" viewBox="0 0 512 512"><path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"/></svg>',
+  "important": '<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" fill="currentColor" viewBox="0 0 512 512"><path fill-rule="evenodd" d="M64 0h384a64 64 0 0 1 64 64v384a64 64 0 0 1-64 64H64a64 64 0 0 1-64-64V64A64 64 0 0 1 64 0zM256 112a32 32 0 0 1 32 32v128a32 32 0 0 1-64 0V144a32 32 0 0 1 32-32zM256 336a40 40 0 1 1 0 80a40 40 0 1 1 0-80z"/></svg>'
+);
 
-.reveal div.callout-tip .callout-icon::before {
-  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMTYiIHdpZHRoPSIxMiIgZmlsbD0iIzFjMjgzMyIgdmlld0JveD0iMCAwIDM4NCA1MTIiPjwhLS0hRm9udCBBd2Vzb21lIEZyZWUgNi41LjEgYnkgQGZvbnRhd2Vzb21lIC0gaHR0cHM6Ly9mb250YXdlc29tZS5jb20gTGljZW5zZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tL2xpY2Vuc2UvZnJlZSBDb3B5cmlnaHQgMjAyMyBGb250aWNvbnMsIEluYy4tLT48cGF0aCBkPSJNMjcyIDM4NGM5LjYtMzEuOSAyOS41LTU5LjEgNDkuMi04Ni4ybDAgMGM1LjItNy4xIDEwLjQtMTQuMiAxNS40LTIxLjRjMTkuOC0yOC41IDMxLjQtNjMgMzEuNC0xMDAuM0MzNjggNzguOCAyODkuMiAwIDE5MiAwUzE2IDc4LjggMTYgMTc2YzAgMzcuMyAxMS42IDcxLjkgMzEuNCAxMDAuM2M1IDcuMiAxMC4yIDE0LjMgMTUuNCAyMS40bDAgMGMxOS44IDI3LjEgMzkuNyA1NC40IDQ5LjIgODYuMkgyNzJ6TTE5MiA1MTJjNDQuMiAwIDgwLTM1LjggODAtODBWNDE2SDExMnYxNmMwIDQ0LjIgMzUuOCA4MCA4MCA4MHpNMTEyIDE3NmMwIDguOC03LjIgMTYtMTYgMTZzLTE2LTcuMi0xNi0xNmMwLTYxLjkgNTAuMS0xMTIgMTEyLTExMmM4LjggMCAxNiA3LjIgMTYgMTZzLTcuMiAxNi0xNiAxNmMtNDQuMiAwLTgwIDM1LjgtODAgODB6Ii8+PC9zdmc+') !important;
-}
+$callout-icon-color: str-replace("#{$body-color}", "#", "%23");
 
-.reveal div.callout-warning .callout-icon::before {
-  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMTYiIHdpZHRoPSIxNiIgZmlsbD0iIzFjMjgzMyIgdmlld0JveD0iMCAwIDUxMiA1MTIiPjwhLS0hRm9udCBBd2Vzb21lIEZyZWUgNi41LjEgYnkgQGZvbnRhd2Vzb21lIC0gaHR0cHM6Ly9mb250YXdlc29tZS5jb20gTGljZW5zZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tL2xpY2Vuc2UvZnJlZSBDb3B5cmlnaHQgMjAyMyBGb250aWNvbnMsIEluYy4tLT48cGF0aCBkPSJNMjU2IDUxMkEyNTYgMjU2IDAgMSAwIDI1NiAwYTI1NiAyNTYgMCAxIDAgMCA1MTJ6bTAtMzg0YzEzLjMgMCAyNCAxMC43IDI0IDI0VjI2NGMwIDEzLjMtMTAuNyAyNC0yNCAyNHMtMjQtMTAuNy0yNC0yNFYxNTJjMC0xMy4zIDEwLjctMjQgMjQtMjR6TTIyNCAzNTJhMzIgMzIgMCAxIDEgNjQgMCAzMiAzMiAwIDEgMSAtNjQgMHoiLz48L3N2Zz4=') !important;
-}
-
-.reveal div.callout-caution .callout-icon::before {
-  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMTYiIHdpZHRoPSIxNiIgZmlsbD0iIzFjMjgzMyIgdmlld0JveD0iMCAwIDUxMiA1MTIiPjwhLS0hRm9udCBBd2Vzb21lIEZyZWUgNi41LjEgYnkgQGZvbnRhd2Vzb21lIC0gaHR0cHM6Ly9mb250YXdlc29tZS5jb20gTGljZW5zZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tL2xpY2Vuc2UvZnJlZSBDb3B5cmlnaHQgMjAyMyBGb250aWNvbnMsIEluYy4tLT48cGF0aCBkPSJNMjU2IDMyYzE0LjIgMCAyNy4zIDcuNSAzNC41IDE5LjhsMjE2IDM2OGM3LjMgMTIuNCA3LjMgMjcuNyAuMiA0MC4xUzQ4Ni4zIDQ4MCA0NzIgNDgwSDQwYy0xNC4zIDAtMjcuNi03LjctMzQuNy0yMC4xcy03LTI3LjggLjItNDAuMWwyMTYtMzY4QzIyOC43IDM5LjUgMjQxLjggMzIgMjU2IDMyem0wIDEyOGMtMTMuMyAwLTI0IDEwLjctMjQgMjRWMjk2YzAgMTMuMyAxMC43IDI0IDI0IDI0czI0LTEwLjcgMjQtMjRWMTg0YzAtMTMuMy0xMC43LTI0LTI0LTI0em0zMiAyMjRhMzIgMzIgMCAxIDAgLTY0IDAgMzIgMzIgMCAxIDAgNjQgMHoiLz48L3N2Zz4=') !important;
+@each $name, $icon in $callout-icons {
+  .reveal div.callout-#{$name} .callout-icon::before {
+    background-image: #{"url('data:image/svg+xml," + str-replace($icon, 'fill="currentColor"', 'style="fill: #{$callout-icon-color}"') + "')"} !important;
+  }
 }
 
 .reveal .callout-caution .callout-icon-container {
   padding-top: 0 !important;
 }
 
-.reveal div.callout-important .callout-icon::before {
-  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMTYiIHdpZHRoPSIxNiIgZmlsbD0iIzFjMjgzMyIgdmlld0JveD0iMCAwIDUxMiA1MTIiPjwhLS0hRm9udCBBd2Vzb21lIEZyZWUgNi41LjEgYnkgQGZvbnRhd2Vzb21lIC0gaHR0cHM6Ly9mb250YXdlc29tZS5jb20gTGljZW5zZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tL2xpY2Vuc2UvZnJlZSBDb3B5cmlnaHQgMjAyMyBGb250aWNvbnMsIEluYy4tLT48cGF0aCBkPSJNNDE2IDM5OC45YzU4LjUtNDEuMSA5Ni0xMDQuMSA5Ni0xNzQuOUM1MTIgMTAwLjMgMzk3LjQgMCAyNTYgMFMwIDEwMC4zIDAgMjI0YzAgNzAuNyAzNy41IDEzMy44IDk2IDE3NC45YzAgLjQgMCAuNyAwIDEuMXY2NGMwIDI2LjUgMjEuNSA0OCA0OCA0OGg0OFY0NjRjMC04LjggNy4yLTE2IDE2LTE2czE2IDcuMiAxNiAxNnY0OGg2NFY0NjRjMC04LjggNy4yLTE2IDE2LTE2czE2IDcuMiAxNiAxNnY0OGg0OGMyNi41IDAgNDgtMjEuNSA0OC00OFY0MDBjMC0uNCAwLS43IDAtMS4xek05NiAyNTZhNjQgNjQgMCAxIDEgMTI4IDBBNjQgNjQgMCAxIDEgOTYgMjU2em0yNTYtNjRhNjQgNjQgMCAxIDEgMCAxMjggNjQgNjQgMCAxIDEgMC0xMjh6Ii8+PC9zdmc+') !important;
+/* the callout type shows in the header tint, not in a colored left border */
+.reveal div.callout.callout-style-simple,
+.reveal div.callout.callout-style-default {
+  border: 1px solid #dee2e6;
 }
 
 /* tables */
@@ -382,7 +396,7 @@ $presentation-h6-font-size: 1em;
 
 .reveal .panel-tabset [role="tab"][aria-selected="true"] {
   border: lightgray 2px solid;
-  border-radius: 6px 6px 0px 0px;
+  border-radius: $border-radius $border-radius 0 0;
   border-bottom: none;
 }
 
@@ -441,13 +455,16 @@ $presentation-h6-font-size: 1em;
   margin: 0;
 }
 
+#title-slide .affiliation {
+  display: block;
+  font-size: 0.7em;
+  font-weight: 400;
+  opacity: 0.75;
+}
+
 #title-slide .date {
   font-size: $presentation-h5-font-size;
   margin: 0;
-}
-
-.reveal .slide-background-content {
-  background-position: right;
 }
 
 #title-slide .title-container {
@@ -501,15 +518,18 @@ $presentation-h6-font-size: 1em;
 
 /* citation */
 
-.reveal .citation,
-.reveal .citation a:hover {
+.reveal .citation {
   font-size: 0.8em;
-  color: lightgray;
+  color: #6c757d;
 }
 
 .reveal .citation a {
   font-size: 0.8em;
-  color: gray;
+  color: #6c757d;
+}
+
+.reveal .citation a:hover {
+  color: $primary;
 }
 
 .references {

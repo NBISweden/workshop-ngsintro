@@ -79,38 +79,38 @@ leaflet:
         icon-color: "#E74856"
         lat: 59.841949
         lon: 17.637073
-        popup: "**Room C6:323a (Linnérummet)**<br> Biomedicinskt centrum<br> Uppsala University / ScilifeLab<br> Husargatan 3<br> 75237 Uppsala"
+        popup: "**Room C6:323a (Linnérummet)**<br> Biomedicinskt centrum<br> Uppsala University / SciLifeLab<br> Husargatan 3<br> 75237 Uppsala"
       - tooltip: "Hotel von Kraemer (900 m, 11 min walk)"
         icon: "fa-solid fa-bed"
         icon-color: "#0078D7"
         lat: 59.84866869
         lon: 17.63525156
         popup: "von Kraemers alle 26<br> 75237 Uppsala"
-      - tooltip: "Grand Hotell Hörnan (1.9 Km, 23 min walk)"
+      - tooltip: "Grand Hotell Hörnan (1.9 km, 23 min walk)"
         icon: "fa-solid fa-bed"
         icon-color: "#0078D7"
         lat: 59.85654413
         lon: 17.64059039
         popup: "Bangårdsgatan 1<br> 75320 Uppsala"
-      - tooltip: "Akademihotellet (1.7 Km, 21 min walk)"
+      - tooltip: "Akademihotellet (1.7 km, 21 min walk)"
         icon: "fa-solid fa-bed"
         icon-color: "#0078D7"
         lat: 59.85659426
         lon: 17.63056311
         popup: "Övre Slottsgatan 5<br> 75310 Uppsala"
-      - tooltip: "Best Western Hotel Svava (2.2 Km, 26 min walk)"
+      - tooltip: "Best Western Hotel Svava (2.2 km, 26 min walk)"
         icon: "fa-solid fa-bed"
         icon-color: "#0078D7"
         lat: 59.85819186
         lon: 17.64407413
         popup: "Bangårdsgatan 24<br> 75320 Uppsala"
-      - tooltip: "Hotell Centralstation (2.1 Km, 25 min walk)"
+      - tooltip: "Hotell Centralstation (2.1 km, 25 min walk)"
         icon: "fa-solid fa-bed"
         icon-color: "#0078D7"
         lat: 59.85830099
         lon: 17.64407784
         popup: "Bangårdsgatan 13<br> 75330 Uppsala"
-      - tooltip: "CityStay Hotell (1.8 Km, 21 min walk)"
+      - tooltip: "CityStay Hotell (1.8 km, 21 min walk)"
         icon: "fa-solid fa-bed"
         icon-color: "#0078D7"
         lat: 59.85709171
