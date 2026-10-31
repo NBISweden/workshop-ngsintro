@@ -47,7 +47,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-1d7419975391f8d34029e70c3403f21d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-73710a6121453aa7cf83fcf2ebcb161f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-1b151a1d3c16ae78eb8a81601a2e4390.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/toastui-calendar-2.1.3/toastui-calendar.min.js"></script>
 <link href="site_libs/quarto-contrib/toastui-calendar-2.1.3/toastui-calendar.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/toastui-calendar-2.1.3/toastui.css" rel="stylesheet">
@@ -144,7 +144,7 @@ background-size: cover;
 <span class="menu-text">Info</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/NBISweden/workshop-ngsintro/"> <i class="bi bi-github" role="img" aria-label="GitHub">
+    <a class="nav-link" href="https://github.com/NBISweden/workshop-ngsintro/"> <i class="bi bi-github" role="img" aria-label="GitHub repository">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -207,8 +207,8 @@ background-size: cover;
 </div>
 <script>
 (function() {
-  var opts = {"defaultView":"week","isReadOnly":true,"timezone":{"zones":[{"timezoneName":"Europe/Stockholm"}]},"usageStatistics":false,"useDetailPopup":true,"week":{"eventView":["time"],"hourEnd":21,"hourStart":9,"showNowIndicator":true,"taskView":false,"workweek":true}};
-  opts.calendars = [{"backgroundColor":"#D6EAF8","borderColor":"#85C1E9","color":"inherit","dragBackgroundColor":"#D6EAF8","id":"session","name":"Session"},{"backgroundColor":"#FCF3CF","borderColor":"#F7DC6F","color":"inherit","dragBackgroundColor":"#FCF3CF","id":"free","name":"Free"},{"backgroundColor":"#E8DAEF","borderColor":"#BB8FCE","color":"inherit","dragBackgroundColor":"#E8DAEF","id":"extra","name":"Extra"}];
+  var opts = {"defaultView":"week","isReadOnly":true,"timezone":{"zones":[{"timezoneName":"Europe/Stockholm"}]},"usageStatistics":false,"useDetailPopup":true,"week":{"eventView":["time"],"showNowIndicator":true,"taskView":false,"workweek":true}};
+  opts.calendars = [{"backgroundColor":"#D6EAF8","borderColor":"#85C1E9","color":"inherit","dragBackgroundColor":"#D6EAF8","id":"session","name":"Session"},{"backgroundColor":"#FCF3CF","borderColor":"#F7DC6F","color":"inherit","dragBackgroundColor":"#FCF3CF","id":"free","name":"Free"},{"backgroundColor":"#E8DAEF","borderColor":"#BB8FCE","color":"inherit","dragBackgroundColor":"#E8DAEF","id":"extra","name":"Extra"},{"backgroundColor":"#D5F5E3","borderColor":"#82E0AA","color":"inherit","dragBackgroundColor":"#D5F5E3","id":"unused","name":"Unused"}];
   var timeFormat = "24h";
   var eventDetailItems = ["attendees"];
   var popupDetailItems = ["attendees","calendar"];
@@ -380,6 +380,45 @@ background-size: cover;
       if (e.end != null) e.end = __resolveEventTime(e.end);
     }
   });
+  (function() {
+    var weekOpts = opts.week || (opts.week = {});
+    var hasHourStart = weekOpts.hourStart != null;
+    var hasHourEnd = weekOpts.hourEnd != null;
+    if (hasHourStart && hasHourEnd) return;
+    var minHour = null, maxHour = null;
+    // Shifts an instant by the delta between __sourceTz's offset and this
+    // browser's own offset, so the native getters below read __sourceTz's
+    // wall-clock digits (matching how TOAST UI actually draws the event)
+    // instead of the viewer's local digits.
+    function __zonedForDigits(d) {
+      if (!__sourceTz) return d;
+      return new Date(d.getTime() + (__tzOffsetMinutes(d, __sourceTz) + d.getTimezoneOffset()) * 60000);
+    }
+    __ev.forEach(function(e) {
+      if (e.isAllday || e.category === 'allday') return;
+      if (e.start == null || e.end == null) return;
+      var start = new Date(e.start);
+      var end = new Date(e.end);
+      if (isNaN(start.getTime()) || isNaN(end.getTime())) return;
+      start = __zonedForDigits(start);
+      end = __zonedForDigits(end);
+      var sameDay = start.getFullYear() === end.getFullYear() &&
+        start.getMonth() === end.getMonth() &&
+        start.getDate() === end.getDate();
+      if (!sameDay) {
+        minHour = 0;
+        maxHour = 24;
+        return;
+      }
+      var startHour = start.getHours() + start.getMinutes() / 60 + start.getSeconds() / 3600;
+      var endHour = end.getHours() + end.getMinutes() / 60 + end.getSeconds() / 3600;
+      if (minHour == null || startHour < minHour) minHour = startHour;
+      if (maxHour == null || endHour > maxHour) maxHour = endHour;
+    });
+    if (minHour == null || maxHour == null) return;
+    if (!hasHourStart) weekOpts.hourStart = minHour;
+    if (!hasHourEnd) weekOpts.hourEnd = maxHour;
+  })();
   var container = document.getElementById("toastui-calendar-1");
   var cal = new tui.Calendar(container, opts);
   function fitShortTimedEvent(event) {
