@@ -5,7 +5,7 @@
 /* colors, fonts, size ---------------------------------------------------------------------- */
 
 $primary: #95b540;
-$primary-strong: #567318; /* darker accent */
+$primary-dark: #567318;
 $secondary: #BDD775;
 $tertiary: #E9F2D1;
 $tertiary-light: #F4F8E8;
@@ -21,7 +21,13 @@ $code-block-border-color: none;
 $code-bg: $code-block-bg; /* inline code */
 $border-radius: 6px;
 $callout-color-note: $primary;
+$tabset-border-color: transparent;
 $callout-border-width: 1px;
+$callout-color-note: $primary;
+$callout-color-tip: #6B9F7F;
+$callout-color-important: #B5495B;
+$callout-color-caution: #CF6A45;
+$callout-color-warning: #D4A02F;
 
 /* presentation */
 $presentation-font-size-root: 27px;
@@ -45,36 +51,33 @@ $presentation-h6-font-size: 1em;
 }
 
 /* font */
-/* major third scale */
-.largest { font-size: 1.953em; }
-.larger { font-size: 1.563em; }
-.large { font-size: 1.25em; }
-.small { font-size: 0.8em; }
-.smaller { font-size: 0.64em; }
-.smallest { font-size: 0.512em; }
+/* perfect fourth scale */
+.largest { font-size: 2.370em; }
+.larger { font-size: 1.778em; }
+.large { font-size: 1.333em; }
+.small { font-size: 0.75em; }
+.smaller { font-size: 0.563em; }
+.smallest { font-size: 0.422em; }
 
-.reveal .largest pre { font-size: 3.41rem !important; }
-.reveal .larger pre { font-size: 2.73rem !important; }
-.reveal .large pre { font-size: 2.19rem !important; }
-.reveal .small pre { font-size: 1.40rem !important; }
-.reveal .smaller pre { font-size: 1.12rem !important; }
-.reveal .smallest pre { font-size: 0.986rem !important; }
+.reveal .largest pre { font-size: 4.148rem !important; }
+.reveal .larger pre { font-size: 3.111rem !important; }
+.reveal .large pre { font-size: 2.333rem !important; }
+.reveal .small pre { font-size: 1.313rem !important; }
+.reveal .smaller pre { font-size: 0.984rem !important; }
+.reveal .smallest pre { font-size: 0.738rem !important; }
 
 .reveal code {
   font-size: 0.80em !important;
 }
 
-.reveal .largest code { font-size: 1.56em !important; }
-.reveal .larger code { font-size: 1.25em !important; }
-.reveal .large code { font-size: 1em !important; }
-.reveal .small code { font-size: 0.64em !important; }
-.reveal .smaller code { font-size: 0.51em !important; }
-.reveal .smallest code { font-size: 0.41em !important; }
-
 .reveal pre {
   font-size: 1.75rem !important;
   line-height: 1.3;
   margin-bottom: 0.5em;
+}
+
+.reveal .code-with-filename .code-with-filename-file {
+  border-radius: $border-radius;
 }
 
 .reveal .code-with-filename-file pre {
@@ -95,6 +98,7 @@ $presentation-h6-font-size: 1em;
 
 .reveal div.sourceCode {
   border: 0 !important;
+  background-color: unset;
   border-radius: $border-radius;
   margin-bottom: 0.6em !important;
 }
@@ -202,11 +206,12 @@ $presentation-h6-font-size: 1em;
 .reveal .btn,
 .reveal .btn.btn-primary {
   display: inline-block;
-  padding: 0.2em 0.6em;
+  padding: var(--bs-btn-padding-y, 0.2em) var(--bs-btn-padding-x, 0.6em);
   border: 1px solid $primary;
-  border-radius: $border-radius;
+  border-radius: var(--bs-btn-border-radius, #{$border-radius});
   color: whitesmoke;
   background-color: $primary;
+  font-size: var(--bs-btn-font-size, inherit);
   line-height: 1.2;
   text-decoration: none;
   vertical-align: baseline;
@@ -282,7 +287,7 @@ $presentation-h6-font-size: 1em;
 
 .reveal .badge,
 .reveal .badge.badge-primary {
-  font-size: 0.85em;
+  font-size: 0.8em;
   background-color: $primary;
   color: whitesmoke;
   padding: 0.05em 0.3em;
@@ -313,7 +318,7 @@ $presentation-h6-font-size: 1em;
   color: $body-color;
 }
 
-/* callout: type colors and icons come from Quarto, only sizes are adjusted here */
+/* callout */
 
 .reveal .callout.callout-style-simple .callout-title,
 .reveal .callout.callout-style-default .callout-title {
@@ -342,7 +347,13 @@ $presentation-h6-font-size: 1em;
   margin-top: 0.55rem;
 }
 
-/* callout icons: Font Awesome Free 6.5.1 (CC BY 4.0, https://fontawesome.com/license/free), the important icon is custom; all use the text color */
+$callout-colors: (
+  "note": $callout-color-note,
+  "tip": $callout-color-tip,
+  "important": $callout-color-important,
+  "caution": $callout-color-caution,
+  "warning": $callout-color-warning
+);
 
 $callout-icons: (
   "note": '<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" fill="currentColor" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg>',
@@ -355,9 +366,20 @@ $callout-icons: (
 $callout-icon-color: str-replace("#{$body-color}", "#", "%23");
 
 @each $name, $icon in $callout-icons {
+  $color: map-get($callout-colors, $name);
+
+  .reveal div.callout.callout-#{$name}.callout-style-default .callout-title {
+    background-color: mix($color, #fff, 20%);
+  }
+
   .reveal div.callout-#{$name} .callout-icon::before {
     background-image: #{"url('data:image/svg+xml," + str-replace($icon, 'fill="currentColor"', 'style="fill: #{$callout-icon-color}"') + "')"} !important;
   }
+}
+
+.callout.callout-titled .callout-body > .callout-content > :last-child {
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
 
 .reveal .callout-caution .callout-icon-container {
@@ -418,6 +440,8 @@ $callout-icon-color: str-replace("#{$body-color}", "#", "%23");
   --bs-accordion-active-color: #{mix(black, $primary, 60%)};
   --bs-accordion-btn-active-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23#{$primary-hex}'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
   --bs-accordion-border-color: #{rgba($primary, 0.35)};
+  --bs-accordion-border-radius: #{$border-radius};
+  --bs-accordion-inner-border-radius: #{$border-radius};
   --bs-accordion-btn-focus-box-shadow: 0 0 0 0.2rem #{rgba($primary, 0.25)};
 }
 
@@ -529,7 +553,7 @@ $callout-icon-color: str-replace("#{$body-color}", "#", "%23");
 }
 
 .reveal .citation a:hover {
-  color: $primary;
+  color: $link-color;
 }
 
 .references {
