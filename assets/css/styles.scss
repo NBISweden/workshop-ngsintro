@@ -2,20 +2,24 @@
 
 /*-- scss:defaults --*/
 
+/* colors, fonts, size ---------------------------------------------------------------------- */
 
 $primary: #95b540;
+$primary-dark: #567318;
 $secondary: #BDD775;
 $tertiary: #E9F2D1;
+$tertiary-light: #F4F8E8;
 $link-color: $primary;
 $body-color: #1c2833;
 $code-color: #496985;
 $code-block-bg: WhiteSmoke;
-$font-family-sans-serif: 'Nunito', 'Source Sans Pro', 'Helvetica', 'sans-serif' ;
-$font-family-monospace: 'Fira Mono', 'Ubuntu Mono', 'Liberation Mono', 'Lucida Console', 'Courier', 'monospace';
-$font-family-headings: $font-family-sans-serif;
-$mermaid-font-family: 'Nunito', 'Source Sans Pro', 'Helvetica', 'sans-serif' ;
+$font-family-sans-serif: 'Nunito', 'Source Sans Pro', 'Helvetica', sans-serif;
+$font-family-monospace: 'Fira Mono', 'Ubuntu Mono', 'Liberation Mono', 'Lucida Console', 'Courier', monospace;
+$headings-font-family: $font-family-sans-serif;
+$headings-font-weight: 600;
+$mermaid-font-family: 'Nunito', 'Source Sans Pro', 'Helvetica', sans-serif;
 $font-size-root: 18px;
-$code-font-size: 14px;
+$code-font-size: 0.85em;
 /* major second scale */
 $h1-font-size: 1.802rem;
 $h2-font-size: 1.602rem;
@@ -25,7 +29,13 @@ $h5-font-size: 1.125rem;
 $h6-font-size: 1rem;
 $code-block-border-color: none;
 $code-bg: $code-block-bg; /* inline code */
-/*$code-color: ; */
+$border-radius: 6px;
+$callout-color-note: $primary;
+$callout-color-tip: #6B9F7F;
+$callout-color-important: #B5495B;
+$callout-color-caution: #CF6A45;
+$callout-color-warning: #D4A02F;
+$callout-border-width: 1px;
 
 /* site */
 $navbar-bg: $tertiary;
@@ -35,7 +45,17 @@ $footer-fg: DimGray;
 /*-- scss:rules --*/
 
 h1,h2,h3,h4,h5,h6 {
-  font-family: $font-family-headings;
+  font-family: $headings-font-family;
+}
+
+/* section numbers follow the heading color */
+h1 .header-section-number,
+h2 .header-section-number,
+h3 .header-section-number,
+h4 .header-section-number,
+h5 .header-section-number,
+h6 .header-section-number {
+  color: inherit;
 }
 
 /* major third scale */
@@ -62,8 +82,21 @@ body {
 .fourofour {
   font-size: 16rem;
   font-weight: 700;
-  color: $secondary;
+  line-height: 1.1;
+  color: $primary-dark;
+  background: linear-gradient(135deg, $primary-dark 20%, $secondary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
+
+@media (max-width: 575.98px) {
+  .fourofour {
+    font-size: 8rem;
+  }
+}
+
+/* navbar  and footer */
 
 .navbar-nav {
   font-size: 0.85em;
@@ -75,57 +108,190 @@ body {
 }
 
 
-/* buttons and badges */
 
-.badge,
-.badge-primary {
-  background-color: $primary;
+/* table */
+
+table th,
+table td {
+  vertical-align: middle;
 }
 
-.badge-secondary {
-  background-color: $secondary;
+table, .Reactable {
+  font-size: 0.85em;
 }
 
-.btn-primary {
-  background-color: $primary;
-  color: whitesmoke;
+/* buttons */
+
+.btn-xs {
+  --bs-btn-padding-y: .125rem;
+  --bs-btn-padding-x: .25rem;
+  --bs-btn-font-size: .75rem;
+  --bs-btn-border-radius: .15rem;
 }
 
-.btn-primary:hover {
-  background-color: darken($primary, 5%);
-  color: whitesmoke;
+.btn.code-tools-button {
+  @extend .btn-primary;
+}
+
+.btn-primary,
+.btn:not(.btn-secondary, .btn-tertiary, .btn-success, .btn-danger, .btn-warning, .btn-info, .btn-light, .btn-dark, .btn-link, [class*="btn-outline-"]) {
+  --bs-btn-color: whitesmoke;
+  --bs-btn-bg: #{$primary};
+  --bs-btn-border-color: #{$primary};
+  --bs-btn-hover-color: whitesmoke;
+  --bs-btn-hover-bg: #{darken($primary, 5%)};
+  --bs-btn-hover-border-color: #{darken($primary, 5%)};
+  --bs-btn-active-color: whitesmoke;
+  --bs-btn-active-bg: #{darken($primary, 10%)};
+  --bs-btn-active-border-color: #{darken($primary, 10%)};
+  --bs-btn-disabled-color: whitesmoke;
+  --bs-btn-disabled-bg: #{$primary};
+  --bs-btn-disabled-border-color: #{$primary};
+  border-radius: var(--bs-btn-border-radius, #{$border-radius});
 }
 
 .btn-secondary {
-  background-color: $secondary;
-  color: whitesmoke;
+  --bs-btn-color: #{$body-color};
+  --bs-btn-bg: #{$secondary};
+  --bs-btn-border-color: #{$secondary};
+  --bs-btn-hover-color: #{$body-color};
+  --bs-btn-hover-bg: #{darken($secondary, 5%)};
+  --bs-btn-hover-border-color: #{darken($secondary, 5%)};
+  --bs-btn-active-color: #{$body-color};
+  --bs-btn-active-bg: #{darken($secondary, 10%)};
+  --bs-btn-active-border-color: #{darken($secondary, 10%)};
+  --bs-btn-disabled-color: #{$body-color};
+  --bs-btn-disabled-bg: #{$secondary};
+  --bs-btn-disabled-border-color: #{$secondary};
 }
 
 .btn-tertiary {
+  --bs-btn-color: #{$body-color};
+  --bs-btn-bg: #{$tertiary};
+  --bs-btn-border-color: #{$tertiary};
+  --bs-btn-hover-color: #{$body-color};
+  --bs-btn-hover-bg: #{darken($tertiary, 5%)};
+  --bs-btn-hover-border-color: #{darken($tertiary, 5%)};
+  --bs-btn-active-color: #{$body-color};
+  --bs-btn-active-bg: #{darken($tertiary, 10%)};
+  --bs-btn-active-border-color: #{darken($tertiary, 10%)};
+  --bs-btn-disabled-color: #{$body-color};
+  --bs-btn-disabled-bg: #{$tertiary};
+  --bs-btn-disabled-border-color: #{$tertiary};
+}
+
+.btn a,
+.btn a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+
+.btn-secondary a, .btn-secondary a:hover,
+.btn-tertiary a, .btn-tertiary a:hover {
+  color: $body-color;
+}
+
+/* badges */
+
+.badge,
+.badge.badge-primary {
+  background-color: $primary;
+  color: whitesmoke;
+  border-radius: $border-radius;
+}
+
+.badge.badge-secondary {
+  background-color: $secondary;
+  color: $body-color;
+}
+
+.badge.badge-tertiary {
   background-color: $tertiary;
   color: $body-color;
 }
 
-.btn-secondary:hover {
-  background-color: darken($secondary, 5%);
+.badge a,
+.badge a:hover {
   color: whitesmoke;
-}
-
-.btn-tertiary:hover {
-  background-color: lighten($tertiary, 5%);
-}
-
-.btn a {
   text-decoration: none;
 }
 
+.badge.badge-secondary a,
+.badge.badge-secondary a:hover,
+.badge.badge-tertiary a,
+.badge.badge-tertiary a:hover {
+  color: $body-color;
+}
+
+/* observablehq */
+
+.observablehq .btn {
+  @extend .btn-sm;
+  border-radius: var(--bs-btn-border-radius, #{$border-radius});
+}
+
+.observablehq select {
+  @extend .form-select;
+  border-radius: $border-radius;
+}
+
+.observablehq input:not([type]),
+.observablehq input[type="text"],
+.observablehq input[type="email"],
+.observablehq input[type="password"],
+.observablehq input[type="search"],
+.observablehq input[type="tel"],
+.observablehq input[type="url"],
+.observablehq input[type="number"],
+.observablehq input[type="file"],
+.observablehq input[type="date"],
+.observablehq input[type="datetime-local"],
+.observablehq input[type="month"],
+.observablehq input[type="time"],
+.observablehq input[type="week"],
+.observablehq textarea {
+  @extend .form-control;
+  border-radius: $border-radius;
+}
+
+.observablehq input[type="button"],
+.observablehq input[type="submit"],
+.observablehq input[type="reset"] {
+  @extend .btn;
+  border-radius: var(--bs-btn-border-radius, #{$border-radius});
+}
+
+.observablehq input[type="checkbox"],
+.observablehq input[type="radio"] {
+  @extend .form-check-input;
+}
+
+.observablehq input[type="checkbox"] {
+  border-radius: $border-radius;
+}
+
+.observablehq input[type="range"] {
+  @extend .form-range;
+  border-radius: $border-radius;
+}
+
+.observablehq input[type="color"] {
+  @extend .form-control-color;
+  border-radius: $border-radius;
+}
+
+/* title banner */
+
+.quarto-title-block .quarto-title-banner {
+  background-position: right;
+}
 
 /* code */
 
 pre {
   line-height: 1.4;
   background-color: $code-block-bg;
-  border-radius: 0.25rem;
+  border-radius: $border-radius;
 }
 
 pre:not(.sourceCode), pre:not([class]) {
@@ -145,44 +311,51 @@ code {
   word-break: break-word !important;
   white-space: pre-wrap !important;
 }
-      
+
 /* call-out */
 
 .callout {
-  border-radius: 0 !important;
+  border: 1px solid $border-color !important;
+  border-radius: $border-radius !important;
+  background-color: $body-bg;
 }
 
-.callout-style-default,
-.callout-style-simple {
-  border: solid silver 1px !important;
-}
+$callout-colors: (
+  "note": $callout-color-note,
+  "tip": $callout-color-tip,
+  "important": $callout-color-important,
+  "caution": $callout-color-caution,
+  "warning": $callout-color-warning
+);
 
-div.callout-note.callout-style-default > .callout-header {
-  background-color: $tertiary;
-}
+$callout-icons: (
+  "note": '<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" fill="currentColor" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg>',
+  "tip": '<svg xmlns="http://www.w3.org/2000/svg" height="16" width="12" fill="currentColor" viewBox="0 0 384 512"><path d="M272 384c9.6-31.9 29.5-59.1 49.2-86.2l0 0c5.2-7.1 10.4-14.2 15.4-21.4c19.8-28.5 31.4-63 31.4-100.3C368 78.8 289.2 0 192 0S16 78.8 16 176c0 37.3 11.6 71.9 31.4 100.3c5 7.2 10.2 14.3 15.4 21.4l0 0c19.8 27.1 39.7 54.4 49.2 86.2H272zM192 512c44.2 0 80-35.8 80-80V416H112v16c0 44.2 35.8 80 80 80zM112 176c0 8.8-7.2 16-16 16s-16-7.2-16-16c0-61.9 50.1-112 112-112c8.8 0 16 7.2 16 16s-7.2 16-16 16c-44.2 0-80 35.8-80 80z"/></svg>',
+  "warning": '<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" fill="currentColor" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-384c13.3 0 24 10.7 24 24V264c0 13.3-10.7 24-24 24s-24-10.7-24-24V152c0-13.3 10.7-24 24-24zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"/></svg>',
+  "caution": '<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" fill="currentColor" viewBox="0 0 512 512"><path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"/></svg>',
+  "important": '<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" fill="currentColor" viewBox="0 0 512 512"><path fill-rule="evenodd" d="M64 0h384a64 64 0 0 1 64 64v384a64 64 0 0 1-64 64H64a64 64 0 0 1-64-64V64A64 64 0 0 1 64 0zM256 112a32 32 0 0 1 32 32v128a32 32 0 0 1-64 0V144a32 32 0 0 1 32-32zM256 336a40 40 0 1 1 0 80a40 40 0 1 1 0-80z"/></svg>'
+);
 
-div.callout-note .callout-icon::before {
-  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMTYiIHdpZHRoPSIxNiIgZmlsbD0iIzFjMjgzMyIgdmlld0JveD0iMCAwIDUxMiA1MTIiPjwhLS0hRm9udCBBd2Vzb21lIEZyZWUgNi41LjEgYnkgQGZvbnRhd2Vzb21lIC0gaHR0cHM6Ly9mb250YXdlc29tZS5jb20gTGljZW5zZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tL2xpY2Vuc2UvZnJlZSBDb3B5cmlnaHQgMjAyMyBGb250aWNvbnMsIEluYy4tLT48cGF0aCBkPSJNMjU2IDUxMkEyNTYgMjU2IDAgMSAwIDI1NiAwYTI1NiAyNTYgMCAxIDAgMCA1MTJ6TTIxNiAzMzZoMjRWMjcySDIxNmMtMTMuMyAwLTI0LTEwLjctMjQtMjRzMTAuNy0yNCAyNC0yNGg0OGMxMy4zIDAgMjQgMTAuNyAyNCAyNHY4OGg4YzEzLjMgMCAyNCAxMC43IDI0IDI0cy0xMC43IDI0LTI0IDI0SDIxNmMtMTMuMyAwLTI0LTEwLjctMjQtMjRzMTAuNy0yNCAyNC0yNHptNDAtMjA4YTMyIDMyIDAgMSAxIDAgNjQgMzIgMzIgMCAxIDEgMC02NHoiLz48L3N2Zz4=') !important;
-}
+$callout-icon-color: str-replace("#{$body-color}", "#", "%23");
 
-div.callout-tip .callout-icon::before {
-  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMTYiIHdpZHRoPSIxMiIgZmlsbD0iIzFjMjgzMyIgdmlld0JveD0iMCAwIDM4NCA1MTIiPjwhLS0hRm9udCBBd2Vzb21lIEZyZWUgNi41LjEgYnkgQGZvbnRhd2Vzb21lIC0gaHR0cHM6Ly9mb250YXdlc29tZS5jb20gTGljZW5zZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tL2xpY2Vuc2UvZnJlZSBDb3B5cmlnaHQgMjAyMyBGb250aWNvbnMsIEluYy4tLT48cGF0aCBkPSJNMjcyIDM4NGM5LjYtMzEuOSAyOS41LTU5LjEgNDkuMi04Ni4ybDAgMGM1LjItNy4xIDEwLjQtMTQuMiAxNS40LTIxLjRjMTkuOC0yOC41IDMxLjQtNjMgMzEuNC0xMDAuM0MzNjggNzguOCAyODkuMiAwIDE5MiAwUzE2IDc4LjggMTYgMTc2YzAgMzcuMyAxMS42IDcxLjkgMzEuNCAxMDAuM2M1IDcuMiAxMC4yIDE0LjMgMTUuNCAyMS40bDAgMGMxOS44IDI3LjEgMzkuNyA1NC40IDQ5LjIgODYuMkgyNzJ6TTE5MiA1MTJjNDQuMiAwIDgwLTM1LjggODAtODBWNDE2SDExMnYxNmMwIDQ0LjIgMzUuOCA4MCA4MCA4MHpNMTEyIDE3NmMwIDguOC03LjIgMTYtMTYgMTZzLTE2LTcuMi0xNi0xNmMwLTYxLjkgNTAuMS0xMTIgMTEyLTExMmM4LjggMCAxNiA3LjIgMTYgMTZzLTcuMiAxNi0xNiAxNmMtNDQuMiAwLTgwIDM1LjgtODAgODB6Ii8+PC9zdmc+') !important;
-}
-
-div.callout-warning .callout-icon::before {
-  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMTYiIHdpZHRoPSIxNiIgZmlsbD0iIzFjMjgzMyIgdmlld0JveD0iMCAwIDUxMiA1MTIiPjwhLS0hRm9udCBBd2Vzb21lIEZyZWUgNi41LjEgYnkgQGZvbnRhd2Vzb21lIC0gaHR0cHM6Ly9mb250YXdlc29tZS5jb20gTGljZW5zZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tL2xpY2Vuc2UvZnJlZSBDb3B5cmlnaHQgMjAyMyBGb250aWNvbnMsIEluYy4tLT48cGF0aCBkPSJNMjU2IDUxMkEyNTYgMjU2IDAgMSAwIDI1NiAwYTI1NiAyNTYgMCAxIDAgMCA1MTJ6bTAtMzg0YzEzLjMgMCAyNCAxMC43IDI0IDI0VjI2NGMwIDEzLjMtMTAuNyAyNC0yNCAyNHMtMjQtMTAuNy0yNC0yNFYxNTJjMC0xMy4zIDEwLjctMjQgMjQtMjR6TTIyNCAzNTJhMzIgMzIgMCAxIDEgNjQgMCAzMiAzMiAwIDEgMSAtNjQgMHoiLz48L3N2Zz4=') !important;
-}
-
-div.callout-caution .callout-icon::before {
-  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMTYiIHdpZHRoPSIxNiIgZmlsbD0iIzFjMjgzMyIgdmlld0JveD0iMCAwIDUxMiA1MTIiPjwhLS0hRm9udCBBd2Vzb21lIEZyZWUgNi41LjEgYnkgQGZvbnRhd2Vzb21lIC0gaHR0cHM6Ly9mb250YXdlc29tZS5jb20gTGljZW5zZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tL2xpY2Vuc2UvZnJlZSBDb3B5cmlnaHQgMjAyMyBGb250aWNvbnMsIEluYy4tLT48cGF0aCBkPSJNMjU2IDMyYzE0LjIgMCAyNy4zIDcuNSAzNC41IDE5LjhsMjE2IDM2OGM3LjMgMTIuNCA3LjMgMjcuNyAuMiA0MC4xUzQ4Ni4zIDQ4MCA0NzIgNDgwSDQwYy0xNC4zIDAtMjcuNi03LjctMzQuNy0yMC4xcy03LTI3LjggLjItNDAuMWwyMTYtMzY4QzIyOC43IDM5LjUgMjQxLjggMzIgMjU2IDMyem0wIDEyOGMtMTMuMyAwLTI0IDEwLjctMjQgMjRWMjk2YzAgMTMuMyAxMC43IDI0IDI0IDI0czI0LTEwLjcgMjQtMjRWMTg0YzAtMTMuMy0xMC43LTI0LTI0LTI0em0zMiAyMjRhMzIgMzIgMCAxIDAgLTY0IDAgMzIgMzIgMCAxIDAgNjQgMHoiLz48L3N2Zz4=') !important;
+@each $name, $icon in $callout-icons {
+  div.callout-#{$name} .callout-icon::before {
+    background-image: #{"url('data:image/svg+xml," + str-replace($icon, 'fill="currentColor"', 'style="fill: #{$callout-icon-color}"') + "')"} !important;
+  }
 }
 
 .callout-caution .callout-icon-container {
   padding-top: 0 !important;
 }
 
-div.callout-important .callout-icon::before {
-  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMTYiIHdpZHRoPSIxNiIgZmlsbD0iIzFjMjgzMyIgdmlld0JveD0iMCAwIDUxMiA1MTIiPjwhLS0hRm9udCBBd2Vzb21lIEZyZWUgNi41LjEgYnkgQGZvbnRhd2Vzb21lIC0gaHR0cHM6Ly9mb250YXdlc29tZS5jb20gTGljZW5zZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tL2xpY2Vuc2UvZnJlZSBDb3B5cmlnaHQgMjAyMyBGb250aWNvbnMsIEluYy4tLT48cGF0aCBkPSJNNDE2IDM5OC45YzU4LjUtNDEuMSA5Ni0xMDQuMSA5Ni0xNzQuOUM1MTIgMTAwLjMgMzk3LjQgMCAyNTYgMFMwIDEwMC4zIDAgMjI0YzAgNzAuNyAzNy41IDEzMy44IDk2IDE3NC45YzAgLjQgMCAuNyAwIDEuMXY2NGMwIDI2LjUgMjEuNSA0OCA0OCA0OGg0OFY0NjRjMC04LjggNy4yLTE2IDE2LTE2czE2IDcuMiAxNiAxNnY0OGg2NFY0NjRjMC04LjggNy4yLTE2IDE2LTE2czE2IDcuMiAxNiAxNnY0OGg0OGMyNi41IDAgNDgtMjEuNSA0OC00OFY0MDBjMC0uNCAwLS43IDAtMS4xek05NiAyNTZhNjQgNjQgMCAxIDEgMTI4IDBBNjQgNjQgMCAxIDEgOTYgMjU2em0yNTYtNjRhNjQgNjQgMCAxIDEgMCAxMjggNjQgNjQgMCAxIDEgMC0xMjh6Ii8+PC9zdmc+') !important;
+/* blockquote */
+
+blockquote,
+.blockquote {
+  padding: 0.75rem 1.25rem;
+  border-left: 0.25rem solid $primary;
+  border-radius: $border-radius;
+  background-color: $tertiary-light;
 }
 
 /* landing page */
