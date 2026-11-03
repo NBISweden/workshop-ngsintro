@@ -6,9 +6,8 @@ description: "A five-day introductory workshop for beginners in the analysis of 
 image: "assets/images/seo.webp"
 toc: false
 date: ""
-number-sections: true
-number-depth: 2
-anchor-sections: false
+number-sections: false
+anchor-sections: true
 ---
 
 ## Syllabus
