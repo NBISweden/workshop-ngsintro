@@ -2,12 +2,12 @@
 title: "Introduction to Bioinformatics using NGS data"
 pagetitle: "NBIS Workshop • Introduction to Bioinformatics using NGS data"
 subtitle: "NBIS Workshop"
-description: "A five day introductory workshop for beginners in the analysis of illumina short-read next-generation sequencing data which includes lectures and hands-on labs on a remote high-performance cluster."
+description: "A five-day introductory workshop for beginners in the analysis of Illumina short-read next-generation sequencing data which includes lectures and hands-on labs on a remote high-performance cluster."
 image: "assets/images/seo.webp"
 toc: false
 date: ""
 number-sections: true
-number-depth: 1
+number-depth: 2
 anchor-sections: false
 ---
 
@@ -55,7 +55,7 @@ anchor-sections: false
 #### {{< fa chart-column >}} Bulk RNA-seq analysis {#rna-seq}
 
 - RNA-seq experimental design and considerations
-- Quality control, mapping and generating gene expression counts
+- Quality control, mapping and generation of gene expression counts
 - Differential gene expression analysis
 :::
 :::
@@ -114,7 +114,7 @@ After this workshop, you should be able to:
 
 ::: {.detail-list}
 - **Criteria:** Entry requirements, motivation to attend, and gender and geographical balance are considered when applications exceed capacity
-- **Priority:** PhD students are prioritized, followed by post-docs, PIs and other researchers
+- **Priority:** PhD students are prioritized, followed by postdocs, PIs and other researchers
 - **Master's students:** Accepted when seats are available
 - **International applicants:** Accepted when seats are available
 :::
@@ -125,11 +125,21 @@ After this workshop, you should be able to:
 NBIS training events do not provide formal university credits. If credits are essential, consult your home department **before applying** to establish whether it can recognize the workshop for credits. Participants with **full attendance and completion of the tasks** receive a certificate of participation stating the topics covered and the duration of the workshop.
 :::
 
-## Key dates
+## Upcoming workshop
+
+This workshop typically runs twice a year, once in spring (Mar/Apr/May) and once in autumn (Sep/Oct/Nov). Upcoming workshops are announced on [SciLifeLab Training](https://training.scilifelab.se/) and [NBIS Training](https://nbis.se/training) a few months in advance. In case of a planned upcoming workshop, you will see registration information below.
+
+::: {.alert .alert-primary}
+
+## Registration
+
+The next workshop will be held online only, from [19-23 April 2027]{.badge .badge-secondary}. Applications are now open.
+
+### Key dates
 
 ::: {.timeline}
 ::: {.timeline-step}
-**23 Nov 2026**  
+**03 Nov 2026**  
 Applications open
 :::
 
@@ -154,22 +164,21 @@ Workshop week
 :::
 :::
 
-## Course fees
+### Course fees
 
 ::: {.fee-grid}
-::: {.hidden}
-::: {.fee-card}
+::: {.fee-card .hidden}
 [On-site]{.fee-mode} Academia, healthcare, etc.
 
 **SEK 3,000**
 :::
 
-::: {.fee-card}
+::: {.fee-card .hidden}
 [On-site]{.fee-mode} Industry
 
 **SEK 15,000**
 :::
-:::
+
 ::: {.fee-card}
 [Online]{.fee-mode} All participants
 
@@ -178,10 +187,12 @@ Workshop week
 :::
 
 ::: {.fee-note}
-An institutional reference is required for invoicing as NBIS cannot invoice individuals. For on-site courses, the fee includes lunch, coffee, tea and snacks twice a day, and one course dinner. Travel and accommodation are not included; arrange and pay for your own. Participants are invoiced six weeks before the workshop. No refunds are provided for cancellations.
+An institutional reference is required for invoicing as NBIS cannot invoice individuals. [For on-site courses, the fee includes lunch, coffee, tea and snacks twice a day, and one course dinner. Travel and accommodation are not included; arrange and pay for your own.]{.hidden} Participants are invoiced six weeks before the workshop. No refunds are provided for cancellations.
 :::
 
 [[[{{< fa square-pen >}} Apply now]{.large .text-whitesmoke}](https://nbis.typeform.com/ngsintro-2704){target="_blank" rel="noopener"}]{.btn .btn-primary}
+
+:::
 
 ## Instances
 
@@ -197,20 +208,20 @@ Course materials and practical information for each workshop instance.
 ::: {.details-section}
 #### Get in touch
 
-Diana Ekman, Martin Dahlö & Estelle Proux-Wéra [edu.intro-ngs@nbis.se]{.badge .badge-tertiary}
+Diana Ekman, Martin Dahlö & Estelle Proux-Wéra [[edu.intro-ngs@nbis.se](mailto:edu.intro-ngs@nbis.se)]{.badge .badge-tertiary}
 :::
 
 ::: {.details-section}
 #### Code of conduct
 
-By participating in this workshop, you agree to the [NBIS Code of Conduct](https://nbisweden.github.io/workshop-ngsintro/2611/home_coc.qmd).
+By participating in this workshop, you agree to the [NBIS Code of Conduct](https://nbisweden.github.io/workshop-ngsintro/2704/home_coc.html).
 :::
 :::
 
-Announcements for future workshops are published on [SciLifeLab Training](https://training.scilifelab.se/) and [NBIS Training](https://nbis.se/training) a few months in advance.
+
 
 ---
 
-![](assets/logos/nbis-scilifelab-ngi.svg){height="26px"}
+![](assets/logos/nbis-scilifelab-ngi.svg){height="26px" fig-alt="NBIS, SciLifeLab and NGI logos"}
 
-<p class="small"><a href="https://nbisweden.github.io/workshop-ngsintro">Introduction to Bioinformatics using NGS data</a>, a workshop created by <a href="https://nbis.se/">National Bioinformatics Infrastructure (NBIS)</a> in partnership with <a href="https://ngisweden.scilifelab.se/">National Genomics Infrastructure (NGI)</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"></p>
+<p class="small"><a href="https://nbisweden.github.io/workshop-ngsintro">Introduction to Bioinformatics using NGS data</a>, a workshop created by <a href="https://nbis.se/">National Bioinformatics Infrastructure (NBIS)</a> in partnership with <a href="https://ngisweden.scilifelab.se/">National Genomics Infrastructure (NGI)</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"></p>
