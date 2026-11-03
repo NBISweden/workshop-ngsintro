@@ -584,7 +584,7 @@ blockquote,
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 1rem;
-  margin-bottom: 0.75rem;
+  margin: 1rem 0 0.25rem;
 }
 
 .timeline-step {
@@ -614,6 +614,11 @@ blockquote,
   background: $secondary;
 }
 
+.timeline-step:last-child::before {
+  background: $primary-dark;
+  box-shadow: 0 0 0 4px $secondary;
+}
+
 .timeline-step:last-child::after {
   display: none;
 }
@@ -625,9 +630,14 @@ blockquote,
   color: $body-secondary-color;
 }
 
-.timeline-step p:first-child {
+.timeline-step strong {
+  display: block;
   font-size: 1rem;
-  color: $body-color;
+  color: $primary-dark;
+}
+
+.timeline-step br {
+  display: none;
 }
 
 .timeline-note p {
@@ -638,31 +648,32 @@ blockquote,
 
 /* fees */
 
-.fee-grid {
+.fee-list {
+  margin: 0.5rem 0 0;
+}
+
+.fee-item {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.25rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.25rem 1.5rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid $border-color;
 }
 
-.fee-card {
-  @include card-surface;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 0.5rem;
-  box-shadow: inset 0 4px 0 $primary, $shadow-card;
-  padding: 1.5rem 1.5rem 1.25rem;
-}
-
-.fee-card p {
+.fee-item p {
   margin: 0;
 }
 
+.fee-item p:first-child {
+  font-size: 1rem;
+  color: $body-color;
+}
+
 .fee-mode {
-  display: block;
-  width: fit-content;
-  margin-bottom: 0.55rem;
-  padding: 0.15rem 0.65rem;
+  display: inline-block;
+  margin-right: 0.75rem;
+  padding: 0.1rem 0.6rem;
   border-radius: $radius-card;
   background: $tertiary;
   font-size: 0.7rem;
@@ -672,18 +683,12 @@ blockquote,
   color: $primary-dark;
 }
 
-.fee-card p:first-child {
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: $body-secondary-color;
-}
-
-.fee-card p:last-child {
-  margin-top: 0.3rem;
+.fee-item p:last-child {
   font-size: 1.4rem;
+  font-weight: 700;
   line-height: 1.15;
+  text-align: right;
+  white-space: nowrap;
   color: $primary-dark;
 }
 
@@ -691,6 +696,93 @@ blockquote,
   margin: 0.85rem 0 1.75rem;
   font-size: 0.9rem;
   color: $body-secondary-color;
+}
+
+/* registration */
+
+.registration .details-section {
+  margin-bottom: 1.25rem;
+}
+
+.registration .fee-note p {
+  margin: 0.85rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: $body-secondary-color;
+}
+
+.reg-hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem 2rem;
+  margin-bottom: 1.25rem;
+  padding: 1.5rem 1.75rem;
+  border: 1px solid $secondary;
+  border-radius: $radius-card;
+  background: linear-gradient(135deg, $tertiary 0%, $tertiary-light 100%);
+}
+
+.reg-hero-text p {
+  margin: 0;
+}
+
+.reg-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.75rem;
+  margin-top: 0.75rem;
+}
+
+.reg-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.2rem 0.75rem;
+  border: 1px solid $secondary;
+  border-radius: $radius-card;
+  background: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $primary-dark;
+}
+
+.reg-detail {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: clamp(1.2rem, 1rem + 0.9vw, 1.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: $body-color;
+}
+
+.reg-detail i {
+  font-size: 0.8em;
+  color: $primary-dark;
+}
+
+.reg-hero-cta p {
+  margin: 0;
+}
+
+.registration .reg-hero .btn {
+  --bs-btn-bg: #{$primary-dark};
+  --bs-btn-border-color: #{$primary-dark};
+  --bs-btn-hover-bg: #{darken($primary-dark, 5%)};
+  --bs-btn-hover-border-color: #{darken($primary-dark, 5%)};
+  --bs-btn-active-bg: #{darken($primary-dark, 10%)};
+  --bs-btn-active-border-color: #{darken($primary-dark, 10%)};
+  padding: 0;
+  box-shadow: $shadow-card;
+}
+
+.registration .reg-hero .btn a {
+  display: block;
+  padding: 0.8rem 1.75rem;
 }
 
 /* instances */
@@ -748,8 +840,7 @@ blockquote,
 /* responsive */
 
 @media (max-width: 48em) {
-  .details-grid,
-  .fee-grid {
+  .details-grid {
     grid-template-columns: 1fr;
   }
 
@@ -785,7 +876,16 @@ blockquote,
 }
 
 @media (max-width: 30em) {
-  .status-banner {
-    padding: 0.9rem 1rem;
+  .reg-hero {
+    padding: 1.25rem;
+  }
+
+  .reg-hero-cta {
+    flex: 1 1 100%;
+  }
+
+  .registration .reg-hero .btn {
+    display: block;
+    text-align: center;
   }
 }

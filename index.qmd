@@ -129,13 +129,42 @@ NBIS training events do not provide formal university credits. If credits are es
 
 This workshop typically runs twice a year, once in spring (Mar/Apr/May) and once in autumn (Sep/Oct/Nov). Upcoming workshops are announced on [SciLifeLab Training](https://training.scilifelab.se/) and [NBIS Training](https://nbis.se/training) a few months in advance. In case of a planned upcoming workshop, you will see registration information below.
 
-::: {.alert .alert-primary}
+::: {.registration}
 
 ## Registration
 
-The next workshop will be held online only, from [19-23 April 2027]{.badge .badge-secondary}. Applications are now open.
+::: {.details-section}
 
-### Key dates
+#### Course fees
+
+::: {.fee-list}
+::: {.fee-item .hidden}
+[On-site]{.fee-mode} Academia, healthcare, etc.
+
+**SEK 3,000**
+:::
+
+::: {.fee-item .hidden}
+[On-site]{.fee-mode} Industry
+
+**SEK 15,000**
+:::
+
+::: {.fee-item}
+[Online]{.fee-mode} All participants
+
+**SEK 1,000**
+:::
+:::
+
+::: {.fee-note}
+An institutional reference is required for invoicing as NBIS cannot invoice individuals. [For on-site courses, the fee includes lunch, coffee, tea and snacks twice a day, and one course dinner. Travel and accommodation are not included; arrange and pay for your own.]{.hidden} Participants are invoiced six weeks before the workshop. No refunds are provided for cancellations.
+:::
+:::
+
+::: {.details-section}
+
+#### Key dates
 
 ::: {.timeline}
 ::: {.timeline-step}
@@ -163,34 +192,23 @@ Confirmation, invoicing
 Workshop week
 :::
 :::
-
-### Course fees
-
-::: {.fee-grid}
-::: {.fee-card .hidden}
-[On-site]{.fee-mode} Academia, healthcare, etc.
-
-**SEK 3,000**
 :::
 
-::: {.fee-card .hidden}
-[On-site]{.fee-mode} Industry
+::: {.reg-hero}
+::: {.reg-hero-text}
+[{{< fa circle-check >}} Applications open]{.reg-status}
 
-**SEK 15,000**
-:::
+::: {.reg-meta}
+[{{< fa calendar-days >}} 19-23 April 2027]{.reg-detail}
 
-::: {.fee-card}
-[Online]{.fee-mode} All participants
-
-**SEK 1,000**
+[{{< fa location-dot >}} Online]{.reg-detail}
 :::
 :::
 
-::: {.fee-note}
-An institutional reference is required for invoicing as NBIS cannot invoice individuals. [For on-site courses, the fee includes lunch, coffee, tea and snacks twice a day, and one course dinner. Travel and accommodation are not included; arrange and pay for your own.]{.hidden} Participants are invoiced six weeks before the workshop. No refunds are provided for cancellations.
-:::
-
+::: {.reg-hero-cta}
 [[[{{< fa square-pen >}} Apply now]{.large .text-whitesmoke}](https://nbis.typeform.com/ngsintro-2704){target="_blank" rel="noopener"}]{.btn .btn-primary}
+:::
+:::
 
 :::
 
