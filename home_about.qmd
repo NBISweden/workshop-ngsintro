@@ -13,12 +13,12 @@ team:
         Bioinformatician,  
         NBIS,  
         Stockholm University
-    - name: Roy Francis
-      image: assets/images/profile/roy-francis.webp
+    - name: Estelle Prox-Wéra
+      image: assets/images/profile/estelle-proux-wera.webp
       description: |
         Bioinformatician,  
         NBIS,  
-        Uppsala University
+        Stockholm University
     - name: Martin Dahlö
       image: assets/images/profile/martin-dahlo.webp
       description: |
@@ -33,11 +33,17 @@ filters:
 
 ## Location
 
+This workshop is Online only.
+
+::: {.hidden}
+
 <!-- update map markers in _metadata.yml -->
 {{< leaflet uppsala >}}
 
 <!-- additional practical information -->
 {{< include assets/locations/_uppsala.qmd >}}
+
+:::
 
 ## Organizers
 
