@@ -13,7 +13,7 @@ team:
         Bioinformatician,  
         NBIS,  
         Stockholm University
-    - name: Estelle Prox-Wéra
+    - name: Estelle Proux-Wéra
       image: assets/images/profile/estelle-proux-wera.webp
       description: |
         Bioinformatician,  
