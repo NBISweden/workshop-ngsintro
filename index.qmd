@@ -2,94 +2,215 @@
 title: "Introduction to Bioinformatics using NGS data"
 pagetitle: "NBIS Workshop • Introduction to Bioinformatics using NGS data"
 subtitle: "NBIS Workshop"
-description: "A five day introductory workshop for beginners in the analysis of illumina short-read next-generation sequencing data which includes lectures and hands-on labs on a remote high-performance cluster. Topics covered include: working on the Linux command line, overview of sequence data formats and QC, DNA variant calling workflow and bulk RNA-seq analyses workflow."
+description: "A five day introductory workshop for beginners in the analysis of illumina short-read next-generation sequencing data which includes lectures and hands-on labs on a remote high-performance cluster."
 image: "assets/images/seo.webp"
 toc: false
 date: ""
-number-sections: false
+number-sections: true
+number-depth: 1
 anchor-sections: false
 ---
 
-## Topics
+## Syllabus
 
-::: {.topic-grid}
-::: {.topic-item}
-### Command line and HPC
+::: {.syllabus-grid}
+::: {.syllabus-card .wide}
+#### {{< fa terminal >}} UNIX/Linux command line {#unix-linux}
 
-Use the UNIX/Linux command line on a high-performance computing cluster.
+- Navigation and directory management: `cd`, `mkdir`, `rm`, `rmdir`
+- Common tools: `cp`, `mv`, `tar`, `less`, `more`, `head`, `tail`, `nano`, `grep`, `top`, `man`
+- Wildcards
+- Ownership and permissions
+- Symbolic links
+- Piping commands
 :::
 
-::: {.topic-item}
-### NGS data and quality control
+::: {.syllabus-card}
+#### {{< fa server >}} Remote computing cluster {#hpc-cluster}
 
-Understand common file formats and assess sequencing data quality.
+- Logging on to a high-performance computing (HPC) cluster
+- Booking resources
+- Job templates, submission and queues
+- Software modules
 :::
 
-::: {.topic-item}
-### DNA variant calling
+::: {.syllabus-card}
+#### {{< fa clipboard-check >}} NGS data & quality control {#ngs-qc}
 
-Follow the essential steps in a DNA variant calling workflow.
+- Common bioinformatic and NGS file formats
+- Quality control of sequencing data
+- Commonly used bioinformatic tools and pipelines
+- Working with the Integrative Genomics Viewer (IGV)
 :::
 
-::: {.topic-item}
-### RNA sequencing
+::: {.syllabus-card}
+#### {{< fa dna >}} DNA variant calling {#variant-calling}
 
-Explore bulk RNA-seq and differential gene expression.
+- Mapping reads to the reference genome
+- Variant detection
+- The VCF file format
+:::
+
+::: {.syllabus-card}
+#### {{< fa chart-column >}} Bulk RNA-seq analysis {#rna-seq}
+
+- RNA-seq experimental design and considerations
+- Quality control, mapping and generating gene expression counts
+- Differential gene expression analysis
 :::
 :::
 
-::: {.workshop-facts}
-::: {.workshop-fact}
-**Twice a year**
+## Learning outcomes
 
-Spring and autumn
-:::
-
-::: {.workshop-fact}
-**Venue**
-
-Online in Spring, Uppsala in Autumn
-:::
-
-::: {.workshop-fact}
-**About 30 seats**
-
-Registration is required
-:::
-
-::: {.workshop-fact}
-**Taught in English**
-
-Lectures and hands-on exercises
-:::
-:::
+After this workshop, you should be able to:
 
 ::: {.details-grid}
 ::: {.details-section}
-## Audience
 
-::: {.detail-list}
-- **Audience:** PhD students, postdocs and researchers in life sciences, healthcare and related fields
-- **Background:** Basic molecular biology and genetics; no prior bioinformatics experience needed
-- **Eligibility:** Swedish applicants are prioritized; international applicants are welcome
+#### Foundations and computing
+
+::: {.detail-list .checks}
+- {{< fa check >}} Describe the basic principles of next-generation sequencing.
+- {{< fa check >}} Use the Linux command line to manage simple file processing operations and organize directory structures.
+- {{< fa check >}} Connect to and work on a remote high-performance computing cluster.
+- {{< fa check >}} Apply programs in Linux for analysis of NGS data.
+- {{< fa check >}} Summarize the applications, strengths and weaknesses of current NGS technologies, and when to use each approach.
+- {{< fa check >}} Explain common NGS file formats.
 :::
 :::
 
 ::: {.details-section}
-## Registration and fees
+
+#### Sequence analysis
+
+::: {.detail-list .checks}
+- {{< fa check >}} Interpret quality control of NGS reads.
+- {{< fa check >}} Explain the steps involved in variant calling using whole-genome sequencing data.
+- {{< fa check >}} Independently perform a basic variant calling workflow on example data.
+- {{< fa check >}} Demonstrate hands-on experience with raw RNA sequencing data, quality control and quantification of gene expression.
+- {{< fa check >}} Explain the steps involved in differential gene expression analysis using RNA-seq data.
+:::
+:::
+:::
+
+## Who can apply?
+
+::: {.details-grid}
+::: {.details-section}
+
+#### Eligibility
 
 ::: {.detail-list}
-- **Announcements:** Published on [SciLifeLab Training](https://training.scilifelab.se/) a few months in advance
-- **Online:** Free for academia; industry participants pay a fee
-- **On-site:** Fees apply to all and include lunch, coffee breaks and a course dinner
-- **Logistics:** Arrange your own travel and accommodation; bring a laptop
-- **Billing:** An institutional reference is required; NBIS cannot invoice individuals
+- **Audience:** PhD students, postdocs and other researchers affiliated with Swedish academia, healthcare, government institutions or industry
+- **Background:** Genetics, cell biology, biomedicine, biochemistry, bioinformatics or a comparable field; no prior bioinformatics experience is needed
+- **Equipment:** Bring your own laptop, configured according to the pre-course instructions
+- **Research:** To get the most from the workshop, have a project in which you are using or planning to use NGS
+:::
+:::
+
+::: {.details-section}
+
+#### How selection works
+
+::: {.detail-list}
+- **Criteria:** Entry requirements, motivation to attend, and gender and geographical balance are considered when applications exceed capacity
+- **Priority:** PhD students are prioritized, followed by post-docs, PIs and other researchers
+- **Master's students:** Accepted when seats are available
+- **International applicants:** Accepted when seats are available
 :::
 :::
 :::
+
+::: {.fee-note}
+NBIS training events do not provide formal university credits. If credits are essential, consult your home department **before applying** to establish whether it can recognize the workshop for credits. Participants with **full attendance and completion of the tasks** receive a certificate of participation stating the topics covered and the duration of the workshop.
+:::
+
+## Key dates
+
+::: {.timeline}
+::: {.timeline-step}
+**23 Nov 2026**  
+Applications open
+:::
+
+::: {.timeline-step}
+**28 Feb 2027**  
+Applications close
+:::
+
+::: {.timeline-step}
+**01-03 Mar 2027**  
+Decision
+:::
+
+::: {.timeline-step}
+**08 Mar 2027**  
+Confirmation, invoicing
+:::
+
+::: {.timeline-step}
+**19-23 Apr 2027**  
+Workshop week
+:::
+:::
+
+## Course fees
+
+::: {.fee-grid}
+::: {.hidden}
+::: {.fee-card}
+[On-site]{.fee-mode} Academia, healthcare, etc.
+
+**SEK 3,000**
+:::
+
+::: {.fee-card}
+[On-site]{.fee-mode} Industry
+
+**SEK 15,000**
+:::
+:::
+::: {.fee-card}
+[Online]{.fee-mode} All participants
+
+**SEK 1,000**
+:::
+:::
+
+::: {.fee-note}
+An institutional reference is required for invoicing as NBIS cannot invoice individuals. For on-site courses, the fee includes lunch, coffee, tea and snacks twice a day, and one course dinner. Travel and accommodation are not included; arrange and pay for your own. Participants are invoiced six weeks before the workshop. No refunds are provided for cancellations.
+:::
+
+[[[{{< fa square-pen >}} Apply now]{.large .text-whitesmoke}](https://nbis.typeform.com/ngsintro-2704){target="_blank" rel="noopener"}]{.btn .btn-primary}
 
 ## Instances
 
-Choose an instance below for course materials and more information.
+Course materials and practical information for each workshop instance.
 
+::: {style="margin-bottom: 2em;"}
 {{< include _instances.qmd >}}
+:::
+
+## Contact
+
+::: {.details-grid}
+::: {.details-section}
+#### Get in touch
+
+Diana Ekman, Martin Dahlö & Estelle Proux-Wéra [edu.intro-ngs@nbis.se]{.badge .badge-tertiary}
+:::
+
+::: {.details-section}
+#### Code of conduct
+
+By participating in this workshop, you agree to the [NBIS Code of Conduct](https://nbisweden.github.io/workshop-ngsintro/2611/home_coc.qmd).
+:::
+:::
+
+Announcements for future workshops are published on [SciLifeLab Training](https://training.scilifelab.se/) and [NBIS Training](https://nbis.se/training) a few months in advance.
+
+---
+
+![](assets/logos/nbis-scilifelab-ngi.svg){height="26px"}
+
+<p class="small"><a href="https://nbisweden.github.io/workshop-ngsintro">Introduction to Bioinformatics using NGS data</a>, a workshop created by <a href="https://nbis.se/">National Bioinformatics Infrastructure (NBIS)</a> in partnership with <a href="https://ngisweden.scilifelab.se/">National Genomics Infrastructure (NGI)</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"></p>

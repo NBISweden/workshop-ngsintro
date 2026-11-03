@@ -10,7 +10,7 @@ website:
   image: "assets/images/seo.webp"
   description: "A five day introductory workshop for beginners in the analysis of illumina short-read next-generation sequencing data which includes lectures and hands-on labs on a remote high-performance cluster. Topics covered include: working on the Linux command line, overview of sequence data formats and QC, DNA variant calling workflow and RNA sequence analyses workflow."
   navbar:
-    logo: "assets/images/logos/nbis-scilifelab.png"
+    logo: "assets/logos/nbis-scilifelab.png"
     logo-alt: "logo"
     search: false
   page-footer:

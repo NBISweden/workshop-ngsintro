@@ -41,6 +41,12 @@ $callout-border-width: 1px;
 $navbar-bg: $tertiary;
 $footer-bg: white;
 $footer-fg: DimGray;
+$grid-body-width: 1000px;
+
+/* landing page tokens */
+$radius-card: 12px;
+$shadow-card: 0 1px 2px rgba(28, 40, 51, 0.05), 0 6px 18px rgba(28, 40, 51, 0.06);
+$shadow-lift: 0 2px 4px rgba(28, 40, 51, 0.06), 0 10px 24px rgba(28, 40, 51, 0.1);
 
 /*-- scss:rules --*/
 
@@ -65,6 +71,9 @@ h6 .header-section-number {
 .small { font-size: 0.8em;}
 .smaller { font-size: 0.64em;}
 .smallest { font-size: 0.512em;}
+
+/* font colors */
+.text-whitesmoke { color: whitesmoke; }
 
 /* site ---------------------------------------------------------------------- */
 
@@ -107,8 +116,6 @@ body {
   max-height: 20px;
 }
 
-
-
 /* table */
 
 table th,
@@ -135,16 +142,16 @@ table, .Reactable {
 
 .btn-primary,
 .btn:not(.btn-secondary, .btn-tertiary, .btn-success, .btn-danger, .btn-warning, .btn-info, .btn-light, .btn-dark, .btn-link, [class*="btn-outline-"]) {
-  --bs-btn-color: whitesmoke;
+  --bs-btn-color: #{$body-color};
   --bs-btn-bg: #{$primary};
   --bs-btn-border-color: #{$primary};
-  --bs-btn-hover-color: whitesmoke;
+  --bs-btn-hover-color: #{$body-color};
   --bs-btn-hover-bg: #{darken($primary, 5%)};
   --bs-btn-hover-border-color: #{darken($primary, 5%)};
-  --bs-btn-active-color: whitesmoke;
+  --bs-btn-active-color: #{$body-color};
   --bs-btn-active-bg: #{darken($primary, 10%)};
   --bs-btn-active-border-color: #{darken($primary, 10%)};
-  --bs-btn-disabled-color: whitesmoke;
+  --bs-btn-disabled-color: #{$body-color};
   --bs-btn-disabled-bg: #{$primary};
   --bs-btn-disabled-border-color: #{$primary};
   border-radius: var(--bs-btn-border-radius, #{$border-radius});
@@ -196,7 +203,7 @@ table, .Reactable {
 .badge,
 .badge.badge-primary {
   background-color: $primary;
-  color: whitesmoke;
+  color: $body-color;
   border-radius: $border-radius;
 }
 
@@ -212,7 +219,7 @@ table, .Reactable {
 
 .badge a,
 .badge a:hover {
-  color: whitesmoke;
+  color: $body-color;
   text-decoration: none;
 }
 
@@ -360,218 +367,425 @@ blockquote,
 
 /* landing page */
 
+@mixin card-surface {
+  background: #fff;
+  border: 1px solid $border-color;
+  border-radius: $radius-card;
+  box-shadow: $shadow-card;
+}
+
+
+/* syllabus */
+
+.syllabus-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+  counter-reset: module;
+}
+
+.syllabus-card {
+  @include card-surface;
+  position: relative;
+  grid-column: span 2;
+  overflow: hidden;
+  padding: 1.25rem 1.5rem 1.1rem;
+  counter-increment: module;
+}
+
+.syllabus-card.wide {
+  grid-column: span 4;
+}
+
+.syllabus-card > h4 {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 0 0 0.9rem;
+  padding-right: 3.5rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.25;
+  opacity: 1;
+  color: $body-color;
+}
+
+.syllabus-card > h4 > i {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 10px;
+  background: $tertiary;
+  font-size: 1.15rem;
+  line-height: 1;
+  color: $primary-dark;
+}
+
+.syllabus-card ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.syllabus-card.wide ul {
+  columns: 2;
+  column-gap: 2rem;
+}
+
+.syllabus-card li {
+  position: relative;
+  padding: 0.15rem 0 0.15rem 1.25rem;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  break-inside: avoid;
+}
+
+.syllabus-card li::before {
+  content: "";
+  position: absolute;
+  top: 0.7em;
+  left: 0.2rem;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: $primary;
+}
+
+.syllabus-card li code:not(.sourceCode) {
+  padding: 0.05em 0.4em;
+  border: 1px solid $border-color;
+  border-radius: 4px;
+  background: $tertiary-light;
+  font-size: 0.8em;
+  color: $primary-dark;
+}
+
+@media (max-width: 62em) {
+  .syllabus-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .syllabus-card,
+  .syllabus-card.wide {
+    grid-column: auto;
+  }
+
+  .syllabus-card.wide {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 48em) {
+  .syllabus-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+  }
+
+  .syllabus-card.wide {
+    grid-column: auto;
+  }
+
+  .syllabus-card.wide ul {
+    columns: 1;
+  }
+}
+
+/* cards and lists */
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.details-section {
+  @include card-surface;
+  padding: 1rem 1.5rem;
+}
+
+.details-section > p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.details-section > h3, .details-section > h4{
+  margin-top: 0;
+}
+
+.details-section > p:last-child {
+  margin-bottom: 0;
+}
+
+.details-section .btn {
+  margin-top: 0.25rem;
+}
+
+.detail-list ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.detail-list li {
+  position: relative;
+  margin: 0;
+  padding: 0.55rem 0 0.55rem 1.4rem;
+  border-bottom: 1px solid $border-color;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.detail-list li:last-child {
+  border-bottom: 0;
+}
+
+.detail-list li::before {
+  content: "";
+  position: absolute;
+  top: 1.05rem;
+  left: 0.2rem;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: $primary;
+}
+
+.detail-list.checks li {
+  padding-left: 1.7rem;
+}
+
+.detail-list.checks li::before {
+  content: none;
+}
+
+.detail-list.checks li > i:first-child {
+  position: absolute;
+  top: 0.78rem;
+  left: 0;
+  font-size: 0.85rem;
+  line-height: 1;
+  color: $primary-dark;
+}
+
+.detail-list strong {
+  color: $primary-dark;
+}
+
+/* timeline */
+
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.timeline-step {
+  position: relative;
+  padding-top: 1.6rem;
+}
+
+.timeline-step::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 50%;
+  background: $primary;
+  box-shadow: 0 0 0 4px $tertiary;
+}
+
+.timeline-step::after {
+  content: "";
+  position: absolute;
+  top: 0.4rem;
+  left: 1.3rem;
+  right: -0.75rem;
+  height: 2px;
+  background: $secondary;
+}
+
+.timeline-step:last-child::after {
+  display: none;
+}
+
+.timeline-step p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: $body-secondary-color;
+}
+
+.timeline-step p:first-child {
+  font-size: 1rem;
+  color: $body-color;
+}
+
+.timeline-note p {
+  margin: 0.75rem 0 0;
+  font-size: 0.9rem;
+  color: $body-secondary-color;
+}
+
+/* fees */
+
+.fee-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.fee-card {
+  @include card-surface;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5rem;
+  box-shadow: inset 0 4px 0 $primary, $shadow-card;
+  padding: 1.5rem 1.5rem 1.25rem;
+}
+
+.fee-card p {
+  margin: 0;
+}
+
+.fee-mode {
+  display: block;
+  width: fit-content;
+  margin-bottom: 0.55rem;
+  padding: 0.15rem 0.65rem;
+  border-radius: $radius-card;
+  background: $tertiary;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $primary-dark;
+}
+
+.fee-card p:first-child {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $body-secondary-color;
+}
+
+.fee-card p:last-child {
+  margin-top: 0.3rem;
+  font-size: 1.9rem;
+  line-height: 1.15;
+  color: $primary-dark;
+}
+
+.fee-note p {
+  margin: 0.85rem 0 1.75rem;
+  font-size: 0.9rem;
+  color: $body-secondary-color;
+}
+
+/* instances */
+
 .workshop-list {
- display: grid;
- grid-template-columns: repeat(2, 1fr);
- gap: 0.65rem;
- margin-top: 1.25rem;
-}
-
-@media (min-width: 42em) {
- .workshop-list {
-  grid-template-columns: repeat(3, 1fr);
- }
-}
-
-@media (min-width: 64em) {
- .workshop-list {
-  grid-template-columns: repeat(4, 1fr);
- }
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
 }
 
 .workshop-item,
 .workshop-item .btn {
- width: 100%;
+  width: 100%;
 }
 
-.workshop-item a {
- display: block;
- padding: 0.7rem;
- text-align: center;
+.workshop-item,
+.workshop-item .btn {
+  display: flex;
 }
 
 .workshop-item .btn {
- border: 1px solid transparent;
-}
-
-.workshop-item .btn:hover {
- border-color: $secondary;
- background-color: lighten($tertiary, 4%);
+  flex: 1;
 }
 
 .workshop-item a {
- font-weight: 700;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  font-weight: 700;
+  text-align: center;
 }
 
-.topic-grid {
- display: grid;
- grid-template-columns: repeat(4, minmax(0, 1fr));
- gap: 0.75rem;
- margin: 1rem 0 2rem;
- counter-reset: topic;
+.workshop-item .btn {
+  border: 1px solid $border-color;
+  box-shadow: $shadow-card;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
 }
 
-.topic-item {
- padding: 1.1rem;
- border: 1px solid #dce3e7;
- border-top: 0.3rem solid $primary;
- border-radius: 0.25rem;
- background: #fff;
- box-shadow: 0 0.2rem 0.8rem rgba(28, 40, 51, 0.06);
- counter-increment: topic;
+@media (min-width: 42em) {
+  .workshop-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
-.topic-item::before {
- content: "0" counter(topic);
- display: block;
- margin-bottom: 0.7rem;
- font-size: 0.75rem;
- font-weight: 700;
- color: #6a7780;
+@media (min-width: 64em) {
+  .workshop-list {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
 }
 
-.topic-item h3 {
- margin: 0 0 0.5rem;
- font-size: 1rem;
-}
-
-.topic-item p {
- margin: 0;
- font-size: 0.9rem;
- color: #53616b;
- line-height: 1.45;
-}
-
-.workshop-facts {
- display: grid;
- grid-template-columns: repeat(4, minmax(0, 1fr));
- margin: 0 0 2.5rem;
- padding: 1.1rem 0;
- border-top: 1px solid $secondary;
- border-bottom: 1px solid $secondary;
- background: linear-gradient(90deg, rgba($tertiary, 0.75), rgba(#edf2f5, 0.65));
-}
-
-.workshop-fact {
- padding: 0 1.25rem;
- border-right: 1px solid $secondary;
- font-size: 0.9rem;
- color: #53616b;
-}
-
-.workshop-fact:last-child {
- border-right: 0;
-}
-
-.workshop-fact p {
- margin: 0;
-}
-
-.workshop-fact strong {
- display: block;
- margin-bottom: 0.25rem;
- font-size: 1rem;
- color: #344f22;
-}
-
-.details-grid {
- display: grid;
- grid-template-columns: repeat(2, minmax(0, 1fr));
- gap: 2.5rem;
- margin-bottom: 2.5rem;
-}
-
-.details-section p {
- font-size: 0.95rem;
- line-height: 1.55;
-}
-
-.detail-list ul {
- margin: 0;
- padding: 0;
- list-style: none;
-}
-
-.detail-list li {
- position: relative;
- margin: 0;
- padding: 0.35rem 0 0.35rem 1rem;
- border-bottom: 1px solid #e3e8eb;
- font-size: 0.85rem;
- line-height: 1.35;
-}
-
-.detail-list li::before {
- content: "";
- position: absolute;
- top: 0.78rem;
- left: 0;
- width: 0.35rem;
- height: 0.35rem;
- background: $primary;
-}
-
-.detail-list li:last-child {
- border-bottom: 0;
-}
-
-.detail-list strong {
- color: #344f22;
-}
-
-.details-section > p:last-child {
- margin: 0.45rem 0 0;
- font-size: 0.85rem;
- color: #53616b;
-}
+/* responsive */
 
 @media (max-width: 48em) {
- .details-grid {
-  grid-template-columns: 1fr;
- }
+  .details-grid,
+  .fee-grid {
+    grid-template-columns: 1fr;
+  }
 
- .topic-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
- }
+  .panel-tabset > .nav-tabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 
- .topic-item {
-  min-height: auto;
- }
+  .timeline {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
 
- .workshop-facts {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
- }
+  .timeline-step {
+    padding: 0 0 1.25rem 1.9rem;
+  }
 
- .workshop-fact {
-  padding: 1rem;
- }
+  .timeline-step::before {
+    top: 0.3rem;
+  }
 
- .workshop-fact:nth-child(2) {
-  border-right: 0;
- }
+  .timeline-step::after {
+    top: 1.3rem;
+    right: auto;
+    bottom: 0;
+    left: 0.4rem;
+    width: 2px;
+    height: auto;
+  }
 
- .workshop-fact:nth-child(-n + 2) {
-  border-bottom: 1px solid $secondary;
- }
+  .tab-content > .tab-pane {
+    font-size: 0.95rem;
+  }
 }
 
 @media (max-width: 30em) {
- .topic-grid {
-  display: flex;
-  gap: 0.65rem;
-  margin-right: -1rem;
-  padding-right: 1rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: thin;
- }
-
- .topic-item {
-  flex: 0 0 82%;
-  scroll-snap-align: start;
- }
-
- .workshop-fact {
-  font-size: 0.8rem;
- }
+  .status-banner {
+    padding: 0.9rem 1rem;
+  }
 }
