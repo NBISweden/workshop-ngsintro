@@ -1,7 +1,7 @@
 project:
   type: website
   # output directory used on gh-pages branch. format: YYMM
-  output-dir: "2611"
+  output-dir: "2704"
   render: 
     - "!README.md"
     - "!LICENSE"
@@ -31,12 +31,10 @@ website:
         href: "home_contents.html"
       - text: "Precourse"
         href: "home_precourse.html"
-      - text: "Syllabus"
-        href: "home_syllabus.html"
       - text: "FAQs"
         href: "home_faq.html"
-      - text: "Info"
-        href: "home_info.html"
+      - text: "About"
+        href: "home_about.html"
       - icon: "github"
         href: "https://github.com/NBISweden/workshop-ngsintro/"
         aria-label: "GitHub repository"
