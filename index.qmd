@@ -129,37 +129,31 @@ NBIS training events do not provide formal university credits. If credits are es
 
 This workshop typically runs twice a year, once in spring (Mar/Apr/May) and once in autumn (Sep/Oct/Nov). Upcoming workshops are announced on [SciLifeLab Training](https://training.scilifelab.se/) and [NBIS Training](https://nbis.se/training) a few months in advance. In case of a planned upcoming workshop, you will see registration information below.
 
-::: {.registration}
-
 ## Registration
 
-::: {.details-section}
+::: {.details-section .fees}
 
 #### Course fees
 
-::: {.fee-list}
-::: {.fee-item .hidden}
-[On-site]{.fee-mode} Academia, healthcare, etc.
+::: {.hidden}
+[On-site]{.fee-mode} Academia, healthcare and government institutions
 
 **SEK 3,000**
 :::
 
-::: {.fee-item .hidden}
+::: {.hidden}
 [On-site]{.fee-mode} Industry
 
 **SEK 15,000**
 :::
 
-::: {.fee-item}
+::: {}
 [Online]{.fee-mode} All participants
 
 **SEK 1,000**
 :::
-:::
 
-::: {.fee-note}
 An institutional reference is required for invoicing as NBIS cannot invoice individuals. [For on-site courses, the fee includes lunch, coffee, tea and snacks twice a day, and one course dinner. Travel and accommodation are not included; arrange and pay for your own.]{.hidden} Participants are invoiced six weeks before the workshop. No refunds are provided for cancellations.
-:::
 :::
 
 ::: {.details-section}
@@ -194,22 +188,12 @@ Workshop week
 :::
 :::
 
-::: {.reg-hero}
-::: {.reg-hero-text}
-[{{< fa circle-check >}} Applications open]{.reg-status}
+::: {.details-section .hero}
+{{< fa circle-check >}} Applications open
 
-::: {.reg-meta}
-[{{< fa calendar-days >}} 19-23 April 2027]{.reg-detail}
+[{{< fa calendar-days >}} 19-23 April 2027]{.detail} [{{< fa location-dot >}} Online]{.detail}
 
-[{{< fa location-dot >}} Online]{.reg-detail}
-:::
-:::
-
-::: {.reg-hero-cta}
 [[[{{< fa square-pen >}} Apply now]{.large .text-whitesmoke}](https://nbis.typeform.com/ngsintro-2704){target="_blank" rel="noopener"}]{.btn .btn-primary}
-:::
-:::
-
 :::
 
 ## Instances
