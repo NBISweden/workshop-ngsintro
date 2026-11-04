@@ -31,8 +31,8 @@
     "objectID": "index.html#instances",
     "href": "index.html#instances",
     "title": "Introduction to Bioinformatics using NGS data",
-    "section": "6 Instances",
-    "text": "6 Instances\nCourse materials and practical information for each workshop instance.\n\n\n\n2027 Apr\n\n\n2026 Mar\n\n\n2025 Nov\n\n\n2025 Mar\n\n\n2024 Nov\n\n\n2024 Mar\n\n\n2023 Nov\n\n\n2023 Feb\n\n\n2022 Sep\n\n\n2022 Mar\n\n\n2021 Nov\n\n\n2021 May"
+    "section": "Instances",
+    "text": "Instances\nCourse materials and practical information for each workshop instance.\n\n\n\n2027 Apr\n\n\n2026 Mar\n\n\n2025 Nov\n\n\n2025 Mar\n\n\n2024 Nov\n\n\n2024 Mar\n\n\n2023 Nov\n\n\n2023 Feb\n\n\n2022 Sep\n\n\n2022 Mar\n\n\n2021 Nov\n\n\n2021 May"
   },
   {
     "objectID": "index.html#syllabus",
@@ -45,15 +45,15 @@
     "objectID": "index.html#learning-outcomes",
     "href": "index.html#learning-outcomes",
     "title": "Introduction to Bioinformatics using NGS data",
-    "section": "2 Learning outcomes",
-    "text": "2 Learning outcomes\nAfter this workshop, you should be able to:\n\n\nFoundations and computing\n\n\n Describe the basic principles of next-generation sequencing.\n Use the Linux command line to manage simple file processing operations and organize directory structures.\n Connect to and work on a remote high-performance computing cluster.\n Apply programs in Linux for analysis of NGS data.\n Summarize the applications, strengths and weaknesses of current NGS technologies, and when to use each approach.\n Explain common NGS file formats.\n\n\n\n\nSequence analysis\n\n\n Interpret quality control of NGS reads.\n Explain the steps involved in variant calling using whole-genome sequencing data.\n Independently perform a basic variant calling workflow on example data.\n Demonstrate hands-on experience with raw RNA sequencing data, quality control and quantification of gene expression.\n Explain the steps involved in differential gene expression analysis using RNA-seq data."
+    "section": "Learning outcomes",
+    "text": "Learning outcomes\nAfter this workshop, you should be able to:\n\n\nFoundations and computing\n\n\n Describe the basic principles of next-generation sequencing.\n Use the Linux command line to manage simple file processing operations and organize directory structures.\n Connect to and work on a remote high-performance computing cluster.\n Apply programs in Linux for analysis of NGS data.\n Summarize the applications, strengths and weaknesses of current NGS technologies, and when to use each approach.\n Explain common NGS file formats.\n\n\n\n\nSequence analysis\n\n\n Interpret quality control of NGS reads.\n Explain the steps involved in variant calling using whole-genome sequencing data.\n Independently perform a basic variant calling workflow on example data.\n Demonstrate hands-on experience with raw RNA sequencing data, quality control and quantification of gene expression.\n Explain the steps involved in differential gene expression analysis using RNA-seq data."
   },
   {
     "objectID": "index.html#who-can-apply",
     "href": "index.html#who-can-apply",
     "title": "Introduction to Bioinformatics using NGS data",
-    "section": "3 Who can apply?",
-    "text": "3 Who can apply?\n\n\nEligibility\n\n\nAudience: PhD students, postdocs and other researchers affiliated with Swedish academia, healthcare, government institutions or industry\nBackground: Genetics, cell biology, biomedicine, biochemistry, bioinformatics or a comparable field; no prior bioinformatics experience is needed\nEquipment: Bring your own laptop, configured according to the pre-course instructions\nResearch: To get the most from the workshop, have a project in which you are using or planning to use NGS\n\n\n\n\nHow selection works\n\n\nCriteria: Entry requirements, motivation to attend, and gender and geographical balance are considered when applications exceed capacity\nPriority: PhD students are prioritized, followed by postdocs, PIs and other researchers\nMaster’s students: Accepted when seats are available\nInternational applicants: Accepted when seats are available\n\n\n\n\n\nNBIS training events do not provide formal university credits. If credits are essential, consult your home department before applying to establish whether it can recognize the workshop for credits. Participants with full attendance and completion of the tasks receive a certificate of participation stating the topics covered and the duration of the workshop."
+    "section": "Who can apply?",
+    "text": "Who can apply?\n\n\nEligibility\n\n\nAudience: PhD students, postdocs and other researchers affiliated with Swedish academia, healthcare, government institutions or industry\nBackground: Genetics, cell biology, biomedicine, biochemistry, bioinformatics or a comparable field; no prior bioinformatics experience is needed\nEquipment: Bring your own laptop, configured according to the pre-course instructions\nResearch: To get the most from the workshop, have a project in which you are using or planning to use NGS\n\n\n\n\nHow selection works\n\n\nCriteria: Entry requirements, motivation to attend, and gender and geographical balance are considered when applications exceed capacity\nPriority: PhD students are prioritized, followed by postdocs, PIs and other researchers\nMaster’s students: Accepted when seats are available\nInternational applicants: Accepted when seats are available\n\n\n\n\n\nNBIS training events do not provide formal university credits. If credits are essential, consult your home department before applying to establish whether it can recognize the workshop for credits. Participants with full attendance and completion of the tasks receive a certificate of participation stating the topics covered and the duration of the workshop."
   },
   {
     "objectID": "index.html#key-dates",
@@ -73,21 +73,21 @@
     "objectID": "index.html#contact",
     "href": "index.html#contact",
     "title": "Introduction to Bioinformatics using NGS data",
-    "section": "7 Contact",
-    "text": "7 Contact\n\n\nGet in touch\nDiana Ekman, Martin Dahlö & Estelle Proux-Wéra edu.intro-ngs@nbis.se\n\n\nCode of conduct\nBy participating in this workshop, you agree to the NBIS Code of Conduct.\n\n\n\n\n\nIntroduction to Bioinformatics using NGS data, a workshop created by National Bioinformatics Infrastructure (NBIS) in partnership with National Genomics Infrastructure (NGI) is licensed under CC BY-NC-SA 4.0"
+    "section": "Contact",
+    "text": "Contact\n\n\nGet in touch\nDiana Ekman, Martin Dahlö & Estelle Proux-Wéra edu.intro-ngs@nbis.se\n\n\nCode of conduct\nBy participating in this workshop, you agree to the NBIS Code of Conduct.\n\n\n\n\n\nIntroduction to Bioinformatics using NGS data, a workshop created by National Bioinformatics Infrastructure (NBIS) in partnership with National Genomics Infrastructure (NGI) is licensed under CC BY-NC-SA 4.0"
   },
   {
     "objectID": "index.html#upcoming-workshop",
     "href": "index.html#upcoming-workshop",
     "title": "Introduction to Bioinformatics using NGS data",
-    "section": "4 Upcoming workshop",
-    "text": "4 Upcoming workshop\nThis workshop typically runs twice a year, once in spring (Mar/Apr/May) and once in autumn (Sep/Oct/Nov). Upcoming workshops are announced on SciLifeLab Training and NBIS Training a few months in advance. In case of a planned upcoming workshop, you will see registration information below."
+    "section": "Upcoming workshop",
+    "text": "Upcoming workshop\nThis workshop typically runs twice a year, once in spring (Mar/Apr/May) and once in autumn (Sep/Oct/Nov). Upcoming workshops are announced on SciLifeLab Training and NBIS Training a few months in advance. In case of a planned upcoming workshop, you will see registration information below."
   },
   {
     "objectID": "index.html#registration",
     "href": "index.html#registration",
     "title": "Introduction to Bioinformatics using NGS data",
-    "section": "5 Registration",
-    "text": "5 Registration\n\nCourse fees\n\nOn-site Academia, healthcare and government institutions\nSEK 3,000\n\n\nOn-site Industry\nSEK 15,000\n\n\nOnline All participants\nSEK 1,000\n\nAn institutional reference is required for invoicing as NBIS cannot invoice individuals. For on-site courses, the fee includes lunch, coffee, tea and snacks twice a day, and one course dinner. Travel and accommodation are not included; arrange and pay for your own. Participants are invoiced six weeks before the workshop. No refunds are provided for cancellations.\n\n\nKey dates\n\n\n03 Nov 2026\nApplications open\n\n\n28 Feb 2027\nApplications close\n\n\n01-03 Mar 2027\nDecision\n\n\n08 Mar 2027\nConfirmation, invoicing\n\n\n19-23 Apr 2027\nWorkshop week\n\n\n\n\n Applications open\n 19-23 April 2027  Online\n Apply now"
+    "section": "Registration",
+    "text": "Registration\n\nCourse fees\n\nOn-site Academia, healthcare and government institutions\nSEK 3,000\n\n\nOn-site Industry\nSEK 15,000\n\n\nOnline All participants\nSEK 1,000\n\nAn institutional reference is required for invoicing as NBIS cannot invoice individuals. For on-site courses, the fee includes lunch, coffee, tea and snacks twice a day, and one course dinner. Travel and accommodation are not included; arrange and pay for your own. Participants are invoiced six weeks before the workshop. No refunds are provided for cancellations.\n\n\nKey dates\n\n\n03 Nov 2026\nApplications open\n\n\n28 Feb 2027\nApplications close\n\n\n01-03 Mar 2027\nDecision\n\n\n08 Mar 2027\nConfirmation, invoicing\n\n\n19-23 Apr 2027\nWorkshop week\n\n\n\n\n Applications open\n 19-23 April 2027  Online\n Apply now"
   }
 ]
